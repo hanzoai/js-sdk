@@ -1,5 +1,5 @@
 {
-  "name": "Hanzo-AI-mcp",
+  "name": "hanzo.ai-mcp",
   "version": "0.0.1-alpha.0",
   "description": "The official MCP Server for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
@@ -22,7 +22,7 @@
     "fix": "eslint --fix --ext ts,js ."
   },
   "dependencies": {
-    "Hanzo-AI": "file:../../dist/",
+    "hanzo.ai": "file:../../dist/",
     "@modelcontextprotocol/sdk": "^1.6.1"
   },
   "bin": {
@@ -45,8 +45,8 @@
     "typescript": "^4.8.2"
   },
   "imports": {
-    "Hanzo-AI-mcp": ".",
-    "Hanzo-AI-mcp/*": "./src/*"
+    "hanzo.ai-mcp": ".",
+    "hanzo.ai-mcp/*": "./src/*"
   },
   "exports": {
     ".": {
