@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'hanzo.ai/internal/to-file';
-import { toFile } from 'hanzo.ai/core/uploads';
+import type { ResponseLike } from 'hanzoai/internal/to-file';
+import { toFile } from 'hanzoai/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('hanzo.ai/core/uploads');
+    const uploads = await import('hanzoai/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(
