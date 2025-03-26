@@ -22,7 +22,7 @@ Add the following value to your `mcpServers` section. Make sure to provide any n
   "mcpServers": {
     "hanzo_api": {
       "command": "npx",
-      "args": ["-y", "git+ssh://git@github.com:stainless-sdks/Hanzo-AI-typescript.git:packages/mcp-server"],
+      "args": ["-y", "git+ssh://git@github.com:hanzoai/js-sdk.git:packages/mcp-server"],
       "env": {
         "HANZO_API_KEY": "My API Key"
       }
