@@ -55,12 +55,12 @@ $ cd js-sdk
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link hanzo.ai
+$ yarn link hanzoai
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global hanzo.ai
+$ pnpm link -—global hanzoai
 ```
 
 ## Running tests

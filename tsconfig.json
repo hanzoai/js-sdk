@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "hanzo.ai/*": ["src/*"],
-      "hanzo.ai": ["src/index.ts"]
+      "hanzoai/*": ["src/*"],
+      "hanzoai": ["src/index.ts"]
     },
     "noEmit": true,
 
