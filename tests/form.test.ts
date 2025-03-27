@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'Hanzo-AI/internal/uploads';
-import { toFile } from 'Hanzo-AI/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'hanzo.ai/internal/uploads';
+import { toFile } from 'hanzo.ai/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

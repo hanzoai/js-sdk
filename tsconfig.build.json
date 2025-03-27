@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "Hanzo-AI/*": ["dist/src/*"],
-      "Hanzo-AI": ["dist/src/index.ts"],
+      "hanzo.ai/*": ["dist/src/*"],
+      "hanzo.ai": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

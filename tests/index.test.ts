@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'Hanzo-AI/core/api-promise';
+import { APIPromise } from 'hanzo.ai/core/api-promise';
 
 import util from 'node:util';
-import Hanzo from 'Hanzo-AI';
-import { APIUserAbortError } from 'Hanzo-AI';
+import Hanzo from 'hanzo.ai';
+import { APIUserAbortError } from 'hanzo.ai';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
