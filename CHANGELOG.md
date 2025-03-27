@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.1-alpha.2 (2025-03-27)
+
+Full Changelog: [v0.0.1-alpha.1...v0.0.1-alpha.2](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.1...v0.0.1-alpha.2)
+
+### Chores
+
+* update SDK settings ([#3](https://github.com/hanzoai/js-sdk/issues/3)) ([532ef94](https://github.com/hanzoai/js-sdk/commit/532ef944f9dd3bf86abbb99599651bfb143559a5))
+
 ## 0.0.1-alpha.1 (2025-03-26)
 
 Full Changelog: [v0.0.1-alpha.0...v0.0.1-alpha.1](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.1)
