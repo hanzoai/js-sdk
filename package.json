@@ -1,6 +1,6 @@
 {
   "name": "hanzoai",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "The official TypeScript library for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
   "types": "dist/index.d.ts",
