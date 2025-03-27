@@ -1,7 +1,7 @@
 import iconv from 'iconv-lite';
-import { stringify } from 'Hanzo-AI/internal/qs';
-import { encode } from 'Hanzo-AI/internal/qs/utils';
-import { StringifyOptions } from 'Hanzo-AI/internal/qs/types';
+import { stringify } from 'hanzo.ai/internal/qs';
+import { encode } from 'hanzo.ai/internal/qs/utils';
+import { StringifyOptions } from 'hanzo.ai/internal/qs/types';
 import { empty_test_cases } from './empty-keys-cases';
 import assert from 'assert';
 
