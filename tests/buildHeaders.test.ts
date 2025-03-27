@@ -1,5 +1,5 @@
 import { inspect } from 'node:util';
-import { buildHeaders, type HeadersLike, type NullableHeaders } from 'Hanzo-AI/internal/headers';
+import { buildHeaders, type HeadersLike, type NullableHeaders } from 'hanzo.ai/internal/headers';
 
 function inspectNullableHeaders(headers: NullableHeaders) {
   return `NullableHeaders {${[
