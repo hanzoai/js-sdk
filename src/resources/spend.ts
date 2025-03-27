@@ -11,7 +11,7 @@ export class Spend extends APIResource {
    * Calculate spend **before** making call:
    *
    * Note: If you see a spend of $0.0 you need to set custom_pricing for your model:
-   * https://docs.llm.ai/docs/proxy/custom_pricing
+   * https://docs.hanzo.ai/docs/proxy/custom_pricing
    *
    * ```
    * curl --location 'http://localhost:4000/spend/calculate'
