@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^hanzo.ai$': '<rootDir>/src/index.ts',
-    '^hanzo.ai/(.*)$': '<rootDir>/src/$1',
+    '^hanzoai$': '<rootDir>/src/index.ts',
+    '^hanzoai/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',
