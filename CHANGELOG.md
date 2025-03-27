@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.1-alpha.3 (2025-03-27)
+
+Full Changelog: [v0.0.1-alpha.2...v0.0.1-alpha.3](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.2...v0.0.1-alpha.3)
+
+### Chores
+
+* remove custom code ([87408fc](https://github.com/hanzoai/js-sdk/commit/87408fcb4f1a322dfd7add29d465a8c11750b5cd))
+
 ## 0.0.1-alpha.2 (2025-03-27)
 
 Full Changelog: [v0.0.1-alpha.1...v0.0.1-alpha.2](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.1...v0.0.1-alpha.2)
