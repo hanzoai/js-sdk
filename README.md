@@ -24,6 +24,7 @@ import Hanzo from 'hanzoai';
 
 const client = new Hanzo({
   apiKey: process.env['HANZO_API_KEY'], // This is the default and can be omitted
+  environment: 'sandbox', // defaults to 'production'
 });
 
 async function main() {
@@ -43,6 +44,7 @@ import Hanzo from 'hanzoai';
 
 const client = new Hanzo({
   apiKey: process.env['HANZO_API_KEY'], // This is the default and can be omitted
+  environment: 'sandbox', // defaults to 'production'
 });
 
 async function main() {
