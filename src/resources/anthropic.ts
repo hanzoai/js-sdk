@@ -7,35 +7,35 @@ import { path } from '../internal/utils/path';
 
 export class Anthropic extends APIResource {
   /**
-   * [Docs](https://docs.llm.ai/docs/anthropic_completion)
+   * [Docs](https://docs.hanzo.ai/docs/anthropic_completion)
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/anthropic/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.llm.ai/docs/anthropic_completion)
+   * [Docs](https://docs.hanzo.ai/docs/anthropic_completion)
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/anthropic/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.llm.ai/docs/anthropic_completion)
+   * [Docs](https://docs.hanzo.ai/docs/anthropic_completion)
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/anthropic/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.llm.ai/docs/anthropic_completion)
+   * [Docs](https://docs.hanzo.ai/docs/anthropic_completion)
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/anthropic/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.llm.ai/docs/anthropic_completion)
+   * [Docs](https://docs.hanzo.ai/docs/anthropic_completion)
    */
   modify(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/anthropic/${endpoint}`, options);

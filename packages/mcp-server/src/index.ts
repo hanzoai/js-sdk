@@ -3,7 +3,7 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
-import Hanzo from 'hanzo.ai';
+import Hanzo from 'hanzoai';
 
 // Instantiate client
 const client = new Hanzo();
@@ -1410,7 +1410,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'retrieve_info_model_group',
   description:
-    'Get information about all the deployments on llm proxy, including config.yaml descriptions (except api key and api base)\n\n- /model_group/info returns all model groups. End users of proxy should use /model_group/info since those models will be used for /chat/completions, /embeddings, etc.\n- /model_group/info?model_group=rerank-english-v3.0 returns all model groups for a specific model group (`model_name` in config.yaml)\n\n\n\nExample Request (All Models):\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info\'     -H \'accept: application/json\'     -H \'x-api-key: sk-1234\'\n```\n\nExample Request (Specific Model Group):\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info?model_group=rerank-english-v3.0\'     -H \'accept: application/json\'     -H \'Authorization: Bearer sk-1234\'\n```\n\nExample Request (Specific Wildcard Model Group): (e.g. `model_name: openai/*` on config.yaml)\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info?model_group=openai/tts-1\'\n-H \'accept: application/json\'     -H \'Authorization: Bearersk-1234\'\n```\n\nLearn how to use and set wildcard models [here](https://docs.llm.ai/docs/wildcard_routing)\n\nExample Response:\n```json\n    {\n        "data": [\n            {\n            "model_group": "rerank-english-v3.0",\n            "providers": [\n                "cohere"\n            ],\n            "max_input_tokens": null,\n            "max_output_tokens": null,\n            "input_cost_per_token": 0.0,\n            "output_cost_per_token": 0.0,\n            "mode": null,\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": false,\n            "supports_function_calling": false,\n            "supported_openai_params": [\n                "stream",\n                "temperature",\n                "max_tokens",\n                "logit_bias",\n                "top_p",\n                "frequency_penalty",\n                "presence_penalty",\n                "stop",\n                "n",\n                "extra_headers"\n            ]\n            },\n            {\n            "model_group": "gpt-3.5-turbo",\n            "providers": [\n                "openai"\n            ],\n            "max_input_tokens": 16385.0,\n            "max_output_tokens": 4096.0,\n            "input_cost_per_token": 1.5e-06,\n            "output_cost_per_token": 2e-06,\n            "mode": "chat",\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": false,\n            "supports_function_calling": true,\n            "supported_openai_params": [\n                "frequency_penalty",\n                "logit_bias",\n                "logprobs",\n                "top_logprobs",\n                "max_tokens",\n                "max_completion_tokens",\n                "n",\n                "presence_penalty",\n                "seed",\n                "stop",\n                "stream",\n                "stream_options",\n                "temperature",\n                "top_p",\n                "tools",\n                "tool_choice",\n                "function_call",\n                "functions",\n                "max_retries",\n                "extra_headers",\n                "parallel_tool_calls",\n                "response_format"\n            ]\n            },\n            {\n            "model_group": "llava-hf",\n            "providers": [\n                "openai"\n            ],\n            "max_input_tokens": null,\n            "max_output_tokens": null,\n            "input_cost_per_token": 0.0,\n            "output_cost_per_token": 0.0,\n            "mode": null,\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": true,\n            "supports_function_calling": false,\n            "supported_openai_params": [\n                "frequency_penalty",\n                "logit_bias",\n                "logprobs",\n                "top_logprobs",\n                "max_tokens",\n                "max_completion_tokens",\n                "n",\n                "presence_penalty",\n                "seed",\n                "stop",\n                "stream",\n                "stream_options",\n                "temperature",\n                "top_p",\n                "tools",\n                "tool_choice",\n                "function_call",\n                "functions",\n                "max_retries",\n                "extra_headers",\n                "parallel_tool_calls",\n                "response_format"\n            ]\n            }\n        ]\n        }\n```',
+    'Get information about all the deployments on llm proxy, including config.yaml descriptions (except api key and api base)\n\n- /model_group/info returns all model groups. End users of proxy should use /model_group/info since those models will be used for /chat/completions, /embeddings, etc.\n- /model_group/info?model_group=rerank-english-v3.0 returns all model groups for a specific model group (`model_name` in config.yaml)\n\n\n\nExample Request (All Models):\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info\'     -H \'accept: application/json\'     -H \'x-api-key: sk-1234\'\n```\n\nExample Request (Specific Model Group):\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info?model_group=rerank-english-v3.0\'     -H \'accept: application/json\'     -H \'Authorization: Bearer sk-1234\'\n```\n\nExample Request (Specific Wildcard Model Group): (e.g. `model_name: openai/*` on config.yaml)\n```shell\ncurl -X \'GET\'     \'http://localhost:4000/model_group/info?model_group=openai/tts-1\'\n-H \'accept: application/json\'     -H \'Authorization: Bearersk-1234\'\n```\n\nLearn how to use and set wildcard models [here](https://docs.hanzo.ai/docs/wildcard_routing)\n\nExample Response:\n```json\n    {\n        "data": [\n            {\n            "model_group": "rerank-english-v3.0",\n            "providers": [\n                "cohere"\n            ],\n            "max_input_tokens": null,\n            "max_output_tokens": null,\n            "input_cost_per_token": 0.0,\n            "output_cost_per_token": 0.0,\n            "mode": null,\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": false,\n            "supports_function_calling": false,\n            "supported_openai_params": [\n                "stream",\n                "temperature",\n                "max_tokens",\n                "logit_bias",\n                "top_p",\n                "frequency_penalty",\n                "presence_penalty",\n                "stop",\n                "n",\n                "extra_headers"\n            ]\n            },\n            {\n            "model_group": "gpt-3.5-turbo",\n            "providers": [\n                "openai"\n            ],\n            "max_input_tokens": 16385.0,\n            "max_output_tokens": 4096.0,\n            "input_cost_per_token": 1.5e-06,\n            "output_cost_per_token": 2e-06,\n            "mode": "chat",\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": false,\n            "supports_function_calling": true,\n            "supported_openai_params": [\n                "frequency_penalty",\n                "logit_bias",\n                "logprobs",\n                "top_logprobs",\n                "max_tokens",\n                "max_completion_tokens",\n                "n",\n                "presence_penalty",\n                "seed",\n                "stop",\n                "stream",\n                "stream_options",\n                "temperature",\n                "top_p",\n                "tools",\n                "tool_choice",\n                "function_call",\n                "functions",\n                "max_retries",\n                "extra_headers",\n                "parallel_tool_calls",\n                "response_format"\n            ]\n            },\n            {\n            "model_group": "llava-hf",\n            "providers": [\n                "openai"\n            ],\n            "max_input_tokens": null,\n            "max_output_tokens": null,\n            "input_cost_per_token": 0.0,\n            "output_cost_per_token": 0.0,\n            "mode": null,\n            "tpm": null,\n            "rpm": null,\n            "supports_parallel_function_calling": false,\n            "supports_vision": true,\n            "supports_function_calling": false,\n            "supported_openai_params": [\n                "frequency_penalty",\n                "logit_bias",\n                "logprobs",\n                "top_logprobs",\n                "max_tokens",\n                "max_completion_tokens",\n                "n",\n                "presence_penalty",\n                "seed",\n                "stop",\n                "stream",\n                "stream_options",\n                "temperature",\n                "top_p",\n                "tools",\n                "tool_choice",\n                "function_call",\n                "functions",\n                "max_retries",\n                "extra_headers",\n                "parallel_tool_calls",\n                "response_format"\n            ]\n            }\n        ]\n        }\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -1957,7 +1957,8 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'create_vertex_ai',
-  description: 'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/vertex_ai)',
+  description:
+    'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -1975,7 +1976,8 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'retrieve_vertex_ai',
-  description: 'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/vertex_ai)',
+  description:
+    'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -1993,7 +1995,8 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'update_vertex_ai',
-  description: 'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/vertex_ai)',
+  description:
+    'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2011,7 +2014,8 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'delete_vertex_ai',
-  description: 'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/vertex_ai)',
+  description:
+    'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2029,7 +2033,8 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'patch_vertex_ai',
-  description: 'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/vertex_ai)',
+  description:
+    'Call LLM proxy via Vertex AI SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2047,7 +2052,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'create_gemini',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/google_ai_studio)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2065,7 +2070,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'retrieve_gemini',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/google_ai_studio)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2083,7 +2088,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'update_gemini',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/google_ai_studio)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2101,7 +2106,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'delete_gemini',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/google_ai_studio)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2119,7 +2124,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'patch_gemini',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/google_ai_studio)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2137,7 +2142,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'create_cohere',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/cohere)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/cohere)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2155,7 +2160,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'retrieve_cohere',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/cohere)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/cohere)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2173,7 +2178,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'update_cohere',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/cohere)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/cohere)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2191,7 +2196,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'delete_cohere',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/cohere)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/cohere)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2209,7 +2214,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'modify_cohere',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/cohere)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/cohere)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2227,7 +2232,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'create_anthropic',
-  description: '[Docs](https://docs.llm.ai/docs/anthropic_completion)',
+  description: '[Docs](https://docs.hanzo.ai/docs/anthropic_completion)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2245,7 +2250,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'retrieve_anthropic',
-  description: '[Docs](https://docs.llm.ai/docs/anthropic_completion)',
+  description: '[Docs](https://docs.hanzo.ai/docs/anthropic_completion)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2263,7 +2268,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'update_anthropic',
-  description: '[Docs](https://docs.llm.ai/docs/anthropic_completion)',
+  description: '[Docs](https://docs.hanzo.ai/docs/anthropic_completion)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2281,7 +2286,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'delete_anthropic',
-  description: '[Docs](https://docs.llm.ai/docs/anthropic_completion)',
+  description: '[Docs](https://docs.hanzo.ai/docs/anthropic_completion)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2299,7 +2304,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'modify_anthropic',
-  description: '[Docs](https://docs.llm.ai/docs/anthropic_completion)',
+  description: '[Docs](https://docs.hanzo.ai/docs/anthropic_completion)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2317,7 +2322,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'create_bedrock',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/bedrock)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/bedrock)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2335,7 +2340,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'retrieve_bedrock',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/bedrock)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/bedrock)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2353,7 +2358,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'update_bedrock',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/bedrock)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/bedrock)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2371,7 +2376,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'delete_bedrock',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/bedrock)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/bedrock)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2389,7 +2394,7 @@ registerApiMethod({
 
 registerApiMethod({
   name: 'patch_bedrock',
-  description: '[Docs](https://docs.llm.ai/docs/pass_through/bedrock)',
+  description: '[Docs](https://docs.hanzo.ai/docs/pass_through/bedrock)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2683,7 +2688,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'create_langfuse',
   description:
-    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/langfuse)',
+    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2702,7 +2707,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'retrieve_langfuse',
   description:
-    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/langfuse)',
+    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2721,7 +2726,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'update_langfuse',
   description:
-    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/langfuse)',
+    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2740,7 +2745,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'delete_langfuse',
   description:
-    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/langfuse)',
+    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2759,7 +2764,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'patch_langfuse',
   description:
-    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.llm.ai/docs/pass_through/langfuse)',
+    'Call Langfuse via LLM proxy. Works with Langfuse SDK.\n\n[Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -2877,7 +2882,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'check_all_health',
   description:
-    '🚨 USE `/health/liveliness` to health check the proxy 🚨\n\nSee more 👉 https://docs.llm.ai/docs/proxy/health\n\n\nCheck the health of all the endpoints in config.yaml\n\nTo run health checks in the background, add this to config.yaml:\n```\ngeneral_settings:\n    # ... other settings\n    background_health_checks: True\n```\nelse, the health checks will be run on models when /health is called.',
+    '🚨 USE `/health/liveliness` to health check the proxy 🚨\n\nSee more 👉 https://docs.hanzo.ai/docs/proxy/health\n\n\nCheck the health of all the endpoints in config.yaml\n\nTo run health checks in the background, add this to config.yaml:\n```\ngeneral_settings:\n    # ... other settings\n    background_health_checks: True\n```\nelse, the health checks will be run on models when /health is called.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -3002,7 +3007,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'update_key',
   description:
-    'Update an existing API key\'s parameters.\n\nParameters:\n- key: str - The key to update\n- key_alias: Optional[str] - User-friendly key alias\n- user_id: Optional[str] - User ID associated with key\n- team_id: Optional[str] - Team ID associated with key\n- budget_id: Optional[str] - The budget id associated with the key. Created by calling `/budget/new`.\n- models: Optional[list] - Model_name\'s a user is allowed to call\n- tags: Optional[List[str]] - Tags for organizing keys (Enterprise only)\n- enforced_params: Optional[List[str]] - List of enforced params for the key (Enterprise only). [Docs](https://docs.llm.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)\n- spend: Optional[float] - Amount spent by key\n- max_budget: Optional[float] - Max budget for key\n- model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets {"gpt-4": {"budget_limit": 0.0005, "time_period": "30d"}}\n- budget_duration: Optional[str] - Budget reset period ("30d", "1h", etc.)\n- soft_budget: Optional[float] - [TODO] Soft budget limit (warning vs. hard stop). Will trigger a slack alert when this soft budget is reached.\n- max_parallel_requests: Optional[int] - Rate limit for parallel requests\n- metadata: Optional[dict] - Metadata for key. Example {"team": "core-infra", "app": "app2"}\n- tpm_limit: Optional[int] - Tokens per minute limit\n- rpm_limit: Optional[int] - Requests per minute limit\n- model_rpm_limit: Optional[dict] - Model-specific RPM limits {"gpt-4": 100, "claude-v1": 200}\n- model_tpm_limit: Optional[dict] - Model-specific TPM limits {"gpt-4": 100000, "claude-v1": 200000}\n- allowed_cache_controls: Optional[list] - List of allowed cache control values\n- duration: Optional[str] - Key validity duration ("30d", "1h", etc.)\n- permissions: Optional[dict] - Key-specific permissions\n- send_invite_email: Optional[bool] - Send invite email to user_id\n- guardrails: Optional[List[str]] - List of active guardrails for the key\n- blocked: Optional[bool] - Whether the key is blocked\n- aliases: Optional[dict] - Model aliases for the key - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n- config: Optional[dict] - [DEPRECATED PARAM] Key-specific config.\n- temp_budget_increase: Optional[float] - Temporary budget increase for the key (Enterprise only).\n- temp_budget_expiry: Optional[str] - Expiry time for the temporary budget increase (Enterprise only).\n\nExample:\n```bash\ncurl --location \'http://0.0.0.0:4000/key/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n    "key": "sk-1234",\n    "key_alias": "my-key",\n    "user_id": "user-1234",\n    "team_id": "team-1234",\n    "max_budget": 100,\n    "metadata": {"any_key": "any-val"},\n}\'\n```',
+    'Update an existing API key\'s parameters.\n\nParameters:\n- key: str - The key to update\n- key_alias: Optional[str] - User-friendly key alias\n- user_id: Optional[str] - User ID associated with key\n- team_id: Optional[str] - Team ID associated with key\n- budget_id: Optional[str] - The budget id associated with the key. Created by calling `/budget/new`.\n- models: Optional[list] - Model_name\'s a user is allowed to call\n- tags: Optional[List[str]] - Tags for organizing keys (Enterprise only)\n- enforced_params: Optional[List[str]] - List of enforced params for the key (Enterprise only). [Docs](https://docs.hanzo.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)\n- spend: Optional[float] - Amount spent by key\n- max_budget: Optional[float] - Max budget for key\n- model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets {"gpt-4": {"budget_limit": 0.0005, "time_period": "30d"}}\n- budget_duration: Optional[str] - Budget reset period ("30d", "1h", etc.)\n- soft_budget: Optional[float] - [TODO] Soft budget limit (warning vs. hard stop). Will trigger a slack alert when this soft budget is reached.\n- max_parallel_requests: Optional[int] - Rate limit for parallel requests\n- metadata: Optional[dict] - Metadata for key. Example {"team": "core-infra", "app": "app2"}\n- tpm_limit: Optional[int] - Tokens per minute limit\n- rpm_limit: Optional[int] - Requests per minute limit\n- model_rpm_limit: Optional[dict] - Model-specific RPM limits {"gpt-4": 100, "claude-v1": 200}\n- model_tpm_limit: Optional[dict] - Model-specific TPM limits {"gpt-4": 100000, "claude-v1": 200000}\n- allowed_cache_controls: Optional[list] - List of allowed cache control values\n- duration: Optional[str] - Key validity duration ("30d", "1h", etc.)\n- permissions: Optional[dict] - Key-specific permissions\n- send_invite_email: Optional[bool] - Send invite email to user_id\n- guardrails: Optional[List[str]] - List of active guardrails for the key\n- blocked: Optional[bool] - Whether the key is blocked\n- aliases: Optional[dict] - Model aliases for the key - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n- config: Optional[dict] - [DEPRECATED PARAM] Key-specific config.\n- temp_budget_increase: Optional[float] - Temporary budget increase for the key (Enterprise only).\n- temp_budget_expiry: Optional[str] - Expiry time for the temporary budget increase (Enterprise only).\n\nExample:\n```bash\ncurl --location \'http://0.0.0.0:4000/key/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n    "key": "sk-1234",\n    "key_alias": "my-key",\n    "user_id": "user-1234",\n    "team_id": "team-1234",\n    "max_budget": 100,\n    "metadata": {"any_key": "any-val"},\n}\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -3276,7 +3281,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'generate_key',
   description:
-    'Generate an API key based on the provided data.\n\nDocs: https://docs.llm.ai/docs/proxy/virtual_keys\n\nParameters:\n- duration: Optional[str] - Specify the length of time the token is valid for. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- key_alias: Optional[str] - User defined key alias\n- key: Optional[str] - User defined key value. If not set, a 16-digit unique sk-key is created for you.\n- team_id: Optional[str] - The team id of the key\n- user_id: Optional[str] - The user id of the key\n- budget_id: Optional[str] - The budget id associated with the key. Created by calling `/budget/new`.\n- models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models)\n- aliases: Optional[dict] - Any alias mappings, on top of anything in the config.yaml model list. - https://docs.llm.ai/docs/proxy/virtual_keys#managing-auth---upgradedowngrade-models\n- config: Optional[dict] - any key-specific configs, overrides config in config.yaml\n- spend: Optional[int] - Amount spent by key. Default is 0. Will be updated by proxy whenever key is used. https://docs.llm.ai/docs/proxy/virtual_keys#managing-auth---tracking-spend\n- send_invite_email: Optional[bool] - Whether to send an invite email to the user_id, with the generate key\n- max_budget: Optional[float] - Specify max budget for a given key.\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n- metadata: Optional[dict] - Metadata for key, store information for key. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- guardrails: Optional[List[str]] - List of active guardrails for the key\n- permissions: Optional[dict] - key-specific permissions. Currently just used for turning off pii masking (if connected). Example - {"pii": false}\n- model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets {"gpt-4": {"budget_limit": 0.0005, "time_period": "30d"}}}. IF null or {} then no model specific budget.\n- model_rpm_limit: Optional[dict] - key-specific model rpm limit. Example - {"text-davinci-002": 1000, "gpt-3.5-turbo": 1000}. IF null or {} then no model specific rpm limit.\n- model_tpm_limit: Optional[dict] - key-specific model tpm limit. Example - {"text-davinci-002": 1000, "gpt-3.5-turbo": 1000}. IF null or {} then no model specific tpm limit.\n- allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.llm.ai/docs/proxy/caching#turn-on--off-caching-per-request\n- blocked: Optional[bool] - Whether the key is blocked.\n- rpm_limit: Optional[int] - Specify rpm limit for a given key (Requests per minute)\n- tpm_limit: Optional[int] - Specify tpm limit for a given key (Tokens per minute)\n- soft_budget: Optional[float] - Specify soft budget for a given key. Will trigger a slack alert when this soft budget is reached.\n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- enforced_params: Optional[List[str]] - List of enforced params for the key (Enterprise only). [Docs](https://docs.llm.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)\n\nExamples:\n\n1. Allow users to turn on/off pii masking\n\n```bash\ncurl --location \'http://0.0.0.0:4000/key/generate\'         --header \'Authorization: Bearer sk-1234\'         --header \'Content-Type: application/json\'         --data \'{\n        "permissions": {"allow_pii_controls": true}\n}\'\n```\n\nReturns:\n- key: (str) The generated api key\n- expires: (datetime) Datetime object for when key expires.\n- user_id: (str) Unique user id - used for tracking spend across multiple keys for same user id.',
+    'Generate an API key based on the provided data.\n\nDocs: https://docs.hanzo.ai/docs/proxy/virtual_keys\n\nParameters:\n- duration: Optional[str] - Specify the length of time the token is valid for. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- key_alias: Optional[str] - User defined key alias\n- key: Optional[str] - User defined key value. If not set, a 16-digit unique sk-key is created for you.\n- team_id: Optional[str] - The team id of the key\n- user_id: Optional[str] - The user id of the key\n- budget_id: Optional[str] - The budget id associated with the key. Created by calling `/budget/new`.\n- models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models)\n- aliases: Optional[dict] - Any alias mappings, on top of anything in the config.yaml model list. - https://docs.hanzo.ai/docs/proxy/virtual_keys#managing-auth---upgradedowngrade-models\n- config: Optional[dict] - any key-specific configs, overrides config in config.yaml\n- spend: Optional[int] - Amount spent by key. Default is 0. Will be updated by proxy whenever key is used. https://docs.hanzo.ai/docs/proxy/virtual_keys#managing-auth---tracking-spend\n- send_invite_email: Optional[bool] - Whether to send an invite email to the user_id, with the generate key\n- max_budget: Optional[float] - Specify max budget for a given key.\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n- metadata: Optional[dict] - Metadata for key, store information for key. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- guardrails: Optional[List[str]] - List of active guardrails for the key\n- permissions: Optional[dict] - key-specific permissions. Currently just used for turning off pii masking (if connected). Example - {"pii": false}\n- model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets {"gpt-4": {"budget_limit": 0.0005, "time_period": "30d"}}}. IF null or {} then no model specific budget.\n- model_rpm_limit: Optional[dict] - key-specific model rpm limit. Example - {"text-davinci-002": 1000, "gpt-3.5-turbo": 1000}. IF null or {} then no model specific rpm limit.\n- model_tpm_limit: Optional[dict] - key-specific model tpm limit. Example - {"text-davinci-002": 1000, "gpt-3.5-turbo": 1000}. IF null or {} then no model specific tpm limit.\n- allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request\n- blocked: Optional[bool] - Whether the key is blocked.\n- rpm_limit: Optional[int] - Specify rpm limit for a given key (Requests per minute)\n- tpm_limit: Optional[int] - Specify tpm limit for a given key (Tokens per minute)\n- soft_budget: Optional[float] - Specify soft budget for a given key. Will trigger a slack alert when this soft budget is reached.\n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- enforced_params: Optional[List[str]] - List of enforced params for the key (Enterprise only). [Docs](https://docs.hanzo.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)\n\nExamples:\n\n1. Allow users to turn on/off pii masking\n\n```bash\ncurl --location \'http://0.0.0.0:4000/key/generate\'         --header \'Authorization: Bearer sk-1234\'         --header \'Content-Type: application/json\'         --data \'{\n        "permissions": {"allow_pii_controls": true}\n}\'\n```\n\nReturns:\n- key: (str) The generated api key\n- expires: (datetime) Datetime object for when key expires.\n- user_id: (str) Unique user id - used for tracking spend across multiple keys for same user id.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -3613,7 +3618,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'create_user',
   description:
-    'Use this to create a new INTERNAL user with a budget.\nInternal Users can access LLM Admin UI to make keys, request access to models.\nThis creates a new user and generates a new api key for the new user. The new api key is returned.\n\nReturns user id, budget + new key.\n\nParameters:\n- user_id: Optional[str] - Specify a user id. If not set, a unique id will be generated.\n- user_alias: Optional[str] - A descriptive name for you to know who this user id refers to.\n- teams: Optional[list] - specify a list of team id\'s a user belongs to.\n- user_email: Optional[str] - Specify a user email.\n- send_invite_email: Optional[bool] - Specify if an invite email should be sent.\n- user_role: Optional[str] - Specify a user role - "proxy_admin", "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team", "customer". Info about each role here: `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20`\n- max_budget: Optional[float] - Specify max budget for a given user.\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n- models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models). Set to [\'no-default-models\'] to block all model access. Restricting user to only team-based model access.\n- tpm_limit: Optional[int] - Specify tpm limit for a given user (Tokens per minute)\n- rpm_limit: Optional[int] - Specify rpm limit for a given user (Requests per minute)\n- auto_create_key: bool - Default=True. Flag used for returning a key as part of the /user/new response\n- aliases: Optional[dict] - Model aliases for the user - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n- config: Optional[dict] - [DEPRECATED PARAM] User-specific config.\n- allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.llm.ai/docs/proxy/caching#turn-on--off-caching-per-request-\n- blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked.\n- guardrails: Optional[List[str]] - [Not Implemented Yet] List of active guardrails for the user\n- permissions: Optional[dict] - [Not Implemented Yet] User-specific permissions, eg. turning off pii masking.\n- metadata: Optional[dict] - Metadata for user, store information for user. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n- soft_budget: Optional[float] - Get alerts when user crosses given budget, doesn\'t block requests.\n- model_max_budget: Optional[dict] - Model-specific max budget for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-budgets-to-keys)\n- model_rpm_limit: Optional[float] - Model-specific rpm limit for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n- model_tpm_limit: Optional[float] - Model-specific tpm limit for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n- spend: Optional[float] - Amount spent by user. Default is 0. Will be updated by proxy whenever user is used. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n- team_id: Optional[str] - [DEPRECATED PARAM] The team id of the user. Default is None. \n- duration: Optional[str] - Duration for the key auto-created on `/user/new`. Default is None.\n- key_alias: Optional[str] - Alias for the key auto-created on `/user/new`. Default is None.\n\nReturns:\n- key: (str) The generated api key for the user\n- expires: (datetime) Datetime object for when key expires.\n- user_id: (str) Unique user id - used for tracking spend across multiple keys for same user id.\n- max_budget: (float|None) Max budget for given user.\n\nUsage Example \n\n```shell\n curl -X POST "http://localhost:4000/user/new"      -H "Content-Type: application/json"      -H "Authorization: Bearer sk-1234"      -d \'{\n     "username": "new_user",\n     "email": "new_user@example.com"\n }\'\n```',
+    'Use this to create a new INTERNAL user with a budget.\nInternal Users can access LLM Admin UI to make keys, request access to models.\nThis creates a new user and generates a new api key for the new user. The new api key is returned.\n\nReturns user id, budget + new key.\n\nParameters:\n- user_id: Optional[str] - Specify a user id. If not set, a unique id will be generated.\n- user_alias: Optional[str] - A descriptive name for you to know who this user id refers to.\n- teams: Optional[list] - specify a list of team id\'s a user belongs to.\n- user_email: Optional[str] - Specify a user email.\n- send_invite_email: Optional[bool] - Specify if an invite email should be sent.\n- user_role: Optional[str] - Specify a user role - "proxy_admin", "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team", "customer". Info about each role here: `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20`\n- max_budget: Optional[float] - Specify max budget for a given user.\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n- models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models). Set to [\'no-default-models\'] to block all model access. Restricting user to only team-based model access.\n- tpm_limit: Optional[int] - Specify tpm limit for a given user (Tokens per minute)\n- rpm_limit: Optional[int] - Specify rpm limit for a given user (Requests per minute)\n- auto_create_key: bool - Default=True. Flag used for returning a key as part of the /user/new response\n- aliases: Optional[dict] - Model aliases for the user - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n- config: Optional[dict] - [DEPRECATED PARAM] User-specific config.\n- allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request-\n- blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked.\n- guardrails: Optional[List[str]] - [Not Implemented Yet] List of active guardrails for the user\n- permissions: Optional[dict] - [Not Implemented Yet] User-specific permissions, eg. turning off pii masking.\n- metadata: Optional[dict] - Metadata for user, store information for user. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n- soft_budget: Optional[float] - Get alerts when user crosses given budget, doesn\'t block requests.\n- model_max_budget: Optional[dict] - Model-specific max budget for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-budgets-to-keys)\n- model_rpm_limit: Optional[float] - Model-specific rpm limit for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n- model_tpm_limit: Optional[float] - Model-specific tpm limit for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n- spend: Optional[float] - Amount spent by user. Default is 0. Will be updated by proxy whenever user is used. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n- team_id: Optional[str] - [DEPRECATED PARAM] The team id of the user. Default is None. \n- duration: Optional[str] - Duration for the key auto-created on `/user/new`. Default is None.\n- key_alias: Optional[str] - Alias for the key auto-created on `/user/new`. Default is None.\n\nReturns:\n- key: (str) The generated api key for the user\n- expires: (datetime) Datetime object for when key expires.\n- user_id: (str) Unique user id - used for tracking spend across multiple keys for same user id.\n- max_budget: (float|None) Max budget for given user.\n\nUsage Example \n\n```shell\n curl -X POST "http://localhost:4000/user/new"      -H "Content-Type: application/json"      -H "Authorization: Bearer sk-1234"      -d \'{\n     "username": "new_user",\n     "email": "new_user@example.com"\n }\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -3749,7 +3754,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'update_user',
   description:
-    'Example curl \n\n```\ncurl --location \'http://0.0.0.0:4000/user/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n    "user_id": "test-llm-user-4",\n    "user_role": "proxy_admin_viewer"\n}\'\n```\n\nParameters:\n    - user_id: Optional[str] - Specify a user id. If not set, a unique id will be generated.\n    - user_email: Optional[str] - Specify a user email.\n    - password: Optional[str] - Specify a user password.\n    - user_alias: Optional[str] - A descriptive name for you to know who this user id refers to.\n    - teams: Optional[list] - specify a list of team id\'s a user belongs to.\n    - send_invite_email: Optional[bool] - Specify if an invite email should be sent.\n    - user_role: Optional[str] - Specify a user role - "proxy_admin", "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team", "customer". Info about each role here: `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20`\n    - max_budget: Optional[float] - Specify max budget for a given user.\n    - budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n    - models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models)\n    - tpm_limit: Optional[int] - Specify tpm limit for a given user (Tokens per minute)\n    - rpm_limit: Optional[int] - Specify rpm limit for a given user (Requests per minute)\n    - auto_create_key: bool - Default=True. Flag used for returning a key as part of the /user/new response\n    - aliases: Optional[dict] - Model aliases for the user - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n    - config: Optional[dict] - [DEPRECATED PARAM] User-specific config.\n    - allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.llm.ai/docs/proxy/caching#turn-on--off-caching-per-request-\n    - blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked.\n    - guardrails: Optional[List[str]] - [Not Implemented Yet] List of active guardrails for the user\n    - permissions: Optional[dict] - [Not Implemented Yet] User-specific permissions, eg. turning off pii masking.\n    - metadata: Optional[dict] - Metadata for user, store information for user. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n    - max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n    - soft_budget: Optional[float] - Get alerts when user crosses given budget, doesn\'t block requests.\n    - model_max_budget: Optional[dict] - Model-specific max budget for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-budgets-to-keys)\n    - model_rpm_limit: Optional[float] - Model-specific rpm limit for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n    - model_tpm_limit: Optional[float] - Model-specific tpm limit for user. [Docs](https://docs.llm.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n    - spend: Optional[float] - Amount spent by user. Default is 0. Will be updated by proxy whenever user is used. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n    - team_id: Optional[str] - [DEPRECATED PARAM] The team id of the user. Default is None. \n    - duration: Optional[str] - [NOT IMPLEMENTED].\n    - key_alias: Optional[str] - [NOT IMPLEMENTED].',
+    'Example curl \n\n```\ncurl --location \'http://0.0.0.0:4000/user/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n    "user_id": "test-llm-user-4",\n    "user_role": "proxy_admin_viewer"\n}\'\n```\n\nParameters:\n    - user_id: Optional[str] - Specify a user id. If not set, a unique id will be generated.\n    - user_email: Optional[str] - Specify a user email.\n    - password: Optional[str] - Specify a user password.\n    - user_alias: Optional[str] - A descriptive name for you to know who this user id refers to.\n    - teams: Optional[list] - specify a list of team id\'s a user belongs to.\n    - send_invite_email: Optional[bool] - Specify if an invite email should be sent.\n    - user_role: Optional[str] - Specify a user role - "proxy_admin", "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team", "customer". Info about each role here: `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20`\n    - max_budget: Optional[float] - Specify max budget for a given user.\n    - budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n    - models: Optional[list] - Model_name\'s a user is allowed to call. (if empty, key is allowed to call all models)\n    - tpm_limit: Optional[int] - Specify tpm limit for a given user (Tokens per minute)\n    - rpm_limit: Optional[int] - Specify rpm limit for a given user (Requests per minute)\n    - auto_create_key: bool - Default=True. Flag used for returning a key as part of the /user/new response\n    - aliases: Optional[dict] - Model aliases for the user - [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)\n    - config: Optional[dict] - [DEPRECATED PARAM] User-specific config.\n    - allowed_cache_controls: Optional[list] - List of allowed cache control values. Example - ["no-cache", "no-store"]. See all values - https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request-\n    - blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked.\n    - guardrails: Optional[List[str]] - [Not Implemented Yet] List of active guardrails for the user\n    - permissions: Optional[dict] - [Not Implemented Yet] User-specific permissions, eg. turning off pii masking.\n    - metadata: Optional[dict] - Metadata for user, store information for user. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n    - max_parallel_requests: Optional[int] - Rate limit a user based on the number of parallel requests. Raises 429 error, if user\'s parallel requests > x.\n    - soft_budget: Optional[float] - Get alerts when user crosses given budget, doesn\'t block requests.\n    - model_max_budget: Optional[dict] - Model-specific max budget for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-budgets-to-keys)\n    - model_rpm_limit: Optional[float] - Model-specific rpm limit for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n    - model_tpm_limit: Optional[float] - Model-specific tpm limit for user. [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)\n    - spend: Optional[float] - Amount spent by user. Default is 0. Will be updated by proxy whenever user is used. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").\n    - team_id: Optional[str] - [DEPRECATED PARAM] The team id of the user. Default is None. \n    - duration: Optional[str] - [NOT IMPLEMENTED].\n    - key_alias: Optional[str] - [NOT IMPLEMENTED].',
   inputSchema: {
     type: 'object',
     properties: {
@@ -3953,7 +3958,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'create_team',
   description:
-    'Allow users to create a new team. Apply user permissions to their team.\n\n👉 [Detailed Doc on setting team budgets](https://docs.llm.ai/docs/proxy/team_budgets)\n\n\nParameters:\n- team_alias: Optional[str] - User defined team alias\n- team_id: Optional[str] - The team id of the user. If none passed, we\'ll generate it.\n- members_with_roles: List[{"role": "admin" or "user", "user_id": "<user-id>"}] - A list of users and their roles in the team. Get user_id when making a new user via `/user/new`.\n- metadata: Optional[dict] - Metadata for team, store information for team. Example metadata = {"extra_info": "some info"}\n- tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team - all keys with this team_id will have at max this TPM limit\n- rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team - all keys associated with this team_id will have at max this RPM limit\n- max_budget: Optional[float] - The maximum budget allocated to the team - all keys for this team_id will have at max this max_budget\n- budget_duration: Optional[str] - The duration of the budget for the team. Doc [here](https://docs.llm.ai/docs/proxy/team_budgets)\n- models: Optional[list] - A list of models associated with the team - all keys for this team_id will have at most, these models. If empty, assumes all models are allowed.\n- blocked: bool - Flag indicating if the team is blocked or not - will stop all calls from keys with this team_id.\n- members: Optional[List] - Control team members via `/team/member/add` and `/team/member/delete`. \n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: Optional[str] - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.llm.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n- guardrails: Optional[List[str]] - Guardrails for the team. [Docs](https://docs.llm.ai/docs/proxy/guardrails)\nReturns:\n- team_id: (str) Unique team id - used for tracking spend across multiple keys for same team id.\n\n_deprecated_params:\n- admins: list - A list of user_id\'s for the admin role\n- users: list - A list of user_id\'s for the user role\n\nExample Request:\n```\ncurl --location \'http://0.0.0.0:4000/team/new\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n  "team_alias": "my-new-team_2",\n  "members_with_roles": [{"role": "admin", "user_id": "user-1234"},\n    {"role": "user", "user_id": "user-2434"}]\n}\'\n\n```\n\n ```\ncurl --location \'http://0.0.0.0:4000/team/new\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n            "team_alias": "QA Prod Bot", \n            "max_budget": 0.000000001, \n            "budget_duration": "1d"\n        }\'\n```',
+    'Allow users to create a new team. Apply user permissions to their team.\n\n👉 [Detailed Doc on setting team budgets](https://docs.hanzo.ai/docs/proxy/team_budgets)\n\n\nParameters:\n- team_alias: Optional[str] - User defined team alias\n- team_id: Optional[str] - The team id of the user. If none passed, we\'ll generate it.\n- members_with_roles: List[{"role": "admin" or "user", "user_id": "<user-id>"}] - A list of users and their roles in the team. Get user_id when making a new user via `/user/new`.\n- metadata: Optional[dict] - Metadata for team, store information for team. Example metadata = {"extra_info": "some info"}\n- tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team - all keys with this team_id will have at max this TPM limit\n- rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team - all keys associated with this team_id will have at max this RPM limit\n- max_budget: Optional[float] - The maximum budget allocated to the team - all keys for this team_id will have at max this max_budget\n- budget_duration: Optional[str] - The duration of the budget for the team. Doc [here](https://docs.hanzo.ai/docs/proxy/team_budgets)\n- models: Optional[list] - A list of models associated with the team - all keys for this team_id will have at most, these models. If empty, assumes all models are allowed.\n- blocked: bool - Flag indicating if the team is blocked or not - will stop all calls from keys with this team_id.\n- members: Optional[List] - Control team members via `/team/member/add` and `/team/member/delete`. \n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: Optional[str] - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n- guardrails: Optional[List[str]] - Guardrails for the team. [Docs](https://docs.hanzo.ai/docs/proxy/guardrails)\nReturns:\n- team_id: (str) Unique team id - used for tracking spend across multiple keys for same team id.\n\n_deprecated_params:\n- admins: list - A list of user_id\'s for the admin role\n- users: list - A list of user_id\'s for the user role\n\nExample Request:\n```\ncurl --location \'http://0.0.0.0:4000/team/new\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n  "team_alias": "my-new-team_2",\n  "members_with_roles": [{"role": "admin", "user_id": "user-1234"},\n    {"role": "user", "user_id": "user-2434"}]\n}\'\n\n```\n\n ```\ncurl --location \'http://0.0.0.0:4000/team/new\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data \'{\n            "team_alias": "QA Prod Bot", \n            "max_budget": 0.000000001, \n            "budget_duration": "1d"\n        }\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -4073,7 +4078,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'update_team',
   description:
-    'Use `/team/member_add` AND `/team/member/delete` to add/remove new team members  \n\nYou can now update team budget / rate limits via /team/update\n\nParameters:\n- team_id: str - The team id of the user. Required param.\n- team_alias: Optional[str] - User defined team alias\n- metadata: Optional[dict] - Metadata for team, store information for team. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team - all keys with this team_id will have at max this TPM limit\n- rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team - all keys associated with this team_id will have at max this RPM limit\n- max_budget: Optional[float] - The maximum budget allocated to the team - all keys for this team_id will have at max this max_budget\n- budget_duration: Optional[str] - The duration of the budget for the team. Doc [here](https://docs.llm.ai/docs/proxy/team_budgets)\n- models: Optional[list] - A list of models associated with the team - all keys for this team_id will have at most, these models. If empty, assumes all models are allowed.\n- blocked: bool - Flag indicating if the team is blocked or not - will stop all calls from keys with this team_id.\n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: Optional[str] - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.llm.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n- guardrails: Optional[List[str]] - Guardrails for the team. [Docs](https://docs.llm.ai/docs/proxy/guardrails)\nExample - update team TPM Limit\n\n```\ncurl --location \'http://0.0.0.0:4000/team/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data-raw \'{\n    "team_id": "8d916b1c-510d-4894-a334-1c16a93344f5",\n    "tpm_limit": 100\n}\'\n```\n\nExample - Update Team `max_budget` budget\n```\ncurl --location \'http://0.0.0.0:4000/team/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data-raw \'{\n    "team_id": "8d916b1c-510d-4894-a334-1c16a93344f5",\n    "max_budget": 10\n}\'\n```',
+    'Use `/team/member_add` AND `/team/member/delete` to add/remove new team members  \n\nYou can now update team budget / rate limits via /team/update\n\nParameters:\n- team_id: str - The team id of the user. Required param.\n- team_alias: Optional[str] - User defined team alias\n- metadata: Optional[dict] - Metadata for team, store information for team. Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" }\n- tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team - all keys with this team_id will have at max this TPM limit\n- rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team - all keys associated with this team_id will have at max this RPM limit\n- max_budget: Optional[float] - The maximum budget allocated to the team - all keys for this team_id will have at max this max_budget\n- budget_duration: Optional[str] - The duration of the budget for the team. Doc [here](https://docs.hanzo.ai/docs/proxy/team_budgets)\n- models: Optional[list] - A list of models associated with the team - all keys for this team_id will have at most, these models. If empty, assumes all models are allowed.\n- blocked: bool - Flag indicating if the team is blocked or not - will stop all calls from keys with this team_id.\n- tags: Optional[List[str]] - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: Optional[str] - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n- guardrails: Optional[List[str]] - Guardrails for the team. [Docs](https://docs.hanzo.ai/docs/proxy/guardrails)\nExample - update team TPM Limit\n\n```\ncurl --location \'http://0.0.0.0:4000/team/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data-raw \'{\n    "team_id": "8d916b1c-510d-4894-a334-1c16a93344f5",\n    "tpm_limit": 100\n}\'\n```\n\nExample - Update Team `max_budget` budget\n```\ncurl --location \'http://0.0.0.0:4000/team/update\'     --header \'Authorization: Bearer sk-1234\'     --header \'Content-Type: application/json\'     --data-raw \'{\n    "team_id": "8d916b1c-510d-4894-a334-1c16a93344f5",\n    "max_budget": 10\n}\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -4544,7 +4549,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'create_organization',
   description:
-    'Allow orgs to own teams\n\nSet org level budgets + model access.\n\nOnly admins can create orgs.\n\n# Parameters\n\n- organization_alias: *str* - The name of the organization.\n- models: *List* - The models the organization has access to.\n- budget_id: *Optional[str]* - The id for a budget (tpm/rpm/max budget) for the organization.\n### IF NO BUDGET ID - CREATE ONE WITH THESE PARAMS ###\n- max_budget: *Optional[float]* - Max budget for org\n- tpm_limit: *Optional[int]* - Max tpm limit for org\n- rpm_limit: *Optional[int]* - Max rpm limit for org\n- max_parallel_requests: *Optional[int]* - [Not Implemented Yet] Max parallel requests for org\n- soft_budget: *Optional[float]* - [Not Implemented Yet] Get a slack alert when this soft budget is reached. Don\'t block requests.\n- model_max_budget: *Optional[dict]* - Max budget for a specific model\n- budget_duration: *Optional[str]* - Frequency of reseting org budget\n- metadata: *Optional[dict]* - Metadata for organization, store information for organization. Example metadata - {"extra_info": "some info"}\n- blocked: *bool* - Flag indicating if the org is blocked or not - will stop all calls from keys with this org_id.\n- tags: *Optional[List[str]]* - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: *Optional[str]* - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.llm.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n\nCase 1: Create new org **without** a budget_id\n\n```bash\ncurl --location \'http://0.0.0.0:4000/organization/new\' \n--header \'Authorization: Bearer sk-1234\' \n--header \'Content-Type: application/json\' \n--data \'{\n    "organization_alias": "my-secret-org",\n    "models": ["model1", "model2"],\n    "max_budget": 100\n}\'\n\n\n```\n\nCase 2: Create new org **with** a budget_id\n\n```bash\ncurl --location \'http://0.0.0.0:4000/organization/new\' \n--header \'Authorization: Bearer sk-1234\' \n--header \'Content-Type: application/json\' \n--data \'{\n    "organization_alias": "my-secret-org",\n    "models": ["model1", "model2"],\n    "budget_id": "428eeaa8-f3ac-4e85-a8fb-7dc8d7aa8689"\n}\'\n```',
+    'Allow orgs to own teams\n\nSet org level budgets + model access.\n\nOnly admins can create orgs.\n\n# Parameters\n\n- organization_alias: *str* - The name of the organization.\n- models: *List* - The models the organization has access to.\n- budget_id: *Optional[str]* - The id for a budget (tpm/rpm/max budget) for the organization.\n### IF NO BUDGET ID - CREATE ONE WITH THESE PARAMS ###\n- max_budget: *Optional[float]* - Max budget for org\n- tpm_limit: *Optional[int]* - Max tpm limit for org\n- rpm_limit: *Optional[int]* - Max rpm limit for org\n- max_parallel_requests: *Optional[int]* - [Not Implemented Yet] Max parallel requests for org\n- soft_budget: *Optional[float]* - [Not Implemented Yet] Get a slack alert when this soft budget is reached. Don\'t block requests.\n- model_max_budget: *Optional[dict]* - Max budget for a specific model\n- budget_duration: *Optional[str]* - Frequency of reseting org budget\n- metadata: *Optional[dict]* - Metadata for organization, store information for organization. Example metadata - {"extra_info": "some info"}\n- blocked: *bool* - Flag indicating if the org is blocked or not - will stop all calls from keys with this org_id.\n- tags: *Optional[List[str]]* - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).\n- organization_id: *Optional[str]* - The organization id of the team. Default is None. Create via `/organization/new`.\n- model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)\n\nCase 1: Create new org **without** a budget_id\n\n```bash\ncurl --location \'http://0.0.0.0:4000/organization/new\' \n--header \'Authorization: Bearer sk-1234\' \n--header \'Content-Type: application/json\' \n--data \'{\n    "organization_alias": "my-secret-org",\n    "models": ["model1", "model2"],\n    "max_budget": 100\n}\'\n\n\n```\n\nCase 2: Create new org **with** a budget_id\n\n```bash\ncurl --location \'http://0.0.0.0:4000/organization/new\' \n--header \'Authorization: Bearer sk-1234\' \n--header \'Content-Type: application/json\' \n--data \'{\n    "organization_alias": "my-secret-org",\n    "models": ["model1", "model2"],\n    "budget_id": "428eeaa8-f3ac-4e85-a8fb-7dc8d7aa8689"\n}\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -5092,7 +5097,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'calculate_spend_spend',
   description:
-    'Accepts all the params of completion_cost.\n\nCalculate spend **before** making call:\n\nNote: If you see a spend of $0.0 you need to set custom_pricing for your model: https://docs.llm.ai/docs/proxy/custom_pricing\n\n```\ncurl --location \'http://localhost:4000/spend/calculate\'\n--header \'Authorization: Bearer sk-1234\'\n--header \'Content-Type: application/json\'\n--data \'{\n    "model": "anthropic.claude-v2",\n    "messages": [{"role": "user", "content": "Hey, how\'\'\'s it going?"}]\n}\'\n```\n\nCalculate spend **after** making call:\n\n```\ncurl --location \'http://localhost:4000/spend/calculate\'\n--header \'Authorization: Bearer sk-1234\'\n--header \'Content-Type: application/json\'\n--data \'{\n    "completion_response": {\n        "id": "chatcmpl-123",\n        "object": "chat.completion",\n        "created": 1677652288,\n        "model": "gpt-3.5-turbo-0125",\n        "system_fingerprint": "fp_44709d6fcb",\n        "choices": [{\n            "index": 0,\n            "message": {\n                "role": "assistant",\n                "content": "Hello there, how may I assist you today?"\n            },\n            "logprobs": null,\n            "finish_reason": "stop"\n        }]\n        "usage": {\n            "prompt_tokens": 9,\n            "completion_tokens": 12,\n            "total_tokens": 21\n        }\n    }\n}\'\n```',
+    'Accepts all the params of completion_cost.\n\nCalculate spend **before** making call:\n\nNote: If you see a spend of $0.0 you need to set custom_pricing for your model: https://docs.hanzo.ai/docs/proxy/custom_pricing\n\n```\ncurl --location \'http://localhost:4000/spend/calculate\'\n--header \'Authorization: Bearer sk-1234\'\n--header \'Content-Type: application/json\'\n--data \'{\n    "model": "anthropic.claude-v2",\n    "messages": [{"role": "user", "content": "Hey, how\'\'\'s it going?"}]\n}\'\n```\n\nCalculate spend **after** making call:\n\n```\ncurl --location \'http://localhost:4000/spend/calculate\'\n--header \'Authorization: Bearer sk-1234\'\n--header \'Content-Type: application/json\'\n--data \'{\n    "completion_response": {\n        "id": "chatcmpl-123",\n        "object": "chat.completion",\n        "created": 1677652288,\n        "model": "gpt-3.5-turbo-0125",\n        "system_fingerprint": "fp_44709d6fcb",\n        "choices": [{\n            "index": 0,\n            "message": {\n                "role": "assistant",\n                "content": "Hello there, how may I assist you today?"\n            },\n            "logprobs": null,\n            "finish_reason": "stop"\n        }]\n        "usage": {\n            "prompt_tokens": 9,\n            "completion_tokens": 12,\n            "total_tokens": 21\n        }\n    }\n}\'\n```',
   inputSchema: {
     type: 'object',
     properties: {
@@ -5284,7 +5289,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'list_budgets_provider',
   description:
-    'Provider Budget Routing - Get Budget, Spend Details https://docs.llm.ai/docs/proxy/provider_budget_routing\n\nUse this endpoint to check current budget, spend and budget reset time for a provider\n\nExample Request\n\n```bash\ncurl -X GET http://localhost:4000/provider/budgets     -H "Content-Type: application/json"     -H "Authorization: Bearer sk-1234"\n```\n\nExample Response\n\n```json\n{\n    "providers": {\n        "openai": {\n            "budget_limit": 1e-12,\n            "time_period": "1d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "azure": {\n            "budget_limit": 100.0,\n            "time_period": "1d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "anthropic": {\n            "budget_limit": 100.0,\n            "time_period": "10d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "vertex_ai": {\n            "budget_limit": 100.0,\n            "time_period": "12d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        }\n    }\n}\n```',
+    'Provider Budget Routing - Get Budget, Spend Details https://docs.hanzo.ai/docs/proxy/provider_budget_routing\n\nUse this endpoint to check current budget, spend and budget reset time for a provider\n\nExample Request\n\n```bash\ncurl -X GET http://localhost:4000/provider/budgets     -H "Content-Type: application/json"     -H "Authorization: Bearer sk-1234"\n```\n\nExample Response\n\n```json\n{\n    "providers": {\n        "openai": {\n            "budget_limit": 1e-12,\n            "time_period": "1d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "azure": {\n            "budget_limit": 100.0,\n            "time_period": "1d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "anthropic": {\n            "budget_limit": 100.0,\n            "time_period": "10d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        },\n        "vertex_ai": {\n            "budget_limit": 100.0,\n            "time_period": "12d",\n            "spend": 0.0,\n            "budget_reset_at": null\n        }\n    }\n}\n```',
   inputSchema: {
     type: 'object',
     properties: {},
@@ -5352,7 +5357,7 @@ registerApiMethod({
 registerApiMethod({
   name: 'list_guardrails',
   description:
-    'List the guardrails that are available on the proxy server\n\n👉 [Guardrail docs](https://docs.llm.ai/docs/proxy/guardrails/quick_start)\n\nExample Request:\n```bash\ncurl -X GET "http://localhost:4000/guardrails/list" -H "Authorization: Bearer <your_api_key>"\n```\n\nExample Response:\n```json\n{\n    "guardrails": [\n        {\n        "guardrail_name": "bedrock-pre-guard",\n        "guardrail_info": {\n            "params": [\n            {\n                "name": "toxicity_score",\n                "type": "float",\n                "description": "Score between 0-1 indicating content toxicity level"\n            },\n            {\n                "name": "pii_detection",\n                "type": "boolean"\n            }\n            ]\n        }\n        }\n    ]\n}\n```',
+    'List the guardrails that are available on the proxy server\n\n👉 [Guardrail docs](https://docs.hanzo.ai/docs/proxy/guardrails/quick_start)\n\nExample Request:\n```bash\ncurl -X GET "http://localhost:4000/guardrails/list" -H "Authorization: Bearer <your_api_key>"\n```\n\nExample Response:\n```json\n{\n    "guardrails": [\n        {\n        "guardrail_name": "bedrock-pre-guard",\n        "guardrail_info": {\n            "params": [\n            {\n                "name": "toxicity_score",\n                "type": "float",\n                "description": "Score between 0-1 indicating content toxicity level"\n            },\n            {\n                "name": "pii_detection",\n                "type": "boolean"\n            }\n            ]\n        }\n        }\n    ]\n}\n```',
   inputSchema: {
     type: 'object',
     properties: {},
