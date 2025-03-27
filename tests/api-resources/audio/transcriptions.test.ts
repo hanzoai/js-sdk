@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Hanzo, { toFile } from 'hanzo.ai';
+import Hanzo, { toFile } from 'hanzoai';
 
 const client = new Hanzo({
   apiKey: 'My API Key',

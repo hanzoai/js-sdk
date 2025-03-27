@@ -9,7 +9,7 @@ export class Langfuse extends APIResource {
   /**
    * Call Langfuse via LLM proxy. Works with Langfuse SDK.
    *
-   * [Docs](https://docs.llm.ai/docs/pass_through/langfuse)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/langfuse/${endpoint}`, options);
@@ -18,7 +18,7 @@ export class Langfuse extends APIResource {
   /**
    * Call Langfuse via LLM proxy. Works with Langfuse SDK.
    *
-   * [Docs](https://docs.llm.ai/docs/pass_through/langfuse)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/langfuse/${endpoint}`, options);
@@ -27,7 +27,7 @@ export class Langfuse extends APIResource {
   /**
    * Call Langfuse via LLM proxy. Works with Langfuse SDK.
    *
-   * [Docs](https://docs.llm.ai/docs/pass_through/langfuse)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/langfuse/${endpoint}`, options);
@@ -36,7 +36,7 @@ export class Langfuse extends APIResource {
   /**
    * Call Langfuse via LLM proxy. Works with Langfuse SDK.
    *
-   * [Docs](https://docs.llm.ai/docs/pass_through/langfuse)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/langfuse/${endpoint}`, options);
@@ -45,7 +45,7 @@ export class Langfuse extends APIResource {
   /**
    * Call Langfuse via LLM proxy. Works with Langfuse SDK.
    *
-   * [Docs](https://docs.llm.ai/docs/pass_through/langfuse)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/langfuse)
    */
   patch(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/langfuse/${endpoint}`, options);
