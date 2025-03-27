@@ -337,11 +337,26 @@ import {
 } from './resources/team/team';
 import { ThreadCreateResponse, ThreadRetrieveResponse, Threads } from './resources/threads/threads';
 
+const environments = {
+  production: 'https://api.hanzo.ai',
+  sandbox: 'https://api.sandbox.hanzo.ai',
+};
+type Environment = keyof typeof environments;
+
 export interface ClientOptions {
   /**
    * The default name of the subscription key header of Azure
    */
   apiKey?: string | undefined;
+
+  /**
+   * Specifies the environment to use for the API.
+   *
+   * Each environment maps to a different base URL:
+   * - `production` corresponds to `https://api.hanzo.ai`
+   * - `sandbox` corresponds to `https://api.sandbox.hanzo.ai`
+   */
+  environment?: Environment | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -432,6 +447,7 @@ export class Hanzo {
    * API Client for interfacing with the Hanzo API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['HANZO_API_KEY'] ?? undefined]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['HANZO_BASE_URL'] ?? https://api.hanzo.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -454,10 +470,17 @@ export class Hanzo {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://api.hanzo.ai`,
+      baseURL,
+      environment: opts.environment ?? 'production',
     };
 
-    this.baseURL = options.baseURL!;
+    if (baseURL && opts.environment) {
+      throw new Errors.HanzoError(
+        'Ambiguous URL; The `baseURL` option (or HANZO_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+      );
+    }
+
+    this.baseURL = options.baseURL || environments[options.environment || 'production'];
     this.timeout = options.timeout ?? Hanzo.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';

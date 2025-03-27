@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'hanzo.ai/core/api-promise';
+import { APIPromise } from 'hanzoai/core/api-promise';
 
 import util from 'node:util';
-import Hanzo from 'hanzo.ai';
-import { APIUserAbortError } from 'hanzo.ai';
+import Hanzo from 'hanzoai';
+import { APIUserAbortError } from 'hanzoai';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -308,6 +308,19 @@ describe('instantiate client', () => {
     test('blank env variable', () => {
       process.env['HANZO_BASE_URL'] = '  '; // blank
       const client = new Hanzo({ apiKey: 'My API Key' });
+      expect(client.baseURL).toEqual('https://api.hanzo.ai');
+    });
+
+    test('env variable with environment', () => {
+      process.env['HANZO_BASE_URL'] = 'https://example.com/from_env';
+
+      expect(
+        () => new Hanzo({ apiKey: 'My API Key', environment: 'production' }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Ambiguous URL; The \`baseURL\` option (or HANZO_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
+      );
+
+      const client = new Hanzo({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
       expect(client.baseURL).toEqual('https://api.hanzo.ai');
     });
   });

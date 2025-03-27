@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^hanzo.ai(/.*)?',
+              regex: '^hanzoai(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],
