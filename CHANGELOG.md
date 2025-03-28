@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.1 (2025-03-28)
+
+Full Changelog: [v0.0.1-alpha.3...v0.1.0-alpha.1](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.3...v0.1.0-alpha.1)
+
+### Features
+
+* **mcp:** export server and tools for more customizability ([#15](https://github.com/hanzoai/js-sdk/issues/15)) ([2e8676d](https://github.com/hanzoai/js-sdk/commit/2e8676d2d549b34e27517bda86641be599a4886d))
+
 ## 0.0.1-alpha.3 (2025-03-27)
 
 Full Changelog: [v0.0.1-alpha.2...v0.0.1-alpha.3](https://github.com/hanzoai/js-sdk/compare/v0.0.1-alpha.2...v0.0.1-alpha.3)
