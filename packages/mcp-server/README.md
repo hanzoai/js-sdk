@@ -20,7 +20,7 @@ Add the following value to your `mcpServers` section. Make sure to provide any n
 ```json
 {
   "mcpServers": {
-    "hanzo_api": {
+    "hanzoai_api": {
       "command": "npx",
       "args": ["-y", "hanzoai-mcp"],
       "env": {
