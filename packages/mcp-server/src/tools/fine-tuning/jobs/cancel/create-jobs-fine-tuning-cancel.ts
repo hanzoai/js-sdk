@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../../../';
 import Hanzo from 'hanzoai';
+
+export const metadata: Metadata = {
+  resource: 'fine_tuning.jobs.cancel',
+  operation: 'write',
+  tags: [],
+};
 
 export const tool: Tool = {
   name: 'create_jobs_fine_tuning_cancel',
@@ -23,4 +30,4 @@ export const handler = (client: Hanzo, args: any) => {
   return client.fineTuning.jobs.cancel.create(fine_tuning_job_id);
 };
 
-export default { tool, handler };
+export default { metadata, tool, handler };

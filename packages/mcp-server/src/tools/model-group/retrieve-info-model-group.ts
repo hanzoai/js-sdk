@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../';
 import Hanzo from 'hanzoai';
+
+export const metadata: Metadata = {
+  resource: 'model_group',
+  operation: 'read',
+  tags: [],
+};
 
 export const tool: Tool = {
   name: 'retrieve_info_model_group',
@@ -23,4 +30,4 @@ export const handler = (client: Hanzo, args: any) => {
   return client.modelGroup.retrieveInfo(body);
 };
 
-export default { tool, handler };
+export default { metadata, tool, handler };
