@@ -192,14 +192,24 @@ import delete_budget from './budget/delete-budget';
 import info_budget from './budget/info-budget';
 import settings_budget from './budget/settings-budget';
 
-export const tools: Tool[] = [];
-
 export type HandlerFunction = (client: Hanzo, args: any) => Promise<any>;
-export const handlers: Record<string, HandlerFunction> = {};
 
-function addEndpoint(endpoint: { tool: Tool; handler: HandlerFunction }) {
-  tools.push(endpoint.tool);
-  handlers[endpoint.tool.name] = endpoint.handler;
+export type Metadata = {
+  resource: string;
+  operation: 'read' | 'write';
+  tags: string[];
+};
+
+export type Endpoint = {
+  metadata: Metadata;
+  tool: Tool;
+  handler: HandlerFunction;
+};
+
+export const endpoints: Endpoint[] = [];
+
+function addEndpoint(endpoint: Endpoint) {
+  endpoints.push(endpoint);
 }
 
 addEndpoint(get_home_$client);
@@ -390,3 +400,49 @@ addEndpoint(list_budget);
 addEndpoint(delete_budget);
 addEndpoint(info_budget);
 addEndpoint(settings_budget);
+
+export type Filter = {
+  type: 'resource' | 'operation' | 'tag' | 'tool';
+  op: 'include' | 'exclude';
+  value: string;
+};
+
+export function query(filters: Filter[], endpoints: Endpoint[]): Endpoint[] {
+  if (filters.length === 0) {
+    return endpoints;
+  }
+  const allExcludes = filters.every((filter) => filter.op === 'exclude');
+
+  return endpoints.filter((endpoint: Endpoint) => {
+    let included = false || allExcludes;
+
+    for (const filter of filters) {
+      if (match(filter, endpoint)) {
+        included = filter.op === 'include';
+      }
+    }
+
+    return included;
+  });
+}
+
+function match({ type, value }: Filter, endpoint: Endpoint): boolean {
+  switch (type) {
+    case 'resource': {
+      const regexStr = '^' + normalizeResource(value).replace(/\*/g, '.*') + '$';
+      const regex = new RegExp(regexStr);
+      console.error('regex is', regexStr);
+      return regex.test(normalizeResource(endpoint.metadata.resource));
+    }
+    case 'operation':
+      return endpoint.metadata.operation === value;
+    case 'tag':
+      return endpoint.metadata.tags.includes(value);
+    case 'tool':
+      return endpoint.tool.name === value;
+  }
+}
+
+function normalizeResource(resource: string): string {
+  return resource.toLowerCase().replace(/[^a-z.*\-_]*/g, '');
+}

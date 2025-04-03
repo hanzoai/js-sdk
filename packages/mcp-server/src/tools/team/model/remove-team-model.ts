@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../../';
 import Hanzo from 'hanzoai';
+
+export const metadata: Metadata = {
+  resource: 'team.model',
+  operation: 'write',
+  tags: [],
+};
 
 export const tool: Tool = {
   name: 'remove_team_model',
@@ -30,4 +37,4 @@ export const handler = (client: Hanzo, args: any) => {
   return client.team.model.remove(body);
 };
 
-export default { tool, handler };
+export default { metadata, tool, handler };
