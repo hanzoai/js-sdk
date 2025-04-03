@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../';
 import Hanzo from 'hanzoai';
+
+export const metadata: Metadata = {
+  resource: 'health',
+  operation: 'read',
+  tags: [],
+};
 
 export const tool: Tool = {
   name: 'check_readiness_health',
@@ -17,4 +24,4 @@ export const handler = (client: Hanzo, args: any) => {
   return client.health.checkReadiness();
 };
 
-export default { tool, handler };
+export default { metadata, tool, handler };

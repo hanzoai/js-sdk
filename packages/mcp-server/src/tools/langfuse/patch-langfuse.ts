@@ -1,7 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import type { Metadata } from '../';
 import Hanzo from 'hanzoai';
+
+export const metadata: Metadata = {
+  resource: 'langfuse',
+  operation: 'write',
+  tags: [],
+};
 
 export const tool: Tool = {
   name: 'patch_langfuse',
@@ -23,4 +30,4 @@ export const handler = (client: Hanzo, args: any) => {
   return client.langfuse.patch(endpoint);
 };
 
-export default { tool, handler };
+export default { metadata, tool, handler };
