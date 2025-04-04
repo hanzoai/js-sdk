@@ -93,7 +93,7 @@ The following tools are available in this MCP server.
 
 ### Resource `$client`:
 
-- `get_home_$client` (`read`): Home
+- `get_home_client` (`read`): Home
 
 ### Resource `models`:
 

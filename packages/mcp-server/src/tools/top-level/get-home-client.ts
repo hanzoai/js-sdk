@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'get_home_$client',
+  name: 'get_home_client',
   description: 'Home',
   inputSchema: {
     type: 'object',
