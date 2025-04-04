@@ -3,7 +3,7 @@
 import Hanzo from 'hanzoai';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
-import get_home_$client from './top-level/get-home-client';
+import get_home_client from './top-level/get-home-client';
 import list_models from './models/list-models';
 import create_openai from './openai/create-openai';
 import retrieve_openai from './openai/retrieve-openai';
@@ -212,7 +212,7 @@ function addEndpoint(endpoint: Endpoint) {
   endpoints.push(endpoint);
 }
 
-addEndpoint(get_home_$client);
+addEndpoint(get_home_client);
 addEndpoint(list_models);
 addEndpoint(create_openai);
 addEndpoint(retrieve_openai);
