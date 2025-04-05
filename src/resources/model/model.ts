@@ -76,6 +76,8 @@ export interface ModelCreateParams {
   model_info: ModelInfo;
 
   model_name: string;
+
+  [k: string]: unknown;
 }
 
 export namespace ModelCreateParams {

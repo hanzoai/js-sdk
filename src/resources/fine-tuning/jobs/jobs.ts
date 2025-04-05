@@ -84,6 +84,8 @@ export interface JobCreateParams {
   suffix?: string | null;
 
   validation_file?: string | null;
+
+  [k: string]: unknown;
 }
 
 export namespace JobCreateParams {
