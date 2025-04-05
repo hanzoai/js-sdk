@@ -106,6 +106,7 @@ export namespace UpdateDeployment {
     vertex_project?: string | null;
 
     watsonx_region_name?: string | null;
+
     [k: string]: unknown;
   }
 }
@@ -187,6 +188,7 @@ export namespace UpdateFullParams {
     vertex_project?: string | null;
 
     watsonx_region_name?: string | null;
+
     [k: string]: unknown;
   }
 }
@@ -264,6 +266,7 @@ export namespace UpdatePartialParams {
     vertex_project?: string | null;
 
     watsonx_region_name?: string | null;
+
     [k: string]: unknown;
   }
 }

@@ -59,6 +59,7 @@ export interface ModelInfo {
   updated_at?: string | null;
 
   updated_by?: string | null;
+
   [k: string]: unknown;
 }
 
@@ -145,6 +146,7 @@ export namespace ModelCreateParams {
     vertex_project?: string | null;
 
     watsonx_region_name?: string | null;
+
     [k: string]: unknown;
   }
 }
