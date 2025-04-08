@@ -515,8 +515,8 @@ export class Hanzo {
     return;
   }
 
-  protected authHeaders(opts: FinalRequestOptions): Headers | undefined {
-    return new Headers({ 'Ocp-Apim-Subscription-Key': this.apiKey });
+  protected authHeaders(opts: FinalRequestOptions): NullableHeaders | undefined {
+    return buildHeaders([{ 'Ocp-Apim-Subscription-Key': this.apiKey }]);
   }
 
   protected stringifyQuery(query: Record<string, unknown>): string {
