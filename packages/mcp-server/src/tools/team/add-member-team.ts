@@ -22,28 +22,11 @@ export const tool: Tool = {
           {
             type: 'array',
             items: {
-              type: 'object',
-              title: 'Member',
-              properties: {
-                role: {
-                  type: 'string',
-                  title: 'Role',
-                  enum: ['admin', 'user'],
-                },
-                user_email: {
-                  type: 'string',
-                  title: 'User Email',
-                },
-                user_id: {
-                  type: 'string',
-                  title: 'User Id',
-                },
-              },
-              required: ['role'],
+              $ref: '#/$defs/member',
             },
           },
           {
-            $ref: '#/properties/member/anyOf/0/items',
+            $ref: '#/$defs/member',
           },
         ],
         title: 'Member',
@@ -57,11 +40,33 @@ export const tool: Tool = {
         title: 'Max Budget In Team',
       },
     },
+    $defs: {
+      member: {
+        type: 'object',
+        title: 'Member',
+        properties: {
+          role: {
+            type: 'string',
+            title: 'Role',
+            enum: ['admin', 'user'],
+          },
+          user_email: {
+            type: 'string',
+            title: 'User Email',
+          },
+          user_id: {
+            type: 'string',
+            title: 'User Id',
+          },
+        },
+        required: ['role'],
+      },
+    },
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const body = args as any;
   return client.team.addMember(body);
 };
 

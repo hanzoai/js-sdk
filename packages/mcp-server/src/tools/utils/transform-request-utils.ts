@@ -91,8 +91,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const body = args as any;
   return client.utils.transformRequest(body);
 };
 

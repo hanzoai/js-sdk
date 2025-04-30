@@ -25,8 +25,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { model } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { model, ...body } = args as any;
   return client.openai.deployments.complete(model);
 };
 

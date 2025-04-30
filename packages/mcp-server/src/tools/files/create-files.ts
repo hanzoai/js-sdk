@@ -37,8 +37,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { provider, ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { provider, ...body } = args as any;
   return client.files.create(provider, body);
 };
 

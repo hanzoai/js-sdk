@@ -29,8 +29,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { file_id, ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { file_id, ...body } = args as any;
   return client.files.delete(file_id, body);
 };
 

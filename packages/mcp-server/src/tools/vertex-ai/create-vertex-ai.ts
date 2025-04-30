@@ -25,8 +25,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { endpoint } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { endpoint, ...body } = args as any;
   return client.vertexAI.create(endpoint);
 };
 

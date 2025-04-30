@@ -25,8 +25,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { thread_id } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { thread_id, ...body } = args as any;
   return client.threads.runs.create(thread_id);
 };
 
