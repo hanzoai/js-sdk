@@ -30,8 +30,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { batch_id, ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { batch_id, ...body } = args as any;
   return client.batches.retrieve(batch_id, body);
 };
 
