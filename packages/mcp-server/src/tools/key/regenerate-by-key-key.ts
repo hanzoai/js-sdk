@@ -154,8 +154,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { key, ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { key, ...body } = args as any;
   return client.key.regenerateByKey(key, body);
 };
 

@@ -25,8 +25,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { response_id } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { response_id, ...body } = args as any;
   return client.responses.delete(response_id);
 };
 

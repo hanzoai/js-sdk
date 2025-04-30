@@ -54,24 +54,7 @@ export const tool: Tool = {
         type: 'array',
         title: 'Members With Roles',
         items: {
-          type: 'object',
-          title: 'Member',
-          properties: {
-            role: {
-              type: 'string',
-              title: 'Role',
-              enum: ['admin', 'user'],
-            },
-            user_email: {
-              type: 'string',
-              title: 'User Email',
-            },
-            user_id: {
-              type: 'string',
-              title: 'User Id',
-            },
-          },
-          required: ['role'],
+          $ref: '#/$defs/member',
         },
       },
       metadata: {
@@ -123,11 +106,33 @@ export const tool: Tool = {
           'The llm-changed-by header enables tracking of actions performed by authorized users on behalf of other users, providing an audit trail for accountability',
       },
     },
+    $defs: {
+      member: {
+        type: 'object',
+        title: 'Member',
+        properties: {
+          role: {
+            type: 'string',
+            title: 'Role',
+            enum: ['admin', 'user'],
+          },
+          user_email: {
+            type: 'string',
+            title: 'User Email',
+          },
+          user_id: {
+            type: 'string',
+            title: 'User Id',
+          },
+        },
+        required: ['role'],
+      },
+    },
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const body = args as any;
   return client.team.create(body);
 };
 
