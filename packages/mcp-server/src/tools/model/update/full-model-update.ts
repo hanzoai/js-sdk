@@ -57,15 +57,7 @@ export const tool: Tool = {
                   type: 'string',
                 },
                 {
-                  type: 'object',
-                  title: 'ConfigurableClientsideParamsCustomAuth',
-                  properties: {
-                    api_base: {
-                      type: 'string',
-                      title: 'Api Base',
-                    },
-                  },
-                  required: ['api_base'],
+                  $ref: '#/$defs/configurable_clientside_params_custom_auth',
                 },
               ],
             },
@@ -187,6 +179,26 @@ export const tool: Tool = {
         required: [],
       },
       model_info: {
+        $ref: '#/$defs/model_info',
+      },
+      model_name: {
+        type: 'string',
+        title: 'Model Name',
+      },
+    },
+    $defs: {
+      configurable_clientside_params_custom_auth: {
+        type: 'object',
+        title: 'ConfigurableClientsideParamsCustomAuth',
+        properties: {
+          api_base: {
+            type: 'string',
+            title: 'Api Base',
+          },
+        },
+        required: ['api_base'],
+      },
+      model_info: {
         type: 'object',
         title: 'ModelInfo',
         properties: {
@@ -236,16 +248,12 @@ export const tool: Tool = {
         },
         required: ['id'],
       },
-      model_name: {
-        type: 'string',
-        title: 'Model Name',
-      },
     },
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const body = args as any;
   return client.model.update.full(body);
 };
 

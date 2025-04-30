@@ -20,8 +20,7 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const {} = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
   return client.guardrails.list();
 };
 

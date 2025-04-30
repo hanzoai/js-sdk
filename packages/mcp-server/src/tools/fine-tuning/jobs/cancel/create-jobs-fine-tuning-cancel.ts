@@ -25,8 +25,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { fine_tuning_job_id } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { fine_tuning_job_id, ...body } = args as any;
   return client.fineTuning.jobs.cancel.create(fine_tuning_job_id);
 };
 

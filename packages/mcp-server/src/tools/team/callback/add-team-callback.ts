@@ -44,8 +44,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { team_id, ...body } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { team_id, ...body } = args as any;
   return client.team.callback.add(team_id, body);
 };
 

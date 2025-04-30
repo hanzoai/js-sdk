@@ -24,8 +24,8 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: any) => {
-  const { credential_name } = args;
+export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+  const { credential_name, ...body } = args as any;
   return client.credentials.delete(credential_name);
 };
 
