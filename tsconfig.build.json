@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "hanzoai/*": ["dist/src/*"],
-      "hanzoai": ["dist/src/index.ts"],
+      "hanzoai": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
