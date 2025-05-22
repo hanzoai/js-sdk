@@ -10,6 +10,7 @@ You can run the MCP Server directly via `npx`:
 
 ```sh
 export HANZO_API_KEY="My API Key"
+export HANZO_ENVIRONMENT="production"
 npx -y hanzoai-mcp@latest
 ```
 
@@ -27,7 +28,8 @@ For clients with a configuration JSON, it might look something like this:
       "command": "npx",
       "args": ["-y", "hanzoai-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
-        "HANZO_API_KEY": "My API Key"
+        "HANZO_API_KEY": "My API Key",
+        "HANZO_ENVIRONMENT": "production"
       }
     }
   }
