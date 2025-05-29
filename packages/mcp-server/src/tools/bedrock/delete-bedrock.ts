@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'bedrock',
   operation: 'write',
   tags: [],
+  httpMethod: 'delete',
+  httpPath: '/bedrock/{endpoint}',
+  operationId: 'bedrock_proxy_route_bedrock__endpoint__patch',
 };
 
 export const tool: Tool = {

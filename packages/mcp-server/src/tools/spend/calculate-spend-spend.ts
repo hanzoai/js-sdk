@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'spend',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/spend/calculate',
+  operationId: 'calculate_spend_spend_calculate_post',
 };
 
 export const tool: Tool = {

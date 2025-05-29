@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'fine_tuning.jobs.cancel',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/fine_tuning/jobs/{fine_tuning_job_id}/cancel',
+  operationId: 'cancel_fine_tuning_job_v1_fine_tuning_jobs__fine_tuning_job_id__cancel_post',
 };
 
 export const tool: Tool = {

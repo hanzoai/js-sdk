@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'model.update',
   operation: 'write',
   tags: [],
+  httpMethod: 'patch',
+  httpPath: '/model/{model_id}/update',
+  operationId: 'patch_model_model__model_id__update_patch',
 };
 
 export const tool: Tool = {

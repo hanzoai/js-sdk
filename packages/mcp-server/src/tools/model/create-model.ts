@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'model',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/model/new',
+  operationId: 'add_new_model_model_new_post',
 };
 
 export const tool: Tool = {

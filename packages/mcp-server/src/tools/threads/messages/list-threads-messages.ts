@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'threads.messages',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/v1/threads/{thread_id}/messages',
+  operationId: 'get_messages_v1_threads__thread_id__messages_get',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'rerank',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/rerank',
+  operationId: 'rerank_rerank_post',
 };
 
 export const tool: Tool = {
