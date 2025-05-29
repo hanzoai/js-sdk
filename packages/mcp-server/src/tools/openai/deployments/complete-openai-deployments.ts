@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'openai.deployments',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/openai/deployments/{model}/completions',
+  operationId: 'completion_openai_deployments__model__completions_post',
 };
 
 export const tool: Tool = {

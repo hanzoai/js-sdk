@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'langfuse',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/langfuse/{endpoint}',
+  operationId: 'langfuse_proxy_route_langfuse__endpoint__patch',
 };
 
 export const tool: Tool = {

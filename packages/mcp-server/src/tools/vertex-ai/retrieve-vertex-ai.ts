@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'vertex_ai',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/vertex_ai/{endpoint}',
+  operationId: 'vertex_proxy_route_vertex_ai__endpoint__patch',
 };
 
 export const tool: Tool = {

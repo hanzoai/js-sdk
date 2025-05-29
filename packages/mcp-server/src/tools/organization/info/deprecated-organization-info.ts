@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'organization.info',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/organization/info',
+  operationId: 'deprecated_info_organization_organization_info_post',
 };
 
 export const tool: Tool = {

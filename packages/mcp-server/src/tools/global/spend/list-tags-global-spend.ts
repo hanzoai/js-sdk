@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'global.spend',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/global/spend/tags',
+  operationId: 'global_view_spend_tags_global_spend_tags_get',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'gemini',
   operation: 'write',
   tags: [],
+  httpMethod: 'patch',
+  httpPath: '/gemini/{endpoint}',
+  operationId: 'gemini_proxy_route_gemini__endpoint__patch',
 };
 
 export const tool: Tool = {

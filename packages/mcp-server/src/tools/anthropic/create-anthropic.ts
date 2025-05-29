@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'anthropic',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/anthropic/{endpoint}',
+  operationId: 'anthropic_proxy_route_anthropic__endpoint__patch',
 };
 
 export const tool: Tool = {

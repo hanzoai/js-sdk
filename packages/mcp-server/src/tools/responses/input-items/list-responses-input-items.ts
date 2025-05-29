@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'responses.input_items',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/v1/responses/{response_id}/input_items',
+  operationId: 'get_response_input_items_v1_responses__response_id__input_items_get',
 };
 
 export const tool: Tool = {

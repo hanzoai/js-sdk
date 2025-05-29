@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'chat.completions',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/chat/completions',
+  operationId: 'chat_completion_v1_chat_completions_post',
 };
 
 export const tool: Tool = {

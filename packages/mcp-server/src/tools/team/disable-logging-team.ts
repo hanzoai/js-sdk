@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'team',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/team/{team_id}/disable_logging',
+  operationId: 'disable_team_logging_team__team_id__disable_logging_post',
 };
 
 export const tool: Tool = {

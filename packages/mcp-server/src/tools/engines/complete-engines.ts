@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'engines',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/engines/{model}/completions',
+  operationId: 'completion_engines__model__completions_post',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'files',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/{provider}/v1/files',
+  operationId: 'create_file__provider__v1_files_post',
 };
 
 export const tool: Tool = {

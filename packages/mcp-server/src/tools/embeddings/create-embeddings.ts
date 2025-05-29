@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'embeddings',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/embeddings',
+  operationId: 'embeddings_embeddings_post',
 };
 
 export const tool: Tool = {

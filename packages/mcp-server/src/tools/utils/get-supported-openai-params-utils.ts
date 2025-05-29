@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'utils',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/utils/supported_openai_params',
+  operationId: 'supported_openai_params_utils_supported_openai_params_get',
 };
 
 export const tool: Tool = {

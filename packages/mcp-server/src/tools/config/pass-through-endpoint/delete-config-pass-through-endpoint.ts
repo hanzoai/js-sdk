@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'config.pass_through_endpoint',
   operation: 'write',
   tags: [],
+  httpMethod: 'delete',
+  httpPath: '/config/pass_through_endpoint',
+  operationId: 'delete_pass_through_endpoints_config_pass_through_endpoint_delete',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'openai.deployments.chat',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/openai/deployments/{model}/chat/completions',
+  operationId: 'chat_completion_openai_deployments__model__chat_completions_post',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'eu_assemblyai',
   operation: 'write',
   tags: [],
+  httpMethod: 'put',
+  httpPath: '/eu.assemblyai/{endpoint}',
+  operationId: 'assemblyai_proxy_route_eu_assemblyai__endpoint__patch',
 };
 
 export const tool: Tool = {

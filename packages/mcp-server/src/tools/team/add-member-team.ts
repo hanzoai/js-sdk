@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'team',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/team/member_add',
+  operationId: 'team_member_add_team_member_add_post',
 };
 
 export const tool: Tool = {

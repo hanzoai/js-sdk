@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'health',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/health/services',
+  operationId: 'health_services_endpoint_health_services_get',
 };
 
 export const tool: Tool = {

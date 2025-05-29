@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'responses',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/responses',
+  operationId: 'responses_api_v1_responses_post',
 };
 
 export const tool: Tool = {

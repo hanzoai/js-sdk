@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'utils',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/utils/token_counter',
+  operationId: 'token_counter_utils_token_counter_post',
 };
 
 export const tool: Tool = {
