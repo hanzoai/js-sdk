@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'guardrails',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/guardrails/list',
+  operationId: 'list_guardrails_guardrails_list_get',
 };
 
 export const tool: Tool = {

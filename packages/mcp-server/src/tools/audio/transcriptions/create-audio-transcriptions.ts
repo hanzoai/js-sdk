@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'audio.transcriptions',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/audio/transcriptions',
+  operationId: 'audio_transcriptions_v1_audio_transcriptions_post',
 };
 
 export const tool: Tool = {

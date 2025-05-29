@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'moderations',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/moderations',
+  operationId: 'moderations_v1_moderations_post',
 };
 
 export const tool: Tool = {

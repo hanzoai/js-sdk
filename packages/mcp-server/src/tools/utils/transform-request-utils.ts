@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'utils',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/utils/transform_request',
+  operationId: 'transform_request_utils_transform_request_post',
 };
 
 export const tool: Tool = {

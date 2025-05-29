@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'model_group',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/model_group/info',
+  operationId: 'model_group_info_model_group_info_get',
 };
 
 export const tool: Tool = {

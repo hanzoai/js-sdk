@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'delete',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/delete/allowed_ip',
+  operationId: 'delete_allowed_ip_delete_allowed_ip_post',
 };
 
 export const tool: Tool = {

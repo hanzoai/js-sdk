@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'team.callback',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/team/{team_id}/callback',
+  operationId: 'add_team_callbacks_team__team_id__callback_post',
 };
 
 export const tool: Tool = {

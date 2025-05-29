@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'cache',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/cache/delete',
+  operationId: 'cache_delete_cache_delete_post',
 };
 
 export const tool: Tool = {

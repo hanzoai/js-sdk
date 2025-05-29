@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'images.generations',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/images/generations',
+  operationId: 'image_generation_v1_images_generations_post',
 };
 
 export const tool: Tool = {
