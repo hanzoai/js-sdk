@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'files',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/{provider}/v1/files/{file_id}',
+  operationId: 'get_file__provider__v1_files__file_id__get',
 };
 
 export const tool: Tool = {

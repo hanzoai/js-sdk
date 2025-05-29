@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'config.pass_through_endpoint',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/config/pass_through_endpoint',
+  operationId: 'create_pass_through_endpoints_config_pass_through_endpoint_post',
 };
 
 export const tool: Tool = {

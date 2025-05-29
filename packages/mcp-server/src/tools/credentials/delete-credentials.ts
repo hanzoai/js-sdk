@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'credentials',
   operation: 'write',
   tags: [],
+  httpMethod: 'delete',
+  httpPath: '/credentials/{credential_name}',
+  operationId: 'delete_credential_credentials__credential_name__delete',
 };
 
 export const tool: Tool = {

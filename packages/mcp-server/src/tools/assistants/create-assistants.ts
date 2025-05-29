@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'assistants',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/assistants',
+  operationId: 'create_assistant_v1_assistants_post',
 };
 
 export const tool: Tool = {

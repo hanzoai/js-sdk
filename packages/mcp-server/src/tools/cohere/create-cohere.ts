@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'cohere',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/cohere/{endpoint}',
+  operationId: 'cohere_proxy_route_cohere__endpoint__patch',
 };
 
 export const tool: Tool = {

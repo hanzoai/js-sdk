@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'settings',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/settings',
+  operationId: 'active_callbacks_settings_get',
 };
 
 export const tool: Tool = {

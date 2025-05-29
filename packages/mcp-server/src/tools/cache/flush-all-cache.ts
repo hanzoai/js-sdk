@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'cache',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/cache/flushall',
+  operationId: 'cache_flushall_cache_flushall_post',
 };
 
 export const tool: Tool = {

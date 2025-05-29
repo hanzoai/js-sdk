@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'team.callback',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/team/{team_id}/callback',
+  operationId: 'get_team_callbacks_team__team_id__callback_get',
 };
 
 export const tool: Tool = {

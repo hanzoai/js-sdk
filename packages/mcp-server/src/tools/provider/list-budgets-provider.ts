@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'provider',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/provider/budgets',
+  operationId: 'provider_budgets_provider_budgets_get',
 };
 
 export const tool: Tool = {

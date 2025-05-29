@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'azure',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/azure/{endpoint}',
+  operationId: 'azure_proxy_route_azure__endpoint__patch',
 };
 
 export const tool: Tool = {

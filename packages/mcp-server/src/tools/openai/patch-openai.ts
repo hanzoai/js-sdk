@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'openai',
   operation: 'write',
   tags: [],
+  httpMethod: 'patch',
+  httpPath: '/openai/{endpoint}',
+  operationId: 'openai_proxy_route_openai__endpoint__patch',
 };
 
 export const tool: Tool = {

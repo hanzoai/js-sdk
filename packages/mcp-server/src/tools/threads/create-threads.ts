@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'threads',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/threads',
+  operationId: 'create_threads_v1_threads_post',
 };
 
 export const tool: Tool = {

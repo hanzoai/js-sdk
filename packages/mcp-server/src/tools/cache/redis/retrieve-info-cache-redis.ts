@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'cache.redis',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/cache/redis/info',
+  operationId: 'cache_redis_info_cache_redis_info_get',
 };
 
 export const tool: Tool = {

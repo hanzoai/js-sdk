@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'openai.deployments',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/openai/deployments/{model}/embeddings',
+  operationId: 'embeddings_openai_deployments__model__embeddings_post',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'add',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/add/allowed_ip',
+  operationId: 'add_allowed_ip_add_allowed_ip_post',
 };
 
 export const tool: Tool = {

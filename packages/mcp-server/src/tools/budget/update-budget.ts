@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'budget',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/budget/update',
+  operationId: 'update_budget_budget_update_post',
 };
 
 export const tool: Tool = {

@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'batches',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/{provider}/v1/batches/{batch_id}',
+  operationId: 'retrieve_batch__provider__v1_batches__batch_id__get',
 };
 
 export const tool: Tool = {

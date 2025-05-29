@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'completions',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/completions',
+  operationId: 'completion_completions_post',
 };
 
 export const tool: Tool = {

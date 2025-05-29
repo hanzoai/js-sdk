@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'audio.speech',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/v1/audio/speech',
+  operationId: 'audio_speech_v1_audio_speech_post',
 };
 
 export const tool: Tool = {

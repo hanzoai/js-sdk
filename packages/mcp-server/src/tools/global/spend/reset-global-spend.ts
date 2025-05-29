@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'global.spend',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/global/spend/reset',
+  operationId: 'global_spend_reset_global_spend_reset_post',
 };
 
 export const tool: Tool = {

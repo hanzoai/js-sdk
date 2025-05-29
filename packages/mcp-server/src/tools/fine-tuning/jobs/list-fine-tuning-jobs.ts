@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'fine_tuning.jobs',
   operation: 'read',
   tags: [],
+  httpMethod: 'get',
+  httpPath: '/v1/fine_tuning/jobs',
+  operationId: 'list_fine_tuning_jobs_v1_fine_tuning_jobs_get',
 };
 
 export const tool: Tool = {

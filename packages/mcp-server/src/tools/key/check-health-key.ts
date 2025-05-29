@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'key',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/key/health',
+  operationId: 'key_health_key_health_post',
 };
 
 export const tool: Tool = {

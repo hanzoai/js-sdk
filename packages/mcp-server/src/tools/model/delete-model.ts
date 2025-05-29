@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   resource: 'model',
   operation: 'write',
   tags: [],
+  httpMethod: 'post',
+  httpPath: '/model/delete',
+  operationId: 'delete_model_model_delete_post',
 };
 
 export const tool: Tool = {
