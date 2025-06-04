@@ -27,11 +27,7 @@ const client = new Hanzo({
   environment: 'sandbox', // defaults to 'production'
 });
 
-async function main() {
-  const response = await client.getHome();
-}
-
-main();
+const response = await client.getHome();
 ```
 
 ### Request & Response types
@@ -47,11 +43,7 @@ const client = new Hanzo({
   environment: 'sandbox', // defaults to 'production'
 });
 
-async function main() {
-  const response: unknown = await client.getHome();
-}
-
-main();
+const response: unknown = await client.getHome();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -93,19 +85,15 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const response = await client.getHome().catch(async (err) => {
-    if (err instanceof Hanzo.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
-}
-
-main();
+const response = await client.getHome().catch(async (err) => {
+  if (err instanceof Hanzo.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
 Error codes are as follows:
