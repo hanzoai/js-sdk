@@ -1,7 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { Metadata, asTextContentResult } from 'hanzoai-mcp/tools/types';
+
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../../';
 import Hanzo from 'hanzoai';
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'partial_model_update',
   description:
-    'PATCH Endpoint for partial model updates.\n\nOnly updates the fields specified in the request while preserving other existing values.\nFollows proper PATCH semantics by only modifying provided fields.\n\nArgs:\n    model_id: The ID of the model to update\n    patch_data: The fields to update and their new values\n    user_api_key_dict: User authentication information\n\nReturns:\n    Updated model information\n\nRaises:\n    ProxyException: For various error conditions including authentication and database errors',
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nPATCH Endpoint for partial model updates.\n\nOnly updates the fields specified in the request while preserving other existing values.\nFollows proper PATCH semantics by only modifying provided fields.\n\nArgs:\n    model_id: The ID of the model to update\n    patch_data: The fields to update and their new values\n    user_api_key_dict: User authentication information\n\nReturns:\n    Updated model information\n\nRaises:\n    ProxyException: For various error conditions including authentication and database errors\n\n# Response Schema\n```json\n{\n  type: 'object'\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -193,6 +194,12 @@ export const tool: Tool = {
         type: 'string',
         title: 'Model Name',
       },
+      jq_filter: {
+        type: 'string',
+        title: 'jq Filter',
+        description:
+          'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
+      },
     },
     $defs: {
       configurable_clientside_params_custom_auth: {
@@ -260,9 +267,9 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {
   const { model_id, ...body } = args as any;
-  return client.model.update.partial(model_id, body);
+  return asTextContentResult((await client.model.update.partial(model_id, body)) as object);
 };
 
 export default { metadata, tool, handler };

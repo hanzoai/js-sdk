@@ -317,7 +317,7 @@ export interface CustomerCreateParams {
    * Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001',
    * 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})
    */
-  model_max_budget?: Record<string, CustomerCreateParams.ModelMaxBudget> | null;
+  model_max_budget?: { [key: string]: CustomerCreateParams.ModelMaxBudget } | null;
 
   /**
    * Max requests per minute, allowed for this budget id.

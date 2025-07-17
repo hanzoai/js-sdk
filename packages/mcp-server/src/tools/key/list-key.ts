@@ -1,7 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { Metadata, asTextContentResult } from 'hanzoai-mcp/tools/types';
+
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { Metadata } from '../';
 import Hanzo from 'hanzoai';
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'list_key',
   description:
-    'List all keys for a given user / team / organization.\n\nReturns:\n    {\n        "keys": List[str] or List[UserAPIKeyAuth],\n        "total_count": int,\n        "current_page": int,\n        "total_pages": int,\n    }',
+    'When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you\'re sure you don\'t need the data.\n\nList all keys for a given user / team / organization.\n\nReturns:\n    {\n        "keys": List[str] or List[UserAPIKeyAuth],\n        "total_count": int,\n        "current_page": int,\n        "total_pages": int,\n    }',
   inputSchema: {
     type: 'object',
     properties: {
@@ -64,9 +65,9 @@ export const tool: Tool = {
   },
 };
 
-export const handler = (client: Hanzo, args: Record<string, unknown> | undefined) => {
+export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {
   const body = args as any;
-  return client.key.list(body);
+  return asTextContentResult(await client.key.list(body));
 };
 
 export default { metadata, tool, handler };
