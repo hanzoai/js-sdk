@@ -61,7 +61,7 @@ export class Provider extends APIResource {
  * budget configs.
  */
 export interface ProviderListBudgetsResponse {
-  providers?: Record<string, ProviderListBudgetsResponse.Providers>;
+  providers?: { [key: string]: ProviderListBudgetsResponse.Providers };
 }
 
 export namespace ProviderListBudgetsResponse {
