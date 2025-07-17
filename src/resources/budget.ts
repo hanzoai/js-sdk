@@ -118,7 +118,7 @@ export interface BudgetNew {
    * Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001',
    * 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})
    */
-  model_max_budget?: Record<string, BudgetNew.ModelMaxBudget> | null;
+  model_max_budget?: { [key: string]: BudgetNew.ModelMaxBudget } | null;
 
   /**
    * Max requests per minute, allowed for this budget id.
@@ -185,7 +185,7 @@ export interface BudgetCreateParams {
    * Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001',
    * 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})
    */
-  model_max_budget?: Record<string, BudgetCreateParams.ModelMaxBudget> | null;
+  model_max_budget?: { [key: string]: BudgetCreateParams.ModelMaxBudget } | null;
 
   /**
    * Max requests per minute, allowed for this budget id.
@@ -240,7 +240,7 @@ export interface BudgetUpdateParams {
    * Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001',
    * 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})
    */
-  model_max_budget?: Record<string, BudgetUpdateParams.ModelMaxBudget> | null;
+  model_max_budget?: { [key: string]: BudgetUpdateParams.ModelMaxBudget } | null;
 
   /**
    * Max requests per minute, allowed for this budget id.
