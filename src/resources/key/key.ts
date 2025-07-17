@@ -576,7 +576,7 @@ export namespace KeyListResponse {
 
     rpm_limit?: number | null;
 
-    rpm_limit_per_model?: Record<string, number> | null;
+    rpm_limit_per_model?: { [key: string]: number } | null;
 
     soft_budget?: number | null;
 
@@ -610,7 +610,7 @@ export namespace KeyListResponse {
 
     tpm_limit?: number | null;
 
-    tpm_limit_per_model?: Record<string, number> | null;
+    tpm_limit_per_model?: { [key: string]: number } | null;
 
     updated_at?: string | null;
 

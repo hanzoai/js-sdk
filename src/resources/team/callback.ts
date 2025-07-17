@@ -100,7 +100,7 @@ export interface CallbackAddParams {
   /**
    * Body param:
    */
-  callback_vars: Record<string, string>;
+  callback_vars: { [key: string]: string };
 
   /**
    * Body param:
