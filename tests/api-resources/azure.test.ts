@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource azure', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.azure.create('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource azure', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.azure.update('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource azure', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.azure.delete('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource azure', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('call', async () => {
     const responsePromise = client.azure.call('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource azure', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('patch', async () => {
     const responsePromise = client.azure.patch('endpoint');
     const rawResponse = await responsePromise.asResponse();

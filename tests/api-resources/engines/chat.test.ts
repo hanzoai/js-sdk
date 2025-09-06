@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource chat', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('complete', async () => {
     const responsePromise = client.engines.chat.complete('model');
     const rawResponse = await responsePromise.asResponse();

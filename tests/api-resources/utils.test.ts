@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource utils', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getSupportedOpenAIParams: only required params', async () => {
     const responsePromise = client.utils.getSupportedOpenAIParams({ model: 'model' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource utils', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getSupportedOpenAIParams: required and optional params', async () => {
     const response = await client.utils.getSupportedOpenAIParams({ model: 'model' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('tokenCounter: only required params', async () => {
     const responsePromise = client.utils.tokenCounter({ model: 'model' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,12 +37,12 @@ describe('resource utils', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('tokenCounter: required and optional params', async () => {
     const response = await client.utils.tokenCounter({ model: 'model', messages: [{}], prompt: 'prompt' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('transformRequest: only required params', async () => {
     const responsePromise = client.utils.transformRequest({ call_type: 'embedding', request_body: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource utils', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('transformRequest: required and optional params', async () => {
     const response = await client.utils.transformRequest({ call_type: 'embedding', request_body: {} });
   });

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource euAssemblyai', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.euAssemblyai.create('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource euAssemblyai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.euAssemblyai.retrieve('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource euAssemblyai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.euAssemblyai.update('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource euAssemblyai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.euAssemblyai.delete('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource euAssemblyai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('patch', async () => {
     const responsePromise = client.euAssemblyai.patch('endpoint');
     const rawResponse = await responsePromise.asResponse();

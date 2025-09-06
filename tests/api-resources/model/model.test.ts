@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource model', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.model.create({
       llm_params: { model: 'model' },
@@ -24,7 +24,7 @@ describe('resource model', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.model.create({
       llm_params: {
@@ -76,7 +76,7 @@ describe('resource model', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.model.delete({ id: 'id' });
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +88,7 @@ describe('resource model', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.model.delete({ id: 'id' });
   });

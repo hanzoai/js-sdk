@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'create_customer',
   description:
-    'When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you\'re sure you don\'t need the data.\n\nAllow creating a new Customer \n\n\nParameters:\n- user_id: str - The unique identifier for the user.\n- alias: Optional[str] - A human-friendly alias for the user.\n- blocked: bool - Flag to allow or disallow requests for this end-user. Default is False.\n- max_budget: Optional[float] - The maximum budget allocated to the user. Either \'max_budget\' or \'budget_id\' should be provided, not both.\n- budget_id: Optional[str] - The identifier for an existing budget allocated to the user. Either \'max_budget\' or \'budget_id\' should be provided, not both.\n- allowed_model_region: Optional[Union[Literal["eu"], Literal["us"]]] - Require all user requests to use models in this specific region.\n- default_model: Optional[str] - If no equivalent model in the allowed region, default all requests to this model.\n- metadata: Optional[dict] = Metadata for customer, store information for customer. Example metadata = {"data_training_opt_out": True}\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- tpm_limit: Optional[int] - [Not Implemented Yet] Specify tpm limit for a given customer (Tokens per minute)\n- rpm_limit: Optional[int] - [Not Implemented Yet] Specify rpm limit for a given customer (Requests per minute)\n- model_max_budget: Optional[dict] - [Not Implemented Yet] Specify max budget for a given model. Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d"}}\n- max_parallel_requests: Optional[int] - [Not Implemented Yet] Specify max parallel requests for a given customer.\n- soft_budget: Optional[float] - [Not Implemented Yet] Get alerts when customer crosses given budget, doesn\'t block requests.\n\n\n- Allow specifying allowed regions \n- Allow specifying default model\n\nExample curl:\n```\ncurl --location \'http://0.0.0.0:4000/customer/new\'         --header \'Authorization: Bearer sk-1234\'         --header \'Content-Type: application/json\'         --data \'{\n        "user_id" : "z-jaff-3",\n        "allowed_region": "eu",\n        "budget_id": "free_tier",\n        "default_model": "azure/gpt-3.5-turbo-eu" <- all calls from this user, use this model? \n    }\'\n\n    # return end-user object\n```\n\nNOTE: This used to be called `/end_user/new`, we will still be maintaining compatibility for /end_user/XXX for these endpoints\n\n# Response Schema\n```json\n{\n  type: \'object\'\n}\n```',
+    'Allow creating a new Customer \n\n\nParameters:\n- user_id: str - The unique identifier for the user.\n- alias: Optional[str] - A human-friendly alias for the user.\n- blocked: bool - Flag to allow or disallow requests for this end-user. Default is False.\n- max_budget: Optional[float] - The maximum budget allocated to the user. Either \'max_budget\' or \'budget_id\' should be provided, not both.\n- budget_id: Optional[str] - The identifier for an existing budget allocated to the user. Either \'max_budget\' or \'budget_id\' should be provided, not both.\n- allowed_model_region: Optional[Union[Literal["eu"], Literal["us"]]] - Require all user requests to use models in this specific region.\n- default_model: Optional[str] - If no equivalent model in the allowed region, default all requests to this model.\n- metadata: Optional[dict] = Metadata for customer, store information for customer. Example metadata = {"data_training_opt_out": True}\n- budget_duration: Optional[str] - Budget is reset at the end of specified duration. If not set, budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"), hours ("30h"), days ("30d").\n- tpm_limit: Optional[int] - [Not Implemented Yet] Specify tpm limit for a given customer (Tokens per minute)\n- rpm_limit: Optional[int] - [Not Implemented Yet] Specify rpm limit for a given customer (Requests per minute)\n- model_max_budget: Optional[dict] - [Not Implemented Yet] Specify max budget for a given model. Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d"}}\n- max_parallel_requests: Optional[int] - [Not Implemented Yet] Specify max parallel requests for a given customer.\n- soft_budget: Optional[float] - [Not Implemented Yet] Get alerts when customer crosses given budget, doesn\'t block requests.\n\n\n- Allow specifying allowed regions \n- Allow specifying default model\n\nExample curl:\n```\ncurl --location \'http://0.0.0.0:4000/customer/new\'         --header \'Authorization: Bearer sk-1234\'         --header \'Content-Type: application/json\'         --data \'{\n        "user_id" : "z-jaff-3",\n        "allowed_region": "eu",\n        "budget_id": "free_tier",\n        "default_model": "azure/gpt-3.5-turbo-eu" <- all calls from this user, use this model? \n    }\'\n\n    # return end-user object\n```\n\nNOTE: This used to be called `/end_user/new`, we will still be maintaining compatibility for /end_user/XXX for these endpoints',
   inputSchema: {
     type: 'object',
     properties: {
@@ -66,6 +66,7 @@ export const tool: Tool = {
         title: 'Model Max Budget',
         description:
           "Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001', 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})",
+        additionalProperties: true,
       },
       rpm_limit: {
         type: 'integer',
@@ -82,14 +83,10 @@ export const tool: Tool = {
         title: 'Tpm Limit',
         description: 'Max tokens per minute, allowed for this budget id.',
       },
-      jq_filter: {
-        type: 'string',
-        title: 'jq Filter',
-        description:
-          'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
-      },
     },
+    required: ['user_id'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource redis', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveInfo', async () => {
     const responsePromise = client.cache.redis.retrieveInfo();
     const rawResponse = await responsePromise.asResponse();

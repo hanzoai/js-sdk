@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'delete_config_pass_through_endpoint',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete a pass-through endpoint\n\nReturns - the deleted endpoint\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/pass_through_endpoint_response',\n  $defs: {\n    pass_through_endpoint_response: {\n      type: 'object',\n      title: 'PassThroughEndpointResponse',\n      properties: {\n        endpoints: {\n          type: 'array',\n          title: 'Endpoints',\n          items: {\n            $ref: '#/$defs/pass_through_generic_endpoint'\n          }\n        }\n      },\n      required: [        'endpoints'\n      ]\n    },\n    pass_through_generic_endpoint: {\n      type: 'object',\n      title: 'PassThroughGenericEndpoint',\n      properties: {\n        headers: {\n          type: 'object',\n          title: 'Headers',\n          description: 'Key-value pairs of headers to be forwarded with the request. You can set any key value pair here and it will be forwarded to your target endpoint'\n        },\n        path: {\n          type: 'string',\n          title: 'Path',\n          description: 'The route to be added to the LLM Proxy Server.'\n        },\n        target: {\n          type: 'string',\n          title: 'Target',\n          description: 'The URL to which requests for this path should be forwarded.'\n        }\n      },\n      required: [        'headers',\n        'path',\n        'target'\n      ]\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete a pass-through endpoint\n\nReturns - the deleted endpoint\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/pass_through_endpoint_response',\n  $defs: {\n    pass_through_endpoint_response: {\n      type: 'object',\n      title: 'PassThroughEndpointResponse',\n      properties: {\n        endpoints: {\n          type: 'array',\n          title: 'Endpoints',\n          items: {\n            $ref: '#/$defs/pass_through_generic_endpoint'\n          }\n        }\n      },\n      required: [        'endpoints'\n      ]\n    },\n    pass_through_generic_endpoint: {\n      type: 'object',\n      title: 'PassThroughGenericEndpoint',\n      properties: {\n        headers: {\n          type: 'object',\n          title: 'Headers',\n          description: 'Key-value pairs of headers to be forwarded with the request. You can set any key value pair here and it will be forwarded to your target endpoint',\n          additionalProperties: true\n        },\n        path: {\n          type: 'string',\n          title: 'Path',\n          description: 'The route to be added to the LLM Proxy Server.'\n        },\n        target: {\n          type: 'string',\n          title: 'Target',\n          description: 'The URL to which requests for this path should be forwarded.'\n        }\n      },\n      required: [        'headers',\n        'path',\n        'target'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -33,12 +33,18 @@ export const tool: Tool = {
           'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
       },
     },
+    required: ['endpoint_id'],
+  },
+  annotations: {
+    idempotentHint: true,
   },
 };
 
 export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {
-  const body = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.config.passThroughEndpoint.delete(body)));
+  const { jq_filter, ...body } = args as any;
+  return asTextContentResult(
+    await maybeFilter(jq_filter, await client.config.passThroughEndpoint.delete(body)),
+  );
 };
 
 export default { metadata, tool, handler };

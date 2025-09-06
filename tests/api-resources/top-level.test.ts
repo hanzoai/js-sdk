@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('top level methods', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getHome', async () => {
     const responsePromise = client.getHome();
     const rawResponse = await responsePromise.asResponse();
