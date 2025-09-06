@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource rerank', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.rerank.create();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource rerank', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('createV1', async () => {
     const responsePromise = client.rerank.createV1();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource rerank', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('createV2', async () => {
     const responsePromise = client.rerank.createV2();
     const rawResponse = await responsePromise.asResponse();

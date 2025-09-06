@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource model', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.team.model.add({ models: ['string'], team_id: 'team_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource model', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.team.model.add({ models: ['string'], team_id: 'team_id' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('remove: only required params', async () => {
     const responsePromise = client.team.model.remove({ models: ['string'], team_id: 'team_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource model', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('remove: required and optional params', async () => {
     const response = await client.team.model.remove({ models: ['string'], team_id: 'team_id' });
   });

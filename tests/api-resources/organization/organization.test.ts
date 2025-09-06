@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource organization', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.organization.create({ organization_alias: 'organization_alias' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.organization.create({
       organization_alias: 'organization_alias',
@@ -38,7 +38,7 @@ describe('resource organization', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.organization.update({});
     const rawResponse = await responsePromise.asResponse();
@@ -50,7 +50,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.organization.list();
     const rawResponse = await responsePromise.asResponse();
@@ -62,7 +62,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.organization.delete({ organization_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -74,12 +74,12 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.organization.delete({ organization_ids: ['string'] });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('addMember: only required params', async () => {
     const responsePromise = client.organization.addMember({
       member: [{ role: 'org_admin' }],
@@ -94,7 +94,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('addMember: required and optional params', async () => {
     const response = await client.organization.addMember({
       member: [{ role: 'org_admin', user_email: 'user_email', user_id: 'user_id' }],
@@ -103,7 +103,7 @@ describe('resource organization', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('deleteMember: only required params', async () => {
     const responsePromise = client.organization.deleteMember({ organization_id: 'organization_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -115,7 +115,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('deleteMember: required and optional params', async () => {
     const response = await client.organization.deleteMember({
       organization_id: 'organization_id',
@@ -124,7 +124,7 @@ describe('resource organization', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('updateMember: only required params', async () => {
     const responsePromise = client.organization.updateMember({ organization_id: 'organization_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -136,7 +136,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('updateMember: required and optional params', async () => {
     const response = await client.organization.updateMember({
       organization_id: 'organization_id',

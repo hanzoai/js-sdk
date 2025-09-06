@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource health', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkAll', async () => {
     const responsePromise = client.health.checkAll();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource health', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkAll: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -28,7 +28,7 @@ describe('resource health', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkLiveliness', async () => {
     const responsePromise = client.health.checkLiveliness();
     const rawResponse = await responsePromise.asResponse();
@@ -40,7 +40,7 @@ describe('resource health', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkLiveness', async () => {
     const responsePromise = client.health.checkLiveness();
     const rawResponse = await responsePromise.asResponse();
@@ -52,7 +52,7 @@ describe('resource health', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkReadiness', async () => {
     const responsePromise = client.health.checkReadiness();
     const rawResponse = await responsePromise.asResponse();
@@ -64,7 +64,7 @@ describe('resource health', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkServices: only required params', async () => {
     const responsePromise = client.health.checkServices({ service: 'slack_budget_alerts' });
     const rawResponse = await responsePromise.asResponse();
@@ -76,7 +76,7 @@ describe('resource health', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkServices: required and optional params', async () => {
     const response = await client.health.checkServices({ service: 'slack_budget_alerts' });
   });

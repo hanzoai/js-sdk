@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource routes', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.routes.list();
     const rawResponse = await responsePromise.asResponse();

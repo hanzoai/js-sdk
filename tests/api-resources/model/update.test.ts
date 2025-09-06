@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource update', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('full', async () => {
     const responsePromise = client.model.update.full({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource update', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('partial', async () => {
     const responsePromise = client.model.update.partial('model_id', {});
     const rawResponse = await responsePromise.asResponse();

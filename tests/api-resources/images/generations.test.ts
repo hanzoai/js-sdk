@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource generations', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.images.generations.create();
     const rawResponse = await responsePromise.asResponse();

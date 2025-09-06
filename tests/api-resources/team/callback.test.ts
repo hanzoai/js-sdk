@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource callback', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.team.callback.retrieve('team_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource callback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: only required params', async () => {
     const responsePromise = client.team.callback.add('team_id', {
       callback_name: 'callback_name',
@@ -35,7 +35,7 @@ describe('resource callback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('add: required and optional params', async () => {
     const response = await client.team.callback.add('team_id', {
       callback_name: 'callback_name',

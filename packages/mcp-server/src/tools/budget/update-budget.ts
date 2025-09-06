@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'update_budget',
   description:
-    'When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you\'re sure you don\'t need the data.\n\nUpdate an existing budget object.\n\nParameters:\n- budget_duration: Optional[str] - Budget reset period ("30d", "1h", etc.)\n- budget_id: Optional[str] - The id of the budget. If not provided, a new id will be generated.\n- max_budget: Optional[float] - The max budget for the budget.\n- soft_budget: Optional[float] - The soft budget for the budget.\n- max_parallel_requests: Optional[int] - The max number of parallel requests for the budget.\n- tpm_limit: Optional[int] - The tokens per minute limit for the budget.\n- rpm_limit: Optional[int] - The requests per minute limit for the budget.\n- model_max_budget: Optional[dict] - Specify max budget for a given model. Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d", "tpm_limit": 100000, "rpm_limit": 100000}}\n\n# Response Schema\n```json\n{\n  type: \'object\'\n}\n```',
+    'Update an existing budget object.\n\nParameters:\n- budget_duration: Optional[str] - Budget reset period ("30d", "1h", etc.)\n- budget_id: Optional[str] - The id of the budget. If not provided, a new id will be generated.\n- max_budget: Optional[float] - The max budget for the budget.\n- soft_budget: Optional[float] - The soft budget for the budget.\n- max_parallel_requests: Optional[int] - The max number of parallel requests for the budget.\n- tpm_limit: Optional[int] - The tokens per minute limit for the budget.\n- rpm_limit: Optional[int] - The requests per minute limit for the budget.\n- model_max_budget: Optional[dict] - Specify max budget for a given model. Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d", "tpm_limit": 100000, "rpm_limit": 100000}}',
   inputSchema: {
     type: 'object',
     properties: {
@@ -46,6 +46,7 @@ export const tool: Tool = {
         title: 'Model Max Budget',
         description:
           "Max budget for each model (e.g. {'gpt-4o': {'max_budget': '0.0000001', 'budget_duration': '1d', 'tpm_limit': 1000, 'rpm_limit': 1000}})",
+        additionalProperties: true,
       },
       rpm_limit: {
         type: 'integer',
@@ -62,14 +63,10 @@ export const tool: Tool = {
         title: 'Tpm Limit',
         description: 'Max tokens per minute, allowed for this budget id.',
       },
-      jq_filter: {
-        type: 'string',
-        title: 'jq Filter',
-        description:
-          'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
-      },
     },
+    required: [],
   },
+  annotations: {},
 };
 
 export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {

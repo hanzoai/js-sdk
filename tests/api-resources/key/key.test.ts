@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource key', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.key.update({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.key.update({
       key: 'key',
@@ -54,7 +54,7 @@ describe('resource key', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.key.list();
     const rawResponse = await responsePromise.asResponse();
@@ -66,7 +66,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -86,7 +86,7 @@ describe('resource key', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.key.delete({});
     const rawResponse = await responsePromise.asResponse();
@@ -98,7 +98,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('block: only required params', async () => {
     const responsePromise = client.key.block({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -110,12 +110,12 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('block: required and optional params', async () => {
     const response = await client.key.block({ key: 'key', 'llm-changed-by': 'llm-changed-by' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('checkHealth', async () => {
     const responsePromise = client.key.checkHealth();
     const rawResponse = await responsePromise.asResponse();
@@ -127,7 +127,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('generate', async () => {
     const responsePromise = client.key.generate({});
     const rawResponse = await responsePromise.asResponse();
@@ -139,7 +139,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('regenerateByKey', async () => {
     const responsePromise = client.key.regenerateByKey('key');
     const rawResponse = await responsePromise.asResponse();
@@ -151,7 +151,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('regenerateByKey: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -193,7 +193,7 @@ describe('resource key', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveInfo', async () => {
     const responsePromise = client.key.retrieveInfo();
     const rawResponse = await responsePromise.asResponse();
@@ -205,7 +205,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveInfo: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -213,7 +213,7 @@ describe('resource key', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('unblock: only required params', async () => {
     const responsePromise = client.key.unblock({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -225,7 +225,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('unblock: required and optional params', async () => {
     const response = await client.key.unblock({ key: 'key', 'llm-changed-by': 'llm-changed-by' });
   });

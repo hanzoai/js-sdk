@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource spend', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('calculateSpend', async () => {
     const responsePromise = client.spend.calculateSpend({});
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listLogs', async () => {
     const responsePromise = client.spend.listLogs();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listLogs: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -49,7 +49,7 @@ describe('resource spend', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listTags', async () => {
     const responsePromise = client.spend.listTags();
     const rawResponse = await responsePromise.asResponse();
@@ -61,7 +61,7 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listTags: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
