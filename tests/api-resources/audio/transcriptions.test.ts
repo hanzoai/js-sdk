@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource transcriptions', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.audio.transcriptions.create({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -22,7 +22,7 @@ describe('resource transcriptions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.audio.transcriptions.create({
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource cache', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.cache.delete();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource cache', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('flushAll', async () => {
     const responsePromise = client.cache.flushAll();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource cache', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('ping', async () => {
     const responsePromise = client.cache.ping();
     const rawResponse = await responsePromise.asResponse();
