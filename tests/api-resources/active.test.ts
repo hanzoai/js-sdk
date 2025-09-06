@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource active', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listCallbacks', async () => {
     const responsePromise = client.active.listCallbacks();
     const rawResponse = await responsePromise.asResponse();

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'list_key',
   description:
-    'When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you\'re sure you don\'t need the data.\n\nList all keys for a given user / team / organization.\n\nReturns:\n    {\n        "keys": List[str] or List[UserAPIKeyAuth],\n        "total_count": int,\n        "current_page": int,\n        "total_pages": int,\n    }',
+    'List all keys for a given user / team / organization.\n\nReturns:\n    {\n        "keys": List[str] or List[UserAPIKeyAuth],\n        "total_count": int,\n        "current_page": int,\n        "total_pages": int,\n    }',
   inputSchema: {
     type: 'object',
     properties: {
@@ -62,6 +62,10 @@ export const tool: Tool = {
         description: 'Filter keys by user ID',
       },
     },
+    required: [],
+  },
+  annotations: {
+    readOnlyHint: true,
   },
 };
 

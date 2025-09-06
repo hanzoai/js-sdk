@@ -16,8 +16,7 @@ export const metadata: Metadata = {
 
 export const tool: Tool = {
   name: 'create_model',
-  description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nAllows adding new models to the model list in the config.yaml\n\n# Response Schema\n```json\n{\n  type: 'object'\n}\n```",
+  description: 'Allows adding new models to the model list in the config.yaml',
   inputSchema: {
     type: 'object',
     properties: {
@@ -107,6 +106,7 @@ export const tool: Tool = {
           model_info: {
             type: 'object',
             title: 'Model Info',
+            additionalProperties: true,
           },
           organization: {
             type: 'string',
@@ -162,6 +162,7 @@ export const tool: Tool = {
             anyOf: [
               {
                 type: 'object',
+                additionalProperties: true,
               },
               {
                 type: 'string',
@@ -191,13 +192,8 @@ export const tool: Tool = {
         type: 'string',
         title: 'Model Name',
       },
-      jq_filter: {
-        type: 'string',
-        title: 'jq Filter',
-        description:
-          'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
-      },
     },
+    required: ['llm_params', 'model_info', 'model_name'],
     $defs: {
       configurable_clientside_params_custom_auth: {
         type: 'object',
@@ -262,6 +258,7 @@ export const tool: Tool = {
       },
     },
   },
+  annotations: {},
 };
 
 export const handler = async (client: Hanzo, args: Record<string, unknown> | undefined) => {

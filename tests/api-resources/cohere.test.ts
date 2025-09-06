@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource cohere', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.cohere.create('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource cohere', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.cohere.retrieve('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource cohere', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.cohere.update('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource cohere', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.cohere.delete('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource cohere', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('modify', async () => {
     const responsePromise = client.cohere.modify('endpoint');
     const rawResponse = await responsePromise.asResponse();
