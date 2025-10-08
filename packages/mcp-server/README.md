@@ -1740,23 +1740,23 @@ The following tools are available in this MCP server.
 
   # Parameters
 
-  - organization*alias: \_str* - The name of the organization.
+  - organization_alias: _str_ - The name of the organization.
   - models: _List_ - The models the organization has access to.
-  - budget*id: \_Optional[str]* - The id for a budget (tpm/rpm/max budget) for the organization.
+  - budget_id: _Optional[str]_ - The id for a budget (tpm/rpm/max budget) for the organization.
 
   ### IF NO BUDGET ID - CREATE ONE WITH THESE PARAMS
 
-  - max*budget: \_Optional[float]* - Max budget for org
-  - tpm*limit: \_Optional[int]* - Max tpm limit for org
-  - rpm*limit: \_Optional[int]* - Max rpm limit for org
-  - max*parallel_requests: \_Optional[int]* - [Not Implemented Yet] Max parallel requests for org
-  - soft*budget: \_Optional[float]* - [Not Implemented Yet] Get a slack alert when this soft budget is reached. Don't block requests.
-  - model*max_budget: \_Optional[dict]* - Max budget for a specific model
-  - budget*duration: \_Optional[str]* - Frequency of reseting org budget
+  - max_budget: _Optional[float]_ - Max budget for org
+  - tpm_limit: _Optional[int]_ - Max tpm limit for org
+  - rpm_limit: _Optional[int]_ - Max rpm limit for org
+  - max_parallel_requests: _Optional[int]_ - [Not Implemented Yet] Max parallel requests for org
+  - soft_budget: _Optional[float]_ - [Not Implemented Yet] Get a slack alert when this soft budget is reached. Don't block requests.
+  - model_max_budget: _Optional[dict]_ - Max budget for a specific model
+  - budget_duration: _Optional[str]_ - Frequency of reseting org budget
   - metadata: _Optional[dict]_ - Metadata for organization, store information for organization. Example metadata - {"extra_info": "some info"}
   - blocked: _bool_ - Flag indicating if the org is blocked or not - will stop all calls from keys with this org_id.
   - tags: _Optional[List[str]]_ - Tags for [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags) and/or doing [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).
-  - organization*id: \_Optional[str]* - The organization id of the team. Default is None. Create via `/organization/new`.
+  - organization_id: _Optional[str]_ - The organization id of the team. Default is None. Create via `/organization/new`.
   - model_aliases: Optional[dict] - Model aliases for the team. [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)
 
   Case 1: Create new org **without** a budget_id
@@ -1790,11 +1790,9 @@ The following tools are available in this MCP server.
 - `update_organization` (`write`): Update an organization
 - `list_organization` (`read`): ```
   curl --location --request GET 'http://0.0.0.0:4000/organization/list' --header 'Authorization: Bearer sk-1234'
-
   ```
 
   ```
-
 - `delete_organization` (`write`): Delete an organization
 
   # Parameters:
