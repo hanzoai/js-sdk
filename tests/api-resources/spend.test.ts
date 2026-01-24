@@ -42,6 +42,7 @@ describe('resource spend', () => {
           end_date: 'end_date',
           request_id: 'request_id',
           start_date: 'start_date',
+          summarize: true,
           user_id: 'user_id',
         },
         { path: '/_stainless_unknown_path' },
