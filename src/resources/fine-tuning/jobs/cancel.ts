@@ -14,7 +14,7 @@ export class Cancel extends APIResource {
    *
    * Supported Query Params:
    *
-   * - `custom_llm_provider`: Name of the LLM provider
+   * - `custom_llm_provider`: Name of the LiteLLM provider
    * - `fine_tuning_job_id`: The ID of the fine-tuning job to cancel.
    */
   create(fineTuningJobID: string, options?: RequestOptions): APIPromise<unknown> {

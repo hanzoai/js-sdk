@@ -41,7 +41,7 @@ describe('resource callback', () => {
       callback_name: 'callback_name',
       callback_vars: { foo: 'string' },
       callback_type: 'success',
-      'llm-changed-by': 'llm-changed-by',
+      'litellm-changed-by': 'litellm-changed-by',
     });
   });
 });

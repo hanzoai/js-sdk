@@ -7,35 +7,35 @@ import { path } from '../internal/utils/path';
 
 export class Cohere extends APIResource {
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/cohere)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/cohere)
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/cohere/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/cohere)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/cohere)
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/cohere/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/cohere)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/cohere)
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/cohere/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/cohere)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/cohere)
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/cohere/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/cohere)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/cohere)
    */
   modify(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/cohere/${endpoint}`, options);

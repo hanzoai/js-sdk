@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as GenerationsAPI from './generations';
-import { GenerationCreateResponse, Generations } from './generations';
+import { GenerationCreateParams, GenerationCreateResponse, Generations } from './generations';
 
 export class Images extends APIResource {
   generations: GenerationsAPI.Generations = new GenerationsAPI.Generations(this._client);
@@ -11,5 +11,9 @@ export class Images extends APIResource {
 Images.Generations = Generations;
 
 export declare namespace Images {
-  export { Generations as Generations, type GenerationCreateResponse as GenerationCreateResponse };
+  export {
+    Generations as Generations,
+    type GenerationCreateResponse as GenerationCreateResponse,
+    type GenerationCreateParams as GenerationCreateParams,
+  };
 }

@@ -34,7 +34,7 @@ export class Update extends APIResource {
 }
 
 export interface UpdateDeployment {
-  llm_params?: UpdateDeployment.LlmParams | null;
+  litellm_params?: UpdateDeployment.LitellmParams | null;
 
   model_info?: ModelAPI.ModelInfo | null;
 
@@ -42,14 +42,24 @@ export interface UpdateDeployment {
 }
 
 export namespace UpdateDeployment {
-  export interface LlmParams {
+  export interface LitellmParams {
     api_base?: string | null;
 
     api_key?: string | null;
 
     api_version?: string | null;
 
+    auto_router_config?: string | null;
+
+    auto_router_config_path?: string | null;
+
+    auto_router_default_model?: string | null;
+
+    auto_router_embedding_model?: string | null;
+
     aws_access_key_id?: string | null;
+
+    aws_bedrock_runtime_endpoint?: string | null;
 
     aws_region_name?: string | null;
 
@@ -57,17 +67,79 @@ export namespace UpdateDeployment {
 
     budget_duration?: string | null;
 
+    cache_creation_input_audio_token_cost?: number | null;
+
+    cache_creation_input_token_cost?: number | null;
+
+    cache_creation_input_token_cost_above_1hr?: number | null;
+
+    cache_creation_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_audio_token_cost?: number | null;
+
+    cache_read_input_token_cost?: number | null;
+
+    cache_read_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_token_cost_flex?: number | null;
+
+    cache_read_input_token_cost_priority?: number | null;
+
+    citation_cost_per_token?: number | null;
+
     configurable_clientside_auth_params?: Array<
-      string | ModelAPI.ConfigurableClientsideParamsCustomAuth
+      string | LitellmParams.ConfigurableClientsideParamsCustomAuthInput
     > | null;
 
     custom_llm_provider?: string | null;
+
+    gcs_bucket_name?: string | null;
+
+    input_cost_per_audio_per_second?: number | null;
+
+    input_cost_per_audio_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_audio_token?: number | null;
+
+    input_cost_per_character?: number | null;
+
+    input_cost_per_character_above_128k_tokens?: number | null;
+
+    input_cost_per_image?: number | null;
+
+    input_cost_per_image_above_128k_tokens?: number | null;
+
+    input_cost_per_pixel?: number | null;
+
+    input_cost_per_query?: number | null;
 
     input_cost_per_second?: number | null;
 
     input_cost_per_token?: number | null;
 
-    llm_trace_id?: string | null;
+    input_cost_per_token_above_128k_tokens?: number | null;
+
+    input_cost_per_token_above_200k_tokens?: number | null;
+
+    input_cost_per_token_batches?: number | null;
+
+    input_cost_per_token_cache_hit?: number | null;
+
+    input_cost_per_token_flex?: number | null;
+
+    input_cost_per_token_priority?: number | null;
+
+    input_cost_per_video_per_second?: number | null;
+
+    input_cost_per_video_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_video_per_second_above_15s_interval?: number | null;
+
+    input_cost_per_video_per_second_above_8s_interval?: number | null;
+
+    litellm_credential_name?: string | null;
+
+    litellm_trace_id?: string | null;
 
     max_budget?: number | null;
 
@@ -77,21 +149,61 @@ export namespace UpdateDeployment {
 
     merge_reasoning_content_in_choices?: boolean | null;
 
+    milvus_text_field?: string | null;
+
+    mock_response?: string | LitellmParams.ModelResponse | unknown | null;
+
     model?: string | null;
 
-    model_info?: unknown | null;
+    model_info?: { [key: string]: unknown } | null;
 
     organization?: string | null;
+
+    output_cost_per_audio_per_second?: number | null;
+
+    output_cost_per_audio_token?: number | null;
+
+    output_cost_per_character?: number | null;
+
+    output_cost_per_character_above_128k_tokens?: number | null;
+
+    output_cost_per_image?: number | null;
+
+    output_cost_per_image_token?: number | null;
+
+    output_cost_per_pixel?: number | null;
+
+    output_cost_per_reasoning_token?: number | null;
 
     output_cost_per_second?: number | null;
 
     output_cost_per_token?: number | null;
 
+    output_cost_per_token_above_128k_tokens?: number | null;
+
+    output_cost_per_token_above_200k_tokens?: number | null;
+
+    output_cost_per_token_batches?: number | null;
+
+    output_cost_per_token_flex?: number | null;
+
+    output_cost_per_token_priority?: number | null;
+
+    output_cost_per_video_per_second?: number | null;
+
     region_name?: string | null;
 
     rpm?: number | null;
 
+    s3_bucket_name?: string | null;
+
+    s3_encryption_key_id?: string | null;
+
+    search_context_cost_per_query?: { [key: string]: unknown } | null;
+
     stream_timeout?: number | string | null;
+
+    tiered_pricing?: Array<{ [key: string]: unknown }> | null;
 
     timeout?: number | string | null;
 
@@ -99,7 +211,11 @@ export namespace UpdateDeployment {
 
     use_in_pass_through?: boolean | null;
 
-    vertex_credentials?: unknown | string | null;
+    use_litellm_proxy?: boolean | null;
+
+    vector_store_id?: string | null;
+
+    vertex_credentials?: string | { [key: string]: unknown } | null;
 
     vertex_location?: string | null;
 
@@ -108,6 +224,206 @@ export namespace UpdateDeployment {
     watsonx_region_name?: string | null;
 
     [k: string]: unknown;
+  }
+
+  export namespace LitellmParams {
+    export interface ConfigurableClientsideParamsCustomAuthInput {
+      api_base: string;
+
+      [k: string]: unknown;
+    }
+
+    export interface ModelResponse {
+      id: string;
+
+      choices: Array<ModelResponse.Choices | { [key: string]: unknown }>;
+
+      created: number;
+
+      object: string;
+
+      model?: string | null;
+
+      system_fingerprint?: string | null;
+
+      [k: string]: unknown;
+    }
+
+    export namespace ModelResponse {
+      export interface Choices {
+        finish_reason: string;
+
+        index: number;
+
+        message: Choices.Message;
+
+        logprobs?: Choices.ChoiceLogprobs | unknown | null;
+
+        provider_specific_fields?: { [key: string]: unknown } | null;
+
+        [k: string]: unknown;
+      }
+
+      export namespace Choices {
+        export interface Message {
+          content: string | null;
+
+          function_call: Message.FunctionCall | null;
+
+          role: 'assistant' | 'user' | 'system' | 'tool' | 'function';
+
+          tool_calls: Array<{ [key: string]: unknown }> | null;
+
+          annotations?: Array<Message.Annotation> | null;
+
+          audio?: Message.Audio | null;
+
+          images?: Array<Message.Image> | null;
+
+          provider_specific_fields?: { [key: string]: unknown } | null;
+
+          reasoning_content?: string | null;
+
+          thinking_blocks?: Array<
+            Message.ChatCompletionThinkingBlock | Message.ChatCompletionRedactedThinkingBlock
+          > | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace Message {
+          export interface FunctionCall {
+            arguments: string;
+
+            name?: string | null;
+
+            [k: string]: unknown;
+          }
+
+          export interface Annotation {
+            type?: 'url_citation';
+
+            url_citation?: Annotation.URLCitation;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Annotation {
+            export interface URLCitation {
+              end_index?: number;
+
+              start_index?: number;
+
+              title?: string;
+
+              url?: string;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface Audio {
+            id: string;
+
+            data: string;
+
+            expires_at: number;
+
+            transcript: string;
+
+            [k: string]: unknown;
+          }
+
+          export interface Image {
+            image_url: Image.ImageURL;
+
+            index: number;
+
+            type: 'image_url';
+
+            [k: string]: unknown;
+          }
+
+          export namespace Image {
+            export interface ImageURL {
+              url: string;
+
+              detail?: string | null;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface ChatCompletionThinkingBlock {
+            type: 'thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            signature?: string;
+
+            thinking?: string;
+          }
+
+          export namespace ChatCompletionThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+
+          export interface ChatCompletionRedactedThinkingBlock {
+            type: 'redacted_thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionRedactedThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            data?: string;
+          }
+
+          export namespace ChatCompletionRedactedThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+        }
+
+        export interface ChoiceLogprobs {
+          content?: Array<ChoiceLogprobs.Content> | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace ChoiceLogprobs {
+          export interface Content {
+            token: string;
+
+            logprob: number;
+
+            top_logprobs: Array<Content.TopLogprob>;
+
+            bytes?: Array<number> | null;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Content {
+            export interface TopLogprob {
+              token: string;
+
+              logprob: number;
+
+              bytes?: Array<number> | null;
+
+              [k: string]: unknown;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -116,7 +432,7 @@ export type UpdateFullResponse = unknown;
 export type UpdatePartialResponse = unknown;
 
 export interface UpdateFullParams {
-  llm_params?: UpdateFullParams.LlmParams | null;
+  litellm_params?: UpdateFullParams.LitellmParams | null;
 
   model_info?: ModelAPI.ModelInfo | null;
 
@@ -124,14 +440,24 @@ export interface UpdateFullParams {
 }
 
 export namespace UpdateFullParams {
-  export interface LlmParams {
+  export interface LitellmParams {
     api_base?: string | null;
 
     api_key?: string | null;
 
     api_version?: string | null;
 
+    auto_router_config?: string | null;
+
+    auto_router_config_path?: string | null;
+
+    auto_router_default_model?: string | null;
+
+    auto_router_embedding_model?: string | null;
+
     aws_access_key_id?: string | null;
+
+    aws_bedrock_runtime_endpoint?: string | null;
 
     aws_region_name?: string | null;
 
@@ -139,17 +465,79 @@ export namespace UpdateFullParams {
 
     budget_duration?: string | null;
 
+    cache_creation_input_audio_token_cost?: number | null;
+
+    cache_creation_input_token_cost?: number | null;
+
+    cache_creation_input_token_cost_above_1hr?: number | null;
+
+    cache_creation_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_audio_token_cost?: number | null;
+
+    cache_read_input_token_cost?: number | null;
+
+    cache_read_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_token_cost_flex?: number | null;
+
+    cache_read_input_token_cost_priority?: number | null;
+
+    citation_cost_per_token?: number | null;
+
     configurable_clientside_auth_params?: Array<
-      string | ModelAPI.ConfigurableClientsideParamsCustomAuth
+      string | LitellmParams.ConfigurableClientsideParamsCustomAuthInput
     > | null;
 
     custom_llm_provider?: string | null;
+
+    gcs_bucket_name?: string | null;
+
+    input_cost_per_audio_per_second?: number | null;
+
+    input_cost_per_audio_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_audio_token?: number | null;
+
+    input_cost_per_character?: number | null;
+
+    input_cost_per_character_above_128k_tokens?: number | null;
+
+    input_cost_per_image?: number | null;
+
+    input_cost_per_image_above_128k_tokens?: number | null;
+
+    input_cost_per_pixel?: number | null;
+
+    input_cost_per_query?: number | null;
 
     input_cost_per_second?: number | null;
 
     input_cost_per_token?: number | null;
 
-    llm_trace_id?: string | null;
+    input_cost_per_token_above_128k_tokens?: number | null;
+
+    input_cost_per_token_above_200k_tokens?: number | null;
+
+    input_cost_per_token_batches?: number | null;
+
+    input_cost_per_token_cache_hit?: number | null;
+
+    input_cost_per_token_flex?: number | null;
+
+    input_cost_per_token_priority?: number | null;
+
+    input_cost_per_video_per_second?: number | null;
+
+    input_cost_per_video_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_video_per_second_above_15s_interval?: number | null;
+
+    input_cost_per_video_per_second_above_8s_interval?: number | null;
+
+    litellm_credential_name?: string | null;
+
+    litellm_trace_id?: string | null;
 
     max_budget?: number | null;
 
@@ -159,21 +547,61 @@ export namespace UpdateFullParams {
 
     merge_reasoning_content_in_choices?: boolean | null;
 
+    milvus_text_field?: string | null;
+
+    mock_response?: string | LitellmParams.ModelResponse | unknown | null;
+
     model?: string | null;
 
-    model_info?: unknown | null;
+    model_info?: { [key: string]: unknown } | null;
 
     organization?: string | null;
+
+    output_cost_per_audio_per_second?: number | null;
+
+    output_cost_per_audio_token?: number | null;
+
+    output_cost_per_character?: number | null;
+
+    output_cost_per_character_above_128k_tokens?: number | null;
+
+    output_cost_per_image?: number | null;
+
+    output_cost_per_image_token?: number | null;
+
+    output_cost_per_pixel?: number | null;
+
+    output_cost_per_reasoning_token?: number | null;
 
     output_cost_per_second?: number | null;
 
     output_cost_per_token?: number | null;
 
+    output_cost_per_token_above_128k_tokens?: number | null;
+
+    output_cost_per_token_above_200k_tokens?: number | null;
+
+    output_cost_per_token_batches?: number | null;
+
+    output_cost_per_token_flex?: number | null;
+
+    output_cost_per_token_priority?: number | null;
+
+    output_cost_per_video_per_second?: number | null;
+
     region_name?: string | null;
 
     rpm?: number | null;
 
+    s3_bucket_name?: string | null;
+
+    s3_encryption_key_id?: string | null;
+
+    search_context_cost_per_query?: { [key: string]: unknown } | null;
+
     stream_timeout?: number | string | null;
+
+    tiered_pricing?: Array<{ [key: string]: unknown }> | null;
 
     timeout?: number | string | null;
 
@@ -181,7 +609,11 @@ export namespace UpdateFullParams {
 
     use_in_pass_through?: boolean | null;
 
-    vertex_credentials?: unknown | string | null;
+    use_litellm_proxy?: boolean | null;
+
+    vector_store_id?: string | null;
+
+    vertex_credentials?: string | { [key: string]: unknown } | null;
 
     vertex_location?: string | null;
 
@@ -191,10 +623,210 @@ export namespace UpdateFullParams {
 
     [k: string]: unknown;
   }
+
+  export namespace LitellmParams {
+    export interface ConfigurableClientsideParamsCustomAuthInput {
+      api_base: string;
+
+      [k: string]: unknown;
+    }
+
+    export interface ModelResponse {
+      id: string;
+
+      choices: Array<ModelResponse.Choices | { [key: string]: unknown }>;
+
+      created: number;
+
+      object: string;
+
+      model?: string | null;
+
+      system_fingerprint?: string | null;
+
+      [k: string]: unknown;
+    }
+
+    export namespace ModelResponse {
+      export interface Choices {
+        finish_reason: string;
+
+        index: number;
+
+        message: Choices.Message;
+
+        logprobs?: Choices.ChoiceLogprobs | unknown | null;
+
+        provider_specific_fields?: { [key: string]: unknown } | null;
+
+        [k: string]: unknown;
+      }
+
+      export namespace Choices {
+        export interface Message {
+          content: string | null;
+
+          function_call: Message.FunctionCall | null;
+
+          role: 'assistant' | 'user' | 'system' | 'tool' | 'function';
+
+          tool_calls: Array<{ [key: string]: unknown }> | null;
+
+          annotations?: Array<Message.Annotation> | null;
+
+          audio?: Message.Audio | null;
+
+          images?: Array<Message.Image> | null;
+
+          provider_specific_fields?: { [key: string]: unknown } | null;
+
+          reasoning_content?: string | null;
+
+          thinking_blocks?: Array<
+            Message.ChatCompletionThinkingBlock | Message.ChatCompletionRedactedThinkingBlock
+          > | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace Message {
+          export interface FunctionCall {
+            arguments: string;
+
+            name?: string | null;
+
+            [k: string]: unknown;
+          }
+
+          export interface Annotation {
+            type?: 'url_citation';
+
+            url_citation?: Annotation.URLCitation;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Annotation {
+            export interface URLCitation {
+              end_index?: number;
+
+              start_index?: number;
+
+              title?: string;
+
+              url?: string;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface Audio {
+            id: string;
+
+            data: string;
+
+            expires_at: number;
+
+            transcript: string;
+
+            [k: string]: unknown;
+          }
+
+          export interface Image {
+            image_url: Image.ImageURL;
+
+            index: number;
+
+            type: 'image_url';
+
+            [k: string]: unknown;
+          }
+
+          export namespace Image {
+            export interface ImageURL {
+              url: string;
+
+              detail?: string | null;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface ChatCompletionThinkingBlock {
+            type: 'thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            signature?: string;
+
+            thinking?: string;
+          }
+
+          export namespace ChatCompletionThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+
+          export interface ChatCompletionRedactedThinkingBlock {
+            type: 'redacted_thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionRedactedThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            data?: string;
+          }
+
+          export namespace ChatCompletionRedactedThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+        }
+
+        export interface ChoiceLogprobs {
+          content?: Array<ChoiceLogprobs.Content> | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace ChoiceLogprobs {
+          export interface Content {
+            token: string;
+
+            logprob: number;
+
+            top_logprobs: Array<Content.TopLogprob>;
+
+            bytes?: Array<number> | null;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Content {
+            export interface TopLogprob {
+              token: string;
+
+              logprob: number;
+
+              bytes?: Array<number> | null;
+
+              [k: string]: unknown;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 export interface UpdatePartialParams {
-  llm_params?: UpdatePartialParams.LlmParams | null;
+  litellm_params?: UpdatePartialParams.LitellmParams | null;
 
   model_info?: ModelAPI.ModelInfo | null;
 
@@ -202,14 +834,24 @@ export interface UpdatePartialParams {
 }
 
 export namespace UpdatePartialParams {
-  export interface LlmParams {
+  export interface LitellmParams {
     api_base?: string | null;
 
     api_key?: string | null;
 
     api_version?: string | null;
 
+    auto_router_config?: string | null;
+
+    auto_router_config_path?: string | null;
+
+    auto_router_default_model?: string | null;
+
+    auto_router_embedding_model?: string | null;
+
     aws_access_key_id?: string | null;
+
+    aws_bedrock_runtime_endpoint?: string | null;
 
     aws_region_name?: string | null;
 
@@ -217,17 +859,79 @@ export namespace UpdatePartialParams {
 
     budget_duration?: string | null;
 
+    cache_creation_input_audio_token_cost?: number | null;
+
+    cache_creation_input_token_cost?: number | null;
+
+    cache_creation_input_token_cost_above_1hr?: number | null;
+
+    cache_creation_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_audio_token_cost?: number | null;
+
+    cache_read_input_token_cost?: number | null;
+
+    cache_read_input_token_cost_above_200k_tokens?: number | null;
+
+    cache_read_input_token_cost_flex?: number | null;
+
+    cache_read_input_token_cost_priority?: number | null;
+
+    citation_cost_per_token?: number | null;
+
     configurable_clientside_auth_params?: Array<
-      string | ModelAPI.ConfigurableClientsideParamsCustomAuth
+      string | LitellmParams.ConfigurableClientsideParamsCustomAuthInput
     > | null;
 
     custom_llm_provider?: string | null;
+
+    gcs_bucket_name?: string | null;
+
+    input_cost_per_audio_per_second?: number | null;
+
+    input_cost_per_audio_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_audio_token?: number | null;
+
+    input_cost_per_character?: number | null;
+
+    input_cost_per_character_above_128k_tokens?: number | null;
+
+    input_cost_per_image?: number | null;
+
+    input_cost_per_image_above_128k_tokens?: number | null;
+
+    input_cost_per_pixel?: number | null;
+
+    input_cost_per_query?: number | null;
 
     input_cost_per_second?: number | null;
 
     input_cost_per_token?: number | null;
 
-    llm_trace_id?: string | null;
+    input_cost_per_token_above_128k_tokens?: number | null;
+
+    input_cost_per_token_above_200k_tokens?: number | null;
+
+    input_cost_per_token_batches?: number | null;
+
+    input_cost_per_token_cache_hit?: number | null;
+
+    input_cost_per_token_flex?: number | null;
+
+    input_cost_per_token_priority?: number | null;
+
+    input_cost_per_video_per_second?: number | null;
+
+    input_cost_per_video_per_second_above_128k_tokens?: number | null;
+
+    input_cost_per_video_per_second_above_15s_interval?: number | null;
+
+    input_cost_per_video_per_second_above_8s_interval?: number | null;
+
+    litellm_credential_name?: string | null;
+
+    litellm_trace_id?: string | null;
 
     max_budget?: number | null;
 
@@ -237,21 +941,61 @@ export namespace UpdatePartialParams {
 
     merge_reasoning_content_in_choices?: boolean | null;
 
+    milvus_text_field?: string | null;
+
+    mock_response?: string | LitellmParams.ModelResponse | unknown | null;
+
     model?: string | null;
 
-    model_info?: unknown | null;
+    model_info?: { [key: string]: unknown } | null;
 
     organization?: string | null;
+
+    output_cost_per_audio_per_second?: number | null;
+
+    output_cost_per_audio_token?: number | null;
+
+    output_cost_per_character?: number | null;
+
+    output_cost_per_character_above_128k_tokens?: number | null;
+
+    output_cost_per_image?: number | null;
+
+    output_cost_per_image_token?: number | null;
+
+    output_cost_per_pixel?: number | null;
+
+    output_cost_per_reasoning_token?: number | null;
 
     output_cost_per_second?: number | null;
 
     output_cost_per_token?: number | null;
 
+    output_cost_per_token_above_128k_tokens?: number | null;
+
+    output_cost_per_token_above_200k_tokens?: number | null;
+
+    output_cost_per_token_batches?: number | null;
+
+    output_cost_per_token_flex?: number | null;
+
+    output_cost_per_token_priority?: number | null;
+
+    output_cost_per_video_per_second?: number | null;
+
     region_name?: string | null;
 
     rpm?: number | null;
 
+    s3_bucket_name?: string | null;
+
+    s3_encryption_key_id?: string | null;
+
+    search_context_cost_per_query?: { [key: string]: unknown } | null;
+
     stream_timeout?: number | string | null;
+
+    tiered_pricing?: Array<{ [key: string]: unknown }> | null;
 
     timeout?: number | string | null;
 
@@ -259,7 +1003,11 @@ export namespace UpdatePartialParams {
 
     use_in_pass_through?: boolean | null;
 
-    vertex_credentials?: unknown | string | null;
+    use_litellm_proxy?: boolean | null;
+
+    vector_store_id?: string | null;
+
+    vertex_credentials?: string | { [key: string]: unknown } | null;
 
     vertex_location?: string | null;
 
@@ -268,6 +1016,206 @@ export namespace UpdatePartialParams {
     watsonx_region_name?: string | null;
 
     [k: string]: unknown;
+  }
+
+  export namespace LitellmParams {
+    export interface ConfigurableClientsideParamsCustomAuthInput {
+      api_base: string;
+
+      [k: string]: unknown;
+    }
+
+    export interface ModelResponse {
+      id: string;
+
+      choices: Array<ModelResponse.Choices | { [key: string]: unknown }>;
+
+      created: number;
+
+      object: string;
+
+      model?: string | null;
+
+      system_fingerprint?: string | null;
+
+      [k: string]: unknown;
+    }
+
+    export namespace ModelResponse {
+      export interface Choices {
+        finish_reason: string;
+
+        index: number;
+
+        message: Choices.Message;
+
+        logprobs?: Choices.ChoiceLogprobs | unknown | null;
+
+        provider_specific_fields?: { [key: string]: unknown } | null;
+
+        [k: string]: unknown;
+      }
+
+      export namespace Choices {
+        export interface Message {
+          content: string | null;
+
+          function_call: Message.FunctionCall | null;
+
+          role: 'assistant' | 'user' | 'system' | 'tool' | 'function';
+
+          tool_calls: Array<{ [key: string]: unknown }> | null;
+
+          annotations?: Array<Message.Annotation> | null;
+
+          audio?: Message.Audio | null;
+
+          images?: Array<Message.Image> | null;
+
+          provider_specific_fields?: { [key: string]: unknown } | null;
+
+          reasoning_content?: string | null;
+
+          thinking_blocks?: Array<
+            Message.ChatCompletionThinkingBlock | Message.ChatCompletionRedactedThinkingBlock
+          > | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace Message {
+          export interface FunctionCall {
+            arguments: string;
+
+            name?: string | null;
+
+            [k: string]: unknown;
+          }
+
+          export interface Annotation {
+            type?: 'url_citation';
+
+            url_citation?: Annotation.URLCitation;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Annotation {
+            export interface URLCitation {
+              end_index?: number;
+
+              start_index?: number;
+
+              title?: string;
+
+              url?: string;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface Audio {
+            id: string;
+
+            data: string;
+
+            expires_at: number;
+
+            transcript: string;
+
+            [k: string]: unknown;
+          }
+
+          export interface Image {
+            image_url: Image.ImageURL;
+
+            index: number;
+
+            type: 'image_url';
+
+            [k: string]: unknown;
+          }
+
+          export namespace Image {
+            export interface ImageURL {
+              url: string;
+
+              detail?: string | null;
+
+              [k: string]: unknown;
+            }
+          }
+
+          export interface ChatCompletionThinkingBlock {
+            type: 'thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            signature?: string;
+
+            thinking?: string;
+          }
+
+          export namespace ChatCompletionThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+
+          export interface ChatCompletionRedactedThinkingBlock {
+            type: 'redacted_thinking';
+
+            cache_control?:
+              | { [key: string]: unknown }
+              | ChatCompletionRedactedThinkingBlock.ChatCompletionCachedContent
+              | null;
+
+            data?: string;
+          }
+
+          export namespace ChatCompletionRedactedThinkingBlock {
+            export interface ChatCompletionCachedContent {
+              type: 'ephemeral';
+            }
+          }
+        }
+
+        export interface ChoiceLogprobs {
+          content?: Array<ChoiceLogprobs.Content> | null;
+
+          [k: string]: unknown;
+        }
+
+        export namespace ChoiceLogprobs {
+          export interface Content {
+            token: string;
+
+            logprob: number;
+
+            top_logprobs: Array<Content.TopLogprob>;
+
+            bytes?: Array<number> | null;
+
+            [k: string]: unknown;
+          }
+
+          export namespace Content {
+            export interface TopLogprob {
+              token: string;
+
+              logprob: number;
+
+              bytes?: Array<number> | null;
+
+              [k: string]: unknown;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

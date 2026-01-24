@@ -46,7 +46,7 @@ Types:
 Methods:
 
 - <code title="post /openai/deployments/{model}/completions">client.openai.deployments.<a href="./src/resources/openai/deployments/deployments.ts">complete</a>(model) -> unknown</code>
-- <code title="post /openai/deployments/{model}/embeddings">client.openai.deployments.<a href="./src/resources/openai/deployments/deployments.ts">embed</a>(model) -> unknown</code>
+- <code title="post /openai/deployments/{model}/embeddings">client.openai.deployments.<a href="./src/resources/openai/deployments/deployments.ts">embed</a>(pathModel, { ...params }) -> unknown</code>
 
 ### Chat
 
@@ -56,7 +56,7 @@ Types:
 
 Methods:
 
-- <code title="post /openai/deployments/{model}/chat/completions">client.openai.deployments.chat.<a href="./src/resources/openai/deployments/chat.ts">complete</a>(model) -> unknown</code>
+- <code title="post /openai/deployments/{model}/chat/completions">client.openai.deployments.chat.<a href="./src/resources/openai/deployments/chat.ts">complete</a>(pathModel, { ...params }) -> unknown</code>
 
 # Engines
 
@@ -68,7 +68,7 @@ Types:
 Methods:
 
 - <code title="post /engines/{model}/completions">client.engines.<a href="./src/resources/engines/engines.ts">complete</a>(model) -> unknown</code>
-- <code title="post /engines/{model}/embeddings">client.engines.<a href="./src/resources/engines/engines.ts">embed</a>(model) -> unknown</code>
+- <code title="post /engines/{model}/embeddings">client.engines.<a href="./src/resources/engines/engines.ts">embed</a>(pathModel, { ...params }) -> unknown</code>
 
 ## Chat
 
@@ -78,7 +78,7 @@ Types:
 
 Methods:
 
-- <code title="post /engines/{model}/chat/completions">client.engines.chat.<a href="./src/resources/engines/chat.ts">complete</a>(model) -> unknown</code>
+- <code title="post /engines/{model}/chat/completions">client.engines.chat.<a href="./src/resources/engines/chat.ts">complete</a>(pathModel, { ...params }) -> unknown</code>
 
 # Chat
 
@@ -122,7 +122,7 @@ Types:
 
 Methods:
 
-- <code title="post /v1/images/generations">client.images.generations.<a href="./src/resources/images/generations.ts">create</a>() -> unknown</code>
+- <code title="post /v1/images/generations">client.images.generations.<a href="./src/resources/images/generations.ts">create</a>({ ...params }) -> unknown</code>
 
 # Audio
 
@@ -222,7 +222,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/model/model.ts">ConfigurableClientsideParamsCustomAuth</a></code>
 - <code><a href="./src/resources/model/model.ts">ModelInfo</a></code>
 - <code><a href="./src/resources/model/model.ts">ModelCreateResponse</a></code>
 - <code><a href="./src/resources/model/model.ts">ModelDeleteResponse</a></code>
@@ -351,6 +350,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/fine-tuning/jobs/jobs.ts">LiteLlmFineTuningJobCreate</a></code>
 - <code><a href="./src/resources/fine-tuning/jobs/jobs.ts">JobCreateResponse</a></code>
 - <code><a href="./src/resources/fine-tuning/jobs/jobs.ts">JobRetrieveResponse</a></code>
 - <code><a href="./src/resources/fine-tuning/jobs/jobs.ts">JobListResponse</a></code>
@@ -562,7 +562,7 @@ Types:
 Methods:
 
 - <code title="post /config/pass_through_endpoint">client.config.passThroughEndpoint.<a href="./src/resources/config/pass-through-endpoint.ts">create</a>({ ...params }) -> unknown</code>
-- <code title="post /config/pass_through_endpoint/{endpoint_id}">client.config.passThroughEndpoint.<a href="./src/resources/config/pass-through-endpoint.ts">update</a>(endpointID) -> unknown</code>
+- <code title="post /config/pass_through_endpoint/{endpoint_id}">client.config.passThroughEndpoint.<a href="./src/resources/config/pass-through-endpoint.ts">update</a>(endpointID, { ...params }) -> unknown</code>
 - <code title="get /config/pass_through_endpoint">client.config.passThroughEndpoint.<a href="./src/resources/config/pass-through-endpoint.ts">list</a>({ ...params }) -> PassThroughEndpointResponse</code>
 - <code title="delete /config/pass_through_endpoint">client.config.passThroughEndpoint.<a href="./src/resources/config/pass-through-endpoint.ts">delete</a>({ ...params }) -> PassThroughEndpointResponse</code>
 
@@ -652,7 +652,6 @@ Types:
 
 - <code><a href="./src/resources/user.ts">UserCreateResponse</a></code>
 - <code><a href="./src/resources/user.ts">UserUpdateResponse</a></code>
-- <code><a href="./src/resources/user.ts">UserListResponse</a></code>
 - <code><a href="./src/resources/user.ts">UserDeleteResponse</a></code>
 - <code><a href="./src/resources/user.ts">UserRetrieveInfoResponse</a></code>
 
@@ -660,7 +659,6 @@ Methods:
 
 - <code title="post /user/new">client.user.<a href="./src/resources/user.ts">create</a>({ ...params }) -> UserCreateResponse</code>
 - <code title="post /user/update">client.user.<a href="./src/resources/user.ts">update</a>({ ...params }) -> unknown</code>
-- <code title="get /user/get_users">client.user.<a href="./src/resources/user.ts">list</a>({ ...params }) -> unknown</code>
 - <code title="post /user/delete">client.user.<a href="./src/resources/user.ts">delete</a>({ ...params }) -> unknown</code>
 - <code title="get /user/info">client.user.<a href="./src/resources/user.ts">retrieveInfo</a>({ ...params }) -> unknown</code>
 
@@ -726,35 +724,36 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/organization/organization.ts">BudgetTable</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrgMember</a></code>
+- <code><a href="./src/resources/organization/organization.ts">OrganizationMembershipTable</a></code>
+- <code><a href="./src/resources/organization/organization.ts">OrganizationTableWithMembers</a></code>
+- <code><a href="./src/resources/organization/organization.ts">UserRoles</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrganizationCreateResponse</a></code>
-- <code><a href="./src/resources/organization/organization.ts">OrganizationUpdateResponse</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrganizationListResponse</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrganizationDeleteResponse</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrganizationAddMemberResponse</a></code>
 - <code><a href="./src/resources/organization/organization.ts">OrganizationDeleteMemberResponse</a></code>
-- <code><a href="./src/resources/organization/organization.ts">OrganizationUpdateMemberResponse</a></code>
 
 Methods:
 
 - <code title="post /organization/new">client.organization.<a href="./src/resources/organization/organization.ts">create</a>({ ...params }) -> OrganizationCreateResponse</code>
-- <code title="patch /organization/update">client.organization.<a href="./src/resources/organization/organization.ts">update</a>({ ...params }) -> OrganizationUpdateResponse</code>
-- <code title="get /organization/list">client.organization.<a href="./src/resources/organization/organization.ts">list</a>() -> OrganizationListResponse</code>
+- <code title="patch /organization/update">client.organization.<a href="./src/resources/organization/organization.ts">update</a>() -> OrganizationTableWithMembers</code>
+- <code title="get /organization/list">client.organization.<a href="./src/resources/organization/organization.ts">list</a>({ ...params }) -> OrganizationListResponse</code>
 - <code title="delete /organization/delete">client.organization.<a href="./src/resources/organization/organization.ts">delete</a>({ ...params }) -> OrganizationDeleteResponse</code>
 - <code title="post /organization/member_add">client.organization.<a href="./src/resources/organization/organization.ts">addMember</a>({ ...params }) -> OrganizationAddMemberResponse</code>
 - <code title="delete /organization/member_delete">client.organization.<a href="./src/resources/organization/organization.ts">deleteMember</a>({ ...params }) -> unknown</code>
-- <code title="patch /organization/member_update">client.organization.<a href="./src/resources/organization/organization.ts">updateMember</a>({ ...params }) -> OrganizationUpdateMemberResponse</code>
+- <code title="patch /organization/member_update">client.organization.<a href="./src/resources/organization/organization.ts">updateMember</a>({ ...params }) -> OrganizationMembershipTable</code>
 
 ## Info
 
 Types:
 
-- <code><a href="./src/resources/organization/info.ts">InfoRetrieveResponse</a></code>
 - <code><a href="./src/resources/organization/info.ts">InfoDeprecatedResponse</a></code>
 
 Methods:
 
-- <code title="get /organization/info">client.organization.info.<a href="./src/resources/organization/info.ts">retrieve</a>({ ...params }) -> InfoRetrieveResponse</code>
+- <code title="get /organization/info">client.organization.info.<a href="./src/resources/organization/info.ts">retrieve</a>({ ...params }) -> OrganizationTableWithMembers</code>
 - <code title="post /organization/info">client.organization.info.<a href="./src/resources/organization/info.ts">deprecated</a>({ ...params }) -> unknown</code>
 
 # Customer
@@ -762,12 +761,12 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/customer.ts">BlockUsers</a></code>
+- <code><a href="./src/resources/customer.ts">LiteLlmEndUserTable</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerCreateResponse</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerUpdateResponse</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerListResponse</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerDeleteResponse</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerBlockResponse</a></code>
-- <code><a href="./src/resources/customer.ts">CustomerRetrieveInfoResponse</a></code>
 - <code><a href="./src/resources/customer.ts">CustomerUnblockResponse</a></code>
 
 Methods:
@@ -777,7 +776,7 @@ Methods:
 - <code title="get /customer/list">client.customer.<a href="./src/resources/customer.ts">list</a>() -> CustomerListResponse</code>
 - <code title="post /customer/delete">client.customer.<a href="./src/resources/customer.ts">delete</a>({ ...params }) -> unknown</code>
 - <code title="post /customer/block">client.customer.<a href="./src/resources/customer.ts">block</a>({ ...params }) -> unknown</code>
-- <code title="get /customer/info">client.customer.<a href="./src/resources/customer.ts">retrieveInfo</a>({ ...params }) -> CustomerRetrieveInfoResponse</code>
+- <code title="get /customer/info">client.customer.<a href="./src/resources/customer.ts">retrieveInfo</a>({ ...params }) -> LiteLlmEndUserTable</code>
 - <code title="post /customer/unblock">client.customer.<a href="./src/resources/customer.ts">unblock</a>({ ...params }) -> unknown</code>
 
 # Spend
