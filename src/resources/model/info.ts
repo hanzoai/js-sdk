@@ -9,11 +9,11 @@ export class Info extends APIResource {
    * Provides more info about each model in /models, including config.yaml
    * descriptions (except api key and api base)
    *
-   * Parameters: llm_model_id: Optional[str] = None (this is the value of
-   * `x-llm-model-id` returned in response headers)
+   * Parameters: litellm_model_id: Optional[str] = None (this is the value of
+   * `x-litellm-model-id` returned in response headers)
    *
-   *     - When llm_model_id is passed, it will return the info for that specific model
-   *     - When llm_model_id is not passed, it will return the info for all models
+   *     - When litellm_model_id is passed, it will return the info for that specific model
+   *     - When litellm_model_id is not passed, it will return the info for all models
    *
    * Returns: Returns a dictionary containing information about each model.
    *
@@ -24,7 +24,7 @@ export class Info extends APIResource {
    *   "data": [
    *     {
    *       "model_name": "fake-openai-endpoint",
-   *       "llm_params": {
+   *       "litellm_params": {
    *         "api_base": "https://exampleopenaiendpoint-production.up.railway.app/",
    *         "model": "openai/fake"
    *       },
@@ -45,7 +45,7 @@ export class Info extends APIResource {
 export type InfoListResponse = unknown;
 
 export interface InfoListParams {
-  llm_model_id?: string | null;
+  litellm_model_id?: string | null;
 }
 
 export declare namespace Info {

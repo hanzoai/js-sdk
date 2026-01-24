@@ -8,8 +8,8 @@ import { RequestOptions } from '../internal/request-options';
 export class User extends APIResource {
   /**
    * Use this to create a new INTERNAL user with a budget. Internal Users can access
-   * LLM Admin UI to make keys, request access to models. This creates a new user and
-   * generates a new api key for the new user. The new api key is returned.
+   * LiteLLM Admin UI to make keys, request access to models. This creates a new user
+   * and generates a new api key for the new user. The new api key is returned.
    *
    * Returns user id, budget + new key.
    *
@@ -25,7 +25,7 @@ export class User extends APIResource {
    * - user_role: Optional[str] - Specify a user role - "proxy_admin",
    *   "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team",
    *   "customer". Info about each role here:
-   *   `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20`
+   *   `https://github.com/BerriAI/litellm/litellm/proxy/_types.py#L20`
    * - max_budget: Optional[float] - Specify max budget for a given user.
    * - budget_duration: Optional[str] - Budget is reset at the end of specified
    *   duration. If not set, budget is never reset. You can set duration as seconds
@@ -40,29 +40,29 @@ export class User extends APIResource {
    * - auto_create_key: bool - Default=True. Flag used for returning a key as part of
    *   the /user/new response
    * - aliases: Optional[dict] - Model aliases for the user -
-   *   [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)
+   *   [Docs](https://litellm.vercel.app/docs/proxy/virtual_keys#model-aliases)
    * - config: Optional[dict] - [DEPRECATED PARAM] User-specific config.
    * - allowed_cache_controls: Optional[list] - List of allowed cache control values.
    *   Example - ["no-cache", "no-store"]. See all values -
-   *   https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request-
+   *   https://docs.litellm.ai/docs/proxy/caching#turn-on--off-caching-per-request-
    * - blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked.
    * - guardrails: Optional[List[str]] - [Not Implemented Yet] List of active
    *   guardrails for the user
    * - permissions: Optional[dict] - [Not Implemented Yet] User-specific permissions,
    *   eg. turning off pii masking.
    * - metadata: Optional[dict] - Metadata for user, store information for user.
-   *   Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai"
-   *   }
+   *   Example metadata = {"team": "core-infra", "app": "app2", "email":
+   *   "ishaan@berri.ai" }
    * - max_parallel_requests: Optional[int] - Rate limit a user based on the number
    *   of parallel requests. Raises 429 error, if user's parallel requests > x.
    * - soft_budget: Optional[float] - Get alerts when user crosses given budget,
    *   doesn't block requests.
    * - model_max_budget: Optional[dict] - Model-specific max budget for user.
-   *   [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-budgets-to-keys)
+   *   [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-budgets-to-keys)
    * - model_rpm_limit: Optional[float] - Model-specific rpm limit for user.
-   *   [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)
+   *   [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-limits-to-keys)
    * - model_tpm_limit: Optional[float] - Model-specific tpm limit for user.
-   *   [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys)
+   *   [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-limits-to-keys)
    * - spend: Optional[float] - Amount spent by user. Default is 0. Will be updated
    *   by proxy whenever user is used. You can set duration as seconds ("30s"),
    *   minutes ("30m"), hours ("30h"), days ("30d"), months ("1mo").
@@ -72,9 +72,15 @@ export class User extends APIResource {
    *   Default is None.
    * - key_alias: Optional[str] - Alias for the key auto-created on `/user/new`.
    *   Default is None.
-   *
-   * Returns:
-   *
+   * - sso_user_id: Optional[str] - The id of the user in the SSO provider.
+   * - object_permission: Optional[LiteLLM_ObjectPermissionBase] - internal
+   *   user-specific object permission. Example - {"vector_stores":
+   *   ["vector_store_1", "vector_store_2"]}. IF null or {} then no object
+   *   permission.
+   * - prompts: Optional[List[str]] - List of allowed prompts for the user. If
+   *   specified, the user will only be able to use these specific prompts.
+   * - organizations: List[str] - List of organization id's the user is a member of
+   *   Returns:
    * - key: (str) The generated api key for the user
    * - expires: (datetime) Datetime object for when key expires.
    * - user_id: (str) Unique user id - used for tracking spend across multiple keys
@@ -99,7 +105,7 @@ export class User extends APIResource {
    *
    * ```
    * curl --location 'http://0.0.0.0:4000/user/update'     --header 'Authorization: Bearer sk-1234'     --header 'Content-Type: application/json'     --data '{
-   *     "user_id": "test-llm-user-4",
+   *     "user_id": "test-litellm-user-4",
    *     "user_role": "proxy_admin_viewer"
    * }'
    * ```
@@ -113,7 +119,7 @@ export class User extends APIResource {
    * user_role: Optional[str] - Specify a user role - "proxy_admin",
    * "proxy_admin_viewer", "internal_user", "internal_user_viewer", "team",
    * "customer". Info about each role here:
-   * `https://github.com/hanzoai/llm/llm/proxy/_types.py#L20` - max_budget:
+   * `https://github.com/BerriAI/litellm/litellm/proxy/_types.py#L20` - max_budget:
    * Optional[float] - Specify max budget for a given user. - budget_duration:
    * Optional[str] - Budget is reset at the end of specified duration. If not set,
    * budget is never reset. You can set duration as seconds ("30s"), minutes ("30m"),
@@ -124,59 +130,40 @@ export class User extends APIResource {
    * (Requests per minute) - auto_create_key: bool - Default=True. Flag used for
    * returning a key as part of the /user/new response - aliases: Optional[dict] -
    * Model aliases for the user -
-   * [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases) - config:
-   * Optional[dict] - [DEPRECATED PARAM] User-specific config. -
+   * [Docs](https://litellm.vercel.app/docs/proxy/virtual_keys#model-aliases) -
+   * config: Optional[dict] - [DEPRECATED PARAM] User-specific config. -
    * allowed_cache_controls: Optional[list] - List of allowed cache control values.
    * Example - ["no-cache", "no-store"]. See all values -
-   * https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request- -
+   * https://docs.litellm.ai/docs/proxy/caching#turn-on--off-caching-per-request- -
    * blocked: Optional[bool] - [Not Implemented Yet] Whether the user is blocked. -
    * guardrails: Optional[List[str]] - [Not Implemented Yet] List of active
    * guardrails for the user - permissions: Optional[dict] - [Not Implemented Yet]
    * User-specific permissions, eg. turning off pii masking. - metadata:
    * Optional[dict] - Metadata for user, store information for user. Example metadata
-   * = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai" } -
+   * = {"team": "core-infra", "app": "app2", "email": "ishaan@berri.ai" } -
    * max_parallel_requests: Optional[int] - Rate limit a user based on the number of
    * parallel requests. Raises 429 error, if user's parallel requests > x. -
    * soft_budget: Optional[float] - Get alerts when user crosses given budget,
    * doesn't block requests. - model_max_budget: Optional[dict] - Model-specific max
    * budget for user.
-   * [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-budgets-to-keys) -
+   * [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-budgets-to-keys) -
    * model_rpm_limit: Optional[float] - Model-specific rpm limit for user.
-   * [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys) -
+   * [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-limits-to-keys) -
    * model_tpm_limit: Optional[float] - Model-specific tpm limit for user.
-   * [Docs](https://docs.hanzo.ai/docs/proxy/users#add-model-specific-limits-to-keys) -
+   * [Docs](https://docs.litellm.ai/docs/proxy/users#add-model-specific-limits-to-keys) -
    * spend: Optional[float] - Amount spent by user. Default is 0. Will be updated by
    * proxy whenever user is used. You can set duration as seconds ("30s"), minutes
    * ("30m"), hours ("30h"), days ("30d"), months ("1mo"). - team_id: Optional[str] -
    * [DEPRECATED PARAM] The team id of the user. Default is None. - duration:
    * Optional[str] - [NOT IMPLEMENTED]. - key_alias: Optional[str] - [NOT
-   * IMPLEMENTED].
+   * IMPLEMENTED]. - object_permission: Optional[LiteLLM_ObjectPermissionBase] -
+   * internal user-specific object permission. Example - {"vector_stores":
+   * ["vector_store_1", "vector_store_2"]}. IF null or {} then no object
+   * permission. - prompts: Optional[List[str]] - List of allowed prompts for the
+   * user. If specified, the user will only be able to use these specific prompts.
    */
   update(body: UserUpdateParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/user/update', { body, ...options });
-  }
-
-  /**
-   * Get a paginated list of users, optionally filtered by role.
-   *
-   * Used by the UI to populate the user lists.
-   *
-   * Parameters: role: Optional[str] Filter users by role. Can be one of: -
-   * proxy_admin - proxy_admin_viewer - internal_user - internal_user_viewer
-   * user_ids: Optional[str] Get list of users by user_ids. Comma separated list of
-   * user_ids. page: int The page number to return page_size: int The number of items
-   * per page
-   *
-   * Currently - admin-only endpoint.
-   *
-   * Example curl:
-   *
-   * ```
-   * http://0.0.0.0:4000/user/list?user_ids=default_user_id,693c1a4a-1cc0-4c7c-afe8-b5d2c8d52e17
-   * ```
-   */
-  list(query: UserListParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.get('/user/get_users', { query, ...options });
   }
 
   /**
@@ -196,12 +183,12 @@ export class User extends APIResource {
    * - user_ids: List[str] - The list of user id's to be deleted.
    */
   delete(params: UserDeleteParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'llm-changed-by': llmChangedBy, ...body } = params;
+    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
     return this._client.post('/user/delete', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
+        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -215,7 +202,7 @@ export class User extends APIResource {
    * Example request
    *
    * ```
-   * curl -X GET 'http://localhost:4000/user/info?user_id=dev7%40hanzo.ai'     --header 'Authorization: Bearer sk-1234'
+   * curl -X GET 'http://localhost:4000/user/info?user_id=krrish7%40berri.ai'     --header 'Authorization: Bearer sk-1234'
    * ```
    */
   retrieveInfo(
@@ -227,15 +214,19 @@ export class User extends APIResource {
 }
 
 export interface UserCreateResponse {
-  expires: string | null;
-
   key: string;
 
   token?: string | null;
 
-  aliases?: unknown | null;
+  aliases?: { [key: string]: unknown } | null;
 
   allowed_cache_controls?: Array<unknown> | null;
+
+  allowed_passthrough_routes?: Array<unknown> | null;
+
+  allowed_routes?: Array<unknown> | null;
+
+  allowed_vector_store_indexes?: Array<UserCreateResponse.AllowedVectorStoreIndex> | null;
 
   blocked?: boolean | null;
 
@@ -243,7 +234,9 @@ export interface UserCreateResponse {
 
   budget_id?: string | null;
 
-  config?: unknown | null;
+  config?: { [key: string]: unknown } | null;
+
+  created_at?: string | null;
 
   created_by?: string | null;
 
@@ -251,31 +244,46 @@ export interface UserCreateResponse {
 
   enforced_params?: Array<string> | null;
 
+  expires?: string | null;
+
   guardrails?: Array<string> | null;
 
   key_alias?: string | null;
 
   key_name?: string | null;
 
-  llm_budget_table?: unknown;
+  litellm_budget_table?: unknown;
 
   max_budget?: number | null;
 
   max_parallel_requests?: number | null;
 
-  metadata?: unknown | null;
+  metadata?: { [key: string]: unknown } | null;
 
-  model_max_budget?: unknown | null;
+  model_max_budget?: { [key: string]: unknown } | null;
 
-  model_rpm_limit?: unknown | null;
+  model_rpm_limit?: { [key: string]: unknown } | null;
 
-  model_tpm_limit?: unknown | null;
+  model_tpm_limit?: { [key: string]: unknown } | null;
 
   models?: Array<unknown> | null;
 
-  permissions?: unknown | null;
+  object_permission?: UserCreateResponse.ObjectPermission | null;
+
+  organization_id?: string | null;
+
+  permissions?: { [key: string]: unknown } | null;
+
+  prompts?: Array<string> | null;
+
+  /**
+   * Set of params that you can modify via `router.update_settings()`.
+   */
+  router_settings?: UserCreateResponse.RouterSettings | null;
 
   rpm_limit?: number | null;
+
+  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
 
   spend?: number | null;
 
@@ -289,6 +297,10 @@ export interface UserCreateResponse {
 
   tpm_limit?: number | null;
 
+  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
+
+  updated_at?: string | null;
+
   updated_by?: string | null;
 
   user_alias?: string | null;
@@ -300,16 +312,65 @@ export interface UserCreateResponse {
   user_role?: 'proxy_admin' | 'proxy_admin_viewer' | 'internal_user' | 'internal_user_viewer' | null;
 }
 
-export type UserUpdateResponse = unknown;
+export namespace UserCreateResponse {
+  export interface AllowedVectorStoreIndex {
+    index_name: string;
 
-export type UserListResponse = unknown;
+    index_permissions: Array<'read' | 'write'>;
+  }
+
+  export interface ObjectPermission {
+    agent_access_groups?: Array<string> | null;
+
+    agents?: Array<string> | null;
+
+    mcp_access_groups?: Array<string> | null;
+
+    mcp_servers?: Array<string> | null;
+
+    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
+
+    vector_stores?: Array<string> | null;
+  }
+
+  /**
+   * Set of params that you can modify via `router.update_settings()`.
+   */
+  export interface RouterSettings {
+    allowed_fails?: number | null;
+
+    context_window_fallbacks?: Array<{ [key: string]: unknown }> | null;
+
+    cooldown_time?: number | null;
+
+    fallbacks?: Array<{ [key: string]: unknown }> | null;
+
+    max_retries?: number | null;
+
+    model_group_alias?: { [key: string]: string | { [key: string]: unknown } } | null;
+
+    model_group_retry_policy?: { [key: string]: unknown } | null;
+
+    num_retries?: number | null;
+
+    retry_after?: number | null;
+
+    routing_strategy?: string | null;
+
+    routing_strategy_args?: { [key: string]: unknown } | null;
+
+    timeout?: number | null;
+  }
+}
+
+export type UserUpdateResponse = unknown;
 
 export type UserDeleteResponse = unknown;
 
 export type UserRetrieveInfoResponse = unknown;
 
 export interface UserCreateParams {
-  aliases?: unknown | null;
+  aliases?: { [key: string]: unknown } | null;
 
   allowed_cache_controls?: Array<unknown> | null;
 
@@ -319,7 +380,7 @@ export interface UserCreateParams {
 
   budget_duration?: string | null;
 
-  config?: unknown | null;
+  config?: { [key: string]: unknown } | null;
 
   duration?: string | null;
 
@@ -331,17 +392,23 @@ export interface UserCreateParams {
 
   max_parallel_requests?: number | null;
 
-  metadata?: unknown | null;
+  metadata?: { [key: string]: unknown } | null;
 
-  model_max_budget?: unknown | null;
+  model_max_budget?: { [key: string]: unknown } | null;
 
-  model_rpm_limit?: unknown | null;
+  model_rpm_limit?: { [key: string]: unknown } | null;
 
-  model_tpm_limit?: unknown | null;
+  model_tpm_limit?: { [key: string]: unknown } | null;
 
   models?: Array<unknown> | null;
 
-  permissions?: unknown | null;
+  object_permission?: UserCreateParams.ObjectPermission | null;
+
+  organizations?: Array<string> | null;
+
+  permissions?: { [key: string]: unknown } | null;
+
+  prompts?: Array<string> | null;
 
   rpm_limit?: number | null;
 
@@ -349,9 +416,11 @@ export interface UserCreateParams {
 
   spend?: number | null;
 
+  sso_user_id?: string | null;
+
   team_id?: string | null;
 
-  teams?: Array<unknown> | null;
+  teams?: Array<string> | Array<UserCreateParams.UnionMember1> | null;
 
   tpm_limit?: number | null;
 
@@ -364,8 +433,32 @@ export interface UserCreateParams {
   user_role?: 'proxy_admin' | 'proxy_admin_viewer' | 'internal_user' | 'internal_user_viewer' | null;
 }
 
+export namespace UserCreateParams {
+  export interface ObjectPermission {
+    agent_access_groups?: Array<string> | null;
+
+    agents?: Array<string> | null;
+
+    mcp_access_groups?: Array<string> | null;
+
+    mcp_servers?: Array<string> | null;
+
+    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
+
+    vector_stores?: Array<string> | null;
+  }
+
+  export interface UnionMember1 {
+    team_id: string;
+
+    max_budget_in_team?: number | null;
+
+    user_role?: 'user' | 'admin';
+  }
+}
+
 export interface UserUpdateParams {
-  aliases?: unknown | null;
+  aliases?: { [key: string]: unknown } | null;
 
   allowed_cache_controls?: Array<unknown> | null;
 
@@ -373,7 +466,7 @@ export interface UserUpdateParams {
 
   budget_duration?: string | null;
 
-  config?: unknown | null;
+  config?: { [key: string]: unknown } | null;
 
   duration?: string | null;
 
@@ -385,19 +478,23 @@ export interface UserUpdateParams {
 
   max_parallel_requests?: number | null;
 
-  metadata?: unknown | null;
+  metadata?: { [key: string]: unknown } | null;
 
-  model_max_budget?: unknown | null;
+  model_max_budget?: { [key: string]: unknown } | null;
 
-  model_rpm_limit?: unknown | null;
+  model_rpm_limit?: { [key: string]: unknown } | null;
 
-  model_tpm_limit?: unknown | null;
+  model_tpm_limit?: { [key: string]: unknown } | null;
 
   models?: Array<unknown> | null;
 
+  object_permission?: UserUpdateParams.ObjectPermission | null;
+
   password?: string | null;
 
-  permissions?: unknown | null;
+  permissions?: { [key: string]: unknown } | null;
+
+  prompts?: Array<string> | null;
 
   rpm_limit?: number | null;
 
@@ -407,6 +504,8 @@ export interface UserUpdateParams {
 
   tpm_limit?: number | null;
 
+  user_alias?: string | null;
+
   user_email?: string | null;
 
   user_id?: string | null;
@@ -414,40 +513,34 @@ export interface UserUpdateParams {
   user_role?: 'proxy_admin' | 'proxy_admin_viewer' | 'internal_user' | 'internal_user_viewer' | null;
 }
 
-export interface UserListParams {
-  /**
-   * Page number
-   */
-  page?: number;
+export namespace UserUpdateParams {
+  export interface ObjectPermission {
+    agent_access_groups?: Array<string> | null;
 
-  /**
-   * Number of items per page
-   */
-  page_size?: number;
+    agents?: Array<string> | null;
 
-  /**
-   * Filter users by role
-   */
-  role?: string | null;
+    mcp_access_groups?: Array<string> | null;
 
-  /**
-   * Get list of users by user_ids
-   */
-  user_ids?: string | null;
+    mcp_servers?: Array<string> | null;
+
+    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
+
+    vector_stores?: Array<string> | null;
+  }
 }
 
 export interface UserDeleteParams {
   /**
-   * Body param:
+   * Body param
    */
   user_ids: Array<string>;
 
   /**
-   * Header param: The llm-changed-by header enables tracking of actions performed by
-   * authorized users on behalf of other users, providing an audit trail for
-   * accountability
+   * Header param: The litellm-changed-by header enables tracking of actions
+   * performed by authorized users on behalf of other users, providing an audit trail
+   * for accountability
    */
-  'llm-changed-by'?: string;
+  'litellm-changed-by'?: string;
 }
 
 export interface UserRetrieveInfoParams {
@@ -461,12 +554,10 @@ export declare namespace User {
   export {
     type UserCreateResponse as UserCreateResponse,
     type UserUpdateResponse as UserUpdateResponse,
-    type UserListResponse as UserListResponse,
     type UserDeleteResponse as UserDeleteResponse,
     type UserRetrieveInfoResponse as UserRetrieveInfoResponse,
     type UserCreateParams as UserCreateParams,
     type UserUpdateParams as UserUpdateParams,
-    type UserListParams as UserListParams,
     type UserDeleteParams as UserDeleteParams,
     type UserRetrieveInfoParams as UserRetrieveInfoParams,
   };

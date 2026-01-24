@@ -75,12 +75,12 @@ export class Callback extends APIResource {
    * the secret key sk-xxxxx
    */
   add(teamID: string, params: CallbackAddParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'llm-changed-by': llmChangedBy, ...body } = params;
+    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
     return this._client.post(path`/team/${teamID}/callback`, {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
+        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -93,26 +93,26 @@ export type CallbackAddResponse = unknown;
 
 export interface CallbackAddParams {
   /**
-   * Body param:
+   * Body param
    */
   callback_name: string;
 
   /**
-   * Body param:
+   * Body param
    */
   callback_vars: { [key: string]: string };
 
   /**
-   * Body param:
+   * Body param
    */
   callback_type?: 'success' | 'failure' | 'success_and_failure' | null;
 
   /**
-   * Header param: The llm-changed-by header enables tracking of actions performed by
-   * authorized users on behalf of other users, providing an audit trail for
-   * accountability
+   * Header param: The litellm-changed-by header enables tracking of actions
+   * performed by authorized users on behalf of other users, providing an audit trail
+   * for accountability
    */
-  'llm-changed-by'?: string;
+  'litellm-changed-by'?: string;
 }
 
 export declare namespace Callback {

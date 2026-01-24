@@ -65,7 +65,12 @@ describe('resource batches', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.batches.list(
-        { after: 'after', limit: 0, provider: 'provider' },
+        {
+          after: 'after',
+          limit: 0,
+          provider: 'provider',
+          target_model_names: 'target_model_names',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);
@@ -118,7 +123,11 @@ describe('resource batches', () => {
     await expect(
       client.batches.listWithProvider(
         'provider',
-        { after: 'after', limit: 0 },
+        {
+          after: 'after',
+          limit: 0,
+          target_model_names: 'target_model_names',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);

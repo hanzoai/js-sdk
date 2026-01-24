@@ -29,6 +29,9 @@ describe('resource files', () => {
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       purpose: 'purpose',
       custom_llm_provider: 'custom_llm_provider',
+      litellm_metadata: 'litellm_metadata',
+      target_model_names: 'target_model_names',
+      target_storage: 'target_storage',
     });
   });
 
@@ -65,7 +68,11 @@ describe('resource files', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.files.list('provider', { purpose: 'purpose' }, { path: '/_stainless_unknown_path' }),
+      client.files.list(
+        'provider',
+        { purpose: 'purpose', target_model_names: 'target_model_names' },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 

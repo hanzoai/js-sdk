@@ -106,7 +106,7 @@ export const formatRequestDetails = (details: {
         ([name, value]) => [
           name,
           (
-            name.toLowerCase() === 'ocp-apim-subscription-key' ||
+            name.toLowerCase() === 'x-litellm-api-key' ||
             name.toLowerCase() === 'authorization' ||
             name.toLowerCase() === 'cookie' ||
             name.toLowerCase() === 'set-cookie'

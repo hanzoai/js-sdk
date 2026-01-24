@@ -39,12 +39,21 @@ describe('resource utils', () => {
 
   // Prism tests are disabled
   test.skip('tokenCounter: required and optional params', async () => {
-    const response = await client.utils.tokenCounter({ model: 'model', messages: [{}], prompt: 'prompt' });
+    const response = await client.utils.tokenCounter({
+      model: 'model',
+      call_endpoint: true,
+      contents: [{ foo: 'bar' }],
+      messages: [{ foo: 'bar' }],
+      prompt: 'prompt',
+    });
   });
 
   // Prism tests are disabled
   test.skip('transformRequest: only required params', async () => {
-    const responsePromise = client.utils.transformRequest({ call_type: 'embedding', request_body: {} });
+    const responsePromise = client.utils.transformRequest({
+      call_type: 'embedding',
+      request_body: { foo: 'bar' },
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,6 +65,9 @@ describe('resource utils', () => {
 
   // Prism tests are disabled
   test.skip('transformRequest: required and optional params', async () => {
-    const response = await client.utils.transformRequest({ call_type: 'embedding', request_body: {} });
+    const response = await client.utils.transformRequest({
+      call_type: 'embedding',
+      request_body: { foo: 'bar' },
+    });
   });
 });

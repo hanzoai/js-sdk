@@ -9,6 +9,7 @@ import {
   PassThroughEndpointDeleteParams,
   PassThroughEndpointListParams,
   PassThroughEndpointResponse,
+  PassThroughEndpointUpdateParams,
   PassThroughEndpointUpdateResponse,
   PassThroughGenericEndpoint,
 } from './pass-through-endpoint';
@@ -28,6 +29,7 @@ export declare namespace Config {
     type PassThroughEndpointCreateResponse as PassThroughEndpointCreateResponse,
     type PassThroughEndpointUpdateResponse as PassThroughEndpointUpdateResponse,
     type PassThroughEndpointCreateParams as PassThroughEndpointCreateParams,
+    type PassThroughEndpointUpdateParams as PassThroughEndpointUpdateParams,
     type PassThroughEndpointListParams as PassThroughEndpointListParams,
     type PassThroughEndpointDeleteParams as PassThroughEndpointDeleteParams,
   };
