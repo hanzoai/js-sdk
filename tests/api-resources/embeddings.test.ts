@@ -9,8 +9,8 @@ const client = new Hanzo({
 
 describe('resource embeddings', () => {
   // Prism tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.embeddings.create();
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.embeddings.create({ model: 'model' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,10 +21,21 @@ describe('resource embeddings', () => {
   });
 
   // Prism tests are disabled
-  test.skip('create: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.embeddings.create({ model: 'model' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Hanzo.NotFoundError);
+  test.skip('create: required and optional params', async () => {
+    const response = await client.embeddings.create({
+      model: 'model',
+      api_base: 'api_base',
+      api_key: 'api_key',
+      api_type: 'api_type',
+      api_version: 'api_version',
+      caching: true,
+      custom_llm_provider: 'string',
+      input: ['string'],
+      litellm_call_id: 'litellm_call_id',
+      litellm_logging_obj: { foo: 'bar' },
+      logger_fn: 'logger_fn',
+      timeout: 0,
+      user: 'user',
+    });
   });
 });

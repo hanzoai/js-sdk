@@ -14,10 +14,22 @@ export class Responses extends APIResource {
    * Follows the OpenAI Responses API spec:
    * https://platform.openai.com/docs/api-reference/responses
    *
+   * Supports background mode with polling_via_cache for partial response retrieval.
+   * When background=true and polling_via_cache is enabled, returns a polling_id
+   * immediately and streams the response in the background, updating Redis cache.
+   *
    * ```bash
+   * # Normal request
    * curl -X POST http://localhost:4000/v1/responses     -H "Content-Type: application/json"     -H "Authorization: Bearer sk-1234"     -d '{
    *     "model": "gpt-4o",
    *     "input": "Tell me about AI"
+   * }'
+   *
+   * # Background request with polling
+   * curl -X POST http://localhost:4000/v1/responses     -H "Content-Type: application/json"     -H "Authorization: Bearer sk-1234"     -d '{
+   *     "model": "gpt-4o",
+   *     "input": "Tell me about AI",
+   *     "background": true
    * }'
    * ```
    */
@@ -28,10 +40,20 @@ export class Responses extends APIResource {
   /**
    * Get a response by ID.
    *
+   * Supports both:
+   *
+   * - Polling IDs (litellm*poll*\*): Returns cumulative cached content from
+   *   background responses
+   * - Provider response IDs: Passes through to provider API
+   *
    * Follows the OpenAI Responses API spec:
    * https://platform.openai.com/docs/api-reference/responses/get
    *
    * ```bash
+   * # Get polling response
+   * curl -X GET http://localhost:4000/v1/responses/litellm_poll_abc123     -H "Authorization: Bearer sk-1234"
+   *
+   * # Get provider response
    * curl -X GET http://localhost:4000/v1/responses/resp_abc123     -H "Authorization: Bearer sk-1234"
    * ```
    */
@@ -41,6 +63,11 @@ export class Responses extends APIResource {
 
   /**
    * Delete a response by ID.
+   *
+   * Supports both:
+   *
+   * - Polling IDs (litellm*poll*\*): Deletes from Redis cache
+   * - Provider response IDs: Passes through to provider API
    *
    * Follows the OpenAI Responses API spec:
    * https://platform.openai.com/docs/api-reference/responses/delete

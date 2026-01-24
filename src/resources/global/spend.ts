@@ -6,7 +6,7 @@ import { RequestOptions } from '../../internal/request-options';
 
 export class Spend extends APIResource {
   /**
-   * LLM Enterprise - View Spend Per Request Tag. Used by LLM UI
+   * LiteLLM Enterprise - View Spend Per Request Tag. Used by LiteLLM UI
    *
    * Example Request:
    *
@@ -30,12 +30,12 @@ export class Spend extends APIResource {
   /**
    * ADMIN ONLY / MASTER KEY Only Endpoint
    *
-   * Globally reset spend for All API Keys and Teams, maintain LLM_SpendLogs
+   * Globally reset spend for All API Keys and Teams, maintain LiteLLM_SpendLogs
    *
-   * 1. LLM_SpendLogs will maintain the logs on spend, no data gets deleted from
+   * 1. LiteLLM_SpendLogs will maintain the logs on spend, no data gets deleted from
    *    there
-   * 2. LLM_VerificationTokens spend will be set = 0
-   * 3. LLM_TeamTable spend will be set = 0
+   * 2. LiteLLM_VerificationTokens spend will be set = 0
+   * 3. LiteLLM_TeamTable spend will be set = 0
    */
   reset(options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/global/spend/reset', options);
@@ -67,11 +67,11 @@ export namespace SpendListTagsResponse {
 
     endTime: string | (string & {}) | null;
 
-    messages: string | Array<unknown> | unknown | null;
+    messages: string | Array<unknown> | { [key: string]: unknown } | null;
 
     request_id: string;
 
-    response: string | Array<unknown> | unknown | null;
+    response: string | Array<unknown> | { [key: string]: unknown } | null;
 
     startTime: string | (string & {}) | null;
 
@@ -113,11 +113,11 @@ export namespace SpendRetrieveReportResponse {
 
     endTime: string | (string & {}) | null;
 
-    messages: string | Array<unknown> | unknown | null;
+    messages: string | Array<unknown> | { [key: string]: unknown } | null;
 
     request_id: string;
 
-    response: string | Array<unknown> | unknown | null;
+    response: string | Array<unknown> | { [key: string]: unknown } | null;
 
     startTime: string | (string & {}) | null;
 

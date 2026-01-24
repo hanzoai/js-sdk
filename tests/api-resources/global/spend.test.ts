@@ -25,7 +25,11 @@ describe('resource spend', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.global.spend.listTags(
-        { end_date: 'end_date', start_date: 'start_date', tags: 'tags' },
+        {
+          end_date: 'end_date',
+          start_date: 'start_date',
+          tags: 'tags',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);

@@ -11,7 +11,7 @@ export class Spend extends APIResource {
    * Calculate spend **before** making call:
    *
    * Note: If you see a spend of $0.0 you need to set custom_pricing for your model:
-   * https://docs.hanzo.ai/docs/proxy/custom_pricing
+   * https://docs.litellm.ai/docs/proxy/custom_pricing
    *
    * ```
    * curl --location 'http://localhost:4000/spend/calculate'
@@ -59,8 +59,17 @@ export class Spend extends APIResource {
   }
 
   /**
+   * [DEPRECATED] This endpoint is not paginated and can cause performance issues.
+   * Please use `/spend/logs/v2` instead for paginated access to spend logs.
+   *
    * View all spend logs, if request_id is provided, only logs for that request_id
    * will be returned
+   *
+   * When start_date and end_date are provided:
+   *
+   * - summarize=true (default): Returns aggregated spend data grouped by date
+   *   (maintains backward compatibility)
+   * - summarize=false: Returns filtered individual log entries within the date range
    *
    * Example Request for all logs
    *
@@ -77,13 +86,19 @@ export class Spend extends APIResource {
    * Example Request for specific api_key
    *
    * ```
-   * curl -X GET "http://0.0.0.0:8000/spend/logs?api_key=sk-Fn8Ej39NkBQmUagFEoUWPQ" -H "Authorization: Bearer sk-1234"
+   * curl -X GET "http://0.0.0.0:8000/spend/logs?api_key=sk-test-example-key-123" -H "Authorization: Bearer sk-1234"
    * ```
    *
    * Example Request for specific user_id
    *
    * ```
-   * curl -X GET "http://0.0.0.0:8000/spend/logs?user_id=z@hanzo.ai" -H "Authorization: Bearer sk-1234"
+   * curl -X GET "http://0.0.0.0:8000/spend/logs?user_id=ishaan@berri.ai" -H "Authorization: Bearer sk-1234"
+   * ```
+   *
+   * Example Request for date range with individual logs (unsummarized)
+   *
+   * ```
+   * curl -X GET "http://0.0.0.0:8000/spend/logs?start_date=2024-01-01&end_date=2024-01-02&summarize=false" -H "Authorization: Bearer sk-1234"
    * ```
    */
   listLogs(
@@ -94,7 +109,7 @@ export class Spend extends APIResource {
   }
 
   /**
-   * LLM Enterprise - View Spend Per Request Tag
+   * LiteLLM Enterprise - View Spend Per Request Tag
    *
    * Example Request:
    *
@@ -128,11 +143,11 @@ export namespace SpendListLogsResponse {
 
     endTime: string | (string & {}) | null;
 
-    messages: string | Array<unknown> | unknown | null;
+    messages: string | Array<unknown> | { [key: string]: unknown } | null;
 
     request_id: string;
 
-    response: string | Array<unknown> | unknown | null;
+    response: string | Array<unknown> | { [key: string]: unknown } | null;
 
     startTime: string | (string & {}) | null;
 
@@ -172,11 +187,11 @@ export namespace SpendListTagsResponse {
 
     endTime: string | (string & {}) | null;
 
-    messages: string | Array<unknown> | unknown | null;
+    messages: string | Array<unknown> | { [key: string]: unknown } | null;
 
     request_id: string;
 
-    response: string | Array<unknown> | unknown | null;
+    response: string | Array<unknown> | { [key: string]: unknown } | null;
 
     startTime: string | (string & {}) | null;
 
@@ -207,7 +222,7 @@ export namespace SpendListTagsResponse {
 }
 
 export interface SpendCalculateSpendParams {
-  completion_response?: unknown | null;
+  completion_response?: { [key: string]: unknown } | null;
 
   messages?: Array<unknown> | null;
 
@@ -235,6 +250,12 @@ export interface SpendListLogsParams {
    * Time from which to start viewing key spend
    */
   start_date?: string | null;
+
+  /**
+   * When start_date and end_date are provided, summarize=true returns aggregated
+   * data by date (legacy behavior), summarize=false returns filtered individual logs
+   */
+  summarize?: boolean;
 
   /**
    * Get spend logs based on user_id

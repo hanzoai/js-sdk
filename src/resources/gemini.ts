@@ -7,35 +7,35 @@ import { path } from '../internal/utils/path';
 
 export class Gemini extends APIResource {
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/google_ai_studio)
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/gemini/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/google_ai_studio)
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/gemini/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/google_ai_studio)
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/gemini/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/google_ai_studio)
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/gemini/${endpoint}`, options);
   }
 
   /**
-   * [Docs](https://docs.hanzo.ai/docs/pass_through/google_ai_studio)
+   * [Docs](https://docs.litellm.ai/docs/pass_through/google_ai_studio)
    */
   patch(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/gemini/${endpoint}`, options);

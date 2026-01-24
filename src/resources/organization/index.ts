@@ -2,23 +2,24 @@
 
 export {
   Info,
-  type InfoRetrieveResponse,
   type InfoDeprecatedResponse,
   type InfoRetrieveParams,
   type InfoDeprecatedParams,
 } from './info';
 export {
   Organization,
+  type BudgetTable,
   type OrgMember,
+  type OrganizationMembershipTable,
+  type OrganizationTableWithMembers,
+  type UserRoles,
   type OrganizationCreateResponse,
-  type OrganizationUpdateResponse,
   type OrganizationListResponse,
   type OrganizationDeleteResponse,
   type OrganizationAddMemberResponse,
   type OrganizationDeleteMemberResponse,
-  type OrganizationUpdateMemberResponse,
   type OrganizationCreateParams,
-  type OrganizationUpdateParams,
+  type OrganizationListParams,
   type OrganizationDeleteParams,
   type OrganizationAddMemberParams,
   type OrganizationDeleteMemberParams,
