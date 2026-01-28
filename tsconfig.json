@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "hanzoai/*": ["src/*"],
-      "hanzoai": ["src/index.ts"]
+      "hanzoai/*": ["./src/*"],
+      "hanzoai": ["./src/index.ts"]
     },
     "noEmit": true,
 
@@ -31,7 +30,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-		"isolatedModules": false,
+    "isolatedModules": false,
 
     "skipLibCheck": true
   }

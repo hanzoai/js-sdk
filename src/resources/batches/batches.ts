@@ -172,6 +172,8 @@ export interface BatchListParams {
   limit?: number | null;
 
   provider?: string | null;
+
+  target_model_names?: string | null;
 }
 
 export interface BatchCancelWithProviderParams {
@@ -182,6 +184,8 @@ export interface BatchListWithProviderParams {
   after?: string | null;
 
   limit?: number | null;
+
+  target_model_names?: string | null;
 }
 
 export interface BatchRetrieveWithProviderParams {

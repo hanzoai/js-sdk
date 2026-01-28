@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource engines', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('complete', async () => {
     const responsePromise = client.engines.complete('model');
     const rawResponse = await responsePromise.asResponse();
@@ -20,9 +20,9 @@ describe('resource engines', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('embed', async () => {
-    const responsePromise = client.engines.embed('model');
+  // Prism tests are disabled
+  test.skip('embed: only required params', async () => {
+    const responsePromise = client.engines.embed('model', { body_model: 'model' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -30,5 +30,24 @@ describe('resource engines', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('embed: required and optional params', async () => {
+    const response = await client.engines.embed('model', {
+      body_model: 'model',
+      api_base: 'api_base',
+      api_key: 'api_key',
+      api_type: 'api_type',
+      api_version: 'api_version',
+      caching: true,
+      custom_llm_provider: 'string',
+      input: ['string'],
+      litellm_call_id: 'litellm_call_id',
+      litellm_logging_obj: { foo: 'bar' },
+      logger_fn: 'logger_fn',
+      timeout: 0,
+      user: 'user',
+    });
   });
 });

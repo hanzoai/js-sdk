@@ -10,6 +10,9 @@ export class Azure extends APIResource {
    * Call any azure endpoint using the proxy.
    *
    * Just use `{PROXY_BASE_URL}/azure/{endpoint:path}`
+   *
+   * Checks if the deployment id in the url is a litellm model name. If so, it will
+   * route using the llm_router.allm_passthrough_route.
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/azure/${endpoint}`, options);
@@ -19,6 +22,9 @@ export class Azure extends APIResource {
    * Call any azure endpoint using the proxy.
    *
    * Just use `{PROXY_BASE_URL}/azure/{endpoint:path}`
+   *
+   * Checks if the deployment id in the url is a litellm model name. If so, it will
+   * route using the llm_router.allm_passthrough_route.
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/azure/${endpoint}`, options);
@@ -28,6 +34,9 @@ export class Azure extends APIResource {
    * Call any azure endpoint using the proxy.
    *
    * Just use `{PROXY_BASE_URL}/azure/{endpoint:path}`
+   *
+   * Checks if the deployment id in the url is a litellm model name. If so, it will
+   * route using the llm_router.allm_passthrough_route.
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/azure/${endpoint}`, options);
@@ -37,6 +46,9 @@ export class Azure extends APIResource {
    * Call any azure endpoint using the proxy.
    *
    * Just use `{PROXY_BASE_URL}/azure/{endpoint:path}`
+   *
+   * Checks if the deployment id in the url is a litellm model name. If so, it will
+   * route using the llm_router.allm_passthrough_route.
    */
   call(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/azure/${endpoint}`, options);
@@ -46,6 +58,9 @@ export class Azure extends APIResource {
    * Call any azure endpoint using the proxy.
    *
    * Just use `{PROXY_BASE_URL}/azure/{endpoint:path}`
+   *
+   * Checks if the deployment id in the url is a litellm model name. If so, it will
+   * route using the llm_router.allm_passthrough_route.
    */
   patch(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/azure/${endpoint}`, options);

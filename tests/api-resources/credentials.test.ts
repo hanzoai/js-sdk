@@ -8,10 +8,10 @@ const client = new Hanzo({
 });
 
 describe('resource credentials', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.credentials.create({
-      credential_info: {},
+      credential_info: { foo: 'bar' },
       credential_name: 'credential_name',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -23,17 +23,17 @@ describe('resource credentials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.credentials.create({
-      credential_info: {},
+      credential_info: { foo: 'bar' },
       credential_name: 'credential_name',
-      credential_values: {},
+      credential_values: { foo: 'bar' },
       model_id: 'model_id',
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.credentials.list();
     const rawResponse = await responsePromise.asResponse();
@@ -45,7 +45,7 @@ describe('resource credentials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.credentials.delete('credential_name');
     const rawResponse = await responsePromise.asResponse();

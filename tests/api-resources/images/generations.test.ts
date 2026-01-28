@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource generations', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.images.generations.create();
     const rawResponse = await responsePromise.asResponse();
@@ -18,5 +18,13 @@ describe('resource generations', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('create: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.images.generations.create({ model: 'model' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Hanzo.NotFoundError);
   });
 });

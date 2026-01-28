@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource spend', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listTags', async () => {
     const responsePromise = client.global.spend.listTags();
     const rawResponse = await responsePromise.asResponse();
@@ -20,18 +20,22 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listTags: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.global.spend.listTags(
-        { end_date: 'end_date', start_date: 'start_date', tags: 'tags' },
+        {
+          end_date: 'end_date',
+          start_date: 'start_date',
+          tags: 'tags',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('reset', async () => {
     const responsePromise = client.global.spend.reset();
     const rawResponse = await responsePromise.asResponse();
@@ -43,7 +47,7 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveReport', async () => {
     const responsePromise = client.global.spend.retrieveReport();
     const rawResponse = await responsePromise.asResponse();
@@ -55,7 +59,7 @@ describe('resource spend', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveReport: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(

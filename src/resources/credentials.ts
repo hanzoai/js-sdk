@@ -30,11 +30,11 @@ export class Credentials extends APIResource {
 }
 
 export interface CredentialItem {
-  credential_info: unknown;
+  credential_info: { [key: string]: unknown };
 
   credential_name: string;
 
-  credential_values: unknown;
+  credential_values: { [key: string]: unknown };
 }
 
 export type CredentialCreateResponse = unknown;
@@ -44,11 +44,11 @@ export type CredentialListResponse = unknown;
 export type CredentialDeleteResponse = unknown;
 
 export interface CredentialCreateParams {
-  credential_info: unknown;
+  credential_info: { [key: string]: unknown };
 
   credential_name: string;
 
-  credential_values?: unknown | null;
+  credential_values?: { [key: string]: unknown } | null;
 
   model_id?: string | null;
 }

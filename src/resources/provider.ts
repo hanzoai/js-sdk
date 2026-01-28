@@ -7,7 +7,7 @@ import { RequestOptions } from '../internal/request-options';
 export class Provider extends APIResource {
   /**
    * Provider Budget Routing - Get Budget, Spend Details
-   * https://docs.hanzo.ai/docs/proxy/provider_budget_routing
+   * https://docs.litellm.ai/docs/proxy/provider_budget_routing
    *
    * Use this endpoint to check current budget, spend and budget reset time for a
    * provider
@@ -61,7 +61,7 @@ export class Provider extends APIResource {
  * budget configs.
  */
 export interface ProviderListBudgetsResponse {
-  providers?: Record<string, ProviderListBudgetsResponse.Providers>;
+  providers?: { [key: string]: ProviderListBudgetsResponse.Providers };
 }
 
 export namespace ProviderListBudgetsResponse {

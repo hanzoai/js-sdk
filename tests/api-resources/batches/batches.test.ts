@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource batches', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.batches.create();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -28,7 +28,7 @@ describe('resource batches', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.batches.retrieve('batch_id');
     const rawResponse = await responsePromise.asResponse();
@@ -40,7 +40,7 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -48,7 +48,7 @@ describe('resource batches', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.batches.list();
     const rawResponse = await responsePromise.asResponse();
@@ -60,18 +60,23 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.batches.list(
-        { after: 'after', limit: 0, provider: 'provider' },
+        {
+          after: 'after',
+          limit: 0,
+          provider: 'provider',
+          target_model_names: 'target_model_names',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('cancelWithProvider: only required params', async () => {
     const responsePromise = client.batches.cancelWithProvider('batch_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -83,12 +88,12 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('cancelWithProvider: required and optional params', async () => {
     const response = await client.batches.cancelWithProvider('batch_id', { provider: 'provider' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('createWithProvider', async () => {
     const responsePromise = client.batches.createWithProvider('provider');
     const rawResponse = await responsePromise.asResponse();
@@ -100,7 +105,7 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listWithProvider', async () => {
     const responsePromise = client.batches.listWithProvider('provider');
     const rawResponse = await responsePromise.asResponse();
@@ -112,19 +117,23 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('listWithProvider: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.batches.listWithProvider(
         'provider',
-        { after: 'after', limit: 0 },
+        {
+          after: 'after',
+          limit: 0,
+          target_model_names: 'target_model_names',
+        },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveWithProvider: only required params', async () => {
     const responsePromise = client.batches.retrieveWithProvider('batch_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -136,7 +145,7 @@ describe('resource batches', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieveWithProvider: required and optional params', async () => {
     const response = await client.batches.retrieveWithProvider('batch_id', { provider: 'provider' });
   });

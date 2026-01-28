@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource files', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.files.create('provider', {
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -23,16 +23,19 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.files.create('provider', {
       file: await toFile(Buffer.from('# my file contents'), 'README.md'),
       purpose: 'purpose',
       custom_llm_provider: 'custom_llm_provider',
+      litellm_metadata: 'litellm_metadata',
+      target_model_names: 'target_model_names',
+      target_storage: 'target_storage',
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.files.retrieve('file_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,12 +47,12 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.files.retrieve('file_id', { provider: 'provider' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.files.list('provider');
     const rawResponse = await responsePromise.asResponse();
@@ -61,15 +64,19 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.files.list('provider', { purpose: 'purpose' }, { path: '/_stainless_unknown_path' }),
+      client.files.list(
+        'provider',
+        { purpose: 'purpose', target_model_names: 'target_model_names' },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.files.delete('file_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -81,7 +88,7 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.files.delete('file_id', { provider: 'provider' });
   });
