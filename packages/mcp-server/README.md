@@ -41,14 +41,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=hanzoai-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImhhbnpvYWktbWNwIl0sImVudiI6eyJIQU5aT19BUElfS0VZIjoiU2V0IHlvdXIgSEFOWk9fQVBJX0tFWSBoZXJlLiJ9fQ)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=hanzoai-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImhhbnpvYWktbWNwIl0sImVudiI6eyJIQU5aT19BUElfS0VZIjoiTXkgQVBJIEtleSJ9fQ)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22hanzoai-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22hanzoai-mcp%22%5D%2C%22env%22%3A%7B%22HANZO_API_KEY%22%3A%22Set%20your%20HANZO_API_KEY%20here.%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22hanzoai-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22hanzoai-mcp%22%5D%2C%22env%22%3A%7B%22HANZO_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)
 
 ### Claude Code
 
@@ -56,7 +56,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add hanzoai_mcp_api --env HANZO_API_KEY="Your HANZO_API_KEY here." -- npx -y hanzoai-mcp
+claude mcp add hanzoai_mcp_api --env HANZO_API_KEY="My API Key" -- npx -y hanzoai-mcp
 ```
 
 ## Code Mode
