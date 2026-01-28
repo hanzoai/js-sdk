@@ -2,58 +2,121 @@
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { endpoints, HandlerFunction } from './tools';
-import { CallToolRequestSchema, ListToolsRequestSchema, Tool } from '@modelcontextprotocol/sdk/types.js';
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+  SetLevelRequestSchema,
+} from '@modelcontextprotocol/sdk/types.js';
+import { ClientOptions } from 'hanzoai';
 import Hanzo from 'hanzoai';
-export { endpoints } from './tools';
+import { codeTool } from './code-tool';
+import docsSearchTool from './docs-search-tool';
+import { McpOptions } from './options';
+import { HandlerFunction, McpTool } from './types';
+
+export { McpOptions } from './options';
+export { ClientOptions } from 'hanzoai';
+
+export const newMcpServer = () =>
+  new McpServer(
+    {
+      name: 'hanzoai_api',
+      version: '0.1.0-alpha.2',
+    },
+    { capabilities: { tools: {}, logging: {} } },
+  );
 
 // Create server instance
-export const server = new McpServer(
-  {
-    name: 'hanzoai_api',
-    version: '0.1.0-alpha.1',
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
-  },
-);
+export const server = newMcpServer();
 
 /**
  * Initializes the provided MCP Server with the given tools and handlers.
  * If not provided, the default client, tools and handlers will be used.
  */
-export function init(params: {
+export function initMcpServer(params: {
   server: Server | McpServer;
-  client?: Hanzo;
-  endpoints?: { tool: Tool; handler: HandlerFunction }[];
+  clientOptions?: ClientOptions;
+  mcpOptions?: McpOptions;
 }) {
   const server = params.server instanceof McpServer ? params.server.server : params.server;
-  const providedEndpoints = params.endpoints || endpoints;
-  const tools = providedEndpoints.map((endpoint) => endpoint.tool);
-  const handlers = Object.fromEntries(
-    providedEndpoints.map((endpoint) => [endpoint.tool.name, endpoint.handler]),
-  );
 
-  const client = params.client || new Hanzo({});
+  const logAtLevel =
+    (level: 'debug' | 'info' | 'warning' | 'error') =>
+    (message: string, ...rest: unknown[]) => {
+      void server.sendLoggingMessage({
+        level,
+        data: { message, rest },
+      });
+    };
+  const logger = {
+    debug: logAtLevel('debug'),
+    info: logAtLevel('info'),
+    warn: logAtLevel('warning'),
+    error: logAtLevel('error'),
+  };
+
+  let client = new Hanzo({
+    ...{ environment: (readEnv('HANZO_ENVIRONMENT') || undefined) as any },
+    logger,
+    ...params.clientOptions,
+    defaultHeaders: {
+      ...params.clientOptions?.defaultHeaders,
+      'X-Stainless-MCP': 'true',
+    },
+  });
+
+  const providedTools = selectTools(params.mcpOptions);
+  const toolMap = Object.fromEntries(providedTools.map((mcpTool) => [mcpTool.tool.name, mcpTool]));
 
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
-      tools,
+      tools: providedTools.map((mcpTool) => mcpTool.tool),
     };
   });
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
-
-    const handler = handlers[name];
-    if (!handler) {
+    const mcpTool = toolMap[name];
+    if (!mcpTool) {
       throw new Error(`Unknown tool: ${name}`);
     }
 
-    return executeHandler(handler, client, args);
+    return executeHandler(mcpTool.handler, client, args);
   });
+
+  server.setRequestHandler(SetLevelRequestSchema, async (request) => {
+    const { level } = request.params;
+    switch (level) {
+      case 'debug':
+        client = client.withOptions({ logLevel: 'debug' });
+        break;
+      case 'info':
+        client = client.withOptions({ logLevel: 'info' });
+        break;
+      case 'notice':
+      case 'warning':
+        client = client.withOptions({ logLevel: 'warn' });
+        break;
+      case 'error':
+        client = client.withOptions({ logLevel: 'error' });
+        break;
+      default:
+        client = client.withOptions({ logLevel: 'off' });
+        break;
+    }
+    return {};
+  });
+}
+
+/**
+ * Selects the tools to include in the MCP Server based on the provided options.
+ */
+export function selectTools(options?: McpOptions): McpTool[] {
+  const includedTools = [codeTool()];
+  if (options?.includeDocsTools ?? true) {
+    includedTools.push(docsSearchTool);
+  }
+  return includedTools;
 }
 
 /**
@@ -64,26 +127,29 @@ export async function executeHandler(
   client: Hanzo,
   args: Record<string, unknown> | undefined,
 ) {
-  const result = await handler(client, args || {});
-  return {
-    content: [
-      {
-        type: 'text',
-        text: JSON.stringify(result, null, 2),
-      },
-    ],
-  };
+  return await handler(client, args || {});
 }
 
-export const readEnv = (env: string): string => {
-  let envValue = undefined;
+export const readEnv = (env: string): string | undefined => {
   if (typeof (globalThis as any).process !== 'undefined') {
-    envValue = (globalThis as any).process.env?.[env]?.trim();
+    return (globalThis as any).process.env?.[env]?.trim();
   } else if (typeof (globalThis as any).Deno !== 'undefined') {
-    envValue = (globalThis as any).Deno.env?.get?.(env)?.trim();
+    return (globalThis as any).Deno.env?.get?.(env)?.trim();
   }
+  return;
+};
+
+export const readEnvOrError = (env: string): string => {
+  let envValue = readEnv(env);
   if (envValue === undefined) {
     throw new Error(`Environment variable ${env} is not set`);
   }
   return envValue;
+};
+
+export const requireValue = <T>(value: T | undefined, description: string): T => {
+  if (value === undefined) {
+    throw new Error(`Missing required value: ${description}`);
+  }
+  return value;
 };

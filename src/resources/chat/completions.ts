@@ -23,20 +23,426 @@ export class Completions extends APIResource {
    *     ]
    * }'
    * ```
+   *
+   * @example
+   * ```ts
+   * const completion = await client.chat.completions.create({
+   *   messages: [
+   *     { content: 'Hello, how are you?', role: 'user' },
+   *   ],
+   *   model: 'model',
+   * });
+   * ```
    */
-  create(
-    params: CompletionCreateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { model } = params ?? {};
-    return this._client.post('/v1/chat/completions', { query: { model }, ...options });
+  create(body: CompletionCreateParams, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post('/v1/chat/completions', { body, ...options });
   }
 }
 
 export type CompletionCreateResponse = unknown;
 
 export interface CompletionCreateParams {
-  model?: string | null;
+  messages: Array<
+    | CompletionCreateParams.ChatCompletionUserMessage
+    | CompletionCreateParams.ChatCompletionAssistantMessage
+    | CompletionCreateParams.ChatCompletionToolMessage
+    | CompletionCreateParams.ChatCompletionSystemMessage
+    | CompletionCreateParams.ChatCompletionFunctionMessage
+    | CompletionCreateParams.ChatCompletionDeveloperMessage
+  >;
+
+  model: string;
+
+  caching?: boolean | null;
+
+  context_window_fallback_dict?: { [key: string]: string } | null;
+
+  fallbacks?: Array<string> | null;
+
+  frequency_penalty?: number | null;
+
+  function_call?: string | { [key: string]: unknown } | null;
+
+  functions?: Array<{ [key: string]: unknown }> | null;
+
+  guardrails?: Array<string> | null;
+
+  logit_bias?: { [key: string]: number } | null;
+
+  logprobs?: boolean | null;
+
+  max_tokens?: number | null;
+
+  metadata?: { [key: string]: unknown } | null;
+
+  n?: number | null;
+
+  num_retries?: number | null;
+
+  parallel_tool_calls?: boolean | null;
+
+  presence_penalty?: number | null;
+
+  response_format?: { [key: string]: unknown } | null;
+
+  seed?: number | null;
+
+  service_tier?: string | null;
+
+  stop?: string | Array<string> | null;
+
+  stream?: boolean | null;
+
+  stream_options?: { [key: string]: unknown } | null;
+
+  temperature?: number | null;
+
+  tool_choice?: string | { [key: string]: unknown } | null;
+
+  tools?: Array<{ [key: string]: unknown }> | null;
+
+  top_logprobs?: number | null;
+
+  top_p?: number | null;
+
+  user?: string | null;
+}
+
+export namespace CompletionCreateParams {
+  export interface ChatCompletionUserMessage {
+    content:
+      | string
+      | Array<
+          | ChatCompletionUserMessage.ChatCompletionTextObject
+          | ChatCompletionUserMessage.ChatCompletionImageObject
+          | ChatCompletionUserMessage.ChatCompletionAudioObject
+          | ChatCompletionUserMessage.ChatCompletionDocumentObject
+          | ChatCompletionUserMessage.ChatCompletionVideoObject
+          | ChatCompletionUserMessage.ChatCompletionFileObject
+        >;
+
+    role: 'user';
+
+    cache_control?: ChatCompletionUserMessage.CacheControl;
+  }
+
+  export namespace ChatCompletionUserMessage {
+    export interface ChatCompletionTextObject {
+      text: string;
+
+      type: 'text';
+
+      cache_control?: ChatCompletionTextObject.CacheControl;
+    }
+
+    export namespace ChatCompletionTextObject {
+      export interface CacheControl {
+        type: 'ephemeral';
+      }
+    }
+
+    export interface ChatCompletionImageObject {
+      image_url: string | ChatCompletionImageObject.ChatCompletionImageURLObject;
+
+      type: 'image_url';
+    }
+
+    export namespace ChatCompletionImageObject {
+      export interface ChatCompletionImageURLObject {
+        url: string;
+
+        detail?: string;
+
+        format?: string;
+      }
+    }
+
+    export interface ChatCompletionAudioObject {
+      input_audio: ChatCompletionAudioObject.InputAudio;
+
+      type: 'input_audio';
+    }
+
+    export namespace ChatCompletionAudioObject {
+      export interface InputAudio {
+        data: string;
+
+        format: 'wav' | 'mp3';
+      }
+    }
+
+    export interface ChatCompletionDocumentObject {
+      citations: ChatCompletionDocumentObject.Citations | null;
+
+      context: string;
+
+      source: ChatCompletionDocumentObject.Source;
+
+      title: string;
+
+      type: 'document';
+    }
+
+    export namespace ChatCompletionDocumentObject {
+      export interface Citations {
+        enabled: boolean;
+      }
+
+      export interface Source {
+        data: string;
+
+        media_type: string;
+
+        type: 'text';
+      }
+    }
+
+    export interface ChatCompletionVideoObject {
+      type: 'video_url';
+
+      video_url: string | ChatCompletionVideoObject.ChatCompletionVideoURLObject;
+    }
+
+    export namespace ChatCompletionVideoObject {
+      export interface ChatCompletionVideoURLObject {
+        url: string;
+
+        detail?: string;
+      }
+    }
+
+    export interface ChatCompletionFileObject {
+      file: ChatCompletionFileObject.File;
+
+      type: 'file';
+    }
+
+    export namespace ChatCompletionFileObject {
+      export interface File {
+        file_data?: string;
+
+        file_id?: string;
+
+        filename?: string;
+
+        format?: string;
+      }
+    }
+
+    export interface CacheControl {
+      type: 'ephemeral';
+    }
+  }
+
+  export interface ChatCompletionAssistantMessage {
+    role: 'assistant';
+
+    cache_control?: ChatCompletionAssistantMessage.CacheControl;
+
+    content?:
+      | string
+      | Array<
+          | ChatCompletionAssistantMessage.ChatCompletionTextObject
+          | ChatCompletionAssistantMessage.ChatCompletionThinkingBlock
+        >
+      | null;
+
+    function_call?: ChatCompletionAssistantMessage.FunctionCall | null;
+
+    name?: string | null;
+
+    reasoning_content?: string | null;
+
+    thinking_blocks?: Array<
+      | ChatCompletionAssistantMessage.ChatCompletionThinkingBlock
+      | ChatCompletionAssistantMessage.ChatCompletionRedactedThinkingBlock
+    > | null;
+
+    tool_calls?: Array<ChatCompletionAssistantMessage.ToolCall> | null;
+  }
+
+  export namespace ChatCompletionAssistantMessage {
+    export interface CacheControl {
+      type: 'ephemeral';
+    }
+
+    export interface ChatCompletionTextObject {
+      text: string;
+
+      type: 'text';
+
+      cache_control?: ChatCompletionTextObject.CacheControl;
+    }
+
+    export namespace ChatCompletionTextObject {
+      export interface CacheControl {
+        type: 'ephemeral';
+      }
+    }
+
+    export interface ChatCompletionThinkingBlock {
+      type: 'thinking';
+
+      cache_control?:
+        | { [key: string]: unknown }
+        | ChatCompletionThinkingBlock.ChatCompletionCachedContent
+        | null;
+
+      signature?: string;
+
+      thinking?: string;
+    }
+
+    export namespace ChatCompletionThinkingBlock {
+      export interface ChatCompletionCachedContent {
+        type: 'ephemeral';
+      }
+    }
+
+    export interface FunctionCall {
+      arguments?: string;
+
+      name?: string | null;
+
+      provider_specific_fields?: { [key: string]: unknown } | null;
+    }
+
+    export interface ChatCompletionThinkingBlock {
+      type: 'thinking';
+
+      cache_control?:
+        | { [key: string]: unknown }
+        | ChatCompletionThinkingBlock.ChatCompletionCachedContent
+        | null;
+
+      signature?: string;
+
+      thinking?: string;
+    }
+
+    export namespace ChatCompletionThinkingBlock {
+      export interface ChatCompletionCachedContent {
+        type: 'ephemeral';
+      }
+    }
+
+    export interface ChatCompletionRedactedThinkingBlock {
+      type: 'redacted_thinking';
+
+      cache_control?:
+        | { [key: string]: unknown }
+        | ChatCompletionRedactedThinkingBlock.ChatCompletionCachedContent
+        | null;
+
+      data?: string;
+    }
+
+    export namespace ChatCompletionRedactedThinkingBlock {
+      export interface ChatCompletionCachedContent {
+        type: 'ephemeral';
+      }
+    }
+
+    export interface ToolCall {
+      id: string | null;
+
+      function: ToolCall.Function;
+
+      type: 'function';
+    }
+
+    export namespace ToolCall {
+      export interface Function {
+        arguments?: string;
+
+        name?: string | null;
+
+        provider_specific_fields?: { [key: string]: unknown } | null;
+      }
+    }
+  }
+
+  export interface ChatCompletionToolMessage {
+    content: string | Array<ChatCompletionToolMessage.UnionMember1>;
+
+    role: 'tool';
+
+    tool_call_id: string;
+  }
+
+  export namespace ChatCompletionToolMessage {
+    export interface UnionMember1 {
+      text: string;
+
+      type: 'text';
+
+      cache_control?: UnionMember1.CacheControl;
+    }
+
+    export namespace UnionMember1 {
+      export interface CacheControl {
+        type: 'ephemeral';
+      }
+    }
+  }
+
+  export interface ChatCompletionSystemMessage {
+    content: string | Array<unknown>;
+
+    role: 'system';
+
+    cache_control?: ChatCompletionSystemMessage.CacheControl;
+
+    name?: string;
+  }
+
+  export namespace ChatCompletionSystemMessage {
+    export interface CacheControl {
+      type: 'ephemeral';
+    }
+  }
+
+  export interface ChatCompletionFunctionMessage {
+    content: string | Array<ChatCompletionFunctionMessage.UnionMember1> | null;
+
+    name: string;
+
+    role: 'function';
+
+    tool_call_id: string | null;
+  }
+
+  export namespace ChatCompletionFunctionMessage {
+    export interface UnionMember1 {
+      text: string;
+
+      type: 'text';
+
+      cache_control?: UnionMember1.CacheControl;
+    }
+
+    export namespace UnionMember1 {
+      export interface CacheControl {
+        type: 'ephemeral';
+      }
+    }
+  }
+
+  export interface ChatCompletionDeveloperMessage {
+    content: string | Array<unknown>;
+
+    role: 'developer';
+
+    cache_control?: ChatCompletionDeveloperMessage.CacheControl;
+
+    name?: string;
+  }
+
+  export namespace ChatCompletionDeveloperMessage {
+    export interface CacheControl {
+      type: 'ephemeral';
+    }
+  }
 }
 
 export declare namespace Completions {

@@ -3,6 +3,7 @@
 export { FineTuning } from './fine-tuning';
 export {
   Jobs,
+  type LiteLlmFineTuningJobCreate,
   type JobCreateResponse,
   type JobRetrieveResponse,
   type JobListResponse,

@@ -58,7 +58,7 @@ const noopLogger = {
   debug: noop,
 };
 
-let cachedLoggers = new WeakMap<Logger, [LogLevel, Logger]>();
+let cachedLoggers = /* @__PURE__ */ new WeakMap<Logger, [LogLevel, Logger]>();
 
 export function loggerFor(client: Hanzo): Logger {
   const logger = client.logger;
@@ -106,7 +106,7 @@ export const formatRequestDetails = (details: {
         ([name, value]) => [
           name,
           (
-            name.toLowerCase() === 'ocp-apim-subscription-key' ||
+            name.toLowerCase() === 'x-litellm-api-key' ||
             name.toLowerCase() === 'authorization' ||
             name.toLowerCase() === 'cookie' ||
             name.toLowerCase() === 'set-cookie'

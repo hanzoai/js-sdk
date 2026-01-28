@@ -1,6 +1,6 @@
-import { File } from './shims/file.node.js';
 import { BlobPart, getName, makeFile, isAsyncIterable } from './uploads';
 import type { FilePropertyBag } from './builtin-types';
+import { checkFileSupport } from './uploads';
 
 type BlobLikePart = string | ArrayBuffer | ArrayBufferView | BlobLike | DataView;
 
@@ -73,7 +73,7 @@ export type ToFileInput =
 
 /**
  * Helper for creating a {@link File} to pass to an SDK upload method from a variety of different data formats
- * @param value the raw content of the file.  Can be an {@link Uploadable}, {@link BlobLikePart}, or {@link AsyncIterable} of {@link BlobLikePart}s
+ * @param value the raw content of the file. Can be an {@link Uploadable}, BlobLikePart, or AsyncIterable of BlobLikeParts
  * @param {string=} name the name of the file. If omitted, toFile will try to determine a file name from bits if possible
  * @param {Object=} options additional properties
  * @param {string=} options.type the MIME type of the content
@@ -85,12 +85,14 @@ export async function toFile(
   name?: string | null | undefined,
   options?: FilePropertyBag | undefined,
 ): Promise<File> {
+  checkFileSupport();
+
   // If it's a promise, resolve it.
   value = await value;
 
   // If we've been given a `File` we don't need to do anything
   if (isFileLike(value)) {
-    if (File && value instanceof File) {
+    if (value instanceof File) {
       return value;
     }
     return makeFile([await value.arrayBuffer()], value.name);

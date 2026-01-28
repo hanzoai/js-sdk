@@ -3,6 +3,7 @@
 export { Cancel, type CancelCreateResponse } from './cancel';
 export {
   Jobs,
+  type LiteLlmFineTuningJobCreate,
   type JobCreateResponse,
   type JobRetrieveResponse,
   type JobListResponse,
