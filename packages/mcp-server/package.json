@@ -1,6 +1,6 @@
 {
   "name": "hanzoai-mcp",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "The official MCP Server for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
   "types": "dist/index.d.ts",
