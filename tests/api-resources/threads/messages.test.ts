@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource messages', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.threads.messages.create('thread_id');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource messages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.threads.messages.list('thread_id');
     const rawResponse = await responsePromise.asResponse();

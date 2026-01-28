@@ -1,12 +1,21 @@
 # Hanzo TypeScript API Library
 
-[![NPM version](https://img.shields.io/npm/v/hanzoai.svg)](https://npmjs.org/package/hanzoai) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/hanzoai)
+[![NPM version](<https://img.shields.io/npm/v/hanzoai.svg?label=npm%20(stable)>)](https://npmjs.org/package/hanzoai) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/hanzoai)
 
 This library provides convenient access to the Hanzo REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [docs.hanzo.ai](https://docs.hanzo.ai). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
+
+## MCP Server
+
+Use the Hanzo MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.
+
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=hanzoai-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImhhbnpvYWktbWNwIl0sImVudiI6eyJIQU5aT19BUElfS0VZIjoiTXkgQVBJIEtleSJ9fQ)
+[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22hanzoai-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22hanzoai-mcp%22%5D%2C%22env%22%3A%7B%22HANZO_API_KEY%22%3A%22My%20API%20Key%22%7D%7D)
+
+> Note: You may need to set environment variables in your MCP client.
 
 ## Installation
 
@@ -27,11 +36,7 @@ const client = new Hanzo({
   environment: 'sandbox', // defaults to 'production'
 });
 
-async function main() {
-  const response = await client.getHome();
-}
-
-main();
+const response = await client.getHome();
 ```
 
 ### Request & Response types
@@ -47,11 +52,7 @@ const client = new Hanzo({
   environment: 'sandbox', // defaults to 'production'
 });
 
-async function main() {
-  const response: unknown = await client.getHome();
-}
-
-main();
+const response: unknown = await client.getHome();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -93,22 +94,18 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-async function main() {
-  const response = await client.getHome().catch(async (err) => {
-    if (err instanceof Hanzo.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
-}
-
-main();
+const response = await client.getHome().catch(async (err) => {
+  if (err instanceof Hanzo.APIError) {
+    console.log(err.status); // 400
+    console.log(err.name); // BadRequestError
+    console.log(err.headers); // {server: 'nginx', ...}
+  } else {
+    throw err;
+  }
+});
 ```
 
-Error codes are as followed:
+Error codes are as follows:
 
 | Status Code | Error Type                 |
 | ----------- | -------------------------- |
@@ -263,9 +260,8 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.foo.create({
-  foo: 'my_param',
-  bar: 12,
+client.getHome({
+  // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
 });
@@ -383,7 +379,7 @@ TypeScript >= 4.9 is supported.
 The following runtimes are supported:
 
 - Web browsers (Up-to-date Chrome, Firefox, Safari, Edge, and more)
-- Node.js 18 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
+- Node.js 20 LTS or later ([non-EOL](https://endoflife.date/nodejs)) versions.
 - Deno v1.28.0 or higher.
 - Bun 1.0 or later.
 - Cloudflare Workers.

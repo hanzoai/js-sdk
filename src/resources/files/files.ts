@@ -23,7 +23,7 @@ export class Files extends APIResource {
    *
    * ```
    * curl http://localhost:4000/v1/files         -H "Authorization: Bearer sk-1234"         -F purpose="batch"         -F file="@mydata.jsonl"
-   *
+   *     -F expires_after[anchor]="created_at"         -F expires_after[seconds]=2592000
    * ```
    */
   create(provider: string, body: FileCreateParams, options?: RequestOptions): APIPromise<unknown> {
@@ -109,6 +109,12 @@ export interface FileCreateParams {
   purpose: string;
 
   custom_llm_provider?: string;
+
+  litellm_metadata?: string | null;
+
+  target_model_names?: string;
+
+  target_storage?: string;
 }
 
 export interface FileRetrieveParams {
@@ -117,6 +123,8 @@ export interface FileRetrieveParams {
 
 export interface FileListParams {
   purpose?: string | null;
+
+  target_model_names?: string | null;
 }
 
 export interface FileDeleteParams {
