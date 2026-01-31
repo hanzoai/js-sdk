@@ -73,7 +73,10 @@ export function codeTool(): McpTool {
             readEnv('HANZO_API_KEY') ?? client.apiKey,
             'set HANZO_API_KEY environment variable or provide apiKey client option',
           ),
-          HANZO_BASE_URL: readEnv('HANZO_BASE_URL') ?? client.baseURL ?? undefined,
+          HANZO_BASE_URL:
+            readEnv('HANZO_BASE_URL') ?? readEnv('HANZO_ENVIRONMENT') ?
+              undefined
+            : client.baseURL ?? undefined,
         }),
       },
       body: JSON.stringify({
