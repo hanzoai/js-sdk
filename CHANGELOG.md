@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2026-01-31)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Bug Fixes
+
+* **mcp:** do not fallback on baseUrl if environment env variable is set ([ef76876](https://github.com/hanzoai/js-sdk/commit/ef76876f6f4a4d52fdaa372a0c239acefe349e0d))
+
+
+### Chores
+
+* **mcp:** up tsconfig lib version to es2022 ([c7513a5](https://github.com/hanzoai/js-sdk/commit/c7513a547c48429ef13a55566f07fb031c959cbe))
+
 ## 0.1.0-alpha.2 (2026-01-28)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
