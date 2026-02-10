@@ -41,9 +41,7 @@ describe('resource utils', () => {
   test.skip('tokenCounter: required and optional params', async () => {
     const response = await client.utils.tokenCounter({
       model: 'model',
-      call_endpoint: true,
-      contents: [{ foo: 'bar' }],
-      messages: [{ foo: 'bar' }],
+      messages: [{}],
       prompt: 'prompt',
     });
   });
@@ -52,7 +50,7 @@ describe('resource utils', () => {
   test.skip('transformRequest: only required params', async () => {
     const responsePromise = client.utils.transformRequest({
       call_type: 'embedding',
-      request_body: { foo: 'bar' },
+      request_body: {},
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -67,7 +65,7 @@ describe('resource utils', () => {
   test.skip('transformRequest: required and optional params', async () => {
     const response = await client.utils.transformRequest({
       call_type: 'embedding',
-      request_body: { foo: 'bar' },
+      request_body: {},
     });
   });
 });

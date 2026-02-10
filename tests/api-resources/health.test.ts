@@ -24,7 +24,7 @@ describe('resource health', () => {
   test.skip('checkAll: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.health.checkAll({ model: 'model', model_id: 'model_id' }, { path: '/_stainless_unknown_path' }),
+      client.health.checkAll({ model: 'model' }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
