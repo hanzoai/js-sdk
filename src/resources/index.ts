@@ -100,12 +100,12 @@ export {
 export {
   Customer,
   type BlockUsers,
-  type LiteLlmEndUserTable,
   type CustomerCreateResponse,
   type CustomerUpdateResponse,
   type CustomerListResponse,
   type CustomerDeleteResponse,
   type CustomerBlockResponse,
+  type CustomerRetrieveInfoResponse,
   type CustomerUnblockResponse,
   type CustomerCreateParams,
   type CustomerUpdateParams,
@@ -116,12 +116,7 @@ export {
 } from './customer';
 export { Delete, type DeleteCreateAllowedIPResponse, type DeleteCreateAllowedIPParams } from './delete';
 export { Embeddings, type EmbeddingCreateResponse, type EmbeddingCreateParams } from './embeddings';
-export {
-  Engines,
-  type EngineCompleteResponse,
-  type EngineEmbedResponse,
-  type EngineEmbedParams,
-} from './engines/engines';
+export { Engines, type EngineCompleteResponse, type EngineEmbedResponse } from './engines/engines';
 export {
   EuAssemblyai,
   type EuAssemblyaiCreateResponse,
@@ -193,6 +188,7 @@ export {
 } from './langfuse';
 export {
   Model,
+  type ConfigurableClientsideParamsCustomAuth,
   type ModelInfo,
   type ModelCreateResponse,
   type ModelDeleteResponse,
@@ -216,18 +212,16 @@ export {
 } from './openai/openai';
 export {
   Organization,
-  type BudgetTable,
   type OrgMember,
-  type OrganizationMembershipTable,
-  type OrganizationTableWithMembers,
-  type UserRoles,
   type OrganizationCreateResponse,
+  type OrganizationUpdateResponse,
   type OrganizationListResponse,
   type OrganizationDeleteResponse,
   type OrganizationAddMemberResponse,
   type OrganizationDeleteMemberResponse,
+  type OrganizationUpdateMemberResponse,
   type OrganizationCreateParams,
-  type OrganizationListParams,
+  type OrganizationUpdateParams,
   type OrganizationDeleteParams,
   type OrganizationAddMemberParams,
   type OrganizationDeleteMemberParams,
@@ -291,10 +285,12 @@ export {
   User,
   type UserCreateResponse,
   type UserUpdateResponse,
+  type UserListResponse,
   type UserDeleteResponse,
   type UserRetrieveInfoResponse,
   type UserCreateParams,
   type UserUpdateParams,
+  type UserListParams,
   type UserDeleteParams,
   type UserRetrieveInfoParams,
 } from './user';

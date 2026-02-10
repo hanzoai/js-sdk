@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as OrganizationAPI from '../organization/organization';
 import * as CallbackAPI from './callback';
 import { Callback, CallbackAddParams, CallbackAddResponse, CallbackRetrieveResponse } from './callback';
 import * as ModelAPI from './model';
@@ -19,7 +18,7 @@ export class Team extends APIResource {
    * Allow users to create a new team. Apply user permissions to their team.
    *
    * 👉
-   * [Detailed Doc on setting team budgets](https://docs.litellm.ai/docs/proxy/team_budgets)
+   * [Detailed Doc on setting team budgets](https://docs.hanzo.ai/docs/proxy/team_budgets)
    *
    * Parameters:
    *
@@ -29,31 +28,16 @@ export class Team extends APIResource {
    * - members_with_roles: List[{"role": "admin" or "user", "user_id":
    *   "<user-id>"}] - A list of users and their roles in the team. Get user_id when
    *   making a new user via `/user/new`.
-   * - team_member_permissions: Optional[List[str]] - A list of routes that non-admin
-   *   team members can access. example: ["/key/generate", "/key/update",
-   *   "/key/delete"]
    * - metadata: Optional[dict] - Metadata for team, store information for team.
    *   Example metadata = {"extra_info": "some info"}
-   * - model_rpm_limit: Optional[Dict[str, int]] - The RPM (Requests Per Minute)
-   *   limit for this team - applied across all keys for this team.
-   * - model_tpm_limit: Optional[Dict[str, int]] - The TPM (Tokens Per Minute) limit
-   *   for this team - applied across all keys for this team.
    * - tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team -
    *   all keys with this team_id will have at max this TPM limit
    * - rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team -
    *   all keys associated with this team_id will have at max this RPM limit
-   * - rpm_limit_type: Optional[Literal["guaranteed_throughput",
-   *   "best_effort_throughput"]] - The type of RPM limit enforcement. Use
-   *   "guaranteed_throughput" to raise an error if overallocating RPM, or
-   *   "best_effort_throughput" for best effort enforcement.
-   * - tpm_limit_type: Optional[Literal["guaranteed_throughput",
-   *   "best_effort_throughput"]] - The type of TPM limit enforcement. Use
-   *   "guaranteed_throughput" to raise an error if overallocating TPM, or
-   *   "best_effort_throughput" for best effort enforcement.
    * - max_budget: Optional[float] - The maximum budget allocated to the team - all
    *   keys for this team_id will have at max this max_budget
    * - budget_duration: Optional[str] - The duration of the budget for the team. Doc
-   *   [here](https://docs.litellm.ai/docs/proxy/team_budgets)
+   *   [here](https://docs.hanzo.ai/docs/proxy/team_budgets)
    * - models: Optional[list] - A list of models associated with the team - all keys
    *   for this team_id will have at most, these models. If empty, assumes all models
    *   are allowed.
@@ -62,46 +46,15 @@ export class Team extends APIResource {
    * - members: Optional[List] - Control team members via `/team/member/add` and
    *   `/team/member/delete`.
    * - tags: Optional[List[str]] - Tags for
-   *   [tracking spend](https://litellm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
+   *   [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
    *   and/or doing
-   *   [tag-based routing](https://litellm.vercel.app/docs/proxy/tag_routing).
-   * - prompts: Optional[List[str]] - List of prompts that the team is allowed to
-   *   use.
+   *   [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).
    * - organization_id: Optional[str] - The organization id of the team. Default is
    *   None. Create via `/organization/new`.
    * - model_aliases: Optional[dict] - Model aliases for the team.
-   *   [Docs](https://docs.litellm.ai/docs/proxy/team_based_routing#create-team-with-model-alias)
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)
    * - guardrails: Optional[List[str]] - Guardrails for the team.
-   *   [Docs](https://docs.litellm.ai/docs/proxy/guardrails)
-   * - disable_global_guardrails: Optional[bool] - Whether to disable global
-   *   guardrails for the key.
-   * - object_permission: Optional[LiteLLM_ObjectPermissionBase] - team-specific
-   *   object permission. Example - {"vector_stores": ["vector_store_1",
-   *   "vector_store_2"], "agents": ["agent_1", "agent_2"], "agent_access_groups":
-   *   ["dev_group"]}. IF null or {} then no object permission.
-   * - team_member_budget: Optional[float] - The maximum budget allocated to an
-   *   individual team member.
-   * - team_member_rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for
-   *   individual team members.
-   * - team_member_tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for
-   *   individual team members.
-   * - team_member_key_duration: Optional[str] - The duration for a team member's
-   *   key. e.g. "1d", "1w", "1mo"
-   * - allowed_passthrough_routes: Optional[List[str]] - List of allowed pass through
-   *   routes for the team.
-   * - allowed_vector_store_indexes: Optional[List[dict]] - List of allowed vector
-   *   store indexes for the key. Example - [{"index_name": "my-index",
-   *   "index_permissions": ["write", "read"]}]. If specified, the key will only be
-   *   able to use these specific vector store indexes. Create index, using
-   *   `/v1/indexes` endpoint.
-   * - secret_manager_settings: Optional[dict] - Secret manager settings for the
-   *   team. [Docs](https://docs.litellm.ai/docs/secret_managers/overview)
-   * - router_settings: Optional[UpdateRouterConfig] - team-specific router settings.
-   *   Example - {"model_group_retry_policy": {"max_retries": 5}}. IF null or {} then
-   *   no router settings.
-   *
-   * Returns:
-   *
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/guardrails) Returns:
    * - team_id: (str) Unique team id - used for tracking spend across multiple keys
    *   for same team id.
    *
@@ -130,12 +83,12 @@ export class Team extends APIResource {
    * ```
    */
   create(params: TeamCreateParams, options?: RequestOptions): APIPromise<TeamCreateResponse> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/team/new', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -150,12 +103,9 @@ export class Team extends APIResource {
    *
    * - team_id: str - The team id of the user. Required param.
    * - team_alias: Optional[str] - User defined team alias
-   * - team_member_permissions: Optional[List[str]] - A list of routes that non-admin
-   *   team members can access. example: ["/key/generate", "/key/update",
-   *   "/key/delete"]
    * - metadata: Optional[dict] - Metadata for team, store information for team.
-   *   Example metadata = {"team": "core-infra", "app": "app2", "email":
-   *   "ishaan@berri.ai" }
+   *   Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai"
+   *   }
    * - tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for this team -
    *   all keys with this team_id will have at max this TPM limit
    * - rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for this team -
@@ -163,57 +113,23 @@ export class Team extends APIResource {
    * - max_budget: Optional[float] - The maximum budget allocated to the team - all
    *   keys for this team_id will have at max this max_budget
    * - budget_duration: Optional[str] - The duration of the budget for the team. Doc
-   *   [here](https://docs.litellm.ai/docs/proxy/team_budgets)
+   *   [here](https://docs.hanzo.ai/docs/proxy/team_budgets)
    * - models: Optional[list] - A list of models associated with the team - all keys
    *   for this team_id will have at most, these models. If empty, assumes all models
    *   are allowed.
-   * - prompts: Optional[List[str]] - List of prompts that the team is allowed to
-   *   use.
    * - blocked: bool - Flag indicating if the team is blocked or not - will stop all
    *   calls from keys with this team_id.
    * - tags: Optional[List[str]] - Tags for
-   *   [tracking spend](https://litellm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
+   *   [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
    *   and/or doing
-   *   [tag-based routing](https://litellm.vercel.app/docs/proxy/tag_routing).
+   *   [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).
    * - organization_id: Optional[str] - The organization id of the team. Default is
    *   None. Create via `/organization/new`.
    * - model_aliases: Optional[dict] - Model aliases for the team.
-   *   [Docs](https://docs.litellm.ai/docs/proxy/team_based_routing#create-team-with-model-alias)
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/team_based_routing#create-team-with-model-alias)
    * - guardrails: Optional[List[str]] - Guardrails for the team.
-   *   [Docs](https://docs.litellm.ai/docs/proxy/guardrails)
-   * - disable_global_guardrails: Optional[bool] - Whether to disable global
-   *   guardrails for the key.
-   * - object_permission: Optional[LiteLLM_ObjectPermissionBase] - team-specific
-   *   object permission. Example - {"vector_stores": ["vector_store_1",
-   *   "vector_store_2"], "agents": ["agent_1", "agent_2"], "agent_access_groups":
-   *   ["dev_group"]}. IF null or {} then no object permission.
-   * - team_member_budget: Optional[float] - The maximum budget allocated to an
-   *   individual team member.
-   * - team_member_budget_duration: Optional[str] - The duration of the budget for
-   *   the team member. Doc [here](https://docs.litellm.ai/docs/proxy/team_budgets)
-   * - team_member_rpm_limit: Optional[int] - The RPM (Requests Per Minute) limit for
-   *   individual team members.
-   * - team_member_tpm_limit: Optional[int] - The TPM (Tokens Per Minute) limit for
-   *   individual team members.
-   * - team_member_key_duration: Optional[str] - The duration for a team member's
-   *   key. e.g. "1d", "1w", "1mo"
-   * - allowed_passthrough_routes: Optional[List[str]] - List of allowed pass through
-   *   routes for the team.
-   * - model_rpm_limit: Optional[Dict[str, int]] - The RPM (Requests Per Minute)
-   *   limit per model for this team. Example: {"gpt-4": 100, "gpt-3.5-turbo": 200}
-   * - model_tpm_limit: Optional[Dict[str, int]] - The TPM (Tokens Per Minute) limit
-   *   per model for this team. Example: {"gpt-4": 10000, "gpt-3.5-turbo": 20000}
-   *   Example - update team TPM Limit
-   * - allowed_vector_store_indexes: Optional[List[dict]] - List of allowed vector
-   *   store indexes for the key. Example - [{"index_name": "my-index",
-   *   "index_permissions": ["write", "read"]}]. If specified, the key will only be
-   *   able to use these specific vector store indexes. Create index, using
-   *   `/v1/indexes` endpoint.
-   * - secret_manager_settings: Optional[dict] - Secret manager settings for the
-   *   team. [Docs](https://docs.litellm.ai/docs/secret_managers/overview)
-   * - router_settings: Optional[UpdateRouterConfig] - team-specific router settings.
-   *   Example - {"model_group_retry_policy": {"max_retries": 5}}. IF null or {} then
-   *   no router settings.
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/guardrails) Example - update team TPM
+   *   Limit
    *
    * ```
    * curl --location 'http://0.0.0.0:4000/team/update'     --header 'Authorization: Bearer sk-1234'     --header 'Content-Type: application/json'     --data-raw '{
@@ -232,12 +148,12 @@ export class Team extends APIResource {
    * ```
    */
   update(params: TeamUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/team/update', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -275,18 +191,20 @@ export class Team extends APIResource {
    * ```
    */
   delete(params: TeamDeleteParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/team/delete', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
   }
 
   /**
+   * [BETA]
+   *
    * Add new members (either via user_email or user_id) to a team
    *
    * If user doesn't exist, new user row will also be added to User Table
@@ -295,7 +213,7 @@ export class Team extends APIResource {
    *
    * ```
    *
-   * curl -X POST 'http://0.0.0.0:4000/team/member_add'     -H 'Authorization: Bearer sk-1234'     -H 'Content-Type: application/json'     -d '{"team_id": "45e3e396-ee08-4a61-a88e-16b3ce7e0849", "member": {"role": "user", "user_id": "krrish247652@berri.ai"}}'
+   * curl -X POST 'http://0.0.0.0:4000/team/member_add'     -H 'Authorization: Bearer sk-1234'     -H 'Content-Type: application/json'     -d '{"team_id": "45e3e396-ee08-4a61-a88e-16b3ce7e0849", "member": {"role": "user", "user_id": "dev247652@hanzo.ai"}}'
    *
    * ```
    */
@@ -366,7 +284,7 @@ export class Team extends APIResource {
    * -H 'Content-Type: application/json'
    * -d '{
    *     "team_id": "45e3e396-ee08-4a61-a88e-16b3ce7e0849",
-   *     "user_id": "krrish247652@berri.ai"
+   *     "user_id": "dev247652@hanzo.ai"
    * }'
    * ```
    */
@@ -426,21 +344,10 @@ export interface BlockTeamRequest {
 }
 
 export interface Member {
-  /**
-   * The role of the user within the team. 'admin' users can manage team settings and
-   * members, 'user' is a regular team member
-   */
   role: 'admin' | 'user';
 
-  /**
-   * The email address of the user to add. Either user_id or user_email must be
-   * provided
-   */
   user_email?: string | null;
 
-  /**
-   * The unique ID of the user to add. Either user_id or user_email must be provided
-   */
   user_id?: string | null;
 }
 
@@ -457,7 +364,7 @@ export interface TeamCreateResponse {
 
   created_at?: string | null;
 
-  litellm_model_table?: unknown;
+  llm_model_table?: TeamCreateResponse.LlmModelTable | null;
 
   max_budget?: number | null;
 
@@ -467,22 +374,13 @@ export interface TeamCreateResponse {
 
   members_with_roles?: Array<Member>;
 
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   model_id?: number | null;
 
   models?: Array<unknown>;
 
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  object_permission?: TeamCreateResponse.ObjectPermission | null;
-
-  object_permission_id?: string | null;
-
   organization_id?: string | null;
-
-  router_settings?: { [key: string]: unknown } | null;
 
   rpm_limit?: number | null;
 
@@ -490,31 +388,16 @@ export interface TeamCreateResponse {
 
   team_alias?: string | null;
 
-  team_member_permissions?: Array<string> | null;
-
   tpm_limit?: number | null;
-
-  updated_at?: string | null;
 }
 
 export namespace TeamCreateResponse {
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  export interface ObjectPermission {
-    object_permission_id: string;
+  export interface LlmModelTable {
+    created_by: string;
 
-    agent_access_groups?: Array<string> | null;
+    updated_by: string;
 
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
+    model_aliases?: unknown | string | null;
   }
 }
 
@@ -541,7 +424,7 @@ export interface TeamAddMemberResponse {
 
   created_at?: string | null;
 
-  litellm_model_table?: TeamAddMemberResponse.LitellmModelTable | null;
+  llm_model_table?: TeamAddMemberResponse.LlmModelTable | null;
 
   max_budget?: number | null;
 
@@ -551,22 +434,13 @@ export interface TeamAddMemberResponse {
 
   members_with_roles?: Array<Member>;
 
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   model_id?: number | null;
 
   models?: Array<unknown>;
 
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  object_permission?: TeamAddMemberResponse.ObjectPermission | null;
-
-  object_permission_id?: string | null;
-
   organization_id?: string | null;
-
-  router_settings?: { [key: string]: unknown } | null;
 
   rpm_limit?: number | null;
 
@@ -574,27 +448,42 @@ export interface TeamAddMemberResponse {
 
   team_alias?: string | null;
 
-  team_member_permissions?: Array<string> | null;
-
   tpm_limit?: number | null;
-
-  updated_at?: string | null;
 }
 
 export namespace TeamAddMemberResponse {
   export interface UpdatedTeamMembership {
+    budget_id: string;
+
     /**
-     * Represents user-controllable params for a LiteLLM_BudgetTable record
+     * Represents user-controllable params for a LLM_BudgetTable record
      */
-    litellm_budget_table: OrganizationAPI.BudgetTable | null;
+    llm_budget_table: UpdatedTeamMembership.LlmBudgetTable | null;
 
     team_id: string;
 
     user_id: string;
+  }
 
-    budget_id?: string | null;
+  export namespace UpdatedTeamMembership {
+    /**
+     * Represents user-controllable params for a LLM_BudgetTable record
+     */
+    export interface LlmBudgetTable {
+      budget_duration?: string | null;
 
-    spend?: number | null;
+      max_budget?: number | null;
+
+      max_parallel_requests?: number | null;
+
+      model_max_budget?: unknown | null;
+
+      rpm_limit?: number | null;
+
+      soft_budget?: number | null;
+
+      tpm_limit?: number | null;
+    }
   }
 
   export interface UpdatedUser {
@@ -604,24 +493,17 @@ export namespace TeamAddMemberResponse {
 
     budget_reset_at?: string | null;
 
-    created_at?: string | null;
-
     max_budget?: number | null;
 
-    metadata?: { [key: string]: unknown } | null;
+    metadata?: unknown | null;
 
-    model_max_budget?: { [key: string]: unknown } | null;
+    model_max_budget?: unknown | null;
 
-    model_spend?: { [key: string]: unknown } | null;
+    model_spend?: unknown | null;
 
     models?: Array<unknown>;
 
-    /**
-     * Represents a LiteLLM_ObjectPermissionTable record
-     */
-    object_permission?: UpdatedUser.ObjectPermission | null;
-
-    organization_memberships?: Array<OrganizationAPI.OrganizationMembershipTable> | null;
+    organization_memberships?: Array<UpdatedUser.OrganizationMembership> | null;
 
     rpm_limit?: number | null;
 
@@ -633,10 +515,6 @@ export namespace TeamAddMemberResponse {
 
     tpm_limit?: number | null;
 
-    updated_at?: string | null;
-
-    user_alias?: string | null;
-
     user_email?: string | null;
 
     user_role?: string | null;
@@ -644,54 +522,60 @@ export namespace TeamAddMemberResponse {
 
   export namespace UpdatedUser {
     /**
-     * Represents a LiteLLM_ObjectPermissionTable record
+     * This is the table that track what organizations a user belongs to and users
+     * spend within the organization
      */
-    export interface ObjectPermission {
-      object_permission_id: string;
+    export interface OrganizationMembership {
+      created_at: string;
 
-      agent_access_groups?: Array<string> | null;
+      organization_id: string;
 
-      agents?: Array<string> | null;
+      updated_at: string;
 
-      mcp_access_groups?: Array<string> | null;
+      user_id: string;
 
-      mcp_servers?: Array<string> | null;
+      budget_id?: string | null;
 
-      mcp_tool_permissions?: { [key: string]: Array<string> } | null;
+      /**
+       * Represents user-controllable params for a LLM_BudgetTable record
+       */
+      llm_budget_table?: OrganizationMembership.LlmBudgetTable | null;
 
-      vector_stores?: Array<string> | null;
+      spend?: number;
+
+      user?: unknown;
+
+      user_role?: string | null;
+    }
+
+    export namespace OrganizationMembership {
+      /**
+       * Represents user-controllable params for a LLM_BudgetTable record
+       */
+      export interface LlmBudgetTable {
+        budget_duration?: string | null;
+
+        max_budget?: number | null;
+
+        max_parallel_requests?: number | null;
+
+        model_max_budget?: unknown | null;
+
+        rpm_limit?: number | null;
+
+        soft_budget?: number | null;
+
+        tpm_limit?: number | null;
+      }
     }
   }
 
-  export interface LitellmModelTable {
+  export interface LlmModelTable {
     created_by: string;
 
     updated_by: string;
 
-    id?: number | null;
-
-    model_aliases?: { [key: string]: unknown } | string | null;
-
-    team?: unknown;
-  }
-
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  export interface ObjectPermission {
-    object_permission_id: string;
-
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
+    model_aliases?: unknown | string | null;
   }
 }
 
@@ -714,10 +598,6 @@ export interface TeamUpdateMemberResponse {
 
   max_budget_in_team?: number | null;
 
-  rpm_limit?: number | null;
-
-  tpm_limit?: number | null;
-
   user_email?: string | null;
 }
 
@@ -726,16 +606,6 @@ export interface TeamCreateParams {
    * Body param
    */
   admins?: Array<unknown>;
-
-  /**
-   * Body param
-   */
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_vector_store_indexes?: Array<TeamCreateParams.AllowedVectorStoreIndex> | null;
 
   /**
    * Body param
@@ -770,22 +640,12 @@ export interface TeamCreateParams {
   /**
    * Body param
    */
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   /**
    * Body param
    */
-  model_aliases?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
-  model_rpm_limit?: { [key: string]: number } | null;
-
-  /**
-   * Body param
-   */
-  model_tpm_limit?: { [key: string]: number } | null;
+  model_aliases?: unknown | null;
 
   /**
    * Body param
@@ -795,37 +655,12 @@ export interface TeamCreateParams {
   /**
    * Body param
    */
-  object_permission?: TeamCreateParams.ObjectPermission | null;
-
-  /**
-   * Body param
-   */
   organization_id?: string | null;
 
   /**
    * Body param
    */
-  prompts?: Array<string> | null;
-
-  /**
-   * Body param
-   */
-  router_settings?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
   rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | null;
-
-  /**
-   * Body param
-   */
-  secret_manager_settings?: { [key: string]: unknown } | null;
 
   /**
    * Body param
@@ -845,66 +680,14 @@ export interface TeamCreateParams {
   /**
    * Body param
    */
-  team_member_budget?: number | null;
-
-  /**
-   * Body param
-   */
-  team_member_key_duration?: string | null;
-
-  /**
-   * Body param
-   */
-  team_member_permissions?: Array<string> | null;
-
-  /**
-   * Body param
-   */
-  team_member_rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  team_member_tpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
   tpm_limit?: number | null;
 
   /**
-   * Body param
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | null;
-
-  /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
-   */
-  'litellm-changed-by'?: string;
-}
-
-export namespace TeamCreateParams {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
+  'llm-changed-by'?: string;
 }
 
 export interface TeamUpdateParams {
@@ -912,16 +695,6 @@ export interface TeamUpdateParams {
    * Body param
    */
   team_id: string;
-
-  /**
-   * Body param
-   */
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_vector_store_indexes?: Array<TeamUpdateParams.AllowedVectorStoreIndex> | null;
 
   /**
    * Body param
@@ -946,22 +719,12 @@ export interface TeamUpdateParams {
   /**
    * Body param
    */
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   /**
    * Body param
    */
-  model_aliases?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
-  model_rpm_limit?: { [key: string]: number } | null;
-
-  /**
-   * Body param
-   */
-  model_tpm_limit?: { [key: string]: number } | null;
+  model_aliases?: unknown | null;
 
   /**
    * Body param
@@ -971,32 +734,12 @@ export interface TeamUpdateParams {
   /**
    * Body param
    */
-  object_permission?: TeamUpdateParams.ObjectPermission | null;
-
-  /**
-   * Body param
-   */
   organization_id?: string | null;
 
   /**
    * Body param
    */
-  prompts?: Array<string> | null;
-
-  /**
-   * Body param
-   */
-  router_settings?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
   rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  secret_manager_settings?: { [key: string]: unknown } | null;
 
   /**
    * Body param
@@ -1011,61 +754,14 @@ export interface TeamUpdateParams {
   /**
    * Body param
    */
-  team_member_budget?: number | null;
-
-  /**
-   * Body param
-   */
-  team_member_budget_duration?: string | null;
-
-  /**
-   * Body param
-   */
-  team_member_key_duration?: string | null;
-
-  /**
-   * Body param
-   */
-  team_member_rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  team_member_tpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
   tpm_limit?: number | null;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
-}
-
-export namespace TeamUpdateParams {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
+  'llm-changed-by'?: string;
 }
 
 export interface TeamListParams {
@@ -1084,29 +780,18 @@ export interface TeamDeleteParams {
   team_ids: Array<string>;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
+  'llm-changed-by'?: string;
 }
 
 export interface TeamAddMemberParams {
-  /**
-   * Member object or list of member objects to add. Each member must include either
-   * user_id or user_email, and a role
-   */
   member: Array<Member> | Member;
 
-  /**
-   * The ID of the team to add the member to
-   */
   team_id: string;
 
-  /**
-   * Maximum budget allocated to this user within the team. If not set, user has
-   * unlimited budget within team limits
-   */
   max_budget_in_team?: number | null;
 }
 
@@ -1143,16 +828,6 @@ export interface TeamUpdateMemberParams {
   max_budget_in_team?: number | null;
 
   role?: 'admin' | 'user' | null;
-
-  /**
-   * Requests per minute limit for this team member
-   */
-  rpm_limit?: number | null;
-
-  /**
-   * Tokens per minute limit for this team member
-   */
-  tpm_limit?: number | null;
 
   user_email?: string | null;
 

@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as RegenerateAPI from './regenerate';
 import { Regenerate, RegenerateKeyRequest } from './regenerate';
-import * as OrganizationAPI from '../organization/organization';
 import * as TeamAPI from '../team/team';
 import { APIPromise } from '../../core/api-promise';
 import { buildHeaders } from '../../internal/headers';
@@ -26,10 +25,9 @@ export class Key extends APIResource {
    *   calling `/budget/new`.
    * - models: Optional[list] - Model_name's a user is allowed to call
    * - tags: Optional[List[str]] - Tags for organizing keys (Enterprise only)
-   * - prompts: Optional[List[str]] - List of prompts that the key is allowed to use.
    * - enforced_params: Optional[List[str]] - List of enforced params for the key
    *   (Enterprise only).
-   *   [Docs](https://docs.litellm.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)
    * - spend: Optional[float] - Amount spent by key
    * - max_budget: Optional[float] - Max budget for key
    * - model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets
@@ -46,53 +44,19 @@ export class Key extends APIResource {
    *   "claude-v1": 200}
    * - model_tpm_limit: Optional[dict] - Model-specific TPM limits {"gpt-4": 100000,
    *   "claude-v1": 200000}
-   * - tpm_limit_type: Optional[str] - TPM rate limit type -
-   *   "best_effort_throughput", "guaranteed_throughput", or "dynamic"
-   * - rpm_limit_type: Optional[str] - RPM rate limit type -
-   *   "best_effort_throughput", "guaranteed_throughput", or "dynamic"
    * - allowed_cache_controls: Optional[list] - List of allowed cache control values
-   * - duration: Optional[str] - Key validity duration ("30d", "1h", etc.) or "-1" to
-   *   never expire
+   * - duration: Optional[str] - Key validity duration ("30d", "1h", etc.)
    * - permissions: Optional[dict] - Key-specific permissions
    * - send_invite_email: Optional[bool] - Send invite email to user_id
    * - guardrails: Optional[List[str]] - List of active guardrails for the key
-   * - disable_global_guardrails: Optional[bool] - Whether to disable global
-   *   guardrails for the key.
-   * - prompts: Optional[List[str]] - List of prompts that the key is allowed to use.
    * - blocked: Optional[bool] - Whether the key is blocked
    * - aliases: Optional[dict] - Model aliases for the key -
-   *   [Docs](https://litellm.vercel.app/docs/proxy/virtual_keys#model-aliases)
+   *   [Docs](https://llm.vercel.app/docs/proxy/virtual_keys#model-aliases)
    * - config: Optional[dict] - [DEPRECATED PARAM] Key-specific config.
    * - temp_budget_increase: Optional[float] - Temporary budget increase for the key
    *   (Enterprise only).
    * - temp_budget_expiry: Optional[str] - Expiry time for the temporary budget
    *   increase (Enterprise only).
-   * - allowed_routes: Optional[list] - List of allowed routes for the key. Store the
-   *   actual route or store a wildcard pattern for a set of routes. Example -
-   *   ["/chat/completions", "/embeddings", "/keys/*"]
-   * - allowed_passthrough_routes: Optional[list] - List of allowed pass through
-   *   routes for the key. Store the actual route or store a wildcard pattern for a
-   *   set of routes. Example - ["/my-custom-endpoint"]. Use this instead of
-   *   allowed_routes, if you just want to specify which pass through routes the key
-   *   can access, without specifying the routes. If allowed_routes is specified,
-   *   allowed_passthrough_routes is ignored.
-   * - prompts: Optional[List[str]] - List of allowed prompts for the key. If
-   *   specified, the key will only be able to use these specific prompts.
-   * - object_permission: Optional[LiteLLM_ObjectPermissionBase] - key-specific
-   *   object permission. Example - {"vector_stores": ["vector_store_1",
-   *   "vector_store_2"], "agents": ["agent_1", "agent_2"], "agent_access_groups":
-   *   ["dev_group"]}. IF null or {} then no object permission.
-   * - auto_rotate: Optional[bool] - Whether this key should be automatically rotated
-   * - rotation_interval: Optional[str] - How often to rotate this key (e.g., '30d',
-   *   '90d'). Required if auto_rotate=True
-   * - allowed_vector_store_indexes: Optional[List[dict]] - List of allowed vector
-   *   store indexes for the key. Example - [{"index_name": "my-index",
-   *   "index_permissions": ["write", "read"]}]. If specified, the key will only be
-   *   able to use these specific vector store indexes. Create index, using
-   *   `/v1/indexes` endpoint.
-   * - router_settings: Optional[UpdateRouterConfig] - key-specific router settings.
-   *   Example - {"model_group_retry_policy": {"max_retries": 5}}. IF null or {} then
-   *   no router settings.
    *
    * Example:
    *
@@ -108,12 +72,12 @@ export class Key extends APIResource {
    * ```
    */
   update(params: KeyUpdateParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/key/update', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -122,16 +86,8 @@ export class Key extends APIResource {
   /**
    * List all keys for a given user / team / organization.
    *
-   * Parameters: expand: Optional[List[str]] - Expand related objects (e.g. 'user' to
-   * include user information) status: Optional[str] - Filter by status. Currently
-   * supports "deleted" to query deleted keys.
-   *
    * Returns: { "keys": List[str] or List[UserAPIKeyAuth], "total_count": int,
    * "current_page": int, "total_pages": int, }
-   *
-   * When expand includes "user", each key object will include a "user" field with
-   * the associated user object. Note: When expand=user is specified, full key
-   * objects are returned regardless of the return_full_object parameter.
    */
   list(query: KeyListParams | null | undefined = {}, options?: RequestOptions): APIPromise<KeyListResponse> {
     return this._client.get('/key/list', { query, ...options });
@@ -165,12 +121,12 @@ export class Key extends APIResource {
    * Raises: HTTPException: If an error occurs during key deletion.
    */
   delete(params: KeyDeleteParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/key/delete', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -195,12 +151,12 @@ export class Key extends APIResource {
    * Note: This is an admin-only endpoint. Only proxy admins can block keys.
    */
   block(params: KeyBlockParams, options?: RequestOptions): APIPromise<KeyBlockResponse | null> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/key/block', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -254,7 +210,7 @@ export class Key extends APIResource {
   /**
    * Generate an API key based on the provided data.
    *
-   * Docs: https://docs.litellm.ai/docs/proxy/virtual_keys
+   * Docs: https://docs.hanzo.ai/docs/proxy/virtual_keys
    *
    * Parameters:
    *
@@ -266,21 +222,18 @@ export class Key extends APIResource {
    *   sk-key is created for you.
    * - team_id: Optional[str] - The team id of the key
    * - user_id: Optional[str] - The user id of the key
-   * - organization_id: Optional[str] - The organization id of the key. If not set,
-   *   and team_id is set, the organization id will be the same as the team id. If
-   *   conflict, an error will be raised.
    * - budget_id: Optional[str] - The budget id associated with the key. Created by
    *   calling `/budget/new`.
    * - models: Optional[list] - Model_name's a user is allowed to call. (if empty,
    *   key is allowed to call all models)
    * - aliases: Optional[dict] - Any alias mappings, on top of anything in the
    *   config.yaml model list. -
-   *   https://docs.litellm.ai/docs/proxy/virtual_keys#managing-auth---upgradedowngrade-models
+   *   https://docs.hanzo.ai/docs/proxy/virtual_keys#managing-auth---upgradedowngrade-models
    * - config: Optional[dict] - any key-specific configs, overrides config in
    *   config.yaml
    * - spend: Optional[int] - Amount spent by key. Default is 0. Will be updated by
    *   proxy whenever key is used.
-   *   https://docs.litellm.ai/docs/proxy/virtual_keys#managing-auth---tracking-spend
+   *   https://docs.hanzo.ai/docs/proxy/virtual_keys#managing-auth---tracking-spend
    * - send_invite_email: Optional[bool] - Whether to send an invite email to the
    *   user_id, with the generate key
    * - max_budget: Optional[float] - Specify max budget for a given key.
@@ -290,11 +243,9 @@ export class Key extends APIResource {
    * - max_parallel_requests: Optional[int] - Rate limit a user based on the number
    *   of parallel requests. Raises 429 error, if user's parallel requests > x.
    * - metadata: Optional[dict] - Metadata for key, store information for key.
-   *   Example metadata = {"team": "core-infra", "app": "app2", "email":
-   *   "ishaan@berri.ai" }
+   *   Example metadata = {"team": "core-infra", "app": "app2", "email": "z@hanzo.ai"
+   *   }
    * - guardrails: Optional[List[str]] - List of active guardrails for the key
-   * - disable_global_guardrails: Optional[bool] - Whether to disable global
-   *   guardrails for the key.
    * - permissions: Optional[dict] - key-specific permissions. Currently just used
    *   for turning off pii masking (if connected). Example - {"pii": false}
    * - model_max_budget: Optional[Dict[str, BudgetConfig]] - Model-specific budgets
@@ -306,19 +257,9 @@ export class Key extends APIResource {
    * - model_tpm_limit: Optional[dict] - key-specific model tpm limit. Example -
    *   {"text-davinci-002": 1000, "gpt-3.5-turbo": 1000}. IF null or {} then no model
    *   specific tpm limit.
-   * - tpm_limit_type: Optional[str] - Type of tpm limit. Options:
-   *   "best_effort_throughput" (no error if we're overallocating tpm),
-   *   "guaranteed_throughput" (raise an error if we're overallocating tpm),
-   *   "dynamic" (dynamically exceed limit when no 429 errors). Defaults to
-   *   "best_effort_throughput".
-   * - rpm_limit_type: Optional[str] - Type of rpm limit. Options:
-   *   "best_effort_throughput" (no error if we're overallocating rpm),
-   *   "guaranteed_throughput" (raise an error if we're overallocating rpm),
-   *   "dynamic" (dynamically exceed limit when no 429 errors). Defaults to
-   *   "best_effort_throughput".
    * - allowed_cache_controls: Optional[list] - List of allowed cache control values.
    *   Example - ["no-cache", "no-store"]. See all values -
-   *   https://docs.litellm.ai/docs/proxy/caching#turn-on--off-caching-per-request
+   *   https://docs.hanzo.ai/docs/proxy/caching#turn-on--off-caching-per-request
    * - blocked: Optional[bool] - Whether the key is blocked.
    * - rpm_limit: Optional[int] - Specify rpm limit for a given key (Requests per
    *   minute)
@@ -327,45 +268,12 @@ export class Key extends APIResource {
    * - soft_budget: Optional[float] - Specify soft budget for a given key. Will
    *   trigger a slack alert when this soft budget is reached.
    * - tags: Optional[List[str]] - Tags for
-   *   [tracking spend](https://litellm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
+   *   [tracking spend](https://llm.vercel.app/docs/proxy/enterprise#tracking-spend-for-custom-tags)
    *   and/or doing
-   *   [tag-based routing](https://litellm.vercel.app/docs/proxy/tag_routing).
-   * - prompts: Optional[List[str]] - List of prompts that the key is allowed to use.
+   *   [tag-based routing](https://llm.vercel.app/docs/proxy/tag_routing).
    * - enforced_params: Optional[List[str]] - List of enforced params for the key
    *   (Enterprise only).
-   *   [Docs](https://docs.litellm.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)
-   * - prompts: Optional[List[str]] - List of prompts that the key is allowed to use.
-   * - allowed_routes: Optional[list] - List of allowed routes for the key. Store the
-   *   actual route or store a wildcard pattern for a set of routes. Example -
-   *   ["/chat/completions", "/embeddings", "/keys/*"]
-   * - allowed_passthrough_routes: Optional[list] - List of allowed pass through
-   *   endpoints for the key. Store the actual endpoint or store a wildcard pattern
-   *   for a set of endpoints. Example - ["/my-custom-endpoint"]. Use this instead of
-   *   allowed_routes, if you just want to specify which pass through endpoints the
-   *   key can access, without specifying the routes. If allowed_routes is specified,
-   *   allowed_pass_through_endpoints is ignored.
-   * - object_permission: Optional[LiteLLM_ObjectPermissionBase] - key-specific
-   *   object permission. Example - {"vector_stores": ["vector_store_1",
-   *   "vector_store_2"], "agents": ["agent_1", "agent_2"], "agent_access_groups":
-   *   ["dev_group"]}. IF null or {} then no object permission.
-   * - key_type: Optional[str] - Type of key that determines default allowed routes.
-   *   Options: "llm_api" (can call LLM API routes), "management" (can call
-   *   management routes), "read_only" (can only call info/read routes), "default"
-   *   (uses default allowed routes). Defaults to "default".
-   * - prompts: Optional[List[str]] - List of allowed prompts for the key. If
-   *   specified, the key will only be able to use these specific prompts.
-   * - auto_rotate: Optional[bool] - Whether this key should be automatically rotated
-   *   (regenerated)
-   * - rotation_interval: Optional[str] - How often to auto-rotate this key (e.g.,
-   *   '30s', '30m', '30h', '30d'). Required if auto_rotate=True.
-   * - allowed_vector_store_indexes: Optional[List[dict]] - List of allowed vector
-   *   store indexes for the key. Example - [{"index_name": "my-index",
-   *   "index_permissions": ["write", "read"]}]. If specified, the key will only be
-   *   able to use these specific vector store indexes. Create index, using
-   *   `/v1/indexes` endpoint.
-   * - router_settings: Optional[UpdateRouterConfig] - key-specific router settings.
-   *   Example - {"model_group_retry_policy": {"max_retries": 5}}. IF null or {} then
-   *   no router settings.
+   *   [Docs](https://docs.hanzo.ai/docs/proxy/enterprise#enforce-required-params-for-llm-requests)
    *
    * Examples:
    *
@@ -385,12 +293,12 @@ export class Key extends APIResource {
    *   for same user id.
    */
   generate(params: KeyGenerateParams, options?: RequestOptions): APIPromise<GenerateKeyResponse> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/key/generate', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -404,11 +312,6 @@ export class Key extends APIResource {
    * - key: str (path parameter) - The key to regenerate
    * - data: Optional[RegenerateKeyRequest] - Request body containing optional
    *   parameters to update
-   *   - key: Optional[str] - The key to regenerate.
-   *   - new_master_key: Optional[str] - The new master key to use, if key is the
-   *     master key.
-   *   - new_key: Optional[str] - The new key to use, if key is not the master key.
-   *     If both set, new_master_key will be used.
    *   - key_alias: Optional[str] - User-friendly key alias
    *   - user_id: Optional[str] - User ID associated with key
    *   - team_id: Optional[str] - Team ID associated with key
@@ -458,12 +361,12 @@ export class Key extends APIResource {
     params: KeyRegenerateByKeyParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<GenerateKeyResponse | null> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params ?? {};
+    const { 'llm-changed-by': llmChangedBy, ...body } = params ?? {};
     return this._client.post(path`/key/${pathKey}/regenerate`, {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -478,14 +381,14 @@ export class Key extends APIResource {
    * Example Curl:
    *
    * ```
-   * curl -X GET "http://0.0.0.0:4000/key/info?key=sk-test-example-key-123" -H "Authorization: Bearer sk-1234"
+   * curl -X GET "http://0.0.0.0:4000/key/info?key=sk-02Wr4IAlN3NvPXvL5JVvDA" -H "Authorization: Bearer sk-1234"
    * ```
    *
    * Example Curl - if no key is passed, it will use the Key Passed in Authorization
    * Header
    *
    * ```
-   * curl -X GET "http://0.0.0.0:4000/key/info" -H "Authorization: Bearer sk-test-example-key-123"
+   * curl -X GET "http://0.0.0.0:4000/key/info" -H "Authorization: Bearer sk-02Wr4IAlN3NvPXvL5JVvDA"
    * ```
    */
   retrieveInfo(
@@ -514,12 +417,12 @@ export class Key extends APIResource {
    * Note: This is an admin-only endpoint. Only proxy admins can unblock keys.
    */
   unblock(params: KeyUnblockParams, options?: RequestOptions): APIPromise<unknown> {
-    const { 'litellm-changed-by': litellmChangedBy, ...body } = params;
+    const { 'llm-changed-by': llmChangedBy, ...body } = params;
     return this._client.post('/key/unblock', {
       body,
       ...options,
       headers: buildHeaders([
-        { ...(litellmChangedBy != null ? { 'litellm-changed-by': litellmChangedBy } : undefined) },
+        { ...(llmChangedBy != null ? { 'llm-changed-by': llmChangedBy } : undefined) },
         options?.headers,
       ]),
     });
@@ -531,19 +434,15 @@ export interface BlockKeyRequest {
 }
 
 export interface GenerateKeyResponse {
+  expires: string | null;
+
   key: string;
 
   token?: string | null;
 
-  aliases?: { [key: string]: unknown } | null;
+  aliases?: unknown | null;
 
   allowed_cache_controls?: Array<unknown> | null;
-
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  allowed_routes?: Array<unknown> | null;
-
-  allowed_vector_store_indexes?: Array<GenerateKeyResponse.AllowedVectorStoreIndex> | null;
 
   blocked?: boolean | null;
 
@@ -551,9 +450,7 @@ export interface GenerateKeyResponse {
 
   budget_id?: string | null;
 
-  config?: { [key: string]: unknown } | null;
-
-  created_at?: string | null;
+  config?: unknown | null;
 
   created_by?: string | null;
 
@@ -561,46 +458,31 @@ export interface GenerateKeyResponse {
 
   enforced_params?: Array<string> | null;
 
-  expires?: string | null;
-
   guardrails?: Array<string> | null;
 
   key_alias?: string | null;
 
   key_name?: string | null;
 
-  litellm_budget_table?: unknown;
+  llm_budget_table?: unknown;
 
   max_budget?: number | null;
 
   max_parallel_requests?: number | null;
 
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
-  model_max_budget?: { [key: string]: unknown } | null;
+  model_max_budget?: unknown | null;
 
-  model_rpm_limit?: { [key: string]: unknown } | null;
+  model_rpm_limit?: unknown | null;
 
-  model_tpm_limit?: { [key: string]: unknown } | null;
+  model_tpm_limit?: unknown | null;
 
   models?: Array<unknown> | null;
 
-  object_permission?: GenerateKeyResponse.ObjectPermission | null;
-
-  organization_id?: string | null;
-
-  permissions?: { [key: string]: unknown } | null;
-
-  prompts?: Array<string> | null;
-
-  /**
-   * Set of params that you can modify via `router.update_settings()`.
-   */
-  router_settings?: GenerateKeyResponse.RouterSettings | null;
+  permissions?: unknown | null;
 
   rpm_limit?: number | null;
-
-  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
 
   spend?: number | null;
 
@@ -612,64 +494,9 @@ export interface GenerateKeyResponse {
 
   tpm_limit?: number | null;
 
-  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
-
-  updated_at?: string | null;
-
   updated_by?: string | null;
 
   user_id?: string | null;
-}
-
-export namespace GenerateKeyResponse {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
-
-  /**
-   * Set of params that you can modify via `router.update_settings()`.
-   */
-  export interface RouterSettings {
-    allowed_fails?: number | null;
-
-    context_window_fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    cooldown_time?: number | null;
-
-    fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    max_retries?: number | null;
-
-    model_group_alias?: { [key: string]: string | { [key: string]: unknown } } | null;
-
-    model_group_retry_policy?: { [key: string]: unknown } | null;
-
-    num_retries?: number | null;
-
-    retry_after?: number | null;
-
-    routing_strategy?: string | null;
-
-    routing_strategy_args?: { [key: string]: unknown } | null;
-
-    timeout?: number | null;
-  }
 }
 
 export type KeyUpdateResponse = unknown;
@@ -677,7 +504,7 @@ export type KeyUpdateResponse = unknown;
 export interface KeyListResponse {
   current_page?: number | null;
 
-  keys?: Array<string | KeyListResponse.UserAPIKeyAuth | KeyListResponse.LiteLlmDeletedVerificationToken>;
+  keys?: Array<string | KeyListResponse.UserAPIKeyAuth>;
 
   total_count?: number | null;
 
@@ -691,17 +518,13 @@ export namespace KeyListResponse {
   export interface UserAPIKeyAuth {
     token?: string | null;
 
-    aliases?: { [key: string]: unknown };
+    aliases?: unknown;
 
     allowed_cache_controls?: Array<unknown> | null;
 
     allowed_model_region?: 'eu' | 'us' | null;
 
-    allowed_routes?: Array<unknown> | null;
-
     api_key?: string | null;
-
-    auto_rotate?: boolean | null;
 
     blocked?: boolean | null;
 
@@ -709,7 +532,7 @@ export namespace KeyListResponse {
 
     budget_reset_at?: string | null;
 
-    config?: { [key: string]: unknown };
+    config?: unknown;
 
     created_at?: string | null;
 
@@ -729,54 +552,27 @@ export namespace KeyListResponse {
 
     key_name?: string | null;
 
-    key_rotation_at?: string | null;
-
     last_refreshed_at?: number | null;
 
-    last_rotation_at?: string | null;
-
-    litellm_budget_table?: { [key: string]: unknown } | null;
+    llm_budget_table?: unknown | null;
 
     max_budget?: number | null;
 
     max_parallel_requests?: number | null;
 
-    metadata?: { [key: string]: unknown };
+    metadata?: unknown;
 
-    model_max_budget?: { [key: string]: unknown };
+    model_max_budget?: unknown;
 
-    model_spend?: { [key: string]: unknown };
+    model_spend?: unknown;
 
     models?: Array<unknown>;
 
-    /**
-     * Represents a LiteLLM_ObjectPermissionTable record
-     */
-    object_permission?: UserAPIKeyAuth.ObjectPermission | null;
-
-    object_permission_id?: string | null;
-
     org_id?: string | null;
-
-    organization_max_budget?: number | null;
-
-    organization_metadata?: { [key: string]: unknown } | null;
-
-    organization_rpm_limit?: number | null;
-
-    organization_tpm_limit?: number | null;
 
     parent_otel_span?: unknown;
 
-    permissions?: { [key: string]: unknown };
-
-    request_route?: string | null;
-
-    rotation_count?: number | null;
-
-    rotation_interval?: string | null;
-
-    router_settings?: { [key: string]: unknown } | null;
+    permissions?: unknown;
 
     rpm_limit?: number | null;
 
@@ -798,19 +594,13 @@ export namespace KeyListResponse {
 
     team_member?: TeamAPI.Member | null;
 
-    team_member_rpm_limit?: number | null;
-
     team_member_spend?: number | null;
 
-    team_member_tpm_limit?: number | null;
+    team_metadata?: unknown | null;
 
-    team_metadata?: { [key: string]: unknown } | null;
-
-    team_model_aliases?: { [key: string]: unknown } | null;
+    team_model_aliases?: unknown | null;
 
     team_models?: Array<unknown>;
-
-    team_object_permission_id?: string | null;
 
     team_rpm_limit?: number | null;
 
@@ -826,13 +616,9 @@ export namespace KeyListResponse {
 
     updated_by?: string | null;
 
-    user?: unknown;
-
     user_email?: string | null;
 
     user_id?: string | null;
-
-    user_max_budget?: number | null;
 
     /**
      * Admin Roles: PROXY_ADMIN: admin over the platform PROXY_ADMIN_VIEW_ONLY: can
@@ -847,150 +633,19 @@ export namespace KeyListResponse {
      *
      * Customer Roles: CUSTOMER: External users -> these are customers
      */
-    user_role?: OrganizationAPI.UserRoles | null;
+    user_role?:
+      | 'proxy_admin'
+      | 'proxy_admin_viewer'
+      | 'org_admin'
+      | 'internal_user'
+      | 'internal_user_viewer'
+      | 'team'
+      | 'customer'
+      | null;
 
     user_rpm_limit?: number | null;
 
-    user_spend?: number | null;
-
     user_tpm_limit?: number | null;
-  }
-
-  export namespace UserAPIKeyAuth {
-    /**
-     * Represents a LiteLLM_ObjectPermissionTable record
-     */
-    export interface ObjectPermission {
-      object_permission_id: string;
-
-      agent_access_groups?: Array<string> | null;
-
-      agents?: Array<string> | null;
-
-      mcp_access_groups?: Array<string> | null;
-
-      mcp_servers?: Array<string> | null;
-
-      mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-      vector_stores?: Array<string> | null;
-    }
-  }
-
-  /**
-   * Recording of deleted keys for audit purposes. Mirrors LiteLLM_VerificationToken
-   * plus metadata captured at deletion time.
-   */
-  export interface LiteLlmDeletedVerificationToken {
-    id?: string | null;
-
-    token?: string | null;
-
-    aliases?: { [key: string]: unknown };
-
-    allowed_cache_controls?: Array<unknown> | null;
-
-    allowed_routes?: Array<unknown> | null;
-
-    auto_rotate?: boolean | null;
-
-    blocked?: boolean | null;
-
-    budget_duration?: string | null;
-
-    budget_reset_at?: string | null;
-
-    config?: { [key: string]: unknown };
-
-    created_at?: string | null;
-
-    created_by?: string | null;
-
-    deleted_at?: string | null;
-
-    deleted_by?: string | null;
-
-    deleted_by_api_key?: string | null;
-
-    expires?: string | (string & {}) | null;
-
-    key_alias?: string | null;
-
-    key_name?: string | null;
-
-    key_rotation_at?: string | null;
-
-    last_rotation_at?: string | null;
-
-    litellm_budget_table?: { [key: string]: unknown } | null;
-
-    litellm_changed_by?: string | null;
-
-    max_budget?: number | null;
-
-    max_parallel_requests?: number | null;
-
-    metadata?: { [key: string]: unknown };
-
-    model_max_budget?: { [key: string]: unknown };
-
-    model_spend?: { [key: string]: unknown };
-
-    models?: Array<unknown>;
-
-    /**
-     * Represents a LiteLLM_ObjectPermissionTable record
-     */
-    object_permission?: LiteLlmDeletedVerificationToken.ObjectPermission | null;
-
-    object_permission_id?: string | null;
-
-    org_id?: string | null;
-
-    permissions?: { [key: string]: unknown };
-
-    rotation_count?: number | null;
-
-    rotation_interval?: string | null;
-
-    router_settings?: { [key: string]: unknown } | null;
-
-    rpm_limit?: number | null;
-
-    soft_budget_cooldown?: boolean;
-
-    spend?: number;
-
-    team_id?: string | null;
-
-    tpm_limit?: number | null;
-
-    updated_at?: string | null;
-
-    updated_by?: string | null;
-
-    user_id?: string | null;
-  }
-
-  export namespace LiteLlmDeletedVerificationToken {
-    /**
-     * Represents a LiteLLM_ObjectPermissionTable record
-     */
-    export interface ObjectPermission {
-      object_permission_id: string;
-
-      agent_access_groups?: Array<string> | null;
-
-      agents?: Array<string> | null;
-
-      mcp_access_groups?: Array<string> | null;
-
-      mcp_servers?: Array<string> | null;
-
-      mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-      vector_stores?: Array<string> | null;
-    }
   }
 }
 
@@ -999,13 +654,9 @@ export type KeyDeleteResponse = unknown;
 export interface KeyBlockResponse {
   token?: string | null;
 
-  aliases?: { [key: string]: unknown };
+  aliases?: unknown;
 
   allowed_cache_controls?: Array<unknown> | null;
-
-  allowed_routes?: Array<unknown> | null;
-
-  auto_rotate?: boolean | null;
 
   blocked?: boolean | null;
 
@@ -1013,7 +664,7 @@ export interface KeyBlockResponse {
 
   budget_reset_at?: string | null;
 
-  config?: { [key: string]: unknown };
+  config?: unknown;
 
   created_at?: string | null;
 
@@ -1025,40 +676,23 @@ export interface KeyBlockResponse {
 
   key_name?: string | null;
 
-  key_rotation_at?: string | null;
-
-  last_rotation_at?: string | null;
-
-  litellm_budget_table?: { [key: string]: unknown } | null;
+  llm_budget_table?: unknown | null;
 
   max_budget?: number | null;
 
   max_parallel_requests?: number | null;
 
-  metadata?: { [key: string]: unknown };
+  metadata?: unknown;
 
-  model_max_budget?: { [key: string]: unknown };
+  model_max_budget?: unknown;
 
-  model_spend?: { [key: string]: unknown };
+  model_spend?: unknown;
 
   models?: Array<unknown>;
 
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  object_permission?: KeyBlockResponse.ObjectPermission | null;
-
-  object_permission_id?: string | null;
-
   org_id?: string | null;
 
-  permissions?: { [key: string]: unknown };
-
-  rotation_count?: number | null;
-
-  rotation_interval?: string | null;
-
-  router_settings?: { [key: string]: unknown } | null;
+  permissions?: unknown;
 
   rpm_limit?: number | null;
 
@@ -1075,27 +709,6 @@ export interface KeyBlockResponse {
   updated_by?: string | null;
 
   user_id?: string | null;
-}
-
-export namespace KeyBlockResponse {
-  /**
-   * Represents a LiteLLM_ObjectPermissionTable record
-   */
-  export interface ObjectPermission {
-    object_permission_id: string;
-
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
 }
 
 export interface KeyCheckHealthResponse {
@@ -1127,32 +740,12 @@ export interface KeyUpdateParams {
   /**
    * Body param
    */
-  aliases?: { [key: string]: unknown } | null;
+  aliases?: unknown | null;
 
   /**
    * Body param
    */
   allowed_cache_controls?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_vector_store_indexes?: Array<KeyUpdateParams.AllowedVectorStoreIndex> | null;
-
-  /**
-   * Body param
-   */
-  auto_rotate?: boolean | null;
 
   /**
    * Body param
@@ -1172,7 +765,7 @@ export interface KeyUpdateParams {
   /**
    * Body param
    */
-  config?: { [key: string]: unknown } | null;
+  config?: unknown | null;
 
   /**
    * Body param
@@ -1207,22 +800,22 @@ export interface KeyUpdateParams {
   /**
    * Body param
    */
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   /**
    * Body param
    */
-  model_max_budget?: { [key: string]: unknown } | null;
+  model_max_budget?: unknown | null;
 
   /**
    * Body param
    */
-  model_rpm_limit?: { [key: string]: unknown } | null;
+  model_rpm_limit?: unknown | null;
 
   /**
    * Body param
    */
-  model_tpm_limit?: { [key: string]: unknown } | null;
+  model_tpm_limit?: unknown | null;
 
   /**
    * Body param
@@ -1232,37 +825,12 @@ export interface KeyUpdateParams {
   /**
    * Body param
    */
-  object_permission?: KeyUpdateParams.ObjectPermission | null;
-
-  /**
-   * Body param
-   */
-  permissions?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
-  prompts?: Array<string> | null;
-
-  /**
-   * Body param
-   */
-  rotation_interval?: string | null;
-
-  /**
-   * Body param: Set of params that you can modify via `router.update_settings()`.
-   */
-  router_settings?: KeyUpdateParams.RouterSettings | null;
+  permissions?: unknown | null;
 
   /**
    * Body param
    */
   rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
 
   /**
    * Body param
@@ -1297,83 +865,17 @@ export interface KeyUpdateParams {
   /**
    * Body param
    */
-  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
-
-  /**
-   * Body param
-   */
   user_id?: string | null;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
-}
-
-export namespace KeyUpdateParams {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
-
-  /**
-   * Set of params that you can modify via `router.update_settings()`.
-   */
-  export interface RouterSettings {
-    allowed_fails?: number | null;
-
-    context_window_fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    cooldown_time?: number | null;
-
-    fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    max_retries?: number | null;
-
-    model_group_alias?: { [key: string]: string | { [key: string]: unknown } } | null;
-
-    model_group_retry_policy?: { [key: string]: unknown } | null;
-
-    num_retries?: number | null;
-
-    retry_after?: number | null;
-
-    routing_strategy?: string | null;
-
-    routing_strategy_args?: { [key: string]: unknown } | null;
-
-    timeout?: number | null;
-  }
+  'llm-changed-by'?: string;
 }
 
 export interface KeyListParams {
-  /**
-   * Expand related objects (e.g. 'user')
-   */
-  expand?: Array<string> | null;
-
-  /**
-   * Include keys created by the user
-   */
-  include_created_by_keys?: boolean;
-
   /**
    * Include all keys for teams that user is an admin of.
    */
@@ -1383,11 +885,6 @@ export interface KeyListParams {
    * Filter keys by key alias
    */
   key_alias?: string | null;
-
-  /**
-   * Filter keys by key hash
-   */
-  key_hash?: string | null;
 
   /**
    * Filter keys by organization ID
@@ -1408,21 +905,6 @@ export interface KeyListParams {
    * Page size
    */
   size?: number;
-
-  /**
-   * Column to sort by (e.g. 'user_id', 'created_at', 'spend')
-   */
-  sort_by?: string | null;
-
-  /**
-   * Sort order ('asc' or 'desc')
-   */
-  sort_order?: string;
-
-  /**
-   * Filter by status (e.g. 'deleted')
-   */
-  status?: string | null;
 
   /**
    * Filter keys by team ID
@@ -1447,11 +929,11 @@ export interface KeyDeleteParams {
   keys?: Array<string> | null;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
+  'llm-changed-by'?: string;
 }
 
 export interface KeyBlockParams {
@@ -1461,43 +943,23 @@ export interface KeyBlockParams {
   key: string;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
+  'llm-changed-by'?: string;
 }
 
 export interface KeyGenerateParams {
   /**
    * Body param
    */
-  aliases?: { [key: string]: unknown } | null;
+  aliases?: unknown | null;
 
   /**
    * Body param
    */
   allowed_cache_controls?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_vector_store_indexes?: Array<KeyGenerateParams.AllowedVectorStoreIndex> | null;
-
-  /**
-   * Body param: Whether this key should be automatically rotated
-   */
-  auto_rotate?: boolean | null;
 
   /**
    * Body param
@@ -1517,7 +979,7 @@ export interface KeyGenerateParams {
   /**
    * Body param
    */
-  config?: { [key: string]: unknown } | null;
+  config?: unknown | null;
 
   /**
    * Body param
@@ -1545,11 +1007,6 @@ export interface KeyGenerateParams {
   key_alias?: string | null;
 
   /**
-   * Body param: Enum for key types that determine what routes a key can access
-   */
-  key_type?: 'llm_api' | 'management' | 'read_only' | 'default' | null;
-
-  /**
    * Body param
    */
   max_budget?: number | null;
@@ -1562,22 +1019,22 @@ export interface KeyGenerateParams {
   /**
    * Body param
    */
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   /**
    * Body param
    */
-  model_max_budget?: { [key: string]: unknown } | null;
+  model_max_budget?: unknown | null;
 
   /**
    * Body param
    */
-  model_rpm_limit?: { [key: string]: unknown } | null;
+  model_rpm_limit?: unknown | null;
 
   /**
    * Body param
    */
-  model_tpm_limit?: { [key: string]: unknown } | null;
+  model_tpm_limit?: unknown | null;
 
   /**
    * Body param
@@ -1587,43 +1044,12 @@ export interface KeyGenerateParams {
   /**
    * Body param
    */
-  object_permission?: KeyGenerateParams.ObjectPermission | null;
-
-  /**
-   * Body param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Body param
-   */
-  permissions?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
-  prompts?: Array<string> | null;
-
-  /**
-   * Body param: How often to rotate this key (e.g., '30d', '90d'). Required if
-   * auto_rotate=True
-   */
-  rotation_interval?: string | null;
-
-  /**
-   * Body param: Set of params that you can modify via `router.update_settings()`.
-   */
-  router_settings?: KeyGenerateParams.RouterSettings | null;
+  permissions?: unknown | null;
 
   /**
    * Body param
    */
   rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
 
   /**
    * Body param
@@ -1658,102 +1084,26 @@ export interface KeyGenerateParams {
   /**
    * Body param
    */
-  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
-
-  /**
-   * Body param
-   */
   user_id?: string | null;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
-}
-
-export namespace KeyGenerateParams {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
-
-  /**
-   * Set of params that you can modify via `router.update_settings()`.
-   */
-  export interface RouterSettings {
-    allowed_fails?: number | null;
-
-    context_window_fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    cooldown_time?: number | null;
-
-    fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    max_retries?: number | null;
-
-    model_group_alias?: { [key: string]: string | { [key: string]: unknown } } | null;
-
-    model_group_retry_policy?: { [key: string]: unknown } | null;
-
-    num_retries?: number | null;
-
-    retry_after?: number | null;
-
-    routing_strategy?: string | null;
-
-    routing_strategy_args?: { [key: string]: unknown } | null;
-
-    timeout?: number | null;
-  }
+  'llm-changed-by'?: string;
 }
 
 export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  aliases?: { [key: string]: unknown } | null;
+  aliases?: unknown | null;
 
   /**
    * Body param
    */
   allowed_cache_controls?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_passthrough_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_routes?: Array<unknown> | null;
-
-  /**
-   * Body param
-   */
-  allowed_vector_store_indexes?: Array<KeyRegenerateByKeyParams.AllowedVectorStoreIndex> | null;
-
-  /**
-   * Body param: Whether this key should be automatically rotated
-   */
-  auto_rotate?: boolean | null;
 
   /**
    * Body param
@@ -1773,7 +1123,7 @@ export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  config?: { [key: string]: unknown } | null;
+  config?: unknown | null;
 
   /**
    * Body param
@@ -1801,11 +1151,6 @@ export interface KeyRegenerateByKeyParams {
   key_alias?: string | null;
 
   /**
-   * Body param: Enum for key types that determine what routes a key can access
-   */
-  key_type?: 'llm_api' | 'management' | 'read_only' | 'default' | null;
-
-  /**
    * Body param
    */
   max_budget?: number | null;
@@ -1818,22 +1163,22 @@ export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  metadata?: { [key: string]: unknown } | null;
+  metadata?: unknown | null;
 
   /**
    * Body param
    */
-  model_max_budget?: { [key: string]: unknown } | null;
+  model_max_budget?: unknown | null;
 
   /**
    * Body param
    */
-  model_rpm_limit?: { [key: string]: unknown } | null;
+  model_rpm_limit?: unknown | null;
 
   /**
    * Body param
    */
-  model_tpm_limit?: { [key: string]: unknown } | null;
+  model_tpm_limit?: unknown | null;
 
   /**
    * Body param
@@ -1843,53 +1188,17 @@ export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  new_key?: string | null;
-
-  /**
-   * Body param
-   */
   new_master_key?: string | null;
 
   /**
    * Body param
    */
-  object_permission?: KeyRegenerateByKeyParams.ObjectPermission | null;
-
-  /**
-   * Body param
-   */
-  organization_id?: string | null;
-
-  /**
-   * Body param
-   */
-  permissions?: { [key: string]: unknown } | null;
-
-  /**
-   * Body param
-   */
-  prompts?: Array<string> | null;
-
-  /**
-   * Body param: How often to rotate this key (e.g., '30d', '90d'). Required if
-   * auto_rotate=True
-   */
-  rotation_interval?: string | null;
-
-  /**
-   * Body param: Set of params that you can modify via `router.update_settings()`.
-   */
-  router_settings?: KeyRegenerateByKeyParams.RouterSettings | null;
+  permissions?: unknown | null;
 
   /**
    * Body param
    */
   rpm_limit?: number | null;
-
-  /**
-   * Body param
-   */
-  rpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
 
   /**
    * Body param
@@ -1924,70 +1233,14 @@ export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  tpm_limit_type?: 'guaranteed_throughput' | 'best_effort_throughput' | 'dynamic' | null;
-
-  /**
-   * Body param
-   */
   user_id?: string | null;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
-}
-
-export namespace KeyRegenerateByKeyParams {
-  export interface AllowedVectorStoreIndex {
-    index_name: string;
-
-    index_permissions: Array<'read' | 'write'>;
-  }
-
-  export interface ObjectPermission {
-    agent_access_groups?: Array<string> | null;
-
-    agents?: Array<string> | null;
-
-    mcp_access_groups?: Array<string> | null;
-
-    mcp_servers?: Array<string> | null;
-
-    mcp_tool_permissions?: { [key: string]: Array<string> } | null;
-
-    vector_stores?: Array<string> | null;
-  }
-
-  /**
-   * Set of params that you can modify via `router.update_settings()`.
-   */
-  export interface RouterSettings {
-    allowed_fails?: number | null;
-
-    context_window_fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    cooldown_time?: number | null;
-
-    fallbacks?: Array<{ [key: string]: unknown }> | null;
-
-    max_retries?: number | null;
-
-    model_group_alias?: { [key: string]: string | { [key: string]: unknown } } | null;
-
-    model_group_retry_policy?: { [key: string]: unknown } | null;
-
-    num_retries?: number | null;
-
-    retry_after?: number | null;
-
-    routing_strategy?: string | null;
-
-    routing_strategy_args?: { [key: string]: unknown } | null;
-
-    timeout?: number | null;
-  }
+  'llm-changed-by'?: string;
 }
 
 export interface KeyRetrieveInfoParams {
@@ -2004,11 +1257,11 @@ export interface KeyUnblockParams {
   key: string;
 
   /**
-   * Header param: The litellm-changed-by header enables tracking of actions
-   * performed by authorized users on behalf of other users, providing an audit trail
-   * for accountability
+   * Header param: The llm-changed-by header enables tracking of actions performed by
+   * authorized users on behalf of other users, providing an audit trail for
+   * accountability
    */
-  'litellm-changed-by'?: string;
+  'llm-changed-by'?: string;
 }
 
 Key.Regenerate = Regenerate;
