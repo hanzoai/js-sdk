@@ -2,12 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as DeploymentsAPI from './deployments/deployments';
-import {
-  DeploymentCompleteResponse,
-  DeploymentEmbedParams,
-  DeploymentEmbedResponse,
-  Deployments,
-} from './deployments/deployments';
+import { DeploymentCompleteResponse, DeploymentEmbedResponse, Deployments } from './deployments/deployments';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -18,11 +13,6 @@ export class OpenAI extends APIResource {
   /**
    * Simple pass-through for OpenAI. Use this if you want to directly send a request
    * to OpenAI.
-   *
-   * @example
-   * ```ts
-   * const openai = await client.openai.create('endpoint');
-   * ```
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/openai/${endpoint}`, options);
@@ -31,11 +21,6 @@ export class OpenAI extends APIResource {
   /**
    * Simple pass-through for OpenAI. Use this if you want to directly send a request
    * to OpenAI.
-   *
-   * @example
-   * ```ts
-   * const openai = await client.openai.retrieve('endpoint');
-   * ```
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/openai/${endpoint}`, options);
@@ -44,11 +29,6 @@ export class OpenAI extends APIResource {
   /**
    * Simple pass-through for OpenAI. Use this if you want to directly send a request
    * to OpenAI.
-   *
-   * @example
-   * ```ts
-   * const openai = await client.openai.update('endpoint');
-   * ```
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/openai/${endpoint}`, options);
@@ -57,11 +37,6 @@ export class OpenAI extends APIResource {
   /**
    * Simple pass-through for OpenAI. Use this if you want to directly send a request
    * to OpenAI.
-   *
-   * @example
-   * ```ts
-   * const openai = await client.openai.delete('endpoint');
-   * ```
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/openai/${endpoint}`, options);
@@ -70,11 +45,6 @@ export class OpenAI extends APIResource {
   /**
    * Simple pass-through for OpenAI. Use this if you want to directly send a request
    * to OpenAI.
-   *
-   * @example
-   * ```ts
-   * const response = await client.openai.patch('endpoint');
-   * ```
    */
   patch(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/openai/${endpoint}`, options);
@@ -106,6 +76,5 @@ export declare namespace OpenAI {
     Deployments as Deployments,
     type DeploymentCompleteResponse as DeploymentCompleteResponse,
     type DeploymentEmbedResponse as DeploymentEmbedResponse,
-    type DeploymentEmbedParams as DeploymentEmbedParams,
   };
 }

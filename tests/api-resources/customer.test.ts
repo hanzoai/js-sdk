@@ -29,7 +29,6 @@ describe('resource customer', () => {
       blocked: true,
       budget_duration: 'budget_duration',
       budget_id: 'budget_id',
-      budget_reset_at: '2019-12-27T18:11:19.117Z',
       default_model: 'default_model',
       max_budget: 0,
       max_parallel_requests: 0,
@@ -43,7 +42,6 @@ describe('resource customer', () => {
       },
       rpm_limit: 0,
       soft_budget: 0,
-      spend: 0,
       tpm_limit: 0,
     });
   });
