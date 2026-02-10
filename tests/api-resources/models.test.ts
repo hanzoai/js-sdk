@@ -25,14 +25,7 @@ describe('resource models', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.models.list(
-        {
-          fallback_type: 'fallback_type',
-          include_metadata: true,
-          include_model_access_groups: true,
-          only_model_access_groups: true,
-          return_wildcard_routes: true,
-          team_id: 'team_id',
-        },
+        { return_wildcard_routes: true, team_id: 'team_id' },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);

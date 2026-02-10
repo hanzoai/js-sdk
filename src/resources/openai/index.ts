@@ -4,7 +4,6 @@ export {
   Deployments,
   type DeploymentCompleteResponse,
   type DeploymentEmbedResponse,
-  type DeploymentEmbedParams,
 } from './deployments/index';
 export {
   OpenAI,

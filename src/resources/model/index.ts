@@ -3,6 +3,7 @@
 export { Info, type InfoListResponse, type InfoListParams } from './info';
 export {
   Model,
+  type ConfigurableClientsideParamsCustomAuth,
   type ModelInfo,
   type ModelCreateResponse,
   type ModelDeleteResponse,

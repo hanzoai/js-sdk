@@ -6,7 +6,7 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Utils extends APIResource {
   /**
-   * Returns supported openai params for a given litellm model name
+   * Returns supported openai params for a given llm model name
    *
    * e.g. `gpt-4` vs `gpt-3.5-turbo`
    *
@@ -24,18 +24,10 @@ export class Utils extends APIResource {
   }
 
   /**
-   * Args: request: TokenCountRequest call_endpoint: bool - When set to "True" it
-   * will call the token counting endpoint - e.g Anthropic or Google AI Studio Token
-   * Counting APIs.
-   *
-   * Returns: TokenCountResponse
+   * Token Counter
    */
-  tokenCounter(
-    params: UtilTokenCounterParams,
-    options?: RequestOptions,
-  ): APIPromise<UtilTokenCounterResponse> {
-    const { call_endpoint, ...body } = params;
-    return this._client.post('/utils/token_counter', { query: { call_endpoint }, body, ...options });
+  tokenCounter(body: UtilTokenCounterParams, options?: RequestOptions): APIPromise<UtilTokenCounterResponse> {
+    return this._client.post('/utils/token_counter', { body, ...options });
   }
 
   /**
@@ -59,14 +51,6 @@ export interface UtilTokenCounterResponse {
   tokenizer_type: string;
 
   total_tokens: number;
-
-  error?: boolean;
-
-  error_message?: string | null;
-
-  original_response?: { [key: string]: unknown } | null;
-
-  status_code?: number | null;
 }
 
 export interface UtilTransformRequestResponse {
@@ -74,9 +58,9 @@ export interface UtilTransformRequestResponse {
 
   raw_request_api_base?: string | null;
 
-  raw_request_body?: { [key: string]: unknown } | null;
+  raw_request_body?: unknown | null;
 
-  raw_request_headers?: { [key: string]: unknown } | null;
+  raw_request_headers?: unknown | null;
 }
 
 export interface UtilGetSupportedOpenAIParamsParams {
@@ -84,29 +68,10 @@ export interface UtilGetSupportedOpenAIParamsParams {
 }
 
 export interface UtilTokenCounterParams {
-  /**
-   * Body param
-   */
   model: string;
 
-  /**
-   * Query param
-   */
-  call_endpoint?: boolean;
+  messages?: Array<unknown> | null;
 
-  /**
-   * Body param
-   */
-  contents?: Array<{ [key: string]: unknown }> | null;
-
-  /**
-   * Body param
-   */
-  messages?: Array<{ [key: string]: unknown }> | null;
-
-  /**
-   * Body param
-   */
   prompt?: string | null;
 }
 
@@ -120,8 +85,6 @@ export interface UtilTransformRequestParams {
     | 'text_completion'
     | 'image_generation'
     | 'aimage_generation'
-    | 'image_edit'
-    | 'aimage_edit'
     | 'moderation'
     | 'amoderation'
     | 'atranscription'
@@ -130,8 +93,6 @@ export interface UtilTransformRequestParams {
     | 'speech'
     | 'rerank'
     | 'arerank'
-    | 'search'
-    | 'asearch'
     | '_arealtime'
     | 'create_batch'
     | 'acreate_batch'
@@ -169,48 +130,6 @@ export interface UtilTransformRequestParams {
     | 'file_content'
     | 'create_fine_tuning_job'
     | 'acreate_fine_tuning_job'
-    | 'create_video'
-    | 'acreate_video'
-    | 'avideo_retrieve'
-    | 'video_retrieve'
-    | 'avideo_content'
-    | 'video_content'
-    | 'video_remix'
-    | 'avideo_remix'
-    | 'video_list'
-    | 'avideo_list'
-    | 'video_retrieve_job'
-    | 'avideo_retrieve_job'
-    | 'video_delete'
-    | 'avideo_delete'
-    | 'vector_store_file_create'
-    | 'avector_store_file_create'
-    | 'vector_store_file_list'
-    | 'avector_store_file_list'
-    | 'vector_store_file_retrieve'
-    | 'avector_store_file_retrieve'
-    | 'vector_store_file_content'
-    | 'avector_store_file_content'
-    | 'vector_store_file_update'
-    | 'avector_store_file_update'
-    | 'vector_store_file_delete'
-    | 'avector_store_file_delete'
-    | 'vector_store_create'
-    | 'avector_store_create'
-    | 'vector_store_search'
-    | 'avector_store_search'
-    | 'create_container'
-    | 'acreate_container'
-    | 'list_containers'
-    | 'alist_containers'
-    | 'retrieve_container'
-    | 'aretrieve_container'
-    | 'delete_container'
-    | 'adelete_container'
-    | 'list_container_files'
-    | 'alist_container_files'
-    | 'upload_container_file'
-    | 'aupload_container_file'
     | 'acancel_fine_tuning_job'
     | 'cancel_fine_tuning_job'
     | 'alist_fine_tuning_jobs'
@@ -218,22 +137,9 @@ export interface UtilTransformRequestParams {
     | 'aretrieve_fine_tuning_job'
     | 'retrieve_fine_tuning_job'
     | 'responses'
-    | 'aresponses'
-    | 'alist_input_items'
-    | 'llm_passthrough_route'
-    | 'allm_passthrough_route'
-    | 'generate_content'
-    | 'agenerate_content'
-    | 'generate_content_stream'
-    | 'agenerate_content_stream'
-    | 'ocr'
-    | 'aocr'
-    | 'call_mcp_tool'
-    | 'asend_message'
-    | 'send_message'
-    | 'acreate_skill';
+    | 'aresponses';
 
-  request_body: { [key: string]: unknown };
+  request_body: unknown;
 }
 
 export declare namespace Utils {

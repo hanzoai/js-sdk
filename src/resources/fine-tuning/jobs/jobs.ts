@@ -40,14 +40,10 @@ export class Jobs extends APIResource {
    *
    * Supported Query Params:
    *
-   * - `custom_llm_provider`: Name of the LiteLLM provider
+   * - `custom_llm_provider`: Name of the LLM provider
    * - `fine_tuning_job_id`: The ID of the fine-tuning job to retrieve.
    */
-  retrieve(
-    fineTuningJobID: string,
-    query: JobRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
+  retrieve(fineTuningJobID: string, query: JobRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/v1/fine_tuning/jobs/${fineTuningJobID}`, { query, ...options });
   }
 
@@ -57,42 +53,12 @@ export class Jobs extends APIResource {
    *
    * Supported Query Params:
    *
-   * - `custom_llm_provider`: Name of the LiteLLM provider
+   * - `custom_llm_provider`: Name of the LLM provider
    * - `after`: Identifier for the last job from the previous pagination request.
    * - `limit`: Number of fine-tuning jobs to retrieve (default is 20).
    */
-  list(query: JobListParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
+  list(query: JobListParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get('/v1/fine_tuning/jobs', { query, ...options });
-  }
-}
-
-export interface LiteLlmFineTuningJobCreate {
-  model: string;
-
-  training_file: string;
-
-  custom_llm_provider?: 'openai' | 'azure' | 'vertex_ai' | null;
-
-  hyperparameters?: LiteLlmFineTuningJobCreate.Hyperparameters | null;
-
-  integrations?: Array<string> | null;
-
-  seed?: number | null;
-
-  suffix?: string | null;
-
-  validation_file?: string | null;
-
-  [k: string]: unknown;
-}
-
-export namespace LiteLlmFineTuningJobCreate {
-  export interface Hyperparameters {
-    batch_size?: string | number | null;
-
-    learning_rate_multiplier?: string | number | null;
-
-    n_epochs?: string | number | null;
   }
 }
 
@@ -103,11 +69,11 @@ export type JobRetrieveResponse = unknown;
 export type JobListResponse = unknown;
 
 export interface JobCreateParams {
+  custom_llm_provider: 'openai' | 'azure' | 'vertex_ai';
+
   model: string;
 
   training_file: string;
-
-  custom_llm_provider?: 'openai' | 'azure' | 'vertex_ai' | null;
 
   hyperparameters?: JobCreateParams.Hyperparameters | null;
 
@@ -133,27 +99,21 @@ export namespace JobCreateParams {
 }
 
 export interface JobRetrieveParams {
-  custom_llm_provider?: 'openai' | 'azure' | null;
+  custom_llm_provider: 'openai' | 'azure';
 }
 
 export interface JobListParams {
+  custom_llm_provider: 'openai' | 'azure';
+
   after?: string | null;
 
-  custom_llm_provider?: 'openai' | 'azure' | null;
-
   limit?: number | null;
-
-  /**
-   * Comma separated list of model names to filter by. Example: 'gpt-4o,gpt-4o-mini'
-   */
-  target_model_names?: string | null;
 }
 
 Jobs.Cancel = Cancel;
 
 export declare namespace Jobs {
   export {
-    type LiteLlmFineTuningJobCreate as LiteLlmFineTuningJobCreate,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobListResponse as JobListResponse,

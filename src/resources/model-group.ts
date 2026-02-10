@@ -6,8 +6,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class ModelGroup extends APIResource {
   /**
-   * Get information about all the deployments on litellm proxy, including
-   * config.yaml descriptions (except api key and api base)
+   * Get information about all the deployments on llm proxy, including config.yaml
+   * descriptions (except api key and api base)
    *
    * - /model_group/info returns all model groups. End users of proxy should use
    *   /model_group/info since those models will be used for /chat/completions,
@@ -36,7 +36,7 @@ export class ModelGroup extends APIResource {
    * ```
    *
    * Learn how to use and set wildcard models
-   * [here](https://docs.litellm.ai/docs/wildcard_routing)
+   * [here](https://docs.hanzo.ai/docs/wildcard_routing)
    *
    * Example Response:
    *
