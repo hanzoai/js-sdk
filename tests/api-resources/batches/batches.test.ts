@@ -69,7 +69,6 @@ describe('resource batches', () => {
           after: 'after',
           limit: 0,
           provider: 'provider',
-          target_model_names: 'target_model_names',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -123,11 +122,7 @@ describe('resource batches', () => {
     await expect(
       client.batches.listWithProvider(
         'provider',
-        {
-          after: 'after',
-          limit: 0,
-          target_model_names: 'target_model_names',
-        },
+        { after: 'after', limit: 0 },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);

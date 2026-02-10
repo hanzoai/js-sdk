@@ -8,7 +8,7 @@ export class Health extends APIResource {
   /**
    * 🚨 USE `/health/liveliness` to health check the proxy 🚨
    *
-   * See more 👉 https://docs.litellm.ai/docs/proxy/health
+   * See more 👉 https://docs.hanzo.ai/docs/proxy/health
    *
    * Check the health of all the endpoints in config.yaml
    *
@@ -79,11 +79,6 @@ export interface HealthCheckAllParams {
    * Specify the model name (optional)
    */
   model?: string | null;
-
-  /**
-   * Specify the model ID (optional)
-   */
-  model_id?: string | null;
 }
 
 export interface HealthCheckServicesParams {
@@ -93,16 +88,12 @@ export interface HealthCheckServicesParams {
   service:
     | 'slack_budget_alerts'
     | 'langfuse'
-    | 'langfuse_otel'
     | 'slack'
     | 'openmeter'
     | 'webhook'
     | 'email'
     | 'braintrust'
     | 'datadog'
-    | 'generic_api'
-    | 'arize'
-    | 'sqs'
     | (string & {});
 }
 

@@ -36,39 +36,19 @@ describe('resource team', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.team.update({
       team_id: 'team_id',
-      allowed_passthrough_routes: [{}],
-      allowed_vector_store_indexes: [{ index_name: 'index_name', index_permissions: ['read'] }],
       blocked: true,
       budget_duration: 'budget_duration',
       guardrails: ['string'],
       max_budget: 0,
-      metadata: { foo: 'bar' },
-      model_aliases: { foo: 'bar' },
-      model_rpm_limit: { foo: 0 },
-      model_tpm_limit: { foo: 0 },
+      metadata: {},
+      model_aliases: {},
       models: [{}],
-      object_permission: {
-        agent_access_groups: ['string'],
-        agents: ['string'],
-        mcp_access_groups: ['string'],
-        mcp_servers: ['string'],
-        mcp_tool_permissions: { foo: ['string'] },
-        vector_stores: ['string'],
-      },
       organization_id: 'organization_id',
-      prompts: ['string'],
-      router_settings: { foo: 'bar' },
       rpm_limit: 0,
-      secret_manager_settings: { foo: 'bar' },
       tags: [{}],
       team_alias: 'team_alias',
-      team_member_budget: 0,
-      team_member_budget_duration: 'team_member_budget_duration',
-      team_member_key_duration: 'team_member_key_duration',
-      team_member_rpm_limit: 0,
-      team_member_tpm_limit: 0,
       tpm_limit: 0,
-      'litellm-changed-by': 'litellm-changed-by',
+      'llm-changed-by': 'llm-changed-by',
     });
   });
 
@@ -109,10 +89,7 @@ describe('resource team', () => {
 
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.team.delete({
-      team_ids: ['string'],
-      'litellm-changed-by': 'litellm-changed-by',
-    });
+    const response = await client.team.delete({ team_ids: ['string'], 'llm-changed-by': 'llm-changed-by' });
   });
 
   // Prism tests are disabled
@@ -267,8 +244,6 @@ describe('resource team', () => {
       team_id: 'team_id',
       max_budget_in_team: 0,
       role: 'admin',
-      rpm_limit: 0,
-      tpm_limit: 0,
       user_email: 'user_email',
       user_id: 'user_id',
     });

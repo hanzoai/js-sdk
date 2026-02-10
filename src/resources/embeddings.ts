@@ -19,39 +19,19 @@ export class Embeddings extends APIResource {
    * }'
    * ```
    */
-  create(body: EmbeddingCreateParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post('/embeddings', { body, ...options });
+  create(
+    params: EmbeddingCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { model } = params ?? {};
+    return this._client.post('/embeddings', { query: { model }, ...options });
   }
 }
 
 export type EmbeddingCreateResponse = unknown;
 
 export interface EmbeddingCreateParams {
-  model: string;
-
-  api_base?: string | null;
-
-  api_key?: string | null;
-
-  api_type?: string | null;
-
-  api_version?: string | null;
-
-  caching?: boolean;
-
-  custom_llm_provider?: string | { [key: string]: unknown } | null;
-
-  input?: Array<string>;
-
-  litellm_call_id?: string | null;
-
-  litellm_logging_obj?: { [key: string]: unknown } | null;
-
-  logger_fn?: string | null;
-
-  timeout?: number;
-
-  user?: string | null;
+  model?: string | null;
 }
 
 export declare namespace Embeddings {

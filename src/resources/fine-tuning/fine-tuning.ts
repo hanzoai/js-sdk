@@ -10,7 +10,6 @@ import {
   JobRetrieveParams,
   JobRetrieveResponse,
   Jobs,
-  LiteLlmFineTuningJobCreate,
 } from './jobs/jobs';
 
 export class FineTuning extends APIResource {
@@ -22,7 +21,6 @@ FineTuning.Jobs = Jobs;
 export declare namespace FineTuning {
   export {
     Jobs as Jobs,
-    type LiteLlmFineTuningJobCreate as LiteLlmFineTuningJobCreate,
     type JobCreateResponse as JobCreateResponse,
     type JobRetrieveResponse as JobRetrieveResponse,
     type JobListResponse as JobListResponse,

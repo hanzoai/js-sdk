@@ -11,7 +11,7 @@ describe('resource credentials', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.credentials.create({
-      credential_info: { foo: 'bar' },
+      credential_info: {},
       credential_name: 'credential_name',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -26,9 +26,9 @@ describe('resource credentials', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.credentials.create({
-      credential_info: { foo: 'bar' },
+      credential_info: {},
       credential_name: 'credential_name',
-      credential_values: { foo: 'bar' },
+      credential_values: {},
       model_id: 'model_id',
     });
   });
