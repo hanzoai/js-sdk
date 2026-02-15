@@ -198,6 +198,42 @@ import {
   VertexAIRetrieveResponse,
   VertexAIUpdateResponse,
 } from './resources/vertex-ai';
+import {
+  Commerce,
+  CommerceListParams,
+  CommerceProductResponse,
+  CommerceProductListResponse,
+  CommerceCreateProductParams,
+  CommerceOrderResponse,
+  CommerceOrderListResponse,
+  CommerceCreateOrderParams,
+  CommerceCheckoutParams,
+  CommerceSubscriptionResponse,
+  CommerceCreateSubscriptionParams,
+  CommerceCouponResponse,
+  CommerceCreateCouponParams,
+  CommerceReferralResponse,
+  CommerceCreateReferralParams,
+  CommerceAffiliateResponse,
+  CommerceCreateAffiliateParams,
+} from './resources/commerce';
+import {
+  Astley,
+  AstleyInteractionType,
+  AstleyRecordInteractionParams,
+  AstleyInteractionResponse,
+  AstleyLabelDataParams,
+  AstleyLabelResponse,
+  AstleyCollectFeedbackParams,
+  AstleyFeedbackResponse,
+  AstleyStatsResponse,
+  AstleyExportDataParams,
+  AstleyExportResponse,
+  AstleyDatasetResponse,
+} from './resources/astley';
+import { readEnv } from './internal/utils/env';
+import { formatRequestDetails, loggerFor } from './internal/utils/log';
+import { isEmptyObj } from './internal/utils/values';
 import { Audio } from './resources/audio/audio';
 import {
   BatchCancelWithProviderParams,
@@ -1093,6 +1129,8 @@ export class Hanzo {
   delete: API.Delete = new API.Delete(this);
   files: API.Files = new API.Files(this);
   budget: API.Budget = new API.Budget(this);
+  commerce: API.Commerce = new API.Commerce(this);
+  astley: API.Astley = new API.Astley(this);
 }
 
 Hanzo.Models = Models;
@@ -1143,6 +1181,8 @@ Hanzo.Add = Add;
 Hanzo.Delete = Delete;
 Hanzo.Files = Files;
 Hanzo.Budget = Budget;
+Hanzo.Commerce = Commerce;
+Hanzo.Astley = Astley;
 
 export declare namespace Hanzo {
   export type RequestOptions = Opts.RequestOptions;
@@ -1535,5 +1575,40 @@ export declare namespace Hanzo {
     type BudgetDeleteParams as BudgetDeleteParams,
     type BudgetInfoParams as BudgetInfoParams,
     type BudgetSettingsParams as BudgetSettingsParams,
+  };
+
+  export {
+    Commerce as Commerce,
+    type CommerceListParams as CommerceListParams,
+    type CommerceProductResponse as CommerceProductResponse,
+    type CommerceProductListResponse as CommerceProductListResponse,
+    type CommerceCreateProductParams as CommerceCreateProductParams,
+    type CommerceOrderResponse as CommerceOrderResponse,
+    type CommerceOrderListResponse as CommerceOrderListResponse,
+    type CommerceCreateOrderParams as CommerceCreateOrderParams,
+    type CommerceCheckoutParams as CommerceCheckoutParams,
+    type CommerceSubscriptionResponse as CommerceSubscriptionResponse,
+    type CommerceCreateSubscriptionParams as CommerceCreateSubscriptionParams,
+    type CommerceCouponResponse as CommerceCouponResponse,
+    type CommerceCreateCouponParams as CommerceCreateCouponParams,
+    type CommerceReferralResponse as CommerceReferralResponse,
+    type CommerceCreateReferralParams as CommerceCreateReferralParams,
+    type CommerceAffiliateResponse as CommerceAffiliateResponse,
+    type CommerceCreateAffiliateParams as CommerceCreateAffiliateParams,
+  };
+
+  export {
+    Astley as Astley,
+    type AstleyInteractionType as AstleyInteractionType,
+    type AstleyRecordInteractionParams as AstleyRecordInteractionParams,
+    type AstleyInteractionResponse as AstleyInteractionResponse,
+    type AstleyLabelDataParams as AstleyLabelDataParams,
+    type AstleyLabelResponse as AstleyLabelResponse,
+    type AstleyCollectFeedbackParams as AstleyCollectFeedbackParams,
+    type AstleyFeedbackResponse as AstleyFeedbackResponse,
+    type AstleyStatsResponse as AstleyStatsResponse,
+    type AstleyExportDataParams as AstleyExportDataParams,
+    type AstleyExportResponse as AstleyExportResponse,
+    type AstleyDatasetResponse as AstleyDatasetResponse,
   };
 }

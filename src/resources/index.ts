@@ -315,4 +315,37 @@ export {
   type VertexAIDeleteResponse,
   type VertexAIPatchResponse,
 } from './vertex-ai';
+export {
+  Commerce,
+  type CommerceListParams,
+  type CommerceProductResponse,
+  type CommerceProductListResponse,
+  type CommerceCreateProductParams,
+  type CommerceOrderResponse,
+  type CommerceOrderListResponse,
+  type CommerceCreateOrderParams,
+  type CommerceCheckoutParams,
+  type CommerceSubscriptionResponse,
+  type CommerceCreateSubscriptionParams,
+  type CommerceCouponResponse,
+  type CommerceCreateCouponParams,
+  type CommerceReferralResponse,
+  type CommerceCreateReferralParams,
+  type CommerceAffiliateResponse,
+  type CommerceCreateAffiliateParams,
+} from './commerce';
+export {
+  Astley,
+  type AstleyInteractionType,
+  type AstleyRecordInteractionParams,
+  type AstleyInteractionResponse,
+  type AstleyLabelDataParams,
+  type AstleyLabelResponse,
+  type AstleyCollectFeedbackParams,
+  type AstleyFeedbackResponse,
+  type AstleyStatsResponse,
+  type AstleyExportDataParams,
+  type AstleyExportResponse,
+  type AstleyDatasetResponse,
+} from './astley';
 export { type GetHomeResponse } from './top-level';
