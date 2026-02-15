@@ -56,7 +56,7 @@ export const newMcpServer = async () =>
   new McpServer(
     {
       name: 'hanzoai_api',
-      version: '0.1.0-alpha.2',
+      version: '0.1.0-alpha.3',
     },
     {
       instructions: await getInstructions(),
