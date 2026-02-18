@@ -2,11 +2,26 @@
 
 import { IncomingMessage } from 'node:http';
 import { ClientOptions } from 'hanzoai';
+import { McpOptions } from './options';
 
-export const parseAuthHeaders = (req: IncomingMessage, required?: boolean): Partial<ClientOptions> => {
+export const parseClientAuthHeaders = (req: IncomingMessage, required?: boolean): Partial<ClientOptions> => {
   const apiKey =
     Array.isArray(req.headers['ocp-apim-subscription-key']) ?
       req.headers['ocp-apim-subscription-key'][0]
     : req.headers['ocp-apim-subscription-key'];
   return { apiKey };
+};
+
+export const getStainlessApiKey = (req: IncomingMessage, mcpOptions: McpOptions): string | undefined => {
+  // Try to get the key from the x-stainless-api-key header
+  const headerKey =
+    Array.isArray(req.headers['x-stainless-api-key']) ?
+      req.headers['x-stainless-api-key'][0]
+    : req.headers['x-stainless-api-key'];
+  if (headerKey && typeof headerKey === 'string') {
+    return headerKey;
+  }
+
+  // Fall back to value set in the mcpOptions (e.g. from environment variable), if provided
+  return mcpOptions.stainlessApiKey;
 };
