@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource deployments', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('complete', async () => {
     const responsePromise = client.openai.deployments.complete('model');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource deployments', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('embed', async () => {
     const responsePromise = client.openai.deployments.embed('model');
     const rawResponse = await responsePromise.asResponse();

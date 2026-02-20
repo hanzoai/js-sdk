@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource openai', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.openai.create('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource openai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.openai.retrieve('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource openai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.openai.update('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource openai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.openai.delete('endpoint');
     const rawResponse = await responsePromise.asResponse();
@@ -56,7 +56,7 @@ describe('resource openai', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('patch', async () => {
     const responsePromise = client.openai.patch('endpoint');
     const rawResponse = await responsePromise.asResponse();

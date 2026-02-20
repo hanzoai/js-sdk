@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource customer', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.customer.create({ user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.customer.create({
       user_id: 'user_id',
@@ -46,7 +46,7 @@ describe('resource customer', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.customer.update({ user_id: 'user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -58,7 +58,7 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.customer.update({
       user_id: 'user_id',
@@ -71,7 +71,7 @@ describe('resource customer', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.customer.list();
     const rawResponse = await responsePromise.asResponse();
@@ -83,7 +83,7 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.customer.delete({ user_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -95,12 +95,12 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.customer.delete({ user_ids: ['string'] });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('block: only required params', async () => {
     const responsePromise = client.customer.block({ user_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -112,12 +112,12 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('block: required and optional params', async () => {
     const response = await client.customer.block({ user_ids: ['string'] });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveInfo: only required params', async () => {
     const responsePromise = client.customer.retrieveInfo({ end_user_id: 'end_user_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -129,12 +129,12 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveInfo: required and optional params', async () => {
     const response = await client.customer.retrieveInfo({ end_user_id: 'end_user_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unblock: only required params', async () => {
     const responsePromise = client.customer.unblock({ user_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -146,7 +146,7 @@ describe('resource customer', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unblock: required and optional params', async () => {
     const response = await client.customer.unblock({ user_ids: ['string'] });
   });
