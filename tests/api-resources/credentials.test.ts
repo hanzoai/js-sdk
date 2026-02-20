@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource credentials', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.credentials.create({
       credential_info: {},
@@ -23,7 +23,7 @@ describe('resource credentials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.credentials.create({
       credential_info: {},
@@ -33,7 +33,7 @@ describe('resource credentials', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.credentials.list();
     const rawResponse = await responsePromise.asResponse();
@@ -45,7 +45,7 @@ describe('resource credentials', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.credentials.delete('credential_name');
     const rawResponse = await responsePromise.asResponse();

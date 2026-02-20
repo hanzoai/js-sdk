@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource runs', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.threads.runs.create('thread_id');
     const rawResponse = await responsePromise.asResponse();

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource test', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('ping', async () => {
     const responsePromise = client.test.ping();
     const rawResponse = await responsePromise.asResponse();

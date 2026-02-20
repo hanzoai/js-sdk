@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource provider', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('listBudgets', async () => {
     const responsePromise = client.provider.listBudgets();
     const rawResponse = await responsePromise.asResponse();

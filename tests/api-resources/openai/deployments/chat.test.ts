@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource chat', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('complete', async () => {
     const responsePromise = client.openai.deployments.chat.complete('model');
     const rawResponse = await responsePromise.asResponse();
