@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource engines', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('complete', async () => {
     const responsePromise = client.engines.complete('model');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource engines', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('embed', async () => {
     const responsePromise = client.engines.embed('model');
     const rawResponse = await responsePromise.asResponse();
