@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
-import * as OrganizationAPI from './organization/organization';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
@@ -39,9 +38,6 @@ export class Customer extends APIResource {
    *   parallel requests for a given customer.
    * - soft_budget: Optional[float] - [Not Implemented Yet] Get alerts when customer
    *   crosses given budget, doesn't block requests.
-   * - spend: Optional[float] - Specify initial spend for a given customer.
-   * - budget_reset_at: Optional[str] - Specify the date and time when the budget
-   *   should be reset.
    *
    * - Allow specifying allowed regions
    * - Allow specifying default model
@@ -50,7 +46,7 @@ export class Customer extends APIResource {
    *
    * ```
    * curl --location 'http://0.0.0.0:4000/customer/new'         --header 'Authorization: Bearer sk-1234'         --header 'Content-Type: application/json'         --data '{
-   *         "user_id" : "ishaan-jaff-3",
+   *         "user_id" : "z-jaff-3",
    *         "allowed_region": "eu",
    *         "budget_id": "free_tier",
    *         "default_model": "azure/gpt-3.5-turbo-eu" <- all calls from this user, use this model?
@@ -85,7 +81,7 @@ export class Customer extends APIResource {
    *
    * ```
    * curl --location 'http://0.0.0.0:4000/customer/update'     --header 'Authorization: Bearer sk-1234'     --header 'Content-Type: application/json'     --data '{
-   *     "user_id": "test-litellm-user-4",
+   *     "user_id": "test-llm-user-4",
    *     "budget_id": "paid_tier"
    * }'
    *
@@ -120,7 +116,7 @@ export class Customer extends APIResource {
    *
    * ```
    * curl --location 'http://0.0.0.0:4000/customer/delete'         --header 'Authorization: Bearer sk-1234'         --header 'Content-Type: application/json'         --data '{
-   *         "user_ids" :["ishaan-jaff-5"]
+   *         "user_ids" :["z-jaff-5"]
    * }'
    *
    * See below for all params
@@ -163,10 +159,13 @@ export class Customer extends APIResource {
    * Example curl:
    *
    * ```
-   * curl -X GET 'http://localhost:4000/customer/info?end_user_id=test-litellm-user-4'         -H 'Authorization: Bearer sk-1234'
+   * curl -X GET 'http://localhost:4000/customer/info?end_user_id=test-llm-user-4'         -H 'Authorization: Bearer sk-1234'
    * ```
    */
-  retrieveInfo(query: CustomerRetrieveInfoParams, options?: RequestOptions): APIPromise<LiteLlmEndUserTable> {
+  retrieveInfo(
+    query: CustomerRetrieveInfoParams,
+    options?: RequestOptions,
+  ): APIPromise<CustomerRetrieveInfoResponse> {
     return this._client.get('/customer/info', { query, ...options });
   }
 
@@ -192,7 +191,59 @@ export interface BlockUsers {
   user_ids: Array<string>;
 }
 
-export interface LiteLlmEndUserTable {
+export type CustomerCreateResponse = unknown;
+
+export type CustomerUpdateResponse = unknown;
+
+export type CustomerListResponse = Array<CustomerListResponse.CustomerListResponseItem>;
+
+export namespace CustomerListResponse {
+  export interface CustomerListResponseItem {
+    blocked: boolean;
+
+    user_id: string;
+
+    alias?: string | null;
+
+    allowed_model_region?: 'eu' | 'us' | null;
+
+    default_model?: string | null;
+
+    /**
+     * Represents user-controllable params for a LLM_BudgetTable record
+     */
+    llm_budget_table?: CustomerListResponseItem.LlmBudgetTable | null;
+
+    spend?: number;
+  }
+
+  export namespace CustomerListResponseItem {
+    /**
+     * Represents user-controllable params for a LLM_BudgetTable record
+     */
+    export interface LlmBudgetTable {
+      budget_duration?: string | null;
+
+      max_budget?: number | null;
+
+      max_parallel_requests?: number | null;
+
+      model_max_budget?: unknown | null;
+
+      rpm_limit?: number | null;
+
+      soft_budget?: number | null;
+
+      tpm_limit?: number | null;
+    }
+  }
+}
+
+export type CustomerDeleteResponse = unknown;
+
+export type CustomerBlockResponse = unknown;
+
+export interface CustomerRetrieveInfoResponse {
   blocked: boolean;
 
   user_id: string;
@@ -204,22 +255,33 @@ export interface LiteLlmEndUserTable {
   default_model?: string | null;
 
   /**
-   * Represents user-controllable params for a LiteLLM_BudgetTable record
+   * Represents user-controllable params for a LLM_BudgetTable record
    */
-  litellm_budget_table?: OrganizationAPI.BudgetTable | null;
+  llm_budget_table?: CustomerRetrieveInfoResponse.LlmBudgetTable | null;
 
   spend?: number;
 }
 
-export type CustomerCreateResponse = unknown;
+export namespace CustomerRetrieveInfoResponse {
+  /**
+   * Represents user-controllable params for a LLM_BudgetTable record
+   */
+  export interface LlmBudgetTable {
+    budget_duration?: string | null;
 
-export type CustomerUpdateResponse = unknown;
+    max_budget?: number | null;
 
-export type CustomerListResponse = Array<LiteLlmEndUserTable>;
+    max_parallel_requests?: number | null;
 
-export type CustomerDeleteResponse = unknown;
+    model_max_budget?: unknown | null;
 
-export type CustomerBlockResponse = unknown;
+    rpm_limit?: number | null;
+
+    soft_budget?: number | null;
+
+    tpm_limit?: number | null;
+  }
+}
 
 export type CustomerUnblockResponse = unknown;
 
@@ -238,11 +300,6 @@ export interface CustomerCreateParams {
   budget_duration?: string | null;
 
   budget_id?: string | null;
-
-  /**
-   * Datetime when the budget is reset
-   */
-  budget_reset_at?: string | null;
 
   default_model?: string | null;
 
@@ -271,8 +328,6 @@ export interface CustomerCreateParams {
    * Requests will NOT fail if this is exceeded. Will fire alerting though.
    */
   soft_budget?: number | null;
-
-  spend?: number | null;
 
   /**
    * Max tokens per minute, allowed for this budget id.
@@ -330,12 +385,12 @@ export interface CustomerUnblockParams {
 export declare namespace Customer {
   export {
     type BlockUsers as BlockUsers,
-    type LiteLlmEndUserTable as LiteLlmEndUserTable,
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerListResponse as CustomerListResponse,
     type CustomerDeleteResponse as CustomerDeleteResponse,
     type CustomerBlockResponse as CustomerBlockResponse,
+    type CustomerRetrieveInfoResponse as CustomerRetrieveInfoResponse,
     type CustomerUnblockResponse as CustomerUnblockResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,
