@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource info', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.organization.info.retrieve({ organization_id: 'organization_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource info', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.organization.info.retrieve({ organization_id: 'organization_id' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deprecated: only required params', async () => {
     const responsePromise = client.organization.info.deprecated({ organizations: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -37,7 +37,7 @@ describe('resource info', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deprecated: required and optional params', async () => {
     const response = await client.organization.info.deprecated({ organizations: ['string'] });
   });

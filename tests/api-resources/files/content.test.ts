@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource content', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.files.content.retrieve('file_id', { provider: 'provider' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource content', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.files.content.retrieve('file_id', { provider: 'provider' });
   });
