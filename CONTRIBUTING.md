@@ -60,7 +60,7 @@ $ yarn link hanzoai
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global hanzoai
+$ pnpm link --global hanzoai
 ```
 
 ## Running tests
