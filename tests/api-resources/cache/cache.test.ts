@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource cache', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.cache.delete();
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource cache', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('flushAll', async () => {
     const responsePromise = client.cache.flushAll();
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource cache', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('ping', async () => {
     const responsePromise = client.cache.ping();
     const rawResponse = await responsePromise.asResponse();

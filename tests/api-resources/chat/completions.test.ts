@@ -8,12 +8,9 @@ const client = new Hanzo({
 });
 
 describe('resource completions', () => {
-  // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.chat.completions.create({
-      messages: [{ content: 'Hello, how are you?', role: 'user' }],
-      model: 'model',
-    });
+  // Mock server tests are disabled
+  test.skip('create', async () => {
+    const responsePromise = client.chat.completions.create();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,44 +20,11 @@ describe('resource completions', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.chat.completions.create({
-      messages: [
-        {
-          content: 'Hello, how are you?',
-          role: 'user',
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
-      model: 'model',
-      caching: true,
-      context_window_fallback_dict: { foo: 'string' },
-      fallbacks: ['string'],
-      frequency_penalty: 0,
-      function_call: 'string',
-      functions: [{ foo: 'bar' }],
-      guardrails: ['string'],
-      logit_bias: { foo: 0 },
-      logprobs: true,
-      max_tokens: 0,
-      metadata: { foo: 'bar' },
-      n: 0,
-      num_retries: 0,
-      parallel_tool_calls: true,
-      presence_penalty: 0,
-      response_format: { foo: 'bar' },
-      seed: 0,
-      service_tier: 'service_tier',
-      stop: 'string',
-      stream: true,
-      stream_options: { foo: 'bar' },
-      temperature: 0,
-      tool_choice: 'string',
-      tools: [{ foo: 'bar' }],
-      top_logprobs: 0,
-      top_p: 0,
-      user: 'user',
-    });
+  // Mock server tests are disabled
+  test.skip('create: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.chat.completions.create({ model: 'model' }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Hanzo.NotFoundError);
   });
 });

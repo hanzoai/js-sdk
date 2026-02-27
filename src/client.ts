@@ -11,7 +11,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
@@ -100,11 +100,11 @@ import {
   CustomerDeleteResponse,
   CustomerListResponse,
   CustomerRetrieveInfoParams,
+  CustomerRetrieveInfoResponse,
   CustomerUnblockParams,
   CustomerUnblockResponse,
   CustomerUpdateParams,
   CustomerUpdateResponse,
-  LiteLlmEndUserTable,
 } from './resources/customer';
 import { Delete, DeleteCreateAllowedIPParams, DeleteCreateAllowedIPResponse } from './resources/delete';
 import { EmbeddingCreateParams, EmbeddingCreateResponse, Embeddings } from './resources/embeddings';
@@ -176,6 +176,8 @@ import {
   UserCreateResponse,
   UserDeleteParams,
   UserDeleteResponse,
+  UserListParams,
+  UserListResponse,
   UserRetrieveInfoParams,
   UserRetrieveInfoResponse,
   UserUpdateParams,
@@ -259,12 +261,7 @@ import {
 } from './resources/cache/cache';
 import { Chat } from './resources/chat/chat';
 import { Config } from './resources/config/config';
-import {
-  EngineCompleteResponse,
-  EngineEmbedParams,
-  EngineEmbedResponse,
-  Engines,
-} from './resources/engines/engines';
+import { EngineCompleteResponse, EngineEmbedResponse, Engines } from './resources/engines/engines';
 import {
   FileCreateParams,
   FileCreateResponse,
@@ -300,6 +297,7 @@ import {
   KeyUpdateResponse,
 } from './resources/key/key';
 import {
+  ConfigurableClientsideParamsCustomAuth,
   Model,
   ModelCreateParams,
   ModelCreateResponse,
@@ -316,7 +314,6 @@ import {
   OpenAIUpdateResponse,
 } from './resources/openai/openai';
 import {
-  BudgetTable,
   OrgMember,
   Organization,
   OrganizationAddMemberParams,
@@ -327,12 +324,11 @@ import {
   OrganizationDeleteMemberResponse,
   OrganizationDeleteParams,
   OrganizationDeleteResponse,
-  OrganizationListParams,
   OrganizationListResponse,
-  OrganizationMembershipTable,
-  OrganizationTableWithMembers,
   OrganizationUpdateMemberParams,
-  UserRoles,
+  OrganizationUpdateMemberResponse,
+  OrganizationUpdateParams,
+  OrganizationUpdateResponse,
 } from './resources/organization/organization';
 import {
   ResponseCreateResponse,
@@ -590,11 +586,11 @@ export class Hanzo {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([{ 'x-litellm-api-key': this.apiKey }]);
+    return buildHeaders([{ 'Ocp-Apim-Subscription-Key': this.apiKey }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -631,7 +627,7 @@ export class Hanzo {
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -815,7 +811,7 @@ export class Hanzo {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText);
+      const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -856,9 +852,10 @@ export class Hanzo {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -1025,6 +1022,12 @@ export class Hanzo {
     return headers.values;
   }
 
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
@@ -1057,6 +1060,14 @@ export class Hanzo {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -1208,7 +1219,6 @@ export declare namespace Hanzo {
     Engines as Engines,
     type EngineCompleteResponse as EngineCompleteResponse,
     type EngineEmbedResponse as EngineEmbedResponse,
-    type EngineEmbedParams as EngineEmbedParams,
   };
 
   export { Chat as Chat };
@@ -1256,6 +1266,7 @@ export declare namespace Hanzo {
 
   export {
     Model as Model,
+    type ConfigurableClientsideParamsCustomAuth as ConfigurableClientsideParamsCustomAuth,
     type ModelInfo as ModelInfo,
     type ModelCreateResponse as ModelCreateResponse,
     type ModelDeleteResponse as ModelDeleteResponse,
@@ -1438,10 +1449,12 @@ export declare namespace Hanzo {
     User as User,
     type UserCreateResponse as UserCreateResponse,
     type UserUpdateResponse as UserUpdateResponse,
+    type UserListResponse as UserListResponse,
     type UserDeleteResponse as UserDeleteResponse,
     type UserRetrieveInfoResponse as UserRetrieveInfoResponse,
     type UserCreateParams as UserCreateParams,
     type UserUpdateParams as UserUpdateParams,
+    type UserListParams as UserListParams,
     type UserDeleteParams as UserDeleteParams,
     type UserRetrieveInfoParams as UserRetrieveInfoParams,
   };
@@ -1477,18 +1490,16 @@ export declare namespace Hanzo {
 
   export {
     Organization as Organization,
-    type BudgetTable as BudgetTable,
     type OrgMember as OrgMember,
-    type OrganizationMembershipTable as OrganizationMembershipTable,
-    type OrganizationTableWithMembers as OrganizationTableWithMembers,
-    type UserRoles as UserRoles,
     type OrganizationCreateResponse as OrganizationCreateResponse,
+    type OrganizationUpdateResponse as OrganizationUpdateResponse,
     type OrganizationListResponse as OrganizationListResponse,
     type OrganizationDeleteResponse as OrganizationDeleteResponse,
     type OrganizationAddMemberResponse as OrganizationAddMemberResponse,
     type OrganizationDeleteMemberResponse as OrganizationDeleteMemberResponse,
+    type OrganizationUpdateMemberResponse as OrganizationUpdateMemberResponse,
     type OrganizationCreateParams as OrganizationCreateParams,
-    type OrganizationListParams as OrganizationListParams,
+    type OrganizationUpdateParams as OrganizationUpdateParams,
     type OrganizationDeleteParams as OrganizationDeleteParams,
     type OrganizationAddMemberParams as OrganizationAddMemberParams,
     type OrganizationDeleteMemberParams as OrganizationDeleteMemberParams,
@@ -1498,12 +1509,12 @@ export declare namespace Hanzo {
   export {
     Customer as Customer,
     type BlockUsers as BlockUsers,
-    type LiteLlmEndUserTable as LiteLlmEndUserTable,
     type CustomerCreateResponse as CustomerCreateResponse,
     type CustomerUpdateResponse as CustomerUpdateResponse,
     type CustomerListResponse as CustomerListResponse,
     type CustomerDeleteResponse as CustomerDeleteResponse,
     type CustomerBlockResponse as CustomerBlockResponse,
+    type CustomerRetrieveInfoResponse as CustomerRetrieveInfoResponse,
     type CustomerUnblockResponse as CustomerUnblockResponse,
     type CustomerCreateParams as CustomerCreateParams,
     type CustomerUpdateParams as CustomerUpdateParams,

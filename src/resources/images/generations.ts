@@ -8,24 +8,13 @@ export class Generations extends APIResource {
   /**
    * Image Generation
    */
-  create(
-    params: GenerationCreateParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
-    const { model } = params ?? {};
-    return this._client.post('/v1/images/generations', { query: { model }, ...options });
+  create(options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post('/v1/images/generations', options);
   }
 }
 
 export type GenerationCreateResponse = unknown;
 
-export interface GenerationCreateParams {
-  model?: string | null;
-}
-
 export declare namespace Generations {
-  export {
-    type GenerationCreateResponse as GenerationCreateResponse,
-    type GenerationCreateParams as GenerationCreateParams,
-  };
+  export { type GenerationCreateResponse as GenerationCreateResponse };
 }

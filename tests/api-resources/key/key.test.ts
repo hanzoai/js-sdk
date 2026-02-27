@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource key', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.key.update({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,71 +20,41 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.key.update({
       key: 'key',
-      aliases: { foo: 'bar' },
+      aliases: {},
       allowed_cache_controls: [{}],
-      allowed_passthrough_routes: [{}],
-      allowed_routes: [{}],
-      allowed_vector_store_indexes: [{ index_name: 'index_name', index_permissions: ['read'] }],
-      auto_rotate: true,
       blocked: true,
       budget_duration: 'budget_duration',
       budget_id: 'budget_id',
-      config: { foo: 'bar' },
+      config: {},
       duration: 'duration',
       enforced_params: ['string'],
       guardrails: ['string'],
       key_alias: 'key_alias',
       max_budget: 0,
       max_parallel_requests: 0,
-      metadata: { foo: 'bar' },
-      model_max_budget: { foo: 'bar' },
-      model_rpm_limit: { foo: 'bar' },
-      model_tpm_limit: { foo: 'bar' },
+      metadata: {},
+      model_max_budget: {},
+      model_rpm_limit: {},
+      model_tpm_limit: {},
       models: [{}],
-      object_permission: {
-        agent_access_groups: ['string'],
-        agents: ['string'],
-        mcp_access_groups: ['string'],
-        mcp_servers: ['string'],
-        mcp_tool_permissions: { foo: ['string'] },
-        vector_stores: ['string'],
-      },
-      permissions: { foo: 'bar' },
-      prompts: ['string'],
-      rotation_interval: 'rotation_interval',
-      router_settings: {
-        allowed_fails: 0,
-        context_window_fallbacks: [{ foo: 'bar' }],
-        cooldown_time: 0,
-        fallbacks: [{ foo: 'bar' }],
-        max_retries: 0,
-        model_group_alias: { foo: 'string' },
-        model_group_retry_policy: { foo: 'bar' },
-        num_retries: 0,
-        retry_after: 0,
-        routing_strategy: 'routing_strategy',
-        routing_strategy_args: { foo: 'bar' },
-        timeout: 0,
-      },
+      permissions: {},
       rpm_limit: 0,
-      rpm_limit_type: 'guaranteed_throughput',
       spend: 0,
       tags: ['string'],
       team_id: 'team_id',
       temp_budget_expiry: '2019-12-27T18:11:19.117Z',
       temp_budget_increase: 0,
       tpm_limit: 0,
-      tpm_limit_type: 'guaranteed_throughput',
       user_id: 'user_id',
-      'litellm-changed-by': 'litellm-changed-by',
+      'llm-changed-by': 'llm-changed-by',
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.key.list();
     const rawResponse = await responsePromise.asResponse();
@@ -96,24 +66,18 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.key.list(
         {
-          expand: ['string'],
-          include_created_by_keys: true,
           include_team_keys: true,
           key_alias: 'key_alias',
-          key_hash: 'key_hash',
           organization_id: 'organization_id',
           page: 1,
           return_full_object: true,
           size: 1,
-          sort_by: 'sort_by',
-          sort_order: 'sort_order',
-          status: 'status',
           team_id: 'team_id',
           user_id: 'user_id',
         },
@@ -122,7 +86,7 @@ describe('resource key', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.key.delete({});
     const rawResponse = await responsePromise.asResponse();
@@ -134,7 +98,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('block: only required params', async () => {
     const responsePromise = client.key.block({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -146,12 +110,12 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('block: required and optional params', async () => {
-    const response = await client.key.block({ key: 'key', 'litellm-changed-by': 'litellm-changed-by' });
+    const response = await client.key.block({ key: 'key', 'llm-changed-by': 'llm-changed-by' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('checkHealth', async () => {
     const responsePromise = client.key.checkHealth();
     const rawResponse = await responsePromise.asResponse();
@@ -163,7 +127,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('generate', async () => {
     const responsePromise = client.key.generate({});
     const rawResponse = await responsePromise.asResponse();
@@ -175,7 +139,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('regenerateByKey', async () => {
     const responsePromise = client.key.regenerateByKey('key');
     const rawResponse = await responsePromise.asResponse();
@@ -187,82 +151,49 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('regenerateByKey: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.key.regenerateByKey(
         'key',
         {
-          aliases: { foo: 'bar' },
+          aliases: {},
           allowed_cache_controls: [{}],
-          allowed_passthrough_routes: [{}],
-          allowed_routes: [{}],
-          allowed_vector_store_indexes: [{ index_name: 'index_name', index_permissions: ['read'] }],
-          auto_rotate: true,
           blocked: true,
           budget_duration: 'budget_duration',
           budget_id: 'budget_id',
-          config: { foo: 'bar' },
+          config: {},
           duration: 'duration',
           enforced_params: ['string'],
           guardrails: ['string'],
           body_key: 'key',
           key_alias: 'key_alias',
-          key_type: 'llm_api',
           max_budget: 0,
           max_parallel_requests: 0,
-          metadata: { foo: 'bar' },
-          model_max_budget: { foo: 'bar' },
-          model_rpm_limit: { foo: 'bar' },
-          model_tpm_limit: { foo: 'bar' },
+          metadata: {},
+          model_max_budget: {},
+          model_rpm_limit: {},
+          model_tpm_limit: {},
           models: [{}],
-          new_key: 'new_key',
           new_master_key: 'new_master_key',
-          object_permission: {
-            agent_access_groups: ['string'],
-            agents: ['string'],
-            mcp_access_groups: ['string'],
-            mcp_servers: ['string'],
-            mcp_tool_permissions: { foo: ['string'] },
-            vector_stores: ['string'],
-          },
-          organization_id: 'organization_id',
-          permissions: { foo: 'bar' },
-          prompts: ['string'],
-          rotation_interval: 'rotation_interval',
-          router_settings: {
-            allowed_fails: 0,
-            context_window_fallbacks: [{ foo: 'bar' }],
-            cooldown_time: 0,
-            fallbacks: [{ foo: 'bar' }],
-            max_retries: 0,
-            model_group_alias: { foo: 'string' },
-            model_group_retry_policy: { foo: 'bar' },
-            num_retries: 0,
-            retry_after: 0,
-            routing_strategy: 'routing_strategy',
-            routing_strategy_args: { foo: 'bar' },
-            timeout: 0,
-          },
+          permissions: {},
           rpm_limit: 0,
-          rpm_limit_type: 'guaranteed_throughput',
           send_invite_email: true,
           soft_budget: 0,
           spend: 0,
           tags: ['string'],
           team_id: 'team_id',
           tpm_limit: 0,
-          tpm_limit_type: 'guaranteed_throughput',
           user_id: 'user_id',
-          'litellm-changed-by': 'litellm-changed-by',
+          'llm-changed-by': 'llm-changed-by',
         },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveInfo', async () => {
     const responsePromise = client.key.retrieveInfo();
     const rawResponse = await responsePromise.asResponse();
@@ -274,7 +205,7 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('retrieveInfo: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -282,7 +213,7 @@ describe('resource key', () => {
     ).rejects.toThrow(Hanzo.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unblock: only required params', async () => {
     const responsePromise = client.key.unblock({ key: 'key' });
     const rawResponse = await responsePromise.asResponse();
@@ -294,8 +225,8 @@ describe('resource key', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unblock: required and optional params', async () => {
-    const response = await client.key.unblock({ key: 'key', 'litellm-changed-by': 'litellm-changed-by' });
+    const response = await client.key.unblock({ key: 'key', 'llm-changed-by': 'llm-changed-by' });
   });
 });

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource speech', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.audio.speech.create();
     const rawResponse = await responsePromise.asResponse();
