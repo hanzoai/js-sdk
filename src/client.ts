@@ -219,6 +219,7 @@ import {
 } from './resources/commerce';
 import {
   Astley,
+  Ast,
   AstleyInteractionType,
   AstleyRecordInteractionParams,
   AstleyInteractionResponse,
@@ -230,6 +231,17 @@ import {
   AstleyExportDataParams,
   AstleyExportResponse,
   AstleyDatasetResponse,
+  AstInteractionType,
+  AstRecordInteractionParams,
+  AstInteractionResponse,
+  AstLabelDataParams,
+  AstLabelResponse,
+  AstCollectFeedbackParams,
+  AstFeedbackResponse,
+  AstStatsResponse,
+  AstExportDataParams,
+  AstExportResponse,
+  AstDatasetResponse,
 } from './resources/astley';
 import { readEnv } from './internal/utils/env';
 import { formatRequestDetails, loggerFor } from './internal/utils/log';
@@ -1131,6 +1143,7 @@ export class Hanzo {
   budget: API.Budget = new API.Budget(this);
   commerce: API.Commerce = new API.Commerce(this);
   astley: API.Astley = new API.Astley(this);
+  ast: API.Astley = this.astley;
 }
 
 Hanzo.Models = Models;
@@ -1183,6 +1196,7 @@ Hanzo.Files = Files;
 Hanzo.Budget = Budget;
 Hanzo.Commerce = Commerce;
 Hanzo.Astley = Astley;
+Hanzo.Ast = Ast;
 
 export declare namespace Hanzo {
   export type RequestOptions = Opts.RequestOptions;
@@ -1610,5 +1624,20 @@ export declare namespace Hanzo {
     type AstleyExportDataParams as AstleyExportDataParams,
     type AstleyExportResponse as AstleyExportResponse,
     type AstleyDatasetResponse as AstleyDatasetResponse,
+  };
+
+  export {
+    Ast as Ast,
+    type AstInteractionType as AstInteractionType,
+    type AstRecordInteractionParams as AstRecordInteractionParams,
+    type AstInteractionResponse as AstInteractionResponse,
+    type AstLabelDataParams as AstLabelDataParams,
+    type AstLabelResponse as AstLabelResponse,
+    type AstCollectFeedbackParams as AstCollectFeedbackParams,
+    type AstFeedbackResponse as AstFeedbackResponse,
+    type AstStatsResponse as AstStatsResponse,
+    type AstExportDataParams as AstExportDataParams,
+    type AstExportResponse as AstExportResponse,
+    type AstDatasetResponse as AstDatasetResponse,
   };
 }
