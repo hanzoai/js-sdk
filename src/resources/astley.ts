@@ -336,3 +336,29 @@ export declare namespace Astley {
     type AstleyDatasetListResponse as AstleyDatasetListResponse,
   };
 }
+
+// ────────────────────── Ast aliases (backward compat) ──────────────────────
+
+export { Astley as Ast };
+
+export type AstInteractionType = AstleyInteractionType;
+export type AstRecordInteractionParams = AstleyRecordInteractionParams;
+export type AstRecordBatchParams = AstleyRecordBatchParams;
+export type AstInteractionResponse = AstleyInteractionResponse;
+export type AstInteractionListResponse = AstleyInteractionListResponse;
+export type AstListInteractionsParams = AstleyListInteractionsParams;
+export type AstLabelDataParams = AstleyLabelDataParams;
+export type AstLabelResponse = AstleyLabelResponse;
+export type AstCollectFeedbackParams = AstleyCollectFeedbackParams;
+export type AstFeedbackResponse = AstleyFeedbackResponse;
+export type AstFeedbackListResponse = AstleyFeedbackListResponse;
+export type AstListFeedbackParams = AstleyListFeedbackParams;
+export type AstGetStatsParams = AstleyGetStatsParams;
+export type AstStatsResponse = AstleyStatsResponse;
+export type AstExportDataParams = AstleyExportDataParams;
+export type AstExportResponse = AstleyExportResponse;
+export type AstUpsertDatasetParams = AstleyUpsertDatasetParams;
+export type AstDatasetResponse = AstleyDatasetResponse;
+export type AstDatasetListResponse = AstleyDatasetListResponse;
+export type AstListDatasetsParams = AstleyListDatasetsParams;
+
