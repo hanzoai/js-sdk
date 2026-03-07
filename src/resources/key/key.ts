@@ -357,12 +357,12 @@ export class Key extends APIResource {
    * Note: This is an Enterprise feature. It requires a premium license to use.
    */
   regenerateByKey(
-    pathKey: string,
+    key: string,
     params: KeyRegenerateByKeyParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<GenerateKeyResponse | null> {
     const { 'llm-changed-by': llmChangedBy, ...body } = params ?? {};
-    return this._client.post(path`/key/${pathKey}/regenerate`, {
+    return this._client.post(path`/key/${key}/regenerate`, {
       body,
       ...options,
       headers: buildHeaders([
@@ -1143,7 +1143,7 @@ export interface KeyRegenerateByKeyParams {
   /**
    * Body param
    */
-  body_key?: string | null;
+  key?: string | null;
 
   /**
    * Body param
