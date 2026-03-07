@@ -636,7 +636,7 @@ Methods:
 - <code title="post /key/block">client.key.<a href="./src/resources/key/key.ts">block</a>({ ...params }) -> KeyBlockResponse | null</code>
 - <code title="post /key/health">client.key.<a href="./src/resources/key/key.ts">checkHealth</a>() -> KeyCheckHealthResponse</code>
 - <code title="post /key/generate">client.key.<a href="./src/resources/key/key.ts">generate</a>({ ...params }) -> GenerateKeyResponse</code>
-- <code title="post /key/{key}/regenerate">client.key.<a href="./src/resources/key/key.ts">regenerateByKey</a>(pathKey, { ...params }) -> GenerateKeyResponse | null</code>
+- <code title="post /key/{key}/regenerate">client.key.<a href="./src/resources/key/key.ts">regenerateByKey</a>(key, { ...params }) -> GenerateKeyResponse | null</code>
 - <code title="get /key/info">client.key.<a href="./src/resources/key/key.ts">retrieveInfo</a>({ ...params }) -> unknown</code>
 - <code title="post /key/unblock">client.key.<a href="./src/resources/key/key.ts">unblock</a>({ ...params }) -> unknown</code>
 

@@ -167,7 +167,7 @@ describe('resource key', () => {
           duration: 'duration',
           enforced_params: ['string'],
           guardrails: ['string'],
-          body_key: 'key',
+          key: 'key',
           key_alias: 'key_alias',
           max_budget: 0,
           max_parallel_requests: 0,
