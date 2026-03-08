@@ -11,7 +11,7 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.files.create('provider', {
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
       purpose: 'purpose',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -26,7 +26,7 @@ describe('resource files', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.files.create('provider', {
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      file: await toFile(Buffer.from('Example data'), 'README.md'),
       purpose: 'purpose',
       custom_llm_provider: 'custom_llm_provider',
     });
