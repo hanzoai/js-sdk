@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource add', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addAllowedIP: only required params', async () => {
     const responsePromise = client.add.addAllowedIP({ ip: 'ip' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource add', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addAllowedIP: required and optional params', async () => {
     const response = await client.add.addAllowedIP({ ip: 'ip' });
   });

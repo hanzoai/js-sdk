@@ -1,5 +1,74 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2026-03-12)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* add Ast aliases for Astley (backward compat preserved) ([f4a4508](https://github.com/hanzoai/js-sdk/commit/f4a45083a02edd3ef4e44a42941e6be93c9380d7))
+* add Commerce and Astley SDK resource modules ([8005c69](https://github.com/hanzoai/js-sdk/commit/8005c69d2b1cccdb63205687ef45953e01bcfc4e))
+* **api:** api update ([af9ae37](https://github.com/hanzoai/js-sdk/commit/af9ae3706a473f554f8800f40f5a45cc369400bf))
+* **mcp:** add an option to disable code tool ([e7be91a](https://github.com/hanzoai/js-sdk/commit/e7be91a22143d684ba7428a9e89386c51db20c5c))
+* **mcp:** add initial server instructions ([48591bb](https://github.com/hanzoai/js-sdk/commit/48591bbb7213c786ce1af02826960cd6fbde3033))
+
+
+### Bug Fixes
+
+* apply prettier formatting to astley.ts and commerce.ts ([f542afd](https://github.com/hanzoai/js-sdk/commit/f542afd869a490c4e41f64435bdc28d428ea731f))
+* **client:** avoid memory leak with abort signals ([132a05e](https://github.com/hanzoai/js-sdk/commit/132a05eaa2e08f4c2e530416b3782248147e7748))
+* **client:** avoid removing abort listener too early ([ede79ce](https://github.com/hanzoai/js-sdk/commit/ede79ce79dae7ab867b0492f54b8855d8150b1a7))
+* **client:** improve parameter names ([ac3cb97](https://github.com/hanzoai/js-sdk/commit/ac3cb974b03e76936faa12d20ba6018543ded1e1))
+* **client:** preserve URL params already embedded in path ([88c9147](https://github.com/hanzoai/js-sdk/commit/88c9147a802857687a3fe4d398e84a56ea628d54))
+* **docs/contributing:** correct pnpm link command ([35e4bdd](https://github.com/hanzoai/js-sdk/commit/35e4bddc283e796df18c6e23f931bcde0adb82e7))
+* **mcp:** do not fallback on baseUrl if environment env variable is set ([36196b4](https://github.com/hanzoai/js-sdk/commit/36196b441cf5fe5a4760df0c755e3e2762aca232))
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([0b6c745](https://github.com/hanzoai/js-sdk/commit/0b6c745d3c571927f6484d2bc72b770cad3e21d0))
+* **mcp:** update prompt ([d28519c](https://github.com/hanzoai/js-sdk/commit/d28519c5fca7f66f07e23f07ffd3af4062c87340))
+* prettier formatting + exclude resource files from Jest ([8512760](https://github.com/hanzoai/js-sdk/commit/851276015971ae8ba20c232357ebdf186cd51a97))
+* resolve TypeScript errors (duplicate imports, missing type, property conflict) ([451c051](https://github.com/hanzoai/js-sdk/commit/451c0518dfa52d9ada3a364871291c112fcac88b))
+* update delete test to use renamed deleteResource property ([1e5789b](https://github.com/hanzoai/js-sdk/commit/1e5789bf2808c6dcbe4343056ce0882ec346f70f))
+* use --legacy-peer-deps for sub-package npm install ([b14211f](https://github.com/hanzoai/js-sdk/commit/b14211f7edcf04577f54e3d506b72a4af9aecbfa))
+* use npm for sub-package builds (pnpm not available in CI) ([2559558](https://github.com/hanzoai/js-sdk/commit/2559558fd8e84a6cadf80d647abf44d9c5f2b307))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([8d21440](https://github.com/hanzoai/js-sdk/commit/8d21440128d727108d52843b4ea30829c17b515c))
+* **client:** do not parse responses with empty content-length ([0dd51ec](https://github.com/hanzoai/js-sdk/commit/0dd51ec7e6c6b07e558f5bfaa7cd98856a104bb2))
+* **client:** restructure abort controller binding ([e6208d2](https://github.com/hanzoai/js-sdk/commit/e6208d272d56ac3adcb7e500690a108672c06836))
+* **internal/client:** fix form-urlencoded requests ([a99ee57](https://github.com/hanzoai/js-sdk/commit/a99ee57a59b64338e1b52066cf25d713a5b95d48))
+* **internal:** add health check to MCP server when running in HTTP mode ([3ea06c2](https://github.com/hanzoai/js-sdk/commit/3ea06c2fc9b1020cd60b958550822216be9478c4))
+* **internal:** allow basic filtering of methods allowed for MCP code mode ([c1f361e](https://github.com/hanzoai/js-sdk/commit/c1f361e96ac6edca0735563f9282e61384c3afd4))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([b0bf2c8](https://github.com/hanzoai/js-sdk/commit/b0bf2c893ff86d66ba0d4a08fd6a1b4483f0f76f))
+* **internal:** always generate MCP server dockerfiles and upgrade associated dependencies ([e276be0](https://github.com/hanzoai/js-sdk/commit/e276be0cb1afebc9c5ec694f0609ca364b68fc5f))
+* **internal:** avoid type checking errors with ts-reset ([efa2121](https://github.com/hanzoai/js-sdk/commit/efa2121726655e6d49fe7d24521ff65c8f249680))
+* **internal:** cache fetch instruction calls in MCP server ([74d69b9](https://github.com/hanzoai/js-sdk/commit/74d69b9af589d4adaedbdb8e39aff4ea9986e451))
+* **internal:** codegen related update ([97aed95](https://github.com/hanzoai/js-sdk/commit/97aed9541ac14ba72de2af6e2102b1038d1add07))
+* **internal:** codegen related update ([54aed6f](https://github.com/hanzoai/js-sdk/commit/54aed6f046a2746d018ed758b4d8871e306275e8))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([a2be2f3](https://github.com/hanzoai/js-sdk/commit/a2be2f31ef5f9177cf192ae6001ee167fec15f9c))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([9797dd3](https://github.com/hanzoai/js-sdk/commit/9797dd3b067b42b75a3e2d02d5fd0b6a2d94e61d))
+* **internal:** improve layout of generated MCP server files ([9782ee8](https://github.com/hanzoai/js-sdk/commit/9782ee828df4e7a6d2222a94dfa7ffda4373a909))
+* **internal:** make MCP code execution location configurable via a flag ([f67a1e5](https://github.com/hanzoai/js-sdk/commit/f67a1e56c8141ac8bb1a3fc23f29411be121f887))
+* **internal:** move stringifyQuery implementation to internal function ([7921bab](https://github.com/hanzoai/js-sdk/commit/7921babe0f14357701cc674f346894f9284caba2))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([6d6c3b2](https://github.com/hanzoai/js-sdk/commit/6d6c3b2e2a15c742cb4f37ab950e1ce430b42a1b))
+* **internal:** remove mock server code ([c90de07](https://github.com/hanzoai/js-sdk/commit/c90de07b7c00ccdfb76da42ec365bc1a732159bf))
+* **internal:** support oauth authorization code flow for MCP servers ([8703d38](https://github.com/hanzoai/js-sdk/commit/8703d38618bc231e201b085452cb132f61e38c6c))
+* **internal:** upgrade @modelcontextprotocol/sdk and hono ([3e0a46d](https://github.com/hanzoai/js-sdk/commit/3e0a46da14240c7b8bb21b316a4d00dcedbbce1f))
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([ae507c5](https://github.com/hanzoai/js-sdk/commit/ae507c5f11d4921de161bb49791c01b3f485e126))
+* **mcp-server:** improve instructions ([6245aac](https://github.com/hanzoai/js-sdk/commit/6245aac6d8889ee3238149fd347e5cfcf03581f8))
+* **mcp-server:** return access instructions for 404 without API key ([69bfe76](https://github.com/hanzoai/js-sdk/commit/69bfe769b3a805a567fe8b421ebc83458f1ed3bb))
+* **mcp:** correctly update version in sync with sdk ([ecf53d1](https://github.com/hanzoai/js-sdk/commit/ecf53d13251e05308cdf803f23efbd4d09d18c65))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([a43278b](https://github.com/hanzoai/js-sdk/commit/a43278b97151706e94af5ee104b95fa6001c92df))
+* **mcp:** up tsconfig lib version to es2022 ([0ac5895](https://github.com/hanzoai/js-sdk/commit/0ac589558129c593963586d36111c7fc50addd34))
+* migrate from yarn to pnpm ([e99cd9c](https://github.com/hanzoai/js-sdk/commit/e99cd9cceda9d516fcc5b15533c9b62a12a2f8ed))
+* update mock server docs ([d433782](https://github.com/hanzoai/js-sdk/commit/d4337829160fe6860871d1889bb8feeb58520f68))
+* update placeholder string ([d438a26](https://github.com/hanzoai/js-sdk/commit/d438a2698b8e1346e89fa326a1109b4e6a8e6e82))
+
+
+### Documentation
+
+* add LLM.md project guide ([b2513b2](https://github.com/hanzoai/js-sdk/commit/b2513b2e479221a2856c629fc134808e9920eb04))
+
 ## 0.1.0-alpha.2 (2026-01-28)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)

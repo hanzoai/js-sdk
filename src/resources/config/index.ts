@@ -8,7 +8,6 @@ export {
   type PassThroughEndpointCreateResponse,
   type PassThroughEndpointUpdateResponse,
   type PassThroughEndpointCreateParams,
-  type PassThroughEndpointUpdateParams,
   type PassThroughEndpointListParams,
   type PassThroughEndpointDeleteParams,
 } from './pass-through-endpoint';
