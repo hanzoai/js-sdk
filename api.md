@@ -872,7 +872,7 @@ Types:
 
 Methods:
 
-- <code title="post /delete/allowed_ip">client.delete.<a href="./src/resources/delete.ts">createAllowedIP</a>({ ...params }) -> unknown</code>
+- <code title="post /delete/allowed_ip">client.deleteResource.<a href="./src/resources/delete.ts">createAllowedIP</a>({ ...params }) -> unknown</code>
 
 # Files
 
