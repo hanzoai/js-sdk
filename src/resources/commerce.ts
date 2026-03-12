@@ -31,10 +31,7 @@ export class Commerce extends APIResource {
   /**
    * Retrieve a product by ID
    */
-  getProduct(
-    productId: string,
-    options?: RequestOptions,
-  ): APIPromise<CommerceProductResponse> {
+  getProduct(productId: string, options?: RequestOptions): APIPromise<CommerceProductResponse> {
     return this._client.get(`/product/${productId}`, options);
   }
 
@@ -69,10 +66,7 @@ export class Commerce extends APIResource {
   /**
    * Create an order
    */
-  createOrder(
-    body: CommerceCreateOrderParams,
-    options?: RequestOptions,
-  ): APIPromise<CommerceOrderResponse> {
+  createOrder(body: CommerceCreateOrderParams, options?: RequestOptions): APIPromise<CommerceOrderResponse> {
     return this._client.post('/order', { body, ...options });
   }
 
@@ -185,10 +179,7 @@ export class Commerce extends APIResource {
   /**
    * Checkout: one-step charge
    */
-  checkoutCharge(
-    body: CommerceCheckoutParams,
-    options?: RequestOptions,
-  ): APIPromise<CommerceOrderResponse> {
+  checkoutCharge(body: CommerceCheckoutParams, options?: RequestOptions): APIPromise<CommerceOrderResponse> {
     return this._client.post('/checkout/charge', { body, ...options });
   }
 
@@ -359,7 +350,10 @@ export class Commerce extends APIResource {
   /**
    * List referrals
    */
-  listReferrals(query?: CommerceListParams, options?: RequestOptions): APIPromise<CommerceReferralListResponse> {
+  listReferrals(
+    query?: CommerceListParams,
+    options?: RequestOptions,
+  ): APIPromise<CommerceReferralListResponse> {
     return this._client.get('/referral', { query, ...options });
   }
 
@@ -438,20 +432,14 @@ export class Commerce extends APIResource {
   /**
    * Search orders
    */
-  searchOrders(
-    query: CommerceSearchParams,
-    options?: RequestOptions,
-  ): APIPromise<CommerceOrderListResponse> {
+  searchOrders(query: CommerceSearchParams, options?: RequestOptions): APIPromise<CommerceOrderListResponse> {
     return this._client.get('/search/order', { query, ...options });
   }
 
   /**
    * Search users
    */
-  searchUsers(
-    query: CommerceSearchParams,
-    options?: RequestOptions,
-  ): APIPromise<unknown> {
+  searchUsers(query: CommerceSearchParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get('/search/user', { query, ...options });
   }
 }

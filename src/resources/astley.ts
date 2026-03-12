@@ -21,20 +21,14 @@ export class Astley extends APIResource {
   /**
    * Record multiple interaction events in batch
    */
-  recordBatch(
-    body: AstleyRecordBatchParams,
-    options?: RequestOptions,
-  ): APIPromise<AstleyBatchResponse> {
+  recordBatch(body: AstleyRecordBatchParams, options?: RequestOptions): APIPromise<AstleyBatchResponse> {
     return this._client.post('/astley/batch', { body, ...options });
   }
 
   /**
    * Label/annotate collected interaction data
    */
-  labelData(
-    body: AstleyLabelDataParams,
-    options?: RequestOptions,
-  ): APIPromise<AstleyLabelResponse> {
+  labelData(body: AstleyLabelDataParams, options?: RequestOptions): APIPromise<AstleyLabelResponse> {
     return this._client.post('/astley/label', { body, ...options });
   }
 
@@ -51,20 +45,14 @@ export class Astley extends APIResource {
   /**
    * Get dataset statistics and summary
    */
-  getStats(
-    query?: AstleyGetStatsParams,
-    options?: RequestOptions,
-  ): APIPromise<AstleyStatsResponse> {
+  getStats(query?: AstleyGetStatsParams, options?: RequestOptions): APIPromise<AstleyStatsResponse> {
     return this._client.get('/astley/stats', { query, ...options });
   }
 
   /**
    * Export collected data in specified format
    */
-  exportData(
-    body: AstleyExportDataParams,
-    options?: RequestOptions,
-  ): APIPromise<AstleyExportResponse> {
+  exportData(body: AstleyExportDataParams, options?: RequestOptions): APIPromise<AstleyExportResponse> {
     return this._client.post('/astley/export', { body, ...options });
   }
 
@@ -81,10 +69,7 @@ export class Astley extends APIResource {
   /**
    * Get a specific interaction by ID
    */
-  getInteraction(
-    interactionId: string,
-    options?: RequestOptions,
-  ): APIPromise<AstleyInteractionResponse> {
+  getInteraction(interactionId: string, options?: RequestOptions): APIPromise<AstleyInteractionResponse> {
     return this._client.get(`/astley/interaction/${interactionId}`, options);
   }
 
@@ -369,4 +354,3 @@ export type AstUpsertDatasetParams = AstleyUpsertDatasetParams;
 export type AstDatasetResponse = AstleyDatasetResponse;
 export type AstDatasetListResponse = AstleyDatasetListResponse;
 export type AstListDatasetsParams = AstleyListDatasetsParams;
-
