@@ -243,9 +243,6 @@ import {
   AstExportResponse,
   AstDatasetResponse,
 } from './resources/astley';
-import { readEnv } from './internal/utils/env';
-import { formatRequestDetails, loggerFor } from './internal/utils/log';
-import { isEmptyObj } from './internal/utils/values';
 import { Audio } from './resources/audio/audio';
 import {
   BatchCancelWithProviderParams,
@@ -1138,7 +1135,11 @@ export class Hanzo {
   cache: API.Cache = new API.Cache(this);
   guardrails: API.Guardrails = new API.Guardrails(this);
   add: API.Add = new API.Add(this);
-  delete: API.Delete = new API.Delete(this);
+  /**
+   * Allowed IP management resource. Named `deleteResource` to avoid
+   * shadowing the inherited HTTP `delete()` method.
+   */
+  deleteResource: API.Delete = new API.Delete(this);
   files: API.Files = new API.Files(this);
   budget: API.Budget = new API.Budget(this);
   commerce: API.Commerce = new API.Commerce(this);
