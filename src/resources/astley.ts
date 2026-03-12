@@ -170,6 +170,12 @@ export interface AstleyInteractionResponse {
   createdAt: string;
 }
 
+export interface AstleyBatchResponse {
+  accepted: number;
+  failed: number;
+  ids: Array<string>;
+}
+
 export type AstleyInteractionListResponse = Array<AstleyInteractionResponse>;
 
 export interface AstleyListInteractionsParams {
@@ -321,6 +327,7 @@ export declare namespace Astley {
     type AstleyRecordInteractionParams as AstleyRecordInteractionParams,
     type AstleyRecordBatchParams as AstleyRecordBatchParams,
     type AstleyInteractionResponse as AstleyInteractionResponse,
+    type AstleyBatchResponse as AstleyBatchResponse,
     type AstleyInteractionListResponse as AstleyInteractionListResponse,
     type AstleyLabelDataParams as AstleyLabelDataParams,
     type AstleyLabelResponse as AstleyLabelResponse,
@@ -345,6 +352,7 @@ export type AstInteractionType = AstleyInteractionType;
 export type AstRecordInteractionParams = AstleyRecordInteractionParams;
 export type AstRecordBatchParams = AstleyRecordBatchParams;
 export type AstInteractionResponse = AstleyInteractionResponse;
+export type AstBatchResponse = AstleyBatchResponse;
 export type AstInteractionListResponse = AstleyInteractionListResponse;
 export type AstListInteractionsParams = AstleyListInteractionsParams;
 export type AstLabelDataParams = AstleyLabelDataParams;
