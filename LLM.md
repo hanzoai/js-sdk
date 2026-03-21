@@ -1,18 +1,22 @@
 # LLM.md - Hanzo Js Sdk
 
 ## Overview
+
 The official TypeScript library for the Hanzo API
 
 ## Tech Stack
+
 - **Language**: TypeScript/JavaScript
 
 ## Build & Run
+
 ```bash
 npm install && npm run build
 npm test
 ```
 
 ## Structure
+
 ```
 js-sdk/
   Brewfile
@@ -33,5 +37,6 @@ js-sdk/
 ```
 
 ## Key Files
+
 - `README.md` -- Project documentation
 - `package.json` -- Dependencies and scripts
