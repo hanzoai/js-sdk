@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource moderations', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.moderations.create();
     const rawResponse = await responsePromise.asResponse();

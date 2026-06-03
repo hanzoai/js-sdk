@@ -22,8 +22,6 @@ export class Budget extends APIResource {
    * - model_max_budget: Optional[dict] - Specify max budget for a given model.
    *   Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d",
    *   "tpm_limit": 100000, "rpm_limit": 100000}}
-   * - budget_reset_at: Optional[datetime] - Datetime when the initial budget is
-   *   reset. Default is now.
    */
   create(body: BudgetCreateParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/budget/new', { body, ...options });
@@ -46,8 +44,6 @@ export class Budget extends APIResource {
    * - model_max_budget: Optional[dict] - Specify max budget for a given model.
    *   Example: {"openai/gpt-4o-mini": {"max_budget": 100.0, "budget_duration": "1d",
    *   "tpm_limit": 100000, "rpm_limit": 100000}}
-   * - budget_reset_at: Optional[datetime] - Update the Datetime when the budget was
-   *   last reset.
    */
   update(body: BudgetUpdateParams, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/budget/update', { body, ...options });
@@ -107,11 +103,6 @@ export interface BudgetNew {
    * The unique budget id.
    */
   budget_id?: string | null;
-
-  /**
-   * Datetime when the budget is reset
-   */
-  budget_reset_at?: string | null;
 
   /**
    * Requests will fail if this budget (in USD) is exceeded.
@@ -181,11 +172,6 @@ export interface BudgetCreateParams {
   budget_id?: string | null;
 
   /**
-   * Datetime when the budget is reset
-   */
-  budget_reset_at?: string | null;
-
-  /**
    * Requests will fail if this budget (in USD) is exceeded.
    */
   max_budget?: number | null;
@@ -239,11 +225,6 @@ export interface BudgetUpdateParams {
    * The unique budget id.
    */
   budget_id?: string | null;
-
-  /**
-   * Datetime when the budget is reset
-   */
-  budget_reset_at?: string | null;
 
   /**
    * Requests will fail if this budget (in USD) is exceeded.

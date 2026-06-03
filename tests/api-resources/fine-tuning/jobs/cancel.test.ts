@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource cancel', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.fineTuning.jobs.cancel.create('fine_tuning_job_id');
     const rawResponse = await responsePromise.asResponse();
