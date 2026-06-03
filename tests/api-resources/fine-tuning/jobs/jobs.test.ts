@@ -8,9 +8,13 @@ const client = new Hanzo({
 });
 
 describe('resource jobs', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.fineTuning.jobs.create({ model: 'model', training_file: 'training_file' });
+    const responsePromise = client.fineTuning.jobs.create({
+      custom_llm_provider: 'openai',
+      model: 'model',
+      training_file: 'training_file',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,12 +24,12 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.fineTuning.jobs.create({
+      custom_llm_provider: 'openai',
       model: 'model',
       training_file: 'training_file',
-      custom_llm_provider: 'openai',
       hyperparameters: {
         batch_size: 'string',
         learning_rate_multiplier: 'string',
@@ -38,9 +42,11 @@ describe('resource jobs', () => {
     });
   });
 
-  // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.fineTuning.jobs.retrieve('fine_tuning_job_id');
+  // Mock server tests are disabled
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.fineTuning.jobs.retrieve('fine_tuning_job_id', {
+      custom_llm_provider: 'openai',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -50,21 +56,16 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.fineTuning.jobs.retrieve(
-        'fine_tuning_job_id',
-        { custom_llm_provider: 'openai' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Hanzo.NotFoundError);
+  // Mock server tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.fineTuning.jobs.retrieve('fine_tuning_job_id', {
+      custom_llm_provider: 'openai',
+    });
   });
 
-  // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.fineTuning.jobs.list();
+  // Mock server tests are disabled
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.fineTuning.jobs.list({ custom_llm_provider: 'openai' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -74,19 +75,12 @@ describe('resource jobs', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.fineTuning.jobs.list(
-        {
-          after: 'after',
-          custom_llm_provider: 'openai',
-          limit: 0,
-          target_model_names: 'target_model_names',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Hanzo.NotFoundError);
+  // Mock server tests are disabled
+  test.skip('list: required and optional params', async () => {
+    const response = await client.fineTuning.jobs.list({
+      custom_llm_provider: 'openai',
+      after: 'after',
+      limit: 0,
+    });
   });
 });

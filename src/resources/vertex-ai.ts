@@ -7,45 +7,45 @@ import { path } from '../internal/utils/path';
 
 export class VertexAI extends APIResource {
   /**
-   * Call LiteLLM proxy via Vertex AI SDK.
+   * Call LLM proxy via Vertex AI SDK.
    *
-   * [Docs](https://docs.litellm.ai/docs/pass_through/vertex_ai)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)
    */
   create(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/vertex_ai/${endpoint}`, options);
   }
 
   /**
-   * Call LiteLLM proxy via Vertex AI SDK.
+   * Call LLM proxy via Vertex AI SDK.
    *
-   * [Docs](https://docs.litellm.ai/docs/pass_through/vertex_ai)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)
    */
   retrieve(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/vertex_ai/${endpoint}`, options);
   }
 
   /**
-   * Call LiteLLM proxy via Vertex AI SDK.
+   * Call LLM proxy via Vertex AI SDK.
    *
-   * [Docs](https://docs.litellm.ai/docs/pass_through/vertex_ai)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)
    */
   update(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.put(path`/vertex_ai/${endpoint}`, options);
   }
 
   /**
-   * Call LiteLLM proxy via Vertex AI SDK.
+   * Call LLM proxy via Vertex AI SDK.
    *
-   * [Docs](https://docs.litellm.ai/docs/pass_through/vertex_ai)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)
    */
   delete(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.delete(path`/vertex_ai/${endpoint}`, options);
   }
 
   /**
-   * Call LiteLLM proxy via Vertex AI SDK.
+   * Call LLM proxy via Vertex AI SDK.
    *
-   * [Docs](https://docs.litellm.ai/docs/pass_through/vertex_ai)
+   * [Docs](https://docs.hanzo.ai/docs/pass_through/vertex_ai)
    */
   patch(endpoint: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.patch(path`/vertex_ai/${endpoint}`, options);

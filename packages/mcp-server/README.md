@@ -82,8 +82,8 @@ Launching the client with `--transport=http` launches the server as a remote ser
 
 Authorization can be provided via the following headers:
 | Header | Equivalent client option | Security scheme |
-| ------------------- | ------------------------ | --------------- |
-| `x-litellm-api-key` | `apiKey` | APIKeyHeader |
+| --------------------------- | ------------------------ | --------------- |
+| `Ocp-Apim-Subscription-Key` | `apiKey` | APIKeyHeader |
 
 A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:
 
@@ -93,7 +93,7 @@ A configuration JSON for this server might look like this, assuming the server i
     "hanzoai_api": {
       "url": "http://localhost:3000",
       "headers": {
-        "x-litellm-api-key": "My API Key"
+        "Ocp-Apim-Subscription-Key": "My API Key"
       }
     }
   }

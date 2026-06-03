@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as ChatAPI from './chat';
-import { Chat, ChatCompleteParams, ChatCompleteResponse } from './chat';
+import { Chat, ChatCompleteResponse } from './chat';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -25,11 +25,6 @@ export class Engines extends APIResource {
    *     "temperature": 0.7
    * }'
    * ```
-   *
-   * @example
-   * ```ts
-   * const response = await client.engines.complete('model');
-   * ```
    */
   complete(model: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.post(path`/engines/${model}/completions`, options);
@@ -48,16 +43,9 @@ export class Engines extends APIResource {
    *     "input": "The quick brown fox jumps over the lazy dog"
    * }'
    * ```
-   *
-   * @example
-   * ```ts
-   * const response = await client.engines.embed('model', {
-   *   body_model: 'model',
-   * });
-   * ```
    */
-  embed(pathModel: string, body: EngineEmbedParams, options?: RequestOptions): APIPromise<unknown> {
-    return this._client.post(path`/engines/${pathModel}/embeddings`, { body, ...options });
+  embed(model: string, options?: RequestOptions): APIPromise<unknown> {
+    return this._client.post(path`/engines/${model}/embeddings`, options);
   }
 }
 
@@ -65,46 +53,13 @@ export type EngineCompleteResponse = unknown;
 
 export type EngineEmbedResponse = unknown;
 
-export interface EngineEmbedParams {
-  body_model: string;
-
-  api_base?: string | null;
-
-  api_key?: string | null;
-
-  api_type?: string | null;
-
-  api_version?: string | null;
-
-  caching?: boolean;
-
-  custom_llm_provider?: string | { [key: string]: unknown } | null;
-
-  input?: Array<string>;
-
-  litellm_call_id?: string | null;
-
-  litellm_logging_obj?: { [key: string]: unknown } | null;
-
-  logger_fn?: string | null;
-
-  timeout?: number;
-
-  user?: string | null;
-}
-
 Engines.Chat = Chat;
 
 export declare namespace Engines {
   export {
     type EngineCompleteResponse as EngineCompleteResponse,
     type EngineEmbedResponse as EngineEmbedResponse,
-    type EngineEmbedParams as EngineEmbedParams,
   };
 
-  export {
-    Chat as Chat,
-    type ChatCompleteResponse as ChatCompleteResponse,
-    type ChatCompleteParams as ChatCompleteParams,
-  };
+  export { Chat as Chat, type ChatCompleteResponse as ChatCompleteResponse };
 }

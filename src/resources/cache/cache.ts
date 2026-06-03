@@ -10,8 +10,8 @@ export class Cache extends APIResource {
   redis: RedisAPI.Redis = new RedisAPI.Redis(this._client);
 
   /**
-   * Endpoint for deleting a key from the cache. All responses from litellm proxy
-   * have `x-litellm-cache-key` in the headers
+   * Endpoint for deleting a key from the cache. All responses from llm proxy have
+   * `x-llm-cache-key` in the headers
    *
    * Parameters:
    *
@@ -59,9 +59,9 @@ export interface CachePingResponse {
 
   status: string;
 
-  health_check_cache_params?: { [key: string]: unknown } | null;
+  health_check_cache_params?: unknown | null;
 
-  litellm_cache_params?: string | null;
+  llm_cache_params?: string | null;
 
   ping_response?: boolean | null;
 

@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource guardrails', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.guardrails.list();
     const rawResponse = await responsePromise.asResponse();

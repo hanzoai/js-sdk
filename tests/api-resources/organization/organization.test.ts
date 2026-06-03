@@ -8,7 +8,7 @@ const client = new Hanzo({
 });
 
 describe('resource organization', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.organization.create({ organization_alias: 'organization_alias' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.organization.create({
       organization_alias: 'organization_alias',
@@ -28,19 +28,9 @@ describe('resource organization', () => {
       budget_id: 'budget_id',
       max_budget: 0,
       max_parallel_requests: 0,
-      metadata: { foo: 'bar' },
-      model_max_budget: { foo: 'bar' },
-      model_rpm_limit: { foo: 0 },
-      model_tpm_limit: { foo: 0 },
+      metadata: {},
+      model_max_budget: {},
       models: [{}],
-      object_permission: {
-        agent_access_groups: ['string'],
-        agents: ['string'],
-        mcp_access_groups: ['string'],
-        mcp_servers: ['string'],
-        mcp_tool_permissions: { foo: ['string'] },
-        vector_stores: ['string'],
-      },
       organization_id: 'organization_id',
       rpm_limit: 0,
       soft_budget: 0,
@@ -48,9 +38,9 @@ describe('resource organization', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
-    const responsePromise = client.organization.update();
+    const responsePromise = client.organization.update({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -60,7 +50,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.organization.list();
     const rawResponse = await responsePromise.asResponse();
@@ -72,18 +62,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.organization.list(
-        { org_alias: 'org_alias', org_id: 'org_id' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Hanzo.NotFoundError);
-  });
-
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.organization.delete({ organization_ids: ['string'] });
     const rawResponse = await responsePromise.asResponse();
@@ -95,12 +74,12 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.organization.delete({ organization_ids: ['string'] });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addMember: only required params', async () => {
     const responsePromise = client.organization.addMember({
       member: [{ role: 'org_admin' }],
@@ -115,7 +94,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('addMember: required and optional params', async () => {
     const response = await client.organization.addMember({
       member: [
@@ -130,7 +109,7 @@ describe('resource organization', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteMember: only required params', async () => {
     const responsePromise = client.organization.deleteMember({ organization_id: 'organization_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -142,7 +121,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deleteMember: required and optional params', async () => {
     const response = await client.organization.deleteMember({
       organization_id: 'organization_id',
@@ -151,7 +130,7 @@ describe('resource organization', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('updateMember: only required params', async () => {
     const responsePromise = client.organization.updateMember({ organization_id: 'organization_id' });
     const rawResponse = await responsePromise.asResponse();
@@ -163,7 +142,7 @@ describe('resource organization', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('updateMember: required and optional params', async () => {
     const response = await client.organization.updateMember({
       organization_id: 'organization_id',
