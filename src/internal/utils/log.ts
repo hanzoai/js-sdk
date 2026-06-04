@@ -106,10 +106,12 @@ export const formatRequestDetails = (details: {
         ([name, value]) => [
           name,
           (
-            name.toLowerCase() === 'ocp-apim-subscription-key' ||
             name.toLowerCase() === 'authorization' ||
+            name.toLowerCase() === 'api-key' ||
+            name.toLowerCase() === 'x-api-key' ||
             name.toLowerCase() === 'cookie' ||
-            name.toLowerCase() === 'set-cookie'
+            name.toLowerCase() === 'set-cookie' ||
+            name.toLowerCase() === 'ocp-apim-subscription-key'
           ) ?
             '***'
           : value,
