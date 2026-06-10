@@ -102,11 +102,11 @@ export interface HanzoSDKConfig {
  * ```ts
  * const hanzo = new HanzoSDK({ token: process.env.HANZO_API_KEY })
  *
- * const apps  = await hanzo.iam.applications.list({ owner: 'liquidity' })
- * await hanzo.iam.applications.redirectURIs.add('vcc-exchange-client-id', [
- *   'http://vcc.localhost:3000/auth/callback',
+ * const apps  = await hanzo.iam.applications.list({ owner: 'hanzo' })
+ * await hanzo.iam.applications.redirectURIs.add('exchange-client-id', [
+ *   'http://localhost:3000/auth/callback',
  * ])
- * const secret = await hanzo.kms.secrets.get('liquid/usdl/treasury-key')
+ * const secret = await hanzo.kms.secrets.get('hanzo/treasury/key')
  * ```
  */
 export class HanzoSDK {

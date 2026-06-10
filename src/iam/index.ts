@@ -71,10 +71,10 @@ export interface Organization {
 /**
  * Idiomatic client. Construct once and reach into subresources:
  *
- *   const iam = new IAMClient({ baseUrl: 'https://iam.dev.', token })
- *   await iam.applications.redirectURIs.add('vcc-exchange-client-id', [
- *     'http://vcc.localhost:3000/auth/callback',
- *     'http://vcc.localhost:3000/callback',
+ *   const iam = new IAMClient({ baseUrl: 'https://hanzo.id', token })
+ *   await iam.applications.redirectURIs.add('exchange-client-id', [
+ *     'http://localhost:3000/auth/callback',
+ *     'http://localhost:3000/callback',
  *   ])
  */
 export class IAMClient {

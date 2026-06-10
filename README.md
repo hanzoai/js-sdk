@@ -17,13 +17,13 @@ const hanzo = new HanzoSDK({
 })
 
 // IAM
-await hanzo.iam.applications.redirectURIs.add('vcc-exchange-client-id', [
-  'http://vcc.localhost:3000/auth/callback',
-  'http://vcc.localhost:3000/callback',
+await hanzo.iam.applications.redirectURIs.add('exchange-client-id', [
+  'http://localhost:3000/auth/callback',
+  'http://localhost:3000/callback',
 ])
 
 // KMS
-const secret = await hanzo.kms.secrets.get('liquid/usdl/treasury-key')
+const secret = await hanzo.kms.secrets.get('hanzo/treasury/key')
 
 // Commerce
 const cart = await hanzo.commerce.store.carts.create({ regionId: 'reg_us' })
@@ -56,46 +56,43 @@ ships only the IAM client to the consumer's bundle.
 import { IAMClient } from '@hanzo/sdk/iam'
 
 const iam = new IAMClient({
-  baseUrl: 'https://iam.dev.',
-  token: process.env.IAM_SERVICE_TOKEN, // bearer from any  pod env
+  baseUrl: 'https://hanzo.id',
+  token: process.env.IAM_SERVICE_TOKEN, // bearer from any iam pod env
 })
 
-await iam.applications.redirectURIs.add('vcc-exchange-client-id', [
-  'http://vcc.localhost:3000/auth/callback',
-  'http://vcc.localhost:3000/callback',
+await iam.applications.redirectURIs.add('exchange-client-id', [
+  'http://localhost:3000/auth/callback',
+  'http://localhost:3000/callback',
 ])
 ```
 
 Same operation via the CLI (no code, no clone, identical behavior):
 
 ```bash
-liquid iam redirect add vcc-exchange-client-id \
-  http://vcc.localhost:3000/auth/callback \
-  http://vcc.localhost:3000/callback
+hanzo iam redirect add exchange-client-id \
+  http://localhost:3000/auth/callback \
+  http://localhost:3000/callback
 ```
-
-(See [`/cli`](https://github.com//cli) for the
-env-aware `liquid` wrapper that knows
-`iam.{dev,test,main}.` hosts.)
 
 ## Environment + multi-tenant config
 
-Different Hanzo platforms run different hostnames per service (Liquidity
-splits `iam.dev.` and `kms.dev.`; the public
-Hanzo cloud is all one origin). The SDK lets you override per service:
+Different Hanzo platforms run different hostnames per service (some
+deployments split IAM, KMS, and API endpoints onto distinct hosts;
+the public Hanzo cloud is all one origin). The SDK lets you override
+per service:
 
 ```ts
-const liquidityDev = new HanzoSDK({
+const customDeploy = new HanzoSDK({
   token: process.env.IAM_SERVICE_TOKEN,
   services: {
-    iam: 'https://iam.dev.',
-    kms: 'https://kms.dev.',
-    api: 'https://api.dev.',
+    iam: 'https://iam.dev.example.com',
+    kms: 'https://kms.dev.example.com',
+    api: 'https://api.dev.example.com',
   },
 })
 
 // Or one-shot construct a single service client:
-const kms = new KMSClient({ baseUrl: 'https://kms.dev.', token })
+const kms = new KMSClient({ baseUrl: 'https://kms.dev.example.com', token })
 ```
 
 ## Error handling
