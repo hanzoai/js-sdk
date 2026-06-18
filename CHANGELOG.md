@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2026-06-18)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Chores
+
+* scrub  /  references from SDK docs and JSDoc ([4c18289](https://github.com/hanzoai/js-sdk/commit/4c18289db893121a167275f8190b6011a84aced1))
+* sync repo ([05bf0bb](https://github.com/hanzoai/js-sdk/commit/05bf0bb519160d28aaf3f6d11b38272a5f036092))
+
 ## 0.1.0-alpha.3 (2026-04-01)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
