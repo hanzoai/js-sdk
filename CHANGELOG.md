@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2026-06-21)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Chores
+
+* restore upstream attribution + NOTICE (OSS compliance) ([a3c818e](https://github.com/hanzoai/js-sdk/commit/a3c818ee99b7f878721e6b321268bc71a315454f))
+
 ## 0.1.0-alpha.4 (2026-06-18)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
