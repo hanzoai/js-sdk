@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/hero.svg" alt="js-sdk" width="880"></p>
+
 # Hanzo TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/hanzoai.svg?label=npm%20(stable)>)](https://npmjs.org/package/hanzoai) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/hanzoai)
