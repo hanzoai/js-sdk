@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2026-06-29)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Chores
+
+* **brand:** dynamic hero banner ([91c7e2a](https://github.com/hanzoai/js-sdk/commit/91c7e2afece527f424b4ad8356fa5739bdf1271c))
+
+
+### Documentation
+
+* **brand:** add hero banner ([c337453](https://github.com/hanzoai/js-sdk/commit/c3374532fef91a4526d635a26f52fa4fdf5beeaa))
+
 ## 0.1.0-alpha.5 (2026-06-21)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/hanzoai/js-sdk/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)

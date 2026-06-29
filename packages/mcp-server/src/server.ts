@@ -21,7 +21,7 @@ export const newMcpServer = async (stainlessApiKey: string | undefined) =>
   new McpServer(
     {
       name: 'hanzoai_api',
-      version: '0.1.0-alpha.5',
+      version: '0.1.0-alpha.6',
     },
     {
       instructions: await getInstructions(stainlessApiKey),
