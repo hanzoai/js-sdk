@@ -1,37 +1,17 @@
 {
-  "include": ["src", "tests", "examples"],
-  "exclude": [],
   "compilerOptions": {
-    "target": "es2020",
-    "lib": ["es2020"],
+    "declaration": true,
+    "target": "ES2020",
+    "lib": ["ES2020"],
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "paths": {
-      "hanzoai/*": ["./src/*"],
-      "hanzoai": ["./src/index.ts"]
-    },
-    "noEmit": true,
-
-    "resolveJsonModule": true,
-
     "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "alwaysStrict": true,
-    "exactOptionalPropertyTypes": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "isolatedModules": false,
-
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules", "packages", "examples"]
 }
