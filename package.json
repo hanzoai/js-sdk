@@ -1,68 +1,42 @@
 {
   "name": "hanzoai",
-  "version": "0.1.0-alpha.5",
+  "version": "1.0.0",
   "description": "The official TypeScript library for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "type": "commonjs",
-  "repository": "github:hanzoai/js-sdk",
   "license": "Apache-2.0",
-  "packageManager": "pnpm@9.15.0",
+  "repository": "github:hanzoai/js-sdk",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "**/*"
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
   ],
   "private": false,
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "./scripts/test",
-    "build": "./scripts/build",
-    "prepublishOnly": "echo 'to publish, run pnpm build && (cd dist; pnpm publish)' && exit 1",
-    "format": "./scripts/format",
-    "prepare": "if ./scripts/utils/check-is-in-git-install.sh; then ./scripts/build && ./scripts/utils/git-swap.sh; fi",
-    "tsn": "ts-node -r tsconfig-paths/register",
-    "lint": "./scripts/lint",
-    "fix": "./scripts/format"
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "typecheck": "tsc --noEmit",
+    "generate": "./scripts/generate.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.7.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.2",
-    "@swc/core": "^1.15.18",
-    "@swc/jest": "^0.2.39",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.0",
-    "@typescript-eslint/eslint-plugin": "8.57.1",
-    "@typescript-eslint/parser": "8.57.1",
-    "eslint": "^10.1.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-unused-imports": "^4.4.1",
-    "iconv-lite": "^0.7.2",
-    "jest": "^30.3.0",
-    "prettier": "^3.8.1",
-    "publint": "^0.3.18",
-    "ts-jest": "^29.4.6",
-    "ts-node": "^10.9.2",
-    "tsc-multi": "https://github.com/stainless-api/tsc-multi/releases/download/v1.1.9/tsc-multi.tgz",
-    "tsconfig-paths": "^4.2.0",
-    "tslib": "^2.8.1",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.57.1"
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
   },
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.js",
       "require": "./dist/index.js"
-    },
-    "./*.mjs": {
-      "default": "./dist/*.mjs"
-    },
-    "./*.js": {
-      "default": "./dist/*.js"
-    },
-    "./*": {
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js"
     }
   }
 }
