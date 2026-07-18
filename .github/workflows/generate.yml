@@ -24,6 +24,9 @@ jobs:
           node-version: '20'
       - name: Regenerate
         run: ./scripts/generate.sh
+        env:
+          # Read token for the private hanzoai/openapi (repo/contents:read).
+          SPEC_TOKEN: ${{ secrets.SPEC_TOKEN }}
       - name: Verify it builds
         run: |
           npm install --no-audit --no-fund
