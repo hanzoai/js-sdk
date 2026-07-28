@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AutoCreateApiKeyRequest } from '../models';
+// @ts-ignore
 import type { AutoCreateTableRequest } from '../models';
 // @ts-ignore
 import type { ChatAgentApiKey } from '../models';
@@ -31,6 +33,118 @@ import type { ChatAgentApiKey } from '../models';
  */
 export const APIKeysApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {AutoCreateApiKeyRequest} autoCreateApiKeyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoCreateApiKey: async (autoCreateApiKeyRequest: AutoCreateApiKeyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'autoCreateApiKeyRequest' is not null or undefined
+            assertParamExists('autoCreateApiKey', 'autoCreateApiKeyRequest', autoCreateApiKeyRequest)
+            const localVarPath = `/v1/auto/api-keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoCreateApiKeyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeleteApiKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('autoDeleteApiKey', 'id', id)
+            const localVarPath = `/v1/auto/api-keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoListApiKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auto/api-keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Delete an API key
@@ -181,6 +295,118 @@ export const APIKeysApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {AutoCreateApiKeyRequest} autoCreateApiKeyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowCreateApiKey: async (autoCreateApiKeyRequest: AutoCreateApiKeyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'autoCreateApiKeyRequest' is not null or undefined
+            assertParamExists('flowCreateApiKey', 'autoCreateApiKeyRequest', autoCreateApiKeyRequest)
+            const localVarPath = `/v1/flow/api-keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(autoCreateApiKeyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowDeleteApiKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('flowDeleteApiKey', 'id', id)
+            const localVarPath = `/v1/flow/api-keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowListApiKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/flow/api-keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -191,6 +417,44 @@ export const APIKeysApiAxiosParamCreator = function (configuration?: Configurati
 export const APIKeysApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = APIKeysApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {AutoCreateApiKeyRequest} autoCreateApiKeyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoCreateApiKey(autoCreateApiKeyRequest: AutoCreateApiKeyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoCreateApiKey(autoCreateApiKeyRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.autoCreateApiKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoDeleteApiKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoDeleteApiKey(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.autoDeleteApiKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoListApiKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoListApiKeys(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.autoListApiKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * 
          * @summary Delete an API key
@@ -242,6 +506,44 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['APIKeysApi.chatPostApiKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {AutoCreateApiKeyRequest} autoCreateApiKeyRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async flowCreateApiKey(autoCreateApiKeyRequest: AutoCreateApiKeyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.flowCreateApiKey(autoCreateApiKeyRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.flowCreateApiKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async flowDeleteApiKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.flowDeleteApiKey(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.flowDeleteApiKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async flowListApiKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.flowListApiKeys(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['APIKeysApi.flowListApiKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -252,6 +554,35 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
 export const APIKeysApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = APIKeysApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {APIKeysApiAutoCreateApiKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoCreateApiKey(requestParameters: APIKeysApiAutoCreateApiKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.autoCreateApiKey(requestParameters.autoCreateApiKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {APIKeysApiAutoDeleteApiKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoDeleteApiKey(requestParameters: APIKeysApiAutoDeleteApiKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.autoDeleteApiKey(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoListApiKeys(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.autoListApiKeys(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Delete an API key
@@ -291,8 +622,65 @@ export const APIKeysApiFactory = function (configuration?: Configuration, basePa
         chatPostApiKeys(requestParameters: APIKeysApiChatPostApiKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatAgentApiKey> {
             return localVarFp.chatPostApiKeys(requestParameters.autoCreateTableRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Create an API key (EE)
+         * @param {APIKeysApiFlowCreateApiKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowCreateApiKey(requestParameters: APIKeysApiFlowCreateApiKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.flowCreateApiKey(requestParameters.autoCreateApiKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete an API key (EE)
+         * @param {APIKeysApiFlowDeleteApiKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowDeleteApiKey(requestParameters: APIKeysApiFlowDeleteApiKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.flowDeleteApiKey(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List API keys (EE)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowListApiKeys(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.flowListApiKeys(options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for autoCreateApiKey operation in APIKeysApi.
+ * @export
+ * @interface APIKeysApiAutoCreateApiKeyRequest
+ */
+export interface APIKeysApiAutoCreateApiKeyRequest {
+    /**
+     * 
+     * @type {AutoCreateApiKeyRequest}
+     * @memberof APIKeysApiAutoCreateApiKey
+     */
+    readonly autoCreateApiKeyRequest: AutoCreateApiKeyRequest
+}
+
+/**
+ * Request parameters for autoDeleteApiKey operation in APIKeysApi.
+ * @export
+ * @interface APIKeysApiAutoDeleteApiKeyRequest
+ */
+export interface APIKeysApiAutoDeleteApiKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof APIKeysApiAutoDeleteApiKey
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for chatDeleteApiKeysByid operation in APIKeysApi.
@@ -337,12 +725,75 @@ export interface APIKeysApiChatPostApiKeysRequest {
 }
 
 /**
+ * Request parameters for flowCreateApiKey operation in APIKeysApi.
+ * @export
+ * @interface APIKeysApiFlowCreateApiKeyRequest
+ */
+export interface APIKeysApiFlowCreateApiKeyRequest {
+    /**
+     * 
+     * @type {AutoCreateApiKeyRequest}
+     * @memberof APIKeysApiFlowCreateApiKey
+     */
+    readonly autoCreateApiKeyRequest: AutoCreateApiKeyRequest
+}
+
+/**
+ * Request parameters for flowDeleteApiKey operation in APIKeysApi.
+ * @export
+ * @interface APIKeysApiFlowDeleteApiKeyRequest
+ */
+export interface APIKeysApiFlowDeleteApiKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof APIKeysApiFlowDeleteApiKey
+     */
+    readonly id: string
+}
+
+/**
  * APIKeysApi - object-oriented interface
  * @export
  * @class APIKeysApi
  * @extends {BaseAPI}
  */
 export class APIKeysApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create an API key (EE)
+     * @param {APIKeysApiAutoCreateApiKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public autoCreateApiKey(requestParameters: APIKeysApiAutoCreateApiKeyRequest, options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).autoCreateApiKey(requestParameters.autoCreateApiKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete an API key (EE)
+     * @param {APIKeysApiAutoDeleteApiKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public autoDeleteApiKey(requestParameters: APIKeysApiAutoDeleteApiKeyRequest, options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).autoDeleteApiKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List API keys (EE)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public autoListApiKeys(options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).autoListApiKeys(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Delete an API key
@@ -388,6 +839,41 @@ export class APIKeysApi extends BaseAPI {
      */
     public chatPostApiKeys(requestParameters: APIKeysApiChatPostApiKeysRequest, options?: RawAxiosRequestConfig) {
         return APIKeysApiFp(this.configuration).chatPostApiKeys(requestParameters.autoCreateTableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create an API key (EE)
+     * @param {APIKeysApiFlowCreateApiKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public flowCreateApiKey(requestParameters: APIKeysApiFlowCreateApiKeyRequest, options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).flowCreateApiKey(requestParameters.autoCreateApiKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete an API key (EE)
+     * @param {APIKeysApiFlowDeleteApiKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public flowDeleteApiKey(requestParameters: APIKeysApiFlowDeleteApiKeyRequest, options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).flowDeleteApiKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List API keys (EE)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof APIKeysApi
+     */
+    public flowListApiKeys(options?: RawAxiosRequestConfig) {
+        return APIKeysApiFp(this.configuration).flowListApiKeys(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

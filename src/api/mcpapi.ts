@@ -42,6 +42,44 @@ import type { ChatPostMcpByservernameReinitialize200Response } from '../models';
 export const MCPApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {string} projectId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoGetMcpServer: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('autoGetMcpServer', 'projectId', projectId)
+            const localVarPath = `/v1/auto/projects/{projectId}/mcp-server`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * HIP-0300 JSON-RPC 2.0. Methods: `initialize`, `ping`, `tools/list`, `tools/call`. Every connector action is a tool named `<connector>_<action>`. JSON-RPC errors are returned with HTTP 200 and an `error` member. 
          * @summary JSON-RPC 2.0 tool surface over connector actions
          * @param {AutomationsMcpRequest} automationsMcpRequest 
@@ -720,6 +758,44 @@ export const MCPApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {string} projectId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowGetMcpServer: async (projectId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectId' is not null or undefined
+            assertParamExists('flowGetMcpServer', 'projectId', projectId)
+            const localVarPath = `/v1/flow/projects/{projectId}/mcp-server`
+                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -730,6 +806,19 @@ export const MCPApiAxiosParamCreator = function (configuration?: Configuration) 
 export const MCPApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MCPApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {string} projectId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async autoGetMcpServer(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.autoGetMcpServer(projectId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPApi.autoGetMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * HIP-0300 JSON-RPC 2.0. Methods: `initialize`, `ping`, `tools/list`, `tools/call`. Every connector action is a tool named `<connector>_<action>`. JSON-RPC errors are returned with HTTP 200 and an `error` member. 
          * @summary JSON-RPC 2.0 tool surface over connector actions
@@ -956,6 +1045,19 @@ export const MCPApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['MCPApi.chatPostMcpServers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {string} projectId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async flowGetMcpServer(projectId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetMcpServer(projectId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MCPApi.flowGetMcpServer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -966,6 +1068,16 @@ export const MCPApiFp = function(configuration?: Configuration) {
 export const MCPApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MCPApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {MCPApiAutoGetMcpServerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        autoGetMcpServer(requestParameters: MCPApiAutoGetMcpServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.autoGetMcpServer(requestParameters.projectId, options).then((request) => request(axios, basePath));
+        },
         /**
          * HIP-0300 JSON-RPC 2.0. Methods: `initialize`, `ping`, `tools/list`, `tools/call`. Every connector action is a tool named `<connector>_<action>`. JSON-RPC errors are returned with HTTP 200 and an `error` member. 
          * @summary JSON-RPC 2.0 tool surface over connector actions
@@ -1134,8 +1246,32 @@ export const MCPApiFactory = function (configuration?: Configuration, basePath?:
         chatPostMcpServers(requestParameters: MCPApiChatPostMcpServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.chatPostMcpServers(requestParameters.body, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Get MCP server configuration for a project
+         * @param {MCPApiFlowGetMcpServerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flowGetMcpServer(requestParameters: MCPApiFlowGetMcpServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.flowGetMcpServer(requestParameters.projectId, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for autoGetMcpServer operation in MCPApi.
+ * @export
+ * @interface MCPApiAutoGetMcpServerRequest
+ */
+export interface MCPApiAutoGetMcpServerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MCPApiAutoGetMcpServer
+     */
+    readonly projectId: string
+}
 
 /**
  * Request parameters for automationsMcp operation in MCPApi.
@@ -1397,12 +1533,38 @@ export interface MCPApiChatPostMcpServersRequest {
 }
 
 /**
+ * Request parameters for flowGetMcpServer operation in MCPApi.
+ * @export
+ * @interface MCPApiFlowGetMcpServerRequest
+ */
+export interface MCPApiFlowGetMcpServerRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MCPApiFlowGetMcpServer
+     */
+    readonly projectId: string
+}
+
+/**
  * MCPApi - object-oriented interface
  * @export
  * @class MCPApi
  * @extends {BaseAPI}
  */
 export class MCPApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get MCP server configuration for a project
+     * @param {MCPApiAutoGetMcpServerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPApi
+     */
+    public autoGetMcpServer(requestParameters: MCPApiAutoGetMcpServerRequest, options?: RawAxiosRequestConfig) {
+        return MCPApiFp(this.configuration).autoGetMcpServer(requestParameters.projectId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * HIP-0300 JSON-RPC 2.0. Methods: `initialize`, `ping`, `tools/list`, `tools/call`. Every connector action is a tool named `<connector>_<action>`. JSON-RPC errors are returned with HTTP 200 and an `error` member. 
      * @summary JSON-RPC 2.0 tool surface over connector actions
@@ -1603,6 +1765,18 @@ export class MCPApi extends BaseAPI {
      */
     public chatPostMcpServers(requestParameters: MCPApiChatPostMcpServersRequest, options?: RawAxiosRequestConfig) {
         return MCPApiFp(this.configuration).chatPostMcpServers(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get MCP server configuration for a project
+     * @param {MCPApiFlowGetMcpServerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MCPApi
+     */
+    public flowGetMcpServer(requestParameters: MCPApiFlowGetMcpServerRequest, options?: RawAxiosRequestConfig) {
+        return MCPApiFp(this.configuration).flowGetMcpServer(requestParameters.projectId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
