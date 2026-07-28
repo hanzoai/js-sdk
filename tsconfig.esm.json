@@ -2,6 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
+    // Node16 resolution would demand an explicit .js on every relative import;
+    // the generated client writes them extensionless. This half of the build
+    // feeds the `module` field, which only bundlers read.
+    "moduleResolution": "Bundler",
     "outDir": "dist/esm"
   }
 }
