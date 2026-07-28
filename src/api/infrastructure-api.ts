@@ -24,8 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { PricingError } from '../models';
 // @ts-ignore
-import type { PricingFullPricingResponse } from '../models';
-// @ts-ignore
 import type { PricingGetComputePresets200Response } from '../models';
 // @ts-ignore
 import type { PricingGpuTiersResponse } from '../models';
@@ -79,40 +77,6 @@ export const InfrastructureApiAxiosParamCreator = function (configuration?: Conf
          */
         pricingGetComputePricing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/compute`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the complete pricing dataset including all AI models, tools, infrastructure, and cloud plans. Large response (~500KB). 
-         * @summary Full pricing data
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        pricingGetFullPricing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/pricing`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -242,18 +206,6 @@ export const InfrastructureApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the complete pricing dataset including all AI models, tools, infrastructure, and cloud plans. Large response (~500KB). 
-         * @summary Full pricing data
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async pricingGetFullPricing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingFullPricingResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pricingGetFullPricing(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InfrastructureApi.pricingGetFullPricing']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns available GPU tiers with VRAM specs and hourly pricing. Currently offers H100 GPU configurations. 
          * @summary GPU tier pricing
          * @param {*} [options] Override http request option.
@@ -306,15 +258,6 @@ export const InfrastructureApiFactory = function (configuration?: Configuration,
             return localVarFp.pricingGetComputePricing(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the complete pricing dataset including all AI models, tools, infrastructure, and cloud plans. Large response (~500KB). 
-         * @summary Full pricing data
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        pricingGetFullPricing(options?: RawAxiosRequestConfig): AxiosPromise<PricingFullPricingResponse> {
-            return localVarFp.pricingGetFullPricing(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns available GPU tiers with VRAM specs and hourly pricing. Currently offers H100 GPU configurations. 
          * @summary GPU tier pricing
          * @param {*} [options] Override http request option.
@@ -362,17 +305,6 @@ export class InfrastructureApi extends BaseAPI {
      */
     public pricingGetComputePricing(options?: RawAxiosRequestConfig) {
         return InfrastructureApiFp(this.configuration).pricingGetComputePricing(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the complete pricing dataset including all AI models, tools, infrastructure, and cloud plans. Large response (~500KB). 
-     * @summary Full pricing data
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof InfrastructureApi
-     */
-    public pricingGetFullPricing(options?: RawAxiosRequestConfig) {
-        return InfrastructureApiFp(this.configuration).pricingGetFullPricing(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

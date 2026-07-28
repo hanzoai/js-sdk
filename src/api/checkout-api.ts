@@ -31,56 +31,12 @@ import type { CommerceLookupEthereumProxy200Response } from '../models';
 import type { CommerceOrder } from '../models';
 // @ts-ignore
 import type { CommercePaymentRequest } from '../models';
-// @ts-ignore
-import type { CommerceRefundOrderRequest } from '../models';
 /**
  * CheckoutApi - axios parameter creator
  * @export
  */
 export const CheckoutApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Authorize payment for order
-         * @param {string} orderid 
-         * @param {CommercePaymentRequest} [commercePaymentRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceAuthorizeOrder: async (orderid: string, commercePaymentRequest?: CommercePaymentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('commerceAuthorizeOrder', 'orderid', orderid)
-            const localVarPath = `/v1/commerce/order/{orderid}/authorize`
-                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(commercePaymentRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Authorize new payment
@@ -208,44 +164,6 @@ export const CheckoutApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commerceCaptureOrder: async (orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('commerceCaptureOrder', 'orderid', orderid)
-            const localVarPath = `/v1/commerce/order/{orderid}/capture`
-                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Capture authorized payment
-         * @param {string} orderid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         commerceCapturePayment: async (orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orderid' is not null or undefined
             assertParamExists('commerceCapturePayment', 'orderid', orderid)
@@ -271,48 +189,6 @@ export const CheckoutApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Authorize and capture payment (single step)
-         * @param {string} orderid 
-         * @param {CommercePaymentRequest} [commercePaymentRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceChargeOrder: async (orderid: string, commercePaymentRequest?: CommercePaymentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('commerceChargeOrder', 'orderid', orderid)
-            const localVarPath = `/v1/commerce/order/{orderid}/charge`
-                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(commercePaymentRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -435,136 +311,6 @@ export const CheckoutApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Refund order
-         * @param {string} orderid 
-         * @param {CommerceRefundOrderRequest} [commerceRefundOrderRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceRefundOrder: async (orderid: string, commerceRefundOrderRequest?: CommerceRefundOrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('commerceRefundOrder', 'orderid', orderid)
-            const localVarPath = `/v1/commerce/order/{orderid}/refund`
-                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(commerceRefundOrderRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Authorize payment via store
-         * @param {string} storeid 
-         * @param {CommerceCheckoutRequest} commerceCheckoutRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceStoreAuthorize: async (storeid: string, commerceCheckoutRequest: CommerceCheckoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('commerceStoreAuthorize', 'storeid', storeid)
-            // verify required parameter 'commerceCheckoutRequest' is not null or undefined
-            assertParamExists('commerceStoreAuthorize', 'commerceCheckoutRequest', commerceCheckoutRequest)
-            const localVarPath = `/v1/commerce/store/{storeid}/checkout/authorize`
-                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(commerceCheckoutRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Charge payment via store
-         * @param {string} storeid 
-         * @param {CommerceCheckoutRequest} commerceCheckoutRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceStoreCharge: async (storeid: string, commerceCheckoutRequest: CommerceCheckoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('commerceStoreCharge', 'storeid', storeid)
-            // verify required parameter 'commerceCheckoutRequest' is not null or undefined
-            assertParamExists('commerceStoreCharge', 'commerceCheckoutRequest', commerceCheckoutRequest)
-            const localVarPath = `/v1/commerce/store/{storeid}/checkout/charge`
-                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(commerceCheckoutRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -575,20 +321,6 @@ export const CheckoutApiAxiosParamCreator = function (configuration?: Configurat
 export const CheckoutApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CheckoutApiAxiosParamCreator(configuration)
     return {
-        /**
-         * 
-         * @summary Authorize payment for order
-         * @param {string} orderid 
-         * @param {CommercePaymentRequest} [commercePaymentRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async commerceAuthorizeOrder(orderid: string, commercePaymentRequest?: CommercePaymentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceAuthorizeOrder(orderid, commercePaymentRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceAuthorizeOrder']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * 
          * @summary Authorize new payment
@@ -636,37 +368,10 @@ export const CheckoutApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commerceCaptureOrder(orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceCaptureOrder(orderid, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceCaptureOrder']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Capture authorized payment
-         * @param {string} orderid 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async commerceCapturePayment(orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.commerceCapturePayment(orderid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceCapturePayment']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Authorize and capture payment (single step)
-         * @param {string} orderid 
-         * @param {CommercePaymentRequest} [commercePaymentRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async commerceChargeOrder(orderid: string, commercePaymentRequest?: CommercePaymentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceChargeOrder(orderid, commercePaymentRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceChargeOrder']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -708,48 +413,6 @@ export const CheckoutApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceLookupEthereumProxy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Refund order
-         * @param {string} orderid 
-         * @param {CommerceRefundOrderRequest} [commerceRefundOrderRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async commerceRefundOrder(orderid: string, commerceRefundOrderRequest?: CommerceRefundOrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceRefundOrder(orderid, commerceRefundOrderRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceRefundOrder']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Authorize payment via store
-         * @param {string} storeid 
-         * @param {CommerceCheckoutRequest} commerceCheckoutRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async commerceStoreAuthorize(storeid: string, commerceCheckoutRequest: CommerceCheckoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceStoreAuthorize(storeid, commerceCheckoutRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceStoreAuthorize']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Charge payment via store
-         * @param {string} storeid 
-         * @param {CommerceCheckoutRequest} commerceCheckoutRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async commerceStoreCharge(storeid: string, commerceCheckoutRequest: CommerceCheckoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceOrder>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceStoreCharge(storeid, commerceCheckoutRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CheckoutApi.commerceStoreCharge']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -760,16 +423,6 @@ export const CheckoutApiFp = function(configuration?: Configuration) {
 export const CheckoutApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CheckoutApiFp(configuration)
     return {
-        /**
-         * 
-         * @summary Authorize payment for order
-         * @param {CheckoutApiCommerceAuthorizeOrderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceAuthorizeOrder(requestParameters: CheckoutApiCommerceAuthorizeOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceAuthorizeOrder(requestParameters.orderid, requestParameters.commercePaymentRequest, options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @summary Authorize new payment
@@ -803,32 +456,12 @@ export const CheckoutApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Capture authorized payment
-         * @param {CheckoutApiCommerceCaptureOrderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceCaptureOrder(requestParameters: CheckoutApiCommerceCaptureOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceCaptureOrder(requestParameters.orderid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Capture authorized payment
          * @param {CheckoutApiCommerceCapturePaymentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         commerceCapturePayment(requestParameters: CheckoutApiCommerceCapturePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
             return localVarFp.commerceCapturePayment(requestParameters.orderid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Authorize and capture payment (single step)
-         * @param {CheckoutApiCommerceChargeOrderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceChargeOrder(requestParameters: CheckoutApiCommerceChargeOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceChargeOrder(requestParameters.orderid, requestParameters.commercePaymentRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -860,59 +493,8 @@ export const CheckoutApiFactory = function (configuration?: Configuration, baseP
         commerceLookupEthereumProxy(requestParameters: CheckoutApiCommerceLookupEthereumProxyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceLookupEthereumProxy200Response> {
             return localVarFp.commerceLookupEthereumProxy(requestParameters.proxyaddress, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @summary Refund order
-         * @param {CheckoutApiCommerceRefundOrderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceRefundOrder(requestParameters: CheckoutApiCommerceRefundOrderRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceRefundOrder(requestParameters.orderid, requestParameters.commerceRefundOrderRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Authorize payment via store
-         * @param {CheckoutApiCommerceStoreAuthorizeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceStoreAuthorize(requestParameters: CheckoutApiCommerceStoreAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceStoreAuthorize(requestParameters.storeid, requestParameters.commerceCheckoutRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Charge payment via store
-         * @param {CheckoutApiCommerceStoreChargeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        commerceStoreCharge(requestParameters: CheckoutApiCommerceStoreChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceOrder> {
-            return localVarFp.commerceStoreCharge(requestParameters.storeid, requestParameters.commerceCheckoutRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
-
-/**
- * Request parameters for commerceAuthorizeOrder operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceAuthorizeOrderRequest
- */
-export interface CheckoutApiCommerceAuthorizeOrderRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceAuthorizeOrder
-     */
-    readonly orderid: string
-
-    /**
-     * 
-     * @type {CommercePaymentRequest}
-     * @memberof CheckoutApiCommerceAuthorizeOrder
-     */
-    readonly commercePaymentRequest?: CommercePaymentRequest
-}
 
 /**
  * Request parameters for commerceAuthorizePayment operation in CheckoutApi.
@@ -964,20 +546,6 @@ export interface CheckoutApiCommerceCancelOrderRequest {
 }
 
 /**
- * Request parameters for commerceCaptureOrder operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceCaptureOrderRequest
- */
-export interface CheckoutApiCommerceCaptureOrderRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceCaptureOrder
-     */
-    readonly orderid: string
-}
-
-/**
  * Request parameters for commerceCapturePayment operation in CheckoutApi.
  * @export
  * @interface CheckoutApiCommerceCapturePaymentRequest
@@ -989,27 +557,6 @@ export interface CheckoutApiCommerceCapturePaymentRequest {
      * @memberof CheckoutApiCommerceCapturePayment
      */
     readonly orderid: string
-}
-
-/**
- * Request parameters for commerceChargeOrder operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceChargeOrderRequest
- */
-export interface CheckoutApiCommerceChargeOrderRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceChargeOrder
-     */
-    readonly orderid: string
-
-    /**
-     * 
-     * @type {CommercePaymentRequest}
-     * @memberof CheckoutApiCommerceChargeOrder
-     */
-    readonly commercePaymentRequest?: CommercePaymentRequest
 }
 
 /**
@@ -1055,87 +602,12 @@ export interface CheckoutApiCommerceLookupEthereumProxyRequest {
 }
 
 /**
- * Request parameters for commerceRefundOrder operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceRefundOrderRequest
- */
-export interface CheckoutApiCommerceRefundOrderRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceRefundOrder
-     */
-    readonly orderid: string
-
-    /**
-     * 
-     * @type {CommerceRefundOrderRequest}
-     * @memberof CheckoutApiCommerceRefundOrder
-     */
-    readonly commerceRefundOrderRequest?: CommerceRefundOrderRequest
-}
-
-/**
- * Request parameters for commerceStoreAuthorize operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceStoreAuthorizeRequest
- */
-export interface CheckoutApiCommerceStoreAuthorizeRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceStoreAuthorize
-     */
-    readonly storeid: string
-
-    /**
-     * 
-     * @type {CommerceCheckoutRequest}
-     * @memberof CheckoutApiCommerceStoreAuthorize
-     */
-    readonly commerceCheckoutRequest: CommerceCheckoutRequest
-}
-
-/**
- * Request parameters for commerceStoreCharge operation in CheckoutApi.
- * @export
- * @interface CheckoutApiCommerceStoreChargeRequest
- */
-export interface CheckoutApiCommerceStoreChargeRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CheckoutApiCommerceStoreCharge
-     */
-    readonly storeid: string
-
-    /**
-     * 
-     * @type {CommerceCheckoutRequest}
-     * @memberof CheckoutApiCommerceStoreCharge
-     */
-    readonly commerceCheckoutRequest: CommerceCheckoutRequest
-}
-
-/**
  * CheckoutApi - object-oriented interface
  * @export
  * @class CheckoutApi
  * @extends {BaseAPI}
  */
 export class CheckoutApi extends BaseAPI {
-    /**
-     * 
-     * @summary Authorize payment for order
-     * @param {CheckoutApiCommerceAuthorizeOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceAuthorizeOrder(requestParameters: CheckoutApiCommerceAuthorizeOrderRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceAuthorizeOrder(requestParameters.orderid, requestParameters.commercePaymentRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Authorize new payment
@@ -1175,18 +647,6 @@ export class CheckoutApi extends BaseAPI {
     /**
      * 
      * @summary Capture authorized payment
-     * @param {CheckoutApiCommerceCaptureOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceCaptureOrder(requestParameters: CheckoutApiCommerceCaptureOrderRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceCaptureOrder(requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Capture authorized payment
      * @param {CheckoutApiCommerceCapturePaymentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1194,18 +654,6 @@ export class CheckoutApi extends BaseAPI {
      */
     public commerceCapturePayment(requestParameters: CheckoutApiCommerceCapturePaymentRequest, options?: RawAxiosRequestConfig) {
         return CheckoutApiFp(this.configuration).commerceCapturePayment(requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Authorize and capture payment (single step)
-     * @param {CheckoutApiCommerceChargeOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceChargeOrder(requestParameters: CheckoutApiCommerceChargeOrderRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceChargeOrder(requestParameters.orderid, requestParameters.commercePaymentRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1242,42 +690,6 @@ export class CheckoutApi extends BaseAPI {
      */
     public commerceLookupEthereumProxy(requestParameters: CheckoutApiCommerceLookupEthereumProxyRequest, options?: RawAxiosRequestConfig) {
         return CheckoutApiFp(this.configuration).commerceLookupEthereumProxy(requestParameters.proxyaddress, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Refund order
-     * @param {CheckoutApiCommerceRefundOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceRefundOrder(requestParameters: CheckoutApiCommerceRefundOrderRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceRefundOrder(requestParameters.orderid, requestParameters.commerceRefundOrderRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Authorize payment via store
-     * @param {CheckoutApiCommerceStoreAuthorizeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceStoreAuthorize(requestParameters: CheckoutApiCommerceStoreAuthorizeRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceStoreAuthorize(requestParameters.storeid, requestParameters.commerceCheckoutRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Charge payment via store
-     * @param {CheckoutApiCommerceStoreChargeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CheckoutApi
-     */
-    public commerceStoreCharge(requestParameters: CheckoutApiCommerceStoreChargeRequest, options?: RawAxiosRequestConfig) {
-        return CheckoutApiFp(this.configuration).commerceStoreCharge(requestParameters.storeid, requestParameters.commerceCheckoutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
