@@ -1,36 +1,29 @@
-// tools — list the MCP tools this key can reach.
+// tools — list the tools this key can reach.
 //
-// POST /v1/automations/mcp (operationId automations_mcp) is the JSON-RPC 2.0
-// MCP surface in hanzo.yaml, and the only one with typed request/response
-// schemas — `method` is an enum the client checks at compile time, so
-// `tools/lst` is a type error here rather than a -32601 at runtime.
+// GET /v1/tools (operationId cloud_get_v1_tools), the catalog behind the MCP
+// surface: each entry is a tool name, its description and its input schema.
 //
-// JSON-RPC reports failure INSIDE a 200: a bad method comes back as
-// `error: { code, message }`, not an HTTP 4xx, so axios does not throw. Check
-// `error` before reading `result`.
-import { MCPApi, AutomationsMcpRequestMethodEnum } from 'hanzoai';
+// A note on the MCP door, because it is easy to pick the wrong one. There is a
+// live JSON-RPC endpoint at POST /v1/mcp that answers `tools/list` with the
+// same catalog (730 tools at the time of writing) — but it is NOT in
+// hanzo.yaml, so the generator emits no method for it and an example would have
+// to bypass the SDK to call it, which defeats the point of an SDK example. Of
+// the MCP routes that ARE declared, /v1/automations/mcp returns 405 at
+// api.hanzo.ai. So this catalog read is the one that is both generated and
+// served. When /v1/mcp is added to the spec, this flow should move to it.
+import { ToolsApi } from 'hanzoai';
 import { config, fail } from '../client';
 
 async function main() {
-  const mcp = new MCPApi(config());
-  const { data } = await mcp.automationsMcp({
-    automationsMcpRequest: {
-      jsonrpc: '2.0',
-      id: 1,
-      method: AutomationsMcpRequestMethodEnum.ToolsList,
-    },
-  });
+  const tools = new ToolsApi(config());
+  const { data } = await tools.cloudGetV1Tools({});
 
-  if (data.error) {
-    console.error(`JSON-RPC ${data.error.code}: ${data.error.message}`);
-    process.exit(1);
-  }
-
-  const tools: Array<{ name: string; description?: string }> = data.result?.tools ?? [];
-  console.log(`${tools.length} tools`);
-  for (const t of tools) {
+  const list = data.tools ?? [];
+  console.log(`${list.length} tools`);
+  for (const t of list.slice(0, 20)) {
     console.log(`  ${t.name} — ${t.description ?? '(no description)'}`);
   }
+  if (list.length > 20) console.log(`  … and ${list.length - 20} more`);
 }
 
 main().catch(fail);

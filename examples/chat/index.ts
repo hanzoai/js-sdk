@@ -22,6 +22,9 @@ async function main() {
     },
   });
 
+  // `choices[0].message.content` is reachable without a cast only because the
+  // spec models a ChatChoice. It used to be `items: {type: object}`, which every
+  // generator turns into its untyped bag — on the most-called route in the API.
   const reply = data.choices?.[0]?.message?.content;
   console.log(reply ?? '(no choices returned)');
 
