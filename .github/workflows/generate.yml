@@ -27,6 +27,9 @@ jobs:
         # scripts/generate.sh is a call site; the driver it runs lives in
         # hanzoai/openapi and needs PyYAML, which uv supplies per-invocation.
         run: ./scripts/generate.sh
+        env:
+          # Read token for the private hanzoai/openapi (contents:read).
+          SPEC_TOKEN: ${{ secrets.SPEC_TOKEN }}
       - name: Verify it builds
         run: |
           npm ci --no-audit --no-fund
