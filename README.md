@@ -6,7 +6,7 @@ The official TypeScript client for the [Hanzo Cloud API](https://api.hanzo.ai) �
 AI inference plus every `/v1/<service>` product, in one install.
 
 Generated from [`hanzoai/openapi`](https://github.com/hanzoai/openapi)'s
-`hanzo.yaml`: **1519 operations, 779 schemas**. Never hand-written, so the
+`hanzo.yaml`: **2452 operations, 1798 schemas**. Never hand-written, so the
 client cannot describe a route the server does not serve.
 
 ## Install
@@ -57,12 +57,12 @@ language's set can find their way around another's.
 
 | flow | what it does | routes |
 |---|---|---|
-| [`hello`](examples/hello) | identity — prove the key works | `GET /v1/ai/account` |
+| [`hello`](examples/hello) | identity — prove the key works | `GET /v1/bot/auth/me` |
 | [`chat`](examples/chat) | one completion | `POST /v1/chat/completions` |
 | [`money`](examples/money) | balance + usage | `GET /v1/billing/balance`, `GET /v1/billing/usage` |
-| [`store`](examples/store) | KV round-trip | `PUT`/`GET`/`DELETE /v1/kv/keys/{key}` |
-| [`agent`](examples/agent) | create + run + read | `POST /v1/agents`, `POST /v1/agents/{ref}/run`, `GET /v1/agents/{ref}` |
-| [`tools`](examples/tools) | MCP `tools/list` | `POST /v1/automations/mcp` |
+| [`store`](examples/store) | KV round-trip | `POST /v1/kv`, `GET`/`DELETE /v1/kv/{name}` |
+| [`agent`](examples/agent) | create + run + read | `POST /v1/agents`, `POST /v1/agents/{ref}/run`, `GET /v1/agents/{ref}/runs` |
+| [`tools`](examples/tools) | tool catalog | `GET /v1/tools` |
 
 Every one reads `HANZO_API_KEY` from the environment and talks to
 `https://api.hanzo.ai` unless `HANZO_BASE_URL` says otherwise:
@@ -78,13 +78,13 @@ on every push, which is what keeps them from rotting into pseudocode.
 
 ## API surface
 
-Operations are grouped into one class per spec tag — `AccountApi`, `BillingApi`,
-`KeysApi`, `AgentsAPIApi`, `MCPApi`, `OpenAICompatibleApi`, and 233 more. Each
+Operations are grouped into one class per spec tag — `AuthApi`, `BillingApi`,
+`KvApi`, `AgentsApi`, `ToolsApi`, `OpenAICompatibleApi`, and 257 more. Each
 takes a `Configuration`, and each method takes a single request object.
 
 ```ts
 import { BillingApi } from 'hanzoai';
-const { data } = await new BillingApi(config).billingBillingBalance({});
+const { data } = await new BillingApi(config).cloudGetV1BillingBalance();
 ```
 
 ## Regenerating
