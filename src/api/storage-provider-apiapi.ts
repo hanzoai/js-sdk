@@ -23,8 +23,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CloudObjectProvider } from '../models';
-// @ts-ignore
-import type { NexusProvider } from '../models';
 /**
  * StorageProviderAPIApi - axios parameter creator
  * @export
@@ -39,40 +37,6 @@ export const StorageProviderAPIApiAxiosParamCreator = function (configuration?: 
          */
         cloudApiControllerGetStorageProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/cloud/get-storage-providers`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get storage providers
-         * @summary get Storage Providers
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetStorageProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-storage-providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -121,18 +85,6 @@ export const StorageProviderAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['StorageProviderAPIApi.cloudApiControllerGetStorageProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get storage providers
-         * @summary get Storage Providers
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetStorageProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NexusProvider>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetStorageProviders(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StorageProviderAPIApi.nexusGetStorageProviders']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -151,15 +103,6 @@ export const StorageProviderAPIApiFactory = function (configuration?: Configurat
          */
         cloudApiControllerGetStorageProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<CloudObjectProvider>> {
             return localVarFp.cloudApiControllerGetStorageProviders(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get storage providers
-         * @summary get Storage Providers
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetStorageProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<NexusProvider>> {
-            return localVarFp.nexusGetStorageProviders(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -180,17 +123,6 @@ export class StorageProviderAPIApi extends BaseAPI {
      */
     public cloudApiControllerGetStorageProviders(options?: RawAxiosRequestConfig) {
         return StorageProviderAPIApiFp(this.configuration).cloudApiControllerGetStorageProviders(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get storage providers
-     * @summary get Storage Providers
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StorageProviderAPIApi
-     */
-    public nexusGetStorageProviders(options?: RawAxiosRequestConfig) {
-        return StorageProviderAPIApiFp(this.configuration).nexusGetStorageProviders(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

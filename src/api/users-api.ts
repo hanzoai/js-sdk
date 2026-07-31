@@ -72,10 +72,6 @@ import type { CommerceWalletAccount } from '../models';
 // @ts-ignore
 import type { CommerceWalletPayRequest } from '../models';
 // @ts-ignore
-import type { FlowListUsers200Response } from '../models';
-// @ts-ignore
-import type { FlowUser } from '../models';
-// @ts-ignore
 import type { IamControllersCheckPasswordRequest } from '../models';
 // @ts-ignore
 import type { IamControllersLaravelResponse } from '../models';
@@ -489,40 +485,6 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(analyticsUpdateUserRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List platform users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/auto/users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1319,88 +1281,6 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(commerceWalletPayRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get user by id
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetUser: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowGetUser', 'id', id)
-            const localVarPath = `/v1/flow/users/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List platform users
-         * @param {string} [cursor] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListUsers: async (cursor?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2768,18 +2648,6 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List platform users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoListUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoListUsers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.autoListUsers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get user profile by handle
          * @param {string} handle 
          * @param {*} [options] Override http request option.
@@ -3044,33 +2912,6 @@ export const UsersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.commerceWalletPay(userid, commerceWalletPayRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.commerceWalletPay']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get user by id
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetUser(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetUser(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.flowGetUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List platform users
-         * @param {string} [cursor] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowListUsers(cursor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowListUsers200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowListUsers(cursor, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsersApi.flowListUsers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3553,15 +3394,6 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary List platform users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListUsers(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoListUsers(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get user profile by handle
          * @param {UsersApiBotGetUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3759,26 +3591,6 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         commerceWalletPay(requestParameters: UsersApiCommerceWalletPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.commerceWalletPay(requestParameters.userid, requestParameters.commerceWalletPayRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get user by id
-         * @param {UsersApiFlowGetUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetUser(requestParameters: UsersApiFlowGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowUser> {
-            return localVarFp.flowGetUser(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List platform users
-         * @param {UsersApiFlowListUsersRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListUsers(requestParameters: UsersApiFlowListUsersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FlowListUsers200Response> {
-            return localVarFp.flowListUsers(requestParameters.cursor, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * add ldap
@@ -4568,41 +4380,6 @@ export interface UsersApiCommerceWalletPayRequest {
 }
 
 /**
- * Request parameters for flowGetUser operation in UsersApi.
- * @export
- * @interface UsersApiFlowGetUserRequest
- */
-export interface UsersApiFlowGetUserRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UsersApiFlowGetUser
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for flowListUsers operation in UsersApi.
- * @export
- * @interface UsersApiFlowListUsersRequest
- */
-export interface UsersApiFlowListUsersRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UsersApiFlowListUsers
-     */
-    readonly cursor?: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof UsersApiFlowListUsers
-     */
-    readonly limit?: number
-}
-
-/**
  * Request parameters for iamApiControllerAddLdap operation in UsersApi.
  * @export
  * @interface UsersApiIamApiControllerAddLdapRequest
@@ -5172,17 +4949,6 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
-     * @summary List platform users
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public autoListUsers(options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).autoListUsers(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get user profile by handle
      * @param {UsersApiBotGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5419,30 +5185,6 @@ export class UsersApi extends BaseAPI {
      */
     public commerceWalletPay(requestParameters: UsersApiCommerceWalletPayRequest, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).commerceWalletPay(requestParameters.userid, requestParameters.commerceWalletPayRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get user by id
-     * @param {UsersApiFlowGetUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public flowGetUser(requestParameters: UsersApiFlowGetUserRequest, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).flowGetUser(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List platform users
-     * @param {UsersApiFlowListUsersRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public flowListUsers(requestParameters: UsersApiFlowListUsersRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsersApiFp(this.configuration).flowListUsers(requestParameters.cursor, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

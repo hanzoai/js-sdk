@@ -1,6 +1,6 @@
 {
   "name": "hanzoai",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "The official TypeScript library for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
   "license": "Apache-2.0",
@@ -22,6 +22,7 @@
   "scripts": {
     "build": "tsc && tsc -p tsconfig.esm.json",
     "typecheck": "tsc --noEmit",
+    "examples": "tsc -p examples/tsconfig.json",
     "generate": "./scripts/generate.sh",
     "prepublishOnly": "npm run build"
   },

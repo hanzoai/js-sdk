@@ -23,8 +23,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CloudObjectActivity } from '../models';
-// @ts-ignore
-import type { NexusActivity } from '../models';
 /**
  * ActivityAPIApi - axios parameter creator
  * @export
@@ -42,47 +40,6 @@ export const ActivityAPIApiAxiosParamCreator = function (configuration?: Configu
             // verify required parameter 'days' is not null or undefined
             assertParamExists('cloudApiControllerGetActivities', 'days', days)
             const localVarPath = `/v1/cloud/get-activities`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (days !== undefined) {
-                localVarQueryParameter['days'] = days;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get activities
-         * @summary get Activities
-         * @param {string} days Number of days
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetActivities: async (days: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'days' is not null or undefined
-            assertParamExists('nexusGetActivities', 'days', days)
-            const localVarPath = `/v1/nexus/get-activities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -136,19 +93,6 @@ export const ActivityAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ActivityAPIApi.cloudApiControllerGetActivities']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get activities
-         * @summary get Activities
-         * @param {string} days Number of days
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetActivities(days: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NexusActivity>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetActivities(days, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ActivityAPIApi.nexusGetActivities']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -169,16 +113,6 @@ export const ActivityAPIApiFactory = function (configuration?: Configuration, ba
         cloudApiControllerGetActivities(requestParameters: ActivityAPIApiCloudApiControllerGetActivitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<CloudObjectActivity>> {
             return localVarFp.cloudApiControllerGetActivities(requestParameters.days, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Get activities
-         * @summary get Activities
-         * @param {ActivityAPIApiNexusGetActivitiesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetActivities(requestParameters: ActivityAPIApiNexusGetActivitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<NexusActivity>> {
-            return localVarFp.nexusGetActivities(requestParameters.days, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -192,20 +126,6 @@ export interface ActivityAPIApiCloudApiControllerGetActivitiesRequest {
      * days count
      * @type {string}
      * @memberof ActivityAPIApiCloudApiControllerGetActivities
-     */
-    readonly days: string
-}
-
-/**
- * Request parameters for nexusGetActivities operation in ActivityAPIApi.
- * @export
- * @interface ActivityAPIApiNexusGetActivitiesRequest
- */
-export interface ActivityAPIApiNexusGetActivitiesRequest {
-    /**
-     * Number of days
-     * @type {string}
-     * @memberof ActivityAPIApiNexusGetActivities
      */
     readonly days: string
 }
@@ -227,18 +147,6 @@ export class ActivityAPIApi extends BaseAPI {
      */
     public cloudApiControllerGetActivities(requestParameters: ActivityAPIApiCloudApiControllerGetActivitiesRequest, options?: RawAxiosRequestConfig) {
         return ActivityAPIApiFp(this.configuration).cloudApiControllerGetActivities(requestParameters.days, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get activities
-     * @summary get Activities
-     * @param {ActivityAPIApiNexusGetActivitiesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActivityAPIApi
-     */
-    public nexusGetActivities(requestParameters: ActivityAPIApiNexusGetActivitiesRequest, options?: RawAxiosRequestConfig) {
-        return ActivityAPIApiFp(this.configuration).nexusGetActivities(requestParameters.days, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

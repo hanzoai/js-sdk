@@ -61,40 +61,6 @@ export const DeploymentAPIApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get Kubernetes cluster status
-         * @summary get K8s Status
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetK8sStatus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-k8s-status`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -117,18 +83,6 @@ export const DeploymentAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DeploymentAPIApi.cloudApiControllerGetK8sStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get Kubernetes cluster status
-         * @summary get K8s Status
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetK8sStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetK8sStatus(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeploymentAPIApi.nexusGetK8sStatus']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -147,15 +101,6 @@ export const DeploymentAPIApiFactory = function (configuration?: Configuration, 
          */
         cloudApiControllerGetK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.cloudApiControllerGetK8sStatus(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get Kubernetes cluster status
-         * @summary get K8s Status
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.nexusGetK8sStatus(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -176,17 +121,6 @@ export class DeploymentAPIApi extends BaseAPI {
      */
     public cloudApiControllerGetK8sStatus(options?: RawAxiosRequestConfig) {
         return DeploymentAPIApiFp(this.configuration).cloudApiControllerGetK8sStatus(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get Kubernetes cluster status
-     * @summary get K8s Status
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeploymentAPIApi
-     */
-    public nexusGetK8sStatus(options?: RawAxiosRequestConfig) {
-        return DeploymentAPIApiFp(this.configuration).nexusGetK8sStatus(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

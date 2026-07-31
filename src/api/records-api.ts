@@ -26,8 +26,6 @@ import type { AiEnvelope } from '../models';
 // @ts-ignore
 import type { AiError } from '../models';
 // @ts-ignore
-import type { AutoCreateRecordRequest } from '../models';
-// @ts-ignore
 import type { BaseError } from '../models';
 // @ts-ignore
 import type { BaseRecord } from '../models';
@@ -43,8 +41,6 @@ import type { DnsRecord } from '../models';
 import type { DnsRecordCreate } from '../models';
 // @ts-ignore
 import type { DnsUpdateRecordRequest } from '../models';
-// @ts-ignore
-import type { FlowUpdateRecordRequest } from '../models';
 /**
  * RecordsApi - axios parameter creator
  * @export
@@ -487,87 +483,6 @@ export const RecordsApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create a record
-         * @param {AutoCreateRecordRequest} autoCreateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoCreateRecord: async (autoCreateRecordRequest: AutoCreateRecordRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'autoCreateRecordRequest' is not null or undefined
-            assertParamExists('autoCreateRecord', 'autoCreateRecordRequest', autoCreateRecordRequest)
-            const localVarPath = `/v1/auto/records`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(autoCreateRecordRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {string} tableId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListRecords: async (tableId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tableId' is not null or undefined
-            assertParamExists('autoListRecords', 'tableId', tableId)
-            const localVarPath = `/v1/auto/records`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (tableId !== undefined) {
-                localVarQueryParameter['tableId'] = tableId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1042,217 +957,6 @@ export const RecordsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Create a record
-         * @param {AutoCreateRecordRequest} autoCreateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowCreateRecord: async (autoCreateRecordRequest: AutoCreateRecordRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'autoCreateRecordRequest' is not null or undefined
-            assertParamExists('flowCreateRecord', 'autoCreateRecordRequest', autoCreateRecordRequest)
-            const localVarPath = `/v1/flow/records`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(autoCreateRecordRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete a record
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowDeleteRecord: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowDeleteRecord', 'id', id)
-            const localVarPath = `/v1/flow/records/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get a record
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetRecord: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowGetRecord', 'id', id)
-            const localVarPath = `/v1/flow/records/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {string} tableId 
-         * @param {string} [cursor] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListRecords: async (tableId: string, cursor?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tableId' is not null or undefined
-            assertParamExists('flowListRecords', 'tableId', tableId)
-            const localVarPath = `/v1/flow/records`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (tableId !== undefined) {
-                localVarQueryParameter['tableId'] = tableId;
-            }
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update a record
-         * @param {string} id 
-         * @param {FlowUpdateRecordRequest} flowUpdateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowUpdateRecord: async (id: string, flowUpdateRecordRequest: FlowUpdateRecordRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowUpdateRecord', 'id', id)
-            // verify required parameter 'flowUpdateRecordRequest' is not null or undefined
-            assertParamExists('flowUpdateRecord', 'flowUpdateRecordRequest', flowUpdateRecordRequest)
-            const localVarPath = `/v1/flow/records/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(flowUpdateRecordRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1412,32 +1116,6 @@ export const RecordsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a record
-         * @param {AutoCreateRecordRequest} autoCreateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoCreateRecord(autoCreateRecordRequest: AutoCreateRecordRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoCreateRecord(autoCreateRecordRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.autoCreateRecord']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {string} tableId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoListRecords(tableId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoListRecords(tableId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.autoListRecords']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Create a record
          * @param {string} collection Collection name or id (e.g. &#x60;site_drafts&#x60;).
          * @param {BaseRecord} baseRecord 
          * @param {*} [options] Override http request option.
@@ -1583,74 +1261,6 @@ export const RecordsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['RecordsApi.dnsUpdateRecord']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Create a record
-         * @param {AutoCreateRecordRequest} autoCreateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowCreateRecord(autoCreateRecordRequest: AutoCreateRecordRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowCreateRecord(autoCreateRecordRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.flowCreateRecord']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Delete a record
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowDeleteRecord(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowDeleteRecord(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.flowDeleteRecord']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get a record
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetRecord(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetRecord(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.flowGetRecord']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {string} tableId 
-         * @param {string} [cursor] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowListRecords(tableId: string, cursor?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowListRecords(tableId, cursor, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.flowListRecords']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Update a record
-         * @param {string} id 
-         * @param {FlowUpdateRecordRequest} flowUpdateRecordRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowUpdateRecord(id: string, flowUpdateRecordRequest: FlowUpdateRecordRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowUpdateRecord(id, flowUpdateRecordRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RecordsApi.flowUpdateRecord']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -1771,26 +1381,6 @@ export const RecordsApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Create a record
-         * @param {RecordsApiAutoCreateRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoCreateRecord(requestParameters: RecordsApiAutoCreateRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoCreateRecord(requestParameters.autoCreateRecordRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {RecordsApiAutoListRecordsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListRecords(requestParameters: RecordsApiAutoListRecordsRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoListRecords(requestParameters.tableId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a record
          * @param {RecordsApiBaseCreateRecordRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1887,56 +1477,6 @@ export const RecordsApiFactory = function (configuration?: Configuration, basePa
          */
         dnsUpdateRecord(requestParameters: RecordsApiDnsUpdateRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<DnsRecord> {
             return localVarFp.dnsUpdateRecord(requestParameters.zone, requestParameters.id, requestParameters.dnsUpdateRecordRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a record
-         * @param {RecordsApiFlowCreateRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowCreateRecord(requestParameters: RecordsApiFlowCreateRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowCreateRecord(requestParameters.autoCreateRecordRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Delete a record
-         * @param {RecordsApiFlowDeleteRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowDeleteRecord(requestParameters: RecordsApiFlowDeleteRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.flowDeleteRecord(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get a record
-         * @param {RecordsApiFlowGetRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetRecord(requestParameters: RecordsApiFlowGetRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowGetRecord(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List records in a table
-         * @param {RecordsApiFlowListRecordsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListRecords(requestParameters: RecordsApiFlowListRecordsRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowListRecords(requestParameters.tableId, requestParameters.cursor, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update a record
-         * @param {RecordsApiFlowUpdateRecordRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowUpdateRecord(requestParameters: RecordsApiFlowUpdateRecordRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowUpdateRecord(requestParameters.id, requestParameters.flowUpdateRecordRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2093,34 +1633,6 @@ export interface RecordsApiAiUpdateRecordRequest {
      * @memberof RecordsApiAiUpdateRecord
      */
     readonly body: object
-}
-
-/**
- * Request parameters for autoCreateRecord operation in RecordsApi.
- * @export
- * @interface RecordsApiAutoCreateRecordRequest
- */
-export interface RecordsApiAutoCreateRecordRequest {
-    /**
-     * 
-     * @type {AutoCreateRecordRequest}
-     * @memberof RecordsApiAutoCreateRecord
-     */
-    readonly autoCreateRecordRequest: AutoCreateRecordRequest
-}
-
-/**
- * Request parameters for autoListRecords operation in RecordsApi.
- * @export
- * @interface RecordsApiAutoListRecordsRequest
- */
-export interface RecordsApiAutoListRecordsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiAutoListRecords
-     */
-    readonly tableId: string
 }
 
 /**
@@ -2390,97 +1902,6 @@ export interface RecordsApiDnsUpdateRecordRequest {
 }
 
 /**
- * Request parameters for flowCreateRecord operation in RecordsApi.
- * @export
- * @interface RecordsApiFlowCreateRecordRequest
- */
-export interface RecordsApiFlowCreateRecordRequest {
-    /**
-     * 
-     * @type {AutoCreateRecordRequest}
-     * @memberof RecordsApiFlowCreateRecord
-     */
-    readonly autoCreateRecordRequest: AutoCreateRecordRequest
-}
-
-/**
- * Request parameters for flowDeleteRecord operation in RecordsApi.
- * @export
- * @interface RecordsApiFlowDeleteRecordRequest
- */
-export interface RecordsApiFlowDeleteRecordRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiFlowDeleteRecord
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for flowGetRecord operation in RecordsApi.
- * @export
- * @interface RecordsApiFlowGetRecordRequest
- */
-export interface RecordsApiFlowGetRecordRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiFlowGetRecord
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for flowListRecords operation in RecordsApi.
- * @export
- * @interface RecordsApiFlowListRecordsRequest
- */
-export interface RecordsApiFlowListRecordsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiFlowListRecords
-     */
-    readonly tableId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiFlowListRecords
-     */
-    readonly cursor?: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof RecordsApiFlowListRecords
-     */
-    readonly limit?: number
-}
-
-/**
- * Request parameters for flowUpdateRecord operation in RecordsApi.
- * @export
- * @interface RecordsApiFlowUpdateRecordRequest
- */
-export interface RecordsApiFlowUpdateRecordRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordsApiFlowUpdateRecord
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {FlowUpdateRecordRequest}
-     * @memberof RecordsApiFlowUpdateRecord
-     */
-    readonly flowUpdateRecordRequest: FlowUpdateRecordRequest
-}
-
-/**
  * RecordsApi - object-oriented interface
  * @export
  * @class RecordsApi
@@ -2619,30 +2040,6 @@ export class RecordsApi extends BaseAPI {
     /**
      * 
      * @summary Create a record
-     * @param {RecordsApiAutoCreateRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public autoCreateRecord(requestParameters: RecordsApiAutoCreateRecordRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).autoCreateRecord(requestParameters.autoCreateRecordRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List records in a table
-     * @param {RecordsApiAutoListRecordsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public autoListRecords(requestParameters: RecordsApiAutoListRecordsRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).autoListRecords(requestParameters.tableId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a record
      * @param {RecordsApiBaseCreateRecordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2758,66 +2155,6 @@ export class RecordsApi extends BaseAPI {
      */
     public dnsUpdateRecord(requestParameters: RecordsApiDnsUpdateRecordRequest, options?: RawAxiosRequestConfig) {
         return RecordsApiFp(this.configuration).dnsUpdateRecord(requestParameters.zone, requestParameters.id, requestParameters.dnsUpdateRecordRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a record
-     * @param {RecordsApiFlowCreateRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public flowCreateRecord(requestParameters: RecordsApiFlowCreateRecordRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).flowCreateRecord(requestParameters.autoCreateRecordRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Delete a record
-     * @param {RecordsApiFlowDeleteRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public flowDeleteRecord(requestParameters: RecordsApiFlowDeleteRecordRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).flowDeleteRecord(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get a record
-     * @param {RecordsApiFlowGetRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public flowGetRecord(requestParameters: RecordsApiFlowGetRecordRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).flowGetRecord(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List records in a table
-     * @param {RecordsApiFlowListRecordsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public flowListRecords(requestParameters: RecordsApiFlowListRecordsRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).flowListRecords(requestParameters.tableId, requestParameters.cursor, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update a record
-     * @param {RecordsApiFlowUpdateRecordRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof RecordsApi
-     */
-    public flowUpdateRecord(requestParameters: RecordsApiFlowUpdateRecordRequest, options?: RawAxiosRequestConfig) {
-        return RecordsApiFp(this.configuration).flowUpdateRecord(requestParameters.id, requestParameters.flowUpdateRecordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

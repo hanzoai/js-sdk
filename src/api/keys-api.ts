@@ -24,8 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AnalyticsGetSessionStats200ResponseValue } from '../models';
 // @ts-ignore
-import type { ChatPutKeysRequest } from '../models';
-// @ts-ignore
 import type { GatewayDeleteKeyRequest } from '../models';
 // @ts-ignore
 import type { GatewayGenerateKeyRequest } from '../models';
@@ -67,164 +65,6 @@ import type { SearchUpdateKeyRequest } from '../models';
  */
 export const KeysApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Delete all user keys
-         * @param {ChatDeleteKeysAllEnum} all 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatDeleteKeys: async (all: ChatDeleteKeysAllEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'all' is not null or undefined
-            assertParamExists('chatDeleteKeys', 'all', all)
-            const localVarPath = `/v1/chat/keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (all !== undefined) {
-                localVarQueryParameter['all'] = all;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete a user key by name
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatDeleteKeysByname: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('chatDeleteKeysByname', 'name', name)
-            const localVarPath = `/v1/chat/keys/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get user key expiry info
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetKeys: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/chat/keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create or update a user API key
-         * @param {ChatPutKeysRequest} chatPutKeysRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatPutKeys: async (chatPutKeysRequest: ChatPutKeysRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatPutKeysRequest' is not null or undefined
-            assertParamExists('chatPutKeys', 'chatPutKeysRequest', chatPutKeysRequest)
-            const localVarPath = `/v1/chat/keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatPutKeysRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Delete key
@@ -1146,58 +986,6 @@ export const KeysApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Delete all user keys
-         * @param {ChatDeleteKeysAllEnum} all 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatDeleteKeys(all: ChatDeleteKeysAllEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatDeleteKeys(all, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.chatDeleteKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Delete a user key by name
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatDeleteKeysByname(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatDeleteKeysByname(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.chatDeleteKeysByname']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get user key expiry info
-         * @param {string} [name] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatGetKeys(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatGetKeys(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.chatGetKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Create or update a user API key
-         * @param {ChatPutKeysRequest} chatPutKeysRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatPutKeys(chatPutKeysRequest: ChatPutKeysRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatPutKeys(chatPutKeysRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.chatPutKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Delete key
          * @param {GatewayDeleteKeyRequest} gatewayDeleteKeyRequest 
          * @param {*} [options] Override http request option.
@@ -1505,46 +1293,6 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @summary Delete all user keys
-         * @param {KeysApiChatDeleteKeysRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatDeleteKeys(requestParameters: KeysApiChatDeleteKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.chatDeleteKeys(requestParameters.all, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Delete a user key by name
-         * @param {KeysApiChatDeleteKeysBynameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatDeleteKeysByname(requestParameters: KeysApiChatDeleteKeysBynameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.chatDeleteKeysByname(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get user key expiry info
-         * @param {KeysApiChatGetKeysRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetKeys(requestParameters: KeysApiChatGetKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.chatGetKeys(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create or update a user API key
-         * @param {KeysApiChatPutKeysRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatPutKeys(requestParameters: KeysApiChatPutKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.chatPutKeys(requestParameters.chatPutKeysRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Delete key
          * @param {KeysApiGatewayDeleteKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1762,62 +1510,6 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
-
-/**
- * Request parameters for chatDeleteKeys operation in KeysApi.
- * @export
- * @interface KeysApiChatDeleteKeysRequest
- */
-export interface KeysApiChatDeleteKeysRequest {
-    /**
-     * 
-     * @type {'true'}
-     * @memberof KeysApiChatDeleteKeys
-     */
-    readonly all: ChatDeleteKeysAllEnum
-}
-
-/**
- * Request parameters for chatDeleteKeysByname operation in KeysApi.
- * @export
- * @interface KeysApiChatDeleteKeysBynameRequest
- */
-export interface KeysApiChatDeleteKeysBynameRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof KeysApiChatDeleteKeysByname
-     */
-    readonly name: string
-}
-
-/**
- * Request parameters for chatGetKeys operation in KeysApi.
- * @export
- * @interface KeysApiChatGetKeysRequest
- */
-export interface KeysApiChatGetKeysRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof KeysApiChatGetKeys
-     */
-    readonly name?: string
-}
-
-/**
- * Request parameters for chatPutKeys operation in KeysApi.
- * @export
- * @interface KeysApiChatPutKeysRequest
- */
-export interface KeysApiChatPutKeysRequest {
-    /**
-     * 
-     * @type {ChatPutKeysRequest}
-     * @memberof KeysApiChatPutKeys
-     */
-    readonly chatPutKeysRequest: ChatPutKeysRequest
-}
 
 /**
  * Request parameters for gatewayDeleteKey operation in KeysApi.
@@ -2192,54 +1884,6 @@ export interface KeysApiSearchUpdateKeyRequest {
 export class KeysApi extends BaseAPI {
     /**
      * 
-     * @summary Delete all user keys
-     * @param {KeysApiChatDeleteKeysRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeysApi
-     */
-    public chatDeleteKeys(requestParameters: KeysApiChatDeleteKeysRequest, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).chatDeleteKeys(requestParameters.all, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Delete a user key by name
-     * @param {KeysApiChatDeleteKeysBynameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeysApi
-     */
-    public chatDeleteKeysByname(requestParameters: KeysApiChatDeleteKeysBynameRequest, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).chatDeleteKeysByname(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get user key expiry info
-     * @param {KeysApiChatGetKeysRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeysApi
-     */
-    public chatGetKeys(requestParameters: KeysApiChatGetKeysRequest = {}, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).chatGetKeys(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create or update a user API key
-     * @param {KeysApiChatPutKeysRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeysApi
-     */
-    public chatPutKeys(requestParameters: KeysApiChatPutKeysRequest, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).chatPutKeys(requestParameters.chatPutKeysRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Delete key
      * @param {KeysApiGatewayDeleteKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2500,13 +2144,6 @@ export class KeysApi extends BaseAPI {
     }
 }
 
-/**
- * @export
- */
-export const ChatDeleteKeysAllEnum = {
-    True: 'true'
-} as const;
-export type ChatDeleteKeysAllEnum = typeof ChatDeleteKeysAllEnum[keyof typeof ChatDeleteKeysAllEnum];
 /**
  * @export
  */

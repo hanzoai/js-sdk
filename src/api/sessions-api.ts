@@ -32,10 +32,6 @@ import type { AnalyticsGetSessionStats200ResponseValue } from '../models';
 // @ts-ignore
 import type { AnalyticsSession } from '../models';
 // @ts-ignore
-import type { ConsoleListSessions200Response } from '../models';
-// @ts-ignore
-import type { ConsoleSessionWithTraces } from '../models';
-// @ts-ignore
 import type { IamControllersResponse } from '../models';
 // @ts-ignore
 import type { IamObjectSession } from '../models';
@@ -854,107 +850,6 @@ export const SessionsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @summary Get a session with its traces
-         * @param {string} sessionId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetSession: async (sessionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'sessionId' is not null or undefined
-            assertParamExists('consoleGetSession', 'sessionId', sessionId)
-            const localVarPath = `/v1/console/sessions/{sessionId}`
-                .replace(`{${"sessionId"}}`, encodeURIComponent(String(sessionId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get sessions
-         * @param {number} [page] 
-         * @param {number} [limit] 
-         * @param {string} [fromTimestamp] 
-         * @param {string} [toTimestamp] 
-         * @param {Array<string>} [environment] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleListSessions: async (page?: number, limit?: number, fromTimestamp?: string, toTimestamp?: string, environment?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/console/sessions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (fromTimestamp !== undefined) {
-                localVarQueryParameter['fromTimestamp'] = (fromTimestamp as any instanceof Date) ?
-                    (fromTimestamp as any).toISOString() :
-                    fromTimestamp;
-            }
-
-            if (toTimestamp !== undefined) {
-                localVarQueryParameter['toTimestamp'] = (toTimestamp as any instanceof Date) ?
-                    (toTimestamp as any).toISOString() :
-                    toTimestamp;
-            }
-
-            if (environment) {
-                localVarQueryParameter['environment'] = environment;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Add session for one user in one application. If there are other existing sessions, join the session into the list.
          * @summary Api Controller Add Session
          * @param {IamObjectSession} iamObjectSession The session object to add
@@ -1465,36 +1360,6 @@ export const SessionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Get a session with its traces
-         * @param {string} sessionId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async consoleGetSession(sessionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleSessionWithTraces>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consoleGetSession(sessionId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SessionsApi.consoleGetSession']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get sessions
-         * @param {number} [page] 
-         * @param {number} [limit] 
-         * @param {string} [fromTimestamp] 
-         * @param {string} [toTimestamp] 
-         * @param {Array<string>} [environment] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async consoleListSessions(page?: number, limit?: number, fromTimestamp?: string, toTimestamp?: string, environment?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleListSessions200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consoleListSessions(page, limit, fromTimestamp, toTimestamp, environment, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SessionsApi.consoleListSessions']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Add session for one user in one application. If there are other existing sessions, join the session into the list.
          * @summary Api Controller Add Session
          * @param {IamObjectSession} iamObjectSession The session object to add
@@ -1733,26 +1598,6 @@ export const SessionsApiFactory = function (configuration?: Configuration, baseP
          */
         analyticsGetSessionsWeekly(requestParameters: SessionsApiAnalyticsGetSessionsWeeklyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<object>> {
             return localVarFp.analyticsGetSessionsWeekly(requestParameters.websiteId, requestParameters.startAt, requestParameters.endAt, requestParameters.timezone, requestParameters.page, requestParameters.pageSize, requestParameters.orderBy, requestParameters.search, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get a session with its traces
-         * @param {SessionsApiConsoleGetSessionRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetSession(requestParameters: SessionsApiConsoleGetSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsoleSessionWithTraces> {
-            return localVarFp.consoleGetSession(requestParameters.sessionId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get sessions
-         * @param {SessionsApiConsoleListSessionsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleListSessions(requestParameters: SessionsApiConsoleListSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConsoleListSessions200Response> {
-            return localVarFp.consoleListSessions(requestParameters.page, requestParameters.limit, requestParameters.fromTimestamp, requestParameters.toTimestamp, requestParameters.environment, options).then((request) => request(axios, basePath));
         },
         /**
          * Add session for one user in one application. If there are other existing sessions, join the session into the list.
@@ -2315,62 +2160,6 @@ export interface SessionsApiAnalyticsGetSessionsWeeklyRequest {
 }
 
 /**
- * Request parameters for consoleGetSession operation in SessionsApi.
- * @export
- * @interface SessionsApiConsoleGetSessionRequest
- */
-export interface SessionsApiConsoleGetSessionRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof SessionsApiConsoleGetSession
-     */
-    readonly sessionId: string
-}
-
-/**
- * Request parameters for consoleListSessions operation in SessionsApi.
- * @export
- * @interface SessionsApiConsoleListSessionsRequest
- */
-export interface SessionsApiConsoleListSessionsRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof SessionsApiConsoleListSessions
-     */
-    readonly page?: number
-
-    /**
-     * 
-     * @type {number}
-     * @memberof SessionsApiConsoleListSessions
-     */
-    readonly limit?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof SessionsApiConsoleListSessions
-     */
-    readonly fromTimestamp?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof SessionsApiConsoleListSessions
-     */
-    readonly toTimestamp?: string
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof SessionsApiConsoleListSessions
-     */
-    readonly environment?: Array<string>
-}
-
-/**
  * Request parameters for iamApiControllerAddSession operation in SessionsApi.
  * @export
  * @interface SessionsApiIamApiControllerAddSessionRequest
@@ -2665,30 +2454,6 @@ export class SessionsApi extends BaseAPI {
      */
     public analyticsGetSessionsWeekly(requestParameters: SessionsApiAnalyticsGetSessionsWeeklyRequest, options?: RawAxiosRequestConfig) {
         return SessionsApiFp(this.configuration).analyticsGetSessionsWeekly(requestParameters.websiteId, requestParameters.startAt, requestParameters.endAt, requestParameters.timezone, requestParameters.page, requestParameters.pageSize, requestParameters.orderBy, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get a session with its traces
-     * @param {SessionsApiConsoleGetSessionRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SessionsApi
-     */
-    public consoleGetSession(requestParameters: SessionsApiConsoleGetSessionRequest, options?: RawAxiosRequestConfig) {
-        return SessionsApiFp(this.configuration).consoleGetSession(requestParameters.sessionId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get sessions
-     * @param {SessionsApiConsoleListSessionsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SessionsApi
-     */
-    public consoleListSessions(requestParameters: SessionsApiConsoleListSessionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return SessionsApiFp(this.configuration).consoleListSessions(requestParameters.page, requestParameters.limit, requestParameters.fromTimestamp, requestParameters.toTimestamp, requestParameters.environment, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

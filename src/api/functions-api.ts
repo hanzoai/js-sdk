@@ -24,7 +24,7 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AdminAdminCreatePromo400Response } from '../models';
 // @ts-ignore
-import type { ChatPostConvosImportRequest } from '../models';
+import type { EdgeDeployFunctionRequest } from '../models';
 // @ts-ignore
 import type { EdgeError } from '../models';
 // @ts-ignore

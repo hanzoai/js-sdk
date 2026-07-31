@@ -26,17 +26,9 @@ import type { AuthzAuthzHealth200Response } from '../models';
 // @ts-ignore
 import type { AuthzAuthzReadyz200Response } from '../models';
 // @ts-ignore
-import type { ConsoleHealthResponse } from '../models';
-// @ts-ignore
 import type { GatewayReadinessCheck200Response } from '../models';
 // @ts-ignore
 import type { KmsGetV1KmsHealth200Response } from '../models';
-// @ts-ignore
-import type { MqError } from '../models';
-// @ts-ignore
-import type { MqHealthCheck200Response } from '../models';
-// @ts-ignore
-import type { MqServerInfo } from '../models';
 // @ts-ignore
 import type { NotifyHealthResponse } from '../models';
 // @ts-ignore
@@ -44,7 +36,7 @@ import type { PricingError } from '../models';
 // @ts-ignore
 import type { PricingTriggerSync200Response } from '../models';
 // @ts-ignore
-import type { StreamHealthCheck200Response } from '../models';
+import type { SearchHealthResponse } from '../models';
 /**
  * HealthApi - axios parameter creator
  * @export
@@ -89,156 +81,6 @@ export const HealthApiAxiosParamCreator = function (configuration?: Configuratio
          */
         authzAuthzReadyz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/authz/readyz`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoGetDocs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/auto/docs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoGetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/auto/health`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Check health of API and database
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/console/health`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetDocs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/docs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -382,70 +224,6 @@ export const HealthApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns service health status. Does not require authentication.
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        mqHealthCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/mq/health`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns server information including version, cluster details, and JetStream status. 
-         * @summary Server info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        mqServerInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/mq/info`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns a fixed health body. Mirrors notifyd\'s `GET /v1/notify/health` verbatim so existing probes keep working unchanged. Unauthenticated. 
          * @summary Liveness probe
          * @param {*} [options] Override http request option.
@@ -545,7 +323,7 @@ export const HealthApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamHealthCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchGetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -605,66 +383,6 @@ export const HealthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoGetDocs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoGetDocs(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.autoGetDocs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoGetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoGetHealth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.autoGetHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Check health of API and database
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async consoleGetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleHealthResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consoleGetHealth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.consoleGetHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetDocs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetDocs(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.flowGetDocs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetHealth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.flowGetHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Liveliness check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -712,30 +430,6 @@ export const HealthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns service health status. Does not require authentication.
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async mqHealthCheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MqHealthCheck200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mqHealthCheck(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.mqHealthCheck']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns server information including version, cluster details, and JetStream status. 
-         * @summary Server info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async mqServerInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MqServerInfo>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.mqServerInfo(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.mqServerInfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns a fixed health body. Mirrors notifyd\'s `GET /v1/notify/health` verbatim so existing probes keep working unchanged. Unauthenticated. 
          * @summary Liveness probe
          * @param {*} [options] Override http request option.
@@ -777,10 +471,10 @@ export const HealthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async streamHealthCheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamHealthCheck200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.streamHealthCheck(options);
+        async searchGetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchHealthResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchGetHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HealthApi.streamHealthCheck']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HealthApi.searchGetHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -810,51 +504,6 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
          */
         authzAuthzReadyz(options?: RawAxiosRequestConfig): AxiosPromise<AuthzAuthzReadyz200Response> {
             return localVarFp.authzAuthzReadyz(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoGetDocs(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoGetDocs(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoGetHealth(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoGetHealth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Check health of API and database
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetHealth(options?: RawAxiosRequestConfig): AxiosPromise<ConsoleHealthResponse> {
-            return localVarFp.consoleGetHealth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get auto-generated OpenAPI documentation
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetDocs(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowGetDocs(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetHealth(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowGetHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -893,24 +542,6 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.kmsGetV1KmsHealthz(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns service health status. Does not require authentication.
-         * @summary Health check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        mqHealthCheck(options?: RawAxiosRequestConfig): AxiosPromise<MqHealthCheck200Response> {
-            return localVarFp.mqHealthCheck(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns server information including version, cluster details, and JetStream status. 
-         * @summary Server info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        mqServerInfo(options?: RawAxiosRequestConfig): AxiosPromise<MqServerInfo> {
-            return localVarFp.mqServerInfo(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns a fixed health body. Mirrors notifyd\'s `GET /v1/notify/health` verbatim so existing probes keep working unchanged. Unauthenticated. 
          * @summary Liveness probe
          * @param {*} [options] Override http request option.
@@ -943,8 +574,8 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        streamHealthCheck(options?: RawAxiosRequestConfig): AxiosPromise<StreamHealthCheck200Response> {
-            return localVarFp.streamHealthCheck(options).then((request) => request(axios, basePath));
+        searchGetHealth(options?: RawAxiosRequestConfig): AxiosPromise<SearchHealthResponse> {
+            return localVarFp.searchGetHealth(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -976,61 +607,6 @@ export class HealthApi extends BaseAPI {
      */
     public authzAuthzReadyz(options?: RawAxiosRequestConfig) {
         return HealthApiFp(this.configuration).authzAuthzReadyz(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get auto-generated OpenAPI documentation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public autoGetDocs(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).autoGetDocs(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Health check
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public autoGetHealth(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).autoGetHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Check health of API and database
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public consoleGetHealth(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).consoleGetHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get auto-generated OpenAPI documentation
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public flowGetDocs(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).flowGetDocs(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Health check
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public flowGetHealth(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).flowGetHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1078,28 +654,6 @@ export class HealthApi extends BaseAPI {
     }
 
     /**
-     * Returns service health status. Does not require authentication.
-     * @summary Health check
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public mqHealthCheck(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).mqHealthCheck(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns server information including version, cluster details, and JetStream status. 
-     * @summary Server info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof HealthApi
-     */
-    public mqServerInfo(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).mqServerInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns a fixed health body. Mirrors notifyd\'s `GET /v1/notify/health` verbatim so existing probes keep working unchanged. Unauthenticated. 
      * @summary Liveness probe
      * @param {*} [options] Override http request option.
@@ -1139,8 +693,8 @@ export class HealthApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof HealthApi
      */
-    public streamHealthCheck(options?: RawAxiosRequestConfig) {
-        return HealthApiFp(this.configuration).streamHealthCheck(options).then((request) => request(this.axios, this.basePath));
+    public searchGetHealth(options?: RawAxiosRequestConfig) {
+        return HealthApiFp(this.configuration).searchGetHealth(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

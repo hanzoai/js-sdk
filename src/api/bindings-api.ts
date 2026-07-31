@@ -27,8 +27,6 @@ import type { AdminAdminCreatePromo400Response } from '../models';
 import type { VisorAgentBinding } from '../models';
 // @ts-ignore
 import type { VisorBindAgentRequest } from '../models';
-// @ts-ignore
-import type { VisorListAgentBindings200Response } from '../models';
 /**
  * BindingsApi - axios parameter creator
  * @export
@@ -91,40 +89,6 @@ export const BindingsApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('visorGetMachineAgentBinding', 'id', id)
             const localVarPath = `/v1/machines/{id}/agent-binding`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List the org\'s agent bindings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        visorListAgentBindings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/agent-bindings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -228,18 +192,6 @@ export const BindingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List the org\'s agent bindings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async visorListAgentBindings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VisorListAgentBindings200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.visorListAgentBindings(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BindingsApi.visorListAgentBindings']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Unbind the agent from a machine
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -280,15 +232,6 @@ export const BindingsApiFactory = function (configuration?: Configuration, baseP
          */
         visorGetMachineAgentBinding(requestParameters: BindingsApiVisorGetMachineAgentBindingRequest, options?: RawAxiosRequestConfig): AxiosPromise<VisorAgentBinding> {
             return localVarFp.visorGetMachineAgentBinding(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List the org\'s agent bindings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        visorListAgentBindings(options?: RawAxiosRequestConfig): AxiosPromise<VisorListAgentBindings200Response> {
-            return localVarFp.visorListAgentBindings(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -381,17 +324,6 @@ export class BindingsApi extends BaseAPI {
      */
     public visorGetMachineAgentBinding(requestParameters: BindingsApiVisorGetMachineAgentBindingRequest, options?: RawAxiosRequestConfig) {
         return BindingsApiFp(this.configuration).visorGetMachineAgentBinding(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List the org\'s agent bindings
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BindingsApi
-     */
-    public visorListAgentBindings(options?: RawAxiosRequestConfig) {
-        return BindingsApiFp(this.configuration).visorListAgentBindings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

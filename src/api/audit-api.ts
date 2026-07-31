@@ -27,8 +27,6 @@ import type { AdminAdminCreatePromo400Response } from '../models';
 import type { AdminAdminListAudit200Response } from '../models';
 // @ts-ignore
 import type { AdminAdminVerifyAudit200Response } from '../models';
-// @ts-ignore
-import type { GuardGetAuditLog200Response } from '../models';
 /**
  * AuditApi - axios parameter creator
  * @export
@@ -152,74 +150,6 @@ export const AuditApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Retrieve audit log entries in JSONL format.
-         * @summary Get audit log
-         * @param {string} [userId] Filter by user ID
-         * @param {string} [sessionId] Filter by session ID
-         * @param {GuardGetAuditLogResultEnum} [result] Filter by result type
-         * @param {string} [since] Entries after this timestamp
-         * @param {string} [until] Entries before this timestamp
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        guardGetAuditLog: async (userId?: string, sessionId?: string, result?: GuardGetAuditLogResultEnum, since?: string, until?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/guard/audit`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (userId !== undefined) {
-                localVarQueryParameter['user_id'] = userId;
-            }
-
-            if (sessionId !== undefined) {
-                localVarQueryParameter['session_id'] = sessionId;
-            }
-
-            if (result !== undefined) {
-                localVarQueryParameter['result'] = result;
-            }
-
-            if (since !== undefined) {
-                localVarQueryParameter['since'] = (since as any instanceof Date) ?
-                    (since as any).toISOString() :
-                    since;
-            }
-
-            if (until !== undefined) {
-                localVarQueryParameter['until'] = (until as any instanceof Date) ?
-                    (until as any).toISOString() :
-                    until;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -263,24 +193,6 @@ export const AuditApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AuditApi.adminAdminVerifyAudit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Retrieve audit log entries in JSONL format.
-         * @summary Get audit log
-         * @param {string} [userId] Filter by user ID
-         * @param {string} [sessionId] Filter by session ID
-         * @param {GuardGetAuditLogResultEnum} [result] Filter by result type
-         * @param {string} [since] Entries after this timestamp
-         * @param {string} [until] Entries before this timestamp
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async guardGetAuditLog(userId?: string, sessionId?: string, result?: GuardGetAuditLogResultEnum, since?: string, until?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GuardGetAuditLog200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.guardGetAuditLog(userId, sessionId, result, since, until, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuditApi.guardGetAuditLog']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -309,16 +221,6 @@ export const AuditApiFactory = function (configuration?: Configuration, basePath
          */
         adminAdminVerifyAudit(options?: RawAxiosRequestConfig): AxiosPromise<AdminAdminVerifyAudit200Response> {
             return localVarFp.adminAdminVerifyAudit(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Retrieve audit log entries in JSONL format.
-         * @summary Get audit log
-         * @param {AuditApiGuardGetAuditLogRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        guardGetAuditLog(requestParameters: AuditApiGuardGetAuditLogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GuardGetAuditLog200Response> {
-            return localVarFp.guardGetAuditLog(requestParameters.userId, requestParameters.sessionId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -394,55 +296,6 @@ export interface AuditApiAdminAdminListAuditRequest {
 }
 
 /**
- * Request parameters for guardGetAuditLog operation in AuditApi.
- * @export
- * @interface AuditApiGuardGetAuditLogRequest
- */
-export interface AuditApiGuardGetAuditLogRequest {
-    /**
-     * Filter by user ID
-     * @type {string}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly userId?: string
-
-    /**
-     * Filter by session ID
-     * @type {string}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly sessionId?: string
-
-    /**
-     * Filter by result type
-     * @type {'clean' | 'redacted' | 'blocked'}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly result?: GuardGetAuditLogResultEnum
-
-    /**
-     * Entries after this timestamp
-     * @type {string}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly since?: string
-
-    /**
-     * Entries before this timestamp
-     * @type {string}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly until?: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof AuditApiGuardGetAuditLog
-     */
-    readonly limit?: number
-}
-
-/**
  * AuditApi - object-oriented interface
  * @export
  * @class AuditApi
@@ -471,26 +324,5 @@ export class AuditApi extends BaseAPI {
     public adminAdminVerifyAudit(options?: RawAxiosRequestConfig) {
         return AuditApiFp(this.configuration).adminAdminVerifyAudit(options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * Retrieve audit log entries in JSONL format.
-     * @summary Get audit log
-     * @param {AuditApiGuardGetAuditLogRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuditApi
-     */
-    public guardGetAuditLog(requestParameters: AuditApiGuardGetAuditLogRequest = {}, options?: RawAxiosRequestConfig) {
-        return AuditApiFp(this.configuration).guardGetAuditLog(requestParameters.userId, requestParameters.sessionId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
-/**
- * @export
- */
-export const GuardGetAuditLogResultEnum = {
-    Clean: 'clean',
-    Redacted: 'redacted',
-    Blocked: 'blocked'
-} as const;
-export type GuardGetAuditLogResultEnum = typeof GuardGetAuditLogResultEnum[keyof typeof GuardGetAuditLogResultEnum];

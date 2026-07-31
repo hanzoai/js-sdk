@@ -27,12 +27,6 @@ import type { CloudObjectPrometheusInfo } from '../models';
 import type { CloudUtilSystemInfo } from '../models';
 // @ts-ignore
 import type { CloudUtilVersionInfo } from '../models';
-// @ts-ignore
-import type { NexusPrometheusInfo } from '../models';
-// @ts-ignore
-import type { NexusSystemInfo } from '../models';
-// @ts-ignore
-import type { NexusVersionInfo } from '../models';
 /**
  * SystemAPIApi - axios parameter creator
  * @export
@@ -141,108 +135,6 @@ export const SystemAPIApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get Prometheus metrics info
-         * @summary get Prometheus Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetPrometheusInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-prometheus-info`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get system info (CPU, memory usage)
-         * @summary get System Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetSystemInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-system-info`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get version info (release version, commit ID)
-         * @summary get Version Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetVersionInfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-version-info`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -289,42 +181,6 @@ export const SystemAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['SystemAPIApi.cloudApiControllerGetVersionInfo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get Prometheus metrics info
-         * @summary get Prometheus Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetPrometheusInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NexusPrometheusInfo>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetPrometheusInfo(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SystemAPIApi.nexusGetPrometheusInfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get system info (CPU, memory usage)
-         * @summary get System Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetSystemInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NexusSystemInfo>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetSystemInfo(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SystemAPIApi.nexusGetSystemInfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get version info (release version, commit ID)
-         * @summary get Version Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetVersionInfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NexusVersionInfo>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetVersionInfo(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SystemAPIApi.nexusGetVersionInfo']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -361,33 +217,6 @@ export const SystemAPIApiFactory = function (configuration?: Configuration, base
          */
         cloudApiControllerGetVersionInfo(options?: RawAxiosRequestConfig): AxiosPromise<CloudUtilVersionInfo> {
             return localVarFp.cloudApiControllerGetVersionInfo(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get Prometheus metrics info
-         * @summary get Prometheus Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetPrometheusInfo(options?: RawAxiosRequestConfig): AxiosPromise<NexusPrometheusInfo> {
-            return localVarFp.nexusGetPrometheusInfo(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get system info (CPU, memory usage)
-         * @summary get System Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetSystemInfo(options?: RawAxiosRequestConfig): AxiosPromise<NexusSystemInfo> {
-            return localVarFp.nexusGetSystemInfo(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get version info (release version, commit ID)
-         * @summary get Version Info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetVersionInfo(options?: RawAxiosRequestConfig): AxiosPromise<NexusVersionInfo> {
-            return localVarFp.nexusGetVersionInfo(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -430,39 +259,6 @@ export class SystemAPIApi extends BaseAPI {
      */
     public cloudApiControllerGetVersionInfo(options?: RawAxiosRequestConfig) {
         return SystemAPIApiFp(this.configuration).cloudApiControllerGetVersionInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get Prometheus metrics info
-     * @summary get Prometheus Info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SystemAPIApi
-     */
-    public nexusGetPrometheusInfo(options?: RawAxiosRequestConfig) {
-        return SystemAPIApiFp(this.configuration).nexusGetPrometheusInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get system info (CPU, memory usage)
-     * @summary get System Info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SystemAPIApi
-     */
-    public nexusGetSystemInfo(options?: RawAxiosRequestConfig) {
-        return SystemAPIApiFp(this.configuration).nexusGetSystemInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get version info (release version, commit ID)
-     * @summary get Version Info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SystemAPIApi
-     */
-    public nexusGetVersionInfo(options?: RawAxiosRequestConfig) {
-        return SystemAPIApiFp(this.configuration).nexusGetVersionInfo(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

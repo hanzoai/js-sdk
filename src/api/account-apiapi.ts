@@ -23,8 +23,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CloudControllersResponse } from '../models';
-// @ts-ignore
-import type { NexusResponse } from '../models';
 /**
  * AccountAPIApi - axios parameter creator
  * @export
@@ -147,118 +145,6 @@ export const AccountAPIApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get the current account
-         * @summary get Account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-account`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sign in
-         * @summary signin
-         * @param {string} code Authorization code
-         * @param {string} state OAuth state
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusSignin: async (code: string, state: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'code' is not null or undefined
-            assertParamExists('nexusSignin', 'code', code)
-            // verify required parameter 'state' is not null or undefined
-            assertParamExists('nexusSignin', 'state', state)
-            const localVarPath = `/v1/nexus/signin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (code !== undefined) {
-                localVarQueryParameter['code'] = code;
-            }
-
-            if (state !== undefined) {
-                localVarQueryParameter['state'] = state;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sign out
-         * @summary signout
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusSignout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/signout`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -307,44 +193,6 @@ export const AccountAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AccountAPIApi.cloudApiControllerSignout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get the current account
-         * @summary get Account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetAccount(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountAPIApi.nexusGetAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sign in
-         * @summary signin
-         * @param {string} code Authorization code
-         * @param {string} state OAuth state
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusSignin(code: string, state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusSignin(code, state, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountAPIApi.nexusSignin']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sign out
-         * @summary signout
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusSignout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NexusResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusSignout(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AccountAPIApi.nexusSignout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -383,34 +231,6 @@ export const AccountAPIApiFactory = function (configuration?: Configuration, bas
         cloudApiControllerSignout(options?: RawAxiosRequestConfig): AxiosPromise<CloudControllersResponse> {
             return localVarFp.cloudApiControllerSignout(options).then((request) => request(axios, basePath));
         },
-        /**
-         * Get the current account
-         * @summary get Account
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetAccount(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.nexusGetAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sign in
-         * @summary signin
-         * @param {AccountAPIApiNexusSigninRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusSignin(requestParameters: AccountAPIApiNexusSigninRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.nexusSignin(requestParameters.code, requestParameters.state, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sign out
-         * @summary signout
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusSignout(options?: RawAxiosRequestConfig): AxiosPromise<NexusResponse> {
-            return localVarFp.nexusSignout(options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -431,27 +251,6 @@ export interface AccountAPIApiCloudApiControllerSigninRequest {
      * state of account
      * @type {string}
      * @memberof AccountAPIApiCloudApiControllerSignin
-     */
-    readonly state: string
-}
-
-/**
- * Request parameters for nexusSignin operation in AccountAPIApi.
- * @export
- * @interface AccountAPIApiNexusSigninRequest
- */
-export interface AccountAPIApiNexusSigninRequest {
-    /**
-     * Authorization code
-     * @type {string}
-     * @memberof AccountAPIApiNexusSignin
-     */
-    readonly code: string
-
-    /**
-     * OAuth state
-     * @type {string}
-     * @memberof AccountAPIApiNexusSignin
      */
     readonly state: string
 }
@@ -495,40 +294,6 @@ export class AccountAPIApi extends BaseAPI {
      */
     public cloudApiControllerSignout(options?: RawAxiosRequestConfig) {
         return AccountAPIApiFp(this.configuration).cloudApiControllerSignout(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get the current account
-     * @summary get Account
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountAPIApi
-     */
-    public nexusGetAccount(options?: RawAxiosRequestConfig) {
-        return AccountAPIApiFp(this.configuration).nexusGetAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sign in
-     * @summary signin
-     * @param {AccountAPIApiNexusSigninRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountAPIApi
-     */
-    public nexusSignin(requestParameters: AccountAPIApiNexusSigninRequest, options?: RawAxiosRequestConfig) {
-        return AccountAPIApiFp(this.configuration).nexusSignin(requestParameters.code, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sign out
-     * @summary signout
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountAPIApi
-     */
-    public nexusSignout(options?: RawAxiosRequestConfig) {
-        return AccountAPIApiFp(this.configuration).nexusSignout(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

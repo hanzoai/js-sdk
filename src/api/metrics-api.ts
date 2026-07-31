@@ -28,10 +28,6 @@ import type { CommerceError } from '../models';
 // @ts-ignore
 import type { CommerceSaaSMetrics } from '../models';
 // @ts-ignore
-import type { ConsoleGetDailyMetrics200Response } from '../models';
-// @ts-ignore
-import type { ConsoleGetMetrics200Response } from '../models';
-// @ts-ignore
 import type { FunctionsMetrics } from '../models';
 // @ts-ignore
 import type { ObserveError } from '../models';
@@ -74,125 +70,6 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get daily metrics
-         * @param {number} [page] 
-         * @param {number} [limit] 
-         * @param {string} [traceName] 
-         * @param {string} [userId] 
-         * @param {Array<string>} [tags] 
-         * @param {string} [fromTimestamp] 
-         * @param {string} [toTimestamp] 
-         * @param {Array<string>} [environment] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetDailyMetrics: async (page?: number, limit?: number, traceName?: string, userId?: string, tags?: Array<string>, fromTimestamp?: string, toTimestamp?: string, environment?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/console/metrics/daily`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (traceName !== undefined) {
-                localVarQueryParameter['traceName'] = traceName;
-            }
-
-            if (userId !== undefined) {
-                localVarQueryParameter['userId'] = userId;
-            }
-
-            if (tags) {
-                localVarQueryParameter['tags'] = tags;
-            }
-
-            if (fromTimestamp !== undefined) {
-                localVarQueryParameter['fromTimestamp'] = (fromTimestamp as any instanceof Date) ?
-                    (fromTimestamp as any).toISOString() :
-                    fromTimestamp;
-            }
-
-            if (toTimestamp !== undefined) {
-                localVarQueryParameter['toTimestamp'] = (toTimestamp as any instanceof Date) ?
-                    (toTimestamp as any).toISOString() :
-                    toTimestamp;
-            }
-
-            if (environment) {
-                localVarQueryParameter['environment'] = environment;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get metrics from the project
-         * @param {string} query JSON string containing the query parameters (view, dimensions, metrics, filters, timeDimension, fromTimestamp, toTimestamp)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetMetrics: async (query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('consoleGetMetrics', 'query', query)
-            const localVarPath = `/v1/console/metrics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (query !== undefined) {
-                localVarQueryParameter['query'] = query;
             }
 
 
@@ -322,39 +199,6 @@ export const MetricsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get daily metrics
-         * @param {number} [page] 
-         * @param {number} [limit] 
-         * @param {string} [traceName] 
-         * @param {string} [userId] 
-         * @param {Array<string>} [tags] 
-         * @param {string} [fromTimestamp] 
-         * @param {string} [toTimestamp] 
-         * @param {Array<string>} [environment] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async consoleGetDailyMetrics(page?: number, limit?: number, traceName?: string, userId?: string, tags?: Array<string>, fromTimestamp?: string, toTimestamp?: string, environment?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleGetDailyMetrics200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consoleGetDailyMetrics(page, limit, traceName, userId, tags, fromTimestamp, toTimestamp, environment, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.consoleGetDailyMetrics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get metrics from the project
-         * @param {string} query JSON string containing the query parameters (view, dimensions, metrics, filters, timeDimension, fromTimestamp, toTimestamp)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async consoleGetMetrics(query: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleGetMetrics200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.consoleGetMetrics(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.consoleGetMetrics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Invocation histogram + status breakdown
          * @param {FunctionsFunctionMetricsRangeEnum} [range] 
          * @param {*} [options] Override http request option.
@@ -403,26 +247,6 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get daily metrics
-         * @param {MetricsApiConsoleGetDailyMetricsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetDailyMetrics(requestParameters: MetricsApiConsoleGetDailyMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ConsoleGetDailyMetrics200Response> {
-            return localVarFp.consoleGetDailyMetrics(requestParameters.page, requestParameters.limit, requestParameters.traceName, requestParameters.userId, requestParameters.tags, requestParameters.fromTimestamp, requestParameters.toTimestamp, requestParameters.environment, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get metrics from the project
-         * @param {MetricsApiConsoleGetMetricsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        consoleGetMetrics(requestParameters: MetricsApiConsoleGetMetricsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsoleGetMetrics200Response> {
-            return localVarFp.consoleGetMetrics(requestParameters.query, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Invocation histogram + status breakdown
          * @param {MetricsApiFunctionsFunctionMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -463,83 +287,6 @@ export interface MetricsApiCommerceGetSaaSMetricsRequest {
      * @memberof MetricsApiCommerceGetSaaSMetrics
      */
     readonly limit?: number
-}
-
-/**
- * Request parameters for consoleGetDailyMetrics operation in MetricsApi.
- * @export
- * @interface MetricsApiConsoleGetDailyMetricsRequest
- */
-export interface MetricsApiConsoleGetDailyMetricsRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly page?: number
-
-    /**
-     * 
-     * @type {number}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly limit?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly traceName?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly userId?: string
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly tags?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly fromTimestamp?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly toTimestamp?: string
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MetricsApiConsoleGetDailyMetrics
-     */
-    readonly environment?: Array<string>
-}
-
-/**
- * Request parameters for consoleGetMetrics operation in MetricsApi.
- * @export
- * @interface MetricsApiConsoleGetMetricsRequest
- */
-export interface MetricsApiConsoleGetMetricsRequest {
-    /**
-     * JSON string containing the query parameters (view, dimensions, metrics, filters, timeDimension, fromTimestamp, toTimestamp)
-     * @type {string}
-     * @memberof MetricsApiConsoleGetMetrics
-     */
-    readonly query: string
 }
 
 /**
@@ -601,30 +348,6 @@ export class MetricsApi extends BaseAPI {
      */
     public commerceGetSaaSMetrics(requestParameters: MetricsApiCommerceGetSaaSMetricsRequest = {}, options?: RawAxiosRequestConfig) {
         return MetricsApiFp(this.configuration).commerceGetSaaSMetrics(requestParameters.window, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get daily metrics
-     * @param {MetricsApiConsoleGetDailyMetricsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MetricsApi
-     */
-    public consoleGetDailyMetrics(requestParameters: MetricsApiConsoleGetDailyMetricsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).consoleGetDailyMetrics(requestParameters.page, requestParameters.limit, requestParameters.traceName, requestParameters.userId, requestParameters.tags, requestParameters.fromTimestamp, requestParameters.toTimestamp, requestParameters.environment, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get metrics from the project
-     * @param {MetricsApiConsoleGetMetricsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MetricsApi
-     */
-    public consoleGetMetrics(requestParameters: MetricsApiConsoleGetMetricsRequest, options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).consoleGetMetrics(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

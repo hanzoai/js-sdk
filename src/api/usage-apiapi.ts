@@ -23,8 +23,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CloudObjectUsage } from '../models';
-// @ts-ignore
-import type { NexusUsage } from '../models';
 /**
  * UsageAPIApi - axios parameter creator
  * @export
@@ -140,115 +138,6 @@ export const UsageAPIApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Get range usages
-         * @summary get Range Usages
-         * @param {string} count Count of range usages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetRangeUsages: async (count: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'count' is not null or undefined
-            assertParamExists('nexusGetRangeUsages', 'count', count)
-            const localVarPath = `/v1/nexus/get-range-usages`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (count !== undefined) {
-                localVarQueryParameter['count'] = count;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get usage information
-         * @summary get Usages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetUsages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-usages`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get users
-         * @summary get Users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/nexus/get-users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -296,43 +185,6 @@ export const UsageAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UsageAPIApi.cloudApiControllerGetUsers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Get range usages
-         * @summary get Range Usages
-         * @param {string} count Count of range usages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetRangeUsages(count: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NexusUsage>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetRangeUsages(count, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageAPIApi.nexusGetRangeUsages']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get usage information
-         * @summary get Usages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetUsages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NexusUsage>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetUsages(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageAPIApi.nexusGetUsages']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get users
-         * @summary get Users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGetUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGetUsers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageAPIApi.nexusGetUsers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -371,34 +223,6 @@ export const UsageAPIApiFactory = function (configuration?: Configuration, baseP
         cloudApiControllerGetUsers(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
             return localVarFp.cloudApiControllerGetUsers(options).then((request) => request(axios, basePath));
         },
-        /**
-         * Get range usages
-         * @summary get Range Usages
-         * @param {UsageAPIApiNexusGetRangeUsagesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetRangeUsages(requestParameters: UsageAPIApiNexusGetRangeUsagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<NexusUsage>> {
-            return localVarFp.nexusGetRangeUsages(requestParameters.count, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get usage information
-         * @summary get Usages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetUsages(options?: RawAxiosRequestConfig): AxiosPromise<Array<NexusUsage>> {
-            return localVarFp.nexusGetUsages(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get users
-         * @summary get Users
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGetUsers(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
-            return localVarFp.nexusGetUsers(options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -412,20 +236,6 @@ export interface UsageAPIApiCloudApiControllerGetRangeUsagesRequest {
      * count of range usages
      * @type {string}
      * @memberof UsageAPIApiCloudApiControllerGetRangeUsages
-     */
-    readonly count: string
-}
-
-/**
- * Request parameters for nexusGetRangeUsages operation in UsageAPIApi.
- * @export
- * @interface UsageAPIApiNexusGetRangeUsagesRequest
- */
-export interface UsageAPIApiNexusGetRangeUsagesRequest {
-    /**
-     * Count of range usages
-     * @type {string}
-     * @memberof UsageAPIApiNexusGetRangeUsages
      */
     readonly count: string
 }
@@ -469,40 +279,6 @@ export class UsageAPIApi extends BaseAPI {
      */
     public cloudApiControllerGetUsers(options?: RawAxiosRequestConfig) {
         return UsageAPIApiFp(this.configuration).cloudApiControllerGetUsers(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get range usages
-     * @summary get Range Usages
-     * @param {UsageAPIApiNexusGetRangeUsagesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageAPIApi
-     */
-    public nexusGetRangeUsages(requestParameters: UsageAPIApiNexusGetRangeUsagesRequest, options?: RawAxiosRequestConfig) {
-        return UsageAPIApiFp(this.configuration).nexusGetRangeUsages(requestParameters.count, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get usage information
-     * @summary get Usages
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageAPIApi
-     */
-    public nexusGetUsages(options?: RawAxiosRequestConfig) {
-        return UsageAPIApiFp(this.configuration).nexusGetUsages(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get users
-     * @summary get Users
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageAPIApi
-     */
-    public nexusGetUsers(options?: RawAxiosRequestConfig) {
-        return UsageAPIApiFp(this.configuration).nexusGetUsers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
