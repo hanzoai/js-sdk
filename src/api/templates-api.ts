@@ -28,8 +28,6 @@ import type { AiEnvelope } from '../models';
 // @ts-ignore
 import type { AiError } from '../models';
 // @ts-ignore
-import type { FlowTemplate } from '../models';
-// @ts-ignore
 import type { TemplatesListTemplates200Response } from '../models';
 // @ts-ignore
 import type { TemplatesTemplate } from '../models';
@@ -295,122 +293,6 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary List flow templates
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/auto/templates`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get a template by id
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetTemplate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowGetTemplate', 'id', id)
-            const localVarPath = `/v1/flow/templates/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List flow templates
-         * @param {Array<string>} [pieces] 
-         * @param {Array<string>} [tags] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListTemplates: async (pieces?: Array<string>, tags?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/templates`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (pieces) {
-                localVarQueryParameter['pieces'] = pieces;
-            }
-
-            if (tags) {
-                localVarQueryParameter['tags'] = tags;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary One template by slug
          * @param {string} slug 
          * @param {*} [options] Override http request option.
@@ -576,45 +458,6 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List flow templates
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoListTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoListTemplates(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.autoListTemplates']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get a template by id
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetTemplate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowTemplate>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetTemplate(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.flowGetTemplate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List flow templates
-         * @param {Array<string>} [pieces] 
-         * @param {Array<string>} [tags] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowListTemplates(pieces?: Array<string>, tags?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowListTemplates(pieces, tags, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.flowListTemplates']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary One template by slug
          * @param {string} slug 
          * @param {*} [options] Override http request option.
@@ -706,35 +549,6 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
          */
         aiUpdateTemplate(requestParameters: TemplatesApiAiUpdateTemplateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.aiUpdateTemplate(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List flow templates
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        autoListTemplates(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoListTemplates(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get a template by id
-         * @param {TemplatesApiFlowGetTemplateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetTemplate(requestParameters: TemplatesApiFlowGetTemplateRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowTemplate> {
-            return localVarFp.flowGetTemplate(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List flow templates
-         * @param {TemplatesApiFlowListTemplatesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowListTemplates(requestParameters: TemplatesApiFlowListTemplatesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowListTemplates(requestParameters.pieces, requestParameters.tags, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -871,41 +685,6 @@ export interface TemplatesApiAiUpdateTemplateRequest {
 }
 
 /**
- * Request parameters for flowGetTemplate operation in TemplatesApi.
- * @export
- * @interface TemplatesApiFlowGetTemplateRequest
- */
-export interface TemplatesApiFlowGetTemplateRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof TemplatesApiFlowGetTemplate
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for flowListTemplates operation in TemplatesApi.
- * @export
- * @interface TemplatesApiFlowListTemplatesRequest
- */
-export interface TemplatesApiFlowListTemplatesRequest {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TemplatesApiFlowListTemplates
-     */
-    readonly pieces?: Array<string>
-
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof TemplatesApiFlowListTemplates
-     */
-    readonly tags?: Array<string>
-}
-
-/**
  * Request parameters for templatesGetTemplate operation in TemplatesApi.
  * @export
  * @interface TemplatesApiTemplatesGetTemplateRequest
@@ -995,41 +774,6 @@ export class TemplatesApi extends BaseAPI {
      */
     public aiUpdateTemplate(requestParameters: TemplatesApiAiUpdateTemplateRequest, options?: RawAxiosRequestConfig) {
         return TemplatesApiFp(this.configuration).aiUpdateTemplate(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List flow templates
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TemplatesApi
-     */
-    public autoListTemplates(options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).autoListTemplates(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get a template by id
-     * @param {TemplatesApiFlowGetTemplateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TemplatesApi
-     */
-    public flowGetTemplate(requestParameters: TemplatesApiFlowGetTemplateRequest, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).flowGetTemplate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List flow templates
-     * @param {TemplatesApiFlowListTemplatesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TemplatesApi
-     */
-    public flowListTemplates(requestParameters: TemplatesApiFlowListTemplatesRequest = {}, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).flowListTemplates(requestParameters.pieces, requestParameters.tags, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

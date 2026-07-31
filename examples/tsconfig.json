@@ -1,0 +1,26 @@
+{
+  // Examples are type-checked, never emitted — CI runs `npm run examples`, which
+  // is the gate that they still compile against the regenerated client.
+  //
+  // `paths` maps the package's own name onto src/, so every example imports
+  // `from 'hanzoai'` exactly as a consumer would instead of reaching up a
+  // relative path no user would ever write.
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "..",
+    "module": "ESNext",
+    // The generated client writes extensionless relative imports; node16
+    // resolution would reject every one of them. Bundler resolution is what the
+    // ESM half of the build already uses for the same reason.
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": { "hanzoai": ["../src/index.ts"] },
+    "types": ["node"],
+    "strict": true
+  },
+  // The root config excludes `examples` (so the shipped build never emits them).
+  // Inherited as-is that would exclude this project's only inputs, so reset it.
+  "exclude": [],
+  "include": ["**/*.ts"]
+}

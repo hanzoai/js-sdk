@@ -28,12 +28,6 @@ import type { ObserveSettingsRequest } from '../models';
 // @ts-ignore
 import type { ObserveSettingsView } from '../models';
 // @ts-ignore
-import type { PlatformSettingsCleanAllRequest } from '../models';
-// @ts-ignore
-import type { PlatformSettingsReloadTraefikRequest } from '../models';
-// @ts-ignore
-import type { PlatformTRPCResult } from '../models';
-// @ts-ignore
 import type { SearchSettings } from '../models';
 // @ts-ignore
 import type { SearchSummarizedTaskView } from '../models';
@@ -43,80 +37,6 @@ import type { SearchSummarizedTaskView } from '../models';
  */
 export const SettingsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Get user favorites
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetUserSettingsFavorites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/chat/user/settings/favorites`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update user favorites
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatPostUserSettingsFavorites: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('chatPostUserSettingsFavorites', 'body', body)
-            const localVarPath = `/v1/chat/user/settings/favorites`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Returns the org\'s persisted config document for a product, plus the NAMES of set secret fields (values are never returned). When the org has never written config for the product, an honest empty config (`{}`) is returned with 200 — not a 404. 
          * @summary Read per-(org,product) settings
@@ -193,238 +113,6 @@ export const SettingsApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(observeSettingsRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Platform health (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/health`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Platform healthcheck (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformHealthcheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/healthcheck`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Full Docker cleanup (admin)
-         * @param {PlatformSettingsCleanAllRequest} [platformSettingsCleanAllRequest] tRPC input (apiServerSchema); the entire input is optional.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsCleanAll: async (platformSettingsCleanAllRequest?: PlatformSettingsCleanAllRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/settings/cleanAll`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(platformSettingsCleanAllRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get platform version
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsGetHanzoVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/settings/getHanzoVersion`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Platform health check (tRPC)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/settings/health`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Check if running in cloud mode
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsIsCloud: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/settings/isCloud`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Reload Traefik configuration (admin)
-         * @param {PlatformSettingsReloadTraefikRequest} platformSettingsReloadTraefikRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsReloadTraefik: async (platformSettingsReloadTraefikRequest: PlatformSettingsReloadTraefikRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'platformSettingsReloadTraefikRequest' is not null or undefined
-            assertParamExists('platformSettingsReloadTraefik', 'platformSettingsReloadTraefikRequest', platformSettingsReloadTraefikRequest)
-            const localVarPath = `/v1/platform/settings/reloadTraefik`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(platformSettingsReloadTraefikRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -562,31 +250,6 @@ export const SettingsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SettingsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Get user favorites
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatGetUserSettingsFavorites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatGetUserSettingsFavorites(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.chatGetUserSettingsFavorites']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Update user favorites
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatPostUserSettingsFavorites(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatPostUserSettingsFavorites(body, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.chatPostUserSettingsFavorites']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the org\'s persisted config document for a product, plus the NAMES of set secret fields (values are never returned). When the org has never written config for the product, an honest empty config (`{}`) is returned with 200 — not a 404. 
          * @summary Read per-(org,product) settings
          * @param {string} product Console product slug. Must match &#x60;^[a-z0-9][a-z0-9._-]{0,62}$&#x60;.
@@ -611,92 +274,6 @@ export const SettingsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.observePutSettings(product, observeSettingsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SettingsApi.observePutSettings']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Platform health (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformHealth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Platform healthcheck (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformHealthcheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformHealthcheck(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformHealthcheck']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Full Docker cleanup (admin)
-         * @param {PlatformSettingsCleanAllRequest} [platformSettingsCleanAllRequest] tRPC input (apiServerSchema); the entire input is optional.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformSettingsCleanAll(platformSettingsCleanAllRequest?: PlatformSettingsCleanAllRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformSettingsCleanAll(platformSettingsCleanAllRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformSettingsCleanAll']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get platform version
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformSettingsGetHanzoVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformSettingsGetHanzoVersion(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformSettingsGetHanzoVersion']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Platform health check (tRPC)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformSettingsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformSettingsHealth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformSettingsHealth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Check if running in cloud mode
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformSettingsIsCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformSettingsIsCloud(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformSettingsIsCloud']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Reload Traefik configuration (admin)
-         * @param {PlatformSettingsReloadTraefikRequest} platformSettingsReloadTraefikRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformSettingsReloadTraefik(platformSettingsReloadTraefikRequest: PlatformSettingsReloadTraefikRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformSettingsReloadTraefik(platformSettingsReloadTraefikRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.platformSettingsReloadTraefik']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -750,25 +327,6 @@ export const SettingsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = SettingsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Get user favorites
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetUserSettingsFavorites(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.chatGetUserSettingsFavorites(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Update user favorites
-         * @param {SettingsApiChatPostUserSettingsFavoritesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatPostUserSettingsFavorites(requestParameters: SettingsApiChatPostUserSettingsFavoritesRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.chatPostUserSettingsFavorites(requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the org\'s persisted config document for a product, plus the NAMES of set secret fields (values are never returned). When the org has never written config for the product, an honest empty config (`{}`) is returned with 200 — not a 404. 
          * @summary Read per-(org,product) settings
          * @param {SettingsApiObserveGetSettingsRequest} requestParameters Request parameters.
@@ -787,71 +345,6 @@ export const SettingsApiFactory = function (configuration?: Configuration, baseP
          */
         observePutSettings(requestParameters: SettingsApiObservePutSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ObserveSettingsView> {
             return localVarFp.observePutSettings(requestParameters.product, requestParameters.observeSettingsRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Platform health (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.platformHealth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Platform healthcheck (REST)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformHealthcheck(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.platformHealthcheck(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Full Docker cleanup (admin)
-         * @param {SettingsApiPlatformSettingsCleanAllRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsCleanAll(requestParameters: SettingsApiPlatformSettingsCleanAllRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformSettingsCleanAll(requestParameters.platformSettingsCleanAllRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get platform version
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsGetHanzoVersion(options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformSettingsGetHanzoVersion(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Platform health check (tRPC)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsHealth(options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformSettingsHealth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Check if running in cloud mode
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsIsCloud(options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformSettingsIsCloud(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Reload Traefik configuration (admin)
-         * @param {SettingsApiPlatformSettingsReloadTraefikRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformSettingsReloadTraefik(requestParameters: SettingsApiPlatformSettingsReloadTraefikRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformSettingsReloadTraefik(requestParameters.platformSettingsReloadTraefikRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -887,20 +380,6 @@ export const SettingsApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for chatPostUserSettingsFavorites operation in SettingsApi.
- * @export
- * @interface SettingsApiChatPostUserSettingsFavoritesRequest
- */
-export interface SettingsApiChatPostUserSettingsFavoritesRequest {
-    /**
-     * 
-     * @type {object}
-     * @memberof SettingsApiChatPostUserSettingsFavorites
-     */
-    readonly body: object
-}
-
-/**
  * Request parameters for observeGetSettings operation in SettingsApi.
  * @export
  * @interface SettingsApiObserveGetSettingsRequest
@@ -933,34 +412,6 @@ export interface SettingsApiObservePutSettingsRequest {
      * @memberof SettingsApiObservePutSettings
      */
     readonly observeSettingsRequest: ObserveSettingsRequest
-}
-
-/**
- * Request parameters for platformSettingsCleanAll operation in SettingsApi.
- * @export
- * @interface SettingsApiPlatformSettingsCleanAllRequest
- */
-export interface SettingsApiPlatformSettingsCleanAllRequest {
-    /**
-     * tRPC input (apiServerSchema); the entire input is optional.
-     * @type {PlatformSettingsCleanAllRequest}
-     * @memberof SettingsApiPlatformSettingsCleanAll
-     */
-    readonly platformSettingsCleanAllRequest?: PlatformSettingsCleanAllRequest
-}
-
-/**
- * Request parameters for platformSettingsReloadTraefik operation in SettingsApi.
- * @export
- * @interface SettingsApiPlatformSettingsReloadTraefikRequest
- */
-export interface SettingsApiPlatformSettingsReloadTraefikRequest {
-    /**
-     * 
-     * @type {PlatformSettingsReloadTraefikRequest}
-     * @memberof SettingsApiPlatformSettingsReloadTraefik
-     */
-    readonly platformSettingsReloadTraefikRequest: PlatformSettingsReloadTraefikRequest
 }
 
 /**
@@ -1020,29 +471,6 @@ export interface SettingsApiSearchUpdateSettingsRequest {
  */
 export class SettingsApi extends BaseAPI {
     /**
-     * 
-     * @summary Get user favorites
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public chatGetUserSettingsFavorites(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).chatGetUserSettingsFavorites(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Update user favorites
-     * @param {SettingsApiChatPostUserSettingsFavoritesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public chatPostUserSettingsFavorites(requestParameters: SettingsApiChatPostUserSettingsFavoritesRequest, options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).chatPostUserSettingsFavorites(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the org\'s persisted config document for a product, plus the NAMES of set secret fields (values are never returned). When the org has never written config for the product, an honest empty config (`{}`) is returned with 200 — not a 404. 
      * @summary Read per-(org,product) settings
      * @param {SettingsApiObserveGetSettingsRequest} requestParameters Request parameters.
@@ -1064,85 +492,6 @@ export class SettingsApi extends BaseAPI {
      */
     public observePutSettings(requestParameters: SettingsApiObservePutSettingsRequest, options?: RawAxiosRequestConfig) {
         return SettingsApiFp(this.configuration).observePutSettings(requestParameters.product, requestParameters.observeSettingsRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Platform health (REST)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformHealth(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Platform healthcheck (REST)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformHealthcheck(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformHealthcheck(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Full Docker cleanup (admin)
-     * @param {SettingsApiPlatformSettingsCleanAllRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformSettingsCleanAll(requestParameters: SettingsApiPlatformSettingsCleanAllRequest = {}, options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformSettingsCleanAll(requestParameters.platformSettingsCleanAllRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get platform version
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformSettingsGetHanzoVersion(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformSettingsGetHanzoVersion(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Platform health check (tRPC)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformSettingsHealth(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformSettingsHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Check if running in cloud mode
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformSettingsIsCloud(options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformSettingsIsCloud(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Reload Traefik configuration (admin)
-     * @param {SettingsApiPlatformSettingsReloadTraefikRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SettingsApi
-     */
-    public platformSettingsReloadTraefik(requestParameters: SettingsApiPlatformSettingsReloadTraefikRequest, options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).platformSettingsReloadTraefik(requestParameters.platformSettingsReloadTraefikRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -165,40 +165,6 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Check if search is enabled
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetSearchEnable: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/chat/search/enable`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Search notes
          * @param {CommerceSearchNotesRequest} commerceSearchNotesRequest 
          * @param {*} [options] Override http request option.
@@ -941,18 +907,6 @@ export const SearchApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Check if search is enabled
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatGetSearchEnable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatGetSearchEnable(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.chatGetSearchEnable']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Search notes
          * @param {CommerceSearchNotesRequest} commerceSearchNotesRequest 
          * @param {*} [options] Override http request option.
@@ -1203,15 +1157,6 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          */
         botSearchSkills(requestParameters: SearchApiBotSearchSkillsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotSearchPersonas200Response> {
             return localVarFp.botSearchSkills(requestParameters.q, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Check if search is enabled
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        chatGetSearchEnable(options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
-            return localVarFp.chatGetSearchEnable(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1752,17 +1697,6 @@ export class SearchApi extends BaseAPI {
      */
     public botSearchSkills(requestParameters: SearchApiBotSearchSkillsRequest, options?: RawAxiosRequestConfig) {
         return SearchApiFp(this.configuration).botSearchSkills(requestParameters.q, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Check if search is enabled
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public chatGetSearchEnable(options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).chatGetSearchEnable(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

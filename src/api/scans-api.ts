@@ -28,10 +28,6 @@ import type { AiEnvelope } from '../models';
 // @ts-ignore
 import type { AiError } from '../models';
 // @ts-ignore
-import type { RegistryError } from '../models';
-// @ts-ignore
-import type { RegistryScanReport } from '../models';
-// @ts-ignore
 import type { SecurityScan } from '../models';
 // @ts-ignore
 import type { SecurityScanRequest } from '../models';
@@ -301,98 +297,6 @@ export const ScansApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Get scan report
-         * @param {string} name 
-         * @param {string} repo 
-         * @param {string} digest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registryGetScanReport: async (name: string, repo: string, digest: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('registryGetScanReport', 'name', name)
-            // verify required parameter 'repo' is not null or undefined
-            assertParamExists('registryGetScanReport', 'repo', repo)
-            // verify required parameter 'digest' is not null or undefined
-            assertParamExists('registryGetScanReport', 'digest', digest)
-            const localVarPath = `/v1/registry/projects/{name}/repositories/{repo}/artifacts/{digest}/scan/report`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
-                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)))
-                .replace(`{${"digest"}}`, encodeURIComponent(String(digest)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Trigger vulnerability scan
-         * @param {string} name 
-         * @param {string} repo 
-         * @param {string} digest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registryTriggerScan: async (name: string, repo: string, digest: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('registryTriggerScan', 'name', name)
-            // verify required parameter 'repo' is not null or undefined
-            assertParamExists('registryTriggerScan', 'repo', repo)
-            // verify required parameter 'digest' is not null or undefined
-            assertParamExists('registryTriggerScan', 'digest', digest)
-            const localVarPath = `/v1/registry/projects/{name}/repositories/{repo}/artifacts/{digest}/scan`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
-                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)))
-                .replace(`{${"digest"}}`, encodeURIComponent(String(digest)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get a scan with its findings
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -603,36 +507,6 @@ export const ScansApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get scan report
-         * @param {string} name 
-         * @param {string} repo 
-         * @param {string} digest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async registryGetScanReport(name: string, repo: string, digest: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryScanReport>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registryGetScanReport(name, repo, digest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ScansApi.registryGetScanReport']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Trigger vulnerability scan
-         * @param {string} name 
-         * @param {string} repo 
-         * @param {string} digest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async registryTriggerScan(name: string, repo: string, digest: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registryTriggerScan(name, repo, digest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ScansApi.registryTriggerScan']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get a scan with its findings
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -738,26 +612,6 @@ export const ScansApiFactory = function (configuration?: Configuration, basePath
          */
         aiUpdateScan(requestParameters: ScansApiAiUpdateScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.aiUpdateScan(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get scan report
-         * @param {ScansApiRegistryGetScanReportRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registryGetScanReport(requestParameters: ScansApiRegistryGetScanReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegistryScanReport> {
-            return localVarFp.registryGetScanReport(requestParameters.name, requestParameters.repo, requestParameters.digest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Trigger vulnerability scan
-         * @param {ScansApiRegistryTriggerScanRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registryTriggerScan(requestParameters: ScansApiRegistryTriggerScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.registryTriggerScan(requestParameters.name, requestParameters.repo, requestParameters.digest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -905,62 +759,6 @@ export interface ScansApiAiUpdateScanRequest {
 }
 
 /**
- * Request parameters for registryGetScanReport operation in ScansApi.
- * @export
- * @interface ScansApiRegistryGetScanReportRequest
- */
-export interface ScansApiRegistryGetScanReportRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryGetScanReport
-     */
-    readonly name: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryGetScanReport
-     */
-    readonly repo: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryGetScanReport
-     */
-    readonly digest: string
-}
-
-/**
- * Request parameters for registryTriggerScan operation in ScansApi.
- * @export
- * @interface ScansApiRegistryTriggerScanRequest
- */
-export interface ScansApiRegistryTriggerScanRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryTriggerScan
-     */
-    readonly name: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryTriggerScan
-     */
-    readonly repo: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ScansApiRegistryTriggerScan
-     */
-    readonly digest: string
-}
-
-/**
  * Request parameters for securitySecurityGetScan operation in ScansApi.
  * @export
  * @interface ScansApiSecuritySecurityGetScanRequest
@@ -1078,30 +876,6 @@ export class ScansApi extends BaseAPI {
      */
     public aiUpdateScan(requestParameters: ScansApiAiUpdateScanRequest, options?: RawAxiosRequestConfig) {
         return ScansApiFp(this.configuration).aiUpdateScan(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get scan report
-     * @param {ScansApiRegistryGetScanReportRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ScansApi
-     */
-    public registryGetScanReport(requestParameters: ScansApiRegistryGetScanReportRequest, options?: RawAxiosRequestConfig) {
-        return ScansApiFp(this.configuration).registryGetScanReport(requestParameters.name, requestParameters.repo, requestParameters.digest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Trigger vulnerability scan
-     * @param {ScansApiRegistryTriggerScanRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ScansApi
-     */
-    public registryTriggerScan(requestParameters: ScansApiRegistryTriggerScanRequest, options?: RawAxiosRequestConfig) {
-        return ScansApiFp(this.configuration).registryTriggerScan(requestParameters.name, requestParameters.repo, requestParameters.digest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

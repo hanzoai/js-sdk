@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AutoUpdatePlatformRequest } from '../models';
+import type { PlatformAppView } from '../models';
 // @ts-ignore
-import type { FlowPlatform } from '../models';
+import type { PlatformCreateAppReq } from '../models';
 // @ts-ignore
-import type { FlowUpdatePlatformRequest } from '../models';
+import type { PlatformProjectView } from '../models';
+// @ts-ignore
+import type { PlatformSetEnvReq } from '../models';
 /**
  * PlatformApi - axios parameter creator
  * @export
@@ -35,15 +37,493 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
-         * @summary Get platform settings
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformDeleteV1PlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformProjectsByProjectAppsByApp', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformProjectsByProjectAppsByApp', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'app', app)
+            // verify required parameter 'host' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'host', host)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains/{host}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)))
+                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformDeleteV1PlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformSitesBySlug', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformDeleteV1PlatformSitesBySlugDomainsByHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformSitesBySlugDomainsByHost', 'slug', slug)
+            // verify required parameter 'host' is not null or undefined
+            assertParamExists('platformDeleteV1PlatformSitesBySlugDomainsByHost', 'host', host)
+            const localVarPath = `/v1/platform/sites/{slug}/domains/{host}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [env] Only rows in this environment (namespace).
+         * @param {string} [health] Only rows at this health: green | yellow | red.
+         * @param {string} [drift] 1 or true — only rows whose live state differs from declared.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformFleet: async (env?: string, health?: string, drift?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/fleet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (env !== undefined) {
+                localVarQueryParameter['env'] = env;
+            }
+
+            if (health !== undefined) {
+                localVarQueryParameter['health'] = health;
+            }
+
+            if (drift !== undefined) {
+                localVarQueryParameter['drift'] = drift;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformFleetByApp: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformFleetByApp', 'app', app)
+            const localVarPath = `/v1/platform/fleet/{app}`
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/projects`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProject: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProject', 'project', project)
+            const localVarPath = `/v1/platform/projects/{project}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectApps: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectApps', 'project', project)
+            const localVarPath = `/v1/platform/projects/{project}/apps`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByApp', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByApp', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDeployments: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeployments', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeployments', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoGetPlatform: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'app', app)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('autoGetPlatform', 'id', id)
-            const localVarPath = `/v1/auto/platforms/{id}`
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'id', id)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments/{id}`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,19 +553,403 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Update platform settings
+         * @param {string} project 
+         * @param {string} app 
          * @param {string} id 
-         * @param {AutoUpdatePlatformRequest} autoUpdatePlatformRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoUpdatePlatform: async (id: string, autoUpdatePlatformRequest: AutoUpdatePlatformRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'app', app)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('autoUpdatePlatform', 'id', id)
-            // verify required parameter 'autoUpdatePlatformRequest' is not null or undefined
-            assertParamExists('autoUpdatePlatform', 'autoUpdatePlatformRequest', autoUpdatePlatformRequest)
-            const localVarPath = `/v1/auto/platforms/{id}`
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'id', id)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments/{id}/logs`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDomains', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformGetV1PlatformProjectsByProjectAppsByAppDomains', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/sites`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlug', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlugDeployments', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/deployments`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDeploymentsById: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlugDeploymentsById', 'slug', slug)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlugDeploymentsById', 'id', id)
+            const localVarPath = `/v1/platform/sites/{slug}/deployments/{id}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlugDomains', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/domains`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformGetV1PlatformSitesBySlugReleases', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/releases`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPatchV1PlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPatchV1PlatformSitesBySlug', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} app 
+         * @param {string} [env] Environment (namespace) holding the Deployment to restart.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformFleetByAppDeploy: async (app: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformFleetByAppDeploy', 'app', app)
+            const localVarPath = `/v1/platform/fleet/{app}/deploy`
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (env !== undefined) {
+                localVarQueryParameter['env'] = env;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {PlatformCreateAppReq} [platformCreateAppReq] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectApps: async (project: string, platformCreateAppReq?: PlatformCreateAppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectApps', 'project', project)
+            const localVarPath = `/v1/platform/projects/{project}/apps`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -108,7 +972,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(autoUpdatePlatformRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformCreateAppReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -117,125 +981,19 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Get platform analytics data
+         * @param {string} project 
+         * @param {string} app 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flowGetAnalytics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/analytics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get platform settings
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetPlatform: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowGetPlatform', 'id', id)
-            const localVarPath = `/v1/flow/platforms/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get worker queue metrics (EE)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowGetQueueMetrics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flow/queue-metrics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update platform settings
-         * @param {string} id 
-         * @param {FlowUpdatePlatformRequest} flowUpdatePlatformRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        flowUpdatePlatform: async (id: string, flowUpdatePlatformRequest: FlowUpdatePlatformRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('flowUpdatePlatform', 'id', id)
-            // verify required parameter 'flowUpdatePlatformRequest' is not null or undefined
-            assertParamExists('flowUpdatePlatform', 'flowUpdatePlatformRequest', flowUpdatePlatformRequest)
-            const localVarPath = `/v1/flow/platforms/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        platformPostV1PlatformProjectsByProjectAppsByAppDeploy: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDeploy', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDeploy', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deploy`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -253,12 +1011,645 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDomains', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDomains', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'app', app)
+            // verify required parameter 'host' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'host', host)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains/{host}/verify`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)))
+                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppPreview: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppPreview', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppPreview', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/preview`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppPromote: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppPromote', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppPromote', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/promote`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppRollback: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppRollback', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppRollback', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/rollback`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppStart: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppStart', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppStart', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/start`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppStop: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppStop', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPostV1PlatformProjectsByProjectAppsByAppStop', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/stop`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/sites`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDeploy: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugDeploy', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/deploy`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugDomains', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/domains`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDomainsByHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugDomainsByHostVerify', 'slug', slug)
+            // verify required parameter 'host' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugDomainsByHostVerify', 'host', host)
+            const localVarPath = `/v1/platform/sites/{slug}/domains/{host}/verify`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugPublish: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugPublish', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/publish`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugPurge', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/purge`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugReleases', 'slug', slug)
+            const localVarPath = `/v1/platform/sites/{slug}/releases`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} release 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugReleasesByReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugReleasesByReleaseActivate', 'slug', slug)
+            // verify required parameter 'release' is not null or undefined
+            assertParamExists('platformPostV1PlatformSitesBySlugReleasesByReleaseActivate', 'release', release)
+            const localVarPath = `/v1/platform/sites/{slug}/releases/{release}/activate`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"release"}}`, encodeURIComponent(String(release)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {PlatformSetEnvReq} [platformSetEnvReq] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPutV1PlatformProjectsByProjectAppsByAppEnv: async (project: string, app: string, platformSetEnvReq?: PlatformSetEnvReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('platformPutV1PlatformProjectsByProjectAppsByAppEnv', 'project', project)
+            // verify required parameter 'app' is not null or undefined
+            assertParamExists('platformPutV1PlatformProjectsByProjectAppsByAppEnv', 'app', app)
+            const localVarPath = `/v1/platform/projects/{project}/apps/{app}/env`
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"app"}}`, encodeURIComponent(String(app)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(flowUpdatePlatformRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(platformSetEnvReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -277,80 +1668,519 @@ export const PlatformApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get platform settings
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformDeleteV1PlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformDeleteV1PlatformProjectsByProjectAppsByApp(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformDeleteV1PlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(project, app, host, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformDeleteV1PlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformDeleteV1PlatformSitesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformDeleteV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformDeleteV1PlatformSitesBySlugDomainsByHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformDeleteV1PlatformSitesBySlugDomainsByHost(slug, host, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformDeleteV1PlatformSitesBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [env] Only rows in this environment (namespace).
+         * @param {string} [health] Only rows at this health: green | yellow | red.
+         * @param {string} [drift] 1 or true — only rows whose live state differs from declared.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformFleet(env?: string, health?: string, drift?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformFleet(env, health, drift, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformFleet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformFleetByApp(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformFleetByApp(app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformFleetByApp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformHealth(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformHealth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformProjectView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjects(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformProjectsByProject(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformProjectView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProject(project, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformProjectsByProjectApps(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformAppView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectApps(project, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectAppsByApp(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformProjectsByProjectAppsByAppDeployments(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectAppsByAppDeployments(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectAppsByAppDeployments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async autoGetPlatform(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoGetPlatform(id, options);
+        async platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.autoGetPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Update platform settings
-         * @param {string} id 
-         * @param {AutoUpdatePlatformRequest} autoUpdatePlatformRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async autoUpdatePlatform(id: string, autoUpdatePlatformRequest: AutoUpdatePlatformRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.autoUpdatePlatform(id, autoUpdatePlatformRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.autoUpdatePlatform']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get platform analytics data
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async flowGetAnalytics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetAnalytics(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.flowGetAnalytics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary Get platform settings
+         * @param {string} project 
+         * @param {string} app 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async flowGetPlatform(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowPlatform>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetPlatform(id, options);
+        async platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.flowGetPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Get worker queue metrics (EE)
+         * @param {string} project 
+         * @param {string} app 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async flowGetQueueMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowGetQueueMetrics(options);
+        async platformGetV1PlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformProjectsByProjectAppsByAppDomains(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.flowGetQueueMetrics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Update platform settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformSites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSites(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSitesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformSitesBySlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSitesBySlugDeployments(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
          * @param {string} id 
-         * @param {FlowUpdatePlatformRequest} flowUpdatePlatformRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async flowUpdatePlatform(id: string, flowUpdatePlatformRequest: FlowUpdatePlatformRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.flowUpdatePlatform(id, flowUpdatePlatformRequest, options);
+        async platformGetV1PlatformSitesBySlugDeploymentsById(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSitesBySlugDeploymentsById(slug, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.flowUpdatePlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSitesBySlugDeploymentsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformSitesBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSitesBySlugDomains(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformGetV1PlatformSitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformGetV1PlatformSitesBySlugReleases(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformGetV1PlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPatchV1PlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPatchV1PlatformSitesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPatchV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} app 
+         * @param {string} [env] Environment (namespace) holding the Deployment to restart.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformFleetByAppDeploy(app: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformFleetByAppDeploy(app, env, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformFleetByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {PlatformCreateAppReq} [platformCreateAppReq] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectApps(project: string, platformCreateAppReq?: PlatformCreateAppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectApps(project, platformCreateAppReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppDeploy(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppDeploy(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppDomains(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(project, app, host, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppPreview(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppPreview(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppPreview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppPromote(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppPromote(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppPromote']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppRollback(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppRollback(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppRollback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppStart(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppStart(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformProjectsByProjectAppsByAppStop(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformProjectsByProjectAppsByAppStop(project, app, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformProjectsByProjectAppsByAppStop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSites(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSites']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugDeploy(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugDeploy(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugDeploy']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugDomains(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} host 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugDomainsByHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugDomainsByHostVerify(slug, host, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugPublish(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugPublish(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugPublish']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugPurge(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugPurge']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugReleases(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} slug 
+         * @param {string} release 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(slug, release, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPostV1PlatformSitesBySlugReleasesByReleaseActivate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} project 
+         * @param {string} app 
+         * @param {PlatformSetEnvReq} [platformSetEnvReq] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async platformPutV1PlatformProjectsByProjectAppsByAppEnv(project: string, app: string, platformSetEnvReq?: PlatformSetEnvReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformAppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.platformPutV1PlatformProjectsByProjectAppsByAppEnv(project, app, platformSetEnvReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.platformPutV1PlatformProjectsByProjectAppsByAppEnv']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -365,133 +2195,1091 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
-         * @summary Get platform settings
-         * @param {PlatformApiAutoGetPlatformRequest} requestParameters Request parameters.
+         * @param {PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoGetPlatform(requestParameters: PlatformApiAutoGetPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoGetPlatform(requestParameters.id, options).then((request) => request(axios, basePath));
+        platformDeleteV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformDeleteV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update platform settings
-         * @param {PlatformApiAutoUpdatePlatformRequest} requestParameters Request parameters.
+         * @param {PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        autoUpdatePlatform(requestParameters: PlatformApiAutoUpdatePlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.autoUpdatePlatform(requestParameters.id, requestParameters.autoUpdatePlatformRequest, options).then((request) => request(axios, basePath));
+        platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get platform analytics data
+         * @param {PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flowGetAnalytics(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowGetAnalytics(options).then((request) => request(axios, basePath));
+        platformDeleteV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformDeleteV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get platform settings
-         * @param {PlatformApiFlowGetPlatformRequest} requestParameters Request parameters.
+         * @param {PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flowGetPlatform(requestParameters: PlatformApiFlowGetPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowPlatform> {
-            return localVarFp.flowGetPlatform(requestParameters.id, options).then((request) => request(axios, basePath));
+        platformDeleteV1PlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformDeleteV1PlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get worker queue metrics (EE)
+         * @param {PlatformApiPlatformGetV1PlatformFleetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flowGetQueueMetrics(options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowGetQueueMetrics(options).then((request) => request(axios, basePath));
+        platformGetV1PlatformFleet(requestParameters: PlatformApiPlatformGetV1PlatformFleetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformFleet(requestParameters.env, requestParameters.health, requestParameters.drift, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update platform settings
-         * @param {PlatformApiFlowUpdatePlatformRequest} requestParameters Request parameters.
+         * @param {PlatformApiPlatformGetV1PlatformFleetByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flowUpdatePlatform(requestParameters: PlatformApiFlowUpdatePlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.flowUpdatePlatform(requestParameters.id, requestParameters.flowUpdatePlatformRequest, options).then((request) => request(axios, basePath));
+        platformGetV1PlatformFleetByApp(requestParameters: PlatformApiPlatformGetV1PlatformFleetByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformFleetByApp(requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformHealth(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjects(options?: RawAxiosRequestConfig): AxiosPromise<Array<PlatformProjectView>> {
+            return localVarFp.platformGetV1PlatformProjects(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProject(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformProjectView> {
+            return localVarFp.platformGetV1PlatformProjectsByProject(requestParameters.project, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<PlatformAppView>> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppView> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSites(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSites(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDeployments(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformGetV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformGetV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPatchV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPatchV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformPatchV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPatchV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformFleetByAppDeploy(requestParameters: PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformFleetByAppDeploy(requestParameters.app, requestParameters.env, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppView> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectApps(requestParameters.project, requestParameters.platformCreateAppReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSites(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSites(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDeploy(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugDeploy(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugPublish(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugPublish(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugPurge(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        platformPutV1PlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformAppView> {
+            return localVarFp.platformPutV1PlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.platformSetEnvReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for autoGetPlatform operation in PlatformApi.
+ * Request parameters for platformDeleteV1PlatformProjectsByProjectAppsByApp operation in PlatformApi.
  * @export
- * @interface PlatformApiAutoGetPlatformRequest
+ * @interface PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest
  */
-export interface PlatformApiAutoGetPlatformRequest {
+export interface PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiAutoGetPlatform
+     * @memberof PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByApp
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByApp
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest
+ */
+export interface PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     */
+    readonly app: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     */
+    readonly host: string
+}
+
+/**
+ * Request parameters for platformDeleteV1PlatformSitesBySlug operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest
+ */
+export interface PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformSitesBySlug
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformDeleteV1PlatformSitesBySlugDomainsByHost operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest
+ */
+export interface PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHost
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHost
+     */
+    readonly host: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformFleet operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformFleetRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformFleetRequest {
+    /**
+     * Only rows in this environment (namespace).
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformFleet
+     */
+    readonly env?: string
+
+    /**
+     * Only rows at this health: green | yellow | red.
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformFleet
+     */
+    readonly health?: string
+
+    /**
+     * 1 or true — only rows whose live state differs from declared.
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformFleet
+     */
+    readonly drift?: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformFleetByApp operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformFleetByAppRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformFleetByAppRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformFleetByApp
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformProjectsByProject operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProject
+     */
+    readonly project: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformProjectsByProjectApps operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectApps
+     */
+    readonly project: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformProjectsByProjectAppsByApp operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByApp
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByApp
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformProjectsByProjectAppsByAppDeployments operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeployments
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeployments
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
+     */
+    readonly app: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for autoUpdatePlatform operation in PlatformApi.
+ * Request parameters for platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs operation in PlatformApi.
  * @export
- * @interface PlatformApiAutoUpdatePlatformRequest
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest
  */
-export interface PlatformApiAutoUpdatePlatformRequest {
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiAutoUpdatePlatform
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
      */
-    readonly id: string
+    readonly project: string
 
-    /**
-     * 
-     * @type {AutoUpdatePlatformRequest}
-     * @memberof PlatformApiAutoUpdatePlatform
-     */
-    readonly autoUpdatePlatformRequest: AutoUpdatePlatformRequest
-}
-
-/**
- * Request parameters for flowGetPlatform operation in PlatformApi.
- * @export
- * @interface PlatformApiFlowGetPlatformRequest
- */
-export interface PlatformApiFlowGetPlatformRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiFlowGetPlatform
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
+     */
+    readonly app: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
      */
     readonly id: string
 }
 
 /**
- * Request parameters for flowUpdatePlatform operation in PlatformApi.
+ * Request parameters for platformGetV1PlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
  * @export
- * @interface PlatformApiFlowUpdatePlatformRequest
+ * @interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest
  */
-export interface PlatformApiFlowUpdatePlatformRequest {
+export interface PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiFlowUpdatePlatform
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomains
      */
-    readonly id: string
+    readonly project: string
 
     /**
      * 
-     * @type {FlowUpdatePlatformRequest}
-     * @memberof PlatformApiFlowUpdatePlatform
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomains
      */
-    readonly flowUpdatePlatformRequest: FlowUpdatePlatformRequest
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformSitesBySlug operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformSitesBySlugRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformSitesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlug
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformSitesBySlugDeployments operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlugDeployments
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformSitesBySlugDeploymentsById operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsById
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformSitesBySlugDomains operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlugDomains
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformGetV1PlatformSitesBySlugReleases operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest
+ */
+export interface PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformGetV1PlatformSitesBySlugReleases
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPatchV1PlatformSitesBySlug operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPatchV1PlatformSitesBySlugRequest
+ */
+export interface PlatformApiPlatformPatchV1PlatformSitesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPatchV1PlatformSitesBySlug
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformFleetByAppDeploy operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformFleetByAppDeploy
+     */
+    readonly app: string
+
+    /**
+     * Environment (namespace) holding the Deployment to restart.
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformFleetByAppDeploy
+     */
+    readonly env?: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectApps operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectApps
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {PlatformCreateAppReq}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectApps
+     */
+    readonly platformCreateAppReq?: PlatformCreateAppReq
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppDeploy operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeploy
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeploy
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomains
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomains
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     */
+    readonly app: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     */
+    readonly host: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppPreview operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreview
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreview
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppPromote operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromote
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromote
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppRollback operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollback
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollback
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppStart operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStart
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStart
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformProjectsByProjectAppsByAppStop operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStop
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStop
+     */
+    readonly app: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugDeploy operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugDeploy
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugDomains operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugDomains
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugDomainsByHostVerify operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerify
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerify
+     */
+    readonly host: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugPublish operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugPublish
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugPurge operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugPurge
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugReleases operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugReleases
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for platformPostV1PlatformSitesBySlugReleasesByReleaseActivate operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest
+ */
+export interface PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivate
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivate
+     */
+    readonly release: string
+}
+
+/**
+ * Request parameters for platformPutV1PlatformProjectsByProjectAppsByAppEnv operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest
+ */
+export interface PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnv
+     */
+    readonly project: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnv
+     */
+    readonly app: string
+
+    /**
+     * 
+     * @type {PlatformSetEnvReq}
+     * @memberof PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnv
+     */
+    readonly platformSetEnvReq?: PlatformSetEnvReq
 }
 
 /**
@@ -503,72 +3291,449 @@ export interface PlatformApiFlowUpdatePlatformRequest {
 export class PlatformApi extends BaseAPI {
     /**
      * 
-     * @summary Get platform settings
-     * @param {PlatformApiAutoGetPlatformRequest} requestParameters Request parameters.
+     * @param {PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public autoGetPlatform(requestParameters: PlatformApiAutoGetPlatformRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).autoGetPlatform(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public platformDeleteV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformDeleteV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update platform settings
-     * @param {PlatformApiAutoUpdatePlatformRequest} requestParameters Request parameters.
+     * @param {PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public autoUpdatePlatform(requestParameters: PlatformApiAutoUpdatePlatformRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).autoUpdatePlatform(requestParameters.id, requestParameters.autoUpdatePlatformRequest, options).then((request) => request(this.axios, this.basePath));
+    public platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiPlatformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get platform analytics data
+     * @param {PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public flowGetAnalytics(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).flowGetAnalytics(options).then((request) => request(this.axios, this.basePath));
+    public platformDeleteV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformDeleteV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformDeleteV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get platform settings
-     * @param {PlatformApiFlowGetPlatformRequest} requestParameters Request parameters.
+     * @param {PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public flowGetPlatform(requestParameters: PlatformApiFlowGetPlatformRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).flowGetPlatform(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public platformDeleteV1PlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiPlatformDeleteV1PlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformDeleteV1PlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get worker queue metrics (EE)
+     * @param {PlatformApiPlatformGetV1PlatformFleetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public flowGetQueueMetrics(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).flowGetQueueMetrics(options).then((request) => request(this.axios, this.basePath));
+    public platformGetV1PlatformFleet(requestParameters: PlatformApiPlatformGetV1PlatformFleetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformFleet(requestParameters.env, requestParameters.health, requestParameters.drift, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Update platform settings
-     * @param {PlatformApiFlowUpdatePlatformRequest} requestParameters Request parameters.
+     * @param {PlatformApiPlatformGetV1PlatformFleetByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public flowUpdatePlatform(requestParameters: PlatformApiFlowUpdatePlatformRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).flowUpdatePlatform(requestParameters.id, requestParameters.flowUpdatePlatformRequest, options).then((request) => request(this.axios, this.basePath));
+    public platformGetV1PlatformFleetByApp(requestParameters: PlatformApiPlatformGetV1PlatformFleetByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformFleetByApp(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformHealth(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformHealth(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjects(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjects(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProject(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProject(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPlatformGetV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSites(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSites(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSitesBySlugDeployments(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformGetV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPlatformGetV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformGetV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPatchV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPatchV1PlatformSitesBySlug(requestParameters: PlatformApiPlatformPatchV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPatchV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformFleetByAppDeploy(requestParameters: PlatformApiPlatformPostV1PlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformFleetByAppDeploy(requestParameters.app, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectApps(requestParameters.project, requestParameters.platformCreateAppReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPlatformPostV1PlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSites(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSites(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugDeploy(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugDeploy(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugPublish(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugPublish(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugPurge(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPlatformPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPostV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public platformPutV1PlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPlatformPutV1PlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).platformPutV1PlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.platformSetEnvReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

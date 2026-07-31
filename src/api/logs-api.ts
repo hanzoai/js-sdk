@@ -161,66 +161,6 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Get container logs
-         * @param {string} orgId 
-         * @param {string} projectId 
-         * @param {string} envId 
-         * @param {string} containerId 
-         * @param {number} [tail] 
-         * @param {boolean} [follow] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        paasGetContainerLogs: async (orgId: string, projectId: string, envId: string, containerId: string, tail?: number, follow?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgId' is not null or undefined
-            assertParamExists('paasGetContainerLogs', 'orgId', orgId)
-            // verify required parameter 'projectId' is not null or undefined
-            assertParamExists('paasGetContainerLogs', 'projectId', projectId)
-            // verify required parameter 'envId' is not null or undefined
-            assertParamExists('paasGetContainerLogs', 'envId', envId)
-            // verify required parameter 'containerId' is not null or undefined
-            assertParamExists('paasGetContainerLogs', 'containerId', containerId)
-            const localVarPath = `/v1/paas/org/{orgId}/project/{projectId}/env/{envId}/containers/{containerId}/logs`
-                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
-                .replace(`{${"projectId"}}`, encodeURIComponent(String(projectId)))
-                .replace(`{${"envId"}}`, encodeURIComponent(String(envId)))
-                .replace(`{${"containerId"}}`, encodeURIComponent(String(containerId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (tail !== undefined) {
-                localVarQueryParameter['tail'] = tail;
-            }
-
-            if (follow !== undefined) {
-                localVarQueryParameter['follow'] = follow;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get stderr log configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -412,24 +352,6 @@ export const LogsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get container logs
-         * @param {string} orgId 
-         * @param {string} projectId 
-         * @param {string} envId 
-         * @param {string} containerId 
-         * @param {number} [tail] 
-         * @param {boolean} [follow] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async paasGetContainerLogs(orgId: string, projectId: string, envId: string, containerId: string, tail?: number, follow?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.paasGetContainerLogs(orgId, projectId, envId, containerId, tail, follow, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogsApi.paasGetContainerLogs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get stderr log configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -507,16 +429,6 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          */
         observeGetLogs(requestParameters: LogsApiObserveGetLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ObserveLogsResponse> {
             return localVarFp.observeGetLogs(requestParameters.product, requestParameters.sinceNs, requestParameters.window, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get container logs
-         * @param {LogsApiPaasGetContainerLogsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        paasGetContainerLogs(requestParameters: LogsApiPaasGetContainerLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.paasGetContainerLogs(requestParameters.orgId, requestParameters.projectId, requestParameters.envId, requestParameters.containerId, requestParameters.tail, requestParameters.follow, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -637,55 +549,6 @@ export interface LogsApiObserveGetLogsRequest {
 }
 
 /**
- * Request parameters for paasGetContainerLogs operation in LogsApi.
- * @export
- * @interface LogsApiPaasGetContainerLogsRequest
- */
-export interface LogsApiPaasGetContainerLogsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly orgId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly projectId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly envId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly containerId: string
-
-    /**
-     * 
-     * @type {number}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly tail?: number
-
-    /**
-     * 
-     * @type {boolean}
-     * @memberof LogsApiPaasGetContainerLogs
-     */
-    readonly follow?: boolean
-}
-
-/**
  * Request parameters for searchStreamLogs operation in LogsApi.
  * @export
  * @interface LogsApiSearchStreamLogsRequest
@@ -742,18 +605,6 @@ export class LogsApi extends BaseAPI {
      */
     public observeGetLogs(requestParameters: LogsApiObserveGetLogsRequest, options?: RawAxiosRequestConfig) {
         return LogsApiFp(this.configuration).observeGetLogs(requestParameters.product, requestParameters.sinceNs, requestParameters.window, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get container logs
-     * @param {LogsApiPaasGetContainerLogsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LogsApi
-     */
-    public paasGetContainerLogs(requestParameters: LogsApiPaasGetContainerLogsRequest, options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).paasGetContainerLogs(requestParameters.orgId, requestParameters.projectId, requestParameters.envId, requestParameters.containerId, requestParameters.tail, requestParameters.follow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

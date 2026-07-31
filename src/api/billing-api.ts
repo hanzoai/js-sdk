@@ -35,8 +35,6 @@ import type { BillingGpuEligibility } from '../models';
 import type { BillingPaymentMethods } from '../models';
 // @ts-ignore
 import type { BillingUsageLedger } from '../models';
-// @ts-ignore
-import type { PlatformTRPCResult } from '../models';
 /**
  * BillingApi - axios parameter creator
  * @export
@@ -249,74 +247,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Get account balance
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformBillingGetBalance: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/billing/getBalance`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List subscription plans
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformBillingGetPlans: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/billing/getPlans`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -394,30 +324,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['BillingApi.billingBillingUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Get account balance
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformBillingGetBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformBillingGetBalance(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.platformBillingGetBalance']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List subscription plans
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformBillingGetPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformBillingGetPlans(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.platformBillingGetPlans']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -476,24 +382,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         billingBillingUsage(requestParameters: BillingApiBillingBillingUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BillingUsageLedger> {
             return localVarFp.billingBillingUsage(requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get account balance
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformBillingGetBalance(options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformBillingGetBalance(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List subscription plans
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformBillingGetPlans(options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformBillingGetPlans(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -639,28 +527,6 @@ export class BillingApi extends BaseAPI {
      */
     public billingBillingUsage(requestParameters: BillingApiBillingBillingUsageRequest = {}, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).billingBillingUsage(requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get account balance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public platformBillingGetBalance(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).platformBillingGetBalance(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List subscription plans
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public platformBillingGetPlans(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).platformBillingGetPlans(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

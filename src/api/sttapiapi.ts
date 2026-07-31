@@ -79,58 +79,6 @@ export const STTAPIApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Convert speech to text
-         * @summary process Speech To Text
-         * @param {File} audio The audio file to convert to text
-         * @param {string} storeId The store ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusProcessSpeechToText: async (audio: File, storeId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'audio' is not null or undefined
-            assertParamExists('nexusProcessSpeechToText', 'audio', audio)
-            // verify required parameter 'storeId' is not null or undefined
-            assertParamExists('nexusProcessSpeechToText', 'storeId', storeId)
-            const localVarPath = `/v1/nexus/process-speech-to-text`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-            if (audio !== undefined) { 
-                localVarFormParams.append('audio', audio as any);
-            }
-    
-            if (storeId !== undefined) { 
-                localVarFormParams.append('storeId', storeId as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -155,20 +103,6 @@ export const STTAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['STTAPIApi.cloudApiControllerProcessSpeechToText']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Convert speech to text
-         * @summary process Speech To Text
-         * @param {File} audio The audio file to convert to text
-         * @param {string} storeId The store ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusProcessSpeechToText(audio: File, storeId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusProcessSpeechToText(audio, storeId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['STTAPIApi.nexusProcessSpeechToText']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -188,16 +122,6 @@ export const STTAPIApiFactory = function (configuration?: Configuration, basePat
          */
         cloudApiControllerProcessSpeechToText(requestParameters: STTAPIApiCloudApiControllerProcessSpeechToTextRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.cloudApiControllerProcessSpeechToText(requestParameters.audio, requestParameters.storeId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Convert speech to text
-         * @summary process Speech To Text
-         * @param {STTAPIApiNexusProcessSpeechToTextRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusProcessSpeechToText(requestParameters: STTAPIApiNexusProcessSpeechToTextRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.nexusProcessSpeechToText(requestParameters.audio, requestParameters.storeId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -224,27 +148,6 @@ export interface STTAPIApiCloudApiControllerProcessSpeechToTextRequest {
 }
 
 /**
- * Request parameters for nexusProcessSpeechToText operation in STTAPIApi.
- * @export
- * @interface STTAPIApiNexusProcessSpeechToTextRequest
- */
-export interface STTAPIApiNexusProcessSpeechToTextRequest {
-    /**
-     * The audio file to convert to text
-     * @type {File}
-     * @memberof STTAPIApiNexusProcessSpeechToText
-     */
-    readonly audio: File
-
-    /**
-     * The store ID
-     * @type {string}
-     * @memberof STTAPIApiNexusProcessSpeechToText
-     */
-    readonly storeId: string
-}
-
-/**
  * STTAPIApi - object-oriented interface
  * @export
  * @class STTAPIApi
@@ -261,18 +164,6 @@ export class STTAPIApi extends BaseAPI {
      */
     public cloudApiControllerProcessSpeechToText(requestParameters: STTAPIApiCloudApiControllerProcessSpeechToTextRequest, options?: RawAxiosRequestConfig) {
         return STTAPIApiFp(this.configuration).cloudApiControllerProcessSpeechToText(requestParameters.audio, requestParameters.storeId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Convert speech to text
-     * @summary process Speech To Text
-     * @param {STTAPIApiNexusProcessSpeechToTextRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof STTAPIApi
-     */
-    public nexusProcessSpeechToText(requestParameters: STTAPIApiNexusProcessSpeechToTextRequest, options?: RawAxiosRequestConfig) {
-        return STTAPIApiFp(this.configuration).nexusProcessSpeechToText(requestParameters.audio, requestParameters.storeId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

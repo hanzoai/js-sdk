@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { ChatChatCompletionUsage } from './chat-chat-completion-usage';
+import type { GatewayChatCompletionResponseChoicesInner } from './gateway-chat-completion-response-choices-inner';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { GatewayChatCompletionResponseChoicesInner } from './gateway-chat-completion-response-choices-inner';
+import type { GatewayChatCompletionResponseUsage } from './gateway-chat-completion-response-usage';
 
 /**
  * 
@@ -58,10 +58,10 @@ export interface GatewayChatCompletionResponse {
     'choices'?: Array<GatewayChatCompletionResponseChoicesInner>;
     /**
      * 
-     * @type {ChatChatCompletionUsage}
+     * @type {GatewayChatCompletionResponseUsage}
      * @memberof GatewayChatCompletionResponse
      */
-    'usage'?: ChatChatCompletionUsage;
+    'usage'?: GatewayChatCompletionResponseUsage;
 }
 
 export const GatewayChatCompletionResponseObjectEnum = {

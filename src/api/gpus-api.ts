@@ -24,10 +24,6 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { AdminAdminCreatePromo400Response } from '../models';
 // @ts-ignore
-import type { EngineGetGPUAllocations200Response } from '../models';
-// @ts-ignore
-import type { EngineListGPUTypes200Response } from '../models';
-// @ts-ignore
 import type { VisorListGPUs200Response } from '../models';
 // @ts-ignore
 import type { VisorListGpuAlerts200Response } from '../models';
@@ -37,84 +33,6 @@ import type { VisorListGpuAlerts200Response } from '../models';
  */
 export const GPUsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Get GPU allocations
-         * @param {string} [gpuType] 
-         * @param {string} [clusterId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        engineGetGPUAllocations: async (gpuType?: string, clusterId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/engine/gpus/allocations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (gpuType !== undefined) {
-                localVarQueryParameter['gpu_type'] = gpuType;
-            }
-
-            if (clusterId !== undefined) {
-                localVarQueryParameter['cluster_id'] = clusterId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List available GPU types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        engineListGPUTypes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/engine/gpus`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary List per-accelerator GPU inventory (derived from GPU machines)
@@ -195,32 +113,6 @@ export const GPUsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get GPU allocations
-         * @param {string} [gpuType] 
-         * @param {string} [clusterId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async engineGetGPUAllocations(gpuType?: string, clusterId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EngineGetGPUAllocations200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.engineGetGPUAllocations(gpuType, clusterId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GPUsApi.engineGetGPUAllocations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @summary List available GPU types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async engineListGPUTypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EngineListGPUTypes200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.engineListGPUTypes(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GPUsApi.engineListGPUTypes']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary List per-accelerator GPU inventory (derived from GPU machines)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -255,25 +147,6 @@ export const GPUsApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @summary Get GPU allocations
-         * @param {GPUsApiEngineGetGPUAllocationsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        engineGetGPUAllocations(requestParameters: GPUsApiEngineGetGPUAllocationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EngineGetGPUAllocations200Response> {
-            return localVarFp.engineGetGPUAllocations(requestParameters.gpuType, requestParameters.clusterId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary List available GPU types
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        engineListGPUTypes(options?: RawAxiosRequestConfig): AxiosPromise<EngineListGPUTypes200Response> {
-            return localVarFp.engineListGPUTypes(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary List per-accelerator GPU inventory (derived from GPU machines)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -294,56 +167,12 @@ export const GPUsApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
- * Request parameters for engineGetGPUAllocations operation in GPUsApi.
- * @export
- * @interface GPUsApiEngineGetGPUAllocationsRequest
- */
-export interface GPUsApiEngineGetGPUAllocationsRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof GPUsApiEngineGetGPUAllocations
-     */
-    readonly gpuType?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof GPUsApiEngineGetGPUAllocations
-     */
-    readonly clusterId?: string
-}
-
-/**
  * GPUsApi - object-oriented interface
  * @export
  * @class GPUsApi
  * @extends {BaseAPI}
  */
 export class GPUsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get GPU allocations
-     * @param {GPUsApiEngineGetGPUAllocationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GPUsApi
-     */
-    public engineGetGPUAllocations(requestParameters: GPUsApiEngineGetGPUAllocationsRequest = {}, options?: RawAxiosRequestConfig) {
-        return GPUsApiFp(this.configuration).engineGetGPUAllocations(requestParameters.gpuType, requestParameters.clusterId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List available GPU types
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GPUsApi
-     */
-    public engineListGPUTypes(options?: RawAxiosRequestConfig) {
-        return GPUsApiFp(this.configuration).engineListGPUTypes(options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary List per-accelerator GPU inventory (derived from GPU machines)

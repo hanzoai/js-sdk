@@ -1,110 +1,130 @@
 # LLM.md - Hanzo TypeScript SDK
 
 ## Overview
-TypeScript/JavaScript client for the Hanzo Cloud API
-(`https://api.hanzo.ai/v1`). Covers the full unified surface — AI inference
-plus every `/v1/<service>` product. npm package: **`@hanzo/sdk`** (the
-unscoped `hanzoai` name is squatted; `scripts/generate.sh` still passes
-`npmName=hanzoai`, which is harmless only because the generated
-`package.json` is discarded — the repo root owns it).
+TypeScript/JavaScript client for the Hanzo Cloud API (`https://api.hanzo.ai`).
+Covers the full unified surface — AI inference plus every `/v1/<service>`
+product. npm package: **`hanzoai`**.
+
+On the package name: this repo briefly renamed itself to `@hanzo/sdk` on the
+belief that the unscoped `hanzoai` was squatted. It is not — `npm owner ls
+hanzoai` is `zeekay`, and the registry's `repository.url` on the published
+`0.0.1-alpha.1` already points here. `@hanzo/sdk` belongs to a *different*
+package, `hanzo-js/sdk` (v2.0.0, the unified per-service SDK), so publishing
+under it would have overwritten someone else's line. The name is `hanzoai` and
+that is the name `sdks.yaml`'s `npmName` should say too; it still reads
+`@hanzo/sdk`, which is inert only because `package.json` is on the generator's
+`drop` list and never reaches this tree.
 
 ## The ONE way: generated from the OpenAPI spec
 
 Generated, never hand-written. Source of truth is `hanzoai/openapi`
-`hanzo.yaml`. Generator is **openapi-generator** (`typescript-axios`) — no
-Stainless.
+`hanzo.yaml`. Generator is **openapi-generator 7.14.0** (`typescript-axios`).
 
 ```bash
 ./scripts/generate.sh                    # regenerate src/ from hanzoai/openapi@main
-SPEC=/path/to/hanzo.yaml ./scripts/generate.sh
+OPENAPI=~/work/hanzo/openapi ./scripts/generate.sh   # use a local spec checkout
+./scripts/generate.sh --check            # fail if committed src/ drifted
 npm run build                            # tsc -> dist (CJS) + dist/esm (ESM)
+npm run examples                         # type-check the six flows
 ```
 
 Never edit `src/*.ts` by hand — change the spec in `hanzoai/openapi` and
 regenerate. CI (`generate.yml`) does this on every spec change via a
 `spec-update` repository_dispatch.
 
-### The pipeline above this repo
+### One driver, one call site
+
+`scripts/generate.sh` no longer knows how to generate anything. It clones
+`hanzoai/openapi` and runs that repo's `generate.py typescript --repo .`; every
+knob (generator name, `apiPackage`, `modelPackage`, `withSeparateModelsAndApi`,
+the `drop` list) is data in `sdks.yaml`.
+
+This was previously duplicated here, and the duplicate drifted: `sdks.yaml` said
+`take: { .: src/cloud }` + `modelPackage: model` while this script wrote `src/`
+with `models`, so running the canonical driver against this repo left an orphan
+second copy of all 2143 files. Both sides now agree, and the disagreement cannot
+recur because only one side declares it.
 
 ```
-hanzoai/cloud    emits its router spec  ->  cloud/openapi.yaml + generated/hanzo.json
-hanzoai/openapi  merges 69 service specs ->  hanzo.yaml   <- the ONE SDK input
+hanzoai/cloud    emits its router spec   ->  cloud/openapi.yaml
+hanzoai/openapi  merges 55 service specs ->  hanzo.yaml   <- the ONE SDK input
 this repo        scripts/generate.sh     ->  src/, then owns its bump + release
 ```
 
-SHAs behind the currently committed `src/`: `hanzoai/openapi` **2861089**
-(its `hanzo.yaml` last changed at **3300cda**), `hanzoai/cloud` **b87a38df**.
+Current `src/` is 1360 files (239 api + 1116 models + 5 root) from **1132 paths /
+1519 operations / 779 schemas**.
 
-Two lags to know about, neither fixable from this repo:
+## Two spec defects fixed upstream — do not re-patch them here
 
-- `hanzo.yaml` still carries 28 `/v1/paas` paths that cloud `b87a38df`
-  already folded into `/v1/platform`. `merge.py` has not re-run since the
-  fold, so the SDK cannot see it yet.
-- There is a second, competing projection: `hanzoai/openapi`'s `sdks.yaml`
-  maps typescript to `take: { .: src/cloud }` with `modelPackage: model`,
-  and `generate.py typescript` writes `src/cloud/` — a layout this repo does
-  not use and does not build. `scripts/generate.sh` (writing `src/`, with
-  `modelPackage: models`) is the one that is real here. Running `generate.py`
-  against this repo leaves an orphan `src/cloud/` tree; don't.
+Both were found by regenerating and are gone from `hanzoai/openapi` main. If you
+are reading old notes telling you to hand-repair generated files: don't.
 
-### Known generator defect — `src/api.ts`, three lines, every regen
+1. **35 `/v1/platform` operations had no `responses`.** OAS 3.x requires it and
+   openapi-generator aborts the whole document, so `hanzo.yaml` produced no
+   client in *any* language. Fixed in `platform/openapi.yaml` (commit
+   `fc0c17a`). They carry a `2XX` with no `content`, because cloud's projection
+   genuinely does not model those bodies.
 
-`hanzo.yaml` carries case-variant duplicate tags: `AI`/`Ai`, `API Keys`/`Api
-Keys`, `MCP`/`Mcp`. openapi-generator emits a distinct class per tag
-(`AIApi` *and* `AiApi`), deduplicates the colliding filenames to
-`ai0-api.ts`, then writes the barrel using the **pre-dedup** name
-`./api/ai-api`. Three dangling re-exports; `tsc` fails and the client does
-not compile as generated:
+2. **`ChatCompletionResponse.choices` was `items: { type: object }`**, so
+   `choices[0].message.content` — the first line anyone writes — needed a cast
+   in every language. Now an `ai_ChatChoice` schema (commit `07783f5`).
 
-```
-./api/ai-api        -> ./api/ai0-api
-./api/api-keys-api  -> ./api/api-keys0-api
-./api/mcp-api       -> ./api/mcp0-api
-```
-
-Repair those three lines after every regeneration until the tags are
-normalized upstream in `hanzoai/openapi`'s `merge.py` — that is where the
-fix belongs, not here. This is new: the previously committed client (493 api
-files) was clean; the tag collapse that took it to 354 introduced it. It
-means `generate.yml`'s "Verify it builds" step fails on an untouched
-auto-regen PR.
+The older note about three dangling re-exports in `src/api.ts` (`./api/ai-api`
+-> `./api/ai0-api`, etc., from case-variant duplicate tags `AI`/`Ai`) is also
+resolved upstream: the current spec has **0 colliding tag groups**, and a clean
+generation now compiles with no hand-repair at all.
 
 ## Module formats — what `dist/esm` is and is not
 
-`tsc` does not add extensions, and the generated client imports
-directories (`export * from "./api"`) and extensionless paths
-(`./api/ai0-api`). Node's ESM loader rejects both, so `dist/esm` is **not
-loadable by Node** — it exists for bundlers, reached through the legacy
-`"module"` field. The `exports` map therefore points **both** `import` and
-`require` at the CJS build, which Node's ESM loader reads named exports
-from via cjs-module-lexer (verified: `import { AdminApi } from '@hanzo/sdk'`
-works). Making `dist/esm` genuinely Node-loadable means rewriting every
-relative specifier to a real file path — that belongs in
-`scripts/generate.sh`, which this repo owns, not in the generated files.
+`tsc` does not add extensions, and the generated client imports directories
+(`export * from "./api"`) and extensionless paths (`./api/ai0-api`). Node's ESM
+loader rejects both, so `dist/esm` is **not loadable by Node** — it exists for
+bundlers, reached through the legacy `"module"` field. The `exports` map
+therefore points **both** `import` and `require` at the CJS build, which Node's
+ESM loader reads named exports from via cjs-module-lexer.
 
 ## Auth
 ```ts
-import { Configuration, ChatCompletionsApi } from "@hanzo/sdk";
+import { Configuration, OpenAICompatibleApi } from "hanzoai";
 
 const config = new Configuration({
   basePath: "https://api.hanzo.ai",
   accessToken: process.env.HANZO_API_KEY,   // IAM JWT or hk- Cloud API key
 });
 ```
+Bearer only; the org comes from the token's `owner` claim, so no route in this
+SDK takes an org argument.
+
+## Examples — the six canonical flows
+
+`examples/{hello,chat,money,store,agent,tools}`, one directory each, plus
+`examples/client.ts` which is the single place a base URL or an env var is
+resolved. The same six exist in every Hanzo SDK.
+
+They are a **gate, not decoration**: `npm run examples` type-checks them against
+the freshly generated client, and `hanzo.yml` runs it in CI. That gate is what
+caught defect #2 above — `npm run build` passed while `choices[0].message` did
+not compile, because only calling the client exercises its surface.
+
+`examples/` sits outside the generator's `take` path, so regeneration never
+touches it.
+
+## CI
+Fleet convention: root `hanzo.yml` (the `test:` gate — build, then examples) and
+a 7-line `.github/workflows/cicd.yml` importing `hanzoai/ci`. The old bespoke
+`ci.yml` was deleted; two gates is one too many.
+
+Publishing is separate and unchanged: `publish-npm.yml` on a `v*` tag.
 
 ## Release
 Push a semver tag `vX.Y.Z` → `publish-npm.yml` builds and `npm publish`es.
-Semver only, never a sha pin.
 
-**The registry, not `package.json`, is the version of record.** npm had
-`2.0.0` published while `package.json` still read `1.0.1` — 2.0.0 shipped
-from a since-reverted lineage and was never tagged. Bumping `1.0.1 -> 1.0.2`
-would have published *below* the current `latest` and walked consumers
-backwards. Always `npm view @hanzo/sdk version` first and take the patch
-above **that**; this release is `2.0.1`.
+**The registry, not `package.json`, is the version of record.** Check
+`npm view hanzoai version` first and take the patch above **that** — `hanzoai`
+currently publishes `0.0.1-alpha.1` while this tree is `2.0.3`, so the tree is
+already ahead and a naive bump from the registry would walk backwards.
 
 ## Note: `packages/mcp-server`
-The Stainless-era MCP server under `packages/mcp-server` targets the old
-client surface and is not rebuilt by the root pipeline. It needs its own
-regeneration against the new surface before it can be republished (tracked
-separately).
+The Stainless-era MCP server under `packages/mcp-server` targets the old client
+surface and is not rebuilt by the root pipeline. It needs its own regeneration
+against the new surface before it can be republished (tracked separately).

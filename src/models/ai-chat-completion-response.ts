@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AiChatChoice } from './ai-chat-choice';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AiUsage } from './ai-usage';
 
 /**
@@ -49,10 +52,10 @@ export interface AiChatCompletionResponse {
     'model'?: string;
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<AiChatChoice>}
      * @memberof AiChatCompletionResponse
      */
-    'choices'?: Array<object>;
+    'choices'?: Array<AiChatChoice>;
     /**
      * 
      * @type {AiUsage}

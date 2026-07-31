@@ -1,0 +1,35 @@
+# Hanzo CI — the ONE way this repo is gated, read by hanzoai/ci.
+#
+# No `images:` and no `deploy:`: this is a client library. A consumer installs
+# it from npm at a tag, so what CI owes is a gate, not an artifact. Publishing
+# stays where it already is — .github/workflows/publish-npm.yml, triggered by a
+# `v*` tag. Two publish paths would be one too many.
+
+test:
+  - name: build
+    # `npm ci`, not `npm install`: the lockfile is committed and a gate that
+    # silently resolves a different axios than the release does is not a gate.
+    #
+    # `npm run build` is both halves of the build (CJS + the bundler-facing
+    # ESM), which is the only thing that type-checks all 1360 generated files.
+    run: |
+      set -e
+      npm ci --no-audit --no-fund
+      npm run build
+
+  - name: examples
+    # The six canonical flows, type-checked against the client that was just
+    # generated. This is the gate that has teeth: `npm run build` only proves
+    # the generated tree is internally consistent, while these compile against
+    # it the way a consumer does — importing `from 'hanzoai'`, reading real
+    # fields off real response models.
+    #
+    # It has already earned its place. `choices[0].message.content` failed to
+    # compile here (TS2339: Property 'message' does not exist on type 'object')
+    # because the spec typed chat choices as a bare object; that became
+    # hanzoai/openapi's ChatChoice schema, which fixed the same hole in every
+    # other language at once. No unit test on generated code would have found
+    # it — only calling the client does.
+    run: |
+      set -e
+      npm run examples

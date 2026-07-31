@@ -22,10 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { PlatformAiSuggestRequest } from '../models';
-// @ts-ignore
-import type { PlatformTRPCResult } from '../models';
-// @ts-ignore
 import type { WorldWorldClassifyBatchRequest } from '../models';
 // @ts-ignore
 import type { WorldWorldCountryIntelRequest } from '../models';
@@ -37,46 +33,6 @@ import type { WorldWorldSummarizeRequest } from '../models';
  */
 export const AIApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Get AI deployment suggestions
-         * @param {PlatformAiSuggestRequest} platformAiSuggestRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformAiSuggest: async (platformAiSuggestRequest: PlatformAiSuggestRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'platformAiSuggestRequest' is not null or undefined
-            assertParamExists('platformAiSuggest', 'platformAiSuggestRequest', platformAiSuggestRequest)
-            const localVarPath = `/v1/platform/ai/suggest`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(platformAiSuggestRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Batch headline classification (per-user IAM token)
@@ -295,19 +251,6 @@ export const AIApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get AI deployment suggestions
-         * @param {PlatformAiSuggestRequest} platformAiSuggestRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async platformAiSuggest(platformAiSuggestRequest: PlatformAiSuggestRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlatformTRPCResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.platformAiSuggest(platformAiSuggestRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AIApi.platformAiSuggest']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Batch headline classification (per-user IAM token)
          * @param {WorldWorldClassifyBatchRequest} worldWorldClassifyBatchRequest 
          * @param {*} [options] Override http request option.
@@ -384,16 +327,6 @@ export const AIApiFactory = function (configuration?: Configuration, basePath?: 
     return {
         /**
          * 
-         * @summary Get AI deployment suggestions
-         * @param {AIApiPlatformAiSuggestRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        platformAiSuggest(requestParameters: AIApiPlatformAiSuggestRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlatformTRPCResult> {
-            return localVarFp.platformAiSuggest(requestParameters.platformAiSuggestRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Batch headline classification (per-user IAM token)
          * @param {AIApiWorldWorldClassifyBatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -444,20 +377,6 @@ export const AIApiFactory = function (configuration?: Configuration, basePath?: 
         },
     };
 };
-
-/**
- * Request parameters for platformAiSuggest operation in AIApi.
- * @export
- * @interface AIApiPlatformAiSuggestRequest
- */
-export interface AIApiPlatformAiSuggestRequest {
-    /**
-     * 
-     * @type {PlatformAiSuggestRequest}
-     * @memberof AIApiPlatformAiSuggest
-     */
-    readonly platformAiSuggestRequest: PlatformAiSuggestRequest
-}
 
 /**
  * Request parameters for worldWorldClassifyBatch operation in AIApi.
@@ -543,18 +462,6 @@ export interface AIApiWorldWorldOpenrouterSummarizeRequest {
  * @extends {BaseAPI}
  */
 export class AIApi extends BaseAPI {
-    /**
-     * 
-     * @summary Get AI deployment suggestions
-     * @param {AIApiPlatformAiSuggestRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AIApi
-     */
-    public platformAiSuggest(requestParameters: AIApiPlatformAiSuggestRequest, options?: RawAxiosRequestConfig) {
-        return AIApiFp(this.configuration).platformAiSuggest(requestParameters.platformAiSuggestRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Batch headline classification (per-user IAM token)

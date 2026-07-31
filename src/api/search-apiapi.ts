@@ -22,10 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CloudProductControllerChatDocsRequest } from '../models';
-// @ts-ignore
-import type { CloudProductControllerIndexDocsRequest } from '../models';
-// @ts-ignore
 import type { CloudProductControllerSearchDocsRequest } from '../models';
 /**
  * SearchAPIApi - axios parameter creator
@@ -33,94 +29,6 @@ import type { CloudProductControllerSearchDocsRequest } from '../models';
  */
 export const SearchAPIApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * RAG chat — retrieves relevant context from the document index and returns a grounded answer.
-         * @param {CloudProductControllerChatDocsRequest} cloudProductControllerChatDocsRequest 
-         * @param {string} [store] Optional store/index selector (e.g. bot-docs).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudProductControllerChatDocs: async (cloudProductControllerChatDocsRequest: CloudProductControllerChatDocsRequest, store?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cloudProductControllerChatDocsRequest' is not null or undefined
-            assertParamExists('cloudProductControllerChatDocs', 'cloudProductControllerChatDocsRequest', cloudProductControllerChatDocsRequest)
-            const localVarPath = `/v1/chat-docs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (store !== undefined) {
-                localVarQueryParameter['store'] = store;
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudProductControllerChatDocsRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Index (upsert) documents into the search backend. Write scope required.
-         * @param {CloudProductControllerIndexDocsRequest} cloudProductControllerIndexDocsRequest 
-         * @param {string} [store] Optional store/index selector (e.g. bot-docs).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudProductControllerIndexDocs: async (cloudProductControllerIndexDocsRequest: CloudProductControllerIndexDocsRequest, store?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cloudProductControllerIndexDocsRequest' is not null or undefined
-            assertParamExists('cloudProductControllerIndexDocs', 'cloudProductControllerIndexDocsRequest', cloudProductControllerIndexDocsRequest)
-            const localVarPath = `/v1/index-docs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (store !== undefined) {
-                localVarQueryParameter['store'] = store;
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudProductControllerIndexDocsRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Hybrid full-text + vector search over an indexed document store.
          * @param {CloudProductControllerSearchDocsRequest} cloudProductControllerSearchDocsRequest 
@@ -176,32 +84,6 @@ export const SearchAPIApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SearchAPIApiAxiosParamCreator(configuration)
     return {
         /**
-         * RAG chat — retrieves relevant context from the document index and returns a grounded answer.
-         * @param {CloudProductControllerChatDocsRequest} cloudProductControllerChatDocsRequest 
-         * @param {string} [store] Optional store/index selector (e.g. bot-docs).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudProductControllerChatDocs(cloudProductControllerChatDocsRequest: CloudProductControllerChatDocsRequest, store?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudProductControllerChatDocs(cloudProductControllerChatDocsRequest, store, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchAPIApi.cloudProductControllerChatDocs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Index (upsert) documents into the search backend. Write scope required.
-         * @param {CloudProductControllerIndexDocsRequest} cloudProductControllerIndexDocsRequest 
-         * @param {string} [store] Optional store/index selector (e.g. bot-docs).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudProductControllerIndexDocs(cloudProductControllerIndexDocsRequest: CloudProductControllerIndexDocsRequest, store?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudProductControllerIndexDocs(cloudProductControllerIndexDocsRequest, store, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchAPIApi.cloudProductControllerIndexDocs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Hybrid full-text + vector search over an indexed document store.
          * @param {CloudProductControllerSearchDocsRequest} cloudProductControllerSearchDocsRequest 
          * @param {string} [store] Optional store/index selector (e.g. bot-docs).
@@ -225,24 +107,6 @@ export const SearchAPIApiFactory = function (configuration?: Configuration, base
     const localVarFp = SearchAPIApiFp(configuration)
     return {
         /**
-         * RAG chat — retrieves relevant context from the document index and returns a grounded answer.
-         * @param {SearchAPIApiCloudProductControllerChatDocsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudProductControllerChatDocs(requestParameters: SearchAPIApiCloudProductControllerChatDocsRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.cloudProductControllerChatDocs(requestParameters.cloudProductControllerChatDocsRequest, requestParameters.store, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Index (upsert) documents into the search backend. Write scope required.
-         * @param {SearchAPIApiCloudProductControllerIndexDocsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudProductControllerIndexDocs(requestParameters: SearchAPIApiCloudProductControllerIndexDocsRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.cloudProductControllerIndexDocs(requestParameters.cloudProductControllerIndexDocsRequest, requestParameters.store, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Hybrid full-text + vector search over an indexed document store.
          * @param {SearchAPIApiCloudProductControllerSearchDocsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -253,48 +117,6 @@ export const SearchAPIApiFactory = function (configuration?: Configuration, base
         },
     };
 };
-
-/**
- * Request parameters for cloudProductControllerChatDocs operation in SearchAPIApi.
- * @export
- * @interface SearchAPIApiCloudProductControllerChatDocsRequest
- */
-export interface SearchAPIApiCloudProductControllerChatDocsRequest {
-    /**
-     * 
-     * @type {CloudProductControllerChatDocsRequest}
-     * @memberof SearchAPIApiCloudProductControllerChatDocs
-     */
-    readonly cloudProductControllerChatDocsRequest: CloudProductControllerChatDocsRequest
-
-    /**
-     * Optional store/index selector (e.g. bot-docs).
-     * @type {string}
-     * @memberof SearchAPIApiCloudProductControllerChatDocs
-     */
-    readonly store?: string
-}
-
-/**
- * Request parameters for cloudProductControllerIndexDocs operation in SearchAPIApi.
- * @export
- * @interface SearchAPIApiCloudProductControllerIndexDocsRequest
- */
-export interface SearchAPIApiCloudProductControllerIndexDocsRequest {
-    /**
-     * 
-     * @type {CloudProductControllerIndexDocsRequest}
-     * @memberof SearchAPIApiCloudProductControllerIndexDocs
-     */
-    readonly cloudProductControllerIndexDocsRequest: CloudProductControllerIndexDocsRequest
-
-    /**
-     * Optional store/index selector (e.g. bot-docs).
-     * @type {string}
-     * @memberof SearchAPIApiCloudProductControllerIndexDocs
-     */
-    readonly store?: string
-}
 
 /**
  * Request parameters for cloudProductControllerSearchDocs operation in SearchAPIApi.
@@ -324,28 +146,6 @@ export interface SearchAPIApiCloudProductControllerSearchDocsRequest {
  * @extends {BaseAPI}
  */
 export class SearchAPIApi extends BaseAPI {
-    /**
-     * RAG chat — retrieves relevant context from the document index and returns a grounded answer.
-     * @param {SearchAPIApiCloudProductControllerChatDocsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchAPIApi
-     */
-    public cloudProductControllerChatDocs(requestParameters: SearchAPIApiCloudProductControllerChatDocsRequest, options?: RawAxiosRequestConfig) {
-        return SearchAPIApiFp(this.configuration).cloudProductControllerChatDocs(requestParameters.cloudProductControllerChatDocsRequest, requestParameters.store, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Index (upsert) documents into the search backend. Write scope required.
-     * @param {SearchAPIApiCloudProductControllerIndexDocsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchAPIApi
-     */
-    public cloudProductControllerIndexDocs(requestParameters: SearchAPIApiCloudProductControllerIndexDocsRequest, options?: RawAxiosRequestConfig) {
-        return SearchAPIApiFp(this.configuration).cloudProductControllerIndexDocs(requestParameters.cloudProductControllerIndexDocsRequest, requestParameters.store, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Hybrid full-text + vector search over an indexed document store.
      * @param {SearchAPIApiCloudProductControllerSearchDocsRequest} requestParameters Request parameters.

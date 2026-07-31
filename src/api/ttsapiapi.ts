@@ -115,94 +115,6 @@ export const TTSAPIApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Convert text to speech
-         * @summary generate Text To Speech Audio
-         * @param {object} body The text to convert to speech
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGenerateTextToSpeechAudio: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('nexusGenerateTextToSpeechAudio', 'body', body)
-            const localVarPath = `/v1/nexus/generate-text-to-speech-audio`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Convert text to speech with streaming
-         * @summary generate Text To Speech Audio Stream
-         * @param {string} storeId The store ID
-         * @param {string} messageId The message ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGenerateTextToSpeechAudioStream: async (storeId: string, messageId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'storeId' is not null or undefined
-            assertParamExists('nexusGenerateTextToSpeechAudioStream', 'storeId', storeId)
-            // verify required parameter 'messageId' is not null or undefined
-            assertParamExists('nexusGenerateTextToSpeechAudioStream', 'messageId', messageId)
-            const localVarPath = `/v1/nexus/generate-text-to-speech-audio-stream`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (storeId !== undefined) {
-                localVarQueryParameter['storeId'] = storeId;
-            }
-
-            if (messageId !== undefined) {
-                localVarQueryParameter['messageId'] = messageId;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -240,33 +152,6 @@ export const TTSAPIApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TTSAPIApi.cloudApiControllerGenerateTextToSpeechAudioStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Convert text to speech
-         * @summary generate Text To Speech Audio
-         * @param {object} body The text to convert to speech
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGenerateTextToSpeechAudio(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGenerateTextToSpeechAudio(body, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TTSAPIApi.nexusGenerateTextToSpeechAudio']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Convert text to speech with streaming
-         * @summary generate Text To Speech Audio Stream
-         * @param {string} storeId The store ID
-         * @param {string} messageId The message ID
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async nexusGenerateTextToSpeechAudioStream(storeId: string, messageId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.nexusGenerateTextToSpeechAudioStream(storeId, messageId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TTSAPIApi.nexusGenerateTextToSpeechAudioStream']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -296,26 +181,6 @@ export const TTSAPIApiFactory = function (configuration?: Configuration, basePat
          */
         cloudApiControllerGenerateTextToSpeechAudioStream(requestParameters: TTSAPIApiCloudApiControllerGenerateTextToSpeechAudioStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.cloudApiControllerGenerateTextToSpeechAudioStream(requestParameters.storeId, requestParameters.messageId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Convert text to speech
-         * @summary generate Text To Speech Audio
-         * @param {TTSAPIApiNexusGenerateTextToSpeechAudioRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGenerateTextToSpeechAudio(requestParameters: TTSAPIApiNexusGenerateTextToSpeechAudioRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.nexusGenerateTextToSpeechAudio(requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Convert text to speech with streaming
-         * @summary generate Text To Speech Audio Stream
-         * @param {TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        nexusGenerateTextToSpeechAudioStream(requestParameters: TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
-            return localVarFp.nexusGenerateTextToSpeechAudioStream(requestParameters.storeId, requestParameters.messageId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -356,41 +221,6 @@ export interface TTSAPIApiCloudApiControllerGenerateTextToSpeechAudioStreamReque
 }
 
 /**
- * Request parameters for nexusGenerateTextToSpeechAudio operation in TTSAPIApi.
- * @export
- * @interface TTSAPIApiNexusGenerateTextToSpeechAudioRequest
- */
-export interface TTSAPIApiNexusGenerateTextToSpeechAudioRequest {
-    /**
-     * The text to convert to speech
-     * @type {object}
-     * @memberof TTSAPIApiNexusGenerateTextToSpeechAudio
-     */
-    readonly body: object
-}
-
-/**
- * Request parameters for nexusGenerateTextToSpeechAudioStream operation in TTSAPIApi.
- * @export
- * @interface TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest
- */
-export interface TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest {
-    /**
-     * The store ID
-     * @type {string}
-     * @memberof TTSAPIApiNexusGenerateTextToSpeechAudioStream
-     */
-    readonly storeId: string
-
-    /**
-     * The message ID
-     * @type {string}
-     * @memberof TTSAPIApiNexusGenerateTextToSpeechAudioStream
-     */
-    readonly messageId: string
-}
-
-/**
  * TTSAPIApi - object-oriented interface
  * @export
  * @class TTSAPIApi
@@ -419,30 +249,6 @@ export class TTSAPIApi extends BaseAPI {
      */
     public cloudApiControllerGenerateTextToSpeechAudioStream(requestParameters: TTSAPIApiCloudApiControllerGenerateTextToSpeechAudioStreamRequest, options?: RawAxiosRequestConfig) {
         return TTSAPIApiFp(this.configuration).cloudApiControllerGenerateTextToSpeechAudioStream(requestParameters.storeId, requestParameters.messageId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Convert text to speech
-     * @summary generate Text To Speech Audio
-     * @param {TTSAPIApiNexusGenerateTextToSpeechAudioRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TTSAPIApi
-     */
-    public nexusGenerateTextToSpeechAudio(requestParameters: TTSAPIApiNexusGenerateTextToSpeechAudioRequest, options?: RawAxiosRequestConfig) {
-        return TTSAPIApiFp(this.configuration).nexusGenerateTextToSpeechAudio(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Convert text to speech with streaming
-     * @summary generate Text To Speech Audio Stream
-     * @param {TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TTSAPIApi
-     */
-    public nexusGenerateTextToSpeechAudioStream(requestParameters: TTSAPIApiNexusGenerateTextToSpeechAudioStreamRequest, options?: RawAxiosRequestConfig) {
-        return TTSAPIApiFp(this.configuration).nexusGenerateTextToSpeechAudioStream(requestParameters.storeId, requestParameters.messageId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

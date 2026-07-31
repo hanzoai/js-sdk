@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { ProjectsCreateProjectRequestRepo } from './projects-create-project-request-repo';
+import type { PlatformCreateAppReqRepo } from './platform-create-app-req-repo';
 
 /**
  * Partial update; only supplied fields change.
@@ -49,10 +49,10 @@ export interface ProjectsUpdateProjectRequest {
     'cacheControl'?: string;
     /**
      * 
-     * @type {ProjectsCreateProjectRequestRepo}
+     * @type {PlatformCreateAppReqRepo}
      * @memberof ProjectsUpdateProjectRequest
      */
-    'repo'?: ProjectsCreateProjectRequestRepo;
+    'repo'?: PlatformCreateAppReqRepo;
 }
 
 export const ProjectsUpdateProjectRequestFrameworkEnum = {

@@ -26,11 +26,9 @@ import type { AiEnvelope } from '../models';
 // @ts-ignore
 import type { AiError } from '../models';
 // @ts-ignore
-import type { ChatPostAuthLoginRequest } from '../models';
-// @ts-ignore
-import type { ChatPostAuthRequestpasswordresetRequest } from '../models';
-// @ts-ignore
 import type { CommerceAccountExists200Response } from '../models';
+// @ts-ignore
+import type { CommerceAccountLoginRequest } from '../models';
 // @ts-ignore
 import type { CommerceAccountWithdrawRequest } from '../models';
 // @ts-ignore
@@ -45,6 +43,8 @@ import type { CommerceError } from '../models';
 import type { CommerceOrder } from '../models';
 // @ts-ignore
 import type { CommercePaymentMethod } from '../models';
+// @ts-ignore
+import type { CommerceRequestPasswordResetRequest } from '../models';
 // @ts-ignore
 import type { CommerceUser } from '../models';
 /**
@@ -128,13 +128,13 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Login to account
-         * @param {ChatPostAuthLoginRequest} chatPostAuthLoginRequest 
+         * @param {CommerceAccountLoginRequest} commerceAccountLoginRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commerceAccountLogin: async (chatPostAuthLoginRequest: ChatPostAuthLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatPostAuthLoginRequest' is not null or undefined
-            assertParamExists('commerceAccountLogin', 'chatPostAuthLoginRequest', chatPostAuthLoginRequest)
+        commerceAccountLogin: async (commerceAccountLoginRequest: CommerceAccountLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'commerceAccountLoginRequest' is not null or undefined
+            assertParamExists('commerceAccountLogin', 'commerceAccountLoginRequest', commerceAccountLoginRequest)
             const localVarPath = `/v1/commerce/account/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -154,7 +154,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatPostAuthLoginRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(commerceAccountLoginRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -526,13 +526,13 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Request password reset
-         * @param {ChatPostAuthRequestpasswordresetRequest} chatPostAuthRequestpasswordresetRequest 
+         * @param {CommerceRequestPasswordResetRequest} commerceRequestPasswordResetRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        commerceRequestPasswordReset: async (chatPostAuthRequestpasswordresetRequest: ChatPostAuthRequestpasswordresetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatPostAuthRequestpasswordresetRequest' is not null or undefined
-            assertParamExists('commerceRequestPasswordReset', 'chatPostAuthRequestpasswordresetRequest', chatPostAuthRequestpasswordresetRequest)
+        commerceRequestPasswordReset: async (commerceRequestPasswordResetRequest: CommerceRequestPasswordResetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'commerceRequestPasswordResetRequest' is not null or undefined
+            assertParamExists('commerceRequestPasswordReset', 'commerceRequestPasswordResetRequest', commerceRequestPasswordResetRequest)
             const localVarPath = `/v1/commerce/account/reset`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -556,7 +556,7 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatPostAuthRequestpasswordresetRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(commerceRequestPasswordResetRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -641,12 +641,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Login to account
-         * @param {ChatPostAuthLoginRequest} chatPostAuthLoginRequest 
+         * @param {CommerceAccountLoginRequest} commerceAccountLoginRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commerceAccountLogin(chatPostAuthLoginRequest: ChatPostAuthLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceAccountLogin(chatPostAuthLoginRequest, options);
+        async commerceAccountLogin(commerceAccountLoginRequest: CommerceAccountLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommerceUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceAccountLogin(commerceAccountLoginRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.commerceAccountLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -774,12 +774,12 @@ export const AccountApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Request password reset
-         * @param {ChatPostAuthRequestpasswordresetRequest} chatPostAuthRequestpasswordresetRequest 
+         * @param {CommerceRequestPasswordResetRequest} commerceRequestPasswordResetRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async commerceRequestPasswordReset(chatPostAuthRequestpasswordresetRequest: ChatPostAuthRequestpasswordresetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceRequestPasswordReset(chatPostAuthRequestpasswordresetRequest, options);
+        async commerceRequestPasswordReset(commerceRequestPasswordResetRequest: CommerceRequestPasswordResetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.commerceRequestPasswordReset(commerceRequestPasswordResetRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AccountApi.commerceRequestPasswordReset']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -834,7 +834,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         commerceAccountLogin(requestParameters: AccountApiCommerceAccountLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommerceUser> {
-            return localVarFp.commerceAccountLogin(requestParameters.chatPostAuthLoginRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.commerceAccountLogin(requestParameters.commerceAccountLoginRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -933,7 +933,7 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         commerceRequestPasswordReset(requestParameters: AccountApiCommerceRequestPasswordResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.commerceRequestPasswordReset(requestParameters.chatPostAuthRequestpasswordresetRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.commerceRequestPasswordReset(requestParameters.commerceRequestPasswordResetRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -970,10 +970,10 @@ export interface AccountApiCommerceAccountExistsRequest {
 export interface AccountApiCommerceAccountLoginRequest {
     /**
      * 
-     * @type {ChatPostAuthLoginRequest}
+     * @type {CommerceAccountLoginRequest}
      * @memberof AccountApiCommerceAccountLogin
      */
-    readonly chatPostAuthLoginRequest: ChatPostAuthLoginRequest
+    readonly commerceAccountLoginRequest: CommerceAccountLoginRequest
 }
 
 /**
@@ -1124,10 +1124,10 @@ export interface AccountApiCommercePatchAccountOrderRequest {
 export interface AccountApiCommerceRequestPasswordResetRequest {
     /**
      * 
-     * @type {ChatPostAuthRequestpasswordresetRequest}
+     * @type {CommerceRequestPasswordResetRequest}
      * @memberof AccountApiCommerceRequestPasswordReset
      */
-    readonly chatPostAuthRequestpasswordresetRequest: ChatPostAuthRequestpasswordresetRequest
+    readonly commerceRequestPasswordResetRequest: CommerceRequestPasswordResetRequest
 }
 
 /**
@@ -1183,7 +1183,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public commerceAccountLogin(requestParameters: AccountApiCommerceAccountLoginRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).commerceAccountLogin(requestParameters.chatPostAuthLoginRequest, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).commerceAccountLogin(requestParameters.commerceAccountLoginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1302,7 +1302,7 @@ export class AccountApi extends BaseAPI {
      * @memberof AccountApi
      */
     public commerceRequestPasswordReset(requestParameters: AccountApiCommerceRequestPasswordResetRequest, options?: RawAxiosRequestConfig) {
-        return AccountApiFp(this.configuration).commerceRequestPasswordReset(requestParameters.chatPostAuthRequestpasswordresetRequest, options).then((request) => request(this.axios, this.basePath));
+        return AccountApiFp(this.configuration).commerceRequestPasswordReset(requestParameters.commerceRequestPasswordResetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
