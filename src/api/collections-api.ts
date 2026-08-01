@@ -34,7 +34,8 @@ import type { VectorGetCollection200Response } from '../models';
 export const CollectionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -67,7 +68,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -104,7 +106,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -137,7 +140,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -174,7 +178,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -207,7 +212,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -244,7 +250,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -277,7 +284,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -314,7 +322,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -347,7 +356,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -384,7 +394,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -417,7 +428,8 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -435,76 +447,6 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Collections: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/collections`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1CollectionsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1CollectionsByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/collections/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -654,7 +596,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CollectionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -665,7 +608,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -677,7 +621,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -688,7 +633,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -700,7 +646,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -711,7 +658,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -723,7 +671,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -734,7 +683,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -746,7 +696,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -757,7 +708,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -769,7 +721,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -780,7 +733,8 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -789,29 +743,6 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1CollectionsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CollectionsApi.cloudPutV1CollectionsByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1Collections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1Collections(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CollectionsApi.cloudTraceV1Collections']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1CollectionsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1CollectionsByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CollectionsApi.cloudTraceV1CollectionsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -865,7 +796,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
     const localVarFp = CollectionsApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -873,7 +805,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudDeleteV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudDeleteV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -882,7 +815,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudDeleteV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -890,7 +824,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudGetV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudGetV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -899,7 +834,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudGetV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -907,7 +843,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudOptionsV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudOptionsV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -916,7 +853,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudOptionsV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -924,7 +862,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPatchV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudPatchV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -933,7 +872,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPatchV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -941,7 +881,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPostV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudPostV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -950,7 +891,8 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPostV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary The org\'s Base content types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -958,30 +900,14 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPutV1Collections(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+         * @summary One Base content type, and its records
          * @param {CollectionsApiCloudPutV1CollectionsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1CollectionsByWildcard1(requestParameters: CollectionsApiCloudPutV1CollectionsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Collections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1Collections(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CollectionsApiCloudTraceV1CollectionsByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1CollectionsByWildcard1(requestParameters: CollectionsApiCloudTraceV1CollectionsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1101,20 +1027,6 @@ export interface CollectionsApiCloudPutV1CollectionsByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1CollectionsByWildcard1 operation in CollectionsApi.
- * @export
- * @interface CollectionsApiCloudTraceV1CollectionsByWildcard1Request
- */
-export interface CollectionsApiCloudTraceV1CollectionsByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CollectionsApiCloudTraceV1CollectionsByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for vectorCreateCollection operation in CollectionsApi.
  * @export
  * @interface CollectionsApiVectorCreateCollectionRequest
@@ -1171,7 +1083,8 @@ export interface CollectionsApiVectorGetCollectionRequest {
  */
 export class CollectionsApi extends BaseAPI {
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1181,7 +1094,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudDeleteV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1192,7 +1106,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1202,7 +1117,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudGetV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1213,7 +1129,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1223,7 +1140,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudOptionsV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1234,7 +1152,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1244,7 +1163,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudPatchV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1255,7 +1175,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1265,7 +1186,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudPostV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1276,7 +1198,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the content types in the org\'s managed Base, and creates one. This is what the console\'s Bases manager reads to render the schema.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary The org\'s Base content types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
@@ -1286,7 +1209,8 @@ export class CollectionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads and writes below the collections root: `meta/scaffolds` is the field-template palette a new content type is built from, `<name>` is one content type (view, update, delete), `<name>/records` is that type\'s rows (list, create) and `<name>/records/<id>` is one row (get, update, delete). This is the data plane behind the console\'s Records browser.  Any other shape below /v1/collections is refused with 404 before it is forwarded, so the wildcard admits exactly those five addresses and nothing more.  The path is forwarded to the managed Base unchanged and its answer comes back verbatim, so the schema, the records and every refusal are the managed Base\'s own.  AUTH is one credential, forwarded and never minted: cloud validates the caller\'s hanzo.id bearer and passes THAT SAME token on, because the managed Base scopes each row by the token\'s own subject. A caller with no validated principal is refused here, before the request leaves the process, and the org header that rides along is the one cloud validated — a client-forged org was stripped upstream.  This is a COLLECTIONS proxy, not a Base tunnel: only the collections data plane is admitted, and everything else the managed Base mounts — settings, backups, logs — is 404 here whatever the caller\'s rights on that deployment are.  One registration owns this address for every method, so which methods answer is the managed Base\'s decision, not this edge\'s.
+     * @summary One Base content type, and its records
      * @param {CollectionsApiCloudPutV1CollectionsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1294,27 +1218,6 @@ export class CollectionsApi extends BaseAPI {
      */
     public cloudPutV1CollectionsByWildcard1(requestParameters: CollectionsApiCloudPutV1CollectionsByWildcard1Request, options?: RawAxiosRequestConfig) {
         return CollectionsApiFp(this.configuration).cloudPutV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public cloudTraceV1Collections(options?: RawAxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).cloudTraceV1Collections(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CollectionsApiCloudTraceV1CollectionsByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public cloudTraceV1CollectionsByWildcard1(requestParameters: CollectionsApiCloudTraceV1CollectionsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).cloudTraceV1CollectionsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

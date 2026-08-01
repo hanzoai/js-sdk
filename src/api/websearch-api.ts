@@ -21,6 +21,10 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { InlineObject } from '../models';
+// @ts-ignore
+import type { WebsearchSearchResponse } from '../models';
 /**
  * WebsearchApi - axios parameter creator
  * @export
@@ -28,7 +32,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const WebsearchApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,11 +66,16 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
+         * @param {string} q Search query
+         * @param {CloudGetV1WebsearchSearchFormatEnum} [format] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1WebsearchSearch: async (q: string, format?: CloudGetV1WebsearchSearchFormatEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'q' is not null or undefined
+            assertParamExists('cloudGetV1WebsearchSearch', 'q', q)
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -78,9 +88,16 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            // authentication serviceKey required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (format !== undefined) {
+                localVarQueryParameter['format'] = format;
+            }
 
 
     
@@ -94,7 +111,8 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -127,7 +145,8 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -160,7 +179,8 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -193,7 +213,8 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -225,39 +246,6 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/websearch/search`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -269,7 +257,8 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebsearchApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -280,18 +269,22 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
+         * @param {string} q Search query
+         * @param {CloudGetV1WebsearchSearchFormatEnum} [format] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1WebsearchSearch(options);
+        async cloudGetV1WebsearchSearch(q: string, format?: CloudGetV1WebsearchSearchFormatEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WebsearchSearchResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1WebsearchSearch(q, format, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebsearchApi.cloudGetV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -302,7 +295,8 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -313,7 +307,8 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -324,7 +319,8 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -332,17 +328,6 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1WebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebsearchApi.cloudPutV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1WebsearchSearch(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.cloudTraceV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -356,7 +341,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
     const localVarFp = WebsearchApiFp(configuration)
     return {
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -364,15 +350,18 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudDeleteV1WebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
+         * @param {WebsearchApiCloudGetV1WebsearchSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        cloudGetV1WebsearchSearch(requestParameters: WebsearchApiCloudGetV1WebsearchSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<WebsearchSearchResponse> {
+            return localVarFp.cloudGetV1WebsearchSearch(requestParameters.q, requestParameters.format, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -380,7 +369,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudOptionsV1WebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -388,7 +378,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudPatchV1WebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -396,23 +387,37 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudPostV1WebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+         * @summary Keyless web meta-search, in the SearXNG JSON envelope.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1WebsearchSearch(options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1WebsearchSearch(options).then((request) => request(axios, basePath));
-        },
     };
 };
+
+/**
+ * Request parameters for cloudGetV1WebsearchSearch operation in WebsearchApi.
+ * @export
+ * @interface WebsearchApiCloudGetV1WebsearchSearchRequest
+ */
+export interface WebsearchApiCloudGetV1WebsearchSearchRequest {
+    /**
+     * Search query
+     * @type {string}
+     * @memberof WebsearchApiCloudGetV1WebsearchSearch
+     */
+    readonly q: string
+
+    /**
+     * 
+     * @type {'json'}
+     * @memberof WebsearchApiCloudGetV1WebsearchSearch
+     */
+    readonly format?: CloudGetV1WebsearchSearchFormatEnum
+}
 
 /**
  * WebsearchApi - object-oriented interface
@@ -422,7 +427,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
  */
 export class WebsearchApi extends BaseAPI {
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
@@ -432,17 +438,20 @@ export class WebsearchApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
+     * @param {WebsearchApiCloudGetV1WebsearchSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public cloudGetV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).cloudGetV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1WebsearchSearch(requestParameters: WebsearchApiCloudGetV1WebsearchSearchRequest, options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).cloudGetV1WebsearchSearch(requestParameters.q, requestParameters.format, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
@@ -452,7 +461,8 @@ export class WebsearchApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
@@ -462,7 +472,8 @@ export class WebsearchApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
@@ -472,7 +483,8 @@ export class WebsearchApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 20. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
+     * @summary Keyless web meta-search, in the SearXNG JSON envelope.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebsearchApi
@@ -480,15 +492,12 @@ export class WebsearchApi extends BaseAPI {
     public cloudPutV1WebsearchSearch(options?: RawAxiosRequestConfig) {
         return WebsearchApiFp(this.configuration).cloudPutV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WebsearchApi
-     */
-    public cloudTraceV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).cloudTraceV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
+/**
+ * @export
+ */
+export const CloudGetV1WebsearchSearchFormatEnum = {
+    Json: 'json'
+} as const;
+export type CloudGetV1WebsearchSearchFormatEnum = typeof CloudGetV1WebsearchSearchFormatEnum[keyof typeof CloudGetV1WebsearchSearchFormatEnum];

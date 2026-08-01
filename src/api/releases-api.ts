@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const ReleasesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary The versions that actually reached the cluster
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -71,7 +72,8 @@ export const ReleasesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReleasesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary The versions that actually reached the cluster
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -92,7 +94,8 @@ export const ReleasesApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ReleasesApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary The versions that actually reached the cluster
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,7 +113,8 @@ export const ReleasesApiFactory = function (configuration?: Configuration, baseP
  */
 export class ReleasesApi extends BaseAPI {
     /**
-     * 
+     * Lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+     * @summary The versions that actually reached the cluster
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReleasesApi

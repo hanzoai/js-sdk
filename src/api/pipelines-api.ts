@@ -40,7 +40,8 @@ import type { MlStartPipelineRunRequest } from '../models';
 export const PipelinesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary One build-and-deploy pipeline per app, with its latest run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -285,7 +286,8 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PipelinesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary One build-and-deploy pipeline per app, with its latest run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -373,7 +375,8 @@ export const PipelinesApiFactory = function (configuration?: Configuration, base
     const localVarFp = PipelinesApiFp(configuration)
     return {
         /**
-         * 
+         * Returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary One build-and-deploy pipeline per app, with its latest run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -525,7 +528,8 @@ export interface PipelinesApiMlStartPipelineRunRequest {
  */
 export class PipelinesApi extends BaseAPI {
     /**
-     * 
+     * Returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+     * @summary One build-and-deploy pipeline per app, with its latest run
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi

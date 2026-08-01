@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const BuildsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Real build records for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -71,7 +72,8 @@ export const BuildsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BuildsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Real build records for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -92,7 +94,8 @@ export const BuildsApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = BuildsApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Real build records for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,7 +113,8 @@ export const BuildsApiFactory = function (configuration?: Configuration, basePat
  */
 export class BuildsApi extends BaseAPI {
     /**
-     * 
+     * Lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+     * @summary Real build records for your org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BuildsApi

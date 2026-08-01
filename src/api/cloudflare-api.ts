@@ -469,7 +469,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Answers one KV key\'s value from the org\'s OWN Cloudflare account as RAW BYTES under the content type it was written with — not wrapped in a JSON envelope, which is why this is not a typed op. Any org member may read. A key that does not exist is Cloudflare\'s own 404; an invalid namespace, or a key that is empty, over 512 bytes, not valid UTF-8, or carries a control character, is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Read a Workers KV value as its stored bytes
          * @param {string} namespace 
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -902,7 +903,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a Cloudflare Workers AI model and get its output back
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -979,7 +981,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a SQL statement against a D1 database
          * @param {string} database 
          * @param {CloudD1Query} [cloudD1Query] 
          * @param {*} [options] Override http request option.
@@ -1100,7 +1103,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Starts a build and deployment of one Cloudflare Pages project on the org\'s OWN Cloudflare account, and relays Cloudflare\'s deployment record back. `branch` picks what to build; OMITTING it builds the project\'s production branch.  A body it cannot parse is IGNORED rather than refused — the deployment falls back to the production branch — which is the one rule to get right here and the reason this is not a typed op: a typed request would answer 400 where this deploys. Requires ORG ADMIN (403 otherwise), and 503 if the org has never connected a Cloudflare token.
+         * @summary Trigger a new Pages deployment for a project
          * @param {string} project 
          * @param {CloudPagesDeploy} [cloudPagesDeploy] 
          * @param {*} [options] Override http request option.
@@ -1357,7 +1361,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Write a Workers KV value from the request body
          * @param {string} namespace 
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -1398,7 +1403,8 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Upload or replace a module Worker script
          * @param {string} script 
          * @param {CloudWorkerScriptPut} [cloudWorkerScriptPut] 
          * @param {*} [options] Override http request option.
@@ -1587,7 +1593,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers one KV key\'s value from the org\'s OWN Cloudflare account as RAW BYTES under the content type it was written with — not wrapped in a JSON envelope, which is why this is not a typed op. Any org member may read. A key that does not exist is Cloudflare\'s own 404; an invalid namespace, or a key that is empty, over 512 bytes, not valid UTF-8, or carries a control character, is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Read a Workers KV value as its stored bytes
          * @param {string} namespace 
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -1726,7 +1733,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a Cloudflare Workers AI model and get its output back
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1751,7 +1759,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a SQL statement against a D1 database
          * @param {string} database 
          * @param {CloudD1Query} [cloudD1Query] 
          * @param {*} [options] Override http request option.
@@ -1790,7 +1799,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Starts a build and deployment of one Cloudflare Pages project on the org\'s OWN Cloudflare account, and relays Cloudflare\'s deployment record back. `branch` picks what to build; OMITTING it builds the project\'s production branch.  A body it cannot parse is IGNORED rather than refused — the deployment falls back to the production branch — which is the one rule to get right here and the reason this is not a typed op: a typed request would answer 400 where this deploys. Requires ORG ADMIN (403 otherwise), and 503 if the org has never connected a Cloudflare token.
+         * @summary Trigger a new Pages deployment for a project
          * @param {string} project 
          * @param {CloudPagesDeploy} [cloudPagesDeploy] 
          * @param {*} [options] Override http request option.
@@ -1872,7 +1882,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Write a Workers KV value from the request body
          * @param {string} namespace 
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -1885,7 +1896,8 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Upload or replace a module Worker script
          * @param {string} script 
          * @param {CloudWorkerScriptPut} [cloudWorkerScriptPut] 
          * @param {*} [options] Override http request option.
@@ -2008,7 +2020,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1CloudflareKvNamespaces(requestParameters.page, requestParameters.perPage, requestParameters.order, requestParameters.direction, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers one KV key\'s value from the org\'s OWN Cloudflare account as RAW BYTES under the content type it was written with — not wrapped in a JSON envelope, which is why this is not a typed op. Any org member may read. A key that does not exist is Cloudflare\'s own 404; an invalid namespace, or a key that is empty, over 512 bytes, not valid UTF-8, or carries a control character, is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Read a Workers KV value as its stored bytes
          * @param {CloudflareApiCloudGetV1CloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2104,7 +2117,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1CloudflareZonesZoneAnalytics(requestParameters.zone, requestParameters.since, requestParameters.until, requestParameters.continuous, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a Cloudflare Workers AI model and get its output back
          * @param {CloudflareApiCloudPostV1CloudflareAiRunByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2123,7 +2137,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPostV1CloudflareD1Databases(requestParameters.cloudDatabaseCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Run a SQL statement against a D1 database
          * @param {CloudflareApiCloudPostV1CloudflareD1DatabasesByDatabaseQueryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2152,7 +2167,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPostV1CloudflarePagesProjects(requestParameters.cloudPagesProjectCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Starts a build and deployment of one Cloudflare Pages project on the org\'s OWN Cloudflare account, and relays Cloudflare\'s deployment record back. `branch` picks what to build; OMITTING it builds the project\'s production branch.  A body it cannot parse is IGNORED rather than refused — the deployment falls back to the production branch — which is the one rule to get right here and the reason this is not a typed op: a typed request would answer 400 where this deploys. Requires ORG ADMIN (403 otherwise), and 503 if the org has never connected a Cloudflare token.
+         * @summary Trigger a new Pages deployment for a project
          * @param {CloudflareApiCloudPostV1CloudflarePagesProjectsByProjectDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2211,7 +2227,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPostV1CloudflareZonesZonePurge(requestParameters.zone, requestParameters.cloudPurgeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Write a Workers KV value from the request body
          * @param {CloudflareApiCloudPutV1CloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2220,7 +2237,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPutV1CloudflareKvNamespacesByNamespaceValuesByKey(requestParameters.namespace, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Upload or replace a module Worker script
          * @param {CloudflareApiCloudPutV1CloudflareWorkersScriptsByScriptRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2982,7 +3000,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers one KV key\'s value from the org\'s OWN Cloudflare account as RAW BYTES under the content type it was written with — not wrapped in a JSON envelope, which is why this is not a typed op. Any org member may read. A key that does not exist is Cloudflare\'s own 404; an invalid namespace, or a key that is empty, over 512 bytes, not valid UTF-8, or carries a control character, is 400; 503 if the org has never connected a Cloudflare token.
+     * @summary Read a Workers KV value as its stored bytes
      * @param {CloudflareApiCloudGetV1CloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3098,7 +3117,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
+     * @summary Run a Cloudflare Workers AI model and get its output back
      * @param {CloudflareApiCloudPostV1CloudflareAiRunByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3121,7 +3141,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+     * @summary Run a SQL statement against a D1 database
      * @param {CloudflareApiCloudPostV1CloudflareD1DatabasesByDatabaseQueryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3156,7 +3177,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Starts a build and deployment of one Cloudflare Pages project on the org\'s OWN Cloudflare account, and relays Cloudflare\'s deployment record back. `branch` picks what to build; OMITTING it builds the project\'s production branch.  A body it cannot parse is IGNORED rather than refused — the deployment falls back to the production branch — which is the one rule to get right here and the reason this is not a typed op: a typed request would answer 400 where this deploys. Requires ORG ADMIN (403 otherwise), and 503 if the org has never connected a Cloudflare token.
+     * @summary Trigger a new Pages deployment for a project
      * @param {CloudflareApiCloudPostV1CloudflarePagesProjectsByProjectDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3227,7 +3249,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Stores one KV key on the org\'s OWN Cloudflare account. The REQUEST BODY IS THE VALUE, forwarded verbatim under the caller\'s own Content-Type (`text/plain` when none is sent), so a value is never re-encoded on the way in — which is why this is not a typed op. `expiration` and `expiration_ttl` may ride the query string and are passed through to Cloudflare. Requires ORG ADMIN (403 otherwise); the same namespace and key validation as the read answers 400; 503 if the org has never connected a Cloudflare token.
+     * @summary Write a Workers KV value from the request body
      * @param {CloudflareApiCloudPutV1CloudflareKvNamespacesByNamespaceValuesByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3238,7 +3261,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
+     * @summary Upload or replace a module Worker script
      * @param {CloudflareApiCloudPutV1CloudflareWorkersScriptsByScriptRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

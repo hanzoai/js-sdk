@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const MeetApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Reports whether this deployment holds the LiveKit key pair it needs. `ready:true` with 200 when tokens can be minted; the SAME body with `ready:false`, `status:\"degraded\"` and 503 when they cannot, so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: `ready` is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Whether the office can mint join tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
+         * @summary Mint a join token for one video room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -104,7 +106,8 @@ export const MeetApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MeetApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Reports whether this deployment holds the LiveKit key pair it needs. `ready:true` with 200 when tokens can be minted; the SAME body with `ready:false`, `status:\"degraded\"` and 503 when they cannot, so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: `ready` is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Whether the office can mint join tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -115,7 +118,8 @@ export const MeetApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
+         * @summary Mint a join token for one video room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -136,7 +140,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = MeetApiFp(configuration)
     return {
         /**
-         * 
+         * Reports whether this deployment holds the LiveKit key pair it needs. `ready:true` with 200 when tokens can be minted; the SAME body with `ready:false`, `status:\"degraded\"` and 503 when they cannot, so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: `ready` is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+         * @summary Whether the office can mint join tokens
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -144,7 +149,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1MeetHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
+         * @summary Mint a join token for one video room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -162,7 +168,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
  */
 export class MeetApi extends BaseAPI {
     /**
-     * 
+     * Reports whether this deployment holds the LiveKit key pair it needs. `ready:true` with 200 when tokens can be minted; the SAME body with `ready:false`, `status:\"degraded\"` and 503 when they cannot, so a probe and a dashboard both read the degraded state instead of someone grepping a boot log.  It takes no credential and is reachable on every public host, so it withholds both the reason and the signing key\'s name on purpose: `ready` is the whole dashboard fact, and the reason — which names the key file and the Secret — is written to the boot log where an operator already is.
+     * @summary Whether the office can mint join tokens
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MeetApi
@@ -172,7 +179,8 @@ export class MeetApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
+     * @summary Mint a join token for one video room
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MeetApi

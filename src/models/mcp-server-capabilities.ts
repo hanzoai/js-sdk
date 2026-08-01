@@ -13,20 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { McpServerCapabilitiesTools } from './mcp-server-capabilities-tools';
 
 /**
- * The cap/funds verdict reason. \"\" = allowed (funded and under every covering cap). `spend_cap` = funded but a HARD-enforced per-scope cap would be exceeded (the tenant\'s OWN policy ceiling). `insufficient_balance` = out of prepaid funds. `spend_cap` and `insufficient_balance` are DISTINCT — one is policy, one is funds. The `/spend-alerts/authorize` endpoint (a pure cap check) emits only \"\" or `spend_cap`; the cloud money-path composite (metering) adds `insufficient_balance`. 
+ * 
  * @export
- * @enum {string}
+ * @interface McpServerCapabilities
  */
-
-export const BillingCapReason = {
-    Empty: '',
-    SpendCap: 'spend_cap',
-    InsufficientBalance: 'insufficient_balance'
-} as const;
-
-export type BillingCapReason = typeof BillingCapReason[keyof typeof BillingCapReason];
-
-
+export interface McpServerCapabilities {
+    /**
+     * 
+     * @type {McpServerCapabilitiesTools}
+     * @memberof McpServerCapabilities
+     */
+    'tools'?: McpServerCapabilitiesTools;
+}
 

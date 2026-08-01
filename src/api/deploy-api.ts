@@ -50,7 +50,8 @@ import type { CloudVersionMessage } from '../models';
 export const DeployApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
+         * @summary Compatibility answer the console UI asks before enabling its buttons
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -277,7 +278,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
+         * @summary Finish the sign-in round trip and mint the console session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -378,7 +380,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
+         * @summary Whether this control plane can actually reach the cluster it deploys to
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -411,7 +414,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
+         * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -546,7 +550,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
+         * @summary Live application fleet updates as Server-Sent Events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -579,7 +584,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
+         * @summary Live resource tree for one application, as Server-Sent Events
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -650,7 +656,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -687,7 +694,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
+         * @summary Ask the operator to reconcile one application now
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -724,7 +732,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
+         * @summary End the console session on this host
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -757,7 +766,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Render the configured git source and apply it to the cluster, once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -800,7 +810,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DeployApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
+         * @summary Compatibility answer the console UI asks before enabling its buttons
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -877,7 +888,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
+         * @summary Finish the sign-in round trip and mint the console session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -912,7 +924,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
+         * @summary Whether this control plane can actually reach the cluster it deploys to
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -923,7 +936,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
+         * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -970,7 +984,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
+         * @summary Live application fleet updates as Server-Sent Events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -981,7 +996,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
+         * @summary Live resource tree for one application, as Server-Sent Events
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1005,7 +1021,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1017,7 +1034,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
+         * @summary Ask the operator to reconcile one application now
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1029,7 +1047,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
+         * @summary End the console session on this host
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1040,7 +1059,8 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Render the configured git source and apply it to the cluster, once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1061,7 +1081,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = DeployApiFp(configuration)
     return {
         /**
-         * 
+         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
+         * @summary Compatibility answer the console UI asks before enabling its buttons
          * @param {DeployApiCloudGetV1DeployAccountCanIByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1119,7 +1140,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeployApplicationsNameSyncwindows(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
+         * @summary Finish the sign-in round trip and mint the console session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1145,7 +1167,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeployGitops(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
+         * @summary Whether this control plane can actually reach the cluster it deploys to
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1153,7 +1176,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeployHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
+         * @summary Start the sign-in round trip for this console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1188,7 +1212,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeploySettings(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
+         * @summary Live application fleet updates as Server-Sent Events
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1196,7 +1221,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeployStreamApplications(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
+         * @summary Live resource tree for one application, as Server-Sent Events
          * @param {DeployApiCloudGetV1DeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1214,7 +1240,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1DeployVersion(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {DeployApiCloudPostV1DeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1223,7 +1250,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1DeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
+         * @summary Ask the operator to reconcile one application now
          * @param {DeployApiCloudPostV1DeployApplicationsByNameSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1232,7 +1260,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1DeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
+         * @summary End the console session on this host
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1240,7 +1269,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1DeployLogout(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Render the configured git source and apply it to the cluster, once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1377,7 +1407,8 @@ export interface DeployApiCloudPostV1DeployApplicationsByNameSyncRequest {
  */
 export class DeployApi extends BaseAPI {
     /**
-     * 
+     * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
+     * @summary Compatibility answer the console UI asks before enabling its buttons
      * @param {DeployApiCloudGetV1DeployAccountCanIByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1447,7 +1478,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
+     * @summary Finish the sign-in round trip and mint the console session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1479,7 +1511,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
+     * @summary Whether this control plane can actually reach the cluster it deploys to
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1489,7 +1522,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
+     * @summary Start the sign-in round trip for this console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1532,7 +1566,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
+     * @summary Live application fleet updates as Server-Sent Events
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1542,7 +1577,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
+     * @summary Live resource tree for one application, as Server-Sent Events
      * @param {DeployApiCloudGetV1DeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1564,7 +1600,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+     * @summary The console\'s rollback control — today it requests a reconcile, nothing more
      * @param {DeployApiCloudPostV1DeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1575,7 +1612,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
+     * @summary Ask the operator to reconcile one application now
      * @param {DeployApiCloudPostV1DeployApplicationsByNameSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1586,7 +1624,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
+     * @summary End the console session on this host
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1596,7 +1635,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+     * @summary Render the configured git source and apply it to the cluster, once
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi

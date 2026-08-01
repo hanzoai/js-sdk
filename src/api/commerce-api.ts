@@ -34,7 +34,8 @@ import type { CloudWalletTopupResp } from '../models';
 export const CommerceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
+         * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -67,7 +68,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns the brand\'s published catalog — the shared source docs, the console sidebar and the pricing pages all read — with the brand taken from the query and defaulting to hanzo. It is public and cacheable, and it is the projection that deliberately omits cost and margin; those live only on the platform-admin projection.
+         * @summary The public product catalog projection for a brand
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -100,7 +102,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns every reference currency as one global list, so a store settings form or a product price picker binds real rows instead of a hardcoded array. It is a default-namespace read shared by every tenant rather than per-org data, and it is public and cacheable.
+         * @summary The reference currency list the price and settings pickers render
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -133,7 +136,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns the deposit\'s state as the tenant\'s own backend reports it — pending, processing, settled or failed — which is what the checkout page polls until a terminal state or timeout. The tenant is resolved from the request host and the read is forwarded to that tenant\'s configured backend with the caller\'s Authorization carried through; without that header the answer is 401. An unknown host is 404, a tenant with no backend 503 and an unreachable backend 502.
+         * @summary Poll a deposit\'s state until it settles
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -170,7 +174,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the tenant the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate tenants; a successful answer is cacheable for a minute.
+         * @summary The public tenant configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -237,7 +242,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Forwards the deposit request to the backend belonging to the tenant the request HOST resolves to, and answers that backend\'s status and body verbatim. The upstream is always taken from the resolved tenant\'s configured backend and never from the Host header itself, so a spoofed host cannot redirect the forward; only the Authorization and Content-Type headers are carried forward, so cookies and custom headers never leak to the backend. An unknown host is 404 with no echo of the host, a caller with no Authorization is 401, a tenant with no backend configured is 503, and an unreachable backend is 502.
+         * @summary Open a deposit against the tenant\'s own backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -270,7 +276,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Forwards the confirmation for the addressed deposit to the resolved tenant\'s own backend and answers that backend\'s reply verbatim. The tenant comes from the request host, the upstream from that tenant\'s configured backend, and an Authorization header is required — the confirmation is the caller\'s, and this service only relays it. An unknown host is 404, a missing deposit id 400, a tenant with no backend configured 503 and an unreachable backend 502.
+         * @summary Confirm a deposit that needed a second step
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -347,7 +354,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Forwards the provider\'s event — body and original signature headers intact — to the backend of the tenant the request host resolves to, so that backend can verify it with its own tenant-scoped signing key. Commerce deliberately does NOT verify the signature here: the keys live with the tenant backend, and holding a second copy would be a second place to rotate and a stale cache that rejects live webhooks. A provider outside the known set is 404, as is an unresolvable host; a tenant with no backend configured is 503.
+         * @summary Relay a payment provider\'s webhook to the tenant\'s own backend
          * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -394,7 +402,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CommerceApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
+         * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -405,7 +414,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the brand\'s published catalog — the shared source docs, the console sidebar and the pricing pages all read — with the brand taken from the query and defaulting to hanzo. It is public and cacheable, and it is the projection that deliberately omits cost and margin; those live only on the platform-admin projection.
+         * @summary The public product catalog projection for a brand
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -416,7 +426,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns every reference currency as one global list, so a store settings form or a product price picker binds real rows instead of a hardcoded array. It is a default-namespace read shared by every tenant rather than per-org data, and it is public and cacheable.
+         * @summary The reference currency list the price and settings pickers render
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -427,7 +438,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the deposit\'s state as the tenant\'s own backend reports it — pending, processing, settled or failed — which is what the checkout page polls until a terminal state or timeout. The tenant is resolved from the request host and the read is forwarded to that tenant\'s configured backend with the caller\'s Authorization carried through; without that header the answer is 401. An unknown host is 404, a tenant with no backend 503 and an unreachable backend 502.
+         * @summary Poll a deposit\'s state until it settles
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -439,7 +451,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the tenant the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate tenants; a successful answer is cacheable for a minute.
+         * @summary The public tenant configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -462,7 +475,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Forwards the deposit request to the backend belonging to the tenant the request HOST resolves to, and answers that backend\'s status and body verbatim. The upstream is always taken from the resolved tenant\'s configured backend and never from the Host header itself, so a spoofed host cannot redirect the forward; only the Authorization and Content-Type headers are carried forward, so cookies and custom headers never leak to the backend. An unknown host is 404 with no echo of the host, a caller with no Authorization is 401, a tenant with no backend configured is 503, and an unreachable backend is 502.
+         * @summary Open a deposit against the tenant\'s own backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -473,7 +487,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Forwards the confirmation for the addressed deposit to the resolved tenant\'s own backend and answers that backend\'s reply verbatim. The tenant comes from the request host, the upstream from that tenant\'s configured backend, and an Authorization header is required — the confirmation is the caller\'s, and this service only relays it. An unknown host is 404, a missing deposit id 400, a tenant with no backend configured 503 and an unreachable backend 502.
+         * @summary Confirm a deposit that needed a second step
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -498,7 +513,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Forwards the provider\'s event — body and original signature headers intact — to the backend of the tenant the request host resolves to, so that backend can verify it with its own tenant-scoped signing key. Commerce deliberately does NOT verify the signature here: the keys live with the tenant backend, and holding a second copy would be a second place to rotate and a stale cache that rejects live webhooks. A provider outside the known set is 404, as is an unresolvable host; a tenant with no backend configured is 503.
+         * @summary Relay a payment provider\'s webhook to the tenant\'s own backend
          * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -520,7 +536,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = CommerceApiFp(configuration)
     return {
         /**
-         * 
+         * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
+         * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -528,7 +545,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1CommerceAdminCatalog(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the brand\'s published catalog — the shared source docs, the console sidebar and the pricing pages all read — with the brand taken from the query and defaulting to hanzo. It is public and cacheable, and it is the projection that deliberately omits cost and margin; those live only on the platform-admin projection.
+         * @summary The public product catalog projection for a brand
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -536,7 +554,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1CommerceCatalog(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns every reference currency as one global list, so a store settings form or a product price picker binds real rows instead of a hardcoded array. It is a default-namespace read shared by every tenant rather than per-org data, and it is public and cacheable.
+         * @summary The reference currency list the price and settings pickers render
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -544,7 +563,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1CommerceCurrencies(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the deposit\'s state as the tenant\'s own backend reports it — pending, processing, settled or failed — which is what the checkout page polls until a terminal state or timeout. The tenant is resolved from the request host and the read is forwarded to that tenant\'s configured backend with the caller\'s Authorization carried through; without that header the answer is 401. An unknown host is 404, a tenant with no backend 503 and an unreachable backend 502.
+         * @summary Poll a deposit\'s state until it settles
          * @param {CommerceApiCloudGetV1CommerceDepositsByIdStatusRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -553,7 +573,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1CommerceDepositsByIdStatus(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the tenant the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate tenants; a successful answer is cacheable for a minute.
+         * @summary The public tenant configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -570,7 +591,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1CommerceTopupRails(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Forwards the deposit request to the backend belonging to the tenant the request HOST resolves to, and answers that backend\'s status and body verbatim. The upstream is always taken from the resolved tenant\'s configured backend and never from the Host header itself, so a spoofed host cannot redirect the forward; only the Authorization and Content-Type headers are carried forward, so cookies and custom headers never leak to the backend. An unknown host is 404 with no echo of the host, a caller with no Authorization is 401, a tenant with no backend configured is 503, and an unreachable backend is 502.
+         * @summary Open a deposit against the tenant\'s own backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -578,7 +600,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1CommerceDeposits(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Forwards the confirmation for the addressed deposit to the resolved tenant\'s own backend and answers that backend\'s reply verbatim. The tenant comes from the request host, the upstream from that tenant\'s configured backend, and an Authorization header is required — the confirmation is the caller\'s, and this service only relays it. An unknown host is 404, a missing deposit id 400, a tenant with no backend configured 503 and an unreachable backend 502.
+         * @summary Confirm a deposit that needed a second step
          * @param {CommerceApiCloudPostV1CommerceDepositsByIdConfirmRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -597,7 +620,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1CommerceTopupWallet(requestParameters.cloudWalletTopupReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Forwards the provider\'s event — body and original signature headers intact — to the backend of the tenant the request host resolves to, so that backend can verify it with its own tenant-scoped signing key. Commerce deliberately does NOT verify the signature here: the keys live with the tenant backend, and holding a second copy would be a second place to rotate and a stale cache that rejects live webhooks. A provider outside the known set is 404, as is an unresolvable host; a tenant with no backend configured is 503.
+         * @summary Relay a payment provider\'s webhook to the tenant\'s own backend
          * @param {CommerceApiCloudPostV1CommerceWebhooksByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -672,7 +696,8 @@ export interface CommerceApiCloudPostV1CommerceWebhooksByProviderRequest {
  */
 export class CommerceApi extends BaseAPI {
     /**
-     * 
+     * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
+     * @summary The catalog projection with cost and margin included
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
@@ -682,7 +707,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the brand\'s published catalog — the shared source docs, the console sidebar and the pricing pages all read — with the brand taken from the query and defaulting to hanzo. It is public and cacheable, and it is the projection that deliberately omits cost and margin; those live only on the platform-admin projection.
+     * @summary The public product catalog projection for a brand
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
@@ -692,7 +718,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns every reference currency as one global list, so a store settings form or a product price picker binds real rows instead of a hardcoded array. It is a default-namespace read shared by every tenant rather than per-org data, and it is public and cacheable.
+     * @summary The reference currency list the price and settings pickers render
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
@@ -702,7 +729,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the deposit\'s state as the tenant\'s own backend reports it — pending, processing, settled or failed — which is what the checkout page polls until a terminal state or timeout. The tenant is resolved from the request host and the read is forwarded to that tenant\'s configured backend with the caller\'s Authorization carried through; without that header the answer is 401. An unknown host is 404, a tenant with no backend 503 and an unreachable backend 502.
+     * @summary Poll a deposit\'s state until it settles
      * @param {CommerceApiCloudGetV1CommerceDepositsByIdStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -713,7 +741,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the tenant the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate tenants; a successful answer is cacheable for a minute.
+     * @summary The public tenant configuration a checkout page boots from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
@@ -734,7 +763,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Forwards the deposit request to the backend belonging to the tenant the request HOST resolves to, and answers that backend\'s status and body verbatim. The upstream is always taken from the resolved tenant\'s configured backend and never from the Host header itself, so a spoofed host cannot redirect the forward; only the Authorization and Content-Type headers are carried forward, so cookies and custom headers never leak to the backend. An unknown host is 404 with no echo of the host, a caller with no Authorization is 401, a tenant with no backend configured is 503, and an unreachable backend is 502.
+     * @summary Open a deposit against the tenant\'s own backend
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
@@ -744,7 +774,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Forwards the confirmation for the addressed deposit to the resolved tenant\'s own backend and answers that backend\'s reply verbatim. The tenant comes from the request host, the upstream from that tenant\'s configured backend, and an Authorization header is required — the confirmation is the caller\'s, and this service only relays it. An unknown host is 404, a missing deposit id 400, a tenant with no backend configured 503 and an unreachable backend 502.
+     * @summary Confirm a deposit that needed a second step
      * @param {CommerceApiCloudPostV1CommerceDepositsByIdConfirmRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -767,7 +798,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Forwards the provider\'s event — body and original signature headers intact — to the backend of the tenant the request host resolves to, so that backend can verify it with its own tenant-scoped signing key. Commerce deliberately does NOT verify the signature here: the keys live with the tenant backend, and holding a second copy would be a second place to rotate and a stale cache that rejects live webhooks. A provider outside the known set is 404, as is an unresolvable host; a tenant with no backend configured is 503.
+     * @summary Relay a payment provider\'s webhook to the tenant\'s own backend
      * @param {CommerceApiCloudPostV1CommerceWebhooksByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

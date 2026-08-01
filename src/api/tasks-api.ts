@@ -428,7 +428,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -461,7 +462,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Delete an engine resource
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -498,7 +500,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -531,7 +534,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Read workflow state from the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -568,7 +572,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -601,7 +606,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -638,7 +644,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -671,7 +678,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -708,7 +716,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -741,7 +750,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Start workflows and act on running ones
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -778,7 +788,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -811,7 +822,8 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -829,76 +841,6 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/tasks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1TasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1419,7 +1361,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1430,7 +1373,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Delete an engine resource
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1442,7 +1386,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1453,7 +1398,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Read workflow state from the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1465,7 +1411,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1476,7 +1423,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1488,7 +1436,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1499,7 +1448,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1511,7 +1461,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1522,7 +1473,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Start workflows and act on running ones
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1534,7 +1486,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1545,7 +1498,8 @@ export const TasksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1554,29 +1508,6 @@ export const TasksApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1TasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TasksApi.cloudPutV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1Tasks(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.cloudTraceV1Tasks']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1TasksByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.cloudTraceV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1793,7 +1724,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.aiUploadTaskDocument(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1801,7 +1733,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Delete an engine resource
          * @param {TasksApiCloudDeleteV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1810,7 +1743,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1818,7 +1752,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Read workflow state from the durable engine
          * @param {TasksApiCloudGetV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1827,7 +1762,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1835,7 +1771,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {TasksApiCloudOptionsV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1844,7 +1781,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1852,7 +1790,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {TasksApiCloudPatchV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1861,7 +1800,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1869,7 +1809,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Start workflows and act on running ones
          * @param {TasksApiCloudPostV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1878,7 +1819,8 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+         * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1886,30 +1828,14 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutV1Tasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+         * @summary Not served by the engine
          * @param {TasksApiCloudPutV1TasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1TasksByWildcard1(requestParameters: TasksApiCloudPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1Tasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {TasksApiCloudTraceV1TasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1TasksByWildcard1(requestParameters: TasksApiCloudTraceV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2246,20 +2172,6 @@ export interface TasksApiCloudPutV1TasksByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1TasksByWildcard1 operation in TasksApi.
- * @export
- * @interface TasksApiCloudTraceV1TasksByWildcard1Request
- */
-export interface TasksApiCloudTraceV1TasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof TasksApiCloudTraceV1TasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for searchCancelTasks operation in TasksApi.
  * @export
  * @interface TasksApiSearchCancelTasksRequest
@@ -2555,7 +2467,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+     * @summary Redirect to the tasks API root
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2565,7 +2478,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+     * @summary Delete an engine resource
      * @param {TasksApiCloudDeleteV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2576,7 +2490,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+     * @summary Redirect to the tasks API root
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2586,7 +2501,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+     * @summary Read workflow state from the durable engine
      * @param {TasksApiCloudGetV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2597,7 +2513,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+     * @summary Not routed by the durable engine
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2607,7 +2524,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+     * @summary Not routed by the durable engine
      * @param {TasksApiCloudOptionsV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2618,7 +2536,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+     * @summary Redirect to the tasks API root
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2628,7 +2547,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+     * @summary Not served by the engine
      * @param {TasksApiCloudPatchV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2639,7 +2559,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+     * @summary Redirect to the tasks API root
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2649,7 +2570,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+     * @summary Start workflows and act on running ones
      * @param {TasksApiCloudPostV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2660,7 +2582,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
+     * @summary Redirect to the tasks API root
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
@@ -2670,7 +2593,8 @@ export class TasksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
+     * @summary Not served by the engine
      * @param {TasksApiCloudPutV1TasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2678,27 +2602,6 @@ export class TasksApi extends BaseAPI {
      */
     public cloudPutV1TasksByWildcard1(requestParameters: TasksApiCloudPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return TasksApiFp(this.configuration).cloudPutV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public cloudTraceV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).cloudTraceV1Tasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {TasksApiCloudTraceV1TasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public cloudTraceV1TasksByWildcard1(requestParameters: TasksApiCloudTraceV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).cloudTraceV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

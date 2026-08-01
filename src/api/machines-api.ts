@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
 import type { CloudAgentBinding } from '../models';
 // @ts-ignore
 import type { CloudBindAgentReq } from '../models';
@@ -31,6 +33,10 @@ import type { CloudBindingList } from '../models';
 import type { CloudMachineList } from '../models';
 // @ts-ignore
 import type { CloudMachineView } from '../models';
+// @ts-ignore
+import type { VisorLaunchRequest } from '../models';
+// @ts-ignore
+import type { VisorMachineView } from '../models';
 /**
  * MachinesApi - axios parameter creator
  * @export
@@ -264,11 +270,15 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+         * @summary Launch a metered machine for your org, or price one first with dryRun
+         * @param {VisorLaunchRequest} visorLaunchRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Machines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1Machines: async (visorLaunchRequest: VisorLaunchRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'visorLaunchRequest' is not null or undefined
+            assertParamExists('cloudPostV1Machines', 'visorLaunchRequest', visorLaunchRequest)
             const localVarPath = `/v1/machines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -287,9 +297,12 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(visorLaunchRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -422,12 +435,14 @@ export const MachinesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+         * @summary Launch a metered machine for your org, or price one first with dryRun
+         * @param {VisorLaunchRequest} visorLaunchRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1Machines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Machines(options);
+        async cloudPostV1Machines(visorLaunchRequest: VisorLaunchRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Machines(visorLaunchRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MachinesApi.cloudPostV1Machines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -514,12 +529,14 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudListMachines(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+         * @summary Launch a metered machine for your org, or price one first with dryRun
+         * @param {MachinesApiCloudPostV1MachinesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Machines(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1Machines(options).then((request) => request(axios, basePath));
+        cloudPostV1Machines(requestParameters: MachinesApiCloudPostV1MachinesRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.cloudPostV1Machines(requestParameters.visorLaunchRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Detaches the agent runtime from one of the caller org\'s machines. The machine stays — this halts the bot, it does not terminate the compute. Answers 204.
@@ -595,6 +612,20 @@ export interface MachinesApiCloudGetMachineAgentRequest {
      * @memberof MachinesApiCloudGetMachineAgent
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for cloudPostV1Machines operation in MachinesApi.
+ * @export
+ * @interface MachinesApiCloudPostV1MachinesRequest
+ */
+export interface MachinesApiCloudPostV1MachinesRequest {
+    /**
+     * 
+     * @type {VisorLaunchRequest}
+     * @memberof MachinesApiCloudPostV1Machines
+     */
+    readonly visorLaunchRequest: VisorLaunchRequest
 }
 
 /**
@@ -689,13 +720,15 @@ export class MachinesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Provisions a machine owned by the caller\'s org and answers 201 with the machine. Send `dryRun: true` to get a PRICE QUOTE instead: 200 with the upstream quote passed through verbatim, nothing launched and nothing spent. Two response shapes on one address is the rule to know, and it is why this is not a typed op.  Metering is not this plane\'s: the launch fronts the compute provider\'s resell endpoint, which owns the balance gate and the per-hour meter, and cloud only forwards the tenant. Ownership is the validated principal\'s org and is never read from the body, so a launch always lands in the caller\'s OWN tenant and the machine it creates is only ever visible to that tenant. Fails closed: a validated principal is required (403 without one) and `size` (or its `instanceType` alias) is required (400).
+     * @summary Launch a metered machine for your org, or price one first with dryRun
+     * @param {MachinesApiCloudPostV1MachinesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MachinesApi
      */
-    public cloudPostV1Machines(options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).cloudPostV1Machines(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1Machines(requestParameters: MachinesApiCloudPostV1MachinesRequest, options?: RawAxiosRequestConfig) {
+        return MachinesApiFp(this.configuration).cloudPostV1Machines(requestParameters.visorLaunchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

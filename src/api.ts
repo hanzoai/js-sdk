@@ -240,6 +240,7 @@ export * from './api/store-api';
 export * from './api/stores-api';
 export * from './api/streams-api';
 export * from './api/subscriptions-api';
+export * from './api/summary-api';
 export * from './api/swap-api';
 export * from './api/sync-api';
 export * from './api/system-api';

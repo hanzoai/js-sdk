@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const RunnerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the platform\'s own release runs with their current state, so a release that answered 202 with an id can be followed to its end. SuperAdmin only — this is the platform\'s own publishing record, not a tenant surface.  The record lives in THIS process\'s memory, so it covers the releases this instance started and does not survive a restart.
+         * @summary Self-publish releases this process has run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
+         * @summary One self-publish release by the id its 202 returned
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -98,7 +100,8 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * The fabric\'s own build trigger, and what `hanzo build`, git-push-to-deploy and cloud\'s own self-release all call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both. `release: true` is the third mode: cloud self-publishing its own image, version computed, built, smoke-tested, tagged and announced.  PRIVILEGED, with exactly two credentials and never a third: the shared build-callback token compared in constant time — the machine path, which a user never holds — or a validated IAM principal who is an ADMIN of their org, which is the `hanzo build` user path and means one IAM login authorizes a build with no separate build token. A plain member is refused.  Both paths are bounded the same way: the output must push to a registry the fabric owns, and on the IAM path the image\'s registry namespace must MATCH the caller\'s own validated org — so an org admin can only publish into their own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. Cutting a release is IAM\'s decision alone: the build token may enqueue a build but may not cut one.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Trigger a native build — an image, or the binaries a repo declares
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -141,7 +144,8 @@ export const RunnerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = RunnerApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the platform\'s own release runs with their current state, so a release that answered 202 with an id can be followed to its end. SuperAdmin only — this is the platform\'s own publishing record, not a tenant surface.  The record lives in THIS process\'s memory, so it covers the releases this instance started and does not survive a restart.
+         * @summary Self-publish releases this process has run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -152,7 +156,8 @@ export const RunnerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
+         * @summary One self-publish release by the id its 202 returned
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -164,7 +169,8 @@ export const RunnerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The fabric\'s own build trigger, and what `hanzo build`, git-push-to-deploy and cloud\'s own self-release all call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both. `release: true` is the third mode: cloud self-publishing its own image, version computed, built, smoke-tested, tagged and announced.  PRIVILEGED, with exactly two credentials and never a third: the shared build-callback token compared in constant time — the machine path, which a user never holds — or a validated IAM principal who is an ADMIN of their org, which is the `hanzo build` user path and means one IAM login authorizes a build with no separate build token. A plain member is refused.  Both paths are bounded the same way: the output must push to a registry the fabric owns, and on the IAM path the image\'s registry namespace must MATCH the caller\'s own validated org — so an org admin can only publish into their own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. Cutting a release is IAM\'s decision alone: the build token may enqueue a build but may not cut one.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Trigger a native build — an image, or the binaries a repo declares
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -185,7 +191,8 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = RunnerApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the platform\'s own release runs with their current state, so a release that answered 202 with an id can be followed to its end. SuperAdmin only — this is the platform\'s own publishing record, not a tenant surface.  The record lives in THIS process\'s memory, so it covers the releases this instance started and does not survive a restart.
+         * @summary Self-publish releases this process has run
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -193,7 +200,8 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1RunnerReleases(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
+         * @summary One self-publish release by the id its 202 returned
          * @param {RunnerApiCloudGetV1RunnerReleasesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -202,7 +210,8 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1RunnerReleasesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The fabric\'s own build trigger, and what `hanzo build`, git-push-to-deploy and cloud\'s own self-release all call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both. `release: true` is the third mode: cloud self-publishing its own image, version computed, built, smoke-tested, tagged and announced.  PRIVILEGED, with exactly two credentials and never a third: the shared build-callback token compared in constant time — the machine path, which a user never holds — or a validated IAM principal who is an ADMIN of their org, which is the `hanzo build` user path and means one IAM login authorizes a build with no separate build token. A plain member is refused.  Both paths are bounded the same way: the output must push to a registry the fabric owns, and on the IAM path the image\'s registry namespace must MATCH the caller\'s own validated org — so an org admin can only publish into their own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. Cutting a release is IAM\'s decision alone: the build token may enqueue a build but may not cut one.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Trigger a native build — an image, or the binaries a repo declares
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -234,7 +243,8 @@ export interface RunnerApiCloudGetV1RunnerReleasesByIdRequest {
  */
 export class RunnerApi extends BaseAPI {
     /**
-     * 
+     * Lists the platform\'s own release runs with their current state, so a release that answered 202 with an id can be followed to its end. SuperAdmin only — this is the platform\'s own publishing record, not a tenant surface.  The record lives in THIS process\'s memory, so it covers the releases this instance started and does not survive a restart.
+     * @summary Self-publish releases this process has run
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunnerApi
@@ -244,7 +254,8 @@ export class RunnerApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
+     * @summary One self-publish release by the id its 202 returned
      * @param {RunnerApiCloudGetV1RunnerReleasesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -255,7 +266,8 @@ export class RunnerApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The fabric\'s own build trigger, and what `hanzo build`, git-push-to-deploy and cloud\'s own self-release all call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both. `release: true` is the third mode: cloud self-publishing its own image, version computed, built, smoke-tested, tagged and announced.  PRIVILEGED, with exactly two credentials and never a third: the shared build-callback token compared in constant time — the machine path, which a user never holds — or a validated IAM principal who is an ADMIN of their org, which is the `hanzo build` user path and means one IAM login authorizes a build with no separate build token. A plain member is refused.  Both paths are bounded the same way: the output must push to a registry the fabric owns, and on the IAM path the image\'s registry namespace must MATCH the caller\'s own validated org — so an org admin can only publish into their own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. Cutting a release is IAM\'s decision alone: the build token may enqueue a build but may not cut one.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+     * @summary Trigger a native build — an image, or the binaries a repo declares
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunnerApi

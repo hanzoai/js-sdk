@@ -25,6 +25,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { CloudMlResource } from '../models';
 // @ts-ignore
 import type { CloudMlResourceList } from '../models';
+// @ts-ignore
+import type { CloudPostV1MlModelsRequest } from '../models';
+// @ts-ignore
+import type { MlModel } from '../models';
 /**
  * MlApi - axios parameter creator
  * @export
@@ -70,7 +74,8 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * 
+         * Reports whether the model-serving plane is genuinely usable: that the Kubernetes API answers, and that the InferenceService CRD is actually served by this cluster. It is a REAL probe, not status theatre — it makes a live call rather than reporting a flag set at boot.  200 only when everything checks out. Otherwise 503 CARRYING THE REPORT — which component failed, and the real error — and that body is the reason this is not a typed op: a typed op reaches a non-2xx by returning an error, and the envelope that produces would drop exactly the detail the probe exists to deliver.  It answers about the cluster, not about a tenant, so it takes no org and reveals no tenant data. A cluster with no kserve CRD reports degraded honestly rather than failing later at the first deploy.
+         * @summary Whether model serving can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -105,10 +110,12 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * ListModels lists the inference models deployed in the caller\'s org. Each entry carries the model\'s name, when Kubernetes admitted it, and kserve\'s live status — the spec is on the single-model read. An org that has deployed nothing gets an empty list.
          * @summary ListModels lists the inference models deployed in the caller\'s org.
+         * @param {CloudGetV1MlModelsStageEnum} [stage] 
+         * @param {string} [search] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1MlModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1MlModels: async (stage?: CloudGetV1MlModelsStageEnum, search?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/ml/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -124,6 +131,14 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (stage !== undefined) {
+                localVarQueryParameter['stage'] = stage;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
 
 
     
@@ -175,7 +190,8 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * 
+         * Applies a JSON merge patch to one of the caller org\'s deployed models and answers the updated resource — the way to change a model\'s image, replica count or resource requests without tearing the deployment down.  The body is relayed to Kubernetes VERBATIM. That is deliberate and it is why this route is not a typed op: re-encoding a merge patch changes what it means, because an integer that round-trips through a generic decoder comes back a float. Merge-patch semantics apply as written — a null removes a field, and a list is replaced whole rather than merged.  Scoped to the caller\'s own tenant namespace, resolved from the validated org and project; a name the caller\'s tenant does not hold is a 404, never another tenant\'s resource. An empty body is refused, and a patch Kubernetes rejects comes back 422 with its reason rather than being silently dropped.
+         * @summary Change a deployed model in place
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -212,11 +228,15 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * 
+         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
+         * @summary Deploy an inference model
+         * @param {CloudPostV1MlModelsRequest} cloudPostV1MlModelsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1MlModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1MlModels: async (cloudPostV1MlModelsRequest: CloudPostV1MlModelsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudPostV1MlModelsRequest' is not null or undefined
+            assertParamExists('cloudPostV1MlModels', 'cloudPostV1MlModelsRequest', cloudPostV1MlModelsRequest)
             const localVarPath = `/v1/ml/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -235,9 +255,12 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudPostV1MlModelsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -245,7 +268,8 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * 
+         * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
+         * @summary Run inference against one of your deployed models
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -305,7 +329,8 @@ export const MlApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports whether the model-serving plane is genuinely usable: that the Kubernetes API answers, and that the InferenceService CRD is actually served by this cluster. It is a REAL probe, not status theatre — it makes a live call rather than reporting a flag set at boot.  200 only when everything checks out. Otherwise 503 CARRYING THE REPORT — which component failed, and the real error — and that body is the reason this is not a typed op: a typed op reaches a non-2xx by returning an error, and the envelope that produces would drop exactly the detail the probe exists to deliver.  It answers about the cluster, not about a tenant, so it takes no org and reveals no tenant data. A cluster with no kserve CRD reports degraded honestly rather than failing later at the first deploy.
+         * @summary Whether model serving can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -318,11 +343,13 @@ export const MlApiFp = function(configuration?: Configuration) {
         /**
          * ListModels lists the inference models deployed in the caller\'s org. Each entry carries the model\'s name, when Kubernetes admitted it, and kserve\'s live status — the spec is on the single-model read. An org that has deployed nothing gets an empty list.
          * @summary ListModels lists the inference models deployed in the caller\'s org.
+         * @param {CloudGetV1MlModelsStageEnum} [stage] 
+         * @param {string} [search] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1MlModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudMlResourceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1MlModels(options);
+        async cloudGetV1MlModels(stage?: CloudGetV1MlModelsStageEnum, search?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudMlResourceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1MlModels(stage, search, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.cloudGetV1MlModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -341,7 +368,8 @@ export const MlApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Applies a JSON merge patch to one of the caller org\'s deployed models and answers the updated resource — the way to change a model\'s image, replica count or resource requests without tearing the deployment down.  The body is relayed to Kubernetes VERBATIM. That is deliberate and it is why this route is not a typed op: re-encoding a merge patch changes what it means, because an integer that round-trips through a generic decoder comes back a float. Merge-patch semantics apply as written — a null removes a field, and a list is replaced whole rather than merged.  Scoped to the caller\'s own tenant namespace, resolved from the validated org and project; a name the caller\'s tenant does not hold is a 404, never another tenant\'s resource. An empty body is refused, and a patch Kubernetes rejects comes back 422 with its reason rather than being silently dropped.
+         * @summary Change a deployed model in place
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -353,18 +381,21 @@ export const MlApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
+         * @summary Deploy an inference model
+         * @param {CloudPostV1MlModelsRequest} cloudPostV1MlModelsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1MlModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1MlModels(options);
+        async cloudPostV1MlModels(cloudPostV1MlModelsRequest: CloudPostV1MlModelsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1MlModels(cloudPostV1MlModelsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.cloudPostV1MlModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
+         * @summary Run inference against one of your deployed models
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -396,7 +427,8 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.cloudDeleteV1MlModelsName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports whether the model-serving plane is genuinely usable: that the Kubernetes API answers, and that the InferenceService CRD is actually served by this cluster. It is a REAL probe, not status theatre — it makes a live call rather than reporting a flag set at boot.  200 only when everything checks out. Otherwise 503 CARRYING THE REPORT — which component failed, and the real error — and that body is the reason this is not a typed op: a typed op reaches a non-2xx by returning an error, and the envelope that produces would drop exactly the detail the probe exists to deliver.  It answers about the cluster, not about a tenant, so it takes no org and reveals no tenant data. A cluster with no kserve CRD reports degraded honestly rather than failing later at the first deploy.
+         * @summary Whether model serving can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -406,11 +438,12 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * ListModels lists the inference models deployed in the caller\'s org. Each entry carries the model\'s name, when Kubernetes admitted it, and kserve\'s live status — the spec is on the single-model read. An org that has deployed nothing gets an empty list.
          * @summary ListModels lists the inference models deployed in the caller\'s org.
+         * @param {MlApiCloudGetV1MlModelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1MlModels(options?: RawAxiosRequestConfig): AxiosPromise<CloudMlResourceList> {
-            return localVarFp.cloudGetV1MlModels(options).then((request) => request(axios, basePath));
+        cloudGetV1MlModels(requestParameters: MlApiCloudGetV1MlModelsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudMlResourceList> {
+            return localVarFp.cloudGetV1MlModels(requestParameters.stage, requestParameters.search, options).then((request) => request(axios, basePath));
         },
         /**
          * GetModel returns one deployed inference model. Its spec comes with it, and kserve\'s live status, which is where readiness and the serving address appear. A name the caller\'s org does not own answers 404, exactly as an unknown name does, so a probe learns nothing about another tenant\'s models.
@@ -423,7 +456,8 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.cloudGetV1MlModelsName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Applies a JSON merge patch to one of the caller org\'s deployed models and answers the updated resource — the way to change a model\'s image, replica count or resource requests without tearing the deployment down.  The body is relayed to Kubernetes VERBATIM. That is deliberate and it is why this route is not a typed op: re-encoding a merge patch changes what it means, because an integer that round-trips through a generic decoder comes back a float. Merge-patch semantics apply as written — a null removes a field, and a list is replaced whole rather than merged.  Scoped to the caller\'s own tenant namespace, resolved from the validated org and project; a name the caller\'s tenant does not hold is a 404, never another tenant\'s resource. An empty body is refused, and a patch Kubernetes rejects comes back 422 with its reason rather than being silently dropped.
+         * @summary Change a deployed model in place
          * @param {MlApiCloudPatchV1MlModelsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -432,15 +466,18 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.cloudPatchV1MlModelsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
+         * @summary Deploy an inference model
+         * @param {MlApiCloudPostV1MlModelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1MlModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1MlModels(options).then((request) => request(axios, basePath));
+        cloudPostV1MlModels(requestParameters: MlApiCloudPostV1MlModelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlModel> {
+            return localVarFp.cloudPostV1MlModels(requestParameters.cloudPostV1MlModelsRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
+         * @summary Run inference against one of your deployed models
          * @param {MlApiCloudPostV1MlModelsByNamePredictRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -463,6 +500,27 @@ export interface MlApiCloudDeleteV1MlModelsNameRequest {
      * @memberof MlApiCloudDeleteV1MlModelsName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for cloudGetV1MlModels operation in MlApi.
+ * @export
+ * @interface MlApiCloudGetV1MlModelsRequest
+ */
+export interface MlApiCloudGetV1MlModelsRequest {
+    /**
+     * 
+     * @type {'dev' | 'staging' | 'canary' | 'production'}
+     * @memberof MlApiCloudGetV1MlModels
+     */
+    readonly stage?: CloudGetV1MlModelsStageEnum
+
+    /**
+     * 
+     * @type {string}
+     * @memberof MlApiCloudGetV1MlModels
+     */
+    readonly search?: string
 }
 
 /**
@@ -491,6 +549,20 @@ export interface MlApiCloudPatchV1MlModelsByNameRequest {
      * @memberof MlApiCloudPatchV1MlModelsByName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for cloudPostV1MlModels operation in MlApi.
+ * @export
+ * @interface MlApiCloudPostV1MlModelsRequest
+ */
+export interface MlApiCloudPostV1MlModelsRequest {
+    /**
+     * 
+     * @type {CloudPostV1MlModelsRequest}
+     * @memberof MlApiCloudPostV1MlModels
+     */
+    readonly cloudPostV1MlModelsRequest: CloudPostV1MlModelsRequest
 }
 
 /**
@@ -527,7 +599,8 @@ export class MlApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports whether the model-serving plane is genuinely usable: that the Kubernetes API answers, and that the InferenceService CRD is actually served by this cluster. It is a REAL probe, not status theatre — it makes a live call rather than reporting a flag set at boot.  200 only when everything checks out. Otherwise 503 CARRYING THE REPORT — which component failed, and the real error — and that body is the reason this is not a typed op: a typed op reaches a non-2xx by returning an error, and the envelope that produces would drop exactly the detail the probe exists to deliver.  It answers about the cluster, not about a tenant, so it takes no org and reveals no tenant data. A cluster with no kserve CRD reports degraded honestly rather than failing later at the first deploy.
+     * @summary Whether model serving can actually work right now
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
@@ -539,12 +612,13 @@ export class MlApi extends BaseAPI {
     /**
      * ListModels lists the inference models deployed in the caller\'s org. Each entry carries the model\'s name, when Kubernetes admitted it, and kserve\'s live status — the spec is on the single-model read. An org that has deployed nothing gets an empty list.
      * @summary ListModels lists the inference models deployed in the caller\'s org.
+     * @param {MlApiCloudGetV1MlModelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
      */
-    public cloudGetV1MlModels(options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).cloudGetV1MlModels(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1MlModels(requestParameters: MlApiCloudGetV1MlModelsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MlApiFp(this.configuration).cloudGetV1MlModels(requestParameters.stage, requestParameters.search, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -560,7 +634,8 @@ export class MlApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Applies a JSON merge patch to one of the caller org\'s deployed models and answers the updated resource — the way to change a model\'s image, replica count or resource requests without tearing the deployment down.  The body is relayed to Kubernetes VERBATIM. That is deliberate and it is why this route is not a typed op: re-encoding a merge patch changes what it means, because an integer that round-trips through a generic decoder comes back a float. Merge-patch semantics apply as written — a null removes a field, and a list is replaced whole rather than merged.  Scoped to the caller\'s own tenant namespace, resolved from the validated org and project; a name the caller\'s tenant does not hold is a 404, never another tenant\'s resource. An empty body is refused, and a patch Kubernetes rejects comes back 422 with its reason rather than being silently dropped.
+     * @summary Change a deployed model in place
      * @param {MlApiCloudPatchV1MlModelsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -571,17 +646,20 @@ export class MlApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
+     * @summary Deploy an inference model
+     * @param {MlApiCloudPostV1MlModelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
      */
-    public cloudPostV1MlModels(options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).cloudPostV1MlModels(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1MlModels(requestParameters: MlApiCloudPostV1MlModelsRequest, options?: RawAxiosRequestConfig) {
+        return MlApiFp(this.configuration).cloudPostV1MlModels(requestParameters.cloudPostV1MlModelsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
+     * @summary Run inference against one of your deployed models
      * @param {MlApiCloudPostV1MlModelsByNamePredictRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -592,3 +670,13 @@ export class MlApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const CloudGetV1MlModelsStageEnum = {
+    Dev: 'dev',
+    Staging: 'staging',
+    Canary: 'canary',
+    Production: 'production'
+} as const;
+export type CloudGetV1MlModelsStageEnum = typeof CloudGetV1MlModelsStageEnum[keyof typeof CloudGetV1MlModelsStageEnum];

@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const EsignApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the caller org\'s documents with their status, recipients and timestamps, newest first, capped at 200 — there is no paging, so treat it as the recent window rather than a complete export. Requires a validated principal (403 without one) and reads the caller\'s own tenant store, so no other org\'s documents can appear in it.
+         * @summary Your org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
+         * @summary One document with its recipients and field layout
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -98,7 +100,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary The document\'s full audit trail, oldest first
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -135,7 +138,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary Download the document — the sealed PDF once it is complete
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -172,7 +176,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers ok whenever the subsystem is mounted. It is unauthenticated and takes no tenant, and it is deliberately shallow: it is registered before the document host is built, so it still answers on a deployment that came up WITHOUT object storage and therefore serves nothing else. Read it as reachability, never as a promise that documents can be stored.
+         * @summary Whether the e-signature surface is mounted
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -205,7 +210,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
+         * @summary Open a document you were asked to sign, using your signing link
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -246,7 +252,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Creates a document from a base64 PDF and answers 201 with it in `DRAFT` — the state where recipients and fields may still be added, and the only state they may. `title` and `pdfBase64` are required; `signingOrder` chooses `PARALLEL` (the default, everyone may sign at once) or `SEQUENTIAL`, and that choice is fixed for the document\'s life.  The bytes go to object storage, not into the tenant database, and the ORIGINAL is kept under its own key so it survives sealing untouched — a completed document can always be compared against what was uploaded. Creation is recorded on the audit trail.  This is the sender\'s door: a validated principal is required (403 without one) and the document lands in that principal\'s OWN org. Isolation is physical rather than a filter — each tenant has its own store — so another org\'s document id is simply not there. Bodies over 32 MiB are refused with 413.
+         * @summary Upload a PDF and open a draft ready for recipients and fields
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -279,7 +286,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Place a field on the page for one recipient to fill
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -316,7 +324,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Add someone to a draft and mint their signing token
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -353,7 +362,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
+         * @summary Send the document out and get each signer\'s link
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -390,7 +400,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
+         * @summary Finish signing — and seal the document if you were the last
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -431,7 +442,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
+         * @summary Fill in one of your fields
          * @param {string} org 
          * @param {string} token 
          * @param {string} fieldId 
@@ -476,7 +488,8 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
+         * @summary Decline to sign, with an optional reason
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -527,7 +540,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EsignApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the caller org\'s documents with their status, recipients and timestamps, newest first, capped at 200 — there is no paging, so treat it as the recent window rather than a complete export. Requires a validated principal (403 without one) and reads the caller\'s own tenant store, so no other org\'s documents can appear in it.
+         * @summary Your org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -538,7 +552,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
+         * @summary One document with its recipients and field layout
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -550,7 +565,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary The document\'s full audit trail, oldest first
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -562,7 +578,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary Download the document — the sealed PDF once it is complete
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -574,7 +591,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers ok whenever the subsystem is mounted. It is unauthenticated and takes no tenant, and it is deliberately shallow: it is registered before the document host is built, so it still answers on a deployment that came up WITHOUT object storage and therefore serves nothing else. Read it as reachability, never as a promise that documents can be stored.
+         * @summary Whether the e-signature surface is mounted
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -585,7 +603,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
+         * @summary Open a document you were asked to sign, using your signing link
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -598,7 +617,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a document from a base64 PDF and answers 201 with it in `DRAFT` — the state where recipients and fields may still be added, and the only state they may. `title` and `pdfBase64` are required; `signingOrder` chooses `PARALLEL` (the default, everyone may sign at once) or `SEQUENTIAL`, and that choice is fixed for the document\'s life.  The bytes go to object storage, not into the tenant database, and the ORIGINAL is kept under its own key so it survives sealing untouched — a completed document can always be compared against what was uploaded. Creation is recorded on the audit trail.  This is the sender\'s door: a validated principal is required (403 without one) and the document lands in that principal\'s OWN org. Isolation is physical rather than a filter — each tenant has its own store — so another org\'s document id is simply not there. Bodies over 32 MiB are refused with 413.
+         * @summary Upload a PDF and open a draft ready for recipients and fields
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -609,7 +629,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Place a field on the page for one recipient to fill
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -621,7 +642,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Add someone to a draft and mint their signing token
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -633,7 +655,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
+         * @summary Send the document out and get each signer\'s link
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -645,7 +668,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
+         * @summary Finish signing — and seal the document if you were the last
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -658,7 +682,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
+         * @summary Fill in one of your fields
          * @param {string} org 
          * @param {string} token 
          * @param {string} fieldId 
@@ -672,7 +697,8 @@ export const EsignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
+         * @summary Decline to sign, with an optional reason
          * @param {string} org 
          * @param {string} token 
          * @param {*} [options] Override http request option.
@@ -695,7 +721,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = EsignApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the caller org\'s documents with their status, recipients and timestamps, newest first, capped at 200 — there is no paging, so treat it as the recent window rather than a complete export. Requires a validated principal (403 without one) and reads the caller\'s own tenant store, so no other org\'s documents can appear in it.
+         * @summary Your org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -703,7 +730,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignDocuments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
+         * @summary One document with its recipients and field layout
          * @param {EsignApiCloudGetV1EsignDocumentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -712,7 +740,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary The document\'s full audit trail, oldest first
          * @param {EsignApiCloudGetV1EsignDocumentsByIdAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -721,7 +750,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignDocumentsByIdAudit(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+         * @summary Download the document — the sealed PDF once it is complete
          * @param {EsignApiCloudGetV1EsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -730,7 +760,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignDocumentsByIdDownload(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers ok whenever the subsystem is mounted. It is unauthenticated and takes no tenant, and it is deliberately shallow: it is registered before the document host is built, so it still answers on a deployment that came up WITHOUT object storage and therefore serves nothing else. Read it as reachability, never as a promise that documents can be stored.
+         * @summary Whether the e-signature surface is mounted
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -738,7 +769,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
+         * @summary Open a document you were asked to sign, using your signing link
          * @param {EsignApiCloudGetV1EsignOByOrgSignByTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -747,7 +779,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1EsignOByOrgSignByToken(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a document from a base64 PDF and answers 201 with it in `DRAFT` — the state where recipients and fields may still be added, and the only state they may. `title` and `pdfBase64` are required; `signingOrder` chooses `PARALLEL` (the default, everyone may sign at once) or `SEQUENTIAL`, and that choice is fixed for the document\'s life.  The bytes go to object storage, not into the tenant database, and the ORIGINAL is kept under its own key so it survives sealing untouched — a completed document can always be compared against what was uploaded. Creation is recorded on the audit trail.  This is the sender\'s door: a validated principal is required (403 without one) and the document lands in that principal\'s OWN org. Isolation is physical rather than a filter — each tenant has its own store — so another org\'s document id is simply not there. Bodies over 32 MiB are refused with 413.
+         * @summary Upload a PDF and open a draft ready for recipients and fields
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -755,7 +788,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignDocuments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Place a field on the page for one recipient to fill
          * @param {EsignApiCloudPostV1EsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -764,7 +798,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignDocumentsByIdFields(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+         * @summary Add someone to a draft and mint their signing token
          * @param {EsignApiCloudPostV1EsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -773,7 +808,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignDocumentsByIdRecipients(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
+         * @summary Send the document out and get each signer\'s link
          * @param {EsignApiCloudPostV1EsignDocumentsByIdSendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -782,7 +818,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignDocumentsByIdSend(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
+         * @summary Finish signing — and seal the document if you were the last
          * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -791,7 +828,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignOByOrgSignByTokenComplete(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
+         * @summary Fill in one of your fields
          * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -800,7 +838,8 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1EsignOByOrgSignByTokenFieldsByFieldid(requestParameters.org, requestParameters.token, requestParameters.fieldId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
+         * @summary Decline to sign, with an optional reason
          * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -994,7 +1033,8 @@ export interface EsignApiCloudPostV1EsignOByOrgSignByTokenRejectRequest {
  */
 export class EsignApi extends BaseAPI {
     /**
-     * 
+     * Lists the caller org\'s documents with their status, recipients and timestamps, newest first, capped at 200 — there is no paging, so treat it as the recent window rather than a complete export. Requires a validated principal (403 without one) and reads the caller\'s own tenant store, so no other org\'s documents can appear in it.
+     * @summary Your org\'s documents, newest first
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
@@ -1004,7 +1044,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
+     * @summary One document with its recipients and field layout
      * @param {EsignApiCloudGetV1EsignDocumentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1015,7 +1056,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+     * @summary The document\'s full audit trail, oldest first
      * @param {EsignApiCloudGetV1EsignDocumentsByIdAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1026,7 +1068,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
+     * @summary Download the document — the sealed PDF once it is complete
      * @param {EsignApiCloudGetV1EsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1037,7 +1080,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers ok whenever the subsystem is mounted. It is unauthenticated and takes no tenant, and it is deliberately shallow: it is registered before the document host is built, so it still answers on a deployment that came up WITHOUT object storage and therefore serves nothing else. Read it as reachability, never as a promise that documents can be stored.
+     * @summary Whether the e-signature surface is mounted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
@@ -1047,7 +1091,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
+     * @summary Open a document you were asked to sign, using your signing link
      * @param {EsignApiCloudGetV1EsignOByOrgSignByTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1058,7 +1103,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates a document from a base64 PDF and answers 201 with it in `DRAFT` — the state where recipients and fields may still be added, and the only state they may. `title` and `pdfBase64` are required; `signingOrder` chooses `PARALLEL` (the default, everyone may sign at once) or `SEQUENTIAL`, and that choice is fixed for the document\'s life.  The bytes go to object storage, not into the tenant database, and the ORIGINAL is kept under its own key so it survives sealing untouched — a completed document can always be compared against what was uploaded. Creation is recorded on the audit trail.  This is the sender\'s door: a validated principal is required (403 without one) and the document lands in that principal\'s OWN org. Isolation is physical rather than a filter — each tenant has its own store — so another org\'s document id is simply not there. Bodies over 32 MiB are refused with 413.
+     * @summary Upload a PDF and open a draft ready for recipients and fields
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
@@ -1068,7 +1114,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+     * @summary Place a field on the page for one recipient to fill
      * @param {EsignApiCloudPostV1EsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1079,7 +1126,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
+     * @summary Add someone to a draft and mint their signing token
      * @param {EsignApiCloudPostV1EsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1090,7 +1138,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
+     * @summary Send the document out and get each signer\'s link
      * @param {EsignApiCloudPostV1EsignDocumentsByIdSendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1101,7 +1150,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
+     * @summary Finish signing — and seal the document if you were the last
      * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1112,7 +1162,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
+     * @summary Fill in one of your fields
      * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1123,7 +1174,8 @@ export class EsignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
+     * @summary Decline to sign, with an optional reason
      * @param {EsignApiCloudPostV1EsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

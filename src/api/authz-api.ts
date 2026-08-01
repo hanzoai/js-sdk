@@ -21,6 +21,16 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AuthzCheckResponse } from '../models';
+// @ts-ignore
+import type { AuthzEnforceRequest } from '../models';
+// @ts-ignore
+import type { AuthzError } from '../models';
+// @ts-ignore
+import type { CloudGetV1AuthzHealth200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1AuthzReadyz200Response } from '../models';
 /**
  * AuthzApi - axios parameter creator
  * @export
@@ -28,7 +38,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const AuthzApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Reports that the authz process is up. Unauthenticated by design and never org-scoped: it answers while every tenant\'s enforcer is still cold, because a probe that needed a tenant would fail for reasons that have nothing to do with the process being alive.
+         * @summary Liveness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -45,10 +56,6 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -61,7 +68,8 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Reports that the authz process is ready to serve decisions. Unauthenticated and not org-scoped, for the same reason health is: readiness is a property of this process, not of any one tenant\'s policy set.
+         * @summary Readiness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -78,10 +86,6 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -94,11 +98,15 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers one policy question — may this subject take this action on this object — against the CALLER\'S OWN org policy set, and answers it with a bare allow/deny.  The org comes from the gateway-minted X-Org-Id and picks the per-org enforcer, so a decision is always rendered by that tenant\'s policies and never by another\'s. A request carrying no org is refused rather than answered from a shared or default set: collapsing tenants together is the one failure a policy engine must not have.  Body: {sub, obj, act}, all three required. The reply echoes them beside `allow` so a cached or logged decision carries the question it answered.
+         * @summary Ask whether a subject may act on an object
+         * @param {AuthzEnforceRequest} authzEnforceRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AuthzCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AuthzCheck: async (authzEnforceRequest: AuthzEnforceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authzEnforceRequest' is not null or undefined
+            assertParamExists('cloudPostV1AuthzCheck', 'authzEnforceRequest', authzEnforceRequest)
             const localVarPath = `/v1/authz/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -117,9 +125,12 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(authzEnforceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -137,34 +148,38 @@ export const AuthzApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthzApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Reports that the authz process is up. Unauthenticated by design and never org-scoped: it answers while every tenant\'s enforcer is still cold, because a probe that needed a tenant would fail for reasons that have nothing to do with the process being alive.
+         * @summary Liveness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1AuthzHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1AuthzHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1AuthzHealth200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1AuthzHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthzApi.cloudGetV1AuthzHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports that the authz process is ready to serve decisions. Unauthenticated and not org-scoped, for the same reason health is: readiness is a property of this process, not of any one tenant\'s policy set.
+         * @summary Readiness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1AuthzReadyz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1AuthzReadyz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1AuthzReadyz200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1AuthzReadyz(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthzApi.cloudGetV1AuthzReadyz']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers one policy question — may this subject take this action on this object — against the CALLER\'S OWN org policy set, and answers it with a bare allow/deny.  The org comes from the gateway-minted X-Org-Id and picks the per-org enforcer, so a decision is always rendered by that tenant\'s policies and never by another\'s. A request carrying no org is refused rather than answered from a shared or default set: collapsing tenants together is the one failure a policy engine must not have.  Body: {sub, obj, act}, all three required. The reply echoes them beside `allow` so a cached or logged decision carries the question it answered.
+         * @summary Ask whether a subject may act on an object
+         * @param {AuthzEnforceRequest} authzEnforceRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AuthzCheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AuthzCheck(options);
+        async cloudPostV1AuthzCheck(authzEnforceRequest: AuthzEnforceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthzCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AuthzCheck(authzEnforceRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthzApi.cloudPostV1AuthzCheck']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -180,31 +195,49 @@ export const AuthzApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = AuthzApiFp(configuration)
     return {
         /**
-         * 
+         * Reports that the authz process is up. Unauthenticated by design and never org-scoped: it answers while every tenant\'s enforcer is still cold, because a probe that needed a tenant would fail for reasons that have nothing to do with the process being alive.
+         * @summary Liveness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1AuthzHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1AuthzHealth(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1AuthzHealth200Response> {
             return localVarFp.cloudGetV1AuthzHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports that the authz process is ready to serve decisions. Unauthenticated and not org-scoped, for the same reason health is: readiness is a property of this process, not of any one tenant\'s policy set.
+         * @summary Readiness of the policy engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1AuthzReadyz(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1AuthzReadyz(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1AuthzReadyz200Response> {
             return localVarFp.cloudGetV1AuthzReadyz(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers one policy question — may this subject take this action on this object — against the CALLER\'S OWN org policy set, and answers it with a bare allow/deny.  The org comes from the gateway-minted X-Org-Id and picks the per-org enforcer, so a decision is always rendered by that tenant\'s policies and never by another\'s. A request carrying no org is refused rather than answered from a shared or default set: collapsing tenants together is the one failure a policy engine must not have.  Body: {sub, obj, act}, all three required. The reply echoes them beside `allow` so a cached or logged decision carries the question it answered.
+         * @summary Ask whether a subject may act on an object
+         * @param {AuthzApiCloudPostV1AuthzCheckRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AuthzCheck(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AuthzCheck(options).then((request) => request(axios, basePath));
+        cloudPostV1AuthzCheck(requestParameters: AuthzApiCloudPostV1AuthzCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthzCheckResponse> {
+            return localVarFp.cloudPostV1AuthzCheck(requestParameters.authzEnforceRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for cloudPostV1AuthzCheck operation in AuthzApi.
+ * @export
+ * @interface AuthzApiCloudPostV1AuthzCheckRequest
+ */
+export interface AuthzApiCloudPostV1AuthzCheckRequest {
+    /**
+     * 
+     * @type {AuthzEnforceRequest}
+     * @memberof AuthzApiCloudPostV1AuthzCheck
+     */
+    readonly authzEnforceRequest: AuthzEnforceRequest
+}
 
 /**
  * AuthzApi - object-oriented interface
@@ -214,7 +247,8 @@ export const AuthzApiFactory = function (configuration?: Configuration, basePath
  */
 export class AuthzApi extends BaseAPI {
     /**
-     * 
+     * Reports that the authz process is up. Unauthenticated by design and never org-scoped: it answers while every tenant\'s enforcer is still cold, because a probe that needed a tenant would fail for reasons that have nothing to do with the process being alive.
+     * @summary Liveness of the policy engine
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthzApi
@@ -224,7 +258,8 @@ export class AuthzApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports that the authz process is ready to serve decisions. Unauthenticated and not org-scoped, for the same reason health is: readiness is a property of this process, not of any one tenant\'s policy set.
+     * @summary Readiness of the policy engine
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthzApi
@@ -234,13 +269,15 @@ export class AuthzApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers one policy question — may this subject take this action on this object — against the CALLER\'S OWN org policy set, and answers it with a bare allow/deny.  The org comes from the gateway-minted X-Org-Id and picks the per-org enforcer, so a decision is always rendered by that tenant\'s policies and never by another\'s. A request carrying no org is refused rather than answered from a shared or default set: collapsing tenants together is the one failure a policy engine must not have.  Body: {sub, obj, act}, all three required. The reply echoes them beside `allow` so a cached or logged decision carries the question it answered.
+     * @summary Ask whether a subject may act on an object
+     * @param {AuthzApiCloudPostV1AuthzCheckRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthzApi
      */
-    public cloudPostV1AuthzCheck(options?: RawAxiosRequestConfig) {
-        return AuthzApiFp(this.configuration).cloudPostV1AuthzCheck(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1AuthzCheck(requestParameters: AuthzApiCloudPostV1AuthzCheckRequest, options?: RawAxiosRequestConfig) {
+        return AuthzApiFp(this.configuration).cloudPostV1AuthzCheck(requestParameters.authzEnforceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

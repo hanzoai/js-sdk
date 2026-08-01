@@ -232,7 +232,8 @@ export const AdsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Run one of your stored campaigns on its ad network
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -388,7 +389,8 @@ export const AdsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Run one of your stored campaigns on its ad network
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -473,7 +475,8 @@ export const AdsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1AdsCampaigns(requestParameters.cloudCampaignInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Run one of your stored campaigns on its ad network
          * @param {AdsApiCloudPostV1AdsCampaignsByIdLaunchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -659,7 +662,8 @@ export class AdsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+     * @summary Run one of your stored campaigns on its ad network
      * @param {AdsApiCloudPostV1AdsCampaignsByIdLaunchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

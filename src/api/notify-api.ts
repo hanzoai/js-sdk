@@ -23,6 +23,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CloudNotifyHealth } from '../models';
+// @ts-ignore
+import type { CloudPostV1NotifySend200Response } from '../models';
+// @ts-ignore
+import type { NotifyError } from '../models';
+// @ts-ignore
+import type { NotifySendRequest } from '../models';
 /**
  * NotifyApi - axios parameter creator
  * @export
@@ -48,10 +54,6 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -64,11 +66,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Delivers a message to each address in `to` over the channel the body names — sms or email — using the CALLER ORG\'S own provider credential, read from KMS at orgs/<org>/notify/<service>/<key> and never from the environment. The org is the validated principal\'s, never a client-supplied header, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional message by email or SMS through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendSyncEnum} sync Must be &#x60;true&#x60;. Async dispatch is not available in the cloud fold; any other value yields &#x60;503&#x60;. 
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySend: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1NotifySend: async (sync: CloudPostV1NotifySendSyncEnum, notifySendRequest: NotifySendRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sync' is not null or undefined
+            assertParamExists('cloudPostV1NotifySend', 'sync', sync)
+            // verify required parameter 'notifySendRequest' is not null or undefined
+            assertParamExists('cloudPostV1NotifySend', 'notifySendRequest', notifySendRequest)
             const localVarPath = `/v1/notify/send`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -85,11 +94,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (sync !== undefined) {
+                localVarQueryParameter['sync'] = sync;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(notifySendRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -97,11 +113,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Subject is carried on the email channel only. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional email through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendEmailSyncEnum} sync Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySendEmail: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1NotifySendEmail: async (sync: CloudPostV1NotifySendEmailSyncEnum, notifySendRequest: NotifySendRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sync' is not null or undefined
+            assertParamExists('cloudPostV1NotifySendEmail', 'sync', sync)
+            // verify required parameter 'notifySendRequest' is not null or undefined
+            assertParamExists('cloudPostV1NotifySendEmail', 'notifySendRequest', notifySendRequest)
             const localVarPath = `/v1/notify/send/email`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -118,11 +141,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (sync !== undefined) {
+                localVarQueryParameter['sync'] = sync;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(notifySendRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -130,11 +160,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional SMS through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendSmsSyncEnum} sync Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySendSms: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1NotifySendSms: async (sync: CloudPostV1NotifySendSmsSyncEnum, notifySendRequest: NotifySendRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sync' is not null or undefined
+            assertParamExists('cloudPostV1NotifySendSms', 'sync', sync)
+            // verify required parameter 'notifySendRequest' is not null or undefined
+            assertParamExists('cloudPostV1NotifySendSms', 'notifySendRequest', notifySendRequest)
             const localVarPath = `/v1/notify/send/sms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -151,11 +188,18 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (sync !== undefined) {
+                localVarQueryParameter['sync'] = sync;
+            }
+
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(notifySendRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -185,34 +229,43 @@ export const NotifyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Delivers a message to each address in `to` over the channel the body names — sms or email — using the CALLER ORG\'S own provider credential, read from KMS at orgs/<org>/notify/<service>/<key> and never from the environment. The org is the validated principal\'s, never a client-supplied header, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional message by email or SMS through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendSyncEnum} sync Must be &#x60;true&#x60;. Async dispatch is not available in the cloud fold; any other value yields &#x60;503&#x60;. 
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1NotifySend(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySend(options);
+        async cloudPostV1NotifySend(sync: CloudPostV1NotifySendSyncEnum, notifySendRequest: NotifySendRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1NotifySend200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySend(sync, notifySendRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.cloudPostV1NotifySend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Subject is carried on the email channel only. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional email through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendEmailSyncEnum} sync Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1NotifySendEmail(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySendEmail(options);
+        async cloudPostV1NotifySendEmail(sync: CloudPostV1NotifySendEmailSyncEnum, notifySendRequest: NotifySendRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1NotifySend200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySendEmail(sync, notifySendRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.cloudPostV1NotifySendEmail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional SMS through your org\'s own provider credential
+         * @param {CloudPostV1NotifySendSmsSyncEnum} sync Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+         * @param {NotifySendRequest} notifySendRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1NotifySendSms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySendSms(options);
+        async cloudPostV1NotifySendSms(sync: CloudPostV1NotifySendSmsSyncEnum, notifySendRequest: NotifySendRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1NotifySend200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1NotifySendSms(sync, notifySendRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['NotifyApi.cloudPostV1NotifySendSms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -237,31 +290,100 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1NotifyHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Delivers a message to each address in `to` over the channel the body names — sms or email — using the CALLER ORG\'S own provider credential, read from KMS at orgs/<org>/notify/<service>/<key> and never from the environment. The org is the validated principal\'s, never a client-supplied header, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional message by email or SMS through your org\'s own provider credential
+         * @param {NotifyApiCloudPostV1NotifySendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySend(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1NotifySend(options).then((request) => request(axios, basePath));
+        cloudPostV1NotifySend(requestParameters: NotifyApiCloudPostV1NotifySendRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1NotifySend200Response> {
+            return localVarFp.cloudPostV1NotifySend(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Subject is carried on the email channel only. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional email through your org\'s own provider credential
+         * @param {NotifyApiCloudPostV1NotifySendEmailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySendEmail(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1NotifySendEmail(options).then((request) => request(axios, basePath));
+        cloudPostV1NotifySendEmail(requestParameters: NotifyApiCloudPostV1NotifySendEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1NotifySend200Response> {
+            return localVarFp.cloudPostV1NotifySendEmail(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+         * @summary Send one transactional SMS through your org\'s own provider credential
+         * @param {NotifyApiCloudPostV1NotifySendSmsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1NotifySendSms(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1NotifySendSms(options).then((request) => request(axios, basePath));
+        cloudPostV1NotifySendSms(requestParameters: NotifyApiCloudPostV1NotifySendSmsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1NotifySend200Response> {
+            return localVarFp.cloudPostV1NotifySendSms(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for cloudPostV1NotifySend operation in NotifyApi.
+ * @export
+ * @interface NotifyApiCloudPostV1NotifySendRequest
+ */
+export interface NotifyApiCloudPostV1NotifySendRequest {
+    /**
+     * Must be &#x60;true&#x60;. Async dispatch is not available in the cloud fold; any other value yields &#x60;503&#x60;. 
+     * @type {'true'}
+     * @memberof NotifyApiCloudPostV1NotifySend
+     */
+    readonly sync: CloudPostV1NotifySendSyncEnum
+
+    /**
+     * 
+     * @type {NotifySendRequest}
+     * @memberof NotifyApiCloudPostV1NotifySend
+     */
+    readonly notifySendRequest: NotifySendRequest
+}
+
+/**
+ * Request parameters for cloudPostV1NotifySendEmail operation in NotifyApi.
+ * @export
+ * @interface NotifyApiCloudPostV1NotifySendEmailRequest
+ */
+export interface NotifyApiCloudPostV1NotifySendEmailRequest {
+    /**
+     * Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+     * @type {'true'}
+     * @memberof NotifyApiCloudPostV1NotifySendEmail
+     */
+    readonly sync: CloudPostV1NotifySendEmailSyncEnum
+
+    /**
+     * 
+     * @type {NotifySendRequest}
+     * @memberof NotifyApiCloudPostV1NotifySendEmail
+     */
+    readonly notifySendRequest: NotifySendRequest
+}
+
+/**
+ * Request parameters for cloudPostV1NotifySendSms operation in NotifyApi.
+ * @export
+ * @interface NotifyApiCloudPostV1NotifySendSmsRequest
+ */
+export interface NotifyApiCloudPostV1NotifySendSmsRequest {
+    /**
+     * Must be &#x60;true&#x60;; otherwise &#x60;503&#x60;.
+     * @type {'true'}
+     * @memberof NotifyApiCloudPostV1NotifySendSms
+     */
+    readonly sync: CloudPostV1NotifySendSmsSyncEnum
+
+    /**
+     * 
+     * @type {NotifySendRequest}
+     * @memberof NotifyApiCloudPostV1NotifySendSms
+     */
+    readonly notifySendRequest: NotifySendRequest
+}
 
 /**
  * NotifyApi - object-oriented interface
@@ -282,33 +404,60 @@ export class NotifyApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Delivers a message to each address in `to` over the channel the body names — sms or email — using the CALLER ORG\'S own provider credential, read from KMS at orgs/<org>/notify/<service>/<key> and never from the environment. The org is the validated principal\'s, never a client-supplied header, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+     * @summary Send one transactional message by email or SMS through your org\'s own provider credential
+     * @param {NotifyApiCloudPostV1NotifySendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public cloudPostV1NotifySend(options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).cloudPostV1NotifySend(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1NotifySend(requestParameters: NotifyApiCloudPostV1NotifySendRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).cloudPostV1NotifySend(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Subject is carried on the email channel only. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+     * @summary Send one transactional email through your org\'s own provider credential
+     * @param {NotifyApiCloudPostV1NotifySendEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public cloudPostV1NotifySendEmail(options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).cloudPostV1NotifySendEmail(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1NotifySendEmail(requestParameters: NotifyApiCloudPostV1NotifySendEmailRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).cloudPostV1NotifySendEmail(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org and never from a client-supplied header; an unauthenticated caller gets 401. Delivery is synchronous and per recipient: one recipient answers the bare {messageId,status} SendResponse, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. ?sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere and is not folded in here. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
+     * @summary Send one transactional SMS through your org\'s own provider credential
+     * @param {NotifyApiCloudPostV1NotifySendSmsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public cloudPostV1NotifySendSms(options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).cloudPostV1NotifySendSms(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1NotifySendSms(requestParameters: NotifyApiCloudPostV1NotifySendSmsRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).cloudPostV1NotifySendSms(requestParameters.sync, requestParameters.notifySendRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
+/**
+ * @export
+ */
+export const CloudPostV1NotifySendSyncEnum = {
+    True: 'true'
+} as const;
+export type CloudPostV1NotifySendSyncEnum = typeof CloudPostV1NotifySendSyncEnum[keyof typeof CloudPostV1NotifySendSyncEnum];
+/**
+ * @export
+ */
+export const CloudPostV1NotifySendEmailSyncEnum = {
+    True: 'true'
+} as const;
+export type CloudPostV1NotifySendEmailSyncEnum = typeof CloudPostV1NotifySendEmailSyncEnum[keyof typeof CloudPostV1NotifySendEmailSyncEnum];
+/**
+ * @export
+ */
+export const CloudPostV1NotifySendSmsSyncEnum = {
+    True: 'true'
+} as const;
+export type CloudPostV1NotifySendSmsSyncEnum = typeof CloudPostV1NotifySendSmsSyncEnum[keyof typeof CloudPostV1NotifySendSmsSyncEnum];

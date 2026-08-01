@@ -36,7 +36,7 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
         /**
          * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
          * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -108,7 +108,7 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
         /**
          * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
          * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -196,7 +196,7 @@ export const LoadBalancersApiFp = function(configuration?: Configuration) {
         /**
          * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
          * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -221,7 +221,7 @@ export const LoadBalancersApiFp = function(configuration?: Configuration) {
         /**
          * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
          * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -303,7 +303,7 @@ export const LoadBalancersApiFactory = function (configuration?: Configuration, 
  */
 export interface LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest {
     /**
-     * ID is the DigitalOcean resource id (a UUID), from the path.
+     * DO load balancer id
      * @type {string}
      * @memberof LoadBalancersApiCloudDeleteV1LoadBalancersId
      */
@@ -317,7 +317,7 @@ export interface LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest {
  */
 export interface LoadBalancersApiCloudGetV1LoadBalancersIdRequest {
     /**
-     * ID is the DigitalOcean resource id (a UUID), from the path.
+     * DO load balancer id
      * @type {string}
      * @memberof LoadBalancersApiCloudGetV1LoadBalancersId
      */

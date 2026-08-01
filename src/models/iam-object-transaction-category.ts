@@ -21,8 +21,8 @@
  */
 
 export const IamObjectTransactionCategory = {
-    TransactionCategoryPurchasePurchase: 'TransactionCategoryPurchase = \"Purchase\"',
-    TransactionCategoryRechargeRecharge: 'TransactionCategoryRecharge = \"Recharge\"'
+    Purchase: 'Purchase',
+    Recharge: 'Recharge'
 } as const;
 
 export type IamObjectTransactionCategory = typeof IamObjectTransactionCategory[keyof typeof IamObjectTransactionCategory];

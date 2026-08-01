@@ -314,7 +314,8 @@ export const LegalApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * @summary Record that a generated document\'s signature request completed
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -578,7 +579,8 @@ export const LegalApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * @summary Record that a generated document\'s signature request completed
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -709,7 +711,8 @@ export const LegalApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1LegalDocuments(requestParameters.cloudGenerateRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+         * @summary Record that a generated document\'s signature request completed
          * @param {LegalApiCloudPostV1LegalDocumentsByIdSignCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -980,7 +983,8 @@ export class LegalApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records completion of the signature request opened over a generated document and answers the document with a `signed` flag.  The e-sign provider\'s own status is consulted FIRST and is the default answer; an explicit `signed` field in the body overrides it. That override is the whole point: the default `manual` provider never self-completes, so a reviewer (or a real provider\'s webhook) is what moves the document. A completion flips the document to `signed`, stamps `signedAt`, and writes a `legal.document.signed` audit event; a provider still reporting incomplete answers 200 with the document unchanged, so the call is safe to repeat and never fabricates a signature.  Org-scoped and fails closed: a validated principal is required (403 without one), the document is read under the caller\'s OWN org so another tenant\'s id is a 404, a document with no open signature request is a 400, and a provider whose status call errors is a 502.
+     * @summary Record that a generated document\'s signature request completed
      * @param {LegalApiCloudPostV1LegalDocumentsByIdSignCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

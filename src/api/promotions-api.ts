@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AdminAdminDeletePromo200Response } from '../models';
-// @ts-ignore
-import type { AdminAdminGetPromo200Response } from '../models';
+import type { AdminPromoCreate } from '../models';
 // @ts-ignore
 import type { AdminPromoUpdate } from '../models';
+// @ts-ignore
+import type { CloudAdminAdminCreatePromo201Response } from '../models';
+// @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
 /**
  * PromotionsApi - axios parameter creator
  * @export
@@ -153,6 +155,46 @@ export const PromotionsApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Create a discount promo
+         * @param {AdminPromoCreate} adminPromoCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminAdminCreatePromo: async (adminPromoCreate: AdminPromoCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adminPromoCreate' is not null or undefined
+            assertParamExists('cloudAdminAdminCreatePromo', 'adminPromoCreate', adminPromoCreate)
+            const localVarPath = `/v1/admin/promos`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminPromoCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -170,7 +212,7 @@ export const PromotionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAdminDeletePromo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAdminDeletePromo200Response>> {
+        async adminAdminDeletePromo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAdminAdminCreatePromo400Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAdminDeletePromo(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromotionsApi.adminAdminDeletePromo']?.[localVarOperationServerIndex]?.url;
@@ -183,7 +225,7 @@ export const PromotionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAdminGetPromo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAdminGetPromo200Response>> {
+        async adminAdminGetPromo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAdminAdminCreatePromo201Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAdminGetPromo(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromotionsApi.adminAdminGetPromo']?.[localVarOperationServerIndex]?.url;
@@ -197,10 +239,23 @@ export const PromotionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAdminUpdatePromo(id: string, adminPromoUpdate: AdminPromoUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAdminGetPromo200Response>> {
+        async adminAdminUpdatePromo(id: string, adminPromoUpdate: AdminPromoUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAdminAdminCreatePromo201Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAdminUpdatePromo(id, adminPromoUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromotionsApi.adminAdminUpdatePromo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a discount promo
+         * @param {AdminPromoCreate} adminPromoCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudAdminAdminCreatePromo(adminPromoCreate: AdminPromoCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAdminAdminCreatePromo201Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminAdminCreatePromo(adminPromoCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PromotionsApi.cloudAdminAdminCreatePromo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -220,7 +275,7 @@ export const PromotionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAdminDeletePromo(requestParameters: PromotionsApiAdminAdminDeletePromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAdminDeletePromo200Response> {
+        adminAdminDeletePromo(requestParameters: PromotionsApiAdminAdminDeletePromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAdminAdminCreatePromo400Response> {
             return localVarFp.adminAdminDeletePromo(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -230,7 +285,7 @@ export const PromotionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAdminGetPromo(requestParameters: PromotionsApiAdminAdminGetPromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAdminGetPromo200Response> {
+        adminAdminGetPromo(requestParameters: PromotionsApiAdminAdminGetPromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAdminAdminCreatePromo201Response> {
             return localVarFp.adminAdminGetPromo(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -240,8 +295,18 @@ export const PromotionsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAdminUpdatePromo(requestParameters: PromotionsApiAdminAdminUpdatePromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAdminGetPromo200Response> {
+        adminAdminUpdatePromo(requestParameters: PromotionsApiAdminAdminUpdatePromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAdminAdminCreatePromo201Response> {
             return localVarFp.adminAdminUpdatePromo(requestParameters.id, requestParameters.adminPromoUpdate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a discount promo
+         * @param {PromotionsApiCloudAdminAdminCreatePromoRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminAdminCreatePromo(requestParameters: PromotionsApiCloudAdminAdminCreatePromoRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAdminAdminCreatePromo201Response> {
+            return localVarFp.cloudAdminAdminCreatePromo(requestParameters.adminPromoCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -296,6 +361,20 @@ export interface PromotionsApiAdminAdminUpdatePromoRequest {
 }
 
 /**
+ * Request parameters for cloudAdminAdminCreatePromo operation in PromotionsApi.
+ * @export
+ * @interface PromotionsApiCloudAdminAdminCreatePromoRequest
+ */
+export interface PromotionsApiCloudAdminAdminCreatePromoRequest {
+    /**
+     * 
+     * @type {AdminPromoCreate}
+     * @memberof PromotionsApiCloudAdminAdminCreatePromo
+     */
+    readonly adminPromoCreate: AdminPromoCreate
+}
+
+/**
  * PromotionsApi - object-oriented interface
  * @export
  * @class PromotionsApi
@@ -336,6 +415,18 @@ export class PromotionsApi extends BaseAPI {
      */
     public adminAdminUpdatePromo(requestParameters: PromotionsApiAdminAdminUpdatePromoRequest, options?: RawAxiosRequestConfig) {
         return PromotionsApiFp(this.configuration).adminAdminUpdatePromo(requestParameters.id, requestParameters.adminPromoUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a discount promo
+     * @param {PromotionsApiCloudAdminAdminCreatePromoRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PromotionsApi
+     */
+    public cloudAdminAdminCreatePromo(requestParameters: PromotionsApiCloudAdminAdminCreatePromoRequest, options?: RawAxiosRequestConfig) {
+        return PromotionsApiFp(this.configuration).cloudAdminAdminCreatePromo(requestParameters.adminPromoCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

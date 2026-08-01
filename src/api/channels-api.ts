@@ -193,7 +193,8 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Send a message from your org\'s bot to one chat room
          * @param {string} channel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -371,7 +372,8 @@ export const ChannelsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Send a message from your org\'s bot to one chat room
          * @param {string} channel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -457,7 +459,8 @@ export const ChannelsApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1ChannelsPairing(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Send a message from your org\'s bot to one chat room
          * @param {ChannelsApiCloudPostV1ChannelsByChannelSendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -619,7 +622,8 @@ export class ChannelsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+     * @summary Send a message from your org\'s bot to one chat room
      * @param {ChannelsApiCloudPostV1ChannelsByChannelSendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

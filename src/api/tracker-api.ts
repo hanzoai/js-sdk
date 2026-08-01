@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
 import type { CloudIssuePatch } from '../models';
 // @ts-ignore
 import type { CloudIssueView } from '../models';
@@ -29,6 +31,14 @@ import type { CloudIssueView } from '../models';
 import type { CloudProjectPatch } from '../models';
 // @ts-ignore
 import type { CloudTrackerProject } from '../models';
+// @ts-ignore
+import type { TrackerCreateIssueRequest } from '../models';
+// @ts-ignore
+import type { TrackerCreateProjectRequest } from '../models';
+// @ts-ignore
+import type { TrackerIssue } from '../models';
+// @ts-ignore
+import type { TrackerProject } from '../models';
 /**
  * TrackerApi - axios parameter creator
  * @export
@@ -38,7 +48,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * DeleteProject removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
          * @summary DeleteProject removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -76,8 +86,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * DeleteIssue removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
          * @summary DeleteIssue removes one issue from a tracker project and answers 204 with no body.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -152,7 +162,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * GetProject returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
          * @summary GetProject returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -190,7 +200,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * ListIssues returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
          * @summary ListIssues returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
-         * @param {string} key Key is the project whose issues to list, from the path.
+         * @param {string} key Project key
          * @param {string} [status] Status keeps only issues in that board column: backlog, todo, in_progress, done or canceled. An unknown value is refused with 400.
          * @param {string} [kind] Kind keeps only work items of that shape: issue, pr or epic. An unknown value is refused with 400.
          * @param {string} [repo] Repo keeps only issues bound to that git repository.
@@ -248,8 +258,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * GetIssue returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
          * @summary GetIssue returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -290,7 +300,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * UpdateProject renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
          * @summary UpdateProject renames a tracker project or rewrites its description, and returns the updated project.
-         * @param {string} key Key is the project to update, from the path.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {CloudProjectPatch} cloudProjectPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -334,8 +344,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * UpdateIssue edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
          * @summary UpdateIssue edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project, from the path.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {CloudIssuePatch} cloudIssuePatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -380,11 +390,15 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
+         * @summary Open a tracker board in your org
+         * @param {TrackerCreateProjectRequest} trackerCreateProjectRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1TrackerProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1TrackerProjects: async (trackerCreateProjectRequest: TrackerCreateProjectRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trackerCreateProjectRequest' is not null or undefined
+            assertParamExists('cloudPostV1TrackerProjects', 'trackerCreateProjectRequest', trackerCreateProjectRequest)
             const localVarPath = `/v1/tracker/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -403,9 +417,12 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trackerCreateProjectRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -413,14 +430,18 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @param {string} key 
+         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
+         * @summary File an issue on a tracker board
+         * @param {string} key Project key
+         * @param {TrackerCreateIssueRequest} trackerCreateIssueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1TrackerProjectsByKeyIssues: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1TrackerProjectsByKeyIssues: async (key: string, trackerCreateIssueRequest: TrackerCreateIssueRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
             assertParamExists('cloudPostV1TrackerProjectsByKeyIssues', 'key', key)
+            // verify required parameter 'trackerCreateIssueRequest' is not null or undefined
+            assertParamExists('cloudPostV1TrackerProjectsByKeyIssues', 'trackerCreateIssueRequest', trackerCreateIssueRequest)
             const localVarPath = `/v1/tracker/projects/{key}/issues`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -440,9 +461,12 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trackerCreateIssueRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -462,7 +486,7 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * DeleteProject removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
          * @summary DeleteProject removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -475,8 +499,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * DeleteIssue removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
          * @summary DeleteIssue removes one issue from a tracker project and answers 204 with no body.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -501,7 +525,7 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * GetProject returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
          * @summary GetProject returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -514,7 +538,7 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * ListIssues returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
          * @summary ListIssues returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
-         * @param {string} key Key is the project whose issues to list, from the path.
+         * @param {string} key Project key
          * @param {string} [status] Status keeps only issues in that board column: backlog, todo, in_progress, done or canceled. An unknown value is refused with 400.
          * @param {string} [kind] Kind keeps only work items of that shape: issue, pr or epic. An unknown value is refused with 400.
          * @param {string} [repo] Repo keeps only issues bound to that git repository.
@@ -531,8 +555,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * GetIssue returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
          * @summary GetIssue returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -545,7 +569,7 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * UpdateProject renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
          * @summary UpdateProject renames a tracker project or rewrites its description, and returns the updated project.
-         * @param {string} key Key is the project to update, from the path.
+         * @param {string} key Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
          * @param {CloudProjectPatch} cloudProjectPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -559,8 +583,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
         /**
          * UpdateIssue edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
          * @summary UpdateIssue edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project, from the path.
+         * @param {string} key Project key
+         * @param {number} num Per-project issue number
          * @param {CloudIssuePatch} cloudIssuePatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -572,24 +596,28 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
+         * @summary Open a tracker board in your org
+         * @param {TrackerCreateProjectRequest} trackerCreateProjectRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1TrackerProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1TrackerProjects(options);
+        async cloudPostV1TrackerProjects(trackerCreateProjectRequest: TrackerCreateProjectRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackerProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1TrackerProjects(trackerCreateProjectRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.cloudPostV1TrackerProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} key 
+         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
+         * @summary File an issue on a tracker board
+         * @param {string} key Project key
+         * @param {TrackerCreateIssueRequest} trackerCreateIssueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1TrackerProjectsByKeyIssues(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1TrackerProjectsByKeyIssues(key, options);
+        async cloudPostV1TrackerProjectsByKeyIssues(key: string, trackerCreateIssueRequest: TrackerCreateIssueRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackerIssue>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1TrackerProjectsByKeyIssues(key, trackerCreateIssueRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.cloudPostV1TrackerProjectsByKeyIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -684,21 +712,24 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPatchV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, requestParameters.cloudIssuePatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
+         * @summary Open a tracker board in your org
+         * @param {TrackerApiCloudPostV1TrackerProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1TrackerProjects(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1TrackerProjects(options).then((request) => request(axios, basePath));
+        cloudPostV1TrackerProjects(requestParameters: TrackerApiCloudPostV1TrackerProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrackerProject> {
+            return localVarFp.cloudPostV1TrackerProjects(requestParameters.trackerCreateProjectRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
+         * @summary File an issue on a tracker board
          * @param {TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1TrackerProjectsByKeyIssues(requestParameters.key, options).then((request) => request(axios, basePath));
+        cloudPostV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrackerIssue> {
+            return localVarFp.cloudPostV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.trackerCreateIssueRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -710,7 +741,7 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
  */
 export interface TrackerApiCloudDeleteV1TrackerProjectsKeyRequest {
     /**
-     * Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+     * Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
      * @type {string}
      * @memberof TrackerApiCloudDeleteV1TrackerProjectsKey
      */
@@ -724,14 +755,14 @@ export interface TrackerApiCloudDeleteV1TrackerProjectsKeyRequest {
  */
 export interface TrackerApiCloudDeleteV1TrackerProjectsKeyIssuesNumRequest {
     /**
-     * Key is the issue\&#39;s project, from the path.
+     * Project key
      * @type {string}
      * @memberof TrackerApiCloudDeleteV1TrackerProjectsKeyIssuesNum
      */
     readonly key: string
 
     /**
-     * Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+     * Per-project issue number
      * @type {number}
      * @memberof TrackerApiCloudDeleteV1TrackerProjectsKeyIssuesNum
      */
@@ -745,7 +776,7 @@ export interface TrackerApiCloudDeleteV1TrackerProjectsKeyIssuesNumRequest {
  */
 export interface TrackerApiCloudGetV1TrackerProjectsKeyRequest {
     /**
-     * Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+     * Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
      * @type {string}
      * @memberof TrackerApiCloudGetV1TrackerProjectsKey
      */
@@ -759,7 +790,7 @@ export interface TrackerApiCloudGetV1TrackerProjectsKeyRequest {
  */
 export interface TrackerApiCloudGetV1TrackerProjectsKeyIssuesRequest {
     /**
-     * Key is the project whose issues to list, from the path.
+     * Project key
      * @type {string}
      * @memberof TrackerApiCloudGetV1TrackerProjectsKeyIssues
      */
@@ -801,14 +832,14 @@ export interface TrackerApiCloudGetV1TrackerProjectsKeyIssuesRequest {
  */
 export interface TrackerApiCloudGetV1TrackerProjectsKeyIssuesNumRequest {
     /**
-     * Key is the issue\&#39;s project, from the path.
+     * Project key
      * @type {string}
      * @memberof TrackerApiCloudGetV1TrackerProjectsKeyIssuesNum
      */
     readonly key: string
 
     /**
-     * Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+     * Per-project issue number
      * @type {number}
      * @memberof TrackerApiCloudGetV1TrackerProjectsKeyIssuesNum
      */
@@ -822,7 +853,7 @@ export interface TrackerApiCloudGetV1TrackerProjectsKeyIssuesNumRequest {
  */
 export interface TrackerApiCloudPatchV1TrackerProjectsKeyRequest {
     /**
-     * Key is the project to update, from the path.
+     * Project key (uppercase, ^[A-Z][A-Z0-9]{1,7}$)
      * @type {string}
      * @memberof TrackerApiCloudPatchV1TrackerProjectsKey
      */
@@ -843,14 +874,14 @@ export interface TrackerApiCloudPatchV1TrackerProjectsKeyRequest {
  */
 export interface TrackerApiCloudPatchV1TrackerProjectsKeyIssuesNumRequest {
     /**
-     * Key is the issue\&#39;s project, from the path.
+     * Project key
      * @type {string}
      * @memberof TrackerApiCloudPatchV1TrackerProjectsKeyIssuesNum
      */
     readonly key: string
 
     /**
-     * Num is the issue\&#39;s number within that project, from the path.
+     * Per-project issue number
      * @type {number}
      * @memberof TrackerApiCloudPatchV1TrackerProjectsKeyIssuesNum
      */
@@ -865,17 +896,38 @@ export interface TrackerApiCloudPatchV1TrackerProjectsKeyIssuesNumRequest {
 }
 
 /**
+ * Request parameters for cloudPostV1TrackerProjects operation in TrackerApi.
+ * @export
+ * @interface TrackerApiCloudPostV1TrackerProjectsRequest
+ */
+export interface TrackerApiCloudPostV1TrackerProjectsRequest {
+    /**
+     * 
+     * @type {TrackerCreateProjectRequest}
+     * @memberof TrackerApiCloudPostV1TrackerProjects
+     */
+    readonly trackerCreateProjectRequest: TrackerCreateProjectRequest
+}
+
+/**
  * Request parameters for cloudPostV1TrackerProjectsByKeyIssues operation in TrackerApi.
  * @export
  * @interface TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest
  */
 export interface TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest {
     /**
-     * 
+     * Project key
      * @type {string}
      * @memberof TrackerApiCloudPostV1TrackerProjectsByKeyIssues
      */
     readonly key: string
+
+    /**
+     * 
+     * @type {TrackerCreateIssueRequest}
+     * @memberof TrackerApiCloudPostV1TrackerProjectsByKeyIssues
+     */
+    readonly trackerCreateIssueRequest: TrackerCreateIssueRequest
 }
 
 /**
@@ -981,24 +1033,27 @@ export class TrackerApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
+     * @summary Open a tracker board in your org
+     * @param {TrackerApiCloudPostV1TrackerProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public cloudPostV1TrackerProjects(options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).cloudPostV1TrackerProjects(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1TrackerProjects(requestParameters: TrackerApiCloudPostV1TrackerProjectsRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).cloudPostV1TrackerProjects(requestParameters.trackerCreateProjectRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
+     * @summary File an issue on a tracker board
      * @param {TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
     public cloudPostV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiCloudPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).cloudPostV1TrackerProjectsByKeyIssues(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+        return TrackerApiFp(this.configuration).cloudPostV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.trackerCreateIssueRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

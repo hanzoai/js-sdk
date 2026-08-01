@@ -42,7 +42,8 @@ import type { CloudVenueLinkRequest } from '../models';
 export const CloudApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -75,7 +76,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -112,7 +114,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -145,7 +148,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -182,7 +186,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Removes a member of one of the AI subsystem\'s managed collections, a connected provider (which revokes the stored connection for the caller\'s org), or documents from the RAG index.  Deleting a provider connection is the one a reader most easily underestimates: it does not merely hide the provider, it drops the org\'s stored authorization for it, and every later call routed to that provider fails until it is connected again.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Remove an AI resource, connection or indexed document
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -261,7 +266,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -298,7 +304,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -331,7 +338,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -376,7 +384,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Open a repository\'s home page
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -417,7 +426,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary View a file in a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -462,7 +472,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Read a repository\'s commit log
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -503,7 +514,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -544,7 +556,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse a directory inside a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -589,7 +602,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -622,7 +636,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers ok whenever the commerce subsystem is mounted. It is registered BEFORE the module embed boots, so it keeps answering even when the embed failed and every business route is serving a fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated, and under /_ so the ingress does not expose it publicly.
+         * @summary Liveness for the commerce subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -655,7 +670,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
+         * @summary List the payment providers configured for your own tenant
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -688,7 +704,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -721,7 +738,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -754,7 +772,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Open a repository\'s home page
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -795,7 +814,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary View a file in a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -840,7 +860,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Read a repository\'s commit log
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -881,7 +902,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse a directory inside a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -926,7 +948,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -959,7 +982,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -992,7 +1016,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1029,7 +1054,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1062,7 +1088,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1099,7 +1126,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Covers the reads: the model catalogue and a model\'s access status, connected providers and their usage, fine-tune jobs and presets, Hugging Face model, dataset and repository search, the subsystem\'s health and metrics, and the collection and member reads on the managed resources behind /v1.  Reads are scoped to the calling org by the identity the gateway validated; the catalogue a caller sees is the one its own org has access to, not the whole provider list.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Read the model catalogue and the AI subsystem\'s own resources
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1204,7 +1232,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1237,7 +1266,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves a single agent skill\'s SKILL.md as text/markdown — the instructions a client follows once index.json has told it the skill exists, and byte for byte the document that index.json\'s sha256 for that skill was computed over.  The skill segment is a flat, service-prefixed id (`ai_models`): one path segment with no separators, so a request can never address anything outside the embedded catalogue. An id of any other shape, or a skill the serving brand does not carry, is `{\"error\":…}` at 404 — the same answer, so a probe learns nothing about which is which.  Brand resolution and caching are index.json\'s: the Host picks the catalogue, and the response is `Cache-Control: public, max-age=300`. Public — no bearer, no tenant scope.
+         * @summary One skill\'s document, as markdown
          * @param {string} skill 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1274,7 +1304,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The Agent Skills Discovery catalogue an AI client reads to learn what this deployment can do: every skill, with the sha256 of the SKILL.md that is actually served for it, so a client can verify the document it then fetches.  The catalogue is GENERATED from the per-service OpenAPI specs and embedded in the binary; this route serves those bytes verbatim and never re-derives them, which is what makes the digests hold. Which brand\'s catalogue you get is decided per request from the Host — api.hanzo.ai answers the Hanzo catalogue, api.lux.network the Lux one, api.zoo.ngo the Zoo one — never one brand\'s skills on another\'s surface; a Host whose brand has no embedded catalogue falls back to the deployment brand, then to hanzo.  Public by design: the discovery surface carries no secrets, so there is no bearer and no tenant scope. Answers `Cache-Control: public, max-age=300`, and a catalogue that is not embedded is `{\"error\":…}` at 404.
+         * @summary The brand\'s master catalogue of agent skills
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1307,7 +1338,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1344,7 +1376,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1377,7 +1410,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1414,7 +1448,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1447,7 +1482,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1484,7 +1520,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Published because this catch-all accepts every method, but the inference surface answers none of them here — the request falls through to whatever owns the path, and reaches no model.
+         * @summary Not served by the inference surface
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1521,7 +1558,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1558,7 +1596,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1591,7 +1630,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1628,7 +1668,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1661,7 +1702,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1698,7 +1740,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Updates a member of one of the AI subsystem\'s managed collections with the fields given, leaving the rest as they were. It is the same update PUT reaches, so either verb is accepted on these resources.  Nothing under this method reaches the generating model API; that is the POST surface.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Update one AI resource in place
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1735,7 +1778,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1772,7 +1816,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -1821,7 +1866,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -1870,7 +1916,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -1915,7 +1962,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -2004,7 +2052,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
+         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2037,7 +2086,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2070,7 +2120,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2107,7 +2158,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2140,7 +2192,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2177,7 +2230,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Carries every generating call in the model API: chat completions and responses (streamed when the body asks for it), embeddings, reranking, image, video and speech generation, speech-to-text, RAG ingest, and fine-tune jobs — plus the creates on the managed collections behind /v1.  This is the billed half of the surface. A call is metered per org against the balance the commerce subsystem holds, and the balance gate is FAIL-CLOSED: when no native balance reader is wired into the process the call is refused rather than guessed at, and an insufficient balance answers 402 with its own message intact.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary The Hanzo AI model API
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2300,7 +2354,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2337,7 +2392,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2370,7 +2426,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2407,7 +2464,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2440,7 +2498,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2477,7 +2536,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Replaces a member of one of the AI subsystem\'s managed collections with the body given. PUT and PATCH reach the SAME update — a full replacement and a partial one are accepted at one address so a client need not know which verb a given collection prefers — so the difference is in what the caller sends, not in what the server does with it.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Replace one AI resource in full
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2514,7 +2574,8 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2532,220 +2593,6 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceLoginOauth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/login/oauth`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceLoginOauthByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceLoginOauthByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/login/oauth/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tasks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceTasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1ByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1ByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceWellKnownByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceWellKnownByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/.well-known/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3086,7 +2933,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CloudApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3097,7 +2945,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3109,7 +2958,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3120,7 +2970,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3132,7 +2983,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Removes a member of one of the AI subsystem\'s managed collections, a connected provider (which revokes the stored connection for the caller\'s org), or documents from the RAG index.  Deleting a provider connection is the one a reader most easily underestimates: it does not merely hide the provider, it drops the org\'s stored authorization for it, and every later call routed to that provider fails until it is connected again.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Remove an AI resource, connection or indexed document
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3158,7 +3010,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3170,7 +3023,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3181,7 +3035,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -3195,7 +3050,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Open a repository\'s home page
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -3208,7 +3064,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary View a file in a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -3222,7 +3079,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Read a repository\'s commit log
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -3235,7 +3093,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -3248,7 +3107,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse a directory inside a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -3262,7 +3122,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3273,7 +3134,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers ok whenever the commerce subsystem is mounted. It is registered BEFORE the module embed boots, so it keeps answering even when the embed failed and every business route is serving a fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated, and under /_ so the ingress does not expose it publicly.
+         * @summary Liveness for the commerce subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3284,7 +3146,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
+         * @summary List the payment providers configured for your own tenant
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3295,7 +3158,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3306,7 +3170,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3317,7 +3182,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Open a repository\'s home page
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -3330,7 +3196,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary View a file in a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -3344,7 +3211,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Read a repository\'s commit log
          * @param {string} org 
          * @param {string} repo 
          * @param {*} [options] Override http request option.
@@ -3357,7 +3225,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse a directory inside a repository
          * @param {string} org 
          * @param {string} repo 
          * @param {string} wildcard1 
@@ -3371,7 +3240,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3382,7 +3252,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3393,7 +3264,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3405,7 +3277,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3416,7 +3289,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3428,7 +3302,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Covers the reads: the model catalogue and a model\'s access status, connected providers and their usage, fine-tune jobs and presets, Hugging Face model, dataset and repository search, the subsystem\'s health and metrics, and the collection and member reads on the managed resources behind /v1.  Reads are scoped to the calling org by the identity the gateway validated; the catalogue a caller sees is the one its own org has access to, not the whole provider list.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Read the model catalogue and the AI subsystem\'s own resources
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3464,7 +3339,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3475,7 +3351,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves a single agent skill\'s SKILL.md as text/markdown — the instructions a client follows once index.json has told it the skill exists, and byte for byte the document that index.json\'s sha256 for that skill was computed over.  The skill segment is a flat, service-prefixed id (`ai_models`): one path segment with no separators, so a request can never address anything outside the embedded catalogue. An id of any other shape, or a skill the serving brand does not carry, is `{\"error\":…}` at 404 — the same answer, so a probe learns nothing about which is which.  Brand resolution and caching are index.json\'s: the Host picks the catalogue, and the response is `Cache-Control: public, max-age=300`. Public — no bearer, no tenant scope.
+         * @summary One skill\'s document, as markdown
          * @param {string} skill 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3487,7 +3364,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The Agent Skills Discovery catalogue an AI client reads to learn what this deployment can do: every skill, with the sha256 of the SKILL.md that is actually served for it, so a client can verify the document it then fetches.  The catalogue is GENERATED from the per-service OpenAPI specs and embedded in the binary; this route serves those bytes verbatim and never re-derives them, which is what makes the digests hold. Which brand\'s catalogue you get is decided per request from the Host — api.hanzo.ai answers the Hanzo catalogue, api.lux.network the Lux one, api.zoo.ngo the Zoo one — never one brand\'s skills on another\'s surface; a Host whose brand has no embedded catalogue falls back to the deployment brand, then to hanzo.  Public by design: the discovery surface carries no secrets, so there is no bearer and no tenant scope. Answers `Cache-Control: public, max-age=300`, and a catalogue that is not embedded is `{\"error\":…}` at 404.
+         * @summary The brand\'s master catalogue of agent skills
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3498,7 +3376,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3510,7 +3389,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3521,7 +3401,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3533,7 +3414,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3544,7 +3426,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3556,7 +3439,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this catch-all accepts every method, but the inference surface answers none of them here — the request falls through to whatever owns the path, and reaches no model.
+         * @summary Not served by the inference surface
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3568,7 +3452,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3580,7 +3465,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3591,7 +3477,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3603,7 +3490,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3614,7 +3502,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3626,7 +3515,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Updates a member of one of the AI subsystem\'s managed collections with the fields given, leaving the rest as they were. It is the same update PUT reaches, so either verb is accepted on these resources.  Nothing under this method reaches the generating model API; that is the POST surface.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Update one AI resource in place
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3638,7 +3528,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3650,7 +3541,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -3665,7 +3557,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -3680,7 +3573,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -3694,7 +3588,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -3722,7 +3617,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
+         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3733,7 +3629,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3744,7 +3641,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3756,7 +3654,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3767,7 +3666,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3779,7 +3679,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Carries every generating call in the model API: chat completions and responses (streamed when the body asks for it), embeddings, reranking, image, video and speech generation, speech-to-text, RAG ingest, and fine-tune jobs — plus the creates on the managed collections behind /v1.  This is the billed half of the surface. A call is metered per org against the balance the commerce subsystem holds, and the balance gate is FAIL-CLOSED: when no native balance reader is wired into the process the call is refused rather than guessed at, and an insufficient balance answers 402 with its own message intact.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary The Hanzo AI model API
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3819,7 +3720,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3831,7 +3733,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3842,7 +3745,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3854,7 +3758,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3865,7 +3770,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3877,7 +3783,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Replaces a member of one of the AI subsystem\'s managed collections with the body given. PUT and PATCH reach the SAME update — a full replacement and a partial one are accepted at one address so a client need not know which verb a given collection prefers — so the difference is in what the caller sends, not in what the server does with it.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Replace one AI resource in full
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3889,7 +3796,8 @@ export const CloudApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3898,76 +3806,6 @@ export const CloudApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutWellKnownByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudPutWellKnownByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceLoginOauth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceLoginOauth(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceLoginOauth']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceLoginOauthByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceLoginOauthByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceLoginOauthByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceTasks(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceTasks']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceTasksByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1ByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1ByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceV1ByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceWellKnownByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceWellKnownByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.cloudTraceWellKnownByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4090,7 +3928,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = CloudApiFp(configuration)
     return {
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4098,7 +3937,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudDeleteLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4107,7 +3947,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4115,7 +3956,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {CloudApiCloudDeleteTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4124,7 +3966,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Removes a member of one of the AI subsystem\'s managed collections, a connected provider (which revokes the stored connection for the caller\'s org), or documents from the RAG index.  Deleting a provider connection is the one a reader most easily underestimates: it does not merely hide the provider, it drops the org\'s stored authorization for it, and every later call routed to that provider fails until it is connected again.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Remove an AI resource, connection or indexed document
          * @param {CloudApiCloudDeleteV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4143,7 +3986,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1CloudProviderAccountsLabel(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudDeleteWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4152,7 +3996,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4160,7 +4005,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {CloudApiCloudGetByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4169,7 +4015,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByProjectByRepoInfoRefs(requestParameters.org, requestParameters.project, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Open a repository\'s home page
          * @param {CloudApiCloudGetByOrgByRepoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4178,7 +4025,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary View a file in a repository
          * @param {CloudApiCloudGetByOrgByRepoBlobByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4187,7 +4035,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByRepoBlobByWildcard1(requestParameters.org, requestParameters.repo, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Read a repository\'s commit log
          * @param {CloudApiCloudGetByOrgByRepoCommitsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4196,7 +4045,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {CloudApiCloudGetByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4205,7 +4055,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Browse a directory inside a repository
          * @param {CloudApiCloudGetByOrgByRepoTreeByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4214,7 +4065,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetByOrgByRepoTreeByWildcard1(requestParameters.org, requestParameters.repo, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4222,7 +4074,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetCollaborator(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers ok whenever the commerce subsystem is mounted. It is registered BEFORE the module embed boots, so it keeps answering even when the embed failed and every business route is serving a fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated, and under /_ so the ingress does not expose it publicly.
+         * @summary Liveness for the commerce subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4230,7 +4083,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetCommerceHealthz(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
+         * @summary List the payment providers configured for your own tenant
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4238,7 +4092,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetCommerceProviders(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4246,7 +4101,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetExplore(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4254,7 +4110,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGit(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Open a repository\'s home page
          * @param {CloudApiCloudGetGitByOrgByRepoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4263,7 +4120,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGitByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary View a file in a repository
          * @param {CloudApiCloudGetGitByOrgByRepoBlobByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4272,7 +4130,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGitByOrgByRepoBlobByWildcard1(requestParameters.org, requestParameters.repo, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Read a repository\'s commit log
          * @param {CloudApiCloudGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4281,7 +4140,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGitByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Browse a directory inside a repository
          * @param {CloudApiCloudGetGitByOrgByRepoTreeByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4290,7 +4150,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGitByOrgByRepoTreeByWildcard1(requestParameters.org, requestParameters.repo, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+         * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4298,7 +4159,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetGitExplore(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4306,7 +4168,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudGetLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4315,7 +4178,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4323,7 +4187,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {CloudApiCloudGetTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4332,7 +4197,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Covers the reads: the model catalogue and a model\'s access status, connected providers and their usage, fine-tune jobs and presets, Hugging Face model, dataset and repository search, the subsystem\'s health and metrics, and the collection and member reads on the managed resources behind /v1.  Reads are scoped to the calling org by the identity the gateway validated; the catalogue a caller sees is the one its own org has access to, not the whole provider list.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Read the model catalogue and the AI subsystem\'s own resources
          * @param {CloudApiCloudGetV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4359,7 +4225,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1CloudAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4367,7 +4234,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1OpenapiJson(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves a single agent skill\'s SKILL.md as text/markdown — the instructions a client follows once index.json has told it the skill exists, and byte for byte the document that index.json\'s sha256 for that skill was computed over.  The skill segment is a flat, service-prefixed id (`ai_models`): one path segment with no separators, so a request can never address anything outside the embedded catalogue. An id of any other shape, or a skill the serving brand does not carry, is `{\"error\":…}` at 404 — the same answer, so a probe learns nothing about which is which.  Brand resolution and caching are index.json\'s: the Host picks the catalogue, and the response is `Cache-Control: public, max-age=300`. Public — no bearer, no tenant scope.
+         * @summary One skill\'s document, as markdown
          * @param {CloudApiCloudGetWellKnownAgentSkillsBySkillSkillMdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4376,7 +4244,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetWellKnownAgentSkillsBySkillSkillMd(requestParameters.skill, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The Agent Skills Discovery catalogue an AI client reads to learn what this deployment can do: every skill, with the sha256 of the SKILL.md that is actually served for it, so a client can verify the document it then fetches.  The catalogue is GENERATED from the per-service OpenAPI specs and embedded in the binary; this route serves those bytes verbatim and never re-derives them, which is what makes the digests hold. Which brand\'s catalogue you get is decided per request from the Host — api.hanzo.ai answers the Hanzo catalogue, api.lux.network the Lux one, api.zoo.ngo the Zoo one — never one brand\'s skills on another\'s surface; a Host whose brand has no embedded catalogue falls back to the deployment brand, then to hanzo.  Public by design: the discovery surface carries no secrets, so there is no bearer and no tenant scope. Answers `Cache-Control: public, max-age=300`, and a catalogue that is not embedded is `{\"error\":…}` at 404.
+         * @summary The brand\'s master catalogue of agent skills
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4384,7 +4253,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetWellKnownAgentSkillsIndexJson(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudGetWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4393,7 +4263,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4401,7 +4272,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudOptionsLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4410,7 +4282,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4418,7 +4291,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+         * @summary Not routed by the durable engine
          * @param {CloudApiCloudOptionsTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4427,7 +4301,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this catch-all accepts every method, but the inference surface answers none of them here — the request falls through to whatever owns the path, and reaches no model.
+         * @summary Not served by the inference surface
          * @param {CloudApiCloudOptionsV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4436,7 +4311,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsV1ByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudOptionsWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4445,7 +4321,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4453,7 +4330,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudPatchLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4462,7 +4340,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4470,7 +4349,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {CloudApiCloudPatchTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4479,7 +4359,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Updates a member of one of the AI subsystem\'s managed collections with the fields given, leaving the rest as they were. It is the same update PUT reaches, so either verb is accepted on these resources.  Nothing under this method reaches the generating model API; that is the POST surface.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Update one AI resource in place
          * @param {CloudApiCloudPatchV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4488,7 +4369,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchV1ByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudPatchWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4497,7 +4379,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {CloudApiCloudPostByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4506,7 +4389,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostByOrgByProjectByRepoGitReceivePack(requestParameters.org, requestParameters.project, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {CloudApiCloudPostByOrgByProjectByRepoGitUploadPackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4515,7 +4399,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostByOrgByProjectByRepoGitUploadPack(requestParameters.org, requestParameters.project, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {CloudApiCloudPostByOrgByRepoGitReceivePackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4524,7 +4409,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostByOrgByRepoGitReceivePack(requestParameters.org, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {CloudApiCloudPostByOrgByRepoGitUploadPackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4543,7 +4429,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostCollaboratorRpcDocumentId(requestParameters.documentId, requestParameters.cloudCollabRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
+         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4551,7 +4438,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostCommerceTenants(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4559,7 +4447,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudPostLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4568,7 +4457,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4576,7 +4466,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {CloudApiCloudPostTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4585,7 +4476,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Carries every generating call in the model API: chat completions and responses (streamed when the body asks for it), embeddings, reranking, image, video and speech generation, speech-to-text, RAG ingest, and fine-tune jobs — plus the creates on the managed collections behind /v1.  This is the billed half of the surface. A call is metered per org against the balance the commerce subsystem holds, and the balance gate is FAIL-CLOSED: when no native balance reader is wired into the process the call is refused rather than guessed at, and an insufficient balance answers 402 with its own message intact.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary The Hanzo AI model API
          * @param {CloudApiCloudPostV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4614,7 +4506,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1CloudProviderAccountsLabelSync(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudPostWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4623,7 +4516,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4631,7 +4525,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutLoginOauth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+         * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
          * @param {CloudApiCloudPutLoginOauthByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4640,7 +4535,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4648,7 +4544,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * @summary The tasks console\'s assets and client-side routes
          * @param {CloudApiCloudPutTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4657,7 +4554,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Replaces a member of one of the AI subsystem\'s managed collections with the body given. PUT and PATCH reach the SAME update — a full replacement and a partial one are accepted at one address so a client need not know which verb a given collection prefers — so the difference is in what the caller sends, not in what the server does with it.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+         * @summary Replace one AI resource in full
          * @param {CloudApiCloudPutV1ByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4666,65 +4564,14 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutV1ByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+         * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
          * @param {CloudApiCloudPutWellKnownByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutWellKnownByWildcard1(requestParameters: CloudApiCloudPutWellKnownByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceLoginOauth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceLoginOauth(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CloudApiCloudTraceLoginOauthByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceLoginOauthByWildcard1(requestParameters: CloudApiCloudTraceLoginOauthByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceTasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CloudApiCloudTraceTasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceTasksByWildcard1(requestParameters: CloudApiCloudTraceTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CloudApiCloudTraceV1ByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1ByWildcard1(requestParameters: CloudApiCloudTraceV1ByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1ByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CloudApiCloudTraceWellKnownByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceWellKnownByWildcard1(requestParameters: CloudApiCloudTraceWellKnownByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5617,62 +5464,6 @@ export interface CloudApiCloudPutWellKnownByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceLoginOauthByWildcard1 operation in CloudApi.
- * @export
- * @interface CloudApiCloudTraceLoginOauthByWildcard1Request
- */
-export interface CloudApiCloudTraceLoginOauthByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudApiCloudTraceLoginOauthByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for cloudTraceTasksByWildcard1 operation in CloudApi.
- * @export
- * @interface CloudApiCloudTraceTasksByWildcard1Request
- */
-export interface CloudApiCloudTraceTasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudApiCloudTraceTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for cloudTraceV1ByWildcard1 operation in CloudApi.
- * @export
- * @interface CloudApiCloudTraceV1ByWildcard1Request
- */
-export interface CloudApiCloudTraceV1ByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudApiCloudTraceV1ByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for cloudTraceWellKnownByWildcard1 operation in CloudApi.
- * @export
- * @interface CloudApiCloudTraceWellKnownByWildcard1Request
- */
-export interface CloudApiCloudTraceWellKnownByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudApiCloudTraceWellKnownByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for worldWorldCloudLlm operation in CloudApi.
  * @export
  * @interface CloudApiWorldWorldCloudLlmRequest
@@ -5694,7 +5485,8 @@ export interface CloudApiWorldWorldCloudLlmRequest {
  */
 export class CloudApi extends BaseAPI {
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5704,7 +5496,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudDeleteLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5715,7 +5508,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5725,7 +5519,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console\'s assets and client-side routes
      * @param {CloudApiCloudDeleteTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5736,7 +5531,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Removes a member of one of the AI subsystem\'s managed collections, a connected provider (which revokes the stored connection for the caller\'s org), or documents from the RAG index.  Deleting a provider connection is the one a reader most easily underestimates: it does not merely hide the provider, it drops the org\'s stored authorization for it, and every later call routed to that provider fails until it is connected again.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+     * @summary Remove an AI resource, connection or indexed document
      * @param {CloudApiCloudDeleteV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5759,7 +5555,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudDeleteWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5770,7 +5567,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary Browse your org\'s repositories
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5780,7 +5578,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Advertise a repository\'s refs to a git client
      * @param {CloudApiCloudGetByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5791,7 +5590,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary Open a repository\'s home page
      * @param {CloudApiCloudGetByOrgByRepoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5802,7 +5602,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary View a file in a repository
      * @param {CloudApiCloudGetByOrgByRepoBlobByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5813,7 +5614,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary Read a repository\'s commit log
      * @param {CloudApiCloudGetByOrgByRepoCommitsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5824,7 +5626,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Advertise a repository\'s refs to a git client
      * @param {CloudApiCloudGetByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5835,7 +5638,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary Browse a directory inside a repository
      * @param {CloudApiCloudGetByOrgByRepoTreeByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5846,7 +5650,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+     * @summary Open the live collaborative-editing socket
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5856,7 +5661,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers ok whenever the commerce subsystem is mounted. It is registered BEFORE the module embed boots, so it keeps answering even when the embed failed and every business route is serving a fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated, and under /_ so the ingress does not expose it publicly.
+     * @summary Liveness for the commerce subsystem
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5866,7 +5672,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
+     * @summary List the payment providers configured for your own tenant
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5876,7 +5683,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
+     * @summary Discover public repositories across every org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5886,7 +5694,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary Browse your org\'s repositories
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5896,7 +5705,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary Open a repository\'s home page
      * @param {CloudApiCloudGetGitByOrgByRepoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5907,7 +5717,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * One file\'s contents at one revision, with its size and line count. A BINARY file is reported as binary rather than dumped into the page. The path after /blob/ is the file and `?ref=` selects the branch, tag or commit. An unknown ref or a path that is not a file in it is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary View a file in a repository
      * @param {CloudApiCloudGetGitByOrgByRepoBlobByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5918,7 +5729,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary Read a repository\'s commit log
      * @param {CloudApiCloudGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5929,7 +5741,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The contents of one directory at one revision, with breadcrumbs back up and links onward into subdirectories and files. The path after /tree/ is the directory and `?ref=` selects the branch, tag or commit, defaulting to the repository\'s own default branch. An unknown ref is 404, as is a repository with no commits. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary Browse a directory inside a repository
      * @param {CloudApiCloudGetGitByOrgByRepoTreeByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5940,7 +5753,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served on every host, which is how the console embeds the git browser under /git.
+     * @summary Discover public repositories across every org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5950,7 +5764,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5960,7 +5775,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudGetLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5971,7 +5787,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -5981,7 +5798,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console\'s assets and client-side routes
      * @param {CloudApiCloudGetTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5992,7 +5810,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Covers the reads: the model catalogue and a model\'s access status, connected providers and their usage, fine-tune jobs and presets, Hugging Face model, dataset and repository search, the subsystem\'s health and metrics, and the collection and member reads on the managed resources behind /v1.  Reads are scoped to the calling org by the identity the gateway validated; the catalogue a caller sees is the one its own org has access to, not the whole provider list.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+     * @summary Read the model catalogue and the AI subsystem\'s own resources
      * @param {CloudApiCloudGetV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6025,7 +5844,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+     * @summary The API description this SDK was generated from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6035,7 +5855,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves a single agent skill\'s SKILL.md as text/markdown — the instructions a client follows once index.json has told it the skill exists, and byte for byte the document that index.json\'s sha256 for that skill was computed over.  The skill segment is a flat, service-prefixed id (`ai_models`): one path segment with no separators, so a request can never address anything outside the embedded catalogue. An id of any other shape, or a skill the serving brand does not carry, is `{\"error\":…}` at 404 — the same answer, so a probe learns nothing about which is which.  Brand resolution and caching are index.json\'s: the Host picks the catalogue, and the response is `Cache-Control: public, max-age=300`. Public — no bearer, no tenant scope.
+     * @summary One skill\'s document, as markdown
      * @param {CloudApiCloudGetWellKnownAgentSkillsBySkillSkillMdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6046,7 +5867,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The Agent Skills Discovery catalogue an AI client reads to learn what this deployment can do: every skill, with the sha256 of the SKILL.md that is actually served for it, so a client can verify the document it then fetches.  The catalogue is GENERATED from the per-service OpenAPI specs and embedded in the binary; this route serves those bytes verbatim and never re-derives them, which is what makes the digests hold. Which brand\'s catalogue you get is decided per request from the Host — api.hanzo.ai answers the Hanzo catalogue, api.lux.network the Lux one, api.zoo.ngo the Zoo one — never one brand\'s skills on another\'s surface; a Host whose brand has no embedded catalogue falls back to the deployment brand, then to hanzo.  Public by design: the discovery surface carries no secrets, so there is no bearer and no tenant scope. Answers `Cache-Control: public, max-age=300`, and a catalogue that is not embedded is `{\"error\":…}` at 404.
+     * @summary The brand\'s master catalogue of agent skills
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6056,7 +5878,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudGetWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6067,7 +5890,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6077,7 +5901,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudOptionsLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6088,7 +5913,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+     * @summary Not routed by the durable engine
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6098,7 +5924,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
+     * @summary Not routed by the durable engine
      * @param {CloudApiCloudOptionsTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6109,7 +5936,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this catch-all accepts every method, but the inference surface answers none of them here — the request falls through to whatever owns the path, and reaches no model.
+     * @summary Not served by the inference surface
      * @param {CloudApiCloudOptionsV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6120,7 +5948,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudOptionsWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6131,7 +5960,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6141,7 +5971,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudPatchLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6152,7 +5983,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6162,7 +5994,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console\'s assets and client-side routes
      * @param {CloudApiCloudPatchTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6173,7 +6006,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Updates a member of one of the AI subsystem\'s managed collections with the fields given, leaving the rest as they were. It is the same update PUT reaches, so either verb is accepted on these resources.  Nothing under this method reaches the generating model API; that is the POST surface.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+     * @summary Update one AI resource in place
      * @param {CloudApiCloudPatchV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6184,7 +6018,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudPatchWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6195,7 +6030,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Accept a push, and turn it into a build
      * @param {CloudApiCloudPostByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6206,7 +6042,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Serve a clone or fetch
      * @param {CloudApiCloudPostByOrgByProjectByRepoGitUploadPackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6217,7 +6054,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Accept a push, and turn it into a build
      * @param {CloudApiCloudPostByOrgByRepoGitReceivePackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6228,7 +6066,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed at the git host\'s root, so `git clone https://<git-host>/<org>/<repo>.git` works with the canonical URL and no prefix. Served ONLY on the dedicated git host; on the API and console hosts it falls through, so a bare /:org/:repo can never shadow another surface. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Serve a clone or fetch
      * @param {CloudApiCloudPostByOrgByRepoGitUploadPackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6251,7 +6090,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
+     * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6261,7 +6101,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6271,7 +6112,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudPostLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6282,7 +6124,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6292,7 +6135,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console\'s assets and client-side routes
      * @param {CloudApiCloudPostTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6303,7 +6147,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Carries every generating call in the model API: chat completions and responses (streamed when the body asks for it), embeddings, reranking, image, video and speech generation, speech-to-text, RAG ingest, and fine-tune jobs — plus the creates on the managed collections behind /v1.  This is the billed half of the surface. A call is metered per org against the balance the commerce subsystem holds, and the balance gate is FAIL-CLOSED: when no native balance reader is wired into the process the call is refused rather than guessed at, and an insufficient balance answers 402 with its own message intact.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+     * @summary The Hanzo AI model API
      * @param {CloudApiCloudPostV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6338,7 +6183,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudPostWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6349,7 +6195,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6359,7 +6206,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This is where /v1/iam/oauth/authorize sends a human. Having validated the client, the redirect URI and S256 PKCE, that endpoint answers 302 to the requesting application\'s own signinUrl — or, when the application record carries none, to /login/oauth/authorize here, with the request re-encoded as a clean query string built from known parameters only. RFC 8628\'s device verification page (/login/oauth/device) is the other address beneath the prefix.  Both are PAGES a person opens, not JSON operations, and IAM registers no route under this prefix at all — it claims the prefix so its Guard covers it. What this relay actually returns is therefore IAM\'s refusal rather than a rendered sign-in form: with no verified bearer, the same {\"status\":401,\"error\":\"authentication required\"} envelope every gated IAM path answers, identically for every method, since there is no route here for the method to select. An application configured with its own signinUrl never reaches this prefix.  The address is claimed rather than answered, and claiming it is the point: it is more specific than the console\'s terminal catch-all, so while IAM is mounted nothing else in the binary can serve the target the authorize endpoint redirects to. When IAM cannot boot it answers the same fail-closed JSON 503 the rest of the identity plane does.
+     * @summary The interactive browser leg of the authorize flow, claimed by the identity plane.
      * @param {CloudApiCloudPutLoginOauthByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6370,7 +6218,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
@@ -6380,7 +6229,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * @summary The tasks console\'s assets and client-side routes
      * @param {CloudApiCloudPutTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6391,7 +6241,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Replaces a member of one of the AI subsystem\'s managed collections with the body given. PUT and PATCH reach the SAME update — a full replacement and a partial one are accepted at one address so a client need not know which verb a given collection prefers — so the difference is in what the caller sends, not in what the server does with it.  This address is a FALLBACK, not a front door. It is registered last, so every subsystem that claims a specific path under /v1 — billing, plans, pricing, the per-app health routes — still serves its own, and this catches the rest. The wildcard is the remainder of the path, and the answer is relayed with the model API\'s own status, headers and content type, so a streamed response streams and an upstream refusal arrives as itself.
+     * @summary Replace one AI resource in full
      * @param {CloudApiCloudPutV1ByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6402,7 +6253,8 @@ export class CloudApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the two documents every OpenID Connect client reads first: /.well-known/openid-configuration (also at /.well-known/oauth-authorization-server, RFC 8414) and /.well-known/jwks. Public by construction — a client has no token yet — and minted per request by IAM from the deployment\'s own registered applications and signing certs, with the issuer derived from the host that was asked, so a strict client never has to reconcile two spellings of the origin. What is advertised is what IAM implements: the authorization-code flow, S256 PKCE, the grants it honours, and the signing algorithms whose public keys the JWKS actually publishes.  The wildcard sits at the ROOT because the spec puts it there, not because it is a catch-all, and it is narrow by construction: zip matches the most specific pattern regardless of registration order, so the deeper routes under it — agentskills\' /.well-known/agent-skills/_* — still win. A method IAM does not serve at one of these documents is its 405, and an unknown name under the prefix is its 404; neither reaches the console.  Fail-closed matters most here, because this is the FIRST call a relying party makes. Before the degraded half covered this wildcard, a discovery request during an IAM outage fell through to the console catch-all and answered 200 with the single-page app\'s HTML, which the client then parsed as its discovery document. It now answers a JSON 503.
+     * @summary OIDC discovery and the JWKS at the issuer root, where a relying party looks before it can do anything else.
      * @param {CloudApiCloudPutWellKnownByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6410,70 +6262,6 @@ export class CloudApi extends BaseAPI {
      */
     public cloudPutWellKnownByWildcard1(requestParameters: CloudApiCloudPutWellKnownByWildcard1Request, options?: RawAxiosRequestConfig) {
         return CloudApiFp(this.configuration).cloudPutWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceLoginOauth(options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceLoginOauth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CloudApiCloudTraceLoginOauthByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceLoginOauthByWildcard1(requestParameters: CloudApiCloudTraceLoginOauthByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceLoginOauthByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceTasks(options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceTasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CloudApiCloudTraceTasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceTasksByWildcard1(requestParameters: CloudApiCloudTraceTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CloudApiCloudTraceV1ByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceV1ByWildcard1(requestParameters: CloudApiCloudTraceV1ByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceV1ByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CloudApiCloudTraceWellKnownByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudApi
-     */
-    public cloudTraceWellKnownByWildcard1(requestParameters: CloudApiCloudTraceWellKnownByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).cloudTraceWellKnownByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

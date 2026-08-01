@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const DataroomApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Rolls up every link pointing at the room: session and page-view totals for the room, plus the same per-page breakdown for each link beneath it.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
+         * @summary Per-page view analytics for a data room, across all its links
          * @param {string} dataroomId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -65,7 +66,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns how the link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  Requires a validated principal; 403 without one. The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is a 404 — knowing a link id is enough to open the room it shares, and never enough to read who has been reading it.
+         * @summary Per-page view analytics for one share link
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -102,7 +104,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns every data room in the caller\'s own tenant store with its short public id, name, description and timestamps, newest first.  Requires a validated principal; 403 without one. Documents are not included — a room\'s contents come from the single-room read.
+         * @summary List the org\'s data rooms, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -135,7 +138,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns the room and every document attached to it, each carrying its membership id and order index, sorted by that index with unordered documents last and creation time breaking ties — the same order a link\'s visitor sees.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404.
+         * @summary Read one data room with its documents in display order
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -172,7 +176,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns every document in the caller\'s own tenant store — name, opaque storage key, content type, page count, size and timestamps — ordered newest first.  Requires a validated principal; 403 without one. Tenant isolation is the per-org store itself: there is one SQLite file per org and the org is never a parameter, so no input the caller controls can address another tenant\'s documents. Metadata only — the bytes come from the file route.
+         * @summary List the org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -205,7 +210,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns the document\'s name, opaque storage key, content type, page count, size and timestamps.  Requires a validated principal; 403 without one. The lookup runs in the caller\'s own tenant store, so an id belonging to another org is a 404 exactly like one that never existed. Metadata only — the bytes are a separate read.
+         * @summary Read one document\'s metadata
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -242,7 +248,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
+         * @summary Download a document\'s bytes as its owner
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -279,7 +286,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
+         * @summary Liveness of the dataroom subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -312,7 +320,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Returns every non-archived link with the controls a visitor will meet: whether an address is required, whether a password is set, the allow and deny lists, whether download is permitted, and when the link expires.  Requires a validated principal; 403 without one. Archived links are omitted entirely. A link reports only THAT a password is set — the stored form is a bcrypt hash and no route returns it.
+         * @summary List the org\'s live share links and the gates they enforce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -345,7 +354,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
+         * @summary What a share link\'s visitor sees before authenticating
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -382,7 +392,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Streams a document\'s bytes under its recorded content type to a visitor holding an open viewing session.  No principal: `?viewId=` from the authenticate step is the authorisation and must belong to this link, or the call is 403 — holding the link id alone gets no bytes. The document must be reachable THROUGH this link (a member of the room the link opens, or the single document the link names), so a visitor cannot walk to an unrelated document by guessing an id; anything else is a 404, as is an unknown or archived link. Bytes that cannot be fetched from object storage are 502.  `?download=1` additionally requires the link\'s `allowDownload` and is 403 when the owner did not permit it. Read that flag precisely: it gates the DOWNLOAD intent, not access to the bytes — without the parameter an authorised visitor is served the file for in-place viewing whether or not downloads are allowed.
+         * @summary Read a document\'s bytes as an authorised link visitor
          * @param {string} linkId 
          * @param {string} documentId 
          * @param {*} [options] Override http request option.
@@ -423,7 +434,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Creates an empty data room from {name, description} and answers with it, including the short public id it is addressed by.  Requires a validated principal; 403 without one. `name` is required; without it the call is 400 and the tenant store is untouched, because a dispatch answering 4xx rolls its transaction back. A new room holds no documents and is reachable by nobody until a share link is created over it.
+         * @summary Create a data room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -456,7 +468,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Adds an already-uploaded document to the room by {documentId} and answers with the new membership id. An optional `orderIndex` fixes its place in the viewer\'s list.  Requires a validated principal; 403 without one. Both the room and the document must exist in the caller\'s own tenant store — either missing is a 404 — and a document already in the room is a 409 rather than a duplicate row. It attaches, it never uploads: the bytes must already be stored.
+         * @summary Attach an existing document to a data room
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -493,7 +506,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -526,7 +540,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Mints a public link over one data room (`dataroomId`) or one document (`documentId`) — one of the two is required — and answers with it. The controls are declared here and enforced only on the viewer surface: `password` is hashed with bcrypt before storage and is never readable back, `emailProtected` (on by default) makes a visitor state an address, `allowList`/`denyList` narrow which addresses pass, `allowDownload` (off by default) governs downloads, and `expiresAt` closes the link.  Requires a validated principal; 403 without one, and the target room or document must exist in the caller\'s own tenant store or it is a 404.  Creating a link also writes dataroom\'s ONE cross-tenant row: the link id to owning org mapping an anonymous visitor is routed through. That write is part of the operation — if it fails the call is 500, so a link that no visitor could open is never handed back as usable.
+         * @summary Create a share link with its access controls
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -559,7 +574,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
+         * @summary Pass a share link\'s gates and open a viewing session
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -596,7 +612,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Appends a single per-page analytics event — {viewId, pageNumber, documentId, versionNumber, duration} — and answers with its id. These events are what the owner\'s analytics count.  No principal: the `viewId` from the authenticate step IS the authorisation, and it must belong to THIS link or the call is 404, so a session opened on one link cannot write events onto another. `pageNumber` is required (400 without it); `documentId` falls back to the document the session was opened on, and `duration` is the caller\'s own dwell measure, summed per page by analytics.  Events are additive: the same page reported twice is two views, which is the metric\'s whole point.
+         * @summary Record one page-view against an open viewing session
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -643,7 +660,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DataroomApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Rolls up every link pointing at the room: session and page-view totals for the room, plus the same per-page breakdown for each link beneath it.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
+         * @summary Per-page view analytics for a data room, across all its links
          * @param {string} dataroomId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -655,7 +673,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns how the link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  Requires a validated principal; 403 without one. The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is a 404 — knowing a link id is enough to open the room it shares, and never enough to read who has been reading it.
+         * @summary Per-page view analytics for one share link
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -667,7 +686,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns every data room in the caller\'s own tenant store with its short public id, name, description and timestamps, newest first.  Requires a validated principal; 403 without one. Documents are not included — a room\'s contents come from the single-room read.
+         * @summary List the org\'s data rooms, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -678,7 +698,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the room and every document attached to it, each carrying its membership id and order index, sorted by that index with unordered documents last and creation time breaking ties — the same order a link\'s visitor sees.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404.
+         * @summary Read one data room with its documents in display order
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -690,7 +711,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns every document in the caller\'s own tenant store — name, opaque storage key, content type, page count, size and timestamps — ordered newest first.  Requires a validated principal; 403 without one. Tenant isolation is the per-org store itself: there is one SQLite file per org and the org is never a parameter, so no input the caller controls can address another tenant\'s documents. Metadata only — the bytes come from the file route.
+         * @summary List the org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -701,7 +723,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the document\'s name, opaque storage key, content type, page count, size and timestamps.  Requires a validated principal; 403 without one. The lookup runs in the caller\'s own tenant store, so an id belonging to another org is a 404 exactly like one that never existed. Metadata only — the bytes are a separate read.
+         * @summary Read one document\'s metadata
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -713,7 +736,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
+         * @summary Download a document\'s bytes as its owner
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -725,7 +749,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
+         * @summary Liveness of the dataroom subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -736,7 +761,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns every non-archived link with the controls a visitor will meet: whether an address is required, whether a password is set, the allow and deny lists, whether download is permitted, and when the link expires.  Requires a validated principal; 403 without one. Archived links are omitted entirely. A link reports only THAT a password is set — the stored form is a bcrypt hash and no route returns it.
+         * @summary List the org\'s live share links and the gates they enforce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -747,7 +773,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
+         * @summary What a share link\'s visitor sees before authenticating
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -759,7 +786,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Streams a document\'s bytes under its recorded content type to a visitor holding an open viewing session.  No principal: `?viewId=` from the authenticate step is the authorisation and must belong to this link, or the call is 403 — holding the link id alone gets no bytes. The document must be reachable THROUGH this link (a member of the room the link opens, or the single document the link names), so a visitor cannot walk to an unrelated document by guessing an id; anything else is a 404, as is an unknown or archived link. Bytes that cannot be fetched from object storage are 502.  `?download=1` additionally requires the link\'s `allowDownload` and is 403 when the owner did not permit it. Read that flag precisely: it gates the DOWNLOAD intent, not access to the bytes — without the parameter an authorised visitor is served the file for in-place viewing whether or not downloads are allowed.
+         * @summary Read a document\'s bytes as an authorised link visitor
          * @param {string} linkId 
          * @param {string} documentId 
          * @param {*} [options] Override http request option.
@@ -772,7 +800,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates an empty data room from {name, description} and answers with it, including the short public id it is addressed by.  Requires a validated principal; 403 without one. `name` is required; without it the call is 400 and the tenant store is untouched, because a dispatch answering 4xx rolls its transaction back. A new room holds no documents and is reachable by nobody until a share link is created over it.
+         * @summary Create a data room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -783,7 +812,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Adds an already-uploaded document to the room by {documentId} and answers with the new membership id. An optional `orderIndex` fixes its place in the viewer\'s list.  Requires a validated principal; 403 without one. Both the room and the document must exist in the caller\'s own tenant store — either missing is a 404 — and a document already in the room is a 409 rather than a duplicate row. It attaches, it never uploads: the bytes must already be stored.
+         * @summary Attach an existing document to a data room
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -795,7 +825,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -806,7 +837,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Mints a public link over one data room (`dataroomId`) or one document (`documentId`) — one of the two is required — and answers with it. The controls are declared here and enforced only on the viewer surface: `password` is hashed with bcrypt before storage and is never readable back, `emailProtected` (on by default) makes a visitor state an address, `allowList`/`denyList` narrow which addresses pass, `allowDownload` (off by default) governs downloads, and `expiresAt` closes the link.  Requires a validated principal; 403 without one, and the target room or document must exist in the caller\'s own tenant store or it is a 404.  Creating a link also writes dataroom\'s ONE cross-tenant row: the link id to owning org mapping an anonymous visitor is routed through. That write is part of the operation — if it fails the call is 500, so a link that no visitor could open is never handed back as usable.
+         * @summary Create a share link with its access controls
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -817,7 +849,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
+         * @summary Pass a share link\'s gates and open a viewing session
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -829,7 +862,8 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Appends a single per-page analytics event — {viewId, pageNumber, documentId, versionNumber, duration} — and answers with its id. These events are what the owner\'s analytics count.  No principal: the `viewId` from the authenticate step IS the authorisation, and it must belong to THIS link or the call is 404, so a session opened on one link cannot write events onto another. `pageNumber` is required (400 without it); `documentId` falls back to the document the session was opened on, and `duration` is the caller\'s own dwell measure, summed per page by analytics.  Events are additive: the same page reported twice is two views, which is the metric\'s whole point.
+         * @summary Record one page-view against an open viewing session
          * @param {string} linkId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -851,7 +885,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = DataroomApiFp(configuration)
     return {
         /**
-         * 
+         * Rolls up every link pointing at the room: session and page-view totals for the room, plus the same per-page breakdown for each link beneath it.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
+         * @summary Per-page view analytics for a data room, across all its links
          * @param {DataroomApiCloudGetV1DataroomAnalyticsDataroomByDataroomidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -860,7 +895,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomAnalyticsDataroomByDataroomid(requestParameters.dataroomId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns how the link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  Requires a validated principal; 403 without one. The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is a 404 — knowing a link id is enough to open the room it shares, and never enough to read who has been reading it.
+         * @summary Per-page view analytics for one share link
          * @param {DataroomApiCloudGetV1DataroomAnalyticsLinkByLinkidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -869,7 +905,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomAnalyticsLinkByLinkid(requestParameters.linkId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns every data room in the caller\'s own tenant store with its short public id, name, description and timestamps, newest first.  Requires a validated principal; 403 without one. Documents are not included — a room\'s contents come from the single-room read.
+         * @summary List the org\'s data rooms, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -877,7 +914,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomDatarooms(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the room and every document attached to it, each carrying its membership id and order index, sorted by that index with unordered documents last and creation time breaking ties — the same order a link\'s visitor sees.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404.
+         * @summary Read one data room with its documents in display order
          * @param {DataroomApiCloudGetV1DataroomDataroomsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -886,7 +924,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomDataroomsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns every document in the caller\'s own tenant store — name, opaque storage key, content type, page count, size and timestamps — ordered newest first.  Requires a validated principal; 403 without one. Tenant isolation is the per-org store itself: there is one SQLite file per org and the org is never a parameter, so no input the caller controls can address another tenant\'s documents. Metadata only — the bytes come from the file route.
+         * @summary List the org\'s documents, newest first
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -894,7 +933,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomDocuments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the document\'s name, opaque storage key, content type, page count, size and timestamps.  Requires a validated principal; 403 without one. The lookup runs in the caller\'s own tenant store, so an id belonging to another org is a 404 exactly like one that never existed. Metadata only — the bytes are a separate read.
+         * @summary Read one document\'s metadata
          * @param {DataroomApiCloudGetV1DataroomDocumentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -903,7 +943,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
+         * @summary Download a document\'s bytes as its owner
          * @param {DataroomApiCloudGetV1DataroomDocumentsByIdFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -912,7 +953,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomDocumentsByIdFile(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
+         * @summary Liveness of the dataroom subsystem
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -920,7 +962,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns every non-archived link with the controls a visitor will meet: whether an address is required, whether a password is set, the allow and deny lists, whether download is permitted, and when the link expires.  Requires a validated principal; 403 without one. Archived links are omitted entirely. A link reports only THAT a password is set — the stored form is a bcrypt hash and no route returns it.
+         * @summary List the org\'s live share links and the gates they enforce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -928,7 +971,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomLinks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
+         * @summary What a share link\'s visitor sees before authenticating
          * @param {DataroomApiCloudGetV1DataroomViewByLinkidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -937,7 +981,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomViewByLinkid(requestParameters.linkId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Streams a document\'s bytes under its recorded content type to a visitor holding an open viewing session.  No principal: `?viewId=` from the authenticate step is the authorisation and must belong to this link, or the call is 403 — holding the link id alone gets no bytes. The document must be reachable THROUGH this link (a member of the room the link opens, or the single document the link names), so a visitor cannot walk to an unrelated document by guessing an id; anything else is a 404, as is an unknown or archived link. Bytes that cannot be fetched from object storage are 502.  `?download=1` additionally requires the link\'s `allowDownload` and is 403 when the owner did not permit it. Read that flag precisely: it gates the DOWNLOAD intent, not access to the bytes — without the parameter an authorised visitor is served the file for in-place viewing whether or not downloads are allowed.
+         * @summary Read a document\'s bytes as an authorised link visitor
          * @param {DataroomApiCloudGetV1DataroomViewByLinkidDocumentByDocumentidFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -946,7 +991,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DataroomViewByLinkidDocumentByDocumentidFile(requestParameters.linkId, requestParameters.documentId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates an empty data room from {name, description} and answers with it, including the short public id it is addressed by.  Requires a validated principal; 403 without one. `name` is required; without it the call is 400 and the tenant store is untouched, because a dispatch answering 4xx rolls its transaction back. A new room holds no documents and is reachable by nobody until a share link is created over it.
+         * @summary Create a data room
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -954,7 +1000,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DataroomDatarooms(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Adds an already-uploaded document to the room by {documentId} and answers with the new membership id. An optional `orderIndex` fixes its place in the viewer\'s list.  Requires a validated principal; 403 without one. Both the room and the document must exist in the caller\'s own tenant store — either missing is a 404 — and a document already in the room is a 409 rather than a duplicate row. It attaches, it never uploads: the bytes must already be stored.
+         * @summary Attach an existing document to a data room
          * @param {DataroomApiCloudPostV1DataroomDataroomsByIdDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -963,7 +1010,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DataroomDataroomsByIdDocuments(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -971,7 +1019,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DataroomDocuments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Mints a public link over one data room (`dataroomId`) or one document (`documentId`) — one of the two is required — and answers with it. The controls are declared here and enforced only on the viewer surface: `password` is hashed with bcrypt before storage and is never readable back, `emailProtected` (on by default) makes a visitor state an address, `allowList`/`denyList` narrow which addresses pass, `allowDownload` (off by default) governs downloads, and `expiresAt` closes the link.  Requires a validated principal; 403 without one, and the target room or document must exist in the caller\'s own tenant store or it is a 404.  Creating a link also writes dataroom\'s ONE cross-tenant row: the link id to owning org mapping an anonymous visitor is routed through. That write is part of the operation — if it fails the call is 500, so a link that no visitor could open is never handed back as usable.
+         * @summary Create a share link with its access controls
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -979,7 +1028,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DataroomLinks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
+         * @summary Pass a share link\'s gates and open a viewing session
          * @param {DataroomApiCloudPostV1DataroomViewByLinkidAuthenticateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -988,7 +1038,8 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DataroomViewByLinkidAuthenticate(requestParameters.linkId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Appends a single per-page analytics event — {viewId, pageNumber, documentId, versionNumber, duration} — and answers with its id. These events are what the owner\'s analytics count.  No principal: the `viewId` from the authenticate step IS the authorisation, and it must belong to THIS link or the call is 404, so a session opened on one link cannot write events onto another. `pageNumber` is required (400 without it); `documentId` falls back to the document the session was opened on, and `duration` is the caller\'s own dwell measure, summed per page by analytics.  Events are additive: the same page reported twice is two views, which is the metric\'s whole point.
+         * @summary Record one page-view against an open viewing session
          * @param {DataroomApiCloudPostV1DataroomViewByLinkidPageviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1154,7 +1205,8 @@ export interface DataroomApiCloudPostV1DataroomViewByLinkidPageviewRequest {
  */
 export class DataroomApi extends BaseAPI {
     /**
-     * 
+     * Rolls up every link pointing at the room: session and page-view totals for the room, plus the same per-page breakdown for each link beneath it.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
+     * @summary Per-page view analytics for a data room, across all its links
      * @param {DataroomApiCloudGetV1DataroomAnalyticsDataroomByDataroomidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1165,7 +1217,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns how the link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  Requires a validated principal; 403 without one. The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is a 404 — knowing a link id is enough to open the room it shares, and never enough to read who has been reading it.
+     * @summary Per-page view analytics for one share link
      * @param {DataroomApiCloudGetV1DataroomAnalyticsLinkByLinkidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1176,7 +1229,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns every data room in the caller\'s own tenant store with its short public id, name, description and timestamps, newest first.  Requires a validated principal; 403 without one. Documents are not included — a room\'s contents come from the single-room read.
+     * @summary List the org\'s data rooms, newest first
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1186,7 +1240,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the room and every document attached to it, each carrying its membership id and order index, sorted by that index with unordered documents last and creation time breaking ties — the same order a link\'s visitor sees.  Requires a validated principal; 403 without one, and a room id outside the caller\'s own tenant store is a 404.
+     * @summary Read one data room with its documents in display order
      * @param {DataroomApiCloudGetV1DataroomDataroomsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1197,7 +1252,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns every document in the caller\'s own tenant store — name, opaque storage key, content type, page count, size and timestamps — ordered newest first.  Requires a validated principal; 403 without one. Tenant isolation is the per-org store itself: there is one SQLite file per org and the org is never a parameter, so no input the caller controls can address another tenant\'s documents. Metadata only — the bytes come from the file route.
+     * @summary List the org\'s documents, newest first
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1207,7 +1263,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the document\'s name, opaque storage key, content type, page count, size and timestamps.  Requires a validated principal; 403 without one. The lookup runs in the caller\'s own tenant store, so an id belonging to another org is a 404 exactly like one that never existed. Metadata only — the bytes are a separate read.
+     * @summary Read one document\'s metadata
      * @param {DataroomApiCloudGetV1DataroomDocumentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1218,7 +1275,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
+     * @summary Download a document\'s bytes as its owner
      * @param {DataroomApiCloudGetV1DataroomDocumentsByIdFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1229,7 +1287,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
+     * @summary Liveness of the dataroom subsystem
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1239,7 +1298,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns every non-archived link with the controls a visitor will meet: whether an address is required, whether a password is set, the allow and deny lists, whether download is permitted, and when the link expires.  Requires a validated principal; 403 without one. Archived links are omitted entirely. A link reports only THAT a password is set — the stored form is a bcrypt hash and no route returns it.
+     * @summary List the org\'s live share links and the gates they enforce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1249,7 +1309,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
+     * @summary What a share link\'s visitor sees before authenticating
      * @param {DataroomApiCloudGetV1DataroomViewByLinkidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1260,7 +1321,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Streams a document\'s bytes under its recorded content type to a visitor holding an open viewing session.  No principal: `?viewId=` from the authenticate step is the authorisation and must belong to this link, or the call is 403 — holding the link id alone gets no bytes. The document must be reachable THROUGH this link (a member of the room the link opens, or the single document the link names), so a visitor cannot walk to an unrelated document by guessing an id; anything else is a 404, as is an unknown or archived link. Bytes that cannot be fetched from object storage are 502.  `?download=1` additionally requires the link\'s `allowDownload` and is 403 when the owner did not permit it. Read that flag precisely: it gates the DOWNLOAD intent, not access to the bytes — without the parameter an authorised visitor is served the file for in-place viewing whether or not downloads are allowed.
+     * @summary Read a document\'s bytes as an authorised link visitor
      * @param {DataroomApiCloudGetV1DataroomViewByLinkidDocumentByDocumentidFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1271,7 +1333,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates an empty data room from {name, description} and answers with it, including the short public id it is addressed by.  Requires a validated principal; 403 without one. `name` is required; without it the call is 400 and the tenant store is untouched, because a dispatch answering 4xx rolls its transaction back. A new room holds no documents and is reachable by nobody until a share link is created over it.
+     * @summary Create a data room
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1281,7 +1344,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Adds an already-uploaded document to the room by {documentId} and answers with the new membership id. An optional `orderIndex` fixes its place in the viewer\'s list.  Requires a validated principal; 403 without one. Both the room and the document must exist in the caller\'s own tenant store — either missing is a 404 — and a document already in the room is a 409 rather than a duplicate row. It attaches, it never uploads: the bytes must already be stored.
+     * @summary Attach an existing document to a data room
      * @param {DataroomApiCloudPostV1DataroomDataroomsByIdDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1292,7 +1356,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+     * @summary Upload a document\'s bytes and record it
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1302,7 +1367,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Mints a public link over one data room (`dataroomId`) or one document (`documentId`) — one of the two is required — and answers with it. The controls are declared here and enforced only on the viewer surface: `password` is hashed with bcrypt before storage and is never readable back, `emailProtected` (on by default) makes a visitor state an address, `allowList`/`denyList` narrow which addresses pass, `allowDownload` (off by default) governs downloads, and `expiresAt` closes the link.  Requires a validated principal; 403 without one, and the target room or document must exist in the caller\'s own tenant store or it is a 404.  Creating a link also writes dataroom\'s ONE cross-tenant row: the link id to owning org mapping an anonymous visitor is routed through. That write is part of the operation — if it fails the call is 500, so a link that no visitor could open is never handed back as usable.
+     * @summary Create a share link with its access controls
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -1312,7 +1378,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
+     * @summary Pass a share link\'s gates and open a viewing session
      * @param {DataroomApiCloudPostV1DataroomViewByLinkidAuthenticateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1323,7 +1390,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Appends a single per-page analytics event — {viewId, pageNumber, documentId, versionNumber, duration} — and answers with its id. These events are what the owner\'s analytics count.  No principal: the `viewId` from the authenticate step IS the authorisation, and it must belong to THIS link or the call is 404, so a session opened on one link cannot write events onto another. `pageNumber` is required (400 without it); `documentId` falls back to the document the session was opened on, and `duration` is the caller\'s own dwell measure, summed per page by analytics.  Events are additive: the same page reported twice is two views, which is the metric\'s whole point.
+     * @summary Record one page-view against an open viewing session
      * @param {DataroomApiCloudPostV1DataroomViewByLinkidPageviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

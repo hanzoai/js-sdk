@@ -44,5 +44,11 @@ export interface CloudEvent {
      * @memberof CloudEvent
      */
     'time'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudEvent
+     */
+    'type'?: string;
 }
 

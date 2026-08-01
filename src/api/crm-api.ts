@@ -56,7 +56,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * DeleteCompany removes one of the caller org\'s companies and answers 204. Any contact or opportunity in the org that referenced it keeps existing with the reference cleared, so nothing is left pointing at a company that is gone.
          * @summary DeleteCompany removes one of the caller org\'s companies and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -94,7 +94,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * DeleteContact removes one of the caller org\'s contacts and answers 204. Any opportunity in the org that named it point of contact keeps existing with that reference cleared.
          * @summary DeleteContact removes one of the caller org\'s contacts and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -132,7 +132,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * DeleteOpportunity removes one of the caller org\'s deals and answers 204.
          * @summary DeleteOpportunity removes one of the caller org\'s deals and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -291,7 +291,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * GetCompany returns one of the caller org\'s companies. An id belonging to another org reads as not found.
          * @summary GetCompany returns one of the caller org\'s companies.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -373,7 +373,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * GetContact returns one of the caller org\'s contacts. An id belonging to another org reads as not found.
          * @summary GetContact returns one of the caller org\'s contacts.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -455,7 +455,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * GetOpportunity returns one of the caller org\'s deals. An id belonging to another org reads as not found.
          * @summary GetOpportunity returns one of the caller org\'s deals.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -569,7 +569,8 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Files an application to the Startup Program and answers the id and pipeline stage it landed at.  This is the ONE unauthenticated route in crm. It takes no principal and never reads a caller org: the application is filed against the DEPLOYMENT\'s own program org — the brand, hanzo unless white-labelled — so there is no tenant to name and none to leak. Reading the application back is staff-only and lives elsewhere.  company, contactName and a parseable email are required; everything else is optional context. Re-submitting the same (email, company) REFRESHES the existing application instead of filing a second one, so an impatient applicant cannot duplicate their own lead — that is a 200 where a first submission is a 201. A filled `hp` honeypot field is answered exactly like a success and stored nowhere, so a bot cannot tell a drop from an accept.  Filing is not screening: the application lands at stage `applied` with its AI screen still pending, and the screen runs afterwards on its own clock. A company and contact are also projected into the program org\'s ordinary CRM lists, best-effort — that projection failing does not fail the application. Bodies over 64 KiB are refused, and submissions are rate-limited.
+         * @summary Apply to the Startup Program from the public form
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -724,7 +725,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * UpdateCompany replaces one of the caller org\'s companies. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required.
          * @summary UpdateCompany replaces one of the caller org\'s companies.
-         * @param {string} id ID names the company to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudCompanyReq} cloudCompanyReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -768,7 +769,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * UpdateContact replaces one of the caller org\'s contacts. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. One of firstName, lastName or email is required.
          * @summary UpdateContact replaces one of the caller org\'s contacts.
-         * @param {string} id ID names the contact to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudContactReq} cloudContactReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -812,7 +813,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * UpdateOpportunity replaces one of the caller org\'s deals. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required and the stage must be a pipeline stage.
          * @summary UpdateOpportunity replaces one of the caller org\'s deals.
-         * @param {string} id ID names the opportunity to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudOppReq} cloudOppReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -866,7 +867,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * DeleteCompany removes one of the caller org\'s companies and answers 204. Any contact or opportunity in the org that referenced it keeps existing with the reference cleared, so nothing is left pointing at a company that is gone.
          * @summary DeleteCompany removes one of the caller org\'s companies and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -879,7 +880,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * DeleteContact removes one of the caller org\'s contacts and answers 204. Any opportunity in the org that named it point of contact keeps existing with that reference cleared.
          * @summary DeleteContact removes one of the caller org\'s contacts and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -892,7 +893,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * DeleteOpportunity removes one of the caller org\'s deals and answers 204.
          * @summary DeleteOpportunity removes one of the caller org\'s deals and answers 204.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -945,7 +946,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * GetCompany returns one of the caller org\'s companies. An id belonging to another org reads as not found.
          * @summary GetCompany returns one of the caller org\'s companies.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -972,7 +973,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * GetContact returns one of the caller org\'s contacts. An id belonging to another org reads as not found.
          * @summary GetContact returns one of the caller org\'s contacts.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -999,7 +1000,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * GetOpportunity returns one of the caller org\'s deals. An id belonging to another org reads as not found.
          * @summary GetOpportunity returns one of the caller org\'s deals.
-         * @param {string} id ID is the record to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1036,7 +1037,8 @@ export const CrmApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Files an application to the Startup Program and answers the id and pipeline stage it landed at.  This is the ONE unauthenticated route in crm. It takes no principal and never reads a caller org: the application is filed against the DEPLOYMENT\'s own program org — the brand, hanzo unless white-labelled — so there is no tenant to name and none to leak. Reading the application back is staff-only and lives elsewhere.  company, contactName and a parseable email are required; everything else is optional context. Re-submitting the same (email, company) REFRESHES the existing application instead of filing a second one, so an impatient applicant cannot duplicate their own lead — that is a 200 where a first submission is a 201. A filled `hp` honeypot field is answered exactly like a success and stored nowhere, so a bot cannot tell a drop from an accept.  Filing is not screening: the application lands at stage `applied` with its AI screen still pending, and the screen runs afterwards on its own clock. A company and contact are also projected into the program org\'s ordinary CRM lists, best-effort — that projection failing does not fail the application. Bodies over 64 KiB are refused, and submissions are rate-limited.
+         * @summary Apply to the Startup Program from the public form
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1088,7 +1090,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * UpdateCompany replaces one of the caller org\'s companies. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required.
          * @summary UpdateCompany replaces one of the caller org\'s companies.
-         * @param {string} id ID names the company to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudCompanyReq} cloudCompanyReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1102,7 +1104,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * UpdateContact replaces one of the caller org\'s contacts. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. One of firstName, lastName or email is required.
          * @summary UpdateContact replaces one of the caller org\'s contacts.
-         * @param {string} id ID names the contact to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudContactReq} cloudContactReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1116,7 +1118,7 @@ export const CrmApiFp = function(configuration?: Configuration) {
         /**
          * UpdateOpportunity replaces one of the caller org\'s deals. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required and the stage must be a pipeline stage.
          * @summary UpdateOpportunity replaces one of the caller org\'s deals.
-         * @param {string} id ID names the opportunity to update and comes from the path. A create ignores it: the server mints the id.
+         * @param {string} id 
          * @param {CloudOppReq} cloudOppReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1267,7 +1269,8 @@ export const CrmApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPatchV1CrmApplicationsId(requestParameters.id, requestParameters.cloudPatchApplicationIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Files an application to the Startup Program and answers the id and pipeline stage it landed at.  This is the ONE unauthenticated route in crm. It takes no principal and never reads a caller org: the application is filed against the DEPLOYMENT\'s own program org — the brand, hanzo unless white-labelled — so there is no tenant to name and none to leak. Reading the application back is staff-only and lives elsewhere.  company, contactName and a parseable email are required; everything else is optional context. Re-submitting the same (email, company) REFRESHES the existing application instead of filing a second one, so an impatient applicant cannot duplicate their own lead — that is a 200 where a first submission is a 201. A filled `hp` honeypot field is answered exactly like a success and stored nowhere, so a bot cannot tell a drop from an accept.  Filing is not screening: the application lands at stage `applied` with its AI screen still pending, and the screen runs afterwards on its own clock. A company and contact are also projected into the program org\'s ordinary CRM lists, best-effort — that projection failing does not fail the application. Bodies over 64 KiB are refused, and submissions are rate-limited.
+         * @summary Apply to the Startup Program from the public form
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1344,7 +1347,7 @@ export const CrmApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface CrmApiCloudDeleteV1CrmCompaniesIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudDeleteV1CrmCompaniesId
      */
@@ -1358,7 +1361,7 @@ export interface CrmApiCloudDeleteV1CrmCompaniesIdRequest {
  */
 export interface CrmApiCloudDeleteV1CrmContactsIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudDeleteV1CrmContactsId
      */
@@ -1372,7 +1375,7 @@ export interface CrmApiCloudDeleteV1CrmContactsIdRequest {
  */
 export interface CrmApiCloudDeleteV1CrmOpportunitiesIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudDeleteV1CrmOpportunitiesId
      */
@@ -1435,7 +1438,7 @@ export interface CrmApiCloudGetV1CrmCompaniesRequest {
  */
 export interface CrmApiCloudGetV1CrmCompaniesIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudGetV1CrmCompaniesId
      */
@@ -1470,7 +1473,7 @@ export interface CrmApiCloudGetV1CrmContactsRequest {
  */
 export interface CrmApiCloudGetV1CrmContactsIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudGetV1CrmContactsId
      */
@@ -1505,7 +1508,7 @@ export interface CrmApiCloudGetV1CrmOpportunitiesRequest {
  */
 export interface CrmApiCloudGetV1CrmOpportunitiesIdRequest {
     /**
-     * ID is the record to act on, from the path.
+     * 
      * @type {string}
      * @memberof CrmApiCloudGetV1CrmOpportunitiesId
      */
@@ -1582,7 +1585,7 @@ export interface CrmApiCloudPostV1CrmOpportunitiesRequest {
  */
 export interface CrmApiCloudPutV1CrmCompaniesIdRequest {
     /**
-     * ID names the company to update and comes from the path. A create ignores it: the server mints the id.
+     * 
      * @type {string}
      * @memberof CrmApiCloudPutV1CrmCompaniesId
      */
@@ -1603,7 +1606,7 @@ export interface CrmApiCloudPutV1CrmCompaniesIdRequest {
  */
 export interface CrmApiCloudPutV1CrmContactsIdRequest {
     /**
-     * ID names the contact to update and comes from the path. A create ignores it: the server mints the id.
+     * 
      * @type {string}
      * @memberof CrmApiCloudPutV1CrmContactsId
      */
@@ -1624,7 +1627,7 @@ export interface CrmApiCloudPutV1CrmContactsIdRequest {
  */
 export interface CrmApiCloudPutV1CrmOpportunitiesIdRequest {
     /**
-     * ID names the opportunity to update and comes from the path. A create ignores it: the server mints the id.
+     * 
      * @type {string}
      * @memberof CrmApiCloudPutV1CrmOpportunitiesId
      */
@@ -1801,7 +1804,8 @@ export class CrmApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Files an application to the Startup Program and answers the id and pipeline stage it landed at.  This is the ONE unauthenticated route in crm. It takes no principal and never reads a caller org: the application is filed against the DEPLOYMENT\'s own program org — the brand, hanzo unless white-labelled — so there is no tenant to name and none to leak. Reading the application back is staff-only and lives elsewhere.  company, contactName and a parseable email are required; everything else is optional context. Re-submitting the same (email, company) REFRESHES the existing application instead of filing a second one, so an impatient applicant cannot duplicate their own lead — that is a 200 where a first submission is a 201. A filled `hp` honeypot field is answered exactly like a success and stored nowhere, so a bot cannot tell a drop from an accept.  Filing is not screening: the application lands at stage `applied` with its AI screen still pending, and the screen runs afterwards on its own clock. A company and contact are also projected into the program org\'s ordinary CRM lists, best-effort — that projection failing does not fail the application. Bodies over 64 KiB are refused, and submissions are rate-limited.
+     * @summary Apply to the Startup Program from the public form
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi

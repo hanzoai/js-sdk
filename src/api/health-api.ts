@@ -22,11 +22,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudGetV1KmsHealth200Response } from '../models';
+// @ts-ignore
 import type { GatewayHealthCheck200Response } from '../models';
 // @ts-ignore
 import type { GatewayReadinessCheck200Response } from '../models';
-// @ts-ignore
-import type { KmsGetV1KmsHealthz200Response } from '../models';
 /**
  * HealthApi - axios parameter creator
  * @export
@@ -235,7 +235,7 @@ export const HealthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async kmsGetV1KmsHealthz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KmsGetV1KmsHealthz200Response>> {
+        async kmsGetV1KmsHealthz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1KmsHealth200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.kmsGetV1KmsHealthz(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['HealthApi.kmsGetV1KmsHealthz']?.[localVarOperationServerIndex]?.url;
@@ -296,7 +296,7 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        kmsGetV1KmsHealthz(options?: RawAxiosRequestConfig): AxiosPromise<KmsGetV1KmsHealthz200Response> {
+        kmsGetV1KmsHealthz(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1KmsHealth200Response> {
             return localVarFp.kmsGetV1KmsHealthz(options).then((request) => request(axios, basePath));
         },
         /**

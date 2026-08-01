@@ -10,10 +10,9 @@ belief that the unscoped `hanzoai` was squatted. It is not — `npm owner ls
 hanzoai` is `zeekay`, and the registry's `repository.url` on the published
 `0.0.1-alpha.1` already points here. `@hanzo/sdk` belongs to a *different*
 package, `hanzo-js/sdk` (v2.0.0, the unified per-service SDK), so publishing
-under it would have overwritten someone else's line. The name is `hanzoai` and
-that is the name `sdks.yaml`'s `npmName` should say too; it still reads
-`@hanzo/sdk`, which is inert only because `package.json` is on the generator's
-`drop` list and never reaches this tree.
+under it would have overwritten someone else's line. The name is `hanzoai`, and
+`sdks.yaml`'s `npmName` now says `hanzoai` too — that row has been corrected, so
+the two no longer disagree.
 
 ## The ONE way: generated from the OpenAPI spec
 
@@ -51,8 +50,8 @@ hanzoai/openapi  merges 55 service specs ->  hanzo.yaml   <- the ONE SDK input
 this repo        scripts/generate.sh     ->  src/, then owns its bump + release
 ```
 
-Current `src/` is 1360 files (239 api + 1116 models + 5 root) from **1132 paths /
-1519 operations / 779 schemas**.
+Current `src/` is 2361 files (264 api + 2092 models + 5 root) from **1739 paths /
+2455 operations / 1831 schemas**.
 
 ## Two spec defects fixed upstream — do not re-patch them here
 
@@ -109,6 +108,40 @@ not compile, because only calling the client exercises its surface.
 `examples/` sits outside the generator's `take` path, so regeneration never
 touches it.
 
+### What they do against the live API
+
+Type-checking is not running. All six were **executed** against `api.hanzo.ai`
+with an IAM JWT, and the result is worth writing down because three of them fail
+for reasons that are not the SDK's:
+
+| flow | result | why |
+|---|---|---|
+| `chat` | works | `zen5`, 200 + typed `choices[0].message.content` |
+| `store` | works | full KV round-trip: provision → read back → delete |
+| `tools` | works | `mcp_rpc` → 833 tools |
+| `agent` | partial | agent **creates** on `zen5`; the run returns 402 *Insufficient balance* |
+| `money` | blocked | `/v1/billing/balance` → 502 *billing upstream unreachable*, same from `curl` |
+| `hello` | blocked | `bot_authMe` → 404 for an IAM principal with no **bot** profile |
+
+Two traps this table encodes:
+
+**A model default is a live dependency.** `chat` and `agent` both defaulted to
+`zen4`, which the gateway no longer serves — 403 *limited preview* on
+`/v1/chat/completions`, 400 *not in this gateway's catalog* on `/v1/agents`. The
+examples type-checked perfectly the entire time, because a model id is a string.
+The default is `zen5` now; the served Zen family is `enso*` and `zen5*`, and
+`GET /v1/models` is the only authority on it.
+
+**`hello` is mounted and gating correctly** — 403 *no validated principal* with
+no key or a bogus one — and still 404s with a *valid* one, because
+`/v1/bot/auth/me` reads the **bot** user table and an ordinary IAM principal has
+no row there. 403-vs-404 is the discriminator `flows.yaml` documents, and here
+it says "route is fine, this credential is the wrong kind", not "route is
+broken". Do not repoint the flow on the strength of that 404; it wants a bot
+key. `flows.yaml`'s note to print `data.owner`/`data.name` is also loose —
+`BotUser` carries `id`/`handle`/`displayName`/`email`/`role`, which is what the
+example prints.
+
 ## CI
 Fleet convention: root `hanzo.yml` (the `test:` gate — build, then examples) and
 a 7-line `.github/workflows/cicd.yml` importing `hanzoai/ci`. The old bespoke
@@ -119,10 +152,24 @@ Publishing is separate and unchanged: `publish-npm.yml` on a `v*` tag.
 ## Release
 Push a semver tag `vX.Y.Z` → `publish-npm.yml` builds and `npm publish`es.
 
-**The registry, not `package.json`, is the version of record.** Check
-`npm view hanzoai version` first and take the patch above **that** — `hanzoai`
-currently publishes `0.0.1-alpha.1` while this tree is `2.0.3`, so the tree is
-already ahead and a naive bump from the registry would walk backwards.
+**A tag is not a release — confirm the registry.** For thirteen months `hanzoai`
+published only `0.0.1-alpha.1` while this tree said `2.0.x` and tags `v1.0.0`
+through `v2.0.4` all existed, so every doc that read the tree described a client
+npm could not install. The cause is structural and will recur:
+`publish-npm.yml` is `runs-on: hanzo-build-linux-amd64`, a self-hosted label, so
+when no runner has that label the job **queues instead of failing** — the v2.0.4
+run sat queued 13h31m and looked exactly like a release in flight. GitHub shows
+it as pending, never red.
+
+So the check after tagging is `npm view hanzoai version`, not the run's colour.
+If the queue is stalled, publish from a checkout that has the package owner's
+npm credential (`npm owner ls hanzoai` → `zeekay`); `2.0.5` was released that
+way. **The registry, not `package.json` and not the tag list, is the version of
+record.**
+
+Tag and artifact must agree: `v2.0.4` already pointed at the pre-regeneration
+tree, so the first real release took the next patch, `2.0.5`, rather than
+publishing different bytes under a tag that was already spoken for.
 
 ## Note: `packages/mcp-server`
 The Stainless-era MCP server under `packages/mcp-server` targets the old client

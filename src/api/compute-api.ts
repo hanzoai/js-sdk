@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
 import type { CloudBotList } from '../models';
 // @ts-ignore
 import type { CloudBotView } from '../models';
@@ -108,7 +110,8 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
+         * @summary The regions a machine or GPU can be launched into
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -141,7 +144,8 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
+         * @summary The machine and GPU sizes that can be launched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -208,7 +212,8 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+         * @summary Message a bot, or stop it, by naming the action in the path
          * @param {string} id 
          * @param {string} action 
          * @param {*} [options] Override http request option.
@@ -249,7 +254,8 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
+         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -318,22 +324,24 @@ export const ComputeApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
+         * @summary The regions a machine or GPU can be launched into
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1ComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ComputeRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComputeApi.cloudGetV1ComputeRegions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
+         * @summary The machine and GPU sizes that can be launched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1ComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ComputeSizes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ComputeApi.cloudGetV1ComputeSizes']?.[localVarOperationServerIndex]?.url;
@@ -352,7 +360,8 @@ export const ComputeApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+         * @summary Message a bot, or stop it, by naming the action in the path
          * @param {string} id 
          * @param {string} action 
          * @param {*} [options] Override http request option.
@@ -365,7 +374,8 @@ export const ComputeApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
+         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -406,19 +416,21 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetBot(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
+         * @summary The regions a machine or GPU can be launched into
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1ComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.cloudGetV1ComputeRegions(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
+         * @summary The machine and GPU sizes that can be launched
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1ComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.cloudGetV1ComputeSizes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -431,7 +443,8 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudListBots(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+         * @summary Message a bot, or stop it, by naming the action in the path
          * @param {ComputeApiCloudPostV1ComputeBotsByIdByActionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -440,7 +453,8 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPostV1ComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
+         * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -531,7 +545,8 @@ export class ComputeApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
+     * @summary The regions a machine or GPU can be launched into
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComputeApi
@@ -541,7 +556,8 @@ export class ComputeApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
+     * @summary The machine and GPU sizes that can be launched
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComputeApi
@@ -562,7 +578,8 @@ export class ComputeApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
+     * @summary Message a bot, or stop it, by naming the action in the path
      * @param {ComputeApiCloudPostV1ComputeBotsByIdByActionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -573,7 +590,8 @@ export class ComputeApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
+     * @summary Launch a bot machine — an agent plus the machine that runs it — or price one
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComputeApi

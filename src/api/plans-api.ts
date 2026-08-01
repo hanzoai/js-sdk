@@ -46,7 +46,8 @@ import type { CloudPlanVocab } from '../models';
 export const PlansApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
          * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -257,7 +258,8 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -341,10 +343,6 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -634,7 +632,8 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -667,7 +666,8 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -700,7 +700,8 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
          * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -747,7 +748,8 @@ export const PlansApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PlansApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
          * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -820,7 +822,8 @@ export const PlansApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -952,7 +955,8 @@ export const PlansApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -963,7 +967,8 @@ export const PlansApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -974,7 +979,8 @@ export const PlansApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
          * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -996,7 +1002,8 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = PlansApiFp(configuration)
     return {
         /**
-         * 
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
          * @param {PlansApiCloudDeleteV1PlansEntriesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1051,7 +1058,8 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1PlansEntitlementsId(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1150,7 +1158,8 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1PlansVocab(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1158,7 +1167,8 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1PlansEntries(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1166,7 +1176,8 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1PlansSeed(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
          * @param {PlansApiCloudPutV1PlansEntriesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1241,7 +1252,8 @@ export interface PlansApiCloudPutV1PlansEntriesBySlugRequest {
  */
 export class PlansApi extends BaseAPI {
     /**
-     * 
+     * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+     * @summary Remove a plan from the authority
      * @param {PlansApiCloudDeleteV1PlansEntriesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1308,7 +1320,8 @@ export class PlansApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+     * @summary The raw plan authority rows
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlansApi
@@ -1429,7 +1442,8 @@ export class PlansApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+     * @summary Add a subscription plan
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlansApi
@@ -1439,7 +1453,8 @@ export class PlansApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+     * @summary Seed the embedded plan catalog, without overwriting administrative edits
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlansApi
@@ -1449,7 +1464,8 @@ export class PlansApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+     * @summary Edit a plan, leaving the fields you omit alone
      * @param {PlansApiCloudPutV1PlansEntriesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const BenchmarkApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Lists the top-14 set every major provider reports — the id, title, axis, item count and upstream source of each — with `native` marking the ones the standardized harness runs today; the rest are registered and adapter-pending. These ids are the vocabulary the rest of the surface takes: a run names them, and the leaderboard and compare read them from `?benchmark=`. The catalog is deployment-wide and identical for every caller — there is no tenant in it.
+         * @summary The canonical public benchmarks this arena runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Scores model `?a=` against model `?b=` on one benchmark, paired over the items both arms actually completed. It answers the common-item count, each arm\'s correct count, the rescues each way (items one got right and the other did not), the net, and a two-sided exact McNemar p over the discordant pairs.  Pairing is what makes it valid. Reading two leaderboard rows against each other compares one model\'s coverage with another\'s, so an arm that only ran the easy subset looks better than it is; this endpoint refuses that by construction — items only one arm attempted are dropped before anything is counted. A p of 1 with zero discordant pairs means the arms never disagreed, not that they are identical. Both `a` and `b` are required (400 without them); the benchmark defaults to GPQA-Diamond.
+         * @summary The only sound head-to-head: two models on the items they BOTH answered
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -94,7 +96,8 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Answers one row per model for the benchmark named by `?benchmark=` (GPQA-Diamond when omitted), carrying `measured` — the accuracy our own harness got — beside `published`, the provider\'s own claim, and `gap`, the claim minus the measurement. The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows `published` null, a model with only a claim shows `measured` null, and `gap` exists only where both do. Each row also carries `n`, the number of items actually attempted — coverage differs between models, so two `measured` values at different `n` are not comparable and the compare endpoint is what settles that properly. Rows are ordered by measured accuracy, unmeasured last. Scores are deployment-wide evidence, not per-tenant.
+         * @summary Per-model scores for one benchmark: what we measured beside what the vendor claims
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -127,7 +130,8 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Lists preset router blends — a named set of model `arms`, the `rank` they escalate through and the `panel` width that bounds fan-out — each served by the model layer as `enso-<name>`. Today it answers exactly one row, the reference blend: a worked example written in models we name, published as an example of the FORM. It is deliberately not the composition of a Hanzo-served tier — the tier name exists to abstract that — so fork it and swap arms by what the leaderboard measures on your own tasks rather than reading it as a disclosure.
+         * @summary The router blends available to compose from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -160,7 +164,8 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Validates a blend — `name`, its `arms`, the `rank` they escalate through and the `panel` fan-out width — and answers 202 with the preset and the `enso-<name>` it would be served as. It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted `rank` becomes the arms in declared order and a `panel` below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * @summary Compose a router blend from the arms that win your tasks
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -193,7 +198,8 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Admits a request to run one or more catalog benchmarks against `model` — a catalog model id — or against `endpoint`, your own OpenAI-compatible endpoint, and answers 202 with what was queued. It ADMITS AND QUEUES ONLY: nothing is executed on this call and no scores come back with it. Results land in the leaderboard as the worker completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free. Validation is up front and total — a request with neither `model` nor `endpoint` is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * @summary Queue a benchmark run against a catalog model or your own endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -236,7 +242,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BenchmarkApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Lists the top-14 set every major provider reports — the id, title, axis, item count and upstream source of each — with `native` marking the ones the standardized harness runs today; the rest are registered and adapter-pending. These ids are the vocabulary the rest of the surface takes: a run names them, and the leaderboard and compare read them from `?benchmark=`. The catalog is deployment-wide and identical for every caller — there is no tenant in it.
+         * @summary The canonical public benchmarks this arena runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -247,7 +254,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Scores model `?a=` against model `?b=` on one benchmark, paired over the items both arms actually completed. It answers the common-item count, each arm\'s correct count, the rescues each way (items one got right and the other did not), the net, and a two-sided exact McNemar p over the discordant pairs.  Pairing is what makes it valid. Reading two leaderboard rows against each other compares one model\'s coverage with another\'s, so an arm that only ran the easy subset looks better than it is; this endpoint refuses that by construction — items only one arm attempted are dropped before anything is counted. A p of 1 with zero discordant pairs means the arms never disagreed, not that they are identical. Both `a` and `b` are required (400 without them); the benchmark defaults to GPQA-Diamond.
+         * @summary The only sound head-to-head: two models on the items they BOTH answered
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -258,7 +266,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers one row per model for the benchmark named by `?benchmark=` (GPQA-Diamond when omitted), carrying `measured` — the accuracy our own harness got — beside `published`, the provider\'s own claim, and `gap`, the claim minus the measurement. The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows `published` null, a model with only a claim shows `measured` null, and `gap` exists only where both do. Each row also carries `n`, the number of items actually attempted — coverage differs between models, so two `measured` values at different `n` are not comparable and the compare endpoint is what settles that properly. Rows are ordered by measured accuracy, unmeasured last. Scores are deployment-wide evidence, not per-tenant.
+         * @summary Per-model scores for one benchmark: what we measured beside what the vendor claims
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -269,7 +278,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists preset router blends — a named set of model `arms`, the `rank` they escalate through and the `panel` width that bounds fan-out — each served by the model layer as `enso-<name>`. Today it answers exactly one row, the reference blend: a worked example written in models we name, published as an example of the FORM. It is deliberately not the composition of a Hanzo-served tier — the tier name exists to abstract that — so fork it and swap arms by what the leaderboard measures on your own tasks rather than reading it as a disclosure.
+         * @summary The router blends available to compose from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -280,7 +290,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Validates a blend — `name`, its `arms`, the `rank` they escalate through and the `panel` fan-out width — and answers 202 with the preset and the `enso-<name>` it would be served as. It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted `rank` becomes the arms in declared order and a `panel` below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * @summary Compose a router blend from the arms that win your tasks
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -291,7 +302,8 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Admits a request to run one or more catalog benchmarks against `model` — a catalog model id — or against `endpoint`, your own OpenAI-compatible endpoint, and answers 202 with what was queued. It ADMITS AND QUEUES ONLY: nothing is executed on this call and no scores come back with it. Results land in the leaderboard as the worker completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free. Validation is up front and total — a request with neither `model` nor `endpoint` is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * @summary Queue a benchmark run against a catalog model or your own endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -312,7 +324,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
     const localVarFp = BenchmarkApiFp(configuration)
     return {
         /**
-         * 
+         * Lists the top-14 set every major provider reports — the id, title, axis, item count and upstream source of each — with `native` marking the ones the standardized harness runs today; the rest are registered and adapter-pending. These ids are the vocabulary the rest of the surface takes: a run names them, and the leaderboard and compare read them from `?benchmark=`. The catalog is deployment-wide and identical for every caller — there is no tenant in it.
+         * @summary The canonical public benchmarks this arena runs
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -320,7 +333,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudGetV1BenchmarkCatalog(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Scores model `?a=` against model `?b=` on one benchmark, paired over the items both arms actually completed. It answers the common-item count, each arm\'s correct count, the rescues each way (items one got right and the other did not), the net, and a two-sided exact McNemar p over the discordant pairs.  Pairing is what makes it valid. Reading two leaderboard rows against each other compares one model\'s coverage with another\'s, so an arm that only ran the easy subset looks better than it is; this endpoint refuses that by construction — items only one arm attempted are dropped before anything is counted. A p of 1 with zero discordant pairs means the arms never disagreed, not that they are identical. Both `a` and `b` are required (400 without them); the benchmark defaults to GPQA-Diamond.
+         * @summary The only sound head-to-head: two models on the items they BOTH answered
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -328,7 +342,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudGetV1BenchmarkCompare(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers one row per model for the benchmark named by `?benchmark=` (GPQA-Diamond when omitted), carrying `measured` — the accuracy our own harness got — beside `published`, the provider\'s own claim, and `gap`, the claim minus the measurement. The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows `published` null, a model with only a claim shows `measured` null, and `gap` exists only where both do. Each row also carries `n`, the number of items actually attempted — coverage differs between models, so two `measured` values at different `n` are not comparable and the compare endpoint is what settles that properly. Rows are ordered by measured accuracy, unmeasured last. Scores are deployment-wide evidence, not per-tenant.
+         * @summary Per-model scores for one benchmark: what we measured beside what the vendor claims
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -336,7 +351,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudGetV1BenchmarkLeaderboard(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists preset router blends — a named set of model `arms`, the `rank` they escalate through and the `panel` width that bounds fan-out — each served by the model layer as `enso-<name>`. Today it answers exactly one row, the reference blend: a worked example written in models we name, published as an example of the FORM. It is deliberately not the composition of a Hanzo-served tier — the tier name exists to abstract that — so fork it and swap arms by what the leaderboard measures on your own tasks rather than reading it as a disclosure.
+         * @summary The router blends available to compose from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -344,7 +360,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudGetV1BenchmarkPresets(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Validates a blend — `name`, its `arms`, the `rank` they escalate through and the `panel` fan-out width — and answers 202 with the preset and the `enso-<name>` it would be served as. It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted `rank` becomes the arms in declared order and a `panel` below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+         * @summary Compose a router blend from the arms that win your tasks
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -352,7 +369,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudPostV1BenchmarkPresets(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Admits a request to run one or more catalog benchmarks against `model` — a catalog model id — or against `endpoint`, your own OpenAI-compatible endpoint, and answers 202 with what was queued. It ADMITS AND QUEUES ONLY: nothing is executed on this call and no scores come back with it. Results land in the leaderboard as the worker completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free. Validation is up front and total — a request with neither `model` nor `endpoint` is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+         * @summary Queue a benchmark run against a catalog model or your own endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -370,7 +388,8 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
  */
 export class BenchmarkApi extends BaseAPI {
     /**
-     * 
+     * Lists the top-14 set every major provider reports — the id, title, axis, item count and upstream source of each — with `native` marking the ones the standardized harness runs today; the rest are registered and adapter-pending. These ids are the vocabulary the rest of the surface takes: a run names them, and the leaderboard and compare read them from `?benchmark=`. The catalog is deployment-wide and identical for every caller — there is no tenant in it.
+     * @summary The canonical public benchmarks this arena runs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
@@ -380,7 +399,8 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Scores model `?a=` against model `?b=` on one benchmark, paired over the items both arms actually completed. It answers the common-item count, each arm\'s correct count, the rescues each way (items one got right and the other did not), the net, and a two-sided exact McNemar p over the discordant pairs.  Pairing is what makes it valid. Reading two leaderboard rows against each other compares one model\'s coverage with another\'s, so an arm that only ran the easy subset looks better than it is; this endpoint refuses that by construction — items only one arm attempted are dropped before anything is counted. A p of 1 with zero discordant pairs means the arms never disagreed, not that they are identical. Both `a` and `b` are required (400 without them); the benchmark defaults to GPQA-Diamond.
+     * @summary The only sound head-to-head: two models on the items they BOTH answered
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
@@ -390,7 +410,8 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers one row per model for the benchmark named by `?benchmark=` (GPQA-Diamond when omitted), carrying `measured` — the accuracy our own harness got — beside `published`, the provider\'s own claim, and `gap`, the claim minus the measurement. The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows `published` null, a model with only a claim shows `measured` null, and `gap` exists only where both do. Each row also carries `n`, the number of items actually attempted — coverage differs between models, so two `measured` values at different `n` are not comparable and the compare endpoint is what settles that properly. Rows are ordered by measured accuracy, unmeasured last. Scores are deployment-wide evidence, not per-tenant.
+     * @summary Per-model scores for one benchmark: what we measured beside what the vendor claims
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
@@ -400,7 +421,8 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists preset router blends — a named set of model `arms`, the `rank` they escalate through and the `panel` width that bounds fan-out — each served by the model layer as `enso-<name>`. Today it answers exactly one row, the reference blend: a worked example written in models we name, published as an example of the FORM. It is deliberately not the composition of a Hanzo-served tier — the tier name exists to abstract that — so fork it and swap arms by what the leaderboard measures on your own tasks rather than reading it as a disclosure.
+     * @summary The router blends available to compose from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
@@ -410,7 +432,8 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Validates a blend — `name`, its `arms`, the `rank` they escalate through and the `panel` fan-out width — and answers 202 with the preset and the `enso-<name>` it would be served as. It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted `rank` becomes the arms in declared order and a `panel` below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
+     * @summary Compose a router blend from the arms that win your tasks
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
@@ -420,7 +443,8 @@ export class BenchmarkApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Admits a request to run one or more catalog benchmarks against `model` — a catalog model id — or against `endpoint`, your own OpenAI-compatible endpoint, and answers 202 with what was queued. It ADMITS AND QUEUES ONLY: nothing is executed on this call and no scores come back with it. Results land in the leaderboard as the worker completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free. Validation is up front and total — a request with neither `model` nor `endpoint` is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
+     * @summary Queue a benchmark run against a catalog model or your own endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi

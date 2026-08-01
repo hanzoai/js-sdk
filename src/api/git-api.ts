@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
 import type { CloudBlobJSON } from '../models';
 // @ts-ignore
 import type { CloudCommitsJSON } from '../models';
@@ -82,7 +84,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
          * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {string} id ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
+         * @param {string} id Key id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -120,7 +122,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -240,7 +242,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -285,17 +288,21 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} repo 
+         * @param {CloudGetV1GitByOrgByRepoInfoRefsServiceEnum} service 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1GitByOrgByRepoInfoRefs: async (org: string, repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1GitByOrgByRepoInfoRefs: async (org: string, repo: string, service: CloudGetV1GitByOrgByRepoInfoRefsServiceEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
             assertParamExists('cloudGetV1GitByOrgByRepoInfoRefs', 'org', org)
             // verify required parameter 'repo' is not null or undefined
             assertParamExists('cloudGetV1GitByOrgByRepoInfoRefs', 'repo', repo)
+            // verify required parameter 'service' is not null or undefined
+            assertParamExists('cloudGetV1GitByOrgByRepoInfoRefs', 'service', service)
             const localVarPath = `/v1/git/{org}/{repo}/info/refs`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
@@ -313,6 +320,10 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (service !== undefined) {
+                localVarQueryParameter['service'] = service;
+            }
 
 
     
@@ -396,7 +407,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -822,7 +833,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
          * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-         * @param {string} name Name is the repo to update, from the :name path segment.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {CloudPatchIn} cloudPatchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -864,7 +875,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -913,7 +925,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -962,7 +975,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -1007,7 +1021,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
@@ -1260,7 +1275,7 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
-         * @param {string} name Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {CloudPushReq} cloudPushReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1346,7 +1361,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * The canonical forge\'s push-to-deploy door. git.hanzo.ai runs as a SEPARATE process, so its pushes never reach this binary\'s receive-pack; without this a push to the host we call canonical would build nothing. A verified push is handed to the same single trigger the embedded git server and the GitHub App fire, and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded — which is also why this cannot be a typed op, since a typed op decodes first. An UNSET webhook secret refuses every delivery rather than trusting it: a door that starts builds fails closed. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  Every success answers 204 and no body, including the deliveries it deliberately ignores: a non-push event, a payload whose ref is not a ref, a ref DELETE (a zero `after` has no commit to build), and a BOT-authored push — release automation pushes as the forge\'s own actions user, and a release must never rebuild itself. Every other ref reaches the builder, branches and tags alike, because releases are cut by tag and filtering here would silently stop publishing. A trigger that fails is logged rather than returned, so a push that already landed on the forge is not retried against us.
+         * @summary Receive a push from the canonical forge and trigger its build
          * @param {CloudPushEvent} [cloudPushEvent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1383,7 +1399,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Create a repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1420,7 +1437,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Delete a repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1457,7 +1475,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Read one repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1494,7 +1513,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary List your repositories over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1527,7 +1547,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Report your org\'s git storage footprint over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1572,11 +1593,11 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
          * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {string} id ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
+         * @param {string} id Key id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1GitKeysId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async cloudDeleteV1GitKeysId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1GitKeysId(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudDeleteV1GitKeysId']?.[localVarOperationServerIndex]?.url;
@@ -1585,11 +1606,11 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1GitReposName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async cloudDeleteV1GitReposName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1GitReposName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudDeleteV1GitReposName']?.[localVarOperationServerIndex]?.url;
@@ -1603,7 +1624,7 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1GitReposNameMirrorsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async cloudDeleteV1GitReposNameMirrorsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1GitReposNameMirrorsId(name, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudDeleteV1GitReposNameMirrorsId']?.[localVarOperationServerIndex]?.url;
@@ -1617,14 +1638,15 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1GitReposNameSubscriptionsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async cloudDeleteV1GitReposNameSubscriptionsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1GitReposNameSubscriptionsId(name, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudDeleteV1GitReposNameSubscriptionsId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -1638,14 +1660,16 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
          * @param {string} repo 
+         * @param {CloudGetV1GitByOrgByRepoInfoRefsServiceEnum} service 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1GitByOrgByRepoInfoRefs(org: string, repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1GitByOrgByRepoInfoRefs(org, repo, options);
+        async cloudGetV1GitByOrgByRepoInfoRefs(org: string, repo: string, service: CloudGetV1GitByOrgByRepoInfoRefsServiceEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1GitByOrgByRepoInfoRefs(org, repo, service, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudGetV1GitByOrgByRepoInfoRefs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1677,7 +1701,7 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
-         * @param {string} name Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1816,7 +1840,7 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
          * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-         * @param {string} name Name is the repo to update, from the :name path segment.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {CloudPatchIn} cloudPatchIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1828,7 +1852,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -1843,7 +1868,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} project 
          * @param {string} repo 
@@ -1858,28 +1884,30 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1GitByOrgByRepoGitReceivePack(org: string, repo: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudPostV1GitByOrgByRepoGitReceivePack(org: string, repo: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1GitByOrgByRepoGitReceivePack(org, repo, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudPostV1GitByOrgByRepoGitReceivePack']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {string} org 
          * @param {string} repo 
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1GitByOrgByRepoGitUploadPack(org: string, repo: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudPostV1GitByOrgByRepoGitUploadPack(org: string, repo: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1GitByOrgByRepoGitUploadPack(org, repo, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.cloudPostV1GitByOrgByRepoGitUploadPack']?.[localVarOperationServerIndex]?.url;
@@ -1955,7 +1983,7 @@ export const GitApiFp = function(configuration?: Configuration) {
         /**
          * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
-         * @param {string} name Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
+         * @param {string} name Repo name (a trailing \&quot;.git\&quot; is stripped)
          * @param {CloudPushReq} cloudPushReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1981,7 +2009,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The canonical forge\'s push-to-deploy door. git.hanzo.ai runs as a SEPARATE process, so its pushes never reach this binary\'s receive-pack; without this a push to the host we call canonical would build nothing. A verified push is handed to the same single trigger the embedded git server and the GitHub App fire, and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded — which is also why this cannot be a typed op, since a typed op decodes first. An UNSET webhook secret refuses every delivery rather than trusting it: a door that starts builds fails closed. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  Every success answers 204 and no body, including the deliveries it deliberately ignores: a non-push event, a payload whose ref is not a ref, a ref DELETE (a zero `after` has no commit to build), and a BOT-authored push — release automation pushes as the forge\'s own actions user, and a release must never rebuild itself. Every other ref reaches the builder, branches and tags alike, because releases are cut by tag and filtering here would silently stop publishing. A trigger that fails is logged rather than returned, so a push that already landed on the forge is not retried against us.
+         * @summary Receive a push from the canonical forge and trigger its build
          * @param {CloudPushEvent} [cloudPushEvent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1993,7 +2022,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Create a repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2005,7 +2035,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Delete a repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2017,7 +2048,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Read one repository over the ZAP transport
          * @param {CloudZapProcReq} [cloudZapProcReq] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2029,7 +2061,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary List your repositories over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2040,7 +2073,8 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Report your org\'s git storage footprint over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2067,7 +2101,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1GitKeysId(requestParameters: GitApiCloudDeleteV1GitKeysIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        cloudDeleteV1GitKeysId(requestParameters: GitApiCloudDeleteV1GitKeysIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudDeleteV1GitKeysId(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2077,7 +2111,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1GitReposName(requestParameters: GitApiCloudDeleteV1GitReposNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        cloudDeleteV1GitReposName(requestParameters: GitApiCloudDeleteV1GitReposNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudDeleteV1GitReposName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2087,7 +2121,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1GitReposNameMirrorsId(requestParameters: GitApiCloudDeleteV1GitReposNameMirrorsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        cloudDeleteV1GitReposNameMirrorsId(requestParameters: GitApiCloudDeleteV1GitReposNameMirrorsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudDeleteV1GitReposNameMirrorsId(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2097,11 +2131,12 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1GitReposNameSubscriptionsId(requestParameters: GitApiCloudDeleteV1GitReposNameSubscriptionsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        cloudDeleteV1GitReposNameSubscriptionsId(requestParameters: GitApiCloudDeleteV1GitReposNameSubscriptionsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudDeleteV1GitReposNameSubscriptionsId(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {GitApiCloudGetV1GitByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2110,13 +2145,14 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudGetV1GitByOrgByProjectByRepoInfoRefs(requestParameters.org, requestParameters.project, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Advertise a repository\'s refs to a git client
          * @param {GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1GitByOrgByRepoInfoRefs(requestParameters: GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1GitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
+        cloudGetV1GitByOrgByRepoInfoRefs(requestParameters: GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.cloudGetV1GitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, requestParameters.service, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
@@ -2246,7 +2282,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPatchV1GitReposName(requestParameters.name, requestParameters.cloudPatchIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {GitApiCloudPostV1GitByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2255,7 +2292,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitByOrgByProjectByRepoGitReceivePack(requestParameters.org, requestParameters.project, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {GitApiCloudPostV1GitByOrgByProjectByRepoGitUploadPackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2264,21 +2302,23 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitByOrgByProjectByRepoGitUploadPack(requestParameters.org, requestParameters.project, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Accept a push, and turn it into a build
          * @param {GitApiCloudPostV1GitByOrgByRepoGitReceivePackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1GitByOrgByRepoGitReceivePack(requestParameters: GitApiCloudPostV1GitByOrgByRepoGitReceivePackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudPostV1GitByOrgByRepoGitReceivePack(requestParameters: GitApiCloudPostV1GitByOrgByRepoGitReceivePackRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
             return localVarFp.cloudPostV1GitByOrgByRepoGitReceivePack(requestParameters.org, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+         * @summary Serve a clone or fetch
          * @param {GitApiCloudPostV1GitByOrgByRepoGitUploadPackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1GitByOrgByRepoGitUploadPack(requestParameters: GitApiCloudPostV1GitByOrgByRepoGitUploadPackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudPostV1GitByOrgByRepoGitUploadPack(requestParameters: GitApiCloudPostV1GitByOrgByRepoGitUploadPackRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
             return localVarFp.cloudPostV1GitByOrgByRepoGitUploadPack(requestParameters.org, requestParameters.repo, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2352,7 +2392,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitReposNameSubscriptions(requestParameters.name, requestParameters.cloudSubscribeReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The canonical forge\'s push-to-deploy door. git.hanzo.ai runs as a SEPARATE process, so its pushes never reach this binary\'s receive-pack; without this a push to the host we call canonical would build nothing. A verified push is handed to the same single trigger the embedded git server and the GitHub App fire, and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded — which is also why this cannot be a typed op, since a typed op decodes first. An UNSET webhook secret refuses every delivery rather than trusting it: a door that starts builds fails closed. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  Every success answers 204 and no body, including the deliveries it deliberately ignores: a non-push event, a payload whose ref is not a ref, a ref DELETE (a zero `after` has no commit to build), and a BOT-authored push — release automation pushes as the forge\'s own actions user, and a release must never rebuild itself. Every other ref reaches the builder, branches and tags alike, because releases are cut by tag and filtering here would silently stop publishing. A trigger that fails is logged rather than returned, so a push that already landed on the forge is not retried against us.
+         * @summary Receive a push from the canonical forge and trigger its build
          * @param {GitApiCloudPostV1GitWebhookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2361,7 +2402,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitWebhook(requestParameters.cloudPushEvent, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Create a repository over the ZAP transport
          * @param {GitApiCloudPostV1GitZapCreaterepoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2370,7 +2412,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitZapCreaterepo(requestParameters.cloudZapProcReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Delete a repository over the ZAP transport
          * @param {GitApiCloudPostV1GitZapDeleterepoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2379,7 +2422,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitZapDeleterepo(requestParameters.cloudZapProcReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Read one repository over the ZAP transport
          * @param {GitApiCloudPostV1GitZapGetrepoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2388,7 +2432,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitZapGetrepo(requestParameters.cloudZapProcReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary List your repositories over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2396,7 +2441,8 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudPostV1GitZapListrepos(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+         * @summary Report your org\'s git storage footprint over the ZAP transport
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2413,7 +2459,7 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface GitApiCloudDeleteV1GitKeysIdRequest {
     /**
-     * ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
+     * Key id
      * @type {string}
      * @memberof GitApiCloudDeleteV1GitKeysId
      */
@@ -2427,7 +2473,7 @@ export interface GitApiCloudDeleteV1GitKeysIdRequest {
  */
 export interface GitApiCloudDeleteV1GitReposNameRequest {
     /**
-     * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+     * Repo name (a trailing \&quot;.git\&quot; is stripped)
      * @type {string}
      * @memberof GitApiCloudDeleteV1GitReposName
      */
@@ -2523,6 +2569,13 @@ export interface GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest {
      * @memberof GitApiCloudGetV1GitByOrgByRepoInfoRefs
      */
     readonly repo: string
+
+    /**
+     * 
+     * @type {'git-upload-pack' | 'git-receive-pack'}
+     * @memberof GitApiCloudGetV1GitByOrgByRepoInfoRefs
+     */
+    readonly service: CloudGetV1GitByOrgByRepoInfoRefsServiceEnum
 }
 
 /**
@@ -2532,7 +2585,7 @@ export interface GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest {
  */
 export interface GitApiCloudGetV1GitReposNameRequest {
     /**
-     * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
+     * Repo name (a trailing \&quot;.git\&quot; is stripped)
      * @type {string}
      * @memberof GitApiCloudGetV1GitReposName
      */
@@ -2728,7 +2781,7 @@ export interface GitApiCloudGetV1GitReposNameTreeRequest {
  */
 export interface GitApiCloudPatchV1GitReposNameRequest {
     /**
-     * Name is the repo to update, from the :name path segment.
+     * Repo name (a trailing \&quot;.git\&quot; is stripped)
      * @type {string}
      * @memberof GitApiCloudPatchV1GitReposName
      */
@@ -2959,7 +3012,7 @@ export interface GitApiCloudPostV1GitReposNameMirrorsRequest {
  */
 export interface GitApiCloudPostV1GitReposNamePushRequest {
     /**
-     * Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
+     * Repo name (a trailing \&quot;.git\&quot; is stripped)
      * @type {string}
      * @memberof GitApiCloudPostV1GitReposNamePush
      */
@@ -3106,7 +3159,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Advertise a repository\'s refs to a git client
      * @param {GitApiCloudGetV1GitByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3117,14 +3171,15 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Advertise a repository\'s refs to a git client
      * @param {GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
     public cloudGetV1GitByOrgByRepoInfoRefs(requestParameters: GitApiCloudGetV1GitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).cloudGetV1GitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+        return GitApiFp(this.configuration).cloudGetV1GitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, requestParameters.service, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3281,7 +3336,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Accept a push, and turn it into a build
      * @param {GitApiCloudPostV1GitByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3292,7 +3348,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Serve a clone or fetch
      * @param {GitApiCloudPostV1GitByOrgByProjectByRepoGitUploadPackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3303,7 +3360,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Accept a push, and turn it into a build
      * @param {GitApiCloudPostV1GitByOrgByRepoGitReceivePackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3314,7 +3372,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The pack-transfer phase of a clone or fetch: the request and the response are git\'s binary pack protocol, streamed straight through git itself — request body to git\'s stdin, git\'s stdout to the response — so a multi-gigabyte clone never lands in this process\'s memory.  A PUBLIC repository is fetched anonymously; a private one requires its own org, and a wrong or absent org is 404 rather than a hint that the repository exists. A Content-Type other than `application/x-git-upload-pack-request` is 400. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
+     * @summary Serve a clone or fetch
      * @param {GitApiCloudPostV1GitByOrgByRepoGitUploadPackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3409,7 +3468,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The canonical forge\'s push-to-deploy door. git.hanzo.ai runs as a SEPARATE process, so its pushes never reach this binary\'s receive-pack; without this a push to the host we call canonical would build nothing. A verified push is handed to the same single trigger the embedded git server and the GitHub App fire, and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded — which is also why this cannot be a typed op, since a typed op decodes first. An UNSET webhook secret refuses every delivery rather than trusting it: a door that starts builds fails closed. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  Every success answers 204 and no body, including the deliveries it deliberately ignores: a non-push event, a payload whose ref is not a ref, a ref DELETE (a zero `after` has no commit to build), and a BOT-authored push — release automation pushes as the forge\'s own actions user, and a release must never rebuild itself. Every other ref reaches the builder, branches and tags alike, because releases are cut by tag and filtering here would silently stop publishing. A trigger that fails is logged rather than returned, so a push that already landed on the forge is not retried against us.
+     * @summary Receive a push from the canonical forge and trigger its build
      * @param {GitApiCloudPostV1GitWebhookRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3420,7 +3480,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Creates a repository in the caller\'s org and project scope and answers with its record. `name` is required and `description` is optional; `project` narrows the scope within the org. A name already taken in that scope is a 409 envelope and an invalid name a 400.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+     * @summary Create a repository over the ZAP transport
      * @param {GitApiCloudPostV1GitZapCreaterepoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3431,7 +3492,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Deletes the repository named by `name` and answers with the deleted name. A repository outside the caller\'s org and project scope is a 404 envelope, so a delete can never reach another tenant\'s repository.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+     * @summary Delete a repository over the ZAP transport
      * @param {GitApiCloudPostV1GitZapDeleterepoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3442,7 +3504,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers a single repository\'s record, named by `name`. A repository outside the caller\'s org and project scope is a 404 envelope, the same answer one that does not exist gets.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+     * @summary Read one repository over the ZAP transport
      * @param {GitApiCloudPostV1GitZapGetrepoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3453,7 +3516,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers every repository in the caller\'s org and project scope. It reads NO body — the scope is entirely the caller\'s identity — so a request with an empty object is correct.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+     * @summary List your repositories over the ZAP transport
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
@@ -3463,7 +3527,8 @@ export class GitApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers every repository in the caller\'s org with its size in bytes, plus the org\'s total — what git storage is actually being used, and by which repository. It reads NO body, and it is scoped to the caller\'s own org, so it is that org\'s footprint and never the fleet\'s.  A ZAP PROCEDURE, not a REST resource. It answers the bridge\'s {status, msg, data} envelope rather than the raw view the /v1 route returns — which is a wire shape a typed op cannot produce, and the reason this stays a raw handler — and it calls the SAME core function the REST route calls, so the two transports cannot diverge in behaviour. Org and project scope come from the request identity and NEVER from the body: the body cannot widen the caller\'s scope. Without a validated org the answer is a 403 envelope.
+     * @summary Report your org\'s git storage footprint over the ZAP transport
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
@@ -3473,3 +3538,11 @@ export class GitApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const CloudGetV1GitByOrgByRepoInfoRefsServiceEnum = {
+    GitUploadPack: 'git-upload-pack',
+    GitReceivePack: 'git-receive-pack'
+} as const;
+export type CloudGetV1GitByOrgByRepoInfoRefsServiceEnum = typeof CloudGetV1GitByOrgByRepoInfoRefsServiceEnum[keyof typeof CloudGetV1GitByOrgByRepoInfoRefsServiceEnum];

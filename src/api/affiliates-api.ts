@@ -22,6 +22,18 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AffiliatesApplyRequest } from '../models';
+// @ts-ignore
+import type { AffiliatesApplyResponse } from '../models';
+// @ts-ignore
+import type { AffiliatesAttributeRequest } from '../models';
+// @ts-ignore
+import type { AffiliatesAttributeResponse } from '../models';
+// @ts-ignore
+import type { AffiliatesError } from '../models';
+// @ts-ignore
+import type { CloudGetV1Affiliates200Response } from '../models';
+// @ts-ignore
 import type { CommerceAffiliate } from '../models';
 // @ts-ignore
 import type { CommerceError } from '../models';
@@ -34,7 +46,8 @@ import type { CommercePaginatedAffiliates } from '../models';
 export const AffiliatesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Answers the caller org\'s OWN affiliate standing: status, referral code and share link, commission rate, how many orgs it has referred, and its lifetime accrued, still-pending and already-paid commission in integer cents, with its payout history.  An org that never applied gets an honest `isAffiliate:false` and the default rate rather than a 404 — the console renders the apply form off that answer.  The affiliate is resolved from the VALIDATED org, never from a field, so this can only ever read the caller\'s own row; without a principal it is refused. For an approved affiliate the read first runs the accrual sweep over its own downline, so the dashboard is self-updating — bounded and best-effort, so a commerce hiccup shows slightly stale numbers instead of failing the page. Commission is earned on Hanzo\'s MARGIN, never on the referred customer\'s bill, so nothing here changes what that customer pays.
+         * @summary Your org\'s affiliate standing and commission dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -67,7 +80,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * The top affiliates by lifetime accrued commission, shown by OPT-IN HANDLE with aggregate figures only, plus the caller\'s own exact rank.  It never discloses an org identity and never a referred org\'s usage. An affiliate that has set no handle still OCCUPIES its rank but is not listed — so opting out hides the name, not the position, and the visible board must not be read as a complete roster.  The caller\'s own row carries its exact GLOBAL rank, computed over the whole approved set rather than over the page, so it is right well outside the top of the board. Only an approved affiliate has a rank. Requires a validated principal; a signed-in non-affiliate may read the board but gets no personal row.
+         * @summary The partner leaderboard, plus your own rank
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -100,7 +114,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * The richer self-view: the same lifetime accrued, pending and paid commission and payout history, plus the caller\'s downline broken out by upline LEVEL — direct, second, third — each with the rate paid at that level and how many orgs sit there.  Commission is MULTI-LEVEL: a referred org\'s spend pays up its referral chain, three levels deep and no further. The direct level is the affiliate\'s own negotiated rate; the second and third are platform-wide switches, read live, so the schedule shown is the one actually in force rather than one compiled in. A caller that has not applied still gets that schedule alongside `isAffiliate:false`, so the console can show what it would earn.  Scoped to the validated org and nothing else, and refused without a principal. An approved affiliate\'s figures are refreshed by a bounded, best-effort sweep before the read.
+         * @summary Your affiliate self-view, with the downline broken out by level
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -133,7 +148,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * The caller\'s own commission ledger: per period, the margin it earned against and the commission taken from that margin; and per referred org, that referral\'s aggregate contribution. Integer cents throughout.  The per-org view deliberately carries the affiliate\'s OWN earned share and NOT the referred org\'s spend or margin. An affiliate is entitled to what it earned, not to a restatement of its customer\'s usage — the period view is where the margin base appears, aggregated across every referral.  Scoped server-side to the validated caller\'s affiliate; a caller that is not one gets `isAffiliate:false`. An approved affiliate\'s ledger is refreshed by a bounded, best-effort sweep first, so the figures are current.
+         * @summary Your commission ledger, by period and by referred org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -166,7 +182,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * The caller\'s share links, each with its URL and its funnel: clicks tracked, signups — orgs attributed with that code — and conversions, meaning how many of those signups have actually produced commission.  Signups and conversions are DERIVED from the commission ledger and never stored, so they cannot drift from the money. Clicks are the one stored counter and the one that is pure vanity.  Any pending public click pings are folded into the store before the read, in one batch — which is how the counters stay current without a database write per click. Scoped to the validated caller\'s own affiliate; a non-affiliate gets `isAffiliate:false` and the link cap.
+         * @summary Your share links and their funnel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -199,11 +216,13 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
+         * @summary Enroll your org in the partner program
+         * @param {AffiliatesApplyRequest} [affiliatesApplyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AffiliatesApply: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AffiliatesApply: async (affiliatesApplyRequest?: AffiliatesApplyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates/apply`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -222,9 +241,12 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(affiliatesApplyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -232,11 +254,15 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
+         * @summary Record that your org arrived through an affiliate\'s code
+         * @param {AffiliatesAttributeRequest} affiliatesAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AffiliatesAttribute: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AffiliatesAttribute: async (affiliatesAttributeRequest: AffiliatesAttributeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'affiliatesAttributeRequest' is not null or undefined
+            assertParamExists('cloudPostV1AffiliatesAttribute', 'affiliatesAttributeRequest', affiliatesAttributeRequest)
             const localVarPath = `/v1/affiliates/attribute`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -255,9 +281,12 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(affiliatesAttributeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -265,7 +294,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
+         * @summary Count a click on a share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -298,7 +328,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
+         * @summary Set or clear your public leaderboard name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -331,7 +362,8 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
+         * @summary Mint a new share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -534,18 +566,20 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AffiliatesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Answers the caller org\'s OWN affiliate standing: status, referral code and share link, commission rate, how many orgs it has referred, and its lifetime accrued, still-pending and already-paid commission in integer cents, with its payout history.  An org that never applied gets an honest `isAffiliate:false` and the default rate rather than a 404 — the console renders the apply form off that answer.  The affiliate is resolved from the VALIDATED org, never from a field, so this can only ever read the caller\'s own row; without a principal it is refused. For an approved affiliate the read first runs the accrual sweep over its own downline, so the dashboard is self-updating — bounded and best-effort, so a commerce hiccup shows slightly stale numbers instead of failing the page. Commission is earned on Hanzo\'s MARGIN, never on the referred customer\'s bill, so nothing here changes what that customer pays.
+         * @summary Your org\'s affiliate standing and commission dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1Affiliates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1Affiliates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1Affiliates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1Affiliates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.cloudGetV1Affiliates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The top affiliates by lifetime accrued commission, shown by OPT-IN HANDLE with aggregate figures only, plus the caller\'s own exact rank.  It never discloses an org identity and never a referred org\'s usage. An affiliate that has set no handle still OCCUPIES its rank but is not listed — so opting out hides the name, not the position, and the visible board must not be read as a complete roster.  The caller\'s own row carries its exact GLOBAL rank, computed over the whole approved set rather than over the page, so it is right well outside the top of the board. Only an approved affiliate has a rank. Requires a validated principal; a signed-in non-affiliate may read the board but gets no personal row.
+         * @summary The partner leaderboard, plus your own rank
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -556,7 +590,8 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The richer self-view: the same lifetime accrued, pending and paid commission and payout history, plus the caller\'s downline broken out by upline LEVEL — direct, second, third — each with the rate paid at that level and how many orgs sit there.  Commission is MULTI-LEVEL: a referred org\'s spend pays up its referral chain, three levels deep and no further. The direct level is the affiliate\'s own negotiated rate; the second and third are platform-wide switches, read live, so the schedule shown is the one actually in force rather than one compiled in. A caller that has not applied still gets that schedule alongside `isAffiliate:false`, so the console can show what it would earn.  Scoped to the validated org and nothing else, and refused without a principal. An approved affiliate\'s figures are refreshed by a bounded, best-effort sweep before the read.
+         * @summary Your affiliate self-view, with the downline broken out by level
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -567,7 +602,8 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The caller\'s own commission ledger: per period, the margin it earned against and the commission taken from that margin; and per referred org, that referral\'s aggregate contribution. Integer cents throughout.  The per-org view deliberately carries the affiliate\'s OWN earned share and NOT the referred org\'s spend or margin. An affiliate is entitled to what it earned, not to a restatement of its customer\'s usage — the period view is where the margin base appears, aggregated across every referral.  Scoped server-side to the validated caller\'s affiliate; a caller that is not one gets `isAffiliate:false`. An approved affiliate\'s ledger is refreshed by a bounded, best-effort sweep first, so the figures are current.
+         * @summary Your commission ledger, by period and by referred org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -578,7 +614,8 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The caller\'s share links, each with its URL and its funnel: clicks tracked, signups — orgs attributed with that code — and conversions, meaning how many of those signups have actually produced commission.  Signups and conversions are DERIVED from the commission ledger and never stored, so they cannot drift from the money. Clicks are the one stored counter and the one that is pure vanity.  Any pending public click pings are folded into the store before the read, in one batch — which is how the counters stay current without a database write per click. Scoped to the validated caller\'s own affiliate; a non-affiliate gets `isAffiliate:false` and the link cap.
+         * @summary Your share links and their funnel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -589,29 +626,34 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
+         * @summary Enroll your org in the partner program
+         * @param {AffiliatesApplyRequest} [affiliatesApplyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AffiliatesApply(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AffiliatesApply(options);
+        async cloudPostV1AffiliatesApply(affiliatesApplyRequest?: AffiliatesApplyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliatesApplyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AffiliatesApply(affiliatesApplyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.cloudPostV1AffiliatesApply']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
+         * @summary Record that your org arrived through an affiliate\'s code
+         * @param {AffiliatesAttributeRequest} affiliatesAttributeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AffiliatesAttribute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AffiliatesAttribute(options);
+        async cloudPostV1AffiliatesAttribute(affiliatesAttributeRequest: AffiliatesAttributeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliatesAttributeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AffiliatesAttribute(affiliatesAttributeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.cloudPostV1AffiliatesAttribute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
+         * @summary Count a click on a share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -622,7 +664,8 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
+         * @summary Set or clear your public leaderboard name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -633,7 +676,8 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
+         * @summary Mint a new share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -707,15 +751,17 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
     const localVarFp = AffiliatesApiFp(configuration)
     return {
         /**
-         * 
+         * Answers the caller org\'s OWN affiliate standing: status, referral code and share link, commission rate, how many orgs it has referred, and its lifetime accrued, still-pending and already-paid commission in integer cents, with its payout history.  An org that never applied gets an honest `isAffiliate:false` and the default rate rather than a 404 — the console renders the apply form off that answer.  The affiliate is resolved from the VALIDATED org, never from a field, so this can only ever read the caller\'s own row; without a principal it is refused. For an approved affiliate the read first runs the accrual sweep over its own downline, so the dashboard is self-updating — bounded and best-effort, so a commerce hiccup shows slightly stale numbers instead of failing the page. Commission is earned on Hanzo\'s MARGIN, never on the referred customer\'s bill, so nothing here changes what that customer pays.
+         * @summary Your org\'s affiliate standing and commission dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1Affiliates(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1Affiliates(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1Affiliates200Response> {
             return localVarFp.cloudGetV1Affiliates(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The top affiliates by lifetime accrued commission, shown by OPT-IN HANDLE with aggregate figures only, plus the caller\'s own exact rank.  It never discloses an org identity and never a referred org\'s usage. An affiliate that has set no handle still OCCUPIES its rank but is not listed — so opting out hides the name, not the position, and the visible board must not be read as a complete roster.  The caller\'s own row carries its exact GLOBAL rank, computed over the whole approved set rather than over the page, so it is right well outside the top of the board. Only an approved affiliate has a rank. Requires a validated principal; a signed-in non-affiliate may read the board but gets no personal row.
+         * @summary The partner leaderboard, plus your own rank
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -723,7 +769,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1AffiliatesLeaderboard(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The richer self-view: the same lifetime accrued, pending and paid commission and payout history, plus the caller\'s downline broken out by upline LEVEL — direct, second, third — each with the rate paid at that level and how many orgs sit there.  Commission is MULTI-LEVEL: a referred org\'s spend pays up its referral chain, three levels deep and no further. The direct level is the affiliate\'s own negotiated rate; the second and third are platform-wide switches, read live, so the schedule shown is the one actually in force rather than one compiled in. A caller that has not applied still gets that schedule alongside `isAffiliate:false`, so the console can show what it would earn.  Scoped to the validated org and nothing else, and refused without a principal. An approved affiliate\'s figures are refreshed by a bounded, best-effort sweep before the read.
+         * @summary Your affiliate self-view, with the downline broken out by level
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -731,7 +778,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1AffiliatesMe(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The caller\'s own commission ledger: per period, the margin it earned against and the commission taken from that margin; and per referred org, that referral\'s aggregate contribution. Integer cents throughout.  The per-org view deliberately carries the affiliate\'s OWN earned share and NOT the referred org\'s spend or margin. An affiliate is entitled to what it earned, not to a restatement of its customer\'s usage — the period view is where the margin base appears, aggregated across every referral.  Scoped server-side to the validated caller\'s affiliate; a caller that is not one gets `isAffiliate:false`. An approved affiliate\'s ledger is refreshed by a bounded, best-effort sweep first, so the figures are current.
+         * @summary Your commission ledger, by period and by referred org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -739,7 +787,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1AffiliatesMeEarnings(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The caller\'s share links, each with its URL and its funnel: clicks tracked, signups — orgs attributed with that code — and conversions, meaning how many of those signups have actually produced commission.  Signups and conversions are DERIVED from the commission ledger and never stored, so they cannot drift from the money. Clicks are the one stored counter and the one that is pure vanity.  Any pending public click pings are folded into the store before the read, in one batch — which is how the counters stay current without a database write per click. Scoped to the validated caller\'s own affiliate; a non-affiliate gets `isAffiliate:false` and the link cap.
+         * @summary Your share links and their funnel
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -747,23 +796,28 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudGetV1AffiliatesMeLinks(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
+         * @summary Enroll your org in the partner program
+         * @param {AffiliatesApiCloudPostV1AffiliatesApplyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AffiliatesApply(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AffiliatesApply(options).then((request) => request(axios, basePath));
+        cloudPostV1AffiliatesApply(requestParameters: AffiliatesApiCloudPostV1AffiliatesApplyRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AffiliatesApplyResponse> {
+            return localVarFp.cloudPostV1AffiliatesApply(requestParameters.affiliatesApplyRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
+         * @summary Record that your org arrived through an affiliate\'s code
+         * @param {AffiliatesApiCloudPostV1AffiliatesAttributeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AffiliatesAttribute(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AffiliatesAttribute(options).then((request) => request(axios, basePath));
+        cloudPostV1AffiliatesAttribute(requestParameters: AffiliatesApiCloudPostV1AffiliatesAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliatesAttributeResponse> {
+            return localVarFp.cloudPostV1AffiliatesAttribute(requestParameters.affiliatesAttributeRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
+         * @summary Count a click on a share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -771,7 +825,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPostV1AffiliatesClick(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
+         * @summary Set or clear your public leaderboard name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -779,7 +834,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
             return localVarFp.cloudPostV1AffiliatesMeHandle(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
+         * @summary Mint a new share link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -828,6 +884,34 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
         },
     };
 };
+
+/**
+ * Request parameters for cloudPostV1AffiliatesApply operation in AffiliatesApi.
+ * @export
+ * @interface AffiliatesApiCloudPostV1AffiliatesApplyRequest
+ */
+export interface AffiliatesApiCloudPostV1AffiliatesApplyRequest {
+    /**
+     * 
+     * @type {AffiliatesApplyRequest}
+     * @memberof AffiliatesApiCloudPostV1AffiliatesApply
+     */
+    readonly affiliatesApplyRequest?: AffiliatesApplyRequest
+}
+
+/**
+ * Request parameters for cloudPostV1AffiliatesAttribute operation in AffiliatesApi.
+ * @export
+ * @interface AffiliatesApiCloudPostV1AffiliatesAttributeRequest
+ */
+export interface AffiliatesApiCloudPostV1AffiliatesAttributeRequest {
+    /**
+     * 
+     * @type {AffiliatesAttributeRequest}
+     * @memberof AffiliatesApiCloudPostV1AffiliatesAttribute
+     */
+    readonly affiliatesAttributeRequest: AffiliatesAttributeRequest
+}
 
 /**
  * Request parameters for commerceConnectAffiliate operation in AffiliatesApi.
@@ -900,7 +984,8 @@ export interface AffiliatesApiCommerceListAffiliatesRequest {
  */
 export class AffiliatesApi extends BaseAPI {
     /**
-     * 
+     * Answers the caller org\'s OWN affiliate standing: status, referral code and share link, commission rate, how many orgs it has referred, and its lifetime accrued, still-pending and already-paid commission in integer cents, with its payout history.  An org that never applied gets an honest `isAffiliate:false` and the default rate rather than a 404 — the console renders the apply form off that answer.  The affiliate is resolved from the VALIDATED org, never from a field, so this can only ever read the caller\'s own row; without a principal it is refused. For an approved affiliate the read first runs the accrual sweep over its own downline, so the dashboard is self-updating — bounded and best-effort, so a commerce hiccup shows slightly stale numbers instead of failing the page. Commission is earned on Hanzo\'s MARGIN, never on the referred customer\'s bill, so nothing here changes what that customer pays.
+     * @summary Your org\'s affiliate standing and commission dashboard
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -910,7 +995,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The top affiliates by lifetime accrued commission, shown by OPT-IN HANDLE with aggregate figures only, plus the caller\'s own exact rank.  It never discloses an org identity and never a referred org\'s usage. An affiliate that has set no handle still OCCUPIES its rank but is not listed — so opting out hides the name, not the position, and the visible board must not be read as a complete roster.  The caller\'s own row carries its exact GLOBAL rank, computed over the whole approved set rather than over the page, so it is right well outside the top of the board. Only an approved affiliate has a rank. Requires a validated principal; a signed-in non-affiliate may read the board but gets no personal row.
+     * @summary The partner leaderboard, plus your own rank
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -920,7 +1006,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The richer self-view: the same lifetime accrued, pending and paid commission and payout history, plus the caller\'s downline broken out by upline LEVEL — direct, second, third — each with the rate paid at that level and how many orgs sit there.  Commission is MULTI-LEVEL: a referred org\'s spend pays up its referral chain, three levels deep and no further. The direct level is the affiliate\'s own negotiated rate; the second and third are platform-wide switches, read live, so the schedule shown is the one actually in force rather than one compiled in. A caller that has not applied still gets that schedule alongside `isAffiliate:false`, so the console can show what it would earn.  Scoped to the validated org and nothing else, and refused without a principal. An approved affiliate\'s figures are refreshed by a bounded, best-effort sweep before the read.
+     * @summary Your affiliate self-view, with the downline broken out by level
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -930,7 +1017,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The caller\'s own commission ledger: per period, the margin it earned against and the commission taken from that margin; and per referred org, that referral\'s aggregate contribution. Integer cents throughout.  The per-org view deliberately carries the affiliate\'s OWN earned share and NOT the referred org\'s spend or margin. An affiliate is entitled to what it earned, not to a restatement of its customer\'s usage — the period view is where the margin base appears, aggregated across every referral.  Scoped server-side to the validated caller\'s affiliate; a caller that is not one gets `isAffiliate:false`. An approved affiliate\'s ledger is refreshed by a bounded, best-effort sweep first, so the figures are current.
+     * @summary Your commission ledger, by period and by referred org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -940,7 +1028,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The caller\'s share links, each with its URL and its funnel: clicks tracked, signups — orgs attributed with that code — and conversions, meaning how many of those signups have actually produced commission.  Signups and conversions are DERIVED from the commission ledger and never stored, so they cannot drift from the money. Clicks are the one stored counter and the one that is pure vanity.  Any pending public click pings are folded into the store before the read, in one batch — which is how the counters stay current without a database write per click. Scoped to the validated caller\'s own affiliate; a non-affiliate gets `isAffiliate:false` and the link cap.
+     * @summary Your share links and their funnel
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -950,27 +1039,32 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
+     * @summary Enroll your org in the partner program
+     * @param {AffiliatesApiCloudPostV1AffiliatesApplyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public cloudPostV1AffiliatesApply(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).cloudPostV1AffiliatesApply(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1AffiliatesApply(requestParameters: AffiliatesApiCloudPostV1AffiliatesApplyRequest = {}, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).cloudPostV1AffiliatesApply(requestParameters.affiliatesApplyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
+     * @summary Record that your org arrived through an affiliate\'s code
+     * @param {AffiliatesApiCloudPostV1AffiliatesAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public cloudPostV1AffiliatesAttribute(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).cloudPostV1AffiliatesAttribute(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1AffiliatesAttribute(requestParameters: AffiliatesApiCloudPostV1AffiliatesAttributeRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).cloudPostV1AffiliatesAttribute(requestParameters.affiliatesAttributeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
+     * @summary Count a click on a share link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -980,7 +1074,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
+     * @summary Set or clear your public leaderboard name
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
@@ -990,7 +1085,8 @@ export class AffiliatesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
+     * @summary Mint a new share link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi

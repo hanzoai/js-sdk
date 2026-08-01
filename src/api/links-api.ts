@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const LinksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it.  The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out one account and stop the sessions it was running
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -65,7 +66,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the caller\'s own links plus a `devices` projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary List your linked accounts and the devices they sit on
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -98,7 +100,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence.  The static paths on this collection — route, usage, devices — are registered BEFORE this one and win first-match, so a link whose id collided with one of those words could not be addressed here. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Read one linked account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -135,7 +138,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one machine: its accounts, usage and live sessions
          * @param {string} machine 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -172,7 +176,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (`plan` or `commerce`), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Get the failover order across your linked accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -205,7 +210,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it. `provider` is required; `account` narrows to one account when a user has several with the same provider; `window` selects a window class (6h, day, week or month) and `range` the period (1h, 24h, 7d or 30d, default 24h). An unknown window class or range is 400, never a quiet fallback to a different one.  When no series is available the response is a 200 with `available: false` and empty lists — an honest \"we have no data\", which is a different claim from zero usage. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one provider account\'s own usage dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -238,7 +244,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers one row per linked account the GATEWAY actually routed through, plus their total — requests, prompt and completion tokens, and cost. This is the routed ledger, the read twin of the counter the router writes, and it is distinct from both of its neighbours: not the device collector\'s plan snapshots, and not the org money ledger. The `source` and `scope` fields on the response say so on every payload.  The same shape answers in the billing namespace, from one shaping function, so the two mounts cannot drift. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Break down what the gateway routed through each of your accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -271,7 +278,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. `range` is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports `available: false` instead of a zero that would read as \"no usage\". Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See plan consumption and Hanzo spend side by side
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -304,7 +312,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat.  NO SECRET IS SENT OR STORED. The provider\'s OAuth token or API key stays on the device; this registry holds link metadata and usage snapshots only, and the caller authenticates with their own Hanzo bearer. `kind` decides how the account\'s inference BILLS and defaults to `subscription`: a subscription account bills the user\'s own monthly plan and is metered here for visibility only, while an `apikey` account bills through commerce on the gateway path. An optional `usage` snapshot is clamped and re-serialized to known fields; omitting it keeps the last good one.  `machine` and `provider` are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Register a signed-in AI provider account on a machine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -337,7 +346,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button.  Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out every account on one machine and stop its sessions
          * @param {string} machine 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -374,7 +384,8 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Ingests a batch of usage samples from the on-device collector and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and `stored` says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way.  Send either one sample inline or up to 256 in `samples`; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Report usage samples from the device collector
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -417,7 +428,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LinksApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it.  The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out one account and stop the sessions it was running
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -429,7 +441,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the caller\'s own links plus a `devices` projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary List your linked accounts and the devices they sit on
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -440,7 +453,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence.  The static paths on this collection — route, usage, devices — are registered BEFORE this one and win first-match, so a link whose id collided with one of those words could not be addressed here. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Read one linked account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -452,7 +466,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one machine: its accounts, usage and live sessions
          * @param {string} machine 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -464,7 +479,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (`plan` or `commerce`), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Get the failover order across your linked accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -475,7 +491,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it. `provider` is required; `account` narrows to one account when a user has several with the same provider; `window` selects a window class (6h, day, week or month) and `range` the period (1h, 24h, 7d or 30d, default 24h). An unknown window class or range is 400, never a quiet fallback to a different one.  When no series is available the response is a 200 with `available: false` and empty lists — an honest \"we have no data\", which is a different claim from zero usage. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one provider account\'s own usage dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -486,7 +503,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers one row per linked account the GATEWAY actually routed through, plus their total — requests, prompt and completion tokens, and cost. This is the routed ledger, the read twin of the counter the router writes, and it is distinct from both of its neighbours: not the device collector\'s plan snapshots, and not the org money ledger. The `source` and `scope` fields on the response say so on every payload.  The same shape answers in the billing namespace, from one shaping function, so the two mounts cannot drift. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Break down what the gateway routed through each of your accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -497,7 +515,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. `range` is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports `available: false` instead of a zero that would read as \"no usage\". Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See plan consumption and Hanzo spend side by side
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -508,7 +527,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat.  NO SECRET IS SENT OR STORED. The provider\'s OAuth token or API key stays on the device; this registry holds link metadata and usage snapshots only, and the caller authenticates with their own Hanzo bearer. `kind` decides how the account\'s inference BILLS and defaults to `subscription`: a subscription account bills the user\'s own monthly plan and is metered here for visibility only, while an `apikey` account bills through commerce on the gateway path. An optional `usage` snapshot is clamped and re-serialized to known fields; omitting it keeps the last good one.  `machine` and `provider` are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Register a signed-in AI provider account on a machine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -519,7 +539,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button.  Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out every account on one machine and stop its sessions
          * @param {string} machine 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -531,7 +552,8 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Ingests a batch of usage samples from the on-device collector and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and `stored` says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way.  Send either one sample inline or up to 256 in `samples`; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Report usage samples from the device collector
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -552,7 +574,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = LinksApiFp(configuration)
     return {
         /**
-         * 
+         * Revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it.  The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out one account and stop the sessions it was running
          * @param {LinksApiCloudDeleteV1LinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -561,7 +584,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the caller\'s own links plus a `devices` projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary List your linked accounts and the devices they sit on
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -569,7 +593,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1Links(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence.  The static paths on this collection — route, usage, devices — are registered BEFORE this one and win first-match, so a link whose id collided with one of those words could not be addressed here. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Read one linked account
          * @param {LinksApiCloudGetV1LinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -578,7 +603,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one machine: its accounts, usage and live sessions
          * @param {LinksApiCloudGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -587,7 +613,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksDevicesByMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (`plan` or `commerce`), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Get the failover order across your linked accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -595,7 +622,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksRoute(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it. `provider` is required; `account` narrows to one account when a user has several with the same provider; `window` selects a window class (6h, day, week or month) and `range` the period (1h, 24h, 7d or 30d, default 24h). An unknown window class or range is 400, never a quiet fallback to a different one.  When no series is available the response is a 200 with `available: false` and empty lists — an honest \"we have no data\", which is a different claim from zero usage. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See one provider account\'s own usage dashboard
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -603,7 +631,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksUsage(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers one row per linked account the GATEWAY actually routed through, plus their total — requests, prompt and completion tokens, and cost. This is the routed ledger, the read twin of the counter the router writes, and it is distinct from both of its neighbours: not the device collector\'s plan snapshots, and not the org money ledger. The `source` and `scope` fields on the response say so on every payload.  The same shape answers in the billing namespace, from one shaping function, so the two mounts cannot drift. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Break down what the gateway routed through each of your accounts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -611,7 +640,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksUsageAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. `range` is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports `available: false` instead of a zero that would read as \"no usage\". Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary See plan consumption and Hanzo spend side by side
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -619,7 +649,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1LinksUsageSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat.  NO SECRET IS SENT OR STORED. The provider\'s OAuth token or API key stays on the device; this registry holds link metadata and usage snapshots only, and the caller authenticates with their own Hanzo bearer. `kind` decides how the account\'s inference BILLS and defaults to `subscription`: a subscription account bills the user\'s own monthly plan and is metered here for visibility only, while an `apikey` account bills through commerce on the gateway path. An optional `usage` snapshot is clamped and re-serialized to known fields; omitting it keeps the last good one.  `machine` and `provider` are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Register a signed-in AI provider account on a machine
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -627,7 +658,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1Links(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button.  Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Log out every account on one machine and stop its sessions
          * @param {LinksApiCloudPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -636,7 +668,8 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1LinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Ingests a batch of usage samples from the on-device collector and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and `stored` says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way.  Send either one sample inline or up to 256 in `samples`; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+         * @summary Report usage samples from the device collector
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -710,7 +743,8 @@ export interface LinksApiCloudPostV1LinksDevicesByMachineRevokeRequest {
  */
 export class LinksApi extends BaseAPI {
     /**
-     * 
+     * Revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it.  The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Log out one account and stop the sessions it was running
      * @param {LinksApiCloudDeleteV1LinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -721,7 +755,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the caller\'s own links plus a `devices` projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary List your linked accounts and the devices they sit on
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -731,7 +766,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence.  The static paths on this collection — route, usage, devices — are registered BEFORE this one and win first-match, so a link whose id collided with one of those words could not be addressed here. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Read one linked account
      * @param {LinksApiCloudGetV1LinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -742,7 +778,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary See one machine: its accounts, usage and live sessions
      * @param {LinksApiCloudGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -753,7 +790,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (`plan` or `commerce`), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Get the failover order across your linked accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -763,7 +801,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it. `provider` is required; `account` narrows to one account when a user has several with the same provider; `window` selects a window class (6h, day, week or month) and `range` the period (1h, 24h, 7d or 30d, default 24h). An unknown window class or range is 400, never a quiet fallback to a different one.  When no series is available the response is a 200 with `available: false` and empty lists — an honest \"we have no data\", which is a different claim from zero usage. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary See one provider account\'s own usage dashboard
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -773,7 +812,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers one row per linked account the GATEWAY actually routed through, plus their total — requests, prompt and completion tokens, and cost. This is the routed ledger, the read twin of the counter the router writes, and it is distinct from both of its neighbours: not the device collector\'s plan snapshots, and not the org money ledger. The `source` and `scope` fields on the response say so on every payload.  The same shape answers in the billing namespace, from one shaping function, so the two mounts cannot drift. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Break down what the gateway routed through each of your accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -783,7 +823,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. `range` is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports `available: false` instead of a zero that would read as \"no usage\". Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary See plan consumption and Hanzo spend side by side
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -793,7 +834,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat.  NO SECRET IS SENT OR STORED. The provider\'s OAuth token or API key stays on the device; this registry holds link metadata and usage snapshots only, and the caller authenticates with their own Hanzo bearer. `kind` decides how the account\'s inference BILLS and defaults to `subscription`: a subscription account bills the user\'s own monthly plan and is metered here for visibility only, while an `apikey` account bills through commerce on the gateway path. An optional `usage` snapshot is clamped and re-serialized to known fields; omitting it keeps the last good one.  `machine` and `provider` are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Register a signed-in AI provider account on a machine
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
@@ -803,7 +845,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button.  Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Log out every account on one machine and stop its sessions
      * @param {LinksApiCloudPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -814,7 +857,8 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Ingests a batch of usage samples from the on-device collector and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and `stored` says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way.  Send either one sample inline or up to 256 in `samples`; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported. Scoped to the caller: a validated principal and a non-empty org, else 403. Both org and subject are bound predicates on every statement, so a caller reads and writes only their OWN accounts within their own org — the org is never a parameter, and there is no path to another user\'s links.
+     * @summary Report usage samples from the device collector
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi

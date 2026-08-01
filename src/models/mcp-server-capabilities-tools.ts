@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface KmsGetV1KmsSecretsRest401Response
+ * @interface McpServerCapabilitiesTools
  */
-export interface KmsGetV1KmsSecretsRest401Response {
+export interface McpServerCapabilitiesTools {
     /**
      * 
-     * @type {string}
-     * @memberof KmsGetV1KmsSecretsRest401Response
+     * @type {boolean}
+     * @memberof McpServerCapabilitiesTools
      */
-    'message'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof KmsGetV1KmsSecretsRest401Response
-     */
-    'statusCode'?: number;
+    'listChanged'?: boolean;
 }
 

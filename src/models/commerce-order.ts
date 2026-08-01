@@ -111,11 +111,11 @@ export interface CommerceOrder {
      */
     'currency'?: string;
     /**
-     * 
+     * Order mode: `deposit`, `contribution`, or \"\" for an ordinary order. 
      * @type {string}
      * @memberof CommerceOrder
      */
-    'mode'?: CommerceOrderModeEnum;
+    'mode'?: string;
     /**
      * 
      * @type {string}
@@ -256,12 +256,5 @@ export interface CommerceOrder {
     'updatedAt'?: string;
 }
 
-export const CommerceOrderModeEnum = {
-    Empty: '',
-    Deposit: 'deposit',
-    Contribution: 'contribution'
-} as const;
-
-export type CommerceOrderModeEnum = typeof CommerceOrderModeEnum[keyof typeof CommerceOrderModeEnum];
 
 
