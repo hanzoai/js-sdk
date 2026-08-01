@@ -21,11 +21,11 @@
  */
 
 export const IamPpPaymentState = {
-    PaymentStatePaidPaid: 'PaymentStatePaid = \"Paid\"',
-    PaymentStateCreatedCreated: 'PaymentStateCreated = \"Created\"',
-    PaymentStateCanceledCanceled: 'PaymentStateCanceled = \"Canceled\"',
-    PaymentStateTimeoutTimeout: 'PaymentStateTimeout = \"Timeout\"',
-    PaymentStateErrorError: 'PaymentStateError = \"Error\"'
+    Paid: 'Paid',
+    Created: 'Created',
+    Canceled: 'Canceled',
+    Timeout: 'Timeout',
+    Error: 'Error'
 } as const;
 
 export type IamPpPaymentState = typeof IamPpPaymentState[keyof typeof IamPpPaymentState];

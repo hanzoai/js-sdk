@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const DownloadApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -98,7 +100,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -131,7 +134,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -168,7 +172,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -201,7 +206,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -238,7 +244,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -271,7 +278,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -308,7 +316,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -341,7 +350,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -378,7 +388,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -411,7 +422,8 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -447,76 +459,6 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Download: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/download`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1DownloadByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1DownloadByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/download/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -528,7 +470,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DownloadApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -539,7 +482,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -551,7 +495,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -562,7 +507,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -574,7 +520,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -585,7 +532,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -597,7 +545,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -608,7 +557,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -620,7 +570,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -631,7 +582,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -643,7 +595,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -654,7 +607,8 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -663,29 +617,6 @@ export const DownloadApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1DownloadByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DownloadApi.cloudPutV1DownloadByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1Download(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1Download(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DownloadApi.cloudTraceV1Download']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1DownloadByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1DownloadByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DownloadApi.cloudTraceV1DownloadByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -699,7 +630,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = DownloadApiFp(configuration)
     return {
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -707,7 +639,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudDeleteV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudDeleteV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -716,7 +649,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudDeleteV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -724,7 +658,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudGetV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -733,7 +668,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudGetV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -741,7 +677,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudOptionsV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudOptionsV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -750,7 +687,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudOptionsV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -758,7 +696,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPatchV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudPatchV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -767,7 +706,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPatchV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -775,7 +715,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudPostV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -784,7 +725,8 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The artifact download surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -792,30 +734,14 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPutV1Download(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Download a file a run produced
          * @param {DownloadApiCloudPutV1DownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1DownloadByWildcard1(requestParameters: DownloadApiCloudPutV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Download(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1Download(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {DownloadApiCloudTraceV1DownloadByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1DownloadByWildcard1(requestParameters: DownloadApiCloudTraceV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -905,20 +831,6 @@ export interface DownloadApiCloudPutV1DownloadByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1DownloadByWildcard1 operation in DownloadApi.
- * @export
- * @interface DownloadApiCloudTraceV1DownloadByWildcard1Request
- */
-export interface DownloadApiCloudTraceV1DownloadByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DownloadApiCloudTraceV1DownloadByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * DownloadApi - object-oriented interface
  * @export
  * @class DownloadApi
@@ -926,7 +838,8 @@ export interface DownloadApiCloudTraceV1DownloadByWildcard1Request {
  */
 export class DownloadApi extends BaseAPI {
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -936,7 +849,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudDeleteV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -947,7 +861,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -957,7 +872,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudGetV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -968,7 +884,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -978,7 +895,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudOptionsV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -989,7 +907,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -999,7 +918,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudPatchV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1010,7 +930,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -1020,7 +941,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudPostV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1031,7 +953,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s download surface. The contract addresses an artifact by id one segment down (/v1/download/{id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The artifact download surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
@@ -1041,7 +964,8 @@ export class DownloadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Fetches an artifact by id — a plot, a generated CSV, whatever a run wrote. This is the ONE address whose success body is not JSON: the artifact\'s BYTES come back under the executor\'s own Content-Type, so a client reads it as a stream and must not try to decode it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Download a file a run produced
      * @param {DownloadApiCloudPutV1DownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1049,27 +973,6 @@ export class DownloadApi extends BaseAPI {
      */
     public cloudPutV1DownloadByWildcard1(requestParameters: DownloadApiCloudPutV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig) {
         return DownloadApiFp(this.configuration).cloudPutV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DownloadApi
-     */
-    public cloudTraceV1Download(options?: RawAxiosRequestConfig) {
-        return DownloadApiFp(this.configuration).cloudTraceV1Download(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {DownloadApiCloudTraceV1DownloadByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DownloadApi
-     */
-    public cloudTraceV1DownloadByWildcard1(requestParameters: DownloadApiCloudTraceV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DownloadApiFp(this.configuration).cloudTraceV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

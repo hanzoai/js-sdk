@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const TracesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Reports the native trace store\'s live state for the calling tenant: the subsystem version and `spans`, the count actually held right now. Not a dependency probe — the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary How many spans this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -61,7 +62,8 @@ export const TracesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Answers `{count, spans}`, newest first, filtered on each span\'s START time. `start` and `end` are nanosecond bounds where 0 — which is what an absent, empty or unparseable value becomes — means UNBOUNDED, so a malformed bound widens the listing instead of failing it. `limit` defaults to 100 when absent or non-positive.  It lists SPANS, not traces: several spans of one trace each count separately and each take a slot against `limit`. Assembling one trace is /v1/traces/trace. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary Recent spans for your org over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -94,7 +96,8 @@ export const TracesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Answers `{spans}`: every span the org holds for the trace id in `id`, in the order they were appended, which is what a waterfall view renders. Unlike the other reads there is no count, no time range and no limit — a trace is addressed by id or not at all.  An id with no spans answers an EMPTY list, never a 404: the store cannot tell a trace that never existed from one whose spans retention has already dropped, so it does not pretend to. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, and a trace id belonging to another org is simply not in this org\'s store.
+         * @summary Every span of one trace — the waterfall
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -127,7 +130,8 @@ export const TracesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes `{spans:[{traceId, spanId, parentId, name, startNs, endNs, attrs}]}`, appends each, and answers `{written}` — the number of spans sent. Every span is indexed by its trace id as it lands, which is what makes the waterfall read possible without a second store.  Times are NANOSECONDS since the Unix epoch. Retention is a bounded ring of 1048576 spans per org: past that the OLDEST are evicted to keep the newest 1048576, and the trace index is rebuilt — so a long-lived trace can lose its early spans while its later ones survive, and a waterfall read is best-effort against retention, not a guarantee.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400.
+         * @summary Append spans for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -170,7 +174,8 @@ export const TracesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TracesApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Reports the native trace store\'s live state for the calling tenant: the subsystem version and `spans`, the count actually held right now. Not a dependency probe — the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary How many spans this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -181,7 +186,8 @@ export const TracesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers `{count, spans}`, newest first, filtered on each span\'s START time. `start` and `end` are nanosecond bounds where 0 — which is what an absent, empty or unparseable value becomes — means UNBOUNDED, so a malformed bound widens the listing instead of failing it. `limit` defaults to 100 when absent or non-positive.  It lists SPANS, not traces: several spans of one trace each count separately and each take a slot against `limit`. Assembling one trace is /v1/traces/trace. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary Recent spans for your org over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -192,7 +198,8 @@ export const TracesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers `{spans}`: every span the org holds for the trace id in `id`, in the order they were appended, which is what a waterfall view renders. Unlike the other reads there is no count, no time range and no limit — a trace is addressed by id or not at all.  An id with no spans answers an EMPTY list, never a 404: the store cannot tell a trace that never existed from one whose spans retention has already dropped, so it does not pretend to. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, and a trace id belonging to another org is simply not in this org\'s store.
+         * @summary Every span of one trace — the waterfall
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -203,7 +210,8 @@ export const TracesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes `{spans:[{traceId, spanId, parentId, name, startNs, endNs, attrs}]}`, appends each, and answers `{written}` — the number of spans sent. Every span is indexed by its trace id as it lands, which is what makes the waterfall read possible without a second store.  Times are NANOSECONDS since the Unix epoch. Retention is a bounded ring of 1048576 spans per org: past that the OLDEST are evicted to keep the newest 1048576, and the trace index is rebuilt — so a long-lived trace can lose its early spans while its later ones survive, and a waterfall read is best-effort against retention, not a guarantee.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400.
+         * @summary Append spans for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -224,7 +232,8 @@ export const TracesApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = TracesApiFp(configuration)
     return {
         /**
-         * 
+         * Reports the native trace store\'s live state for the calling tenant: the subsystem version and `spans`, the count actually held right now. Not a dependency probe — the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary How many spans this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -232,7 +241,8 @@ export const TracesApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1TracesHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers `{count, spans}`, newest first, filtered on each span\'s START time. `start` and `end` are nanosecond bounds where 0 — which is what an absent, empty or unparseable value becomes — means UNBOUNDED, so a malformed bound widens the listing instead of failing it. `limit` defaults to 100 when absent or non-positive.  It lists SPANS, not traces: several spans of one trace each count separately and each take a slot against `limit`. Assembling one trace is /v1/traces/trace. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+         * @summary Recent spans for your org over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -240,7 +250,8 @@ export const TracesApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1TracesQuery(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers `{spans}`: every span the org holds for the trace id in `id`, in the order they were appended, which is what a waterfall view renders. Unlike the other reads there is no count, no time range and no limit — a trace is addressed by id or not at all.  An id with no spans answers an EMPTY list, never a 404: the store cannot tell a trace that never existed from one whose spans retention has already dropped, so it does not pretend to. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, and a trace id belonging to another org is simply not in this org\'s store.
+         * @summary Every span of one trace — the waterfall
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -248,7 +259,8 @@ export const TracesApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1TracesTrace(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes `{spans:[{traceId, spanId, parentId, name, startNs, endNs, attrs}]}`, appends each, and answers `{written}` — the number of spans sent. Every span is indexed by its trace id as it lands, which is what makes the waterfall read possible without a second store.  Times are NANOSECONDS since the Unix epoch. Retention is a bounded ring of 1048576 spans per org: past that the OLDEST are evicted to keep the newest 1048576, and the trace index is rebuilt — so a long-lived trace can lose its early spans while its later ones survive, and a waterfall read is best-effort against retention, not a guarantee.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400.
+         * @summary Append spans for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -266,7 +278,8 @@ export const TracesApiFactory = function (configuration?: Configuration, basePat
  */
 export class TracesApi extends BaseAPI {
     /**
-     * 
+     * Reports the native trace store\'s live state for the calling tenant: the subsystem version and `spans`, the count actually held right now. Not a dependency probe — the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+     * @summary How many spans this deployment holds for your org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TracesApi
@@ -276,7 +289,8 @@ export class TracesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers `{count, spans}`, newest first, filtered on each span\'s START time. `start` and `end` are nanosecond bounds where 0 — which is what an absent, empty or unparseable value becomes — means UNBOUNDED, so a malformed bound widens the listing instead of failing it. `limit` defaults to 100 when absent or non-positive.  It lists SPANS, not traces: several spans of one trace each count separately and each take a slot against `limit`. Assembling one trace is /v1/traces/trace. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`.
+     * @summary Recent spans for your org over a time range
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TracesApi
@@ -286,7 +300,8 @@ export class TracesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers `{spans}`: every span the org holds for the trace id in `id`, in the order they were appended, which is what a waterfall view renders. Unlike the other reads there is no count, no time range and no limit — a trace is addressed by id or not at all.  An id with no spans answers an EMPTY list, never a 404: the store cannot tell a trace that never existed from one whose spans retention has already dropped, so it does not pretend to. The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, and a trace id belonging to another org is simply not in this org\'s store.
+     * @summary Every span of one trace — the waterfall
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TracesApi
@@ -296,7 +311,8 @@ export class TracesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes `{spans:[{traceId, spanId, parentId, name, startNs, endNs, attrs}]}`, appends each, and answers `{written}` — the number of spans sent. Every span is indexed by its trace id as it lands, which is what makes the waterfall read possible without a second store.  Times are NANOSECONDS since the Unix epoch. Retention is a bounded ring of 1048576 spans per org: past that the OLDEST are evicted to keep the newest 1048576, and the trace index is rebuilt — so a long-lived trace can lose its early spans while its later ones survive, and a waterfall read is best-effort against retention, not a guarantee.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400.
+     * @summary Append spans for your org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TracesApi

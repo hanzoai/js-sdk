@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const SentryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * The one delete on the Sentry surface: removing a PROJECT, answering 204. Error issues, events and traces are not individually deletable — they are append-only telemetry, and their lifetime is retention\'s business, not an API call\'s.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The delete is confined to the org minted from that principal\'s claim, so a project id belonging to another tenant is not found rather than removed. Deleting a project retires the DSN that fed it, so any SDK still pointed at that key stops being accepted. Before the runtime is initialized, 503.
+         * @summary Delete a Sentry project
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -65,7 +66,8 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Serves the Sentry-compatible read surface — projects, error issues and one issue\'s occurrences, a single event, error logs, error-correlated traces and one trace\'s waterfall, and the event-rate stats — so a Sentry client or the error console reads its errors at the paths it already speaks.  It is the SAME runtime the observability surface serves, reached under a second path family, and there is NO rewrite: the runtime carries these routes literally. That is what makes this a product face rather than a translation layer. One runtime, two path families.  A validated principal is required and the read is scoped to that principal\'s own org. Errors are a tenant\'s OWN data, so org membership is the whole admission test and there is deliberately no admin term on it — gating the product on platform sudo would make the only way to see your own errors a scope that shows you everyone\'s. Before the runtime is initialized, 503.
+         * @summary Read the caller org\'s errors on the Sentry surface
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -102,7 +104,8 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
+         * @summary Not served by the Sentry face
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -139,7 +142,8 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * The Sentry face carries NO route for a partial update. The wildcard admits every method, so this operation exists as an address, but nothing behind it answers and a request lands on the runtime as an unrouted path.  It is documented rather than silently omitted because the useful thing to say is where to go instead: an issue\'s lifecycle — resolve, ignore, assign — is a REPLACE on that issue, not a patch, and it is the only mutable state on this surface. A client that reaches for a partial update here is looking for that call.
+         * @summary Not served — the Sentry surface has no partial update
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -176,7 +180,8 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Carries every write on the Sentry-compatible surface: the SDK\'s error ingest, and the authenticated writes the console makes — creating a project, rotating a project\'s DSN key, and running a discover query over the events plane.  THE TWO ARE AUTHENTICATED DIFFERENTLY, and that is the rule to get right. An envelope or store submission presents a DSN public key, never a Hanzo session, so it is exempt from the principal gate and verified by the ingest key check instead — which derives the org from the DSN and fails closed. A keyless submission is a 401 from that verifier, not a 403 from the gate, and telling those two apart is how you tell the hops apart. Every other write here needs a validated, org-scoped principal, and creating or rotating requires an editor rather than a viewer.  The ingest exemption is matched by method plus prefix plus suffix, never a bare prefix, and the project segment must be a UUID — so no read is reachable through it. Before the runtime is initialized, 503.
+         * @summary Send events to the Sentry surface, or write on it
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -213,7 +218,8 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * The one replace on the Sentry surface: updating an error ISSUE — resolving it, ignoring it, or assigning it — and answering the updated issue.  Nothing else here takes a replace. A project is created and deleted but never replaced, and the event and trace planes are append-only telemetry, so an issue\'s lifecycle is the only mutable state this face exposes.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The write is confined to the org minted from that principal\'s claim, so an issue id belonging to another tenant is simply not found. Before the runtime is initialized, 503.
+         * @summary Move an error issue through its lifecycle
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -249,43 +255,6 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1SentryByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1SentryByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/sentry/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -297,7 +266,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SentryApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * The one delete on the Sentry surface: removing a PROJECT, answering 204. Error issues, events and traces are not individually deletable — they are append-only telemetry, and their lifetime is retention\'s business, not an API call\'s.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The delete is confined to the org minted from that principal\'s claim, so a project id belonging to another tenant is not found rather than removed. Deleting a project retires the DSN that fed it, so any SDK still pointed at that key stops being accepted. Before the runtime is initialized, 503.
+         * @summary Delete a Sentry project
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -309,7 +279,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the Sentry-compatible read surface — projects, error issues and one issue\'s occurrences, a single event, error logs, error-correlated traces and one trace\'s waterfall, and the event-rate stats — so a Sentry client or the error console reads its errors at the paths it already speaks.  It is the SAME runtime the observability surface serves, reached under a second path family, and there is NO rewrite: the runtime carries these routes literally. That is what makes this a product face rather than a translation layer. One runtime, two path families.  A validated principal is required and the read is scoped to that principal\'s own org. Errors are a tenant\'s OWN data, so org membership is the whole admission test and there is deliberately no admin term on it — gating the product on platform sudo would make the only way to see your own errors a scope that shows you everyone\'s. Before the runtime is initialized, 503.
+         * @summary Read the caller org\'s errors on the Sentry surface
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -321,7 +292,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
+         * @summary Not served by the Sentry face
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -333,7 +305,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The Sentry face carries NO route for a partial update. The wildcard admits every method, so this operation exists as an address, but nothing behind it answers and a request lands on the runtime as an unrouted path.  It is documented rather than silently omitted because the useful thing to say is where to go instead: an issue\'s lifecycle — resolve, ignore, assign — is a REPLACE on that issue, not a patch, and it is the only mutable state on this surface. A client that reaches for a partial update here is looking for that call.
+         * @summary Not served — the Sentry surface has no partial update
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -345,7 +318,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Carries every write on the Sentry-compatible surface: the SDK\'s error ingest, and the authenticated writes the console makes — creating a project, rotating a project\'s DSN key, and running a discover query over the events plane.  THE TWO ARE AUTHENTICATED DIFFERENTLY, and that is the rule to get right. An envelope or store submission presents a DSN public key, never a Hanzo session, so it is exempt from the principal gate and verified by the ingest key check instead — which derives the org from the DSN and fails closed. A keyless submission is a 401 from that verifier, not a 403 from the gate, and telling those two apart is how you tell the hops apart. Every other write here needs a validated, org-scoped principal, and creating or rotating requires an editor rather than a viewer.  The ingest exemption is matched by method plus prefix plus suffix, never a bare prefix, and the project segment must be a UUID — so no read is reachable through it. Before the runtime is initialized, 503.
+         * @summary Send events to the Sentry surface, or write on it
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -357,7 +331,8 @@ export const SentryApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The one replace on the Sentry surface: updating an error ISSUE — resolving it, ignoring it, or assigning it — and answering the updated issue.  Nothing else here takes a replace. A project is created and deleted but never replaced, and the event and trace planes are append-only telemetry, so an issue\'s lifecycle is the only mutable state this face exposes.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The write is confined to the org minted from that principal\'s claim, so an issue id belonging to another tenant is simply not found. Before the runtime is initialized, 503.
+         * @summary Move an error issue through its lifecycle
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -366,18 +341,6 @@ export const SentryApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1SentryByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SentryApi.cloudPutV1SentryByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1SentryByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1SentryByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.cloudTraceV1SentryByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -391,7 +354,8 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = SentryApiFp(configuration)
     return {
         /**
-         * 
+         * The one delete on the Sentry surface: removing a PROJECT, answering 204. Error issues, events and traces are not individually deletable — they are append-only telemetry, and their lifetime is retention\'s business, not an API call\'s.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The delete is confined to the org minted from that principal\'s claim, so a project id belonging to another tenant is not found rather than removed. Deleting a project retires the DSN that fed it, so any SDK still pointed at that key stops being accepted. Before the runtime is initialized, 503.
+         * @summary Delete a Sentry project
          * @param {SentryApiCloudDeleteV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -400,7 +364,8 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudDeleteV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the Sentry-compatible read surface — projects, error issues and one issue\'s occurrences, a single event, error logs, error-correlated traces and one trace\'s waterfall, and the event-rate stats — so a Sentry client or the error console reads its errors at the paths it already speaks.  It is the SAME runtime the observability surface serves, reached under a second path family, and there is NO rewrite: the runtime carries these routes literally. That is what makes this a product face rather than a translation layer. One runtime, two path families.  A validated principal is required and the read is scoped to that principal\'s own org. Errors are a tenant\'s OWN data, so org membership is the whole admission test and there is deliberately no admin term on it — gating the product on platform sudo would make the only way to see your own errors a scope that shows you everyone\'s. Before the runtime is initialized, 503.
+         * @summary Read the caller org\'s errors on the Sentry surface
          * @param {SentryApiCloudGetV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -409,7 +374,8 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
+         * @summary Not served by the Sentry face
          * @param {SentryApiCloudOptionsV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -418,7 +384,8 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudOptionsV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The Sentry face carries NO route for a partial update. The wildcard admits every method, so this operation exists as an address, but nothing behind it answers and a request lands on the runtime as an unrouted path.  It is documented rather than silently omitted because the useful thing to say is where to go instead: an issue\'s lifecycle — resolve, ignore, assign — is a REPLACE on that issue, not a patch, and it is the only mutable state on this surface. A client that reaches for a partial update here is looking for that call.
+         * @summary Not served — the Sentry surface has no partial update
          * @param {SentryApiCloudPatchV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -427,7 +394,8 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPatchV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Carries every write on the Sentry-compatible surface: the SDK\'s error ingest, and the authenticated writes the console makes — creating a project, rotating a project\'s DSN key, and running a discover query over the events plane.  THE TWO ARE AUTHENTICATED DIFFERENTLY, and that is the rule to get right. An envelope or store submission presents a DSN public key, never a Hanzo session, so it is exempt from the principal gate and verified by the ingest key check instead — which derives the org from the DSN and fails closed. A keyless submission is a 401 from that verifier, not a 403 from the gate, and telling those two apart is how you tell the hops apart. Every other write here needs a validated, org-scoped principal, and creating or rotating requires an editor rather than a viewer.  The ingest exemption is matched by method plus prefix plus suffix, never a bare prefix, and the project segment must be a UUID — so no read is reachable through it. Before the runtime is initialized, 503.
+         * @summary Send events to the Sentry surface, or write on it
          * @param {SentryApiCloudPostV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -436,22 +404,14 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The one replace on the Sentry surface: updating an error ISSUE — resolving it, ignoring it, or assigning it — and answering the updated issue.  Nothing else here takes a replace. A project is created and deleted but never replaced, and the event and trace planes are append-only telemetry, so an issue\'s lifecycle is the only mutable state this face exposes.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The write is confined to the org minted from that principal\'s claim, so an issue id belonging to another tenant is simply not found. Before the runtime is initialized, 503.
+         * @summary Move an error issue through its lifecycle
          * @param {SentryApiCloudPutV1SentryByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1SentryByWildcard1(requestParameters: SentryApiCloudPutV1SentryByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {SentryApiCloudTraceV1SentryByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1SentryByWildcard1(requestParameters: SentryApiCloudTraceV1SentryByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -541,20 +501,6 @@ export interface SentryApiCloudPutV1SentryByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1SentryByWildcard1 operation in SentryApi.
- * @export
- * @interface SentryApiCloudTraceV1SentryByWildcard1Request
- */
-export interface SentryApiCloudTraceV1SentryByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof SentryApiCloudTraceV1SentryByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * SentryApi - object-oriented interface
  * @export
  * @class SentryApi
@@ -562,7 +508,8 @@ export interface SentryApiCloudTraceV1SentryByWildcard1Request {
  */
 export class SentryApi extends BaseAPI {
     /**
-     * 
+     * The one delete on the Sentry surface: removing a PROJECT, answering 204. Error issues, events and traces are not individually deletable — they are append-only telemetry, and their lifetime is retention\'s business, not an API call\'s.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The delete is confined to the org minted from that principal\'s claim, so a project id belonging to another tenant is not found rather than removed. Deleting a project retires the DSN that fed it, so any SDK still pointed at that key stops being accepted. Before the runtime is initialized, 503.
+     * @summary Delete a Sentry project
      * @param {SentryApiCloudDeleteV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -573,7 +520,8 @@ export class SentryApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the Sentry-compatible read surface — projects, error issues and one issue\'s occurrences, a single event, error logs, error-correlated traces and one trace\'s waterfall, and the event-rate stats — so a Sentry client or the error console reads its errors at the paths it already speaks.  It is the SAME runtime the observability surface serves, reached under a second path family, and there is NO rewrite: the runtime carries these routes literally. That is what makes this a product face rather than a translation layer. One runtime, two path families.  A validated principal is required and the read is scoped to that principal\'s own org. Errors are a tenant\'s OWN data, so org membership is the whole admission test and there is deliberately no admin term on it — gating the product on platform sudo would make the only way to see your own errors a scope that shows you everyone\'s. Before the runtime is initialized, 503.
+     * @summary Read the caller org\'s errors on the Sentry surface
      * @param {SentryApiCloudGetV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -584,7 +532,8 @@ export class SentryApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
+     * @summary Not served by the Sentry face
      * @param {SentryApiCloudOptionsV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -595,7 +544,8 @@ export class SentryApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The Sentry face carries NO route for a partial update. The wildcard admits every method, so this operation exists as an address, but nothing behind it answers and a request lands on the runtime as an unrouted path.  It is documented rather than silently omitted because the useful thing to say is where to go instead: an issue\'s lifecycle — resolve, ignore, assign — is a REPLACE on that issue, not a patch, and it is the only mutable state on this surface. A client that reaches for a partial update here is looking for that call.
+     * @summary Not served — the Sentry surface has no partial update
      * @param {SentryApiCloudPatchV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -606,7 +556,8 @@ export class SentryApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Carries every write on the Sentry-compatible surface: the SDK\'s error ingest, and the authenticated writes the console makes — creating a project, rotating a project\'s DSN key, and running a discover query over the events plane.  THE TWO ARE AUTHENTICATED DIFFERENTLY, and that is the rule to get right. An envelope or store submission presents a DSN public key, never a Hanzo session, so it is exempt from the principal gate and verified by the ingest key check instead — which derives the org from the DSN and fails closed. A keyless submission is a 401 from that verifier, not a 403 from the gate, and telling those two apart is how you tell the hops apart. Every other write here needs a validated, org-scoped principal, and creating or rotating requires an editor rather than a viewer.  The ingest exemption is matched by method plus prefix plus suffix, never a bare prefix, and the project segment must be a UUID — so no read is reachable through it. Before the runtime is initialized, 503.
+     * @summary Send events to the Sentry surface, or write on it
      * @param {SentryApiCloudPostV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -617,7 +568,8 @@ export class SentryApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The one replace on the Sentry surface: updating an error ISSUE — resolving it, ignoring it, or assigning it — and answering the updated issue.  Nothing else here takes a replace. A project is created and deleted but never replaced, and the event and trace planes are append-only telemetry, so an issue\'s lifecycle is the only mutable state this face exposes.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The write is confined to the org minted from that principal\'s claim, so an issue id belonging to another tenant is simply not found. Before the runtime is initialized, 503.
+     * @summary Move an error issue through its lifecycle
      * @param {SentryApiCloudPutV1SentryByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -625,17 +577,6 @@ export class SentryApi extends BaseAPI {
      */
     public cloudPutV1SentryByWildcard1(requestParameters: SentryApiCloudPutV1SentryByWildcard1Request, options?: RawAxiosRequestConfig) {
         return SentryApiFp(this.configuration).cloudPutV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {SentryApiCloudTraceV1SentryByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SentryApi
-     */
-    public cloudTraceV1SentryByWildcard1(requestParameters: SentryApiCloudTraceV1SentryByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).cloudTraceV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

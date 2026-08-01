@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AdminAdminDeletePromo200Response } from '../models';
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
 // @ts-ignore
 import type { VisorAgentBinding } from '../models';
 // @ts-ignore

@@ -25,6 +25,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { BotGetUploadUrl200Response } from '../models';
 // @ts-ignore
 import type { BotGetUploadUrlRequest } from '../models';
+// @ts-ignore
+import type { CloudPostV1Upload200Response } from '../models';
+// @ts-ignore
+import type { InlineObject } from '../models';
 /**
  * UploadApi - axios parameter creator
  * @export
@@ -72,7 +76,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -105,7 +110,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -142,7 +148,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -175,7 +182,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -212,7 +220,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -245,7 +254,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -282,7 +292,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -315,7 +326,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -352,11 +364,14 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
+         * @param {File} [file] 
+         * @param {string} [sessionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Upload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1Upload: async (file?: File, sessionId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -368,16 +383,28 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (sessionId !== undefined) { 
+                localVarFormParams.append('session_id', sessionId as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -385,7 +412,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -422,7 +450,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -455,7 +484,8 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -473,76 +503,6 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Upload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/upload`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1UploadByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1UploadByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/upload/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -585,7 +545,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -596,7 +557,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -608,7 +570,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -619,7 +582,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -631,7 +595,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -642,7 +607,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -654,7 +620,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -665,7 +632,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -677,18 +645,22 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
+         * @param {File} [file] 
+         * @param {string} [sessionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1Upload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Upload(options);
+        async cloudPostV1Upload(file?: File, sessionId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1Upload200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Upload(file, sessionId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadApi.cloudPostV1Upload']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -700,7 +672,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -711,7 +684,8 @@ export const UploadApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -720,29 +694,6 @@ export const UploadApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1UploadByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadApi.cloudPutV1UploadByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1Upload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1Upload(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UploadApi.cloudTraceV1Upload']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1UploadByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1UploadByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UploadApi.cloudTraceV1UploadByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -766,7 +717,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.botGetUploadUrl(requestParameters.botGetUploadUrlRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -774,7 +726,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudDeleteV1Upload(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudDeleteV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -783,7 +736,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudDeleteV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -791,7 +745,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1Upload(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudGetV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -800,7 +755,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -808,7 +764,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudOptionsV1Upload(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudOptionsV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -817,7 +774,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudOptionsV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -825,7 +783,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPatchV1Upload(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudPatchV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -834,15 +793,18 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPatchV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
+         * @param {UploadApiCloudPostV1UploadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Upload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1Upload(options).then((request) => request(axios, basePath));
+        cloudPostV1Upload(requestParameters: UploadApiCloudPostV1UploadRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1Upload200Response> {
+            return localVarFp.cloudPostV1Upload(requestParameters.file, requestParameters.sessionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudPostV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -851,7 +813,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary Upload a file into an execution session
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -859,30 +822,14 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPutV1Upload(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The upload surface\'s own subpaths
          * @param {UploadApiCloudPutV1UploadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1UploadByWildcard1(requestParameters: UploadApiCloudPutV1UploadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Upload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1Upload(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {UploadApiCloudTraceV1UploadByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1UploadByWildcard1(requestParameters: UploadApiCloudTraceV1UploadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -958,6 +905,27 @@ export interface UploadApiCloudPatchV1UploadByWildcard1Request {
 }
 
 /**
+ * Request parameters for cloudPostV1Upload operation in UploadApi.
+ * @export
+ * @interface UploadApiCloudPostV1UploadRequest
+ */
+export interface UploadApiCloudPostV1UploadRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof UploadApiCloudPostV1Upload
+     */
+    readonly file?: File
+
+    /**
+     * 
+     * @type {string}
+     * @memberof UploadApiCloudPostV1Upload
+     */
+    readonly sessionId?: string
+}
+
+/**
  * Request parameters for cloudPostV1UploadByWildcard1 operation in UploadApi.
  * @export
  * @interface UploadApiCloudPostV1UploadByWildcard1Request
@@ -986,20 +954,6 @@ export interface UploadApiCloudPutV1UploadByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1UploadByWildcard1 operation in UploadApi.
- * @export
- * @interface UploadApiCloudTraceV1UploadByWildcard1Request
- */
-export interface UploadApiCloudTraceV1UploadByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof UploadApiCloudTraceV1UploadByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * UploadApi - object-oriented interface
  * @export
  * @class UploadApi
@@ -1019,7 +973,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
@@ -1029,7 +984,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudDeleteV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1040,7 +996,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
@@ -1050,7 +1007,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudGetV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1061,7 +1019,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
@@ -1071,7 +1030,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudOptionsV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1082,7 +1042,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
@@ -1092,7 +1053,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudPatchV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1103,17 +1065,20 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
+     * @param {UploadApiCloudPostV1UploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
      */
-    public cloudPostV1Upload(options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).cloudPostV1Upload(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1Upload(requestParameters: UploadApiCloudPostV1UploadRequest = {}, options?: RawAxiosRequestConfig) {
+        return UploadApiFp(this.configuration).cloudPostV1Upload(requestParameters.file, requestParameters.sessionId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudPostV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1124,7 +1089,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a multipart upload and puts the file into the session the interpreter runs against, so a later run can read it. The multipart envelope and its content type reach the executor untouched — this address is not JSON and nothing here parses it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary Upload a file into an execution session
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
@@ -1134,7 +1100,8 @@ export class UploadApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Whatever the executor serves below /upload, addressed verbatim. One greedy route rather than an enumeration this repo has never made: a listed subtree would 404 everything left out of it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The upload surface\'s own subpaths
      * @param {UploadApiCloudPutV1UploadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1142,27 +1109,6 @@ export class UploadApi extends BaseAPI {
      */
     public cloudPutV1UploadByWildcard1(requestParameters: UploadApiCloudPutV1UploadByWildcard1Request, options?: RawAxiosRequestConfig) {
         return UploadApiFp(this.configuration).cloudPutV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UploadApi
-     */
-    public cloudTraceV1Upload(options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).cloudTraceV1Upload(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {UploadApiCloudTraceV1UploadByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UploadApi
-     */
-    public cloudTraceV1UploadByWildcard1(requestParameters: UploadApiCloudTraceV1UploadByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).cloudTraceV1UploadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

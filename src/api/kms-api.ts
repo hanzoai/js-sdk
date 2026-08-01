@@ -21,6 +21,20 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AnalyticsHeartbeat200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1KmsHealth200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1KmsSecrets200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1KmsSecrets401Response } from '../models';
+// @ts-ignore
+import type { CloudPostV1KmsAuthLogin200Response } from '../models';
+// @ts-ignore
+import type { CloudPostV1KmsAuthLoginRequest } from '../models';
+// @ts-ignore
+import type { CloudPostV1KmsSecretsRequest } from '../models';
 /**
  * KmsApi - axios parameter creator
  * @export
@@ -28,7 +42,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const KmsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Removes one secret from the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root, and `env` selects the environment, defaulting when omitted. Scoped to the caller\'s own org — the store root comes from the validated claim, never from the request — under the same fail-closed admission as the reads.
+         * @summary Delete one secret from your org
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -65,7 +80,8 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Returns what the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
+         * @summary Runtime configuration for the KMS console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -98,7 +114,8 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * A real readiness probe, not a liveness stub: 200 only when the store is open AND a master key is configured, with `signing` reporting whether signing keys are set up too. Anything less answers 503 with `ready:false` and the reason — no in-process store, or no master key — which are exactly the two states in which the secret operations refuse.  Not token-gated, because the platform must be able to probe it without a credential. It reports the broker\'s configuration state only; no secret, no key material and no tenant name appears in it.
+         * @summary Whether this broker can actually serve secrets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -115,10 +132,6 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -131,11 +144,14 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
+         * @summary List the secrets your org holds, without their values
+         * @param {string} [path] Grouping path, e.g. gateway
+         * @param {string} [env] Environment slug; defaults to &#x60;default&#x60;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1KmsSecrets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1KmsSecrets: async (path?: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/kms/secrets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -152,6 +168,14 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (path !== undefined) {
+                localVarQueryParameter['path'] = path;
+            }
+
+            if (env !== undefined) {
+                localVarQueryParameter['env'] = env;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -164,7 +188,8 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Opens one sealed secret belonging to the caller\'s own org and returns its value in the response body, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root; `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the path, so another tenant\'s secret is not merely refused, it is unnameable. Admission is fail-closed — validated member, well-formed org, master key present — and an unconfigured master key is 503 rather than an empty read.
+         * @summary Read one secret\'s value
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -201,11 +226,15 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * @summary Exchange a machine credential for an IAM bearer token
+         * @param {CloudPostV1KmsAuthLoginRequest} cloudPostV1KmsAuthLoginRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1KmsAuthLogin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1KmsAuthLogin: async (cloudPostV1KmsAuthLoginRequest: CloudPostV1KmsAuthLoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudPostV1KmsAuthLoginRequest' is not null or undefined
+            assertParamExists('cloudPostV1KmsAuthLogin', 'cloudPostV1KmsAuthLoginRequest', cloudPostV1KmsAuthLoginRequest)
             const localVarPath = `/v1/kms/auth/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -218,15 +247,14 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudPostV1KmsAuthLoginRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -234,11 +262,15 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * 
+         * Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. Same fail-closed admission as the rest of the secret surface: validated member, well-formed org, master key present.
+         * @summary Store or replace one secret in your org
+         * @param {CloudPostV1KmsSecretsRequest} cloudPostV1KmsSecretsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1KmsSecrets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1KmsSecrets: async (cloudPostV1KmsSecretsRequest: CloudPostV1KmsSecretsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudPostV1KmsSecretsRequest' is not null or undefined
+            assertParamExists('cloudPostV1KmsSecrets', 'cloudPostV1KmsSecretsRequest', cloudPostV1KmsSecretsRequest)
             const localVarPath = `/v1/kms/secrets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -257,9 +289,12 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudPostV1KmsSecretsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -277,7 +312,8 @@ export const KmsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = KmsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Removes one secret from the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root, and `env` selects the environment, defaulting when omitted. Scoped to the caller\'s own org — the store root comes from the validated claim, never from the request — under the same fail-closed admission as the reads.
+         * @summary Delete one secret from your org
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -289,7 +325,8 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns what the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
+         * @summary Runtime configuration for the KMS console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -300,29 +337,34 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A real readiness probe, not a liveness stub: 200 only when the store is open AND a master key is configured, with `signing` reporting whether signing keys are set up too. Anything less answers 503 with `ready:false` and the reason — no in-process store, or no master key — which are exactly the two states in which the secret operations refuse.  Not token-gated, because the platform must be able to probe it without a credential. It reports the broker\'s configuration state only; no secret, no key material and no tenant name appears in it.
+         * @summary Whether this broker can actually serve secrets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1KmsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1KmsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1KmsHealth200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1KmsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.cloudGetV1KmsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
+         * @summary List the secrets your org holds, without their values
+         * @param {string} [path] Grouping path, e.g. gateway
+         * @param {string} [env] Environment slug; defaults to &#x60;default&#x60;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1KmsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1KmsSecrets(options);
+        async cloudGetV1KmsSecrets(path?: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1KmsSecrets200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1KmsSecrets(path, env, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.cloudGetV1KmsSecrets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Opens one sealed secret belonging to the caller\'s own org and returns its value in the response body, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root; `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the path, so another tenant\'s secret is not merely refused, it is unnameable. Admission is fail-closed — validated member, well-formed org, master key present — and an unconfigured master key is 503 rather than an empty read.
+         * @summary Read one secret\'s value
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -334,23 +376,27 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * @summary Exchange a machine credential for an IAM bearer token
+         * @param {CloudPostV1KmsAuthLoginRequest} cloudPostV1KmsAuthLoginRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1KmsAuthLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1KmsAuthLogin(options);
+        async cloudPostV1KmsAuthLogin(cloudPostV1KmsAuthLoginRequest: CloudPostV1KmsAuthLoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1KmsAuthLogin200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1KmsAuthLogin(cloudPostV1KmsAuthLoginRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.cloudPostV1KmsAuthLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. Same fail-closed admission as the rest of the secret surface: validated member, well-formed org, master key present.
+         * @summary Store or replace one secret in your org
+         * @param {CloudPostV1KmsSecretsRequest} cloudPostV1KmsSecretsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1KmsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1KmsSecrets(options);
+        async cloudPostV1KmsSecrets(cloudPostV1KmsSecretsRequest: CloudPostV1KmsSecretsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsHeartbeat200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1KmsSecrets(cloudPostV1KmsSecretsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KmsApi.cloudPostV1KmsSecrets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -366,7 +412,8 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = KmsApiFp(configuration)
     return {
         /**
-         * 
+         * Removes one secret from the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root, and `env` selects the environment, defaulting when omitted. Scoped to the caller\'s own org — the store root comes from the validated claim, never from the request — under the same fail-closed admission as the reads.
+         * @summary Delete one secret from your org
          * @param {KmsApiCloudDeleteV1KmsSecretsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -375,7 +422,8 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudDeleteV1KmsSecretsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns what the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
+         * @summary Runtime configuration for the KMS console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -383,23 +431,27 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudGetV1KmsConfig(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A real readiness probe, not a liveness stub: 200 only when the store is open AND a master key is configured, with `signing` reporting whether signing keys are set up too. Anything less answers 503 with `ready:false` and the reason — no in-process store, or no master key — which are exactly the two states in which the secret operations refuse.  Not token-gated, because the platform must be able to probe it without a credential. It reports the broker\'s configuration state only; no secret, no key material and no tenant name appears in it.
+         * @summary Whether this broker can actually serve secrets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1KmsHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1KmsHealth(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1KmsHealth200Response> {
             return localVarFp.cloudGetV1KmsHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
+         * @summary List the secrets your org holds, without their values
+         * @param {KmsApiCloudGetV1KmsSecretsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1KmsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1KmsSecrets(options).then((request) => request(axios, basePath));
+        cloudGetV1KmsSecrets(requestParameters: KmsApiCloudGetV1KmsSecretsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1KmsSecrets200Response> {
+            return localVarFp.cloudGetV1KmsSecrets(requestParameters.path, requestParameters.env, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Opens one sealed secret belonging to the caller\'s own org and returns its value in the response body, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root; `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the path, so another tenant\'s secret is not merely refused, it is unnameable. Admission is fail-closed — validated member, well-formed org, master key present — and an unconfigured master key is 503 rather than an empty read.
+         * @summary Read one secret\'s value
          * @param {KmsApiCloudGetV1KmsSecretsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -408,20 +460,24 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.cloudGetV1KmsSecretsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * @summary Exchange a machine credential for an IAM bearer token
+         * @param {KmsApiCloudPostV1KmsAuthLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1KmsAuthLogin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1KmsAuthLogin(options).then((request) => request(axios, basePath));
+        cloudPostV1KmsAuthLogin(requestParameters: KmsApiCloudPostV1KmsAuthLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1KmsAuthLogin200Response> {
+            return localVarFp.cloudPostV1KmsAuthLogin(requestParameters.cloudPostV1KmsAuthLoginRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. Same fail-closed admission as the rest of the secret surface: validated member, well-formed org, master key present.
+         * @summary Store or replace one secret in your org
+         * @param {KmsApiCloudPostV1KmsSecretsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1KmsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1KmsSecrets(options).then((request) => request(axios, basePath));
+        cloudPostV1KmsSecrets(requestParameters: KmsApiCloudPostV1KmsSecretsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsHeartbeat200Response> {
+            return localVarFp.cloudPostV1KmsSecrets(requestParameters.cloudPostV1KmsSecretsRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -441,6 +497,27 @@ export interface KmsApiCloudDeleteV1KmsSecretsByWildcard1Request {
 }
 
 /**
+ * Request parameters for cloudGetV1KmsSecrets operation in KmsApi.
+ * @export
+ * @interface KmsApiCloudGetV1KmsSecretsRequest
+ */
+export interface KmsApiCloudGetV1KmsSecretsRequest {
+    /**
+     * Grouping path, e.g. gateway
+     * @type {string}
+     * @memberof KmsApiCloudGetV1KmsSecrets
+     */
+    readonly path?: string
+
+    /**
+     * Environment slug; defaults to &#x60;default&#x60;
+     * @type {string}
+     * @memberof KmsApiCloudGetV1KmsSecrets
+     */
+    readonly env?: string
+}
+
+/**
  * Request parameters for cloudGetV1KmsSecretsByWildcard1 operation in KmsApi.
  * @export
  * @interface KmsApiCloudGetV1KmsSecretsByWildcard1Request
@@ -455,6 +532,34 @@ export interface KmsApiCloudGetV1KmsSecretsByWildcard1Request {
 }
 
 /**
+ * Request parameters for cloudPostV1KmsAuthLogin operation in KmsApi.
+ * @export
+ * @interface KmsApiCloudPostV1KmsAuthLoginRequest
+ */
+export interface KmsApiCloudPostV1KmsAuthLoginRequest {
+    /**
+     * 
+     * @type {CloudPostV1KmsAuthLoginRequest}
+     * @memberof KmsApiCloudPostV1KmsAuthLogin
+     */
+    readonly cloudPostV1KmsAuthLoginRequest: CloudPostV1KmsAuthLoginRequest
+}
+
+/**
+ * Request parameters for cloudPostV1KmsSecrets operation in KmsApi.
+ * @export
+ * @interface KmsApiCloudPostV1KmsSecretsRequest
+ */
+export interface KmsApiCloudPostV1KmsSecretsRequest {
+    /**
+     * 
+     * @type {CloudPostV1KmsSecretsRequest}
+     * @memberof KmsApiCloudPostV1KmsSecrets
+     */
+    readonly cloudPostV1KmsSecretsRequest: CloudPostV1KmsSecretsRequest
+}
+
+/**
  * KmsApi - object-oriented interface
  * @export
  * @class KmsApi
@@ -462,7 +567,8 @@ export interface KmsApiCloudGetV1KmsSecretsByWildcard1Request {
  */
 export class KmsApi extends BaseAPI {
     /**
-     * 
+     * Removes one secret from the caller\'s own org and confirms the name and environment that were removed. Deleting a secret that is not there is a 404, not a silent success, so a caller can tell a real deletion from a typo.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root, and `env` selects the environment, defaulting when omitted. Scoped to the caller\'s own org — the store root comes from the validated claim, never from the request — under the same fail-closed admission as the reads.
+     * @summary Delete one secret from your org
      * @param {KmsApiCloudDeleteV1KmsSecretsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -473,7 +579,8 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns what the console needs before anyone has signed in: the brand, the OIDC issuer it authenticates against, the API base for this subsystem and the path of the login exchange.  Public on purpose, and it holds nothing sensitive — it is deliberately kept under this subsystem\'s own namespace rather than under an admin prefix, so a gateway that admin-gates the admin routes cannot break the console\'s legitimate pre-login fetch.
+     * @summary Runtime configuration for the KMS console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KmsApi
@@ -483,7 +590,8 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A real readiness probe, not a liveness stub: 200 only when the store is open AND a master key is configured, with `signing` reporting whether signing keys are set up too. Anything less answers 503 with `ready:false` and the reason — no in-process store, or no master key — which are exactly the two states in which the secret operations refuse.  Not token-gated, because the platform must be able to probe it without a credential. It reports the broker\'s configuration state only; no secret, no key material and no tenant name appears in it.
+     * @summary Whether this broker can actually serve secrets
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KmsApi
@@ -493,17 +601,20 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
+     * @summary List the secrets your org holds, without their values
+     * @param {KmsApiCloudGetV1KmsSecretsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KmsApi
      */
-    public cloudGetV1KmsSecrets(options?: RawAxiosRequestConfig) {
-        return KmsApiFp(this.configuration).cloudGetV1KmsSecrets(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1KmsSecrets(requestParameters: KmsApiCloudGetV1KmsSecretsRequest = {}, options?: RawAxiosRequestConfig) {
+        return KmsApiFp(this.configuration).cloudGetV1KmsSecrets(requestParameters.path, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Opens one sealed secret belonging to the caller\'s own org and returns its value in the response body, with the name and environment it was resolved under. This is the broker\'s purpose, and the response body is the ONLY place the value appears — it is not logged, and it is never carried in an error.  The trailing path is the secret\'s subpath and name beneath the caller\'s org root; `env` selects the environment and falls back to the default when omitted. A secret that is not there is a plain 404 that names nothing about the store.  Scoped to the caller\'s own org and nothing else: there is no org in the path, so another tenant\'s secret is not merely refused, it is unnameable. Admission is fail-closed — validated member, well-formed org, master key present — and an unconfigured master key is 503 rather than an empty read.
+     * @summary Read one secret\'s value
      * @param {KmsApiCloudGetV1KmsSecretsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -514,23 +625,27 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+     * @summary Exchange a machine credential for an IAM bearer token
+     * @param {KmsApiCloudPostV1KmsAuthLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KmsApi
      */
-    public cloudPostV1KmsAuthLogin(options?: RawAxiosRequestConfig) {
-        return KmsApiFp(this.configuration).cloudPostV1KmsAuthLogin(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1KmsAuthLogin(requestParameters: KmsApiCloudPostV1KmsAuthLoginRequest, options?: RawAxiosRequestConfig) {
+        return KmsApiFp(this.configuration).cloudPostV1KmsAuthLogin(requestParameters.cloudPostV1KmsAuthLoginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Upserts one secret under the caller\'s own org. The value is sealed before it is written — a fresh per-secret data key, itself wrapped by the master key — so plaintext never reaches disk. The receipt confirms the name and environment that were written and does not echo the value.  `env` is REQUIRED on a write and has no default, which is the rule most easily got wrong here: reads and deletes still fall back to the default environment for older callers, but a write must not, because the environment is part of the storage key. A silently defaulted write lands in a bucket the readers that resolve project, environment and path never look in, and the stale value keeps being served — so the write fails loudly instead.  `name` is required, `path` is an optional subpath beneath the org root, and the org is taken from the validated claim rather than the body. Same fail-closed admission as the rest of the secret surface: validated member, well-formed org, master key present.
+     * @summary Store or replace one secret in your org
+     * @param {KmsApiCloudPostV1KmsSecretsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KmsApi
      */
-    public cloudPostV1KmsSecrets(options?: RawAxiosRequestConfig) {
-        return KmsApiFp(this.configuration).cloudPostV1KmsSecrets(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1KmsSecrets(requestParameters: KmsApiCloudPostV1KmsSecretsRequest, options?: RawAxiosRequestConfig) {
+        return KmsApiFp(this.configuration).cloudPostV1KmsSecrets(requestParameters.cloudPostV1KmsSecretsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

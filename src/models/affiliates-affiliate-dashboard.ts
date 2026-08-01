@@ -27,11 +27,11 @@ import type { AffiliatesPayout } from './affiliates-payout';
  */
 export interface AffiliatesAffiliateDashboard {
     /**
-     * 
+     * Always true — this org is an affiliate.
      * @type {boolean}
      * @memberof AffiliatesAffiliateDashboard
      */
-    'isAffiliate'?: AffiliatesAffiliateDashboardIsAffiliateEnum;
+    'isAffiliate'?: boolean;
     /**
      * 
      * @type {string}
@@ -100,10 +100,5 @@ export interface AffiliatesAffiliateDashboard {
     'payouts'?: Array<AffiliatesPayout>;
 }
 
-export const AffiliatesAffiliateDashboardIsAffiliateEnum = {
-    True: true
-} as const;
-
-export type AffiliatesAffiliateDashboardIsAffiliateEnum = typeof AffiliatesAffiliateDashboardIsAffiliateEnum[keyof typeof AffiliatesAffiliateDashboardIsAffiliateEnum];
 
 

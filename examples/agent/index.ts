@@ -14,7 +14,9 @@
 import { AgentsApi } from 'hanzoai';
 import { config, fail } from '../client';
 
-const model = process.env.HANZO_MODEL ?? 'zen4';
+// `zen5`, for the reason the chat flow states: the gateway rejects `zen4` with
+// 400 "not in this gateway's catalog", so an agent created on it cannot run.
+const model = process.env.HANZO_MODEL ?? 'zen5';
 // Org-unique: a fixed name collides with itself on the second run.
 const name = `example-greeter-${Date.now()}`;
 

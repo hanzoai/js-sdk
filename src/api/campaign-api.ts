@@ -331,7 +331,8 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
+         * @summary Launch a campaign across every channel it declares
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -368,7 +369,8 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
+         * @summary Pause every live channel on a campaign at its provider
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -598,7 +600,8 @@ export const CampaignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
+         * @summary Launch a campaign across every channel it declares
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -610,7 +613,8 @@ export const CampaignApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
+         * @summary Pause every live channel on a campaign at its provider
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -729,7 +733,8 @@ export const CampaignApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1Campaign(requestParameters.cloudCampaignWrite, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
+         * @summary Launch a campaign across every channel it declares
          * @param {CampaignApiCloudPostV1CampaignByIdLaunchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -738,7 +743,8 @@ export const CampaignApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.cloudPostV1CampaignByIdLaunch(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
+         * @summary Pause every live channel on a campaign at its provider
          * @param {CampaignApiCloudPostV1CampaignByIdPauseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1049,7 +1055,8 @@ export class CampaignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
+     * @summary Launch a campaign across every channel it declares
      * @param {CampaignApiCloudPostV1CampaignByIdLaunchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1060,7 +1067,8 @@ export class CampaignApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
+     * @summary Pause every live channel on a campaign at its provider
      * @param {CampaignApiCloudPostV1CampaignByIdPauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

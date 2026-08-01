@@ -76,7 +76,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers the org\'s spendable prepaid balance typed for the finance surfaces: `availableCents`, `pendingCents`, `dueCents` and the `asOf` instant it was read.  It is the SAME wallet read /v1/billing/balance answers — one function, called by both, so the two surfaces cannot drift into disagreeing about a customer\'s money. Reshaped, never re-metered. Co-resident the number comes straight out of the org\'s own double-entry ledger file.  `dueCents` is a structural 0: this is a PREPAID wallet with no open-invoice debt, so nothing is ever owed and a non-zero value here would be an invention. `pendingCents` is 0 on the co-resident ledger, where authorization holds are never posted; only a split-deploy upstream reports holds, and there spendable is the balance NET of them, floored at 0 — a fully-held wallet reports 0 rather than money the gate would refuse.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org from the validated IAM owner claim; 401 without a validated principal, and a balance that cannot be read is 502 — never 0, because unknown is not broke.
+         * @summary Spendable prepaid for the caller\'s org, in the finance shape
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -109,7 +110,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers the money PUT IN to the org\'s wallet — each staff grant, promo and settled top-up as a positive row with its id, label, cents and grant time.  Spend is not a credit. A posting counts here only when it moved money IN; debits belong to /v1/finance/usage (aggregated) and /v1/finance/ledger (signed). All three project ONE read of the same ledger through ONE vocabulary for what a posting means, so they cannot disagree about a row — nor silently drop one, which is what an empty credits page against a funded wallet was.  `label` falls back through the posting\'s notes, then its tags, then a bare Credit — it is a description, never an identifier. `remainingCents` is OMITTED: the wallet is one running balance, not per-grant buckets, so no grant has a remainder to report and spend cannot be attributed to the credit that funded it.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org; 401 without a validated principal. An org with no grants gets an empty array — honest, never a fabricated figure.
+         * @summary Credit grants and top-ups on the caller\'s org wallet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -142,7 +144,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers an empty typed array, always. The fleet bills a PREPAID wallet — money in, metered debits out — and issues no customer invoices, so there is no invoice ledger to project. Nothing here is a fabricated figure and nothing is hidden behind a filter.  The shape is fixed, so the finance UI renders this lane today and the day an invoice ledger exists it fills with ZERO client change. Spend that actually happened is /v1/finance/usage; money in and out is /v1/finance/ledger; what is left to spend is /v1/finance/balance.  The gate is real even though the body is empty: 401 without a validated principal. It is the only finance read that touches no store, so it is also the only one that cannot 502.
+         * @summary Issued invoices — none exist, and that is the honest answer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -175,7 +178,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  `range` is 24h, 7d, 30d or 90d, defaulting to 30d. A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Money in and out of the caller\'s org wallet, signed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -208,7 +212,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers the masked card descriptors for the caller\'s resolved WALLET — id, brand, last four, expiry, default flag — reshaped into the finance contract.  It re-masks defensively: whatever the upstream sends, at most the trailing four DIGITS survive into `last4`. No card number, no security code and no processor token exists in this shape at all, so an over-returning upstream still cannot leak one through this lane.  Read the sibling difference before trusting a mismatch. This keys the store on the resolved wallet; /v1/billing/payment-methods keys it on the org SLUG, which is also the key a card is SAVED under — identical for an org paying from its shared pool, different wherever the payer is a person. When the two lists disagree, the billing one is what was saved.  401 without a validated principal. An upstream that answers non-2xx or cannot be reached is 502 — never an empty list, because no cards and could not ask must not look alike.
+         * @summary Saved cards for the wallet the caller pays from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -275,7 +280,8 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. `range` is 24h, 7d, 30d or 90d, and anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
+         * @summary What the caller\'s org spent over a window, as a series and by tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -332,7 +338,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the org\'s spendable prepaid balance typed for the finance surfaces: `availableCents`, `pendingCents`, `dueCents` and the `asOf` instant it was read.  It is the SAME wallet read /v1/billing/balance answers — one function, called by both, so the two surfaces cannot drift into disagreeing about a customer\'s money. Reshaped, never re-metered. Co-resident the number comes straight out of the org\'s own double-entry ledger file.  `dueCents` is a structural 0: this is a PREPAID wallet with no open-invoice debt, so nothing is ever owed and a non-zero value here would be an invention. `pendingCents` is 0 on the co-resident ledger, where authorization holds are never posted; only a split-deploy upstream reports holds, and there spendable is the balance NET of them, floored at 0 — a fully-held wallet reports 0 rather than money the gate would refuse.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org from the validated IAM owner claim; 401 without a validated principal, and a balance that cannot be read is 502 — never 0, because unknown is not broke.
+         * @summary Spendable prepaid for the caller\'s org, in the finance shape
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -343,7 +350,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the money PUT IN to the org\'s wallet — each staff grant, promo and settled top-up as a positive row with its id, label, cents and grant time.  Spend is not a credit. A posting counts here only when it moved money IN; debits belong to /v1/finance/usage (aggregated) and /v1/finance/ledger (signed). All three project ONE read of the same ledger through ONE vocabulary for what a posting means, so they cannot disagree about a row — nor silently drop one, which is what an empty credits page against a funded wallet was.  `label` falls back through the posting\'s notes, then its tags, then a bare Credit — it is a description, never an identifier. `remainingCents` is OMITTED: the wallet is one running balance, not per-grant buckets, so no grant has a remainder to report and spend cannot be attributed to the credit that funded it.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org; 401 without a validated principal. An org with no grants gets an empty array — honest, never a fabricated figure.
+         * @summary Credit grants and top-ups on the caller\'s org wallet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -354,7 +362,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers an empty typed array, always. The fleet bills a PREPAID wallet — money in, metered debits out — and issues no customer invoices, so there is no invoice ledger to project. Nothing here is a fabricated figure and nothing is hidden behind a filter.  The shape is fixed, so the finance UI renders this lane today and the day an invoice ledger exists it fills with ZERO client change. Spend that actually happened is /v1/finance/usage; money in and out is /v1/finance/ledger; what is left to spend is /v1/finance/balance.  The gate is real even though the body is empty: 401 without a validated principal. It is the only finance read that touches no store, so it is also the only one that cannot 502.
+         * @summary Issued invoices — none exist, and that is the honest answer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -365,7 +374,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  `range` is 24h, 7d, 30d or 90d, defaulting to 30d. A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Money in and out of the caller\'s org wallet, signed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -376,7 +386,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the masked card descriptors for the caller\'s resolved WALLET — id, brand, last four, expiry, default flag — reshaped into the finance contract.  It re-masks defensively: whatever the upstream sends, at most the trailing four DIGITS survive into `last4`. No card number, no security code and no processor token exists in this shape at all, so an over-returning upstream still cannot leak one through this lane.  Read the sibling difference before trusting a mismatch. This keys the store on the resolved wallet; /v1/billing/payment-methods keys it on the org SLUG, which is also the key a card is SAVED under — identical for an org paying from its shared pool, different wherever the payer is a person. When the two lists disagree, the billing one is what was saved.  401 without a validated principal. An upstream that answers non-2xx or cannot be reached is 502 — never an empty list, because no cards and could not ask must not look alike.
+         * @summary Saved cards for the wallet the caller pays from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -399,7 +410,8 @@ export const FinanceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. `range` is 24h, 7d, 30d or 90d, and anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
+         * @summary What the caller\'s org spent over a window, as a series and by tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -430,7 +442,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceAccounts(requestParameters.scope, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the org\'s spendable prepaid balance typed for the finance surfaces: `availableCents`, `pendingCents`, `dueCents` and the `asOf` instant it was read.  It is the SAME wallet read /v1/billing/balance answers — one function, called by both, so the two surfaces cannot drift into disagreeing about a customer\'s money. Reshaped, never re-metered. Co-resident the number comes straight out of the org\'s own double-entry ledger file.  `dueCents` is a structural 0: this is a PREPAID wallet with no open-invoice debt, so nothing is ever owed and a non-zero value here would be an invention. `pendingCents` is 0 on the co-resident ledger, where authorization holds are never posted; only a split-deploy upstream reports holds, and there spendable is the balance NET of them, floored at 0 — a fully-held wallet reports 0 rather than money the gate would refuse.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org from the validated IAM owner claim; 401 without a validated principal, and a balance that cannot be read is 502 — never 0, because unknown is not broke.
+         * @summary Spendable prepaid for the caller\'s org, in the finance shape
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -438,7 +451,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceBalance(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the money PUT IN to the org\'s wallet — each staff grant, promo and settled top-up as a positive row with its id, label, cents and grant time.  Spend is not a credit. A posting counts here only when it moved money IN; debits belong to /v1/finance/usage (aggregated) and /v1/finance/ledger (signed). All three project ONE read of the same ledger through ONE vocabulary for what a posting means, so they cannot disagree about a row — nor silently drop one, which is what an empty credits page against a funded wallet was.  `label` falls back through the posting\'s notes, then its tags, then a bare Credit — it is a description, never an identifier. `remainingCents` is OMITTED: the wallet is one running balance, not per-grant buckets, so no grant has a remainder to report and spend cannot be attributed to the credit that funded it.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org; 401 without a validated principal. An org with no grants gets an empty array — honest, never a fabricated figure.
+         * @summary Credit grants and top-ups on the caller\'s org wallet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -446,7 +460,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceCredits(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers an empty typed array, always. The fleet bills a PREPAID wallet — money in, metered debits out — and issues no customer invoices, so there is no invoice ledger to project. Nothing here is a fabricated figure and nothing is hidden behind a filter.  The shape is fixed, so the finance UI renders this lane today and the day an invoice ledger exists it fills with ZERO client change. Spend that actually happened is /v1/finance/usage; money in and out is /v1/finance/ledger; what is left to spend is /v1/finance/balance.  The gate is real even though the body is empty: 401 without a validated principal. It is the only finance read that touches no store, so it is also the only one that cannot 502.
+         * @summary Issued invoices — none exist, and that is the honest answer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -454,7 +469,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceInvoices(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  `range` is 24h, 7d, 30d or 90d, defaulting to 30d. A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Money in and out of the caller\'s org wallet, signed
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -462,7 +478,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceLedger(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the masked card descriptors for the caller\'s resolved WALLET — id, brand, last four, expiry, default flag — reshaped into the finance contract.  It re-masks defensively: whatever the upstream sends, at most the trailing four DIGITS survive into `last4`. No card number, no security code and no processor token exists in this shape at all, so an over-returning upstream still cannot leak one through this lane.  Read the sibling difference before trusting a mismatch. This keys the store on the resolved wallet; /v1/billing/payment-methods keys it on the org SLUG, which is also the key a card is SAVED under — identical for an org paying from its shared pool, different wherever the payer is a person. When the two lists disagree, the billing one is what was saved.  401 without a validated principal. An upstream that answers non-2xx or cannot be reached is 502 — never an empty list, because no cards and could not ask must not look alike.
+         * @summary Saved cards for the wallet the caller pays from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -479,7 +496,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1FinanceTreasury(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. `range` is 24h, 7d, 30d or 90d, and anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
+         * @summary What the caller\'s org spent over a window, as a series and by tag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -530,7 +548,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the org\'s spendable prepaid balance typed for the finance surfaces: `availableCents`, `pendingCents`, `dueCents` and the `asOf` instant it was read.  It is the SAME wallet read /v1/billing/balance answers — one function, called by both, so the two surfaces cannot drift into disagreeing about a customer\'s money. Reshaped, never re-metered. Co-resident the number comes straight out of the org\'s own double-entry ledger file.  `dueCents` is a structural 0: this is a PREPAID wallet with no open-invoice debt, so nothing is ever owed and a non-zero value here would be an invention. `pendingCents` is 0 on the co-resident ledger, where authorization holds are never posted; only a split-deploy upstream reports holds, and there spendable is the balance NET of them, floored at 0 — a fully-held wallet reports 0 rather than money the gate would refuse.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org from the validated IAM owner claim; 401 without a validated principal, and a balance that cannot be read is 502 — never 0, because unknown is not broke.
+     * @summary Spendable prepaid for the caller\'s org, in the finance shape
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
@@ -540,7 +559,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the money PUT IN to the org\'s wallet — each staff grant, promo and settled top-up as a positive row with its id, label, cents and grant time.  Spend is not a credit. A posting counts here only when it moved money IN; debits belong to /v1/finance/usage (aggregated) and /v1/finance/ledger (signed). All three project ONE read of the same ledger through ONE vocabulary for what a posting means, so they cannot disagree about a row — nor silently drop one, which is what an empty credits page against a funded wallet was.  `label` falls back through the posting\'s notes, then its tags, then a bare Credit — it is a description, never an identifier. `remainingCents` is OMITTED: the wallet is one running balance, not per-grant buckets, so no grant has a remainder to report and spend cannot be attributed to the credit that funded it.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org; 401 without a validated principal. An org with no grants gets an empty array — honest, never a fabricated figure.
+     * @summary Credit grants and top-ups on the caller\'s org wallet
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
@@ -550,7 +570,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers an empty typed array, always. The fleet bills a PREPAID wallet — money in, metered debits out — and issues no customer invoices, so there is no invoice ledger to project. Nothing here is a fabricated figure and nothing is hidden behind a filter.  The shape is fixed, so the finance UI renders this lane today and the day an invoice ledger exists it fills with ZERO client change. Spend that actually happened is /v1/finance/usage; money in and out is /v1/finance/ledger; what is left to spend is /v1/finance/balance.  The gate is real even though the body is empty: 401 without a validated principal. It is the only finance read that touches no store, so it is also the only one that cannot 502.
+     * @summary Issued invoices — none exist, and that is the honest answer
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
@@ -560,7 +581,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  `range` is 24h, 7d, 30d or 90d, defaulting to 30d. A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+     * @summary Money in and out of the caller\'s org wallet, signed
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
@@ -570,7 +592,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the masked card descriptors for the caller\'s resolved WALLET — id, brand, last four, expiry, default flag — reshaped into the finance contract.  It re-masks defensively: whatever the upstream sends, at most the trailing four DIGITS survive into `last4`. No card number, no security code and no processor token exists in this shape at all, so an over-returning upstream still cannot leak one through this lane.  Read the sibling difference before trusting a mismatch. This keys the store on the resolved wallet; /v1/billing/payment-methods keys it on the org SLUG, which is also the key a card is SAVED under — identical for an org paying from its shared pool, different wherever the payer is a person. When the two lists disagree, the billing one is what was saved.  401 without a validated principal. An upstream that answers non-2xx or cannot be reached is 502 — never an empty list, because no cards and could not ask must not look alike.
+     * @summary Saved cards for the wallet the caller pays from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
@@ -591,7 +614,8 @@ export class FinanceApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. `range` is 24h, 7d, 30d or 90d, and anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
+     * @summary What the caller\'s org spent over a window, as a series and by tag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi

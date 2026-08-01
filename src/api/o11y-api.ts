@@ -52,6 +52,10 @@ import type { CloudUpdateQueueIn } from '../models';
 // @ts-ignore
 import type { O11yAlertRule } from '../models';
 // @ts-ignore
+import type { O11yBuilderQuery } from '../models';
+// @ts-ignore
+import type { O11yBuilderQueryResult } from '../models';
+// @ts-ignore
 import type { O11yDashboardSummary } from '../models';
 // @ts-ignore
 import type { O11yError } from '../models';
@@ -63,6 +67,8 @@ import type { O11yIngestBatch } from '../models';
 import type { O11yIngestResult } from '../models';
 // @ts-ignore
 import type { O11yO11yServices200Response } from '../models';
+// @ts-ignore
+import type { O11yPrometheusResponse } from '../models';
 /**
  * O11yApi - axios parameter creator
  * @export
@@ -108,7 +114,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
+         * @summary Remove a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -145,7 +152,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
+         * @summary Replay the page-delivery receipts this process took
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -313,7 +321,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Reports whether every service in the runtime\'s registry is healthy, and names them grouped by state — so a failure says WHICH component is down, not merely that something is. An unhealthy registry answers 503, not a 200 with a false flag inside, so a plain status check cannot read a sick runtime as well.  UNAUTHENTICATED by design, like the other two probes: it carries no tenant data and is reached by k8s and by external checks that hold no principal.
+         * @summary Health of the observability runtime\'s services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -346,7 +355,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers 200 unconditionally while the process is running, and asserts NOTHING about the telemetry stores behind it. That is what makes it a liveness probe: a container that answers this is worth leaving alive, and restarting on a store outage would only remove the thing reporting the outage.  UNAUTHENTICATED by design, and one of exactly three /v1/o11y paths that are. It carries no tenant data, and gating it would break the k8s probes and the external health checks without protecting anything. Use the health probe, not this one, to ask whether the runtime can actually serve.
+         * @summary Liveness of the observability process
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -379,7 +389,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Reports whether the runtime\'s registered services are healthy enough to take traffic, and answers 503 when they are not — which is what takes a booting or degraded replica out of the load balancer instead of letting it serve errors.  UNAUTHENTICATED by design, like the other two probes. It reads the same service registry the health probe reads, so the two agree by construction; readiness is the question a router asks and health is the question an operator asks.
+         * @summary Readiness of the observability runtime to serve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -412,7 +423,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Serves the observability runtime\'s own read surface — dashboards, alert rules, saved views, the service and dependency inventory, and the trace, log and metric explorers — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH, not the front door. Every path this repo owns the shape of is registered ahead of it and wins the match; what reaches here is what only the runtime knows how to answer. The public contract is flat — one /v1/, no nested version — and the mapping onto the runtime\'s internal namespace happens at this one seam, so a caller never spells an engine version.  A validated principal is required and the read is scoped to that principal\'s own org, pinned server-side from its claim; a client-supplied org header never survives ingress and there is no query parameter that widens the scope. Platform sudo passes without an org — the admin console reads before one is selected — and buys reach, not data: the runtime still scopes every read from the tenant it was given, so an org-less request answers org-less, never the fleet. Before the runtime is initialized, 503.
+         * @summary Read a resource from the observability runtime
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -552,7 +564,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
+         * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -624,11 +637,15 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one instant query, byte-for-byte — its own status code and envelope, unwrapped and un-reshaped, so the console\'s infrastructure-health board parses the response it was written against.  PLATFORM SUDO ONLY. This is not tenant data: it is the whole fleet\'s `up{}` inventory, so it takes the same platform-sudo predicate the infra-log god-view takes, and every customer is 403. VictoriaMetrics has no per-request auth of its own — it is an internal ClusterIP — so this handler IS the access boundary, and it fails closed at every step.  The query is ALLOWLISTED, not passed through. The `query` parameter must equal one of the exact PromQL strings the boards issue, or it is a 400; there is no way to phrase a new one. That is what keeps a read proxy from becoming a generic PromQL exfiltration and DoS endpoint.
+         * @summary Instant platform-infrastructure metric, for platform administrators
+         * @param {CloudGetV1O11yVmQueryQueryEnum} query Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1O11yVmQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1O11yVmQuery: async (query: CloudGetV1O11yVmQueryQueryEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('cloudGetV1O11yVmQuery', 'query', query)
             const localVarPath = `/v1/o11y/vm/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -645,6 +662,10 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -657,11 +678,24 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one ranged query over start/end/step, byte-for-byte — its own status code and envelope, so the console\'s infrastructure trends render off the response as-is.  PLATFORM SUDO ONLY, on the same fleet-wide `up{}` inventory and the same fixed board queries as the instant read; a customer is 403. VictoriaMetrics carries no per-request auth, so this handler is the access boundary.  The query is ALLOWLISTED to the exact PromQL the boards issue — anything else is a 400 — and start, end and step must each be positive integers before the request is forwarded. Range arguments are the other half of the same boundary: an unbounded step over an unbounded window is a DoS whether or not the query is on the list.
+         * @summary Ranged platform-infrastructure metric, for platform administrators
+         * @param {CloudGetV1O11yVmQueryRangeQueryEnum} query Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
+         * @param {number} start Range start (Unix seconds, positive integer).
+         * @param {number} end Range end (Unix seconds, positive integer).
+         * @param {number} step Step resolution (seconds, positive integer).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1O11yVmQueryRange: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1O11yVmQueryRange: async (query: CloudGetV1O11yVmQueryRangeQueryEnum, start: number, end: number, step: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('cloudGetV1O11yVmQueryRange', 'query', query)
+            // verify required parameter 'start' is not null or undefined
+            assertParamExists('cloudGetV1O11yVmQueryRange', 'start', start)
+            // verify required parameter 'end' is not null or undefined
+            assertParamExists('cloudGetV1O11yVmQueryRange', 'end', end)
+            // verify required parameter 'step' is not null or undefined
+            assertParamExists('cloudGetV1O11yVmQueryRange', 'step', step)
             const localVarPath = `/v1/o11y/vm/query_range`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -678,6 +712,22 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+            if (step !== undefined) {
+                localVarQueryParameter['step'] = step;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -690,7 +740,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Published because this address accepts every method, but the runtime routes nothing here: the request reaches it as an unrouted path and no telemetry is read or written.
+         * @summary Not served by the observability runtime
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -819,7 +870,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
+         * @summary Update part of a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -856,7 +908,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
+         * @summary Take an Alertmanager notification and page Slack
          * @param {string} receiver 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -977,7 +1030,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Carries the runtime\'s own writes and query posts — creating a dashboard, an alert rule or a saved view, and running the query bodies the explorers submit — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH: the builder query and the ingest routes this repo owns are registered ahead of it and win the match. A validated, org-scoped principal is required and the write lands in that principal\'s own tenant, pinned server-side.  ONE EXEMPTION, and it is deliberate: a Sentry error-ingest write presents a DSN public key, never a Hanzo session, so those two paths bypass the principal gate and are authenticated by the ingest verifier instead — which derives the org from the DSN itself and fails closed. The exemption is matched by method plus prefix plus suffix, never a broad prefix, so every read under the same subtree stays gated. Before the runtime is initialized, 503.
+         * @summary Create a runtime object, or run a query against telemetry
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1014,11 +1068,15 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Runs the console\'s composite builder query and answers the engine\'s own response untouched — body, status and headers ride through both ways, because the shape here is the query engine\'s, not this layer\'s.  This flat path is the ONE canonical public address for the builder query, and pinning it server-side is the point: the version-less alias resolves to the engine\'s highest version, which rejects the v3-shaped composite payload the console speaks. So the engine version is resolved INSIDE the handler and the client never names one — a caller that spells a version into the path is coupling itself to an internal detail that is free to move.  Requires a validated principal, and the tenant is the principal\'s own org, pinned server-side from the validated claim; there is no org selector in the payload or the query string that could widen it. Before the runtime is initialized this answers 503 rather than an empty result.
+         * @summary Run one builder query against the caller\'s telemetry
+         * @param {O11yBuilderQuery} o11yBuilderQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1O11yQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1O11yQuery: async (o11yBuilderQuery: O11yBuilderQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'o11yBuilderQuery' is not null or undefined
+            assertParamExists('cloudPostV1O11yQuery', 'o11yBuilderQuery', o11yBuilderQuery)
             const localVarPath = `/v1/o11y/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1037,9 +1095,12 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(o11yBuilderQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1047,11 +1108,15 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Runs the console\'s composite builder query over a time range — the list and series the trace, log and metric explorers render — and answers the engine\'s own response untouched, body, status and headers alike.  Same pin as the instant form and for the same reason: the flat path resolves to a specific engine version INSIDE the handler, because the version-less alias resolves to one that rejects the composite payload the console sends. The client speaks only this path.  Requires a validated principal, and the tenant is that principal\'s own org, pinned server-side; nothing in the request can widen it. Before the runtime is initialized this answers 503.
+         * @summary Run one ranged builder query against the caller\'s telemetry
+         * @param {O11yBuilderQuery} o11yBuilderQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1O11yQueryRange: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1O11yQueryRange: async (o11yBuilderQuery: O11yBuilderQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'o11yBuilderQuery' is not null or undefined
+            assertParamExists('cloudPostV1O11yQueryRange', 'o11yBuilderQuery', o11yBuilderQuery)
             const localVarPath = `/v1/o11y/query_range`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1070,9 +1135,12 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(o11yBuilderQuery, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1080,7 +1148,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Replaces one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant: the org is minted from its claim at ingress, a client copy never survives, and nothing in the request can widen the scope. Before the runtime is initialized, 503.
+         * @summary Replace a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1098,43 +1167,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1O11yByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1O11yByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/o11y/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1353,7 +1385,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
+         * @summary Remove a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1365,7 +1398,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
+         * @summary Replay the page-delivery receipts this process took
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1419,7 +1453,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports whether every service in the runtime\'s registry is healthy, and names them grouped by state — so a failure says WHICH component is down, not merely that something is. An unhealthy registry answers 503, not a 200 with a false flag inside, so a plain status check cannot read a sick runtime as well.  UNAUTHENTICATED by design, like the other two probes: it carries no tenant data and is reached by k8s and by external checks that hold no principal.
+         * @summary Health of the observability runtime\'s services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1430,7 +1465,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers 200 unconditionally while the process is running, and asserts NOTHING about the telemetry stores behind it. That is what makes it a liveness probe: a container that answers this is worth leaving alive, and restarting on a store outage would only remove the thing reporting the outage.  UNAUTHENTICATED by design, and one of exactly three /v1/o11y paths that are. It carries no tenant data, and gating it would break the k8s probes and the external health checks without protecting anything. Use the health probe, not this one, to ask whether the runtime can actually serve.
+         * @summary Liveness of the observability process
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1441,7 +1477,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports whether the runtime\'s registered services are healthy enough to take traffic, and answers 503 when they are not — which is what takes a booting or degraded replica out of the load balancer instead of letting it serve errors.  UNAUTHENTICATED by design, like the other two probes. It reads the same service registry the health probe reads, so the two agree by construction; readiness is the question a router asks and health is the question an operator asks.
+         * @summary Readiness of the observability runtime to serve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1452,7 +1489,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Serves the observability runtime\'s own read surface — dashboards, alert rules, saved views, the service and dependency inventory, and the trace, log and metric explorers — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH, not the front door. Every path this repo owns the shape of is registered ahead of it and wins the match; what reaches here is what only the runtime knows how to answer. The public contract is flat — one /v1/, no nested version — and the mapping onto the runtime\'s internal namespace happens at this one seam, so a caller never spells an engine version.  A validated principal is required and the read is scoped to that principal\'s own org, pinned server-side from its claim; a client-supplied org header never survives ingress and there is no query parameter that widens the scope. Platform sudo passes without an org — the admin console reads before one is selected — and buys reach, not data: the runtime still scopes every read from the tenant it was given, so an org-less request answers org-less, never the fleet. Before the runtime is initialized, 503.
+         * @summary Read a resource from the observability runtime
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1495,7 +1533,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
+         * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1519,29 +1558,37 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one instant query, byte-for-byte — its own status code and envelope, unwrapped and un-reshaped, so the console\'s infrastructure-health board parses the response it was written against.  PLATFORM SUDO ONLY. This is not tenant data: it is the whole fleet\'s `up{}` inventory, so it takes the same platform-sudo predicate the infra-log god-view takes, and every customer is 403. VictoriaMetrics has no per-request auth of its own — it is an internal ClusterIP — so this handler IS the access boundary, and it fails closed at every step.  The query is ALLOWLISTED, not passed through. The `query` parameter must equal one of the exact PromQL strings the boards issue, or it is a 400; there is no way to phrase a new one. That is what keeps a read proxy from becoming a generic PromQL exfiltration and DoS endpoint.
+         * @summary Instant platform-infrastructure metric, for platform administrators
+         * @param {CloudGetV1O11yVmQueryQueryEnum} query Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1O11yVmQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yVmQuery(options);
+        async cloudGetV1O11yVmQuery(query: CloudGetV1O11yVmQueryQueryEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yPrometheusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yVmQuery(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yVmQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one ranged query over start/end/step, byte-for-byte — its own status code and envelope, so the console\'s infrastructure trends render off the response as-is.  PLATFORM SUDO ONLY, on the same fleet-wide `up{}` inventory and the same fixed board queries as the instant read; a customer is 403. VictoriaMetrics carries no per-request auth, so this handler is the access boundary.  The query is ALLOWLISTED to the exact PromQL the boards issue — anything else is a 400 — and start, end and step must each be positive integers before the request is forwarded. Range arguments are the other half of the same boundary: an unbounded step over an unbounded window is a DoS whether or not the query is on the list.
+         * @summary Ranged platform-infrastructure metric, for platform administrators
+         * @param {CloudGetV1O11yVmQueryRangeQueryEnum} query Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
+         * @param {number} start Range start (Unix seconds, positive integer).
+         * @param {number} end Range end (Unix seconds, positive integer).
+         * @param {number} step Step resolution (seconds, positive integer).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1O11yVmQueryRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yVmQueryRange(options);
+        async cloudGetV1O11yVmQueryRange(query: CloudGetV1O11yVmQueryRangeQueryEnum, start: number, end: number, step: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yPrometheusResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yVmQueryRange(query, start, end, step, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yVmQueryRange']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Published because this address accepts every method, but the runtime routes nothing here: the request reaches it as an unrouted path and no telemetry is read or written.
+         * @summary Not served by the observability runtime
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1582,7 +1629,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
+         * @summary Update part of a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1594,7 +1642,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
+         * @summary Take an Alertmanager notification and page Slack
          * @param {string} receiver 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1633,7 +1682,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Carries the runtime\'s own writes and query posts — creating a dashboard, an alert rule or a saved view, and running the query bodies the explorers submit — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH: the builder query and the ingest routes this repo owns are registered ahead of it and win the match. A validated, org-scoped principal is required and the write lands in that principal\'s own tenant, pinned server-side.  ONE EXEMPTION, and it is deliberate: a Sentry error-ingest write presents a DSN public key, never a Hanzo session, so those two paths bypass the principal gate and are authenticated by the ingest verifier instead — which derives the org from the DSN itself and fails closed. The exemption is matched by method plus prefix plus suffix, never a broad prefix, so every read under the same subtree stays gated. Before the runtime is initialized, 503.
+         * @summary Create a runtime object, or run a query against telemetry
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1645,29 +1695,34 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Runs the console\'s composite builder query and answers the engine\'s own response untouched — body, status and headers ride through both ways, because the shape here is the query engine\'s, not this layer\'s.  This flat path is the ONE canonical public address for the builder query, and pinning it server-side is the point: the version-less alias resolves to the engine\'s highest version, which rejects the v3-shaped composite payload the console speaks. So the engine version is resolved INSIDE the handler and the client never names one — a caller that spells a version into the path is coupling itself to an internal detail that is free to move.  Requires a validated principal, and the tenant is the principal\'s own org, pinned server-side from the validated claim; there is no org selector in the payload or the query string that could widen it. Before the runtime is initialized this answers 503 rather than an empty result.
+         * @summary Run one builder query against the caller\'s telemetry
+         * @param {O11yBuilderQuery} o11yBuilderQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1O11yQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yQuery(options);
+        async cloudPostV1O11yQuery(o11yBuilderQuery: O11yBuilderQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yBuilderQueryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yQuery(o11yBuilderQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Runs the console\'s composite builder query over a time range — the list and series the trace, log and metric explorers render — and answers the engine\'s own response untouched, body, status and headers alike.  Same pin as the instant form and for the same reason: the flat path resolves to a specific engine version INSIDE the handler, because the version-less alias resolves to one that rejects the composite payload the console sends. The client speaks only this path.  Requires a validated principal, and the tenant is that principal\'s own org, pinned server-side; nothing in the request can widen it. Before the runtime is initialized this answers 503.
+         * @summary Run one ranged builder query against the caller\'s telemetry
+         * @param {O11yBuilderQuery} o11yBuilderQuery 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1O11yQueryRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yQueryRange(options);
+        async cloudPostV1O11yQueryRange(o11yBuilderQuery: O11yBuilderQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yBuilderQueryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yQueryRange(o11yBuilderQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yQueryRange']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Replaces one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant: the org is minted from its claim at ingress, a client copy never survives, and nothing in the request can widen the scope. Before the runtime is initialized, 503.
+         * @summary Replace a runtime object
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1676,18 +1731,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1O11yByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPutV1O11yByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1O11yByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1O11yByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudTraceV1O11yByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1772,7 +1815,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudDeleteV1O11yAnnotationQueuesId(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
+         * @summary Remove a runtime object
          * @param {O11yApiCloudDeleteV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1781,7 +1825,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudDeleteV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
+         * @summary Replay the page-delivery receipts this process took
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1819,7 +1864,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports whether every service in the runtime\'s registry is healthy, and names them grouped by state — so a failure says WHICH component is down, not merely that something is. An unhealthy registry answers 503, not a 200 with a false flag inside, so a plain status check cannot read a sick runtime as well.  UNAUTHENTICATED by design, like the other two probes: it carries no tenant data and is reached by k8s and by external checks that hold no principal.
+         * @summary Health of the observability runtime\'s services
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1827,7 +1873,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yApiV2Healthz(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers 200 unconditionally while the process is running, and asserts NOTHING about the telemetry stores behind it. That is what makes it a liveness probe: a container that answers this is worth leaving alive, and restarting on a store outage would only remove the thing reporting the outage.  UNAUTHENTICATED by design, and one of exactly three /v1/o11y paths that are. It carries no tenant data, and gating it would break the k8s probes and the external health checks without protecting anything. Use the health probe, not this one, to ask whether the runtime can actually serve.
+         * @summary Liveness of the observability process
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1835,7 +1882,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yApiV2Livez(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports whether the runtime\'s registered services are healthy enough to take traffic, and answers 503 when they are not — which is what takes a booting or degraded replica out of the load balancer instead of letting it serve errors.  UNAUTHENTICATED by design, like the other two probes. It reads the same service registry the health probe reads, so the two agree by construction; readiness is the question a router asks and health is the question an operator asks.
+         * @summary Readiness of the observability runtime to serve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1843,7 +1891,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yApiV2Readyz(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Serves the observability runtime\'s own read surface — dashboards, alert rules, saved views, the service and dependency inventory, and the trace, log and metric explorers — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH, not the front door. Every path this repo owns the shape of is registered ahead of it and wins the match; what reaches here is what only the runtime knows how to answer. The public contract is flat — one /v1/, no nested version — and the mapping onto the runtime\'s internal namespace happens at this one seam, so a caller never spells an engine version.  A validated principal is required and the read is scoped to that principal\'s own org, pinned server-side from its claim; a client-supplied org header never survives ingress and there is no query parameter that widens the scope. Platform sudo passes without an org — the admin console reads before one is selected — and buys reach, not data: the runtime still scopes every read from the tenant it was given, so an org-less request answers org-less, never the fleet. Before the runtime is initialized, 503.
+         * @summary Read a resource from the observability runtime
          * @param {O11yApiCloudGetV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1872,7 +1921,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yMetrics(requestParameters.product, requestParameters.range, requestParameters.stepSec, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
+         * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1890,23 +1940,28 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yStatus(requestParameters.product, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one instant query, byte-for-byte — its own status code and envelope, unwrapped and un-reshaped, so the console\'s infrastructure-health board parses the response it was written against.  PLATFORM SUDO ONLY. This is not tenant data: it is the whole fleet\'s `up{}` inventory, so it takes the same platform-sudo predicate the infra-log god-view takes, and every customer is 403. VictoriaMetrics has no per-request auth of its own — it is an internal ClusterIP — so this handler IS the access boundary, and it fails closed at every step.  The query is ALLOWLISTED, not passed through. The `query` parameter must equal one of the exact PromQL strings the boards issue, or it is a 400; there is no way to phrase a new one. That is what keeps a read proxy from becoming a generic PromQL exfiltration and DoS endpoint.
+         * @summary Instant platform-infrastructure metric, for platform administrators
+         * @param {O11yApiCloudGetV1O11yVmQueryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1O11yVmQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1O11yVmQuery(options).then((request) => request(axios, basePath));
+        cloudGetV1O11yVmQuery(requestParameters: O11yApiCloudGetV1O11yVmQueryRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yPrometheusResponse> {
+            return localVarFp.cloudGetV1O11yVmQuery(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers VictoriaMetrics\' native Prometheus JSON for one ranged query over start/end/step, byte-for-byte — its own status code and envelope, so the console\'s infrastructure trends render off the response as-is.  PLATFORM SUDO ONLY, on the same fleet-wide `up{}` inventory and the same fixed board queries as the instant read; a customer is 403. VictoriaMetrics carries no per-request auth, so this handler is the access boundary.  The query is ALLOWLISTED to the exact PromQL the boards issue — anything else is a 400 — and start, end and step must each be positive integers before the request is forwarded. Range arguments are the other half of the same boundary: an unbounded step over an unbounded window is a DoS whether or not the query is on the list.
+         * @summary Ranged platform-infrastructure metric, for platform administrators
+         * @param {O11yApiCloudGetV1O11yVmQueryRangeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1O11yVmQueryRange(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1O11yVmQueryRange(options).then((request) => request(axios, basePath));
+        cloudGetV1O11yVmQueryRange(requestParameters: O11yApiCloudGetV1O11yVmQueryRangeRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yPrometheusResponse> {
+            return localVarFp.cloudGetV1O11yVmQueryRange(requestParameters.query, requestParameters.start, requestParameters.end, requestParameters.step, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Published because this address accepts every method, but the runtime routes nothing here: the request reaches it as an unrouted path and no telemetry is read or written.
+         * @summary Not served by the observability runtime
          * @param {O11yApiCloudOptionsV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1935,7 +1990,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudPatchV1O11yAnnotationQueuesIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.cloudUpdateItemIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
+         * @summary Update part of a runtime object
          * @param {O11yApiCloudPatchV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1944,7 +2000,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudPatchV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
+         * @summary Take an Alertmanager notification and page Slack
          * @param {O11yApiCloudPostV1O11yAlertsByReceiverRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1973,7 +2030,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudPostV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.cloudAddItemsIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Carries the runtime\'s own writes and query posts — creating a dashboard, an alert rule or a saved view, and running the query bodies the explorers submit — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH: the builder query and the ingest routes this repo owns are registered ahead of it and win the match. A validated, org-scoped principal is required and the write lands in that principal\'s own tenant, pinned server-side.  ONE EXEMPTION, and it is deliberate: a Sentry error-ingest write presents a DSN public key, never a Hanzo session, so those two paths bypass the principal gate and are authenticated by the ingest verifier instead — which derives the org from the DSN itself and fails closed. The exemption is matched by method plus prefix plus suffix, never a broad prefix, so every read under the same subtree stays gated. Before the runtime is initialized, 503.
+         * @summary Create a runtime object, or run a query against telemetry
          * @param {O11yApiCloudPostV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1982,38 +2040,34 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudPostV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Runs the console\'s composite builder query and answers the engine\'s own response untouched — body, status and headers ride through both ways, because the shape here is the query engine\'s, not this layer\'s.  This flat path is the ONE canonical public address for the builder query, and pinning it server-side is the point: the version-less alias resolves to the engine\'s highest version, which rejects the v3-shaped composite payload the console speaks. So the engine version is resolved INSIDE the handler and the client never names one — a caller that spells a version into the path is coupling itself to an internal detail that is free to move.  Requires a validated principal, and the tenant is the principal\'s own org, pinned server-side from the validated claim; there is no org selector in the payload or the query string that could widen it. Before the runtime is initialized this answers 503 rather than an empty result.
+         * @summary Run one builder query against the caller\'s telemetry
+         * @param {O11yApiCloudPostV1O11yQueryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1O11yQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1O11yQuery(options).then((request) => request(axios, basePath));
+        cloudPostV1O11yQuery(requestParameters: O11yApiCloudPostV1O11yQueryRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yBuilderQueryResult> {
+            return localVarFp.cloudPostV1O11yQuery(requestParameters.o11yBuilderQuery, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Runs the console\'s composite builder query over a time range — the list and series the trace, log and metric explorers render — and answers the engine\'s own response untouched, body, status and headers alike.  Same pin as the instant form and for the same reason: the flat path resolves to a specific engine version INSIDE the handler, because the version-less alias resolves to one that rejects the composite payload the console sends. The client speaks only this path.  Requires a validated principal, and the tenant is that principal\'s own org, pinned server-side; nothing in the request can widen it. Before the runtime is initialized this answers 503.
+         * @summary Run one ranged builder query against the caller\'s telemetry
+         * @param {O11yApiCloudPostV1O11yQueryRangeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1O11yQueryRange(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1O11yQueryRange(options).then((request) => request(axios, basePath));
+        cloudPostV1O11yQueryRange(requestParameters: O11yApiCloudPostV1O11yQueryRangeRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yBuilderQueryResult> {
+            return localVarFp.cloudPostV1O11yQueryRange(requestParameters.o11yBuilderQuery, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Replaces one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant: the org is minted from its claim at ingress, a client copy never survives, and nothing in the request can widen the scope. Before the runtime is initialized, 503.
+         * @summary Replace a runtime object
          * @param {O11yApiCloudPutV1O11yByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1O11yByWildcard1(requestParameters: O11yApiCloudPutV1O11yByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {O11yApiCloudTraceV1O11yByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1O11yByWildcard1(requestParameters: O11yApiCloudTraceV1O11yByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * List dashboards from the o11y runtime.
@@ -2254,6 +2308,55 @@ export interface O11yApiCloudGetV1O11yStatusRequest {
 }
 
 /**
+ * Request parameters for cloudGetV1O11yVmQuery operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudGetV1O11yVmQueryRequest
+ */
+export interface O11yApiCloudGetV1O11yVmQueryRequest {
+    /**
+     * Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
+     * @type {'up' | 'sum(up)' | 'count(up)'}
+     * @memberof O11yApiCloudGetV1O11yVmQuery
+     */
+    readonly query: CloudGetV1O11yVmQueryQueryEnum
+}
+
+/**
+ * Request parameters for cloudGetV1O11yVmQueryRange operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudGetV1O11yVmQueryRangeRequest
+ */
+export interface O11yApiCloudGetV1O11yVmQueryRangeRequest {
+    /**
+     * Allowlisted PromQL. Only up, sum(up), and count(up) are permitted.
+     * @type {'up' | 'sum(up)' | 'count(up)'}
+     * @memberof O11yApiCloudGetV1O11yVmQueryRange
+     */
+    readonly query: CloudGetV1O11yVmQueryRangeQueryEnum
+
+    /**
+     * Range start (Unix seconds, positive integer).
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yVmQueryRange
+     */
+    readonly start: number
+
+    /**
+     * Range end (Unix seconds, positive integer).
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yVmQueryRange
+     */
+    readonly end: number
+
+    /**
+     * Step resolution (seconds, positive integer).
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yVmQueryRange
+     */
+    readonly step: number
+}
+
+/**
  * Request parameters for cloudOptionsV1O11yByWildcard1 operation in O11yApi.
  * @export
  * @interface O11yApiCloudOptionsV1O11yByWildcard1Request
@@ -2394,6 +2497,34 @@ export interface O11yApiCloudPostV1O11yByWildcard1Request {
 }
 
 /**
+ * Request parameters for cloudPostV1O11yQuery operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPostV1O11yQueryRequest
+ */
+export interface O11yApiCloudPostV1O11yQueryRequest {
+    /**
+     * 
+     * @type {O11yBuilderQuery}
+     * @memberof O11yApiCloudPostV1O11yQuery
+     */
+    readonly o11yBuilderQuery: O11yBuilderQuery
+}
+
+/**
+ * Request parameters for cloudPostV1O11yQueryRange operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPostV1O11yQueryRangeRequest
+ */
+export interface O11yApiCloudPostV1O11yQueryRangeRequest {
+    /**
+     * 
+     * @type {O11yBuilderQuery}
+     * @memberof O11yApiCloudPostV1O11yQueryRange
+     */
+    readonly o11yBuilderQuery: O11yBuilderQuery
+}
+
+/**
  * Request parameters for cloudPutV1O11yByWildcard1 operation in O11yApi.
  * @export
  * @interface O11yApiCloudPutV1O11yByWildcard1Request
@@ -2403,20 +2534,6 @@ export interface O11yApiCloudPutV1O11yByWildcard1Request {
      * 
      * @type {string}
      * @memberof O11yApiCloudPutV1O11yByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for cloudTraceV1O11yByWildcard1 operation in O11yApi.
- * @export
- * @interface O11yApiCloudTraceV1O11yByWildcard1Request
- */
-export interface O11yApiCloudTraceV1O11yByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof O11yApiCloudTraceV1O11yByWildcard1
      */
     readonly wildcard1: string
 }
@@ -2455,7 +2572,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
+     * @summary Remove a runtime object
      * @param {O11yApiCloudDeleteV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2466,7 +2584,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
+     * @summary Replay the page-delivery receipts this process took
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -2512,7 +2631,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports whether every service in the runtime\'s registry is healthy, and names them grouped by state — so a failure says WHICH component is down, not merely that something is. An unhealthy registry answers 503, not a 200 with a false flag inside, so a plain status check cannot read a sick runtime as well.  UNAUTHENTICATED by design, like the other two probes: it carries no tenant data and is reached by k8s and by external checks that hold no principal.
+     * @summary Health of the observability runtime\'s services
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -2522,7 +2642,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers 200 unconditionally while the process is running, and asserts NOTHING about the telemetry stores behind it. That is what makes it a liveness probe: a container that answers this is worth leaving alive, and restarting on a store outage would only remove the thing reporting the outage.  UNAUTHENTICATED by design, and one of exactly three /v1/o11y paths that are. It carries no tenant data, and gating it would break the k8s probes and the external health checks without protecting anything. Use the health probe, not this one, to ask whether the runtime can actually serve.
+     * @summary Liveness of the observability process
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -2532,7 +2653,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports whether the runtime\'s registered services are healthy enough to take traffic, and answers 503 when they are not — which is what takes a booting or degraded replica out of the load balancer instead of letting it serve errors.  UNAUTHENTICATED by design, like the other two probes. It reads the same service registry the health probe reads, so the two agree by construction; readiness is the question a router asks and health is the question an operator asks.
+     * @summary Readiness of the observability runtime to serve
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -2542,7 +2664,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Serves the observability runtime\'s own read surface — dashboards, alert rules, saved views, the service and dependency inventory, and the trace, log and metric explorers — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH, not the front door. Every path this repo owns the shape of is registered ahead of it and wins the match; what reaches here is what only the runtime knows how to answer. The public contract is flat — one /v1/, no nested version — and the mapping onto the runtime\'s internal namespace happens at this one seam, so a caller never spells an engine version.  A validated principal is required and the read is scoped to that principal\'s own org, pinned server-side from its claim; a client-supplied org header never survives ingress and there is no query parameter that widens the scope. Platform sudo passes without an org — the admin console reads before one is selected — and buys reach, not data: the runtime still scopes every read from the tenant it was given, so an org-less request answers org-less, never the fleet. Before the runtime is initialized, 503.
+     * @summary Read a resource from the observability runtime
      * @param {O11yApiCloudGetV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2577,7 +2700,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
+     * @summary List the caller org\'s LLM sessions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -2599,27 +2723,32 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers VictoriaMetrics\' native Prometheus JSON for one instant query, byte-for-byte — its own status code and envelope, unwrapped and un-reshaped, so the console\'s infrastructure-health board parses the response it was written against.  PLATFORM SUDO ONLY. This is not tenant data: it is the whole fleet\'s `up{}` inventory, so it takes the same platform-sudo predicate the infra-log god-view takes, and every customer is 403. VictoriaMetrics has no per-request auth of its own — it is an internal ClusterIP — so this handler IS the access boundary, and it fails closed at every step.  The query is ALLOWLISTED, not passed through. The `query` parameter must equal one of the exact PromQL strings the boards issue, or it is a 400; there is no way to phrase a new one. That is what keeps a read proxy from becoming a generic PromQL exfiltration and DoS endpoint.
+     * @summary Instant platform-infrastructure metric, for platform administrators
+     * @param {O11yApiCloudGetV1O11yVmQueryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public cloudGetV1O11yVmQuery(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudGetV1O11yVmQuery(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1O11yVmQuery(requestParameters: O11yApiCloudGetV1O11yVmQueryRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudGetV1O11yVmQuery(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Answers VictoriaMetrics\' native Prometheus JSON for one ranged query over start/end/step, byte-for-byte — its own status code and envelope, so the console\'s infrastructure trends render off the response as-is.  PLATFORM SUDO ONLY, on the same fleet-wide `up{}` inventory and the same fixed board queries as the instant read; a customer is 403. VictoriaMetrics carries no per-request auth, so this handler is the access boundary.  The query is ALLOWLISTED to the exact PromQL the boards issue — anything else is a 400 — and start, end and step must each be positive integers before the request is forwarded. Range arguments are the other half of the same boundary: an unbounded step over an unbounded window is a DoS whether or not the query is on the list.
+     * @summary Ranged platform-infrastructure metric, for platform administrators
+     * @param {O11yApiCloudGetV1O11yVmQueryRangeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public cloudGetV1O11yVmQueryRange(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudGetV1O11yVmQueryRange(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1O11yVmQueryRange(requestParameters: O11yApiCloudGetV1O11yVmQueryRangeRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudGetV1O11yVmQueryRange(requestParameters.query, requestParameters.start, requestParameters.end, requestParameters.step, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Published because this address accepts every method, but the runtime routes nothing here: the request reaches it as an unrouted path and no telemetry is read or written.
+     * @summary Not served by the observability runtime
      * @param {O11yApiCloudOptionsV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2654,7 +2783,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
+     * @summary Update part of a runtime object
      * @param {O11yApiCloudPatchV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2665,7 +2795,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
+     * @summary Take an Alertmanager notification and page Slack
      * @param {O11yApiCloudPostV1O11yAlertsByReceiverRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2700,7 +2831,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Carries the runtime\'s own writes and query posts — creating a dashboard, an alert rule or a saved view, and running the query bodies the explorers submit — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH: the builder query and the ingest routes this repo owns are registered ahead of it and win the match. A validated, org-scoped principal is required and the write lands in that principal\'s own tenant, pinned server-side.  ONE EXEMPTION, and it is deliberate: a Sentry error-ingest write presents a DSN public key, never a Hanzo session, so those two paths bypass the principal gate and are authenticated by the ingest verifier instead — which derives the org from the DSN itself and fails closed. The exemption is matched by method plus prefix plus suffix, never a broad prefix, so every read under the same subtree stays gated. Before the runtime is initialized, 503.
+     * @summary Create a runtime object, or run a query against telemetry
      * @param {O11yApiCloudPostV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2711,27 +2843,32 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Runs the console\'s composite builder query and answers the engine\'s own response untouched — body, status and headers ride through both ways, because the shape here is the query engine\'s, not this layer\'s.  This flat path is the ONE canonical public address for the builder query, and pinning it server-side is the point: the version-less alias resolves to the engine\'s highest version, which rejects the v3-shaped composite payload the console speaks. So the engine version is resolved INSIDE the handler and the client never names one — a caller that spells a version into the path is coupling itself to an internal detail that is free to move.  Requires a validated principal, and the tenant is the principal\'s own org, pinned server-side from the validated claim; there is no org selector in the payload or the query string that could widen it. Before the runtime is initialized this answers 503 rather than an empty result.
+     * @summary Run one builder query against the caller\'s telemetry
+     * @param {O11yApiCloudPostV1O11yQueryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public cloudPostV1O11yQuery(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPostV1O11yQuery(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1O11yQuery(requestParameters: O11yApiCloudPostV1O11yQueryRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPostV1O11yQuery(requestParameters.o11yBuilderQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Runs the console\'s composite builder query over a time range — the list and series the trace, log and metric explorers render — and answers the engine\'s own response untouched, body, status and headers alike.  Same pin as the instant form and for the same reason: the flat path resolves to a specific engine version INSIDE the handler, because the version-less alias resolves to one that rejects the composite payload the console sends. The client speaks only this path.  Requires a validated principal, and the tenant is that principal\'s own org, pinned server-side; nothing in the request can widen it. Before the runtime is initialized this answers 503.
+     * @summary Run one ranged builder query against the caller\'s telemetry
+     * @param {O11yApiCloudPostV1O11yQueryRangeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public cloudPostV1O11yQueryRange(options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPostV1O11yQueryRange(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1O11yQueryRange(requestParameters: O11yApiCloudPostV1O11yQueryRangeRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPostV1O11yQueryRange(requestParameters.o11yBuilderQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Replaces one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant: the org is minted from its claim at ingress, a client copy never survives, and nothing in the request can widen the scope. Before the runtime is initialized, 503.
+     * @summary Replace a runtime object
      * @param {O11yApiCloudPutV1O11yByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2739,17 +2876,6 @@ export class O11yApi extends BaseAPI {
      */
     public cloudPutV1O11yByWildcard1(requestParameters: O11yApiCloudPutV1O11yByWildcard1Request, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).cloudPutV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {O11yApiCloudTraceV1O11yByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudTraceV1O11yByWildcard1(requestParameters: O11yApiCloudTraceV1O11yByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudTraceV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2809,3 +2935,21 @@ export class O11yApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const CloudGetV1O11yVmQueryQueryEnum = {
+    Up: 'up',
+    SumUp: 'sum(up)',
+    CountUp: 'count(up)'
+} as const;
+export type CloudGetV1O11yVmQueryQueryEnum = typeof CloudGetV1O11yVmQueryQueryEnum[keyof typeof CloudGetV1O11yVmQueryQueryEnum];
+/**
+ * @export
+ */
+export const CloudGetV1O11yVmQueryRangeQueryEnum = {
+    Up: 'up',
+    SumUp: 'sum(up)',
+    CountUp: 'count(up)'
+} as const;
+export type CloudGetV1O11yVmQueryRangeQueryEnum = typeof CloudGetV1O11yVmQueryRangeQueryEnum[keyof typeof CloudGetV1O11yVmQueryRangeQueryEnum];

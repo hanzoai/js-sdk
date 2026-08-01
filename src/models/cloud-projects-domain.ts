@@ -13,24 +13,57 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { CloudRecord } from './cloud-record';
 
 /**
  * 
  * @export
- * @interface KmsGetV1KmsHealthz200Response
+ * @interface CloudProjectsDomain
  */
-export interface KmsGetV1KmsHealthz200Response {
+export interface CloudProjectsDomain {
     /**
      * 
-     * @type {string}
-     * @memberof KmsGetV1KmsHealthz200Response
+     * @type {number}
+     * @memberof CloudProjectsDomain
      */
-    'service'?: string;
+    'createdAt'?: number;
     /**
      * 
      * @type {string}
-     * @memberof KmsGetV1KmsHealthz200Response
+     * @memberof CloudProjectsDomain
+     */
+    'detail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProjectsDomain
+     */
+    'host'?: string;
+    /**
+     * 
+     * @type {Array<CloudRecord>}
+     * @memberof CloudProjectsDomain
+     */
+    'records'?: Array<CloudRecord>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProjectsDomain
      */
     'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudProjectsDomain
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CloudProjectsDomain
+     */
+    'verified'?: boolean;
 }
 

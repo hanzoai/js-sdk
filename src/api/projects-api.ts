@@ -21,6 +21,32 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { CloudProjectsBoundDomains } from '../models';
+// @ts-ignore
+import type { CloudProjectsComplete } from '../models';
+// @ts-ignore
+import type { CloudProjectsCreate } from '../models';
+// @ts-ignore
+import type { CloudProjectsDeployment } from '../models';
+// @ts-ignore
+import type { CloudProjectsDomain } from '../models';
+// @ts-ignore
+import type { CloudProjectsDomains } from '../models';
+// @ts-ignore
+import type { CloudProjectsDomainsBind } from '../models';
+// @ts-ignore
+import type { CloudProjectsFork } from '../models';
+// @ts-ignore
+import type { CloudProjectsProject } from '../models';
+// @ts-ignore
+import type { CloudProjectsUpdate } from '../models';
+// @ts-ignore
+import type { ProjectsDeployment } from '../models';
+// @ts-ignore
+import type { ProjectsError } from '../models';
+// @ts-ignore
+import type { ProjectsGitDeployRequest } from '../models';
 /**
  * ProjectsApi - axios parameter creator
  * @export
@@ -28,14 +54,15 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const ProjectsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @param {string} slug 
+         * DeleteProject deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * @summary DeleteProject deletes a project and takes its site off the internet.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1ProjectsBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudDeleteV1ProjectsSlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudDeleteV1ProjectsBySlug', 'slug', slug)
+            assertParamExists('cloudDeleteV1ProjectsSlug', 'slug', slug)
             const localVarPath = `/v1/projects/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -65,17 +92,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} host 
+         * ReleaseDomain gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ReleaseDomain gives a custom hostname back, so the name is free to reuse.
+         * @param {string} slug Slug is the project the host is attached to, from the path.
+         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1ProjectsBySlugDomainsByHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudDeleteV1ProjectsSlugDomainsHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudDeleteV1ProjectsBySlugDomainsByHost', 'slug', slug)
+            assertParamExists('cloudDeleteV1ProjectsSlugDomainsHost', 'slug', slug)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('cloudDeleteV1ProjectsBySlugDomainsByHost', 'host', host)
+            assertParamExists('cloudDeleteV1ProjectsSlugDomainsHost', 'host', host)
             const localVarPath = `/v1/projects/{slug}/domains/{host}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
@@ -106,7 +134,8 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * ListProjects returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
+         * @summary ListProjects returns every project your org owns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -139,14 +168,15 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
+         * @summary GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1ProjectsSlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudGetV1ProjectsBySlug', 'slug', slug)
+            assertParamExists('cloudGetV1ProjectsSlug', 'slug', slug)
             const localVarPath = `/v1/projects/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -176,14 +206,15 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * ListDeployments returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDeployments returns a project\'s deploy history, newest version first.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1ProjectsSlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudGetV1ProjectsBySlugDeployments', 'slug', slug)
+            assertParamExists('cloudGetV1ProjectsSlugDeployments', 'slug', slug)
             const localVarPath = `/v1/projects/{slug}/deployments`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -213,17 +244,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} id 
+         * GetDeployment returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary GetDeployment returns one deployment of a project by id.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {string} id Deployment id (e.g. dep_...).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDeploymentsById: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1ProjectsSlugDeploymentsId: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudGetV1ProjectsBySlugDeploymentsById', 'slug', slug)
+            assertParamExists('cloudGetV1ProjectsSlugDeploymentsId', 'slug', slug)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudGetV1ProjectsBySlugDeploymentsById', 'id', id)
+            assertParamExists('cloudGetV1ProjectsSlugDeploymentsId', 'id', id)
             const localVarPath = `/v1/projects/{slug}/deployments/{id}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -254,14 +286,15 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1ProjectsSlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudGetV1ProjectsBySlugDomains', 'slug', slug)
+            assertParamExists('cloudGetV1ProjectsSlugDomains', 'slug', slug)
             const localVarPath = `/v1/projects/{slug}/domains`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -291,14 +324,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * UpdateProject changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary UpdateProject changes a project\'s settings, and only the settings you send.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {CloudProjectsUpdate} cloudProjectsUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1ProjectsBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPatchV1ProjectsSlug: async (slug: string, cloudProjectsUpdate: CloudProjectsUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudPatchV1ProjectsBySlug', 'slug', slug)
+            assertParamExists('cloudPatchV1ProjectsSlug', 'slug', slug)
+            // verify required parameter 'cloudProjectsUpdate' is not null or undefined
+            assertParamExists('cloudPatchV1ProjectsSlug', 'cloudProjectsUpdate', cloudProjectsUpdate)
             const localVarPath = `/v1/projects/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -318,9 +355,12 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudProjectsUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -328,11 +368,15 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
+         * @summary CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
+         * @param {CloudProjectsCreate} cloudProjectsCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Projects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1Projects: async (cloudProjectsCreate: CloudProjectsCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudProjectsCreate' is not null or undefined
+            assertParamExists('cloudPostV1Projects', 'cloudProjectsCreate', cloudProjectsCreate)
             const localVarPath = `/v1/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -351,9 +395,12 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudProjectsCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -361,14 +408,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * Takes a built site live at `https://<slug>.hanzo.app`. It accepts BOTH shapes on one address and the content type decides which: a `zip` or `tar.gz` archive — raw in the body or as a multipart file part — is uploaded and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the project\'s linked repo and answers 202 with a queued deployment and, where one could be minted, a scoped upload grant for CI to write with. The git path needs a linked repo (400 without one) and is finished later by the completion hook.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site, and a queued build is billed at completion rather than at queue time. A redeploy returns the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured, else 503; an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Deploy a build — upload an archive, or trigger a build from the linked repo
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {ProjectsGitDeployRequest} projectsGitDeployRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDeploy: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1ProjectsBySlugDeploy: async (slug: string, projectsGitDeployRequest: ProjectsGitDeployRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
             assertParamExists('cloudPostV1ProjectsBySlugDeploy', 'slug', slug)
+            // verify required parameter 'projectsGitDeployRequest' is not null or undefined
+            assertParamExists('cloudPostV1ProjectsBySlugDeploy', 'projectsGitDeployRequest', projectsGitDeployRequest)
             const localVarPath = `/v1/projects/{slug}/deploy`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -388,9 +439,12 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(projectsGitDeployRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -398,17 +452,61 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} id 
+         * ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org\'s own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template\'s format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent\'s deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller\'s own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal\'s org.
+         * @summary ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app).
+         * @param {CloudProjectsFork} cloudProjectsFork 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDeploymentsByIdComplete: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1ProjectsFork: async (cloudProjectsFork: CloudProjectsFork, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudProjectsFork' is not null or undefined
+            assertParamExists('cloudPostV1ProjectsFork', 'cloudProjectsFork', cloudProjectsFork)
+            const localVarPath = `/v1/projects/fork`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudProjectsFork, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {string} id Deployment id (e.g. dep_...).
+         * @param {CloudProjectsComplete} cloudProjectsComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1ProjectsSlugDeploymentsIdComplete: async (slug: string, id: string, cloudProjectsComplete: CloudProjectsComplete, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugDeploymentsByIdComplete', 'slug', slug)
+            assertParamExists('cloudPostV1ProjectsSlugDeploymentsIdComplete', 'slug', slug)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugDeploymentsByIdComplete', 'id', id)
+            assertParamExists('cloudPostV1ProjectsSlugDeploymentsIdComplete', 'id', id)
+            // verify required parameter 'cloudProjectsComplete' is not null or undefined
+            assertParamExists('cloudPostV1ProjectsSlugDeploymentsIdComplete', 'cloudProjectsComplete', cloudProjectsComplete)
             const localVarPath = `/v1/projects/{slug}/deployments/{id}/complete`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -429,9 +527,12 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudProjectsComplete, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -439,14 +540,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a platform admin or the platform-operator org — which manages customer DNS, so its bind IS the vouch — binds VERIFIED immediately; any other org has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a reserved label is a 400. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.
+         * @param {string} slug Slug is the site the hosts attach to, from the path.
+         * @param {CloudProjectsDomainsBind} cloudProjectsDomainsBind 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1ProjectsSlugDomains: async (slug: string, cloudProjectsDomainsBind: CloudProjectsDomainsBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugDomains', 'slug', slug)
+            assertParamExists('cloudPostV1ProjectsSlugDomains', 'slug', slug)
+            // verify required parameter 'cloudProjectsDomainsBind' is not null or undefined
+            assertParamExists('cloudPostV1ProjectsSlugDomains', 'cloudProjectsDomainsBind', cloudProjectsDomainsBind)
             const localVarPath = `/v1/projects/{slug}/domains`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -466,9 +571,12 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudProjectsDomainsBind, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -476,17 +584,18 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} host 
+         * VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
+         * @summary VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
+         * @param {string} slug Slug is the project the host is attached to, from the path.
+         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDomainsByHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1ProjectsSlugDomainsHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugDomainsByHostVerify', 'slug', slug)
+            assertParamExists('cloudPostV1ProjectsSlugDomainsHostVerify', 'slug', slug)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugDomainsByHostVerify', 'host', host)
+            assertParamExists('cloudPostV1ProjectsSlugDomainsHostVerify', 'host', host)
             const localVarPath = `/v1/projects/{slug}/domains/{host}/verify`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
@@ -517,49 +626,17 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
-         * @param {string} slug 
+         * PurgeProject flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary PurgeProject flushes the site\'s edge cache without redeploying anything.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1ProjectsSlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('cloudPostV1ProjectsBySlugPurge', 'slug', slug)
+            assertParamExists('cloudPostV1ProjectsSlugPurge', 'slug', slug)
             const localVarPath = `/v1/projects/{slug}/purge`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1ProjectsFork: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/projects/fork`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -597,184 +674,205 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProjectsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @param {string} slug 
+         * DeleteProject deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * @summary DeleteProject deletes a project and takes its site off the internet.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1ProjectsBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1ProjectsBySlug(slug, options);
+        async cloudDeleteV1ProjectsSlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1ProjectsSlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudDeleteV1ProjectsBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudDeleteV1ProjectsSlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} host 
+         * ReleaseDomain gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ReleaseDomain gives a custom hostname back, so the name is free to reuse.
+         * @param {string} slug Slug is the project the host is attached to, from the path.
+         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1ProjectsBySlugDomainsByHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1ProjectsBySlugDomainsByHost(slug, host, options);
+        async cloudDeleteV1ProjectsSlugDomainsHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1ProjectsSlugDomainsHost(slug, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudDeleteV1ProjectsBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudDeleteV1ProjectsSlugDomainsHost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * ListProjects returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
+         * @summary ListProjects returns every project your org owns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1Projects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1Projects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CloudProjectsProject>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1Projects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1Projects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
+         * GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
+         * @summary GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ProjectsBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsBySlug(slug, options);
+        async cloudGetV1ProjectsSlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsSlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsSlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
+         * ListDeployments returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDeployments returns a project\'s deploy history, newest version first.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ProjectsBySlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsBySlugDeployments(slug, options);
+        async cloudGetV1ProjectsSlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CloudProjectsDeployment>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsSlugDeployments(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsBySlugDeployments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsSlugDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} id 
+         * GetDeployment returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary GetDeployment returns one deployment of a project by id.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {string} id Deployment id (e.g. dep_...).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ProjectsBySlugDeploymentsById(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsBySlugDeploymentsById(slug, id, options);
+        async cloudGetV1ProjectsSlugDeploymentsId(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsSlugDeploymentsId(slug, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsBySlugDeploymentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsSlugDeploymentsId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
+         * ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1ProjectsBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsBySlugDomains(slug, options);
+        async cloudGetV1ProjectsSlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsDomains>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1ProjectsSlugDomains(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsBySlugDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudGetV1ProjectsSlugDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
+         * UpdateProject changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary UpdateProject changes a project\'s settings, and only the settings you send.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {CloudProjectsUpdate} cloudProjectsUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPatchV1ProjectsBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1ProjectsBySlug(slug, options);
+        async cloudPatchV1ProjectsSlug(slug: string, cloudProjectsUpdate: CloudProjectsUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1ProjectsSlug(slug, cloudProjectsUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPatchV1ProjectsBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPatchV1ProjectsSlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
+         * @summary CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
+         * @param {CloudProjectsCreate} cloudProjectsCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1Projects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Projects(options);
+        async cloudPostV1Projects(cloudProjectsCreate: CloudProjectsCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Projects(cloudProjectsCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1Projects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
+         * Takes a built site live at `https://<slug>.hanzo.app`. It accepts BOTH shapes on one address and the content type decides which: a `zip` or `tar.gz` archive — raw in the body or as a multipart file part — is uploaded and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the project\'s linked repo and answers 202 with a queued deployment and, where one could be minted, a scoped upload grant for CI to write with. The git path needs a linked repo (400 without one) and is finished later by the completion hook.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site, and a queued build is billed at completion rather than at queue time. A redeploy returns the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured, else 503; an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Deploy a build — upload an archive, or trigger a build from the linked repo
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {ProjectsGitDeployRequest} projectsGitDeployRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1ProjectsBySlugDeploy(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugDeploy(slug, options);
+        async cloudPostV1ProjectsBySlugDeploy(slug: string, projectsGitDeployRequest: ProjectsGitDeployRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugDeploy(slug, projectsGitDeployRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsBySlugDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} slug 
-         * @param {string} id 
+         * ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org\'s own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template\'s format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent\'s deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller\'s own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal\'s org.
+         * @summary ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app).
+         * @param {CloudProjectsFork} cloudProjectsFork 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1ProjectsBySlugDeploymentsByIdComplete(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugDeploymentsByIdComplete(slug, id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsBySlugDeploymentsByIdComplete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} slug 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1ProjectsBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugDomains(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsBySlugDomains']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} slug 
-         * @param {string} host 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1ProjectsBySlugDomainsByHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugDomainsByHostVerify(slug, host, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsBySlugDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} slug 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1ProjectsBySlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsBySlugPurge(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsBySlugPurge']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1ProjectsFork(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsFork(options);
+        async cloudPostV1ProjectsFork(cloudProjectsFork: CloudProjectsFork, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsFork(cloudProjectsFork, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsFork']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {string} id Deployment id (e.g. dep_...).
+         * @param {CloudProjectsComplete} cloudProjectsComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1ProjectsSlugDeploymentsIdComplete(slug: string, id: string, cloudProjectsComplete: CloudProjectsComplete, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsSlugDeploymentsIdComplete(slug, id, cloudProjectsComplete, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsSlugDeploymentsIdComplete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a platform admin or the platform-operator org — which manages customer DNS, so its bind IS the vouch — binds VERIFIED immediately; any other org has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a reserved label is a 400. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.
+         * @param {string} slug Slug is the site the hosts attach to, from the path.
+         * @param {CloudProjectsDomainsBind} cloudProjectsDomainsBind 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1ProjectsSlugDomains(slug: string, cloudProjectsDomainsBind: CloudProjectsDomainsBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsBoundDomains>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsSlugDomains(slug, cloudProjectsDomainsBind, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsSlugDomains']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
+         * @summary VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
+         * @param {string} slug Slug is the project the host is attached to, from the path.
+         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1ProjectsSlugDomainsHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsDomain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsSlugDomainsHostVerify(slug, host, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsSlugDomainsHostVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * PurgeProject flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary PurgeProject flushes the site\'s edge cache without redeploying anything.
+         * @param {string} slug Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1ProjectsSlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1ProjectsSlugPurge(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.cloudPostV1ProjectsSlugPurge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -788,250 +886,288 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ProjectsApiFp(configuration)
     return {
         /**
-         * 
-         * @param {ProjectsApiCloudDeleteV1ProjectsBySlugRequest} requestParameters Request parameters.
+         * DeleteProject deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * @summary DeleteProject deletes a project and takes its site off the internet.
+         * @param {ProjectsApiCloudDeleteV1ProjectsSlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1ProjectsBySlug(requestParameters: ProjectsApiCloudDeleteV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudDeleteV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudDeleteV1ProjectsSlug(requestParameters: ProjectsApiCloudDeleteV1ProjectsSlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudDeleteV1ProjectsSlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest} requestParameters Request parameters.
+         * ReleaseDomain gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ReleaseDomain gives a custom hostname back, so the name is free to reuse.
+         * @param {ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1ProjectsBySlugDomainsByHost(requestParameters: ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudDeleteV1ProjectsBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        cloudDeleteV1ProjectsSlugDomainsHost(requestParameters: ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudDeleteV1ProjectsSlugDomainsHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * ListProjects returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
+         * @summary ListProjects returns every project your org owns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1Projects(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1Projects(options?: RawAxiosRequestConfig): AxiosPromise<Array<CloudProjectsProject>> {
             return localVarFp.cloudGetV1Projects(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudGetV1ProjectsBySlugRequest} requestParameters Request parameters.
+         * GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
+         * @summary GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
+         * @param {ProjectsApiCloudGetV1ProjectsSlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlug(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudGetV1ProjectsSlug(requestParameters: ProjectsApiCloudGetV1ProjectsSlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsProject> {
+            return localVarFp.cloudGetV1ProjectsSlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest} requestParameters Request parameters.
+         * ListDeployments returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDeployments returns a project\'s deploy history, newest version first.
+         * @param {ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDeployments(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1ProjectsBySlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudGetV1ProjectsSlugDeployments(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<CloudProjectsDeployment>> {
+            return localVarFp.cloudGetV1ProjectsSlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+         * GetDeployment returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+         * @summary GetDeployment returns one deployment of a project by id.
+         * @param {ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDeploymentsById(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1ProjectsBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudGetV1ProjectsSlugDeploymentsId(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsDeployment> {
+            return localVarFp.cloudGetV1ProjectsSlugDeploymentsId(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest} requestParameters Request parameters.
+         * ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
+         * @param {ProjectsApiCloudGetV1ProjectsSlugDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1ProjectsBySlugDomains(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1ProjectsBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudGetV1ProjectsSlugDomains(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsDomains> {
+            return localVarFp.cloudGetV1ProjectsSlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudPatchV1ProjectsBySlugRequest} requestParameters Request parameters.
+         * UpdateProject changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary UpdateProject changes a project\'s settings, and only the settings you send.
+         * @param {ProjectsApiCloudPatchV1ProjectsSlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1ProjectsBySlug(requestParameters: ProjectsApiCloudPatchV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPatchV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudPatchV1ProjectsSlug(requestParameters: ProjectsApiCloudPatchV1ProjectsSlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsProject> {
+            return localVarFp.cloudPatchV1ProjectsSlug(requestParameters.slug, requestParameters.cloudProjectsUpdate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
+         * @summary CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
+         * @param {ProjectsApiCloudPostV1ProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Projects(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1Projects(options).then((request) => request(axios, basePath));
+        cloudPostV1Projects(requestParameters: ProjectsApiCloudPostV1ProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsProject> {
+            return localVarFp.cloudPostV1Projects(requestParameters.cloudProjectsCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes a built site live at `https://<slug>.hanzo.app`. It accepts BOTH shapes on one address and the content type decides which: a `zip` or `tar.gz` archive — raw in the body or as a multipart file part — is uploaded and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the project\'s linked repo and answers 202 with a queued deployment and, where one could be minted, a scoped upload grant for CI to write with. The git path needs a linked repo (400 without one) and is finished later by the completion hook.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site, and a queued build is billed at completion rather than at queue time. A redeploy returns the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured, else 503; an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Deploy a build — upload an archive, or trigger a build from the linked repo
          * @param {ProjectsApiCloudPostV1ProjectsBySlugDeployRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDeploy(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsBySlugDeploy(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsBySlugDeploy(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
+            return localVarFp.cloudPostV1ProjectsBySlugDeploy(requestParameters.slug, requestParameters.projectsGitDeployRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
+         * ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org\'s own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template\'s format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent\'s deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller\'s own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal\'s org.
+         * @summary ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app).
+         * @param {ProjectsApiCloudPostV1ProjectsForkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDeploymentsByIdComplete(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsFork(requestParameters: ProjectsApiCloudPostV1ProjectsForkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsProject> {
+            return localVarFp.cloudPostV1ProjectsFork(requestParameters.cloudProjectsFork, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest} requestParameters Request parameters.
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDomains(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsSlugDeploymentsIdComplete(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsDeployment> {
+            return localVarFp.cloudPostV1ProjectsSlugDeploymentsIdComplete(requestParameters.slug, requestParameters.id, requestParameters.cloudProjectsComplete, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+         * BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a platform admin or the platform-operator org — which manages customer DNS, so its bind IS the vouch — binds VERIFIED immediately; any other org has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a reserved label is a 400. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.
+         * @param {ProjectsApiCloudPostV1ProjectsSlugDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugDomainsByHostVerify(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsSlugDomains(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsBoundDomains> {
+            return localVarFp.cloudPostV1ProjectsSlugDomains(requestParameters.slug, requestParameters.cloudProjectsDomainsBind, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest} requestParameters Request parameters.
+         * VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
+         * @summary VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
+         * @param {ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsBySlugPurge(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsBySlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsSlugDomainsHostVerify(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsDomain> {
+            return localVarFp.cloudPostV1ProjectsSlugDomainsHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * PurgeProject flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary PurgeProject flushes the site\'s edge cache without redeploying anything.
+         * @param {ProjectsApiCloudPostV1ProjectsSlugPurgeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1ProjectsFork(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1ProjectsFork(options).then((request) => request(axios, basePath));
+        cloudPostV1ProjectsSlugPurge(requestParameters: ProjectsApiCloudPostV1ProjectsSlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProjectsProject> {
+            return localVarFp.cloudPostV1ProjectsSlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for cloudDeleteV1ProjectsBySlug operation in ProjectsApi.
+ * Request parameters for cloudDeleteV1ProjectsSlug operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudDeleteV1ProjectsBySlugRequest
+ * @interface ProjectsApiCloudDeleteV1ProjectsSlugRequest
  */
-export interface ProjectsApiCloudDeleteV1ProjectsBySlugRequest {
+export interface ProjectsApiCloudDeleteV1ProjectsSlugRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudDeleteV1ProjectsBySlug
+     * @memberof ProjectsApiCloudDeleteV1ProjectsSlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for cloudDeleteV1ProjectsBySlugDomainsByHost operation in ProjectsApi.
+ * Request parameters for cloudDeleteV1ProjectsSlugDomainsHost operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest
+ * @interface ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest
  */
-export interface ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest {
+export interface ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest {
     /**
-     * 
+     * Slug is the project the host is attached to, from the path.
      * @type {string}
-     * @memberof ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHost
+     * @memberof ProjectsApiCloudDeleteV1ProjectsSlugDomainsHost
      */
     readonly slug: string
 
     /**
-     * 
+     * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
      * @type {string}
-     * @memberof ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHost
+     * @memberof ProjectsApiCloudDeleteV1ProjectsSlugDomainsHost
      */
     readonly host: string
 }
 
 /**
- * Request parameters for cloudGetV1ProjectsBySlug operation in ProjectsApi.
+ * Request parameters for cloudGetV1ProjectsSlug operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudGetV1ProjectsBySlugRequest
+ * @interface ProjectsApiCloudGetV1ProjectsSlugRequest
  */
-export interface ProjectsApiCloudGetV1ProjectsBySlugRequest {
+export interface ProjectsApiCloudGetV1ProjectsSlugRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudGetV1ProjectsBySlug
+     * @memberof ProjectsApiCloudGetV1ProjectsSlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for cloudGetV1ProjectsBySlugDeployments operation in ProjectsApi.
+ * Request parameters for cloudGetV1ProjectsSlugDeployments operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest
+ * @interface ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest
  */
-export interface ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest {
+export interface ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudGetV1ProjectsBySlugDeployments
+     * @memberof ProjectsApiCloudGetV1ProjectsSlugDeployments
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for cloudGetV1ProjectsBySlugDeploymentsById operation in ProjectsApi.
+ * Request parameters for cloudGetV1ProjectsSlugDeploymentsId operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest
+ * @interface ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest
  */
-export interface ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest {
+export interface ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudGetV1ProjectsBySlugDeploymentsById
+     * @memberof ProjectsApiCloudGetV1ProjectsSlugDeploymentsId
      */
     readonly slug: string
 
     /**
-     * 
+     * Deployment id (e.g. dep_...).
      * @type {string}
-     * @memberof ProjectsApiCloudGetV1ProjectsBySlugDeploymentsById
+     * @memberof ProjectsApiCloudGetV1ProjectsSlugDeploymentsId
      */
     readonly id: string
 }
 
 /**
- * Request parameters for cloudGetV1ProjectsBySlugDomains operation in ProjectsApi.
+ * Request parameters for cloudGetV1ProjectsSlugDomains operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest
+ * @interface ProjectsApiCloudGetV1ProjectsSlugDomainsRequest
  */
-export interface ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest {
+export interface ProjectsApiCloudGetV1ProjectsSlugDomainsRequest {
     /**
-     * 
+     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof ProjectsApiCloudGetV1ProjectsBySlugDomains
+     * @memberof ProjectsApiCloudGetV1ProjectsSlugDomains
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for cloudPatchV1ProjectsBySlug operation in ProjectsApi.
+ * Request parameters for cloudPatchV1ProjectsSlug operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudPatchV1ProjectsBySlugRequest
+ * @interface ProjectsApiCloudPatchV1ProjectsSlugRequest
  */
-export interface ProjectsApiCloudPatchV1ProjectsBySlugRequest {
+export interface ProjectsApiCloudPatchV1ProjectsSlugRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudPatchV1ProjectsBySlug
+     * @memberof ProjectsApiCloudPatchV1ProjectsSlug
      */
     readonly slug: string
+
+    /**
+     * 
+     * @type {CloudProjectsUpdate}
+     * @memberof ProjectsApiCloudPatchV1ProjectsSlug
+     */
+    readonly cloudProjectsUpdate: CloudProjectsUpdate
+}
+
+/**
+ * Request parameters for cloudPostV1Projects operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiCloudPostV1ProjectsRequest
+ */
+export interface ProjectsApiCloudPostV1ProjectsRequest {
+    /**
+     * 
+     * @type {CloudProjectsCreate}
+     * @memberof ProjectsApiCloudPostV1Projects
+     */
+    readonly cloudProjectsCreate: CloudProjectsCreate
 }
 
 /**
@@ -1041,79 +1177,114 @@ export interface ProjectsApiCloudPatchV1ProjectsBySlugRequest {
  */
 export interface ProjectsApiCloudPostV1ProjectsBySlugDeployRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
      * @memberof ProjectsApiCloudPostV1ProjectsBySlugDeploy
      */
     readonly slug: string
+
+    /**
+     * 
+     * @type {ProjectsGitDeployRequest}
+     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDeploy
+     */
+    readonly projectsGitDeployRequest: ProjectsGitDeployRequest
 }
 
 /**
- * Request parameters for cloudPostV1ProjectsBySlugDeploymentsByIdComplete operation in ProjectsApi.
+ * Request parameters for cloudPostV1ProjectsFork operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest
+ * @interface ProjectsApiCloudPostV1ProjectsForkRequest
  */
-export interface ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest {
+export interface ProjectsApiCloudPostV1ProjectsForkRequest {
     /**
      * 
+     * @type {CloudProjectsFork}
+     * @memberof ProjectsApiCloudPostV1ProjectsFork
+     */
+    readonly cloudProjectsFork: CloudProjectsFork
+}
+
+/**
+ * Request parameters for cloudPostV1ProjectsSlugDeploymentsIdComplete operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest
+ */
+export interface ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest {
+    /**
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdComplete
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdComplete
      */
     readonly slug: string
 
     /**
-     * 
+     * Deployment id (e.g. dep_...).
      * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdComplete
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdComplete
      */
     readonly id: string
-}
 
-/**
- * Request parameters for cloudPostV1ProjectsBySlugDomains operation in ProjectsApi.
- * @export
- * @interface ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest
- */
-export interface ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest {
     /**
      * 
-     * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDomains
+     * @type {CloudProjectsComplete}
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdComplete
      */
-    readonly slug: string
+    readonly cloudProjectsComplete: CloudProjectsComplete
 }
 
 /**
- * Request parameters for cloudPostV1ProjectsBySlugDomainsByHostVerify operation in ProjectsApi.
+ * Request parameters for cloudPostV1ProjectsSlugDomains operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest
+ * @interface ProjectsApiCloudPostV1ProjectsSlugDomainsRequest
  */
-export interface ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest {
+export interface ProjectsApiCloudPostV1ProjectsSlugDomainsRequest {
     /**
-     * 
+     * Slug is the site the hosts attach to, from the path.
      * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerify
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDomains
      */
     readonly slug: string
 
     /**
      * 
+     * @type {CloudProjectsDomainsBind}
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDomains
+     */
+    readonly cloudProjectsDomainsBind: CloudProjectsDomainsBind
+}
+
+/**
+ * Request parameters for cloudPostV1ProjectsSlugDomainsHostVerify operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest
+ */
+export interface ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest {
+    /**
+     * Slug is the project the host is attached to, from the path.
      * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerify
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerify
+     */
+    readonly slug: string
+
+    /**
+     * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
+     * @type {string}
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerify
      */
     readonly host: string
 }
 
 /**
- * Request parameters for cloudPostV1ProjectsBySlugPurge operation in ProjectsApi.
+ * Request parameters for cloudPostV1ProjectsSlugPurge operation in ProjectsApi.
  * @export
- * @interface ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest
+ * @interface ProjectsApiCloudPostV1ProjectsSlugPurgeRequest
  */
-export interface ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest {
+export interface ProjectsApiCloudPostV1ProjectsSlugPurgeRequest {
     /**
-     * 
+     * Org-unique project handle (lowercased); also the S3-origin key segment and the subdomain label.
      * @type {string}
-     * @memberof ProjectsApiCloudPostV1ProjectsBySlugPurge
+     * @memberof ProjectsApiCloudPostV1ProjectsSlugPurge
      */
     readonly slug: string
 }
@@ -1126,29 +1297,32 @@ export interface ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest {
  */
 export class ProjectsApi extends BaseAPI {
     /**
-     * 
-     * @param {ProjectsApiCloudDeleteV1ProjectsBySlugRequest} requestParameters Request parameters.
+     * DeleteProject deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+     * @summary DeleteProject deletes a project and takes its site off the internet.
+     * @param {ProjectsApiCloudDeleteV1ProjectsSlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudDeleteV1ProjectsBySlug(requestParameters: ProjectsApiCloudDeleteV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudDeleteV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudDeleteV1ProjectsSlug(requestParameters: ProjectsApiCloudDeleteV1ProjectsSlugRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudDeleteV1ProjectsSlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest} requestParameters Request parameters.
+     * ReleaseDomain gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary ReleaseDomain gives a custom hostname back, so the name is free to reuse.
+     * @param {ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudDeleteV1ProjectsBySlugDomainsByHost(requestParameters: ProjectsApiCloudDeleteV1ProjectsBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudDeleteV1ProjectsBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public cloudDeleteV1ProjectsSlugDomainsHost(requestParameters: ProjectsApiCloudDeleteV1ProjectsSlugDomainsHostRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudDeleteV1ProjectsSlugDomainsHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * ListProjects returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
+     * @summary ListProjects returns every project your org owns.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
@@ -1158,133 +1332,147 @@ export class ProjectsApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudGetV1ProjectsBySlugRequest} requestParameters Request parameters.
+     * GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
+     * @summary GetProject returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
+     * @param {ProjectsApiCloudGetV1ProjectsSlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudGetV1ProjectsBySlug(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1ProjectsSlug(requestParameters: ProjectsApiCloudGetV1ProjectsSlugRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsSlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest} requestParameters Request parameters.
+     * ListDeployments returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary ListDeployments returns a project\'s deploy history, newest version first.
+     * @param {ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudGetV1ProjectsBySlugDeployments(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsBySlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1ProjectsSlugDeployments(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsSlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+     * GetDeployment returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
+     * @summary GetDeployment returns one deployment of a project by id.
+     * @param {ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudGetV1ProjectsBySlugDeploymentsById(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1ProjectsSlugDeploymentsId(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDeploymentsIdRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsSlugDeploymentsId(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest} requestParameters Request parameters.
+     * ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary ListDomains returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
+     * @param {ProjectsApiCloudGetV1ProjectsSlugDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudGetV1ProjectsBySlugDomains(requestParameters: ProjectsApiCloudGetV1ProjectsBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1ProjectsSlugDomains(requestParameters: ProjectsApiCloudGetV1ProjectsSlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudGetV1ProjectsSlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudPatchV1ProjectsBySlugRequest} requestParameters Request parameters.
+     * UpdateProject changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary UpdateProject changes a project\'s settings, and only the settings you send.
+     * @param {ProjectsApiCloudPatchV1ProjectsSlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPatchV1ProjectsBySlug(requestParameters: ProjectsApiCloudPatchV1ProjectsBySlugRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPatchV1ProjectsBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudPatchV1ProjectsSlug(requestParameters: ProjectsApiCloudPatchV1ProjectsSlugRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPatchV1ProjectsSlug(requestParameters.slug, requestParameters.cloudProjectsUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
+     * @summary CreateProject creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
+     * @param {ProjectsApiCloudPostV1ProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1Projects(options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1Projects(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1Projects(requestParameters: ProjectsApiCloudPostV1ProjectsRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1Projects(requestParameters.cloudProjectsCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Takes a built site live at `https://<slug>.hanzo.app`. It accepts BOTH shapes on one address and the content type decides which: a `zip` or `tar.gz` archive — raw in the body or as a multipart file part — is uploaded and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the project\'s linked repo and answers 202 with a queued deployment and, where one could be minted, a scoped upload grant for CI to write with. The git path needs a linked repo (400 without one) and is finished later by the completion hook.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site, and a queued build is billed at completion rather than at queue time. A redeploy returns the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured, else 503; an archive that does not walk is a 400 and one over the size cap is a 413.
+     * @summary Deploy a build — upload an archive, or trigger a build from the linked repo
      * @param {ProjectsApiCloudPostV1ProjectsBySlugDeployRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
     public cloudPostV1ProjectsBySlugDeploy(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDeployRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugDeploy(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugDeploy(requestParameters.slug, requestParameters.projectsGitDeployRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
+     * ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app). Answers 201 with the new project.  `slug` names the PARENT to fork and is required. Templates resolve first, and the caller org\'s own private templates ahead of the public gallery, so a curated template slug keeps meaning the same thing even if someone later publishes a live project under it; `variant` picks that template\'s format/page/theme. If no template matches, the slug resolves to the UNIQUE live project that owns it across all orgs — the same resolution the site edge uses to serve <slug>.hanzo.app, so what you can browse is what you can fork.  `name` and `target` override the derived project name and slug; everything else is inherited from the parent. A live parent contributes its REPO, so the child builds from the same source — the parent\'s deployed bytes are never copied, because releases are per-tenant by design and the fork publishes its own. The parent it actually resolved is stamped on the child as `forkedFrom`, so attribution is a fact recorded at fork time rather than a claim reconstructed later.  It funnels through the SAME create path POST /v1/projects uses, so slug validation, org scoping, ID minting and the 409 on a slug the caller\'s own org already uses are identical.  Scope: a validated principal is required (403 without one) and the child is created in THAT principal\'s org.
+     * @summary ForkProject creates a project seeded from a PUBLISHED EXAMPLE — either a starter-kit template from the ONE embedded gallery catalog, or any live project on the platform (an example a seeded creator published, or another org\'s app serving at <slug>.hanzo.app).
+     * @param {ProjectsApiCloudPostV1ProjectsForkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1ProjectsBySlugDeploymentsByIdComplete(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1ProjectsFork(requestParameters: ProjectsApiCloudPostV1ProjectsForkRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsFork(requestParameters.cloudProjectsFork, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest} requestParameters Request parameters.
+     * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+     * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+     * @param {ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1ProjectsBySlugDomains(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1ProjectsSlugDeploymentsIdComplete(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDeploymentsIdCompleteRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsSlugDeploymentsIdComplete(requestParameters.slug, requestParameters.id, requestParameters.cloudProjectsComplete, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+     * BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a platform admin or the platform-operator org — which manages customer DNS, so its bind IS the vouch — binds VERIFIED immediately; any other org has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a reserved label is a 400. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary BindDomains attaches one or more CUSTOM public hostnames to this org\'s site.
+     * @param {ProjectsApiCloudPostV1ProjectsSlugDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1ProjectsBySlugDomainsByHostVerify(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1ProjectsSlugDomains(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsSlugDomains(requestParameters.slug, requestParameters.cloudProjectsDomainsBind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest} requestParameters Request parameters.
+     * VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
+     * @summary VerifyDomain checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
+     * @param {ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1ProjectsBySlugPurge(requestParameters: ProjectsApiCloudPostV1ProjectsBySlugPurgeRequest, options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsBySlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1ProjectsSlugDomainsHostVerify(requestParameters: ProjectsApiCloudPostV1ProjectsSlugDomainsHostVerifyRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsSlugDomainsHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * PurgeProject flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary PurgeProject flushes the site\'s edge cache without redeploying anything.
+     * @param {ProjectsApiCloudPostV1ProjectsSlugPurgeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public cloudPostV1ProjectsFork(options?: RawAxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsFork(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1ProjectsSlugPurge(requestParameters: ProjectsApiCloudPostV1ProjectsSlugPurgeRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).cloudPostV1ProjectsSlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

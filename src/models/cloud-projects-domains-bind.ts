@@ -17,26 +17,20 @@
 /**
  * 
  * @export
- * @interface MlModelArtifacts
+ * @interface CloudProjectsDomainsBind
  */
-export interface MlModelArtifacts {
+export interface CloudProjectsDomainsBind {
     /**
-     * 
-     * @type {string}
-     * @memberof MlModelArtifacts
+     * Domains are the custom hostnames to attach, in order. An empty list is a 400 rather than a clear — releasing a host is its own call.
+     * @type {Array<string>}
+     * @memberof CloudProjectsDomainsBind
      */
-    'weights'?: string;
+    'domains'?: Array<string>;
     /**
-     * 
+     * Slug is the site the hosts attach to, from the path.
      * @type {string}
-     * @memberof MlModelArtifacts
+     * @memberof CloudProjectsDomainsBind
      */
-    'tokenizer'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MlModelArtifacts
-     */
-    'config'?: string;
+    'slug'?: string;
 }
 

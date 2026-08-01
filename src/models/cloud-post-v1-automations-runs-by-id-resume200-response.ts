@@ -13,33 +13,18 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { AdminPromo } from './admin-promo';
 
 /**
  * 
  * @export
- * @interface AdminAdminGetPromo200Response
+ * @interface CloudPostV1AutomationsRunsByIdResume200Response
  */
-export interface AdminAdminGetPromo200Response {
+export interface CloudPostV1AutomationsRunsByIdResume200Response {
     /**
      * 
-     * @type {string}
-     * @memberof AdminAdminGetPromo200Response
+     * @type {boolean}
+     * @memberof CloudPostV1AutomationsRunsByIdResume200Response
      */
-    'status'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AdminAdminGetPromo200Response
-     */
-    'msg'?: string;
-    /**
-     * 
-     * @type {AdminPromo}
-     * @memberof AdminAdminGetPromo200Response
-     */
-    'data'?: AdminPromo;
+    'resumed'?: boolean;
 }
 

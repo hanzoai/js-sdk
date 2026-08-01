@@ -296,7 +296,7 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Deletes the caller org\'s OWN starter kit. A slug they do not own is a 404, never a delete: the DELETE binds org.
          * @summary Deletes the caller org\'s OWN starter kit.
-         * @param {string} slug Slug is the starter kit to act on, from the path.
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -368,7 +368,7 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s. A slug another org owns reads as not found.
          * @summary Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s.
-         * @param {string} slug Slug is the starter kit to act on, from the path.
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -446,7 +446,7 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit. A slug they do not own is 404, never a create: the UPDATE binds org, so a PUT can never reach another org\'s kit.
          * @summary Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit.
-         * @param {string} slug Slug is the kit to replace, from the path.
+         * @param {string} slug 
          * @param {CloudReplaceKitIn} cloudReplaceKitIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -583,7 +583,7 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         /**
          * Deletes the caller org\'s OWN starter kit. A slug they do not own is a 404, never a delete: the DELETE binds org.
          * @summary Deletes the caller org\'s OWN starter kit.
-         * @param {string} slug Slug is the starter kit to act on, from the path.
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -608,7 +608,7 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         /**
          * Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s. A slug another org owns reads as not found.
          * @summary Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s.
-         * @param {string} slug Slug is the starter kit to act on, from the path.
+         * @param {string} slug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -634,7 +634,7 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
         /**
          * Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit. A slug they do not own is 404, never a create: the UPDATE binds org, so a PUT can never reach another org\'s kit.
          * @summary Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit.
-         * @param {string} slug Slug is the kit to replace, from the path.
+         * @param {string} slug 
          * @param {CloudReplaceKitIn} cloudReplaceKitIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -885,7 +885,7 @@ export interface TemplatesApiAiUpdateTemplateRequest {
  */
 export interface TemplatesApiCloudDeleteV1TemplatesSlugRequest {
     /**
-     * Slug is the starter kit to act on, from the path.
+     * 
      * @type {string}
      * @memberof TemplatesApiCloudDeleteV1TemplatesSlug
      */
@@ -899,7 +899,7 @@ export interface TemplatesApiCloudDeleteV1TemplatesSlugRequest {
  */
 export interface TemplatesApiCloudGetV1TemplatesSlugRequest {
     /**
-     * Slug is the starter kit to act on, from the path.
+     * 
      * @type {string}
      * @memberof TemplatesApiCloudGetV1TemplatesSlug
      */
@@ -927,7 +927,7 @@ export interface TemplatesApiCloudPostV1TemplatesRequest {
  */
 export interface TemplatesApiCloudPutV1TemplatesSlugRequest {
     /**
-     * Slug is the kit to replace, from the path.
+     * 
      * @type {string}
      * @memberof TemplatesApiCloudPutV1TemplatesSlug
      */

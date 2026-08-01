@@ -46,11 +46,11 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * DisconnectConnector revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
          * @summary DisconnectConnector revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudDeleteV1KbConnectorsProviderProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1KbConnectorsProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudDeleteV1KbConnectorsProvider: async (provider: CloudDeleteV1KbConnectorsProviderProviderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('cloudDeleteV1KbConnectorsProvider', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}`
@@ -152,14 +152,14 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection. THE ORG COMES FROM THE SIGNED STATE, not from a header and not from the provider, so an attacker cannot bind their own account to someone else\'s org — a tampered, expired or foreign-provider state is refused outright. The token itself is never returned, never written into the document, and never logged; the document holds only its KMS path.
          * @summary CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection.
-         * @param {string} provider Provider is the connector completing its flow, from the path.
+         * @param {CloudGetV1KbConnectorsProviderCallbackProviderEnum} provider 
          * @param {string} [code] Code is the provider\&#39;s authorization code, exchanged for a token.
          * @param {string} [state] State is the org-bound value this server signed at connect time.
          * @param {string} [error] Error is the provider\&#39;s denial reason when the user refused consent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1KbConnectorsProviderCallback: async (provider: string, code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1KbConnectorsProviderCallback: async (provider: CloudGetV1KbConnectorsProviderCallbackProviderEnum, code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('cloudGetV1KbConnectorsProviderCallback', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/callback`
@@ -174,10 +174,6 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (code !== undefined) {
                 localVarQueryParameter['code'] = code;
@@ -205,11 +201,11 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account. There is no server-side redirect — the console stays in control of the navigation. The URL carries a state this server SIGNED over the caller\'s validated org, so the connection the callback completes can only ever land in that org.
          * @summary StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudGetV1KbConnectorsProviderConnectProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1KbConnectorsProviderConnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1KbConnectorsProviderConnect: async (provider: CloudGetV1KbConnectorsProviderConnectProviderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('cloudGetV1KbConnectorsProviderConnect', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/connect`
@@ -282,11 +278,11 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * SyncConnector pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page. The org is the validated tenant and the credential is read from KMS, so an org can only ever sync its own connection. A provider failure is reported honestly (502) and recorded on the connector rather than silently swallowed.
          * @summary SyncConnector pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudPostV1KbConnectorsProviderSyncProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1KbConnectorsProviderSync: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1KbConnectorsProviderSync: async (provider: CloudPostV1KbConnectorsProviderSyncProviderEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('cloudPostV1KbConnectorsProviderSync', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/sync`
@@ -318,7 +314,8 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * 
+         * Ingests an uploaded export as a tree of kb-page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb-page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb-link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
+         * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -403,11 +400,11 @@ export const KbApiFp = function(configuration?: Configuration) {
         /**
          * DisconnectConnector revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
          * @summary DisconnectConnector revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudDeleteV1KbConnectorsProviderProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1KbConnectorsProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudConnectionOut>> {
+        async cloudDeleteV1KbConnectorsProvider(provider: CloudDeleteV1KbConnectorsProviderProviderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudConnectionOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1KbConnectorsProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KbApi.cloudDeleteV1KbConnectorsProvider']?.[localVarOperationServerIndex]?.url;
@@ -440,14 +437,14 @@ export const KbApiFp = function(configuration?: Configuration) {
         /**
          * CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection. THE ORG COMES FROM THE SIGNED STATE, not from a header and not from the provider, so an attacker cannot bind their own account to someone else\'s org — a tampered, expired or foreign-provider state is refused outright. The token itself is never returned, never written into the document, and never logged; the document holds only its KMS path.
          * @summary CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection.
-         * @param {string} provider Provider is the connector completing its flow, from the path.
+         * @param {CloudGetV1KbConnectorsProviderCallbackProviderEnum} provider 
          * @param {string} [code] Code is the provider\&#39;s authorization code, exchanged for a token.
          * @param {string} [state] State is the org-bound value this server signed at connect time.
          * @param {string} [error] Error is the provider\&#39;s denial reason when the user refused consent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1KbConnectorsProviderCallback(provider: string, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudConnectionOut>> {
+        async cloudGetV1KbConnectorsProviderCallback(provider: CloudGetV1KbConnectorsProviderCallbackProviderEnum, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudConnectionOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1KbConnectorsProviderCallback(provider, code, state, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KbApi.cloudGetV1KbConnectorsProviderCallback']?.[localVarOperationServerIndex]?.url;
@@ -456,11 +453,11 @@ export const KbApiFp = function(configuration?: Configuration) {
         /**
          * StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account. There is no server-side redirect — the console stays in control of the navigation. The URL carries a state this server SIGNED over the caller\'s validated org, so the connection the callback completes can only ever land in that org.
          * @summary StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudGetV1KbConnectorsProviderConnectProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1KbConnectorsProviderConnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudKbAuthorizeOut>> {
+        async cloudGetV1KbConnectorsProviderConnect(provider: CloudGetV1KbConnectorsProviderConnectProviderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudKbAuthorizeOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1KbConnectorsProviderConnect(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KbApi.cloudGetV1KbConnectorsProviderConnect']?.[localVarOperationServerIndex]?.url;
@@ -482,18 +479,19 @@ export const KbApiFp = function(configuration?: Configuration) {
         /**
          * SyncConnector pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page. The org is the validated tenant and the credential is read from KMS, so an org can only ever sync its own connection. A provider failure is reported honestly (502) and recorded on the connector rather than silently swallowed.
          * @summary SyncConnector pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page.
-         * @param {string} provider Provider is the connector to act on: github, slack, google or notion.
+         * @param {CloudPostV1KbConnectorsProviderSyncProviderEnum} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1KbConnectorsProviderSync(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudKbSyncOut>> {
+        async cloudPostV1KbConnectorsProviderSync(provider: CloudPostV1KbConnectorsProviderSyncProviderEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudKbSyncOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1KbConnectorsProviderSync(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['KbApi.cloudPostV1KbConnectorsProviderSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Ingests an uploaded export as a tree of kb-page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb-page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb-link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
+         * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -595,7 +593,8 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.cloudPostV1KbConnectorsProviderSync(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Ingests an uploaded export as a tree of kb-page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb-page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb-link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
+         * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -622,11 +621,11 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
  */
 export interface KbApiCloudDeleteV1KbConnectorsProviderRequest {
     /**
-     * Provider is the connector to act on: github, slack, google or notion.
-     * @type {string}
+     * 
+     * @type {'github' | 'slack' | 'google' | 'notion'}
      * @memberof KbApiCloudDeleteV1KbConnectorsProvider
      */
-    readonly provider: string
+    readonly provider: CloudDeleteV1KbConnectorsProviderProviderEnum
 }
 
 /**
@@ -636,11 +635,11 @@ export interface KbApiCloudDeleteV1KbConnectorsProviderRequest {
  */
 export interface KbApiCloudGetV1KbConnectorsProviderCallbackRequest {
     /**
-     * Provider is the connector completing its flow, from the path.
-     * @type {string}
+     * 
+     * @type {'github' | 'slack' | 'google' | 'notion'}
      * @memberof KbApiCloudGetV1KbConnectorsProviderCallback
      */
-    readonly provider: string
+    readonly provider: CloudGetV1KbConnectorsProviderCallbackProviderEnum
 
     /**
      * Code is the provider\&#39;s authorization code, exchanged for a token.
@@ -671,11 +670,11 @@ export interface KbApiCloudGetV1KbConnectorsProviderCallbackRequest {
  */
 export interface KbApiCloudGetV1KbConnectorsProviderConnectRequest {
     /**
-     * Provider is the connector to act on: github, slack, google or notion.
-     * @type {string}
+     * 
+     * @type {'github' | 'slack' | 'google' | 'notion'}
      * @memberof KbApiCloudGetV1KbConnectorsProviderConnect
      */
-    readonly provider: string
+    readonly provider: CloudGetV1KbConnectorsProviderConnectProviderEnum
 }
 
 /**
@@ -699,11 +698,11 @@ export interface KbApiCloudGetV1KbGraphRequest {
  */
 export interface KbApiCloudPostV1KbConnectorsProviderSyncRequest {
     /**
-     * Provider is the connector to act on: github, slack, google or notion.
-     * @type {string}
+     * 
+     * @type {'github' | 'slack' | 'google' | 'notion'}
      * @memberof KbApiCloudPostV1KbConnectorsProviderSync
      */
-    readonly provider: string
+    readonly provider: CloudPostV1KbConnectorsProviderSyncProviderEnum
 }
 
 /**
@@ -810,7 +809,8 @@ export class KbApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Ingests an uploaded export as a tree of kb-page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb-page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb-link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
+     * @summary Import an Obsidian, Notion, Roam or Evernote export into the org\'s knowledge base
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
@@ -832,3 +832,43 @@ export class KbApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const CloudDeleteV1KbConnectorsProviderProviderEnum = {
+    Github: 'github',
+    Slack: 'slack',
+    Google: 'google',
+    Notion: 'notion'
+} as const;
+export type CloudDeleteV1KbConnectorsProviderProviderEnum = typeof CloudDeleteV1KbConnectorsProviderProviderEnum[keyof typeof CloudDeleteV1KbConnectorsProviderProviderEnum];
+/**
+ * @export
+ */
+export const CloudGetV1KbConnectorsProviderCallbackProviderEnum = {
+    Github: 'github',
+    Slack: 'slack',
+    Google: 'google',
+    Notion: 'notion'
+} as const;
+export type CloudGetV1KbConnectorsProviderCallbackProviderEnum = typeof CloudGetV1KbConnectorsProviderCallbackProviderEnum[keyof typeof CloudGetV1KbConnectorsProviderCallbackProviderEnum];
+/**
+ * @export
+ */
+export const CloudGetV1KbConnectorsProviderConnectProviderEnum = {
+    Github: 'github',
+    Slack: 'slack',
+    Google: 'google',
+    Notion: 'notion'
+} as const;
+export type CloudGetV1KbConnectorsProviderConnectProviderEnum = typeof CloudGetV1KbConnectorsProviderConnectProviderEnum[keyof typeof CloudGetV1KbConnectorsProviderConnectProviderEnum];
+/**
+ * @export
+ */
+export const CloudPostV1KbConnectorsProviderSyncProviderEnum = {
+    Github: 'github',
+    Slack: 'slack',
+    Google: 'google',
+    Notion: 'notion'
+} as const;
+export type CloudPostV1KbConnectorsProviderSyncProviderEnum = typeof CloudPostV1KbConnectorsProviderSyncProviderEnum[keyof typeof CloudPostV1KbConnectorsProviderSyncProviderEnum];

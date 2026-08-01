@@ -22,6 +22,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AutomationsFlowOperation } from '../models';
+// @ts-ignore
+import type { AutomationsFlowVersion } from '../models';
+// @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
 import type { CloudCatalog } from '../models';
 // @ts-ignore
 import type { CloudCreateFlowReq } from '../models';
@@ -40,6 +46,8 @@ import type { CloudPatchFlowIn } from '../models';
 // @ts-ignore
 import type { CloudPopulatedFlow } from '../models';
 // @ts-ignore
+import type { CloudPostV1AutomationsRunsByIdResume200Response } from '../models';
+// @ts-ignore
 import type { CloudRunIn } from '../models';
 // @ts-ignore
 import type { CloudRunPage } from '../models';
@@ -56,7 +64,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * DeleteFlow deletes one automation, its versions and its run history. It answers no content, and a flow of another org answers not-found.
          * @summary DeleteFlow deletes one automation, its versions and its run history.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -167,7 +175,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * GetFlow returns one automation and its latest version. That is the flow record plus the step tree the builder edits; a flow of another org answers not-found.
          * @summary GetFlow returns one automation and its latest version.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -205,7 +213,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * ListVersions returns one flow\'s versions, newest first. The optional `limit` query bounds the page.
          * @summary ListVersions returns one flow\'s versions, newest first.
-         * @param {string} id ID is the flow whose versions to list, from the path.
+         * @param {string} id 
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -326,7 +334,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * GetRun returns one run. A run that has not reached a terminal status is refreshed from the durable engine first — scoped to the org\'s own namespace — so the caller sees live progress rather than the last status that happened to be persisted.
          * @summary GetRun returns one run.
-         * @param {string} id ID is the run to read, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -364,7 +372,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * UpdateFlow updates one automation\'s metadata in place. Every field is optional; a field the request omits is left alone. Publishing a version pins which one runs, and is refused unless that version belongs to this flow.
          * @summary UpdateFlow updates one automation\'s metadata in place.
-         * @param {string} id ID is the flow to update, from the path.
+         * @param {string} id 
          * @param {CloudPatchFlowIn} cloudPatchFlowIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -490,14 +498,18 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
+         * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
          * @param {string} id 
+         * @param {AutomationsFlowOperation} automationsFlowOperation 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AutomationsFlowsByIdOperations: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AutomationsFlowsByIdOperations: async (id: string, automationsFlowOperation: AutomationsFlowOperation, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AutomationsFlowsByIdOperations', 'id', id)
+            // verify required parameter 'automationsFlowOperation' is not null or undefined
+            assertParamExists('cloudPostV1AutomationsFlowsByIdOperations', 'automationsFlowOperation', automationsFlowOperation)
             const localVarPath = `/v1/automations/flows/{id}/operations`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -517,9 +529,12 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(automationsFlowOperation, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -529,7 +544,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * DisableFlow disarms a flow\'s trigger and marks it DISABLED. Its schedule and its event subscriptions are dropped, so a disabled flow is never a live target; runs already in flight are unaffected, and it can still be started on demand.
          * @summary DisableFlow disarms a flow\'s trigger and marks it DISABLED.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -567,7 +582,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * EnableFlow arms a flow\'s trigger and marks it ENABLED. A POLLING trigger gets a cron schedule on the durable engine; a WEBHOOK trigger gets a subscription in the routing index, so an inbound event starts it; a MANUAL trigger arms nothing and still runs on demand.
          * @summary EnableFlow arms a flow\'s trigger and marks it ENABLED.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -605,7 +620,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * RunFlow starts one durable run of a flow now. It runs the flow\'s published version if one is pinned, else its latest, and answers the run record it created. The run is bounded by the org\'s per-minute run-start budget and its in-flight concurrency ceiling; over either, or with the engine not ready, no run is started and no run id is burned.
          * @summary RunFlow starts one durable run of a flow now.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -643,7 +658,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * CreateVersion adds a new DRAFT version to a flow. The version is created invalid unless it carries a trigger, and it does not become the running version until it is published (PATCH the flow\'s publishedVersionId) or becomes the latest.
          * @summary CreateVersion adds a new DRAFT version to a flow.
-         * @param {string} id ID is the flow to add a version to, from the path.
+         * @param {string} id 
          * @param {CloudCreateVersionIn} cloudCreateVersionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -685,7 +700,8 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
+         * @summary Fire an event that starts every enabled flow subscribed to it
          * @param {string} source 
          * @param {string} event 
          * @param {*} [options] Override http request option.
@@ -726,12 +742,14 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
+         * @summary Release a run waiting at an approval step, with the approval payload
          * @param {string} id 
+         * @param {any} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AutomationsRunsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AutomationsRunsByIdResume: async (id: string, body?: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AutomationsRunsByIdResume', 'id', id)
             const localVarPath = `/v1/automations/runs/{id}/resume`
@@ -753,9 +771,12 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -775,7 +796,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * DeleteFlow deletes one automation, its versions and its run history. It answers no content, and a flow of another org answers not-found.
          * @summary DeleteFlow deletes one automation, its versions and its run history.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -813,7 +834,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * GetFlow returns one automation and its latest version. That is the flow record plus the step tree the builder edits; a flow of another org answers not-found.
          * @summary GetFlow returns one automation and its latest version.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -826,7 +847,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * ListVersions returns one flow\'s versions, newest first. The optional `limit` query bounds the page.
          * @summary ListVersions returns one flow\'s versions, newest first.
-         * @param {string} id ID is the flow whose versions to list, from the path.
+         * @param {string} id 
          * @param {number} [limit] Limit bounds the page (default 200, maximum 1000).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -866,7 +887,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * GetRun returns one run. A run that has not reached a terminal status is refreshed from the durable engine first — scoped to the org\'s own namespace — so the caller sees live progress rather than the last status that happened to be persisted.
          * @summary GetRun returns one run.
-         * @param {string} id ID is the run to read, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -879,7 +900,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * UpdateFlow updates one automation\'s metadata in place. Every field is optional; a field the request omits is left alone. Publishing a version pins which one runs, and is refused unless that version belongs to this flow.
          * @summary UpdateFlow updates one automation\'s metadata in place.
-         * @param {string} id ID is the flow to update, from the path.
+         * @param {string} id 
          * @param {CloudPatchFlowIn} cloudPatchFlowIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -918,13 +939,15 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
+         * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
          * @param {string} id 
+         * @param {AutomationsFlowOperation} automationsFlowOperation 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AutomationsFlowsByIdOperations(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AutomationsFlowsByIdOperations(id, options);
+        async cloudPostV1AutomationsFlowsByIdOperations(id: string, automationsFlowOperation: AutomationsFlowOperation, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationsFlowVersion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AutomationsFlowsByIdOperations(id, automationsFlowOperation, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AutomationsApi.cloudPostV1AutomationsFlowsByIdOperations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -932,7 +955,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * DisableFlow disarms a flow\'s trigger and marks it DISABLED. Its schedule and its event subscriptions are dropped, so a disabled flow is never a live target; runs already in flight are unaffected, and it can still be started on demand.
          * @summary DisableFlow disarms a flow\'s trigger and marks it DISABLED.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -945,7 +968,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * EnableFlow arms a flow\'s trigger and marks it ENABLED. A POLLING trigger gets a cron schedule on the durable engine; a WEBHOOK trigger gets a subscription in the routing index, so an inbound event starts it; a MANUAL trigger arms nothing and still runs on demand.
          * @summary EnableFlow arms a flow\'s trigger and marks it ENABLED.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -958,7 +981,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * RunFlow starts one durable run of a flow now. It runs the flow\'s published version if one is pinned, else its latest, and answers the run record it created. The run is bounded by the org\'s per-minute run-start budget and its in-flight concurrency ceiling; over either, or with the engine not ready, no run is started and no run id is burned.
          * @summary RunFlow starts one durable run of a flow now.
-         * @param {string} id ID is the flow to act on, from the path.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -971,7 +994,7 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
         /**
          * CreateVersion adds a new DRAFT version to a flow. The version is created invalid unless it carries a trigger, and it does not become the running version until it is published (PATCH the flow\'s publishedVersionId) or becomes the latest.
          * @summary CreateVersion adds a new DRAFT version to a flow.
-         * @param {string} id ID is the flow to add a version to, from the path.
+         * @param {string} id 
          * @param {CloudCreateVersionIn} cloudCreateVersionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -983,7 +1006,8 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
+         * @summary Fire an event that starts every enabled flow subscribed to it
          * @param {string} source 
          * @param {string} event 
          * @param {*} [options] Override http request option.
@@ -996,13 +1020,15 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
+         * @summary Release a run waiting at an approval step, with the approval payload
          * @param {string} id 
+         * @param {any} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AutomationsRunsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AutomationsRunsByIdResume(id, options);
+        async cloudPostV1AutomationsRunsByIdResume(id: string, body?: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudPostV1AutomationsRunsByIdResume200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AutomationsRunsByIdResume(id, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AutomationsApi.cloudPostV1AutomationsRunsByIdResume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1126,13 +1152,14 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPostV1AutomationsFlows(requestParameters.cloudCreateFlowReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
+         * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
          * @param {AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AutomationsFlowsByIdOperations(requestParameters: AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AutomationsFlowsByIdOperations(requestParameters: AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AutomationsFlowVersion> {
+            return localVarFp.cloudPostV1AutomationsFlowsByIdOperations(requestParameters.id, requestParameters.automationsFlowOperation, options).then((request) => request(axios, basePath));
         },
         /**
          * DisableFlow disarms a flow\'s trigger and marks it DISABLED. Its schedule and its event subscriptions are dropped, so a disabled flow is never a live target; runs already in flight are unaffected, and it can still be started on demand.
@@ -1175,7 +1202,8 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPostV1AutomationsFlowsIdVersions(requestParameters.id, requestParameters.cloudCreateVersionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
+         * @summary Fire an event that starts every enabled flow subscribed to it
          * @param {AutomationsApiCloudPostV1AutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1184,13 +1212,14 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cloudPostV1AutomationsHooksBySourceByEvent(requestParameters.source, requestParameters.event, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
+         * @summary Release a run waiting at an approval step, with the approval payload
          * @param {AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AutomationsRunsByIdResume(requestParameters: AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AutomationsRunsByIdResume(requestParameters: AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudPostV1AutomationsRunsByIdResume200Response> {
+            return localVarFp.cloudPostV1AutomationsRunsByIdResume(requestParameters.id, requestParameters.body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1202,7 +1231,7 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
  */
 export interface AutomationsApiCloudDeleteV1AutomationsFlowsIdRequest {
     /**
-     * ID is the flow to act on, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudDeleteV1AutomationsFlowsId
      */
@@ -1230,7 +1259,7 @@ export interface AutomationsApiCloudGetV1AutomationsFlowsRequest {
  */
 export interface AutomationsApiCloudGetV1AutomationsFlowsIdRequest {
     /**
-     * ID is the flow to act on, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudGetV1AutomationsFlowsId
      */
@@ -1244,7 +1273,7 @@ export interface AutomationsApiCloudGetV1AutomationsFlowsIdRequest {
  */
 export interface AutomationsApiCloudGetV1AutomationsFlowsIdVersionsRequest {
     /**
-     * ID is the flow whose versions to list, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudGetV1AutomationsFlowsIdVersions
      */
@@ -1286,7 +1315,7 @@ export interface AutomationsApiCloudGetV1AutomationsRunsRequest {
  */
 export interface AutomationsApiCloudGetV1AutomationsRunsIdRequest {
     /**
-     * ID is the run to read, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudGetV1AutomationsRunsId
      */
@@ -1300,7 +1329,7 @@ export interface AutomationsApiCloudGetV1AutomationsRunsIdRequest {
  */
 export interface AutomationsApiCloudPatchV1AutomationsFlowsIdRequest {
     /**
-     * ID is the flow to update, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudPatchV1AutomationsFlowsId
      */
@@ -1361,6 +1390,13 @@ export interface AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest 
      * @memberof AutomationsApiCloudPostV1AutomationsFlowsByIdOperations
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AutomationsFlowOperation}
+     * @memberof AutomationsApiCloudPostV1AutomationsFlowsByIdOperations
+     */
+    readonly automationsFlowOperation: AutomationsFlowOperation
 }
 
 /**
@@ -1370,7 +1406,7 @@ export interface AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest 
  */
 export interface AutomationsApiCloudPostV1AutomationsFlowsIdDisableRequest {
     /**
-     * ID is the flow to act on, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudPostV1AutomationsFlowsIdDisable
      */
@@ -1384,7 +1420,7 @@ export interface AutomationsApiCloudPostV1AutomationsFlowsIdDisableRequest {
  */
 export interface AutomationsApiCloudPostV1AutomationsFlowsIdEnableRequest {
     /**
-     * ID is the flow to act on, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudPostV1AutomationsFlowsIdEnable
      */
@@ -1398,7 +1434,7 @@ export interface AutomationsApiCloudPostV1AutomationsFlowsIdEnableRequest {
  */
 export interface AutomationsApiCloudPostV1AutomationsFlowsIdRunRequest {
     /**
-     * ID is the flow to act on, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudPostV1AutomationsFlowsIdRun
      */
@@ -1412,7 +1448,7 @@ export interface AutomationsApiCloudPostV1AutomationsFlowsIdRunRequest {
  */
 export interface AutomationsApiCloudPostV1AutomationsFlowsIdVersionsRequest {
     /**
-     * ID is the flow to add a version to, from the path.
+     * 
      * @type {string}
      * @memberof AutomationsApiCloudPostV1AutomationsFlowsIdVersions
      */
@@ -1459,6 +1495,13 @@ export interface AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest {
      * @memberof AutomationsApiCloudPostV1AutomationsRunsByIdResume
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {any}
+     * @memberof AutomationsApiCloudPostV1AutomationsRunsByIdResume
+     */
+    readonly body?: any
 }
 
 /**
@@ -1599,14 +1642,15 @@ export class AutomationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
+     * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
      * @param {AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
     public cloudPostV1AutomationsFlowsByIdOperations(requestParameters: AutomationsApiCloudPostV1AutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).cloudPostV1AutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AutomationsApiFp(this.configuration).cloudPostV1AutomationsFlowsByIdOperations(requestParameters.id, requestParameters.automationsFlowOperation, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1658,7 +1702,8 @@ export class AutomationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
+     * @summary Fire an event that starts every enabled flow subscribed to it
      * @param {AutomationsApiCloudPostV1AutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1669,14 +1714,15 @@ export class AutomationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
+     * @summary Release a run waiting at an approval step, with the approval payload
      * @param {AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
     public cloudPostV1AutomationsRunsByIdResume(requestParameters: AutomationsApiCloudPostV1AutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).cloudPostV1AutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AutomationsApiFp(this.configuration).cloudPostV1AutomationsRunsByIdResume(requestParameters.id, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

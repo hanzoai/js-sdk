@@ -220,7 +220,8 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Reports whether the training plane is genuinely usable: that the Kubernetes API answers, and that BOTH the TrainJob and the Experiment CRDs are served by this cluster. A live check, not a flag read back.  200 only when all of it checks out; otherwise 503 carrying the per-CRD report and the real error. That body is why this is not a typed op — the error envelope a typed refusal renders would drop it.  It names each CRD separately on purpose: a cluster can serve training but not tuning, and the difference decides whether a job submission or only an experiment will fail. Answers about the cluster, not a tenant, so it takes no org and reveals no tenant data.
+         * @summary Whether training and tuning can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -325,7 +326,8 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Starts a katib hyperparameter search in the caller\'s own tenant namespace and answers the created Experiment, 201. The spec is katib\'s own, relayed as given, so the whole search-algorithm surface is available without this layer enumerating it.  One experiment fans out into many Trials, and each trial is real compute — so the BALANCE GATE RUNS FIRST, before anything is created, and fails CLOSED when commerce cannot be reached. The refusal carries the fleet\'s nested error body, which is why this is not a typed op. The submission fee is debited from the caller org\'s own ledger on success, asynchronously and best-effort.  The trials the search creates are read through the experiment\'s own trials list. Tenant namespace from the validated org and project, never a field; an unvalidated caller is refused. DNS-1123 name, and a duplicate is a 409.
+         * @summary Start a hyperparameter-tuning experiment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -358,7 +360,8 @@ export const TrainApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Submits a training job into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the Kubeflow TrainJob spec, relayed as given, so the trainer\'s full surface is reachable without this layer modelling it.  THE BALANCE GATE RUNS FIRST, before the namespace or the job is created, and it fails CLOSED — an unreachable commerce refuses rather than admits. That is what keeps an unfunded org from starting GPU compute. The refusal carries the fleet\'s nested error body, which is why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort.  Submitting is not finishing: the answer is the job as accepted, not a result — poll the job read for status. The tenant namespace comes from the validated org and project, never from a field; an unvalidated caller is refused. The name must be a DNS-1123 label, and a name already in use is a 409.
+         * @summary Submit a training job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -465,7 +468,8 @@ export const TrainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reports whether the training plane is genuinely usable: that the Kubernetes API answers, and that BOTH the TrainJob and the Experiment CRDs are served by this cluster. A live check, not a flag read back.  200 only when all of it checks out; otherwise 503 carrying the per-CRD report and the real error. That body is why this is not a typed op — the error envelope a typed refusal renders would drop it.  It names each CRD separately on purpose: a cluster can serve training but not tuning, and the difference decides whether a job submission or only an experiment will fail. Answers about the cluster, not a tenant, so it takes no org and reveals no tenant data.
+         * @summary Whether training and tuning can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -501,7 +505,8 @@ export const TrainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Starts a katib hyperparameter search in the caller\'s own tenant namespace and answers the created Experiment, 201. The spec is katib\'s own, relayed as given, so the whole search-algorithm surface is available without this layer enumerating it.  One experiment fans out into many Trials, and each trial is real compute — so the BALANCE GATE RUNS FIRST, before anything is created, and fails CLOSED when commerce cannot be reached. The refusal carries the fleet\'s nested error body, which is why this is not a typed op. The submission fee is debited from the caller org\'s own ledger on success, asynchronously and best-effort.  The trials the search creates are read through the experiment\'s own trials list. Tenant namespace from the validated org and project, never a field; an unvalidated caller is refused. DNS-1123 name, and a duplicate is a 409.
+         * @summary Start a hyperparameter-tuning experiment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -512,7 +517,8 @@ export const TrainApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Submits a training job into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the Kubeflow TrainJob spec, relayed as given, so the trainer\'s full surface is reachable without this layer modelling it.  THE BALANCE GATE RUNS FIRST, before the namespace or the job is created, and it fails CLOSED — an unreachable commerce refuses rather than admits. That is what keeps an unfunded org from starting GPU compute. The refusal carries the fleet\'s nested error body, which is why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort.  Submitting is not finishing: the answer is the job as accepted, not a result — poll the job read for status. The tenant namespace comes from the validated org and project, never from a field; an unvalidated caller is refused. The name must be a DNS-1123 label, and a name already in use is a 409.
+         * @summary Submit a training job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -582,7 +588,8 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1TrainExperimentsNameTrials(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reports whether the training plane is genuinely usable: that the Kubernetes API answers, and that BOTH the TrainJob and the Experiment CRDs are served by this cluster. A live check, not a flag read back.  200 only when all of it checks out; otherwise 503 carrying the per-CRD report and the real error. That body is why this is not a typed op — the error envelope a typed refusal renders would drop it.  It names each CRD separately on purpose: a cluster can serve training but not tuning, and the difference decides whether a job submission or only an experiment will fail. Answers about the cluster, not a tenant, so it takes no org and reveals no tenant data.
+         * @summary Whether training and tuning can actually work right now
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -609,7 +616,8 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1TrainJobsName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Starts a katib hyperparameter search in the caller\'s own tenant namespace and answers the created Experiment, 201. The spec is katib\'s own, relayed as given, so the whole search-algorithm surface is available without this layer enumerating it.  One experiment fans out into many Trials, and each trial is real compute — so the BALANCE GATE RUNS FIRST, before anything is created, and fails CLOSED when commerce cannot be reached. The refusal carries the fleet\'s nested error body, which is why this is not a typed op. The submission fee is debited from the caller org\'s own ledger on success, asynchronously and best-effort.  The trials the search creates are read through the experiment\'s own trials list. Tenant namespace from the validated org and project, never a field; an unvalidated caller is refused. DNS-1123 name, and a duplicate is a 409.
+         * @summary Start a hyperparameter-tuning experiment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -617,7 +625,8 @@ export const TrainApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1TrainExperiments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Submits a training job into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the Kubeflow TrainJob spec, relayed as given, so the trainer\'s full surface is reachable without this layer modelling it.  THE BALANCE GATE RUNS FIRST, before the namespace or the job is created, and it fails CLOSED — an unreachable commerce refuses rather than admits. That is what keeps an unfunded org from starting GPU compute. The refusal carries the fleet\'s nested error body, which is why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort.  Submitting is not finishing: the answer is the job as accepted, not a result — poll the job read for status. The tenant namespace comes from the validated org and project, never from a field; an unvalidated caller is refused. The name must be a DNS-1123 label, and a name already in use is a 409.
+         * @summary Submit a training job
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -764,7 +773,8 @@ export class TrainApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reports whether the training plane is genuinely usable: that the Kubernetes API answers, and that BOTH the TrainJob and the Experiment CRDs are served by this cluster. A live check, not a flag read back.  200 only when all of it checks out; otherwise 503 carrying the per-CRD report and the real error. That body is why this is not a typed op — the error envelope a typed refusal renders would drop it.  It names each CRD separately on purpose: a cluster can serve training but not tuning, and the difference decides whether a job submission or only an experiment will fail. Answers about the cluster, not a tenant, so it takes no org and reveals no tenant data.
+     * @summary Whether training and tuning can actually work right now
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrainApi
@@ -797,7 +807,8 @@ export class TrainApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Starts a katib hyperparameter search in the caller\'s own tenant namespace and answers the created Experiment, 201. The spec is katib\'s own, relayed as given, so the whole search-algorithm surface is available without this layer enumerating it.  One experiment fans out into many Trials, and each trial is real compute — so the BALANCE GATE RUNS FIRST, before anything is created, and fails CLOSED when commerce cannot be reached. The refusal carries the fleet\'s nested error body, which is why this is not a typed op. The submission fee is debited from the caller org\'s own ledger on success, asynchronously and best-effort.  The trials the search creates are read through the experiment\'s own trials list. Tenant namespace from the validated org and project, never a field; an unvalidated caller is refused. DNS-1123 name, and a duplicate is a 409.
+     * @summary Start a hyperparameter-tuning experiment
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrainApi
@@ -807,7 +818,8 @@ export class TrainApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Submits a training job into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the Kubeflow TrainJob spec, relayed as given, so the trainer\'s full surface is reachable without this layer modelling it.  THE BALANCE GATE RUNS FIRST, before the namespace or the job is created, and it fails CLOSED — an unreachable commerce refuses rather than admits. That is what keeps an unfunded org from starting GPU compute. The refusal carries the fleet\'s nested error body, which is why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort.  Submitting is not finishing: the answer is the job as accepted, not a result — poll the job read for status. The tenant namespace comes from the validated org and project, never from a field; an unvalidated caller is refused. The name must be a DNS-1123 label, and a name already in use is a 409.
+     * @summary Submit a training job
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrainApi

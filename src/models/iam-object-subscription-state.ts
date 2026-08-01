@@ -21,12 +21,12 @@
  */
 
 export const IamObjectSubscriptionState = {
-    SubStatePendingPending: 'SubStatePending = \"Pending\"',
-    SubStateErrorError: 'SubStateError = \"Error\"',
-    SubStateSuspendedSuspended: 'SubStateSuspended = \"Suspended\"',
-    SubStateActiveActive: 'SubStateActive = \"Active\"',
-    SubStateUpcomingUpcoming: 'SubStateUpcoming = \"Upcoming\"',
-    SubStateExpiredExpired: 'SubStateExpired = \"Expired\"'
+    Pending: 'Pending',
+    Error: 'Error',
+    Suspended: 'Suspended',
+    Active: 'Active',
+    Upcoming: 'Upcoming',
+    Expired: 'Expired'
 } as const;
 
 export type IamObjectSubscriptionState = typeof IamObjectSubscriptionState[keyof typeof IamObjectSubscriptionState];

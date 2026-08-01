@@ -22,6 +22,20 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AgentsControlRequest } from '../models';
+// @ts-ignore
+import type { AgentsControlResult } from '../models';
+// @ts-ignore
+import type { AgentsError } from '../models';
+// @ts-ignore
+import type { AgentsEventRequest } from '../models';
+// @ts-ignore
+import type { AgentsEventView } from '../models';
+// @ts-ignore
+import type { AgentsRunRequest } from '../models';
+// @ts-ignore
+import type { AgentsRunView } from '../models';
+// @ts-ignore
 import type { CloudActivityFeed } from '../models';
 // @ts-ignore
 import type { CloudAgentDetail } from '../models';
@@ -82,7 +96,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * DeleteAgent removes an agent and every run recorded against it. Answers 204.
          * @summary DeleteAgent removes an agent and every run recorded against it.
-         * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -346,7 +360,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * GetAgent returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
          * @summary GetAgent returns one agent with its system prompt and its 20 most recent runs.
-         * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -384,7 +398,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * ListAgentRuns returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
          * @summary ListAgentRuns returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
-         * @param {string} ref Ref is the agent\&#39;s public id or its org-unique name, from the path.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -486,7 +500,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * GetSession returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @summary GetSession returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-         * @param {string} id ID is the session to act on, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -567,7 +581,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * SessionTree returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
          * @summary SessionTree returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
-         * @param {string} id ID is the session to act on, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -603,11 +617,13 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
+         * @param {string} [root] Scope the stream to one subagent tree by root session id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1AgentsSessionsStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1AgentsSessionsStream: async (root?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/sessions/stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -623,6 +639,10 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (root !== undefined) {
+                localVarQueryParameter['root'] = root;
+            }
 
 
     
@@ -710,7 +730,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * UpdateAgent changes an agent in place. Every field is optional; a field the request omits keeps its stored value. The resulting mode+schedule are re-validated together, so a partial update can never leave a long-running agent without the cron the scheduler needs to fire it, and a transition INTO long-running counts against the per-org cap on scheduled agents.
          * @summary UpdateAgent changes an agent in place.
-         * @param {string} ref Ref is the agent to update — its public id or org-unique name, from the path.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {CloudUpdateAgentIn} cloudUpdateAgentIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -754,7 +774,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * PatchSession updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public. A FINISHED session stays finished — reopening a done/error run would fabricate liveness — and publishing is refused unless the session names the project it built, because the public build route is keyed on (org, project).
          * @summary PatchSession updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public.
-         * @param {string} id ID is the session to update, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {CloudPatchSessionIn} cloudPatchSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -880,12 +900,14 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} ref 
+         * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
+         * @summary Run one of your org\'s agents and get the recorded run back.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
+         * @param {AgentsRunRequest} [agentsRunRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsByRefRun: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsByRefRun: async (ref: string, agentsRunRequest?: AgentsRunRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
             assertParamExists('cloudPostV1AgentsByRefRun', 'ref', ref)
             const localVarPath = `/v1/agents/{ref}/run`
@@ -907,9 +929,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsRunRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -957,14 +982,18 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} id 
+         * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
+         * @summary Append one turn to a session\'s ordered log.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsEventRequest} agentsEventRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdEvents: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsSessionsByIdEvents: async (id: string, agentsEventRequest: AgentsEventRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AgentsSessionsByIdEvents', 'id', id)
+            // verify required parameter 'agentsEventRequest' is not null or undefined
+            assertParamExists('cloudPostV1AgentsSessionsByIdEvents', 'agentsEventRequest', agentsEventRequest)
             const localVarPath = `/v1/agents/sessions/{id}/events`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -984,9 +1013,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsEventRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -994,14 +1026,18 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Send text into a running session.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} agentsControlRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdMessage: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsSessionsByIdMessage: async (id: string, agentsControlRequest: AgentsControlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AgentsSessionsByIdMessage', 'id', id)
+            // verify required parameter 'agentsControlRequest' is not null or undefined
+            assertParamExists('cloudPostV1AgentsSessionsByIdMessage', 'agentsControlRequest', agentsControlRequest)
             const localVarPath = `/v1/agents/sessions/{id}/message`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1021,9 +1057,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsControlRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1031,12 +1070,14 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a running session to pause.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsSessionsByIdPause: async (id: string, agentsControlRequest?: AgentsControlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AgentsSessionsByIdPause', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/pause`
@@ -1058,9 +1099,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsControlRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1068,12 +1112,14 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a paused session to carry on.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsSessionsByIdResume: async (id: string, agentsControlRequest?: AgentsControlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AgentsSessionsByIdResume', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/resume`
@@ -1095,9 +1141,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsControlRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1105,12 +1154,14 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a session to stop for good.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdStop: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsSessionsByIdStop: async (id: string, agentsControlRequest?: AgentsControlRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cloudPostV1AgentsSessionsByIdStop', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/stop`
@@ -1132,9 +1183,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(agentsControlRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1318,7 +1372,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * DeleteAgent removes an agent and every run recorded against it. Answers 204.
          * @summary DeleteAgent removes an agent and every run recorded against it.
-         * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1408,7 +1462,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * GetAgent returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
          * @summary GetAgent returns one agent with its system prompt and its 20 most recent runs.
-         * @param {string} ref Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1421,7 +1475,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * ListAgentRuns returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
          * @summary ListAgentRuns returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
-         * @param {string} ref Ref is the agent\&#39;s public id or its org-unique name, from the path.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {number} [limit] Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1452,7 +1506,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * GetSession returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @summary GetSession returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-         * @param {string} id ID is the session to act on, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1479,7 +1533,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * SessionTree returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
          * @summary SessionTree returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
-         * @param {string} id ID is the session to act on, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1490,12 +1544,14 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
+         * @param {string} [root] Scope the stream to one subagent tree by root session id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1AgentsSessionsStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1AgentsSessionsStream(options);
+        async cloudGetV1AgentsSessionsStream(root?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1AgentsSessionsStream(root, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudGetV1AgentsSessionsStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1528,7 +1584,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * UpdateAgent changes an agent in place. Every field is optional; a field the request omits keeps its stored value. The resulting mode+schedule are re-validated together, so a partial update can never leave a long-running agent without the cron the scheduler needs to fire it, and a transition INTO long-running counts against the per-org cap on scheduled agents.
          * @summary UpdateAgent changes an agent in place.
-         * @param {string} ref Ref is the agent to update — its public id or org-unique name, from the path.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
          * @param {CloudUpdateAgentIn} cloudUpdateAgentIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1542,7 +1598,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         /**
          * PatchSession updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public. A FINISHED session stays finished — reopening a done/error run would fabricate liveness — and publishing is refused unless the session names the project it built, because the public build route is keyed on (org, project).
          * @summary PatchSession updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public.
-         * @param {string} id ID is the session to update, from the path.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
          * @param {CloudPatchSessionIn} cloudPatchSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1581,13 +1637,15 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} ref 
+         * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
+         * @summary Run one of your org\'s agents and get the recorded run back.
+         * @param {string} ref The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
+         * @param {AgentsRunRequest} [agentsRunRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsByRefRun(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsByRefRun(ref, options);
+        async cloudPostV1AgentsByRefRun(ref: string, agentsRunRequest?: AgentsRunRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsRunView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsByRefRun(ref, agentsRunRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsByRefRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1606,61 +1664,71 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
+         * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
+         * @summary Append one turn to a session\'s ordered log.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsEventRequest} agentsEventRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsSessionsByIdEvents(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdEvents(id, options);
+        async cloudPostV1AgentsSessionsByIdEvents(id: string, agentsEventRequest: AgentsEventRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsEventView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdEvents(id, agentsEventRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsSessionsByIdEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Send text into a running session.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} agentsControlRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsSessionsByIdMessage(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdMessage(id, options);
+        async cloudPostV1AgentsSessionsByIdMessage(id: string, agentsControlRequest: AgentsControlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsControlResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdMessage(id, agentsControlRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsSessionsByIdMessage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a running session to pause.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsSessionsByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdPause(id, options);
+        async cloudPostV1AgentsSessionsByIdPause(id: string, agentsControlRequest?: AgentsControlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsControlResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdPause(id, agentsControlRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsSessionsByIdPause']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a paused session to carry on.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsSessionsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdResume(id, options);
+        async cloudPostV1AgentsSessionsByIdResume(id: string, agentsControlRequest?: AgentsControlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsControlResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdResume(id, agentsControlRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsSessionsByIdResume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
+         * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a session to stop for good.
+         * @param {string} id The session id (the &#x60;sess_...&#x60; handle).
+         * @param {AgentsControlRequest} [agentsControlRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsSessionsByIdStop(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdStop(id, options);
+        async cloudPostV1AgentsSessionsByIdStop(id: string, agentsControlRequest?: AgentsControlRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentsControlResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsSessionsByIdStop(id, agentsControlRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsSessionsByIdStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1858,12 +1926,14 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1AgentsSessionsIdTree(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+         * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
+         * @param {AgentsApiCloudGetV1AgentsSessionsStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1AgentsSessionsStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1AgentsSessionsStream(options).then((request) => request(axios, basePath));
+        cloudGetV1AgentsSessionsStream(requestParameters: AgentsApiCloudGetV1AgentsSessionsStreamRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.cloudGetV1AgentsSessionsStream(requestParameters.root, options).then((request) => request(axios, basePath));
         },
         /**
          * ListTargets returns every machine registered to the caller\'s org, newest first, each with its live session load.
@@ -1925,13 +1995,14 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1Agents(requestParameters.cloudCreateAgentIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
+         * @summary Run one of your org\'s agents and get the recorded run back.
          * @param {AgentsApiCloudPostV1AgentsByRefRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsByRefRun(requestParameters: AgentsApiCloudPostV1AgentsByRefRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsByRefRun(requestParameters.ref, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsByRefRun(requestParameters: AgentsApiCloudPostV1AgentsByRefRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsRunView> {
+            return localVarFp.cloudPostV1AgentsByRefRun(requestParameters.ref, requestParameters.agentsRunRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * RegisterSession opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
@@ -1944,49 +2015,54 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudPostV1AgentsSessions(requestParameters.cloudRegisterReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
+         * @summary Append one turn to a session\'s ordered log.
          * @param {AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdEvents(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsSessionsByIdEvents(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsEventView> {
+            return localVarFp.cloudPostV1AgentsSessionsByIdEvents(requestParameters.id, requestParameters.agentsEventRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Send text into a running session.
          * @param {AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdMessage(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsSessionsByIdMessage(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsControlResult> {
+            return localVarFp.cloudPostV1AgentsSessionsByIdMessage(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a running session to pause.
          * @param {AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdPause(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsSessionsByIdPause(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsControlResult> {
+            return localVarFp.cloudPostV1AgentsSessionsByIdPause(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a paused session to carry on.
          * @param {AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdResume(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsSessionsByIdResume(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsControlResult> {
+            return localVarFp.cloudPostV1AgentsSessionsByIdResume(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+         * @summary Ask a session to stop for good.
          * @param {AgentsApiCloudPostV1AgentsSessionsByIdStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsSessionsByIdStop(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1AgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsSessionsByIdStop(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentsControlResult> {
+            return localVarFp.cloudPostV1AgentsSessionsByIdStop(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * RegisterTarget registers a machine as an agent target, or re-links one that is already registered. Re-linking is idempotent and keyed on org+host+owner, so a machine that reconnects refreshes its own row rather than piling up duplicates; it answers 200, while a first registration answers 201.
@@ -2038,7 +2114,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
  */
 export interface AgentsApiCloudDeleteV1AgentsRefRequest {
     /**
-     * Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+     * The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
      * @type {string}
      * @memberof AgentsApiCloudDeleteV1AgentsRef
      */
@@ -2115,7 +2191,7 @@ export interface AgentsApiCloudGetV1AgentsMetricsRequest {
  */
 export interface AgentsApiCloudGetV1AgentsRefRequest {
     /**
-     * Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
+     * The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
      * @type {string}
      * @memberof AgentsApiCloudGetV1AgentsRef
      */
@@ -2129,7 +2205,7 @@ export interface AgentsApiCloudGetV1AgentsRefRequest {
  */
 export interface AgentsApiCloudGetV1AgentsRefRunsRequest {
     /**
-     * Ref is the agent\&#39;s public id or its org-unique name, from the path.
+     * The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
      * @type {string}
      * @memberof AgentsApiCloudGetV1AgentsRefRuns
      */
@@ -2192,7 +2268,7 @@ export interface AgentsApiCloudGetV1AgentsSessionsRequest {
  */
 export interface AgentsApiCloudGetV1AgentsSessionsIdRequest {
     /**
-     * ID is the session to act on, from the path.
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudGetV1AgentsSessionsId
      */
@@ -2227,11 +2303,25 @@ export interface AgentsApiCloudGetV1AgentsSessionsIdControlRequest {
  */
 export interface AgentsApiCloudGetV1AgentsSessionsIdTreeRequest {
     /**
-     * ID is the session to act on, from the path.
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudGetV1AgentsSessionsIdTree
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for cloudGetV1AgentsSessionsStream operation in AgentsApi.
+ * @export
+ * @interface AgentsApiCloudGetV1AgentsSessionsStreamRequest
+ */
+export interface AgentsApiCloudGetV1AgentsSessionsStreamRequest {
+    /**
+     * Scope the stream to one subagent tree by root session id.
+     * @type {string}
+     * @memberof AgentsApiCloudGetV1AgentsSessionsStream
+     */
+    readonly root?: string
 }
 
 /**
@@ -2255,7 +2345,7 @@ export interface AgentsApiCloudGetV1AgentsTargetsIdRequest {
  */
 export interface AgentsApiCloudPatchV1AgentsRefRequest {
     /**
-     * Ref is the agent to update — its public id or org-unique name, from the path.
+     * The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
      * @type {string}
      * @memberof AgentsApiCloudPatchV1AgentsRef
      */
@@ -2276,7 +2366,7 @@ export interface AgentsApiCloudPatchV1AgentsRefRequest {
  */
 export interface AgentsApiCloudPatchV1AgentsSessionsIdRequest {
     /**
-     * ID is the session to update, from the path.
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPatchV1AgentsSessionsId
      */
@@ -2332,11 +2422,18 @@ export interface AgentsApiCloudPostV1AgentsRequest {
  */
 export interface AgentsApiCloudPostV1AgentsByRefRunRequest {
     /**
-     * 
+     * The agent\&#39;s public id (the &#x60;agent_...&#x60; handle) OR its org-unique name.
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsByRefRun
      */
     readonly ref: string
+
+    /**
+     * 
+     * @type {AgentsRunRequest}
+     * @memberof AgentsApiCloudPostV1AgentsByRefRun
+     */
+    readonly agentsRunRequest?: AgentsRunRequest
 }
 
 /**
@@ -2360,11 +2457,18 @@ export interface AgentsApiCloudPostV1AgentsSessionsRequest {
  */
 export interface AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest {
     /**
-     * 
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsSessionsByIdEvents
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AgentsEventRequest}
+     * @memberof AgentsApiCloudPostV1AgentsSessionsByIdEvents
+     */
+    readonly agentsEventRequest: AgentsEventRequest
 }
 
 /**
@@ -2374,11 +2478,18 @@ export interface AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest {
  */
 export interface AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest {
     /**
-     * 
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsSessionsByIdMessage
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AgentsControlRequest}
+     * @memberof AgentsApiCloudPostV1AgentsSessionsByIdMessage
+     */
+    readonly agentsControlRequest: AgentsControlRequest
 }
 
 /**
@@ -2388,11 +2499,18 @@ export interface AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest {
  */
 export interface AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest {
     /**
-     * 
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsSessionsByIdPause
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AgentsControlRequest}
+     * @memberof AgentsApiCloudPostV1AgentsSessionsByIdPause
+     */
+    readonly agentsControlRequest?: AgentsControlRequest
 }
 
 /**
@@ -2402,11 +2520,18 @@ export interface AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest {
  */
 export interface AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest {
     /**
-     * 
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsSessionsByIdResume
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AgentsControlRequest}
+     * @memberof AgentsApiCloudPostV1AgentsSessionsByIdResume
+     */
+    readonly agentsControlRequest?: AgentsControlRequest
 }
 
 /**
@@ -2416,11 +2541,18 @@ export interface AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest {
  */
 export interface AgentsApiCloudPostV1AgentsSessionsByIdStopRequest {
     /**
-     * 
+     * The session id (the &#x60;sess_...&#x60; handle).
      * @type {string}
      * @memberof AgentsApiCloudPostV1AgentsSessionsByIdStop
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AgentsControlRequest}
+     * @memberof AgentsApiCloudPostV1AgentsSessionsByIdStop
+     */
+    readonly agentsControlRequest?: AgentsControlRequest
 }
 
 /**
@@ -2655,13 +2787,15 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
+     * @summary Live session and event updates for the caller\'s org, as Server-Sent Events.
+     * @param {AgentsApiCloudGetV1AgentsSessionsStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public cloudGetV1AgentsSessionsStream(options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudGetV1AgentsSessionsStream(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1AgentsSessionsStream(requestParameters: AgentsApiCloudGetV1AgentsSessionsStreamRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).cloudGetV1AgentsSessionsStream(requestParameters.root, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2736,14 +2870,15 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
+     * @summary Run one of your org\'s agents and get the recorded run back.
      * @param {AgentsApiCloudPostV1AgentsByRefRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsByRefRun(requestParameters: AgentsApiCloudPostV1AgentsByRefRunRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsByRefRun(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsByRefRun(requestParameters.ref, requestParameters.agentsRunRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2759,58 +2894,63 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
+     * @summary Append one turn to a session\'s ordered log.
      * @param {AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsSessionsByIdEvents(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdEvents(requestParameters.id, requestParameters.agentsEventRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+     * @summary Send text into a running session.
      * @param {AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsSessionsByIdMessage(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdMessage(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+     * @summary Ask a running session to pause.
      * @param {AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsSessionsByIdPause(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdPause(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+     * @summary Ask a paused session to carry on.
      * @param {AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsSessionsByIdResume(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdResume(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
+     * @summary Ask a session to stop for good.
      * @param {AgentsApiCloudPostV1AgentsSessionsByIdStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public cloudPostV1AgentsSessionsByIdStop(requestParameters: AgentsApiCloudPostV1AgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsSessionsByIdStop(requestParameters.id, requestParameters.agentsControlRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

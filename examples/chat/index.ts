@@ -10,8 +10,13 @@
 import { OpenAICompatibleApi, AiChatMessageRoleEnum } from 'hanzoai';
 import { config, fail } from '../client';
 
-// `zen4` is the flagship the spec documents as its own example value.
-const model = process.env.HANZO_MODEL ?? 'zen4';
+// `zen5` is the current flagship of the Zen family, and it is what the gateway
+// actually serves: `zen4` answered 403 "zen4 is in limited preview" on
+// /v1/chat/completions and 400 "not in this gateway's catalog" on /v1/agents,
+// so every run of this example failed. An example's model default has to be a
+// model the reader's key can call on the first try. `HANZO_MODEL` overrides it
+// (zen5-mini, zen5-coder, enso, …).
+const model = process.env.HANZO_MODEL ?? 'zen5';
 
 async function main() {
   const ai = new OpenAICompatibleApi(config());

@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const LicensingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A DELETE to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a DELETE to a path the subtree does not have is 404.  The delete-shaped operation here is revocation, and it is POST /v1/licensing/revoke. It APPENDS a revocation entry rather than removing anything, because a token already in the field cannot be recalled — it can only be denied at verify and download time, and the entry is the record of who denied it and why.
+         * @summary Not served — a license is revoked, never deleted
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -65,7 +66,8 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under GET those are:  - `/v1/licensing/releases` — every release the deployment knows. - `/v1/licensing/releases/{release}` — one release\'s metadata; an unknown id is 404. - `/v1/licensing/download/{release}` — the license-gated artifact download. It is gated on the minted LICENSE token rather than the OIDC bearer, because that is exactly what the engine runs on: present it as an `X-License-Token` header or a `?token=` query parameter. No token is 401; a token whose signature, app or expiry fails, or that has been revoked, or that lacks the features the release requires, is 403; a yanked release is 410. The answer carries the artifact AND its cosign signature, so a client verifies the binary before trusting it. - `/v1/licensing/pubkey` and `/v1/licensing/jwks` — the same Ed25519 PUBLIC key, in raw base64 and as a JWK. This is the only public-safe surface here, and it is what lets an engine verify tokens OFFLINE. The private key never enters this process: signing goes through the KMS signer abstraction, not key material. - `/v1/licensing/healthz` — status, deployment env, and which signer provider is in use.  Any other path under the subtree is 404.
+         * @summary Read the licensing subtree: releases, the public verification key, health
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -102,7 +104,8 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only, and OPTIONS is not among them. An OPTIONS to a real licensing path is therefore 405 rather than a capability answer; it does still carry the `Allow` header naming that path\'s real methods, which is the part a client was asking for. An OPTIONS to a path the subtree does not have is 404.
+         * @summary Not served — but the refusal still names the methods a path allows
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -139,7 +142,8 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PATCH to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a PATCH to a path the subtree does not have is 404.  Nothing here is mutable in part. A license is an immutable signed token — you issue a new one — and a release is republished whole.
+         * @summary Not served — nothing in the licensing subtree is patched
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -176,7 +180,8 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under POST those are:  - `/v1/licensing/issue` — mints an Ed25519 license token for a paid product. The caller must be authenticated (mounted in cloud, that is an IAM-verified bearer), and the entitlement is then checked in commerce for that caller\'s org and subject: a caller who does not own the product is 403, never a token. The token\'s `app_id` is the DEPLOYMENT\'s brand, so a hanzo deployment can never mint a lux- or zoo-scoped token. Device binding comes from a `fingerprint` you registered earlier or from `signals` bound at issue time, and a deployment configured to require one refuses without it. The lifetime is clamped both to policy and to the entitlement\'s own expiry, so a token never outlives the entitlement that justified it. Naming a `release` scopes the token to it as a `release:<id>` feature, which is what makes release-scoped revocation reach it. - `/v1/licensing/verify` — an online, unauthenticated check of a token: signature, app and expiry, then the revocation list. The rule worth knowing is that an INVALID token is still 200 — the answer is `{valid:false, reason}`, not an HTTP error — because this read is informational and the engine is what enforces the license, offline, from the public key. - `/v1/licensing/revoke` — appends a revocation entry scoped by `nonce`, `holder`, `fingerprint` or `release`, stamped with the admin who did it. Authenticated; any other scope, or a missing value, is 400. - `/v1/licensing/fingerprint` — turns device signals into the opaque binding value `/issue` accepts. Authenticated, and the raw signals are never echoed back. - `/v1/licensing/releases` — publishes a release, answering 201. Authenticated, and outside dev a release carrying no cosign signature is refused, so an unsigned binary cannot enter the download path.  Any other path under the subtree is 404.
+         * @summary Issue, verify and revoke license tokens, bind a device, publish a release
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -213,7 +218,8 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PUT to a real licensing path (`/v1/licensing/issue`, `/v1/licensing/releases`, and the rest) is 405, with an `Allow` header naming the methods that path does serve; a PUT to a path the subtree does not have at all is 404.  There is no replace-in-place anywhere here: a release is published again through POST /v1/licensing/releases, and a license is re-issued rather than edited.
+         * @summary Not served — nothing in the licensing subtree is replaced by PUT
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -249,43 +255,6 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1LicensingByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1LicensingByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/licensing/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -297,7 +266,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LicensingApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A DELETE to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a DELETE to a path the subtree does not have is 404.  The delete-shaped operation here is revocation, and it is POST /v1/licensing/revoke. It APPENDS a revocation entry rather than removing anything, because a token already in the field cannot be recalled — it can only be denied at verify and download time, and the entry is the record of who denied it and why.
+         * @summary Not served — a license is revoked, never deleted
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -309,7 +279,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under GET those are:  - `/v1/licensing/releases` — every release the deployment knows. - `/v1/licensing/releases/{release}` — one release\'s metadata; an unknown id is 404. - `/v1/licensing/download/{release}` — the license-gated artifact download. It is gated on the minted LICENSE token rather than the OIDC bearer, because that is exactly what the engine runs on: present it as an `X-License-Token` header or a `?token=` query parameter. No token is 401; a token whose signature, app or expiry fails, or that has been revoked, or that lacks the features the release requires, is 403; a yanked release is 410. The answer carries the artifact AND its cosign signature, so a client verifies the binary before trusting it. - `/v1/licensing/pubkey` and `/v1/licensing/jwks` — the same Ed25519 PUBLIC key, in raw base64 and as a JWK. This is the only public-safe surface here, and it is what lets an engine verify tokens OFFLINE. The private key never enters this process: signing goes through the KMS signer abstraction, not key material. - `/v1/licensing/healthz` — status, deployment env, and which signer provider is in use.  Any other path under the subtree is 404.
+         * @summary Read the licensing subtree: releases, the public verification key, health
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -321,7 +292,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only, and OPTIONS is not among them. An OPTIONS to a real licensing path is therefore 405 rather than a capability answer; it does still carry the `Allow` header naming that path\'s real methods, which is the part a client was asking for. An OPTIONS to a path the subtree does not have is 404.
+         * @summary Not served — but the refusal still names the methods a path allows
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -333,7 +305,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PATCH to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a PATCH to a path the subtree does not have is 404.  Nothing here is mutable in part. A license is an immutable signed token — you issue a new one — and a release is republished whole.
+         * @summary Not served — nothing in the licensing subtree is patched
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -345,7 +318,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under POST those are:  - `/v1/licensing/issue` — mints an Ed25519 license token for a paid product. The caller must be authenticated (mounted in cloud, that is an IAM-verified bearer), and the entitlement is then checked in commerce for that caller\'s org and subject: a caller who does not own the product is 403, never a token. The token\'s `app_id` is the DEPLOYMENT\'s brand, so a hanzo deployment can never mint a lux- or zoo-scoped token. Device binding comes from a `fingerprint` you registered earlier or from `signals` bound at issue time, and a deployment configured to require one refuses without it. The lifetime is clamped both to policy and to the entitlement\'s own expiry, so a token never outlives the entitlement that justified it. Naming a `release` scopes the token to it as a `release:<id>` feature, which is what makes release-scoped revocation reach it. - `/v1/licensing/verify` — an online, unauthenticated check of a token: signature, app and expiry, then the revocation list. The rule worth knowing is that an INVALID token is still 200 — the answer is `{valid:false, reason}`, not an HTTP error — because this read is informational and the engine is what enforces the license, offline, from the public key. - `/v1/licensing/revoke` — appends a revocation entry scoped by `nonce`, `holder`, `fingerprint` or `release`, stamped with the admin who did it. Authenticated; any other scope, or a missing value, is 400. - `/v1/licensing/fingerprint` — turns device signals into the opaque binding value `/issue` accepts. Authenticated, and the raw signals are never echoed back. - `/v1/licensing/releases` — publishes a release, answering 201. Authenticated, and outside dev a release carrying no cosign signature is refused, so an unsigned binary cannot enter the download path.  Any other path under the subtree is 404.
+         * @summary Issue, verify and revoke license tokens, bind a device, publish a release
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -357,7 +331,8 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PUT to a real licensing path (`/v1/licensing/issue`, `/v1/licensing/releases`, and the rest) is 405, with an `Allow` header naming the methods that path does serve; a PUT to a path the subtree does not have at all is 404.  There is no replace-in-place anywhere here: a release is published again through POST /v1/licensing/releases, and a license is re-issued rather than edited.
+         * @summary Not served — nothing in the licensing subtree is replaced by PUT
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -366,18 +341,6 @@ export const LicensingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1LicensingByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LicensingApi.cloudPutV1LicensingByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1LicensingByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1LicensingByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.cloudTraceV1LicensingByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -391,7 +354,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
     const localVarFp = LicensingApiFp(configuration)
     return {
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A DELETE to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a DELETE to a path the subtree does not have is 404.  The delete-shaped operation here is revocation, and it is POST /v1/licensing/revoke. It APPENDS a revocation entry rather than removing anything, because a token already in the field cannot be recalled — it can only be denied at verify and download time, and the entry is the record of who denied it and why.
+         * @summary Not served — a license is revoked, never deleted
          * @param {LicensingApiCloudDeleteV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -400,7 +364,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudDeleteV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under GET those are:  - `/v1/licensing/releases` — every release the deployment knows. - `/v1/licensing/releases/{release}` — one release\'s metadata; an unknown id is 404. - `/v1/licensing/download/{release}` — the license-gated artifact download. It is gated on the minted LICENSE token rather than the OIDC bearer, because that is exactly what the engine runs on: present it as an `X-License-Token` header or a `?token=` query parameter. No token is 401; a token whose signature, app or expiry fails, or that has been revoked, or that lacks the features the release requires, is 403; a yanked release is 410. The answer carries the artifact AND its cosign signature, so a client verifies the binary before trusting it. - `/v1/licensing/pubkey` and `/v1/licensing/jwks` — the same Ed25519 PUBLIC key, in raw base64 and as a JWK. This is the only public-safe surface here, and it is what lets an engine verify tokens OFFLINE. The private key never enters this process: signing goes through the KMS signer abstraction, not key material. - `/v1/licensing/healthz` — status, deployment env, and which signer provider is in use.  Any other path under the subtree is 404.
+         * @summary Read the licensing subtree: releases, the public verification key, health
          * @param {LicensingApiCloudGetV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -409,7 +374,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudGetV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only, and OPTIONS is not among them. An OPTIONS to a real licensing path is therefore 405 rather than a capability answer; it does still carry the `Allow` header naming that path\'s real methods, which is the part a client was asking for. An OPTIONS to a path the subtree does not have is 404.
+         * @summary Not served — but the refusal still names the methods a path allows
          * @param {LicensingApiCloudOptionsV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -418,7 +384,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudOptionsV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PATCH to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a PATCH to a path the subtree does not have is 404.  Nothing here is mutable in part. A license is an immutable signed token — you issue a new one — and a release is republished whole.
+         * @summary Not served — nothing in the licensing subtree is patched
          * @param {LicensingApiCloudPatchV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -427,7 +394,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudPatchV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under POST those are:  - `/v1/licensing/issue` — mints an Ed25519 license token for a paid product. The caller must be authenticated (mounted in cloud, that is an IAM-verified bearer), and the entitlement is then checked in commerce for that caller\'s org and subject: a caller who does not own the product is 403, never a token. The token\'s `app_id` is the DEPLOYMENT\'s brand, so a hanzo deployment can never mint a lux- or zoo-scoped token. Device binding comes from a `fingerprint` you registered earlier or from `signals` bound at issue time, and a deployment configured to require one refuses without it. The lifetime is clamped both to policy and to the entitlement\'s own expiry, so a token never outlives the entitlement that justified it. Naming a `release` scopes the token to it as a `release:<id>` feature, which is what makes release-scoped revocation reach it. - `/v1/licensing/verify` — an online, unauthenticated check of a token: signature, app and expiry, then the revocation list. The rule worth knowing is that an INVALID token is still 200 — the answer is `{valid:false, reason}`, not an HTTP error — because this read is informational and the engine is what enforces the license, offline, from the public key. - `/v1/licensing/revoke` — appends a revocation entry scoped by `nonce`, `holder`, `fingerprint` or `release`, stamped with the admin who did it. Authenticated; any other scope, or a missing value, is 400. - `/v1/licensing/fingerprint` — turns device signals into the opaque binding value `/issue` accepts. Authenticated, and the raw signals are never echoed back. - `/v1/licensing/releases` — publishes a release, answering 201. Authenticated, and outside dev a release carrying no cosign signature is refused, so an unsigned binary cannot enter the download path.  Any other path under the subtree is 404.
+         * @summary Issue, verify and revoke license tokens, bind a device, publish a release
          * @param {LicensingApiCloudPostV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -436,22 +404,14 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudPostV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PUT to a real licensing path (`/v1/licensing/issue`, `/v1/licensing/releases`, and the rest) is 405, with an `Allow` header naming the methods that path does serve; a PUT to a path the subtree does not have at all is 404.  There is no replace-in-place anywhere here: a release is published again through POST /v1/licensing/releases, and a license is re-issued rather than edited.
+         * @summary Not served — nothing in the licensing subtree is replaced by PUT
          * @param {LicensingApiCloudPutV1LicensingByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1LicensingByWildcard1(requestParameters: LicensingApiCloudPutV1LicensingByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {LicensingApiCloudTraceV1LicensingByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1LicensingByWildcard1(requestParameters: LicensingApiCloudTraceV1LicensingByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -541,20 +501,6 @@ export interface LicensingApiCloudPutV1LicensingByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1LicensingByWildcard1 operation in LicensingApi.
- * @export
- * @interface LicensingApiCloudTraceV1LicensingByWildcard1Request
- */
-export interface LicensingApiCloudTraceV1LicensingByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof LicensingApiCloudTraceV1LicensingByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * LicensingApi - object-oriented interface
  * @export
  * @class LicensingApi
@@ -562,7 +508,8 @@ export interface LicensingApiCloudTraceV1LicensingByWildcard1Request {
  */
 export class LicensingApi extends BaseAPI {
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A DELETE to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a DELETE to a path the subtree does not have is 404.  The delete-shaped operation here is revocation, and it is POST /v1/licensing/revoke. It APPENDS a revocation entry rather than removing anything, because a token already in the field cannot be recalled — it can only be denied at verify and download time, and the entry is the record of who denied it and why.
+     * @summary Not served — a license is revoked, never deleted
      * @param {LicensingApiCloudDeleteV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -573,7 +520,8 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under GET those are:  - `/v1/licensing/releases` — every release the deployment knows. - `/v1/licensing/releases/{release}` — one release\'s metadata; an unknown id is 404. - `/v1/licensing/download/{release}` — the license-gated artifact download. It is gated on the minted LICENSE token rather than the OIDC bearer, because that is exactly what the engine runs on: present it as an `X-License-Token` header or a `?token=` query parameter. No token is 401; a token whose signature, app or expiry fails, or that has been revoked, or that lacks the features the release requires, is 403; a yanked release is 410. The answer carries the artifact AND its cosign signature, so a client verifies the binary before trusting it. - `/v1/licensing/pubkey` and `/v1/licensing/jwks` — the same Ed25519 PUBLIC key, in raw base64 and as a JWK. This is the only public-safe surface here, and it is what lets an engine verify tokens OFFLINE. The private key never enters this process: signing goes through the KMS signer abstraction, not key material. - `/v1/licensing/healthz` — status, deployment env, and which signer provider is in use.  Any other path under the subtree is 404.
+     * @summary Read the licensing subtree: releases, the public verification key, health
      * @param {LicensingApiCloudGetV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -584,7 +532,8 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only, and OPTIONS is not among them. An OPTIONS to a real licensing path is therefore 405 rather than a capability answer; it does still carry the `Allow` header naming that path\'s real methods, which is the part a client was asking for. An OPTIONS to a path the subtree does not have is 404.
+     * @summary Not served — but the refusal still names the methods a path allows
      * @param {LicensingApiCloudOptionsV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -595,7 +544,8 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PATCH to a real licensing path is 405, with an `Allow` header naming the methods that path does serve; a PATCH to a path the subtree does not have is 404.  Nothing here is mutable in part. A license is an immutable signed token — you issue a new one — and a release is republished whole.
+     * @summary Not served — nothing in the licensing subtree is patched
      * @param {LicensingApiCloudPatchV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -606,7 +556,8 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so the path segment selects the real operation. Under POST those are:  - `/v1/licensing/issue` — mints an Ed25519 license token for a paid product. The caller must be authenticated (mounted in cloud, that is an IAM-verified bearer), and the entitlement is then checked in commerce for that caller\'s org and subject: a caller who does not own the product is 403, never a token. The token\'s `app_id` is the DEPLOYMENT\'s brand, so a hanzo deployment can never mint a lux- or zoo-scoped token. Device binding comes from a `fingerprint` you registered earlier or from `signals` bound at issue time, and a deployment configured to require one refuses without it. The lifetime is clamped both to policy and to the entitlement\'s own expiry, so a token never outlives the entitlement that justified it. Naming a `release` scopes the token to it as a `release:<id>` feature, which is what makes release-scoped revocation reach it. - `/v1/licensing/verify` — an online, unauthenticated check of a token: signature, app and expiry, then the revocation list. The rule worth knowing is that an INVALID token is still 200 — the answer is `{valid:false, reason}`, not an HTTP error — because this read is informational and the engine is what enforces the license, offline, from the public key. - `/v1/licensing/revoke` — appends a revocation entry scoped by `nonce`, `holder`, `fingerprint` or `release`, stamped with the admin who did it. Authenticated; any other scope, or a missing value, is 400. - `/v1/licensing/fingerprint` — turns device signals into the opaque binding value `/issue` accepts. Authenticated, and the raw signals are never echoed back. - `/v1/licensing/releases` — publishes a release, answering 201. Authenticated, and outside dev a release carrying no cosign signature is refused, so an unsigned binary cannot enter the download path.  Any other path under the subtree is 404.
+     * @summary Issue, verify and revoke license tokens, bind a device, publish a release
      * @param {LicensingApiCloudPostV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -617,7 +568,8 @@ export class LicensingApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The subtree is mounted as ONE wildcard route, so every method that route can carry is published — but the mux behind it registers GET and POST handlers only. A PUT to a real licensing path (`/v1/licensing/issue`, `/v1/licensing/releases`, and the rest) is 405, with an `Allow` header naming the methods that path does serve; a PUT to a path the subtree does not have at all is 404.  There is no replace-in-place anywhere here: a release is published again through POST /v1/licensing/releases, and a license is re-issued rather than edited.
+     * @summary Not served — nothing in the licensing subtree is replaced by PUT
      * @param {LicensingApiCloudPutV1LicensingByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -625,17 +577,6 @@ export class LicensingApi extends BaseAPI {
      */
     public cloudPutV1LicensingByWildcard1(requestParameters: LicensingApiCloudPutV1LicensingByWildcard1Request, options?: RawAxiosRequestConfig) {
         return LicensingApiFp(this.configuration).cloudPutV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {LicensingApiCloudTraceV1LicensingByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LicensingApi
-     */
-    public cloudTraceV1LicensingByWildcard1(requestParameters: LicensingApiCloudTraceV1LicensingByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).cloudTraceV1LicensingByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

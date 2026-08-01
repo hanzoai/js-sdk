@@ -21,11 +21,11 @@
  */
 export interface AffiliatesNotEnrolled {
     /**
-     * 
+     * Always false — this is the not-enrolled shape.
      * @type {boolean}
      * @memberof AffiliatesNotEnrolled
      */
-    'isAffiliate'?: AffiliatesNotEnrolledIsAffiliateEnum;
+    'isAffiliate'?: boolean;
     /**
      * The default commission rate a new affiliate gets, in basis points (2000 = 20%).
      * @type {number}
@@ -33,11 +33,4 @@ export interface AffiliatesNotEnrolled {
      */
     'defaultRateBps'?: number;
 }
-
-export const AffiliatesNotEnrolledIsAffiliateEnum = {
-    False: false
-} as const;
-
-export type AffiliatesNotEnrolledIsAffiliateEnum = typeof AffiliatesNotEnrolledIsAffiliateEnum[keyof typeof AffiliatesNotEnrolledIsAffiliateEnum];
-
 

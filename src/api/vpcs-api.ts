@@ -36,7 +36,7 @@ export const VpcsApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * DeleteVpc removes one of the caller org\'s VPCs and answers 204. Ownership is confirmed by re-fetching the resource and checking its physical name carries the caller\'s org prefix BEFORE anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s VPC.
          * @summary DeleteVpc removes one of the caller org\'s VPCs and answers 204.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO VPC id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -108,7 +108,7 @@ export const VpcsApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * GetVpc returns one of the caller org\'s VPCs by id. A VPC that exists but sits in another org\'s namespace is reported 404, never 403 — the answer must not tell one tenant that another tenant\'s resource exists.
          * @summary GetVpc returns one of the caller org\'s VPCs by id.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO VPC id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -196,7 +196,7 @@ export const VpcsApiFp = function(configuration?: Configuration) {
         /**
          * DeleteVpc removes one of the caller org\'s VPCs and answers 204. Ownership is confirmed by re-fetching the resource and checking its physical name carries the caller\'s org prefix BEFORE anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s VPC.
          * @summary DeleteVpc removes one of the caller org\'s VPCs and answers 204.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO VPC id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -221,7 +221,7 @@ export const VpcsApiFp = function(configuration?: Configuration) {
         /**
          * GetVpc returns one of the caller org\'s VPCs by id. A VPC that exists but sits in another org\'s namespace is reported 404, never 403 — the answer must not tell one tenant that another tenant\'s resource exists.
          * @summary GetVpc returns one of the caller org\'s VPCs by id.
-         * @param {string} id ID is the DigitalOcean resource id (a UUID), from the path.
+         * @param {string} id DO VPC id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -303,7 +303,7 @@ export const VpcsApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface VpcsApiCloudDeleteV1VpcsIdRequest {
     /**
-     * ID is the DigitalOcean resource id (a UUID), from the path.
+     * DO VPC id
      * @type {string}
      * @memberof VpcsApiCloudDeleteV1VpcsId
      */
@@ -317,7 +317,7 @@ export interface VpcsApiCloudDeleteV1VpcsIdRequest {
  */
 export interface VpcsApiCloudGetV1VpcsIdRequest {
     /**
-     * ID is the DigitalOcean resource id (a UUID), from the path.
+     * DO VPC id
      * @type {string}
      * @memberof VpcsApiCloudGetV1VpcsId
      */

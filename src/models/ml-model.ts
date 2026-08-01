@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { MlModelArtifacts } from './ml-model-artifacts';
+import type { CloudPostV1MlModelsRequestArtifacts } from './cloud-post-v1-ml-models-request-artifacts';
 
 /**
  * 
@@ -61,10 +61,10 @@ export interface MlModel {
     'source_run_id'?: string;
     /**
      * 
-     * @type {MlModelArtifacts}
+     * @type {CloudPostV1MlModelsRequestArtifacts}
      * @memberof MlModel
      */
-    'artifacts'?: MlModelArtifacts;
+    'artifacts'?: CloudPostV1MlModelsRequestArtifacts;
     /**
      * 
      * @type {{ [key: string]: number; }}

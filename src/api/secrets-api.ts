@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudGetV1KmsSecrets401Response } from '../models';
+// @ts-ignore
 import type { EdgeError } from '../models';
 // @ts-ignore
 import type { EdgeListSecrets200ResponseInner } from '../models';
@@ -35,8 +37,6 @@ import type { EdgeUpdateSecretRequest } from '../models';
 import type { KmsGetV1KmsKeysId404Response } from '../models';
 // @ts-ignore
 import type { KmsGetV1KmsSecretsRest200Response } from '../models';
-// @ts-ignore
-import type { KmsGetV1KmsSecretsRest401Response } from '../models';
 /**
  * SecretsApi - axios parameter creator
  * @export

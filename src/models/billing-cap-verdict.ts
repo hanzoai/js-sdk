@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { BillingCapReason } from './billing-cap-reason';
 
 /**
  * The per-request spend-cap verdict for a (project, service) scope, evaluated over the org\'s spend-alert rows (most-restrictive-wins). Fails CLOSED: if a hard-enforceable row\'s spend cannot be computed the verdict denies. 
@@ -32,11 +29,11 @@ export interface BillingCapVerdict {
      */
     'allow': boolean;
     /**
-     * 
-     * @type {BillingCapReason}
+     * The cap/funds verdict reason. \"\" = allowed (funded and under every covering cap). `spend_cap` = funded but a HARD-enforced per-scope cap would be exceeded (the tenant\'s OWN policy ceiling). `insufficient_balance` = out of prepaid funds. `spend_cap` and `insufficient_balance` are DISTINCT — one is policy, one is funds. The `/spend-alerts/authorize` endpoint (a pure cap check) emits only \"\" or `spend_cap`; the cloud money-path composite (metering) adds `insufficient_balance`. 
+     * @type {string}
      * @memberof BillingCapVerdict
      */
-    'reason': BillingCapReason;
+    'reason': string;
     /**
      * The tightest violated cap\'s ceiling in USD cents (0 when allowed).
      * @type {number}
@@ -56,6 +53,4 @@ export interface BillingCapVerdict {
      */
     'warnPct'?: number;
 }
-
-
 

@@ -40,7 +40,7 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
          * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -180,7 +180,7 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
          * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -268,7 +268,7 @@ export const PromptsApiFp = function(configuration?: Configuration) {
         /**
          * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
          * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -317,7 +317,7 @@ export const PromptsApiFp = function(configuration?: Configuration) {
         /**
          * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
          * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -417,7 +417,7 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
  */
 export interface PromptsApiCloudDeleteV1PromptsNameRequest {
     /**
-     * Name is the prompt to act on, from the path.
+     * 
      * @type {string}
      * @memberof PromptsApiCloudDeleteV1PromptsName
      */
@@ -431,7 +431,7 @@ export interface PromptsApiCloudDeleteV1PromptsNameRequest {
  */
 export interface PromptsApiCloudGetV1PromptsNameRequest {
     /**
-     * Name is the prompt to act on, from the path.
+     * 
      * @type {string}
      * @memberof PromptsApiCloudGetV1PromptsName
      */

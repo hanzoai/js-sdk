@@ -40,7 +40,8 @@ import type { DnsQueryAnalytics } from '../models';
 export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Reports the analytics subsystem\'s own liveness: whether the shared warehouse connection is up, and — when it is — whether each read lens\'s table has been provisioned yet (the LLM usage ledger and the product-event table, each named in the report).  IT DOES NOT PROBE THE WAREHOUSE TO EARN ITS 200. `datastore` here is the state of the process\'s own shared client — established, and not since closed — not the result of a query, so a warehouse that is accepting connections and failing reads still reports healthy. Degraded means only that the client never came up: 503, CARRYING the report (status, datastore:false, reason) as its body rather than an error envelope, so a readiness gate can read the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status. The per-lens probe runs only once connected, and a lens reported available:false answers honest-empty rather than erroring — a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is absent entirely from a degraded report, which has nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence only, never a row.
+         * @summary Whether the analytics warehouse is reachable, and which lens tables exist
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -292,7 +293,8 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AnalyticsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Reports the analytics subsystem\'s own liveness: whether the shared warehouse connection is up, and — when it is — whether each read lens\'s table has been provisioned yet (the LLM usage ledger and the product-event table, each named in the report).  IT DOES NOT PROBE THE WAREHOUSE TO EARN ITS 200. `datastore` here is the state of the process\'s own shared client — established, and not since closed — not the result of a query, so a warehouse that is accepting connections and failing reads still reports healthy. Degraded means only that the client never came up: 503, CARRYING the report (status, datastore:false, reason) as its body rather than an error envelope, so a readiness gate can read the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status. The per-lens probe runs only once connected, and a lens reported available:false answers honest-empty rather than erroring — a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is absent entirely from a degraded report, which has nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence only, never a row.
+         * @summary Whether the analytics warehouse is reachable, and which lens tables exist
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -375,7 +377,8 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
     const localVarFp = AnalyticsApiFp(configuration)
     return {
         /**
-         * 
+         * Reports the analytics subsystem\'s own liveness: whether the shared warehouse connection is up, and — when it is — whether each read lens\'s table has been provisioned yet (the LLM usage ledger and the product-event table, each named in the report).  IT DOES NOT PROBE THE WAREHOUSE TO EARN ITS 200. `datastore` here is the state of the process\'s own shared client — established, and not since closed — not the result of a query, so a warehouse that is accepting connections and failing reads still reports healthy. Degraded means only that the client never came up: 503, CARRYING the report (status, datastore:false, reason) as its body rather than an error envelope, so a readiness gate can read the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status. The per-lens probe runs only once connected, and a lens reported available:false answers honest-empty rather than erroring — a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is absent entirely from a degraded report, which has nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence only, never a row.
+         * @summary Whether the analytics warehouse is reachable, and which lens tables exist
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -559,7 +562,8 @@ export interface AnalyticsApiDnsGetZoneAnalyticsRequest {
  */
 export class AnalyticsApi extends BaseAPI {
     /**
-     * 
+     * Reports the analytics subsystem\'s own liveness: whether the shared warehouse connection is up, and — when it is — whether each read lens\'s table has been provisioned yet (the LLM usage ledger and the product-event table, each named in the report).  IT DOES NOT PROBE THE WAREHOUSE TO EARN ITS 200. `datastore` here is the state of the process\'s own shared client — established, and not since closed — not the result of a query, so a warehouse that is accepting connections and failing reads still reports healthy. Degraded means only that the client never came up: 503, CARRYING the report (status, datastore:false, reason) as its body rather than an error envelope, so a readiness gate can read the cause off the same object it got at 200.  A MISSING LENS TABLE IS NOT A FAILURE and never moves the status. The per-lens probe runs only once connected, and a lens reported available:false answers honest-empty rather than erroring — a fresh deployment whose collector has not emitted yet is legitimately 200 with the product-event lens unavailable. The lens block is absent entirely from a degraded report, which has nothing to say about tables it could not reach.  Unauthenticated on purpose — liveness has to be probe-able — and it reads NO tenant data: table existence only, never a row.
+     * @summary Whether the analytics warehouse is reachable, and which lens tables exist
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi

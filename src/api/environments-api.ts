@@ -28,7 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const EnvironmentsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Your deploy targets, and what is running on each
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -71,7 +72,8 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = EnvironmentsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Your deploy targets, and what is running on each
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -92,7 +94,8 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
     const localVarFp = EnvironmentsApiFp(configuration)
     return {
         /**
-         * 
+         * Returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Your deploy targets, and what is running on each
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,7 +113,8 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
  */
 export class EnvironmentsApi extends BaseAPI {
     /**
-     * 
+     * Returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+     * @summary Your deploy targets, and what is running on each
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnvironmentsApi

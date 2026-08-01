@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface AdminAdminDeletePromo200Response
+ * @interface CloudPostV1KmsAuthLoginRequest
  */
-export interface AdminAdminDeletePromo200Response {
+export interface CloudPostV1KmsAuthLoginRequest {
     /**
      * 
      * @type {string}
-     * @memberof AdminAdminDeletePromo200Response
+     * @memberof CloudPostV1KmsAuthLoginRequest
      */
-    'status'?: string;
+    'clientId': string;
     /**
      * 
      * @type {string}
-     * @memberof AdminAdminDeletePromo200Response
+     * @memberof CloudPostV1KmsAuthLoginRequest
      */
-    'msg'?: string;
+    'clientSecret': string;
 }
 

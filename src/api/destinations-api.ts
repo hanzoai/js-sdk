@@ -146,7 +146,8 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connect one conversion destination for your org, or update the one you have
          * @param {string} platform 
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
@@ -273,7 +274,8 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connect one conversion destination for your org, or update the one you have
          * @param {string} platform 
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
@@ -338,7 +340,8 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1DestinationsPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connect one conversion destination for your org, or update the one you have
          * @param {DestinationsApiCloudPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -465,7 +468,8 @@ export class DestinationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+     * @summary Connect one conversion destination for your org, or update the one you have
      * @param {DestinationsApiCloudPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

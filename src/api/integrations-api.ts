@@ -61,6 +61,8 @@ import type { CloudListOut } from '../models';
 import type { CloudProviderView } from '../models';
 // @ts-ignore
 import type { CloudVerifyOut } from '../models';
+// @ts-ignore
+import type { IntegrationsSlackEventEnvelope } from '../models';
 /**
  * IntegrationsApi - axios parameter creator
  * @export
@@ -221,12 +223,18 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * @summary OAuth return for any connector
+         * @param {string} state 
          * @param {string} provider 
+         * @param {string} [code] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsByProviderCallback: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1IntegrationsByProviderCallback: async (state: string, provider: string, code?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('cloudGetV1IntegrationsByProviderCallback', 'state', state)
             // verify required parameter 'provider' is not null or undefined
             assertParamExists('cloudGetV1IntegrationsByProviderCallback', 'provider', provider)
             const localVarPath = `/v1/integrations/{provider}/callback`
@@ -242,9 +250,17 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (error !== undefined) {
+                localVarQueryParameter['error'] = error;
+            }
 
 
     
@@ -258,7 +274,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Discord
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -291,7 +308,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The final leg: it binds the verified Discord user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Discord. The Hanzo credential is sealed into the connected org\'s KMS namespace rather than stored beside the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Discord account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -324,7 +342,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Where Discord returns the user after the identify consent. It resolves the verified Discord user, confirms the server is connected to an org, and hands the browser to the Hanzo sign-in that completes the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Discord sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -431,7 +450,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider slug (e.g. slack, github)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -467,11 +486,15 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Slack
+         * @param {string} state Signed, single-use link state
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1IntegrationsSlackLink: async (state: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'state' is not null or undefined
+            assertParamExists('cloudGetV1IntegrationsSlackLink', 'state', state)
             const localVarPath = `/v1/integrations/slack/link`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -484,9 +507,9 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
 
 
     
@@ -500,11 +523,15 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The final leg: the user has proved both who they are in Slack and who they are in Hanzo, and this binds the two. It answers a short confirmation page telling them to return to Slack.  The Hanzo credential obtained here is sealed into the connected workspace\'s own KMS namespace; it is never written to a database column and never logged. A deployment whose secret store is unavailable refuses the link rather than completing it without custody of the credential.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Slack account link
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLinkCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1IntegrationsSlackLinkCallback: async (code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/integrations/slack/link/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -517,9 +544,17 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (error !== undefined) {
+                localVarQueryParameter['error'] = error;
+            }
 
 
     
@@ -533,11 +568,15 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Where Slack returns the user after they sign in. It establishes the verified Slack workspace and user, confirms that workspace is connected to an org, and hands the browser on to the Hanzo sign-in that completes the link.  The verified pair is carried onward in a host-bound cookie rather than in the URL, so the identity being linked cannot be edited in transit.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Slack sign-in return leg
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLinkSlack: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1IntegrationsSlackLinkSlack: async (code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/integrations/slack/link/slack`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -550,9 +589,17 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            if (code !== undefined) {
+                localVarQueryParameter['code'] = code;
+            }
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+            if (error !== undefined) {
+                localVarQueryParameter['error'] = error;
+            }
 
 
     
@@ -566,7 +613,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in Teams. It starts a link session and redirects to Microsoft sign-in addressed to the CHAT\'S OWN tenant, not the common endpoint, so only a member of that tenant can complete it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Teams
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -599,7 +647,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Where Microsoft returns the user after sign-in. It resolves the verified directory identity and then re-checks the tenant: the signed-in user\'s tenant must equal the tenant of the chat the link started from, so a valid Microsoft sign-in from a different organization is refused here rather than accepted.  This is the leg Teams has and the other platforms do not, which is why the Teams flow has an extra address.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Microsoft sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -632,7 +681,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The final leg: it binds the verified directory identity to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Teams. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Teams account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -665,7 +715,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo sends in Telegram. Unlike the other platforms it answers an HTML PAGE rather than a redirect: Telegram has no OAuth flow, so the page hosts Telegram\'s Login Widget, and the browser is sent onward only after the user signs in through it.  The widget only appears on the domain registered for the bot, so a deployment whose bot domain is unset renders a page with nothing on it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Telegram
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -698,7 +749,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * Where Telegram\'s Login Widget sends the user with its signed authentication data. That data is verified against the bot token — this is the identity source, and it is the widget\'s signature rather than a code exchange — and the chat is confirmed to be bound to an org before the browser is handed to the Hanzo sign-in.  Widget data is only accepted while it is fresh, so a captured sign-in blob cannot be replayed later even though its signature stays valid.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Telegram Login Widget return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -731,7 +783,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The final leg: it binds the verified Telegram user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Telegram. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Telegram account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -764,7 +817,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -961,7 +1015,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
-         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {string} provider 
          * @param {CloudConnectIn} cloudConnectIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1005,7 +1059,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1079,11 +1133,18 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack slash command webhook
+         * @param {string} [command] 
+         * @param {string} [text] 
+         * @param {string} [teamId] 
+         * @param {string} [userId] 
+         * @param {string} [channelId] 
+         * @param {string} [responseUrl] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1IntegrationsSlackCommands: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1IntegrationsSlackCommands: async (command?: string, text?: string, teamId?: string, userId?: string, channelId?: string, responseUrl?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/integrations/slack/commands`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1095,16 +1156,40 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            const localVarFormParams = new URLSearchParams();
 
 
+            if (command !== undefined) { 
+                localVarFormParams.set('command', command as any);
+            }
+    
+            if (text !== undefined) { 
+                localVarFormParams.set('text', text as any);
+            }
+    
+            if (teamId !== undefined) { 
+                localVarFormParams.set('team_id', teamId as any);
+            }
+    
+            if (userId !== undefined) { 
+                localVarFormParams.set('user_id', userId as any);
+            }
+    
+            if (channelId !== undefined) { 
+                localVarFormParams.set('channel_id', channelId as any);
+            }
+    
+            if (responseUrl !== undefined) { 
+                localVarFormParams.set('response_url', responseUrl as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'application/x-www-form-urlencoded';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams.toString();
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1112,11 +1197,15 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The address a Slack app posts workspace events to. It answers Slack\'s url_verification handshake with the challenge, and routes an @mention or a direct message to an agent turn that replies in the same thread. A prompt beginning with `code:` is routed to the coding flow instead, which runs under its own pool.  The raw body and its timestamp are verified against the app\'s signing secret before anything is read from them. Hanzo\'s own bot messages are dropped, so a reply cannot trigger another reply.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack Events API webhook
+         * @param {IntegrationsSlackEventEnvelope} integrationsSlackEventEnvelope 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1IntegrationsSlackEvents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1IntegrationsSlackEvents: async (integrationsSlackEventEnvelope: IntegrationsSlackEventEnvelope, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'integrationsSlackEventEnvelope' is not null or undefined
+            assertParamExists('cloudPostV1IntegrationsSlackEvents', 'integrationsSlackEventEnvelope', integrationsSlackEventEnvelope)
             const localVarPath = `/v1/integrations/slack/events`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1129,15 +1218,14 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(integrationsSlackEventEnvelope, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1145,7 +1233,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1212,7 +1301,8 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * 
+         * The update webhook for the Telegram bot. It does two jobs: `/start <code>` or `/connect <code>` binds the chat it was sent from to an org, idempotently; anything else is treated as a possible agent trigger.  What counts as a trigger differs by chat type, and it is easy to get wrong: in a private chat every message is a trigger, while in a group the message must mention the bot or use the `/hanzo` command. Non-triggers and non-message updates are acknowledged and dropped.  Authentication is the secret token Telegram echoes on every update, compared in constant time. A message in a chat that has never been bound is dropped, which is why the bind command exists.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Telegram Bot API webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1352,19 +1442,24 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * @summary OAuth return for any connector
+         * @param {string} state 
          * @param {string} provider 
+         * @param {string} [code] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1IntegrationsByProviderCallback(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsByProviderCallback(provider, options);
+        async cloudGetV1IntegrationsByProviderCallback(state: string, provider: string, code?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsByProviderCallback(state, provider, code, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudGetV1IntegrationsByProviderCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Discord
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1375,7 +1470,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The final leg: it binds the verified Discord user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Discord. The Hanzo credential is sealed into the connected org\'s KMS namespace rather than stored beside the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Discord account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1386,7 +1482,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Where Discord returns the user after the identify consent. It resolves the verified Discord user, confirms the server is connected to an org, and hands the browser to the Hanzo sign-in that completes the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Discord sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1424,7 +1521,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider slug (e.g. slack, github)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1435,40 +1532,51 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Slack
+         * @param {string} state Signed, single-use link state
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1IntegrationsSlackLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLink(options);
+        async cloudGetV1IntegrationsSlackLink(state: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLink(state, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudGetV1IntegrationsSlackLink']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The final leg: the user has proved both who they are in Slack and who they are in Hanzo, and this binds the two. It answers a short confirmation page telling them to return to Slack.  The Hanzo credential obtained here is sealed into the connected workspace\'s own KMS namespace; it is never written to a database column and never logged. A deployment whose secret store is unavailable refuses the link rather than completing it without custody of the credential.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Slack account link
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1IntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLinkCallback(options);
+        async cloudGetV1IntegrationsSlackLinkCallback(code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLinkCallback(code, state, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudGetV1IntegrationsSlackLinkCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Where Slack returns the user after they sign in. It establishes the verified Slack workspace and user, confirms that workspace is connected to an org, and hands the browser on to the Hanzo sign-in that completes the link.  The verified pair is carried onward in a host-bound cookie rather than in the URL, so the identity being linked cannot be edited in transit.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Slack sign-in return leg
+         * @param {string} [code] 
+         * @param {string} [state] 
+         * @param {string} [error] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1IntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLinkSlack(options);
+        async cloudGetV1IntegrationsSlackLinkSlack(code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1IntegrationsSlackLinkSlack(code, state, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudGetV1IntegrationsSlackLinkSlack']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in Teams. It starts a link session and redirects to Microsoft sign-in addressed to the CHAT\'S OWN tenant, not the common endpoint, so only a member of that tenant can complete it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Teams
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1479,7 +1587,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Where Microsoft returns the user after sign-in. It resolves the verified directory identity and then re-checks the tenant: the signed-in user\'s tenant must equal the tenant of the chat the link started from, so a valid Microsoft sign-in from a different organization is refused here rather than accepted.  This is the leg Teams has and the other platforms do not, which is why the Teams flow has an extra address.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Microsoft sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1490,7 +1599,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The final leg: it binds the verified directory identity to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Teams. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Teams account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1501,7 +1611,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo sends in Telegram. Unlike the other platforms it answers an HTML PAGE rather than a redirect: Telegram has no OAuth flow, so the page hosts Telegram\'s Login Widget, and the browser is sent onward only after the user signs in through it.  The widget only appears on the domain registered for the bot, so a deployment whose bot domain is unset renders a page with nothing on it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Telegram
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1512,7 +1623,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Where Telegram\'s Login Widget sends the user with its signed authentication data. That data is verified against the bot token — this is the identity source, and it is the widget\'s signature rather than a code exchange — and the chat is confirmed to be bound to an org before the browser is handed to the Hanzo sign-in.  Widget data is only accepted while it is fresh, so a captured sign-in blob cannot be replayed later even though its signature stays valid.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Telegram Login Widget return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1523,7 +1635,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The final leg: it binds the verified Telegram user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Telegram. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Telegram account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1534,7 +1647,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1600,7 +1714,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
          * @summary Acquires the org\'s credential for one provider.
-         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {string} provider 
          * @param {CloudConnectIn} cloudConnectIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1614,7 +1728,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1638,29 +1752,39 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack slash command webhook
+         * @param {string} [command] 
+         * @param {string} [text] 
+         * @param {string} [teamId] 
+         * @param {string} [userId] 
+         * @param {string} [channelId] 
+         * @param {string} [responseUrl] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1IntegrationsSlackCommands(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1IntegrationsSlackCommands(options);
+        async cloudPostV1IntegrationsSlackCommands(command?: string, text?: string, teamId?: string, userId?: string, channelId?: string, responseUrl?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1IntegrationsSlackCommands(command, text, teamId, userId, channelId, responseUrl, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudPostV1IntegrationsSlackCommands']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The address a Slack app posts workspace events to. It answers Slack\'s url_verification handshake with the challenge, and routes an @mention or a direct message to an agent turn that replies in the same thread. A prompt beginning with `code:` is routed to the coding flow instead, which runs under its own pool.  The raw body and its timestamp are verified against the app\'s signing secret before anything is read from them. Hanzo\'s own bot messages are dropped, so a reply cannot trigger another reply.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack Events API webhook
+         * @param {IntegrationsSlackEventEnvelope} integrationsSlackEventEnvelope 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1IntegrationsSlackEvents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1IntegrationsSlackEvents(options);
+        async cloudPostV1IntegrationsSlackEvents(integrationsSlackEventEnvelope: IntegrationsSlackEventEnvelope, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1IntegrationsSlackEvents(integrationsSlackEventEnvelope, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.cloudPostV1IntegrationsSlackEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1683,7 +1807,8 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The update webhook for the Telegram bot. It does two jobs: `/start <code>` or `/connect <code>` binds the chat it was sent from to an org, idempotently; anything else is treated as a possible agent trigger.  What counts as a trigger differs by chat type, and it is easy to get wrong: in a private chat every message is a trigger, while in a group the message must mention the bot or use the `/hanzo` command. Non-triggers and non-message updates are acknowledged and dropped.  Authentication is the secret token Telegram echoes on every update, compared in constant time. A message in a chat that has never been bound is dropped, which is why the bind command exists.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Telegram Bot API webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1757,16 +1882,18 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1Integrations(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+         * @summary OAuth return for any connector
          * @param {IntegrationsApiCloudGetV1IntegrationsByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudGetV1IntegrationsByProviderCallback(requestParameters: IntegrationsApiCloudGetV1IntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1IntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
+            return localVarFp.cloudGetV1IntegrationsByProviderCallback(requestParameters.state, requestParameters.provider, requestParameters.code, requestParameters.error, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Discord
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1774,7 +1901,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsDiscordLink(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The final leg: it binds the verified Discord user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Discord. The Hanzo credential is sealed into the connected org\'s KMS namespace rather than stored beside the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Discord account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1782,7 +1910,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsDiscordLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Where Discord returns the user after the identify consent. It resolves the verified Discord user, confirms the server is connected to an org, and hands the browser to the Hanzo sign-in that completes the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Discord sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1819,31 +1948,38 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Slack
+         * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1IntegrationsSlackLink(options).then((request) => request(axios, basePath));
+        cloudGetV1IntegrationsSlackLink(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudGetV1IntegrationsSlackLink(requestParameters.state, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The final leg: the user has proved both who they are in Slack and who they are in Hanzo, and this binds the two. It answers a short confirmation page telling them to return to Slack.  The Hanzo credential obtained here is sealed into the connected workspace\'s own KMS namespace; it is never written to a database column and never logged. A deployment whose secret store is unavailable refuses the link rather than completing it without custody of the credential.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Slack account link
+         * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1IntegrationsSlackLinkCallback(options).then((request) => request(axios, basePath));
+        cloudGetV1IntegrationsSlackLinkCallback(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.cloudGetV1IntegrationsSlackLinkCallback(requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Where Slack returns the user after they sign in. It establishes the verified Slack workspace and user, confirms that workspace is connected to an org, and hands the browser on to the Hanzo sign-in that completes the link.  The verified pair is carried onward in a host-bound cookie rather than in the URL, so the identity being linked cannot be edited in transit.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Slack sign-in return leg
+         * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1IntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1IntegrationsSlackLinkSlack(options).then((request) => request(axios, basePath));
+        cloudGetV1IntegrationsSlackLinkSlack(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudGetV1IntegrationsSlackLinkSlack(requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo shows in Teams. It starts a link session and redirects to Microsoft sign-in addressed to the CHAT\'S OWN tenant, not the common endpoint, so only a member of that tenant can complete it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Teams
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1851,7 +1987,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTeamsLink(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Where Microsoft returns the user after sign-in. It resolves the verified directory identity and then re-checks the tenant: the signed-in user\'s tenant must equal the tenant of the chat the link started from, so a valid Microsoft sign-in from a different organization is refused here rather than accepted.  This is the leg Teams has and the other platforms do not, which is why the Teams flow has an extra address.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Microsoft sign-in return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1859,7 +1996,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTeamsLinkAad(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The final leg: it binds the verified directory identity to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Teams. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Teams account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1867,7 +2005,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTeamsLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The entry point behind the connect prompt Hanzo sends in Telegram. Unlike the other platforms it answers an HTML PAGE rather than a redirect: Telegram has no OAuth flow, so the page hosts Telegram\'s Login Widget, and the browser is sent onward only after the user signs in through it.  The widget only appears on the domain registered for the bot, so a deployment whose bot domain is unset renders a page with nothing on it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Begin linking a Hanzo account from Telegram
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1875,7 +2014,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTelegramLink(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Where Telegram\'s Login Widget sends the user with its signed authentication data. That data is verified against the bot token — this is the identity source, and it is the widget\'s signature rather than a code exchange — and the chat is confirmed to be bound to an org before the browser is handed to the Hanzo sign-in.  Widget data is only accepted while it is fresh, so a captured sign-in blob cannot be replayed later even though its signature stays valid.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Telegram Login Widget return leg
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1883,7 +2023,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTelegramLinkAuth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The final leg: it binds the verified Telegram user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Telegram. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+         * @summary Complete the Telegram account link
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1891,7 +2032,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudGetV1IntegrationsTelegramLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1969,23 +2111,28 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudPostV1IntegrationsProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack slash command webhook
+         * @param {IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1IntegrationsSlackCommands(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1IntegrationsSlackCommands(options).then((request) => request(axios, basePath));
+        cloudPostV1IntegrationsSlackCommands(requestParameters: IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPostV1IntegrationsSlackCommands(requestParameters.command, requestParameters.text, requestParameters.teamId, requestParameters.userId, requestParameters.channelId, requestParameters.responseUrl, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The address a Slack app posts workspace events to. It answers Slack\'s url_verification handshake with the challenge, and routes an @mention or a direct message to an agent turn that replies in the same thread. A prompt beginning with `code:` is routed to the coding flow instead, which runs under its own pool.  The raw body and its timestamp are verified against the app\'s signing secret before anything is read from them. Hanzo\'s own bot messages are dropped, so a reply cannot trigger another reply.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Slack Events API webhook
+         * @param {IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1IntegrationsSlackEvents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1IntegrationsSlackEvents(options).then((request) => request(axios, basePath));
+        cloudPostV1IntegrationsSlackEvents(requestParameters: IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPostV1IntegrationsSlackEvents(requestParameters.integrationsSlackEventEnvelope, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2002,7 +2149,8 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.cloudPostV1IntegrationsTelegramConnect(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The update webhook for the Telegram bot. It does two jobs: `/start <code>` or `/connect <code>` binds the chat it was sent from to an org, idempotently; anything else is treated as a possible agent trigger.  What counts as a trigger differs by chat type, and it is easy to get wrong: in a private chat every message is a trigger, while in a group the message must mention the bot or use the `/hanzo` command. Non-triggers and non-message updates are acknowledged and dropped.  Authentication is the secret token Telegram echoes on every update, compared in constant time. A message in a chat that has never been bound is dropped, which is why the bind command exists.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * @summary Telegram Bot API webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2089,7 +2237,28 @@ export interface IntegrationsApiCloudGetV1IntegrationsByProviderCallbackRequest 
      * @type {string}
      * @memberof IntegrationsApiCloudGetV1IntegrationsByProviderCallback
      */
+    readonly state: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsByProviderCallback
+     */
     readonly provider: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsByProviderCallback
+     */
+    readonly code?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsByProviderCallback
+     */
+    readonly error?: string
 }
 
 /**
@@ -2113,11 +2282,81 @@ export interface IntegrationsApiCloudGetV1IntegrationsGithubReposRepoPagesReques
  */
 export interface IntegrationsApiCloudGetV1IntegrationsProviderRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * Provider slug (e.g. slack, github)
      * @type {string}
      * @memberof IntegrationsApiCloudGetV1IntegrationsProvider
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for cloudGetV1IntegrationsSlackLink operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest
+ */
+export interface IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest {
+    /**
+     * Signed, single-use link state
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLink
+     */
+    readonly state: string
+}
+
+/**
+ * Request parameters for cloudGetV1IntegrationsSlackLinkCallback operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest
+ */
+export interface IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkCallback
+     */
+    readonly code?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkCallback
+     */
+    readonly state?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkCallback
+     */
+    readonly error?: string
+}
+
+/**
+ * Request parameters for cloudGetV1IntegrationsSlackLinkSlack operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest
+ */
+export interface IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkSlack
+     */
+    readonly code?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkSlack
+     */
+    readonly state?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudGetV1IntegrationsSlackLinkSlack
+     */
+    readonly error?: string
 }
 
 /**
@@ -2190,7 +2429,7 @@ export interface IntegrationsApiCloudPostV1IntegrationsGithubReposRepoPagesBuild
  */
 export interface IntegrationsApiCloudPostV1IntegrationsProviderConnectRequest {
     /**
-     * Provider is the connector\&#39;s registry id, from the :provider path segment.
+     * 
      * @type {string}
      * @memberof IntegrationsApiCloudPostV1IntegrationsProviderConnect
      */
@@ -2211,7 +2450,7 @@ export interface IntegrationsApiCloudPostV1IntegrationsProviderConnectRequest {
  */
 export interface IntegrationsApiCloudPostV1IntegrationsProviderDisconnectRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * 
      * @type {string}
      * @memberof IntegrationsApiCloudPostV1IntegrationsProviderDisconnect
      */
@@ -2230,6 +2469,69 @@ export interface IntegrationsApiCloudPostV1IntegrationsProviderVerifyRequest {
      * @memberof IntegrationsApiCloudPostV1IntegrationsProviderVerify
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for cloudPostV1IntegrationsSlackCommands operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest
+ */
+export interface IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly command?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly text?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly teamId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly userId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly channelId?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackCommands
+     */
+    readonly responseUrl?: string
+}
+
+/**
+ * Request parameters for cloudPostV1IntegrationsSlackEvents operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest
+ */
+export interface IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest {
+    /**
+     * 
+     * @type {IntegrationsSlackEventEnvelope}
+     * @memberof IntegrationsApiCloudPostV1IntegrationsSlackEvents
+     */
+    readonly integrationsSlackEventEnvelope: IntegrationsSlackEventEnvelope
 }
 
 /**
@@ -2308,18 +2610,20 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
+     * @summary OAuth return for any connector
      * @param {IntegrationsApiCloudGetV1IntegrationsByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
     public cloudGetV1IntegrationsByProviderCallback(requestParameters: IntegrationsApiCloudGetV1IntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsByProviderCallback(requestParameters.state, requestParameters.provider, requestParameters.code, requestParameters.error, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Begin linking a Hanzo account from Discord
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2329,7 +2633,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The final leg: it binds the verified Discord user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Discord. The Hanzo credential is sealed into the connected org\'s KMS namespace rather than stored beside the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Complete the Discord account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2339,7 +2644,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Where Discord returns the user after the identify consent. It resolves the verified Discord user, confirms the server is connected to an org, and hands the browser to the Hanzo sign-in that completes the link.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Discord sign-in return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2384,37 +2690,44 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Begin linking a Hanzo account from Slack
+     * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public cloudGetV1IntegrationsSlackLink(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLink(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1IntegrationsSlackLink(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLink(requestParameters.state, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The final leg: the user has proved both who they are in Slack and who they are in Hanzo, and this binds the two. It answers a short confirmation page telling them to return to Slack.  The Hanzo credential obtained here is sealed into the connected workspace\'s own KMS namespace; it is never written to a database column and never logged. A deployment whose secret store is unavailable refuses the link rather than completing it without custody of the credential.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Complete the Slack account link
+     * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public cloudGetV1IntegrationsSlackLinkCallback(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLinkCallback(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1IntegrationsSlackLinkCallback(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkCallbackRequest = {}, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLinkCallback(requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Where Slack returns the user after they sign in. It establishes the verified Slack workspace and user, confirms that workspace is connected to an org, and hands the browser on to the Hanzo sign-in that completes the link.  The verified pair is carried onward in a host-bound cookie rather than in the URL, so the identity being linked cannot be edited in transit.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Slack sign-in return leg
+     * @param {IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public cloudGetV1IntegrationsSlackLinkSlack(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLinkSlack(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1IntegrationsSlackLinkSlack(requestParameters: IntegrationsApiCloudGetV1IntegrationsSlackLinkSlackRequest = {}, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).cloudGetV1IntegrationsSlackLinkSlack(requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The entry point behind the connect prompt Hanzo shows in Teams. It starts a link session and redirects to Microsoft sign-in addressed to the CHAT\'S OWN tenant, not the common endpoint, so only a member of that tenant can complete it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Begin linking a Hanzo account from Teams
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2424,7 +2737,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Where Microsoft returns the user after sign-in. It resolves the verified directory identity and then re-checks the tenant: the signed-in user\'s tenant must equal the tenant of the chat the link started from, so a valid Microsoft sign-in from a different organization is refused here rather than accepted.  This is the leg Teams has and the other platforms do not, which is why the Teams flow has an extra address.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Microsoft sign-in return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2434,7 +2748,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The final leg: it binds the verified directory identity to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Teams. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Complete the Teams account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2444,7 +2759,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The entry point behind the connect prompt Hanzo sends in Telegram. Unlike the other platforms it answers an HTML PAGE rather than a redirect: Telegram has no OAuth flow, so the page hosts Telegram\'s Login Widget, and the browser is sent onward only after the user signs in through it.  The widget only appears on the domain registered for the bot, so a deployment whose bot domain is unset renders a page with nothing on it.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Begin linking a Hanzo account from Telegram
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2454,7 +2770,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Where Telegram\'s Login Widget sends the user with its signed authentication data. That data is verified against the bot token — this is the identity source, and it is the widget\'s signature rather than a code exchange — and the chat is confirmed to be bound to an org before the browser is handed to the Hanzo sign-in.  Widget data is only accepted while it is fresh, so a captured sign-in blob cannot be replayed later even though its signature stays valid.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Telegram Login Widget return leg
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2464,7 +2781,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The final leg: it binds the verified Telegram user to the Hanzo account that just signed in, and answers a short confirmation page telling them to return to Telegram. The Hanzo credential is sealed into the connected org\'s KMS namespace.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
+     * @summary Complete the Telegram account link
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2474,7 +2792,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+     * @summary Discord interactions endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2568,27 +2887,32 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+     * @summary Slack slash command webhook
+     * @param {IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public cloudPostV1IntegrationsSlackCommands(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudPostV1IntegrationsSlackCommands(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1IntegrationsSlackCommands(requestParameters: IntegrationsApiCloudPostV1IntegrationsSlackCommandsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).cloudPostV1IntegrationsSlackCommands(requestParameters.command, requestParameters.text, requestParameters.teamId, requestParameters.userId, requestParameters.channelId, requestParameters.responseUrl, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The address a Slack app posts workspace events to. It answers Slack\'s url_verification handshake with the challenge, and routes an @mention or a direct message to an agent turn that replies in the same thread. A prompt beginning with `code:` is routed to the coding flow instead, which runs under its own pool.  The raw body and its timestamp are verified against the app\'s signing secret before anything is read from them. Hanzo\'s own bot messages are dropped, so a reply cannot trigger another reply.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+     * @summary Slack Events API webhook
+     * @param {IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public cloudPostV1IntegrationsSlackEvents(options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).cloudPostV1IntegrationsSlackEvents(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1IntegrationsSlackEvents(requestParameters: IntegrationsApiCloudPostV1IntegrationsSlackEventsRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).cloudPostV1IntegrationsSlackEvents(requestParameters.integrationsSlackEventEnvelope, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+     * @summary Microsoft Teams Bot Framework webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
@@ -2609,7 +2933,8 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The update webhook for the Telegram bot. It does two jobs: `/start <code>` or `/connect <code>` binds the chat it was sent from to an org, idempotently; anything else is treated as a possible agent trigger.  What counts as a trigger differs by chat type, and it is easy to get wrong: in a private chat every message is a trigger, while in a group the message must mention the bot or use the `/hanzo` command. Non-triggers and non-message updates are acknowledged and dropped.  Authentication is the secret token Telegram echoes on every update, compared in constant time. A message in a chat that has never been bound is dropped, which is why the bind command exists.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+     * @summary Telegram Bot API webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi

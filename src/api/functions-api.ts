@@ -22,6 +22,18 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1Functions200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1FunctionsByNameInvocations200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1FunctionsByNameLogs200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1FunctionsSecrets200Response } from '../models';
+// @ts-ignore
+import type { CloudGetV1FunctionsTriggers200Response } from '../models';
+// @ts-ignore
 import type { EdgeDeployFunctionRequest } from '../models';
 // @ts-ignore
 import type { EdgeError } from '../models';
@@ -33,6 +45,18 @@ import type { EdgeFunctionCreate } from '../models';
 import type { EdgeFunctionMetrics } from '../models';
 // @ts-ignore
 import type { EdgeFunctionUpdate } from '../models';
+// @ts-ignore
+import type { FunctionsCreateFunctionRequest } from '../models';
+// @ts-ignore
+import type { FunctionsFunction } from '../models';
+// @ts-ignore
+import type { FunctionsFunctionDetail } from '../models';
+// @ts-ignore
+import type { FunctionsInvocation } from '../models';
+// @ts-ignore
+import type { FunctionsInvokeRequest } from '../models';
+// @ts-ignore
+import type { FunctionsMetrics } from '../models';
 /**
  * FunctionsApi - axios parameter creator
  * @export
@@ -40,7 +64,8 @@ import type { EdgeFunctionUpdate } from '../models';
 export const FunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * One transaction removes the function record and every invocation row recorded against its name, so that history also leaves the metrics chart and the invocation list. This is not a soft delete and there is no restore.  Deletion is keyed on (org, name): a name owned by another org is not found here, exactly like a name that never existed, so the call cannot be used to probe for or destroy another tenant\'s function. A successful delete answers with no body.  Requires a validated principal.
+         * @summary Delete a function and its entire invocation history
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -77,7 +102,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * A row carries the function\'s runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The registry holds secret NAMES only; a value never enters this store and is never returned.  The rollup (invocations7d, errors7d, successRate, avgDurationMs) is counted from real invocation rows over the trailing 7 days and is OMITTED for a function with no calls in that window rather than sent as zero, so a consumer must render absence as unknown, not as an idle function. Ordered most-recently-deployed first.  Scoped to the caller\'s own org — one store per org, with the org column on every query. Requires a validated principal: an org claim with no verified credential behind it is refused, never answered with an empty list.
+         * @summary Every serverless function the caller\'s org has published, with its real 7-day rollup
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,7 +136,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Extends the list row with the function\'s single derived HTTP trigger, its 20 most recent invocations (newest first, metadata only — no captured output), and `secrets`, the NAMES of the secrets it mounts. No secret value is stored or returned.  Lookup is keyed on (org, name), so a function that exists but belongs to another org answers exactly as one that never existed — not found, never a signal that the name is taken elsewhere. The 7-day rollup fields are omitted rather than zeroed when the function has not run in the window.  Requires a validated principal.
+         * @summary One function in full: spec, trailing-7-day rollup, trigger, latest runs and mounted secret names
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -147,12 +174,14 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Each entry is invocation METADATA — id, status, HTTP status code, wall-clock duration and when it ran. The captured stdout/stderr is not on this path; the logs call returns it, for the latest run only.  `limit` defaults to 100 and is clamped: at or below zero, above 500, or not a number at all, it falls back to 100. An unknown function name is NOT an error here — nothing has ever run under it, so the answer is an empty list rather than a not-found, and a caller testing existence must ask for the function itself.  Scoped to the caller\'s org, so it can only ever return the calling tenant\'s own runs. Requires a validated principal.
+         * @summary Recent invocation history for one function, newest first
          * @param {string} name 
+         * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsByNameInvocations: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1FunctionsByNameInvocations: async (name: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('cloudGetV1FunctionsByNameInvocations', 'name', name)
             const localVarPath = `/v1/functions/{name}/invocations`
@@ -172,6 +201,10 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -184,7 +217,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * One string, from the LATEST invocation only. This is not a log stream and carries no history; the invocations list is where earlier runs are enumerated.  When that run failed, the string is its ERROR text rather than its stdout — the two share one field, so success cannot be told from failure by this value alone and the invocation\'s status is what answers that. Output was truncated to 64 KiB when the run was recorded, error text to 16 KiB.  A function that has never run — or a name that does not exist in the caller\'s org — answers with an empty string, not a not-found. Scoped to the caller\'s org; requires a validated principal.
+         * @summary The captured output of a function\'s most recent invocation
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -221,7 +255,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * A function\'s current record IS its deployment, so this answers in the same shape the function list does — runtime, resource limits, target, endpoint, and when it was last deployed.  Two things not to assume. The invocation rollup is never populated here, even for a function that has run: those fields are omitted unconditionally, and the function list is where they are filled in. And this is an inventory of what is live, not a history — there is exactly one entry per function, and a redeploy replaces it rather than appending to it.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The live deployment of every function in the caller\'s org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -254,11 +289,13 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * One series per function that actually ran in the window, bucketed, plus a success/timeout/error donut over the same rows. Every point is a COUNT of real invocation rows that fell in that bucket — nothing is interpolated, and a function with no invocations in the window has no series at all.  The `range` query selects the window and its bucket count: 1H, 6H, 24H, 7D or 30D. An absent or unrecognized value falls back to 24H rather than failing. At most the 5000 newest rows are read, so a very busy org\'s oldest buckets in a wide range can undercount.  costCents is always null: this view has no per-invocation cost source, and reports nothing rather than a fabricated figure. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Invocation chart and status breakdown across every function in the caller\'s org
+         * @param {CloudGetV1FunctionsMetricsRangeEnum} [range] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsMetrics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1FunctionsMetrics: async (range?: CloudGetV1FunctionsMetricsRangeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,6 +312,10 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -287,7 +328,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * NAMES only. A secret\'s value is not held by this subsystem and is not read on this path — values live in KMS and are resolved sandbox-side when a function runs — so nothing in this answer is a credential.  The list is derived from the mount declarations on the function records and deduplicated by namespace and name, so a name mounted by several functions appears ONCE: mountedBy names the first function that claimed it in deploy order, not every function that mounts it. Read it as a hint about origin, not as a complete usage map.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The names of the secrets mounted by the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -320,7 +362,8 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * A function has exactly ONE trigger today and it is derived, not stored: an always-enabled HTTP trigger whose target is that function\'s own invoke endpoint, listed once per function.  There is no trigger table behind this and no call that creates, disables or deletes one. The list is a projection of the function registry, so it changes only when a function is published or deleted.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary Every trigger attached to the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -353,11 +396,15 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Org and name together identify a function, so a second call for a name the org already owns is a REDEPLOY: the spec is replaced, the deploy version advances, and the original creation time is kept. There is no separate update call, and no way to take over a name another org owns.  What is accepted is a closed set. runtime is one of node, python, go, deno, bash or container; name must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ and may not be one of the reserved static names (metrics, triggers, deployments, secrets); source is capped at 256 KiB. timeoutSec is CLAMPED to the 900s ceiling rather than rejected, and an absent one defaults to 30s with 256Mi of memory. target=fleet runs the function on the org\'s own linked GPU fleet and is accepted for runtime=python only; everything else runs on the shared sandbox.  envNames declares which secrets the function mounts BY NAME — values live in KMS and are resolved sandbox-side at run time, so no secret value is sent here or stored here. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Publish a function, or redeploy an existing one under the same name
+         * @param {FunctionsCreateFunctionRequest} functionsCreateFunctionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Functions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1Functions: async (functionsCreateFunctionRequest: FunctionsCreateFunctionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'functionsCreateFunctionRequest' is not null or undefined
+            assertParamExists('cloudPostV1Functions', 'functionsCreateFunctionRequest', functionsCreateFunctionRequest)
             const localVarPath = `/v1/functions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -376,9 +423,12 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(functionsCreateFunctionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -386,12 +436,14 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * The body\'s `input` is handed to the function on stdin. Execution NEVER happens in this process: the runtime and source go to the sandboxed code executor, or, for a function published with target=fleet, to the org\'s own linked GPU fleet as an fn.run job this call blocks on until it finishes. Either way it is bounded by the function\'s own timeout, itself capped at 900s.  The answer is the invocation record — id, status, duration — and its HTTP status is about the RUN, not about this API: a function whose own code fails answers 502 with a recorded `error` invocation, which is a successful invocation of a failing program. The captured output is not in this reply; the logs call returns it.  MONEY. The caller\'s org ledger is gated BEFORE any compute runs, so an org out of credit or over its spend cap is refused 402 and nothing executes, and a billing plane that cannot answer refuses rather than granting free compute. A run that actually executed is then debited twice — a flat per-invocation fee, and GB-seconds of compute derived from the measured duration and the function\'s configured memory. A run that never reached its executor (unreachable, or timed out in transport) consumed nothing and is not charged; a run whose code exited non-zero DID consume compute and is. An operator who prices either half at zero makes it a no-op, and a zero request fee removes the balance gate with it.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Run a function and get back the recorded invocation
          * @param {string} name 
+         * @param {FunctionsInvokeRequest} [functionsInvokeRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1FunctionsByNameInvoke: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1FunctionsByNameInvoke: async (name: string, functionsInvokeRequest?: FunctionsInvokeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
             assertParamExists('cloudPostV1FunctionsByNameInvoke', 'name', name)
             const localVarPath = `/v1/functions/{name}/invoke`
@@ -413,9 +465,12 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(functionsInvokeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -785,7 +840,8 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = FunctionsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * One transaction removes the function record and every invocation row recorded against its name, so that history also leaves the metrics chart and the invocation list. This is not a soft delete and there is no restore.  Deletion is keyed on (org, name): a name owned by another org is not found here, exactly like a name that never existed, so the call cannot be used to probe for or destroy another tenant\'s function. A successful delete answers with no body.  Requires a validated principal.
+         * @summary Delete a function and its entire invocation history
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -797,115 +853,129 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A row carries the function\'s runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The registry holds secret NAMES only; a value never enters this store and is never returned.  The rollup (invocations7d, errors7d, successRate, avgDurationMs) is counted from real invocation rows over the trailing 7 days and is OMITTED for a function with no calls in that window rather than sent as zero, so a consumer must render absence as unknown, not as an idle function. Ordered most-recently-deployed first.  Scoped to the caller\'s own org — one store per org, with the org column on every query. Requires a validated principal: an org claim with no verified credential behind it is refused, never answered with an empty list.
+         * @summary Every serverless function the caller\'s org has published, with its real 7-day rollup
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1Functions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1Functions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1Functions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1Functions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1Functions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Extends the list row with the function\'s single derived HTTP trigger, its 20 most recent invocations (newest first, metadata only — no captured output), and `secrets`, the NAMES of the secrets it mounts. No secret value is stored or returned.  Lookup is keyed on (org, name), so a function that exists but belongs to another org answers exactly as one that never existed — not found, never a signal that the name is taken elsewhere. The 7-day rollup fields are omitted rather than zeroed when the function has not run in the window.  Requires a validated principal.
+         * @summary One function in full: spec, trailing-7-day rollup, trigger, latest runs and mounted secret names
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1FunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionsFunctionDetail>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Each entry is invocation METADATA — id, status, HTTP status code, wall-clock duration and when it ran. The captured stdout/stderr is not on this path; the logs call returns it, for the latest run only.  `limit` defaults to 100 and is clamped: at or below zero, above 500, or not a number at all, it falls back to 100. An unknown function name is NOT an error here — nothing has ever run under it, so the answer is an empty list rather than a not-found, and a caller testing existence must ask for the function itself.  Scoped to the caller\'s org, so it can only ever return the calling tenant\'s own runs. Requires a validated principal.
+         * @summary Recent invocation history for one function, newest first
          * @param {string} name 
+         * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsByNameInvocations(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsByNameInvocations(name, options);
+        async cloudGetV1FunctionsByNameInvocations(name: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1FunctionsByNameInvocations200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsByNameInvocations(name, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsByNameInvocations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * One string, from the LATEST invocation only. This is not a log stream and carries no history; the invocations list is where earlier runs are enumerated.  When that run failed, the string is its ERROR text rather than its stdout — the two share one field, so success cannot be told from failure by this value alone and the invocation\'s status is what answers that. Output was truncated to 64 KiB when the run was recorded, error text to 16 KiB.  A function that has never run — or a name that does not exist in the caller\'s org — answers with an empty string, not a not-found. Scoped to the caller\'s org; requires a validated principal.
+         * @summary The captured output of a function\'s most recent invocation
          * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsByNameLogs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1FunctionsByNameLogs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1FunctionsByNameLogs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsByNameLogs(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsByNameLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A function\'s current record IS its deployment, so this answers in the same shape the function list does — runtime, resource limits, target, endpoint, and when it was last deployed.  Two things not to assume. The invocation rollup is never populated here, even for a function that has run: those fields are omitted unconditionally, and the function list is where they are filled in. And this is an inventory of what is live, not a history — there is exactly one entry per function, and a redeploy replaces it rather than appending to it.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The live deployment of every function in the caller\'s org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1FunctionsDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1Functions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsDeployments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * One series per function that actually ran in the window, bucketed, plus a success/timeout/error donut over the same rows. Every point is a COUNT of real invocation rows that fell in that bucket — nothing is interpolated, and a function with no invocations in the window has no series at all.  The `range` query selects the window and its bucket count: 1H, 6H, 24H, 7D or 30D. An absent or unrecognized value falls back to 24H rather than failing. At most the 5000 newest rows are read, so a very busy org\'s oldest buckets in a wide range can undercount.  costCents is always null: this view has no per-invocation cost source, and reports nothing rather than a fabricated figure. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Invocation chart and status breakdown across every function in the caller\'s org
+         * @param {CloudGetV1FunctionsMetricsRangeEnum} [range] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsMetrics(options);
+        async cloudGetV1FunctionsMetrics(range?: CloudGetV1FunctionsMetricsRangeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionsMetrics>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsMetrics(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * NAMES only. A secret\'s value is not held by this subsystem and is not read on this path — values live in KMS and are resolved sandbox-side when a function runs — so nothing in this answer is a credential.  The list is derived from the mount declarations on the function records and deduplicated by namespace and name, so a name mounted by several functions appears ONCE: mountedBy names the first function that claimed it in deploy order, not every function that mounts it. Read it as a hint about origin, not as a complete usage map.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The names of the secrets mounted by the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1FunctionsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1FunctionsSecrets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsSecrets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsSecrets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * A function has exactly ONE trigger today and it is derived, not stored: an always-enabled HTTP trigger whose target is that function\'s own invoke endpoint, listed once per function.  There is no trigger table behind this and no call that creates, disables or deletes one. The list is a projection of the function registry, so it changes only when a function is published or deleted.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary Every trigger attached to the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1FunctionsTriggers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async cloudGetV1FunctionsTriggers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudGetV1FunctionsTriggers200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1FunctionsTriggers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudGetV1FunctionsTriggers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Org and name together identify a function, so a second call for a name the org already owns is a REDEPLOY: the spec is replaced, the deploy version advances, and the original creation time is kept. There is no separate update call, and no way to take over a name another org owns.  What is accepted is a closed set. runtime is one of node, python, go, deno, bash or container; name must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ and may not be one of the reserved static names (metrics, triggers, deployments, secrets); source is capped at 256 KiB. timeoutSec is CLAMPED to the 900s ceiling rather than rejected, and an absent one defaults to 30s with 256Mi of memory. target=fleet runs the function on the org\'s own linked GPU fleet and is accepted for runtime=python only; everything else runs on the shared sandbox.  envNames declares which secrets the function mounts BY NAME — values live in KMS and are resolved sandbox-side at run time, so no secret value is sent here or stored here. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Publish a function, or redeploy an existing one under the same name
+         * @param {FunctionsCreateFunctionRequest} functionsCreateFunctionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1Functions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Functions(options);
+        async cloudPostV1Functions(functionsCreateFunctionRequest: FunctionsCreateFunctionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionsFunction>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1Functions(functionsCreateFunctionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudPostV1Functions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The body\'s `input` is handed to the function on stdin. Execution NEVER happens in this process: the runtime and source go to the sandboxed code executor, or, for a function published with target=fleet, to the org\'s own linked GPU fleet as an fn.run job this call blocks on until it finishes. Either way it is bounded by the function\'s own timeout, itself capped at 900s.  The answer is the invocation record — id, status, duration — and its HTTP status is about the RUN, not about this API: a function whose own code fails answers 502 with a recorded `error` invocation, which is a successful invocation of a failing program. The captured output is not in this reply; the logs call returns it.  MONEY. The caller\'s org ledger is gated BEFORE any compute runs, so an org out of credit or over its spend cap is refused 402 and nothing executes, and a billing plane that cannot answer refuses rather than granting free compute. A run that actually executed is then debited twice — a flat per-invocation fee, and GB-seconds of compute derived from the measured duration and the function\'s configured memory. A run that never reached its executor (unreachable, or timed out in transport) consumed nothing and is not charged; a run whose code exited non-zero DID consume compute and is. An operator who prices either half at zero makes it a no-op, and a zero request fee removes the balance gate with it.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Run a function and get back the recorded invocation
          * @param {string} name 
+         * @param {FunctionsInvokeRequest} [functionsInvokeRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1FunctionsByNameInvoke(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1FunctionsByNameInvoke(name, options);
+        async cloudPostV1FunctionsByNameInvoke(name: string, functionsInvokeRequest?: FunctionsInvokeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionsInvocation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1FunctionsByNameInvoke(name, functionsInvokeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FunctionsApi.cloudPostV1FunctionsByNameInvoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1033,7 +1103,8 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
     const localVarFp = FunctionsApiFp(configuration)
     return {
         /**
-         * 
+         * One transaction removes the function record and every invocation row recorded against its name, so that history also leaves the metrics chart and the invocation list. This is not a soft delete and there is no restore.  Deletion is keyed on (org, name): a name owned by another org is not found here, exactly like a name that never existed, so the call cannot be used to probe for or destroy another tenant\'s function. A successful delete answers with no body.  Requires a validated principal.
+         * @summary Delete a function and its entire invocation history
          * @param {FunctionsApiCloudDeleteV1FunctionsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1042,88 +1113,100 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
             return localVarFp.cloudDeleteV1FunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A row carries the function\'s runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The registry holds secret NAMES only; a value never enters this store and is never returned.  The rollup (invocations7d, errors7d, successRate, avgDurationMs) is counted from real invocation rows over the trailing 7 days and is OMITTED for a function with no calls in that window rather than sent as zero, so a consumer must render absence as unknown, not as an idle function. Ordered most-recently-deployed first.  Scoped to the caller\'s own org — one store per org, with the org column on every query. Requires a validated principal: an org claim with no verified credential behind it is refused, never answered with an empty list.
+         * @summary Every serverless function the caller\'s org has published, with its real 7-day rollup
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1Functions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1Functions(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1Functions200Response> {
             return localVarFp.cloudGetV1Functions(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Extends the list row with the function\'s single derived HTTP trigger, its 20 most recent invocations (newest first, metadata only — no captured output), and `secrets`, the NAMES of the secrets it mounts. No secret value is stored or returned.  Lookup is keyed on (org, name), so a function that exists but belongs to another org answers exactly as one that never existed — not found, never a signal that the name is taken elsewhere. The 7-day rollup fields are omitted rather than zeroed when the function has not run in the window.  Requires a validated principal.
+         * @summary One function in full: spec, trailing-7-day rollup, trigger, latest runs and mounted secret names
          * @param {FunctionsApiCloudGetV1FunctionsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsByName(requestParameters: FunctionsApiCloudGetV1FunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1FunctionsByName(requestParameters: FunctionsApiCloudGetV1FunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionsFunctionDetail> {
             return localVarFp.cloudGetV1FunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Each entry is invocation METADATA — id, status, HTTP status code, wall-clock duration and when it ran. The captured stdout/stderr is not on this path; the logs call returns it, for the latest run only.  `limit` defaults to 100 and is clamped: at or below zero, above 500, or not a number at all, it falls back to 100. An unknown function name is NOT an error here — nothing has ever run under it, so the answer is an empty list rather than a not-found, and a caller testing existence must ask for the function itself.  Scoped to the caller\'s org, so it can only ever return the calling tenant\'s own runs. Requires a validated principal.
+         * @summary Recent invocation history for one function, newest first
          * @param {FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsByNameInvocations(requestParameters: FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1FunctionsByNameInvocations(requestParameters.name, options).then((request) => request(axios, basePath));
+        cloudGetV1FunctionsByNameInvocations(requestParameters: FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1FunctionsByNameInvocations200Response> {
+            return localVarFp.cloudGetV1FunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * One string, from the LATEST invocation only. This is not a log stream and carries no history; the invocations list is where earlier runs are enumerated.  When that run failed, the string is its ERROR text rather than its stdout — the two share one field, so success cannot be told from failure by this value alone and the invocation\'s status is what answers that. Output was truncated to 64 KiB when the run was recorded, error text to 16 KiB.  A function that has never run — or a name that does not exist in the caller\'s org — answers with an empty string, not a not-found. Scoped to the caller\'s org; requires a validated principal.
+         * @summary The captured output of a function\'s most recent invocation
          * @param {FunctionsApiCloudGetV1FunctionsByNameLogsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsByNameLogs(requestParameters: FunctionsApiCloudGetV1FunctionsByNameLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1FunctionsByNameLogs(requestParameters: FunctionsApiCloudGetV1FunctionsByNameLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1FunctionsByNameLogs200Response> {
             return localVarFp.cloudGetV1FunctionsByNameLogs(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A function\'s current record IS its deployment, so this answers in the same shape the function list does — runtime, resource limits, target, endpoint, and when it was last deployed.  Two things not to assume. The invocation rollup is never populated here, even for a function that has run: those fields are omitted unconditionally, and the function list is where they are filled in. And this is an inventory of what is live, not a history — there is exactly one entry per function, and a redeploy replaces it rather than appending to it.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The live deployment of every function in the caller\'s org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsDeployments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1FunctionsDeployments(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1Functions200Response> {
             return localVarFp.cloudGetV1FunctionsDeployments(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * One series per function that actually ran in the window, bucketed, plus a success/timeout/error donut over the same rows. Every point is a COUNT of real invocation rows that fell in that bucket — nothing is interpolated, and a function with no invocations in the window has no series at all.  The `range` query selects the window and its bucket count: 1H, 6H, 24H, 7D or 30D. An absent or unrecognized value falls back to 24H rather than failing. At most the 5000 newest rows are read, so a very busy org\'s oldest buckets in a wide range can undercount.  costCents is always null: this view has no per-invocation cost source, and reports nothing rather than a fabricated figure. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Invocation chart and status breakdown across every function in the caller\'s org
+         * @param {FunctionsApiCloudGetV1FunctionsMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsMetrics(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudGetV1FunctionsMetrics(options).then((request) => request(axios, basePath));
+        cloudGetV1FunctionsMetrics(requestParameters: FunctionsApiCloudGetV1FunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FunctionsMetrics> {
+            return localVarFp.cloudGetV1FunctionsMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * NAMES only. A secret\'s value is not held by this subsystem and is not read on this path — values live in KMS and are resolved sandbox-side when a function runs — so nothing in this answer is a credential.  The list is derived from the mount declarations on the function records and deduplicated by namespace and name, so a name mounted by several functions appears ONCE: mountedBy names the first function that claimed it in deploy order, not every function that mounts it. Read it as a hint about origin, not as a complete usage map.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary The names of the secrets mounted by the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1FunctionsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1FunctionsSecrets200Response> {
             return localVarFp.cloudGetV1FunctionsSecrets(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * A function has exactly ONE trigger today and it is derived, not stored: an always-enabled HTTP trigger whose target is that function\'s own invoke endpoint, listed once per function.  There is no trigger table behind this and no call that creates, disables or deletes one. The list is a projection of the function registry, so it changes only when a function is published or deleted.  Scoped to the caller\'s org; requires a validated principal.
+         * @summary Every trigger attached to the caller\'s org\'s functions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1FunctionsTriggers(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        cloudGetV1FunctionsTriggers(options?: RawAxiosRequestConfig): AxiosPromise<CloudGetV1FunctionsTriggers200Response> {
             return localVarFp.cloudGetV1FunctionsTriggers(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Org and name together identify a function, so a second call for a name the org already owns is a REDEPLOY: the spec is replaced, the deploy version advances, and the original creation time is kept. There is no separate update call, and no way to take over a name another org owns.  What is accepted is a closed set. runtime is one of node, python, go, deno, bash or container; name must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ and may not be one of the reserved static names (metrics, triggers, deployments, secrets); source is capped at 256 KiB. timeoutSec is CLAMPED to the 900s ceiling rather than rejected, and an absent one defaults to 30s with 256Mi of memory. target=fleet runs the function on the org\'s own linked GPU fleet and is accepted for runtime=python only; everything else runs on the shared sandbox.  envNames declares which secrets the function mounts BY NAME — values live in KMS and are resolved sandbox-side at run time, so no secret value is sent here or stored here. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Publish a function, or redeploy an existing one under the same name
+         * @param {FunctionsApiCloudPostV1FunctionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1Functions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1Functions(options).then((request) => request(axios, basePath));
+        cloudPostV1Functions(requestParameters: FunctionsApiCloudPostV1FunctionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionsFunction> {
+            return localVarFp.cloudPostV1Functions(requestParameters.functionsCreateFunctionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The body\'s `input` is handed to the function on stdin. Execution NEVER happens in this process: the runtime and source go to the sandboxed code executor, or, for a function published with target=fleet, to the org\'s own linked GPU fleet as an fn.run job this call blocks on until it finishes. Either way it is bounded by the function\'s own timeout, itself capped at 900s.  The answer is the invocation record — id, status, duration — and its HTTP status is about the RUN, not about this API: a function whose own code fails answers 502 with a recorded `error` invocation, which is a successful invocation of a failing program. The captured output is not in this reply; the logs call returns it.  MONEY. The caller\'s org ledger is gated BEFORE any compute runs, so an org out of credit or over its spend cap is refused 402 and nothing executes, and a billing plane that cannot answer refuses rather than granting free compute. A run that actually executed is then debited twice — a flat per-invocation fee, and GB-seconds of compute derived from the measured duration and the function\'s configured memory. A run that never reached its executor (unreachable, or timed out in transport) consumed nothing and is not charged; a run whose code exited non-zero DID consume compute and is. An operator who prices either half at zero makes it a no-op, and a zero request fee removes the balance gate with it.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
+         * @summary Run a function and get back the recorded invocation
          * @param {FunctionsApiCloudPostV1FunctionsByNameInvokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1FunctionsByNameInvoke(requestParameters: FunctionsApiCloudPostV1FunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1FunctionsByNameInvoke(requestParameters.name, options).then((request) => request(axios, basePath));
+        cloudPostV1FunctionsByNameInvoke(requestParameters: FunctionsApiCloudPostV1FunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionsInvocation> {
+            return localVarFp.cloudPostV1FunctionsByNameInvoke(requestParameters.name, requestParameters.functionsInvokeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1248,6 +1331,13 @@ export interface FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest {
      * @memberof FunctionsApiCloudGetV1FunctionsByNameInvocations
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof FunctionsApiCloudGetV1FunctionsByNameInvocations
+     */
+    readonly limit?: number
 }
 
 /**
@@ -1265,6 +1355,34 @@ export interface FunctionsApiCloudGetV1FunctionsByNameLogsRequest {
 }
 
 /**
+ * Request parameters for cloudGetV1FunctionsMetrics operation in FunctionsApi.
+ * @export
+ * @interface FunctionsApiCloudGetV1FunctionsMetricsRequest
+ */
+export interface FunctionsApiCloudGetV1FunctionsMetricsRequest {
+    /**
+     * 
+     * @type {'24H' | '7D' | '30D'}
+     * @memberof FunctionsApiCloudGetV1FunctionsMetrics
+     */
+    readonly range?: CloudGetV1FunctionsMetricsRangeEnum
+}
+
+/**
+ * Request parameters for cloudPostV1Functions operation in FunctionsApi.
+ * @export
+ * @interface FunctionsApiCloudPostV1FunctionsRequest
+ */
+export interface FunctionsApiCloudPostV1FunctionsRequest {
+    /**
+     * 
+     * @type {FunctionsCreateFunctionRequest}
+     * @memberof FunctionsApiCloudPostV1Functions
+     */
+    readonly functionsCreateFunctionRequest: FunctionsCreateFunctionRequest
+}
+
+/**
  * Request parameters for cloudPostV1FunctionsByNameInvoke operation in FunctionsApi.
  * @export
  * @interface FunctionsApiCloudPostV1FunctionsByNameInvokeRequest
@@ -1276,6 +1394,13 @@ export interface FunctionsApiCloudPostV1FunctionsByNameInvokeRequest {
      * @memberof FunctionsApiCloudPostV1FunctionsByNameInvoke
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {FunctionsInvokeRequest}
+     * @memberof FunctionsApiCloudPostV1FunctionsByNameInvoke
+     */
+    readonly functionsInvokeRequest?: FunctionsInvokeRequest
 }
 
 /**
@@ -1454,7 +1579,8 @@ export interface FunctionsApiEdgeUpdateFunctionRequest {
  */
 export class FunctionsApi extends BaseAPI {
     /**
-     * 
+     * One transaction removes the function record and every invocation row recorded against its name, so that history also leaves the metrics chart and the invocation list. This is not a soft delete and there is no restore.  Deletion is keyed on (org, name): a name owned by another org is not found here, exactly like a name that never existed, so the call cannot be used to probe for or destroy another tenant\'s function. A successful delete answers with no body.  Requires a validated principal.
+     * @summary Delete a function and its entire invocation history
      * @param {FunctionsApiCloudDeleteV1FunctionsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1465,7 +1591,8 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A row carries the function\'s runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The registry holds secret NAMES only; a value never enters this store and is never returned.  The rollup (invocations7d, errors7d, successRate, avgDurationMs) is counted from real invocation rows over the trailing 7 days and is OMITTED for a function with no calls in that window rather than sent as zero, so a consumer must render absence as unknown, not as an idle function. Ordered most-recently-deployed first.  Scoped to the caller\'s own org — one store per org, with the org column on every query. Requires a validated principal: an org claim with no verified credential behind it is refused, never answered with an empty list.
+     * @summary Every serverless function the caller\'s org has published, with its real 7-day rollup
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
@@ -1475,7 +1602,8 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Extends the list row with the function\'s single derived HTTP trigger, its 20 most recent invocations (newest first, metadata only — no captured output), and `secrets`, the NAMES of the secrets it mounts. No secret value is stored or returned.  Lookup is keyed on (org, name), so a function that exists but belongs to another org answers exactly as one that never existed — not found, never a signal that the name is taken elsewhere. The 7-day rollup fields are omitted rather than zeroed when the function has not run in the window.  Requires a validated principal.
+     * @summary One function in full: spec, trailing-7-day rollup, trigger, latest runs and mounted secret names
      * @param {FunctionsApiCloudGetV1FunctionsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1486,18 +1614,20 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Each entry is invocation METADATA — id, status, HTTP status code, wall-clock duration and when it ran. The captured stdout/stderr is not on this path; the logs call returns it, for the latest run only.  `limit` defaults to 100 and is clamped: at or below zero, above 500, or not a number at all, it falls back to 100. An unknown function name is NOT an error here — nothing has ever run under it, so the answer is an empty list rather than a not-found, and a caller testing existence must ask for the function itself.  Scoped to the caller\'s org, so it can only ever return the calling tenant\'s own runs. Requires a validated principal.
+     * @summary Recent invocation history for one function, newest first
      * @param {FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
     public cloudGetV1FunctionsByNameInvocations(requestParameters: FunctionsApiCloudGetV1FunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).cloudGetV1FunctionsByNameInvocations(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return FunctionsApiFp(this.configuration).cloudGetV1FunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * One string, from the LATEST invocation only. This is not a log stream and carries no history; the invocations list is where earlier runs are enumerated.  When that run failed, the string is its ERROR text rather than its stdout — the two share one field, so success cannot be told from failure by this value alone and the invocation\'s status is what answers that. Output was truncated to 64 KiB when the run was recorded, error text to 16 KiB.  A function that has never run — or a name that does not exist in the caller\'s org — answers with an empty string, not a not-found. Scoped to the caller\'s org; requires a validated principal.
+     * @summary The captured output of a function\'s most recent invocation
      * @param {FunctionsApiCloudGetV1FunctionsByNameLogsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1508,7 +1638,8 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A function\'s current record IS its deployment, so this answers in the same shape the function list does — runtime, resource limits, target, endpoint, and when it was last deployed.  Two things not to assume. The invocation rollup is never populated here, even for a function that has run: those fields are omitted unconditionally, and the function list is where they are filled in. And this is an inventory of what is live, not a history — there is exactly one entry per function, and a redeploy replaces it rather than appending to it.  Scoped to the caller\'s org; requires a validated principal.
+     * @summary The live deployment of every function in the caller\'s org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
@@ -1518,17 +1649,20 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * One series per function that actually ran in the window, bucketed, plus a success/timeout/error donut over the same rows. Every point is a COUNT of real invocation rows that fell in that bucket — nothing is interpolated, and a function with no invocations in the window has no series at all.  The `range` query selects the window and its bucket count: 1H, 6H, 24H, 7D or 30D. An absent or unrecognized value falls back to 24H rather than failing. At most the 5000 newest rows are read, so a very busy org\'s oldest buckets in a wide range can undercount.  costCents is always null: this view has no per-invocation cost source, and reports nothing rather than a fabricated figure. Scoped to the caller\'s org; requires a validated principal.
+     * @summary Invocation chart and status breakdown across every function in the caller\'s org
+     * @param {FunctionsApiCloudGetV1FunctionsMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public cloudGetV1FunctionsMetrics(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).cloudGetV1FunctionsMetrics(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1FunctionsMetrics(requestParameters: FunctionsApiCloudGetV1FunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).cloudGetV1FunctionsMetrics(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * NAMES only. A secret\'s value is not held by this subsystem and is not read on this path — values live in KMS and are resolved sandbox-side when a function runs — so nothing in this answer is a credential.  The list is derived from the mount declarations on the function records and deduplicated by namespace and name, so a name mounted by several functions appears ONCE: mountedBy names the first function that claimed it in deploy order, not every function that mounts it. Read it as a hint about origin, not as a complete usage map.  Scoped to the caller\'s org; requires a validated principal.
+     * @summary The names of the secrets mounted by the caller\'s org\'s functions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
@@ -1538,7 +1672,8 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * A function has exactly ONE trigger today and it is derived, not stored: an always-enabled HTTP trigger whose target is that function\'s own invoke endpoint, listed once per function.  There is no trigger table behind this and no call that creates, disables or deletes one. The list is a projection of the function registry, so it changes only when a function is published or deleted.  Scoped to the caller\'s org; requires a validated principal.
+     * @summary Every trigger attached to the caller\'s org\'s functions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
@@ -1548,24 +1683,27 @@ export class FunctionsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Org and name together identify a function, so a second call for a name the org already owns is a REDEPLOY: the spec is replaced, the deploy version advances, and the original creation time is kept. There is no separate update call, and no way to take over a name another org owns.  What is accepted is a closed set. runtime is one of node, python, go, deno, bash or container; name must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$ and may not be one of the reserved static names (metrics, triggers, deployments, secrets); source is capped at 256 KiB. timeoutSec is CLAMPED to the 900s ceiling rather than rejected, and an absent one defaults to 30s with 256Mi of memory. target=fleet runs the function on the org\'s own linked GPU fleet and is accepted for runtime=python only; everything else runs on the shared sandbox.  envNames declares which secrets the function mounts BY NAME — values live in KMS and are resolved sandbox-side at run time, so no secret value is sent here or stored here. Scoped to the caller\'s org; requires a validated principal.
+     * @summary Publish a function, or redeploy an existing one under the same name
+     * @param {FunctionsApiCloudPostV1FunctionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public cloudPostV1Functions(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).cloudPostV1Functions(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1Functions(requestParameters: FunctionsApiCloudPostV1FunctionsRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).cloudPostV1Functions(requestParameters.functionsCreateFunctionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * The body\'s `input` is handed to the function on stdin. Execution NEVER happens in this process: the runtime and source go to the sandboxed code executor, or, for a function published with target=fleet, to the org\'s own linked GPU fleet as an fn.run job this call blocks on until it finishes. Either way it is bounded by the function\'s own timeout, itself capped at 900s.  The answer is the invocation record — id, status, duration — and its HTTP status is about the RUN, not about this API: a function whose own code fails answers 502 with a recorded `error` invocation, which is a successful invocation of a failing program. The captured output is not in this reply; the logs call returns it.  MONEY. The caller\'s org ledger is gated BEFORE any compute runs, so an org out of credit or over its spend cap is refused 402 and nothing executes, and a billing plane that cannot answer refuses rather than granting free compute. A run that actually executed is then debited twice — a flat per-invocation fee, and GB-seconds of compute derived from the measured duration and the function\'s configured memory. A run that never reached its executor (unreachable, or timed out in transport) consumed nothing and is not charged; a run whose code exited non-zero DID consume compute and is. An operator who prices either half at zero makes it a no-op, and a zero request fee removes the balance gate with it.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
+     * @summary Run a function and get back the recorded invocation
      * @param {FunctionsApiCloudPostV1FunctionsByNameInvokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
     public cloudPostV1FunctionsByNameInvoke(requestParameters: FunctionsApiCloudPostV1FunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).cloudPostV1FunctionsByNameInvoke(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return FunctionsApiFp(this.configuration).cloudPostV1FunctionsByNameInvoke(requestParameters.name, requestParameters.functionsInvokeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1665,6 +1803,15 @@ export class FunctionsApi extends BaseAPI {
     }
 }
 
+/**
+ * @export
+ */
+export const CloudGetV1FunctionsMetricsRangeEnum = {
+    _24H: '24H',
+    _7D: '7D',
+    _30D: '30D'
+} as const;
+export type CloudGetV1FunctionsMetricsRangeEnum = typeof CloudGetV1FunctionsMetricsRangeEnum[keyof typeof CloudGetV1FunctionsMetricsRangeEnum];
 /**
  * @export
  */

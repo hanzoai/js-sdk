@@ -32,7 +32,8 @@ import type { CommerceSaaSMetrics } from '../models';
 export const MetricsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Reports the native metrics store\'s live state for the calling tenant: the subsystem version, the resolved `org`, and `series` — the number of distinct series actually held right now, read out of the store rather than a constant. It is not a dependency probe and has nothing downstream to fail on: the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. This surface trusts the edge rather than re-deriving the org from a validated claim of its own, so it belongs behind the gateway and nowhere else.
+         * @summary How many metric series this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -65,7 +66,8 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Answers `{count, series}`, where `count` is the number of matching SERIES and each series carries the samples that fall inside the window. `name` selects one series name, and an absent or empty `name` returns every series the org holds. `match` is a `k=v,k2=v2` label matcher applied as a SUPERSET test: a series matches when it carries all the named labels with those values, extra labels and all.  `start` and `end` are nanoseconds since the Unix epoch, and here is the rule worth knowing: a bound that is absent, empty or unparseable becomes 0, which this store reads as UNBOUNDED. A malformed `start` therefore silently widens the query instead of failing it. There is no limit parameter — the window and the matcher are the whole of what bounds the answer.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a query can only ever read the org the edge asserted.
+         * @summary Read your org\'s series back over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -98,7 +100,8 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Writes every sample in a luxfi/metric `MetricBatch` into the calling org\'s store and answers `{written}`: the number of SAMPLES stored, not families and not metrics. This is the exact wire shape the ZAP `MsgMetricBatch` transport carries, so the HTTP door and the optional ZAP push receiver share one code path and one meaning — the transport is an optimisation, never a different contract.  A counter or gauge lands as one sample. A histogram or summary contributes DERIVED `<name>_sum` and `<name>_count` series, so one metric can write more than one sample and `written` can exceed the number of metrics you sent. The batch\'s own `TimestampNs` stamps every sample it carries.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org gets its own store, WAL-durable under the deployment\'s data dir. A body that does not decode is 400.
+         * @summary Ingest a MetricBatch — the same payload the ZAP transport carries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -131,7 +134,8 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Takes `{series:[{name, labels, samples:[{t, v}]}]}`, appends every sample, creating each series on first write, and answers `{written}` — again counting SAMPLES, so three series of ten samples is 30.  A series is identified by its name PLUS its whole label set, so adding one label makes a different series rather than annotating an existing one. Timestamps `t` are NANOSECONDS since the Unix epoch; a sample sent without one is stored at 0 and is then excluded by any query that sets a lower bound, which is the usual reason a write that reported success does not read back. Retention is per series and bounded — past 65536 samples the oldest are evicted.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400; nothing else is validated or rejected.
+         * @summary Append samples to your org\'s named, labelled series
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -218,7 +222,8 @@ export const MetricsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MetricsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Reports the native metrics store\'s live state for the calling tenant: the subsystem version, the resolved `org`, and `series` — the number of distinct series actually held right now, read out of the store rather than a constant. It is not a dependency probe and has nothing downstream to fail on: the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. This surface trusts the edge rather than re-deriving the org from a validated claim of its own, so it belongs behind the gateway and nowhere else.
+         * @summary How many metric series this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -229,7 +234,8 @@ export const MetricsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Answers `{count, series}`, where `count` is the number of matching SERIES and each series carries the samples that fall inside the window. `name` selects one series name, and an absent or empty `name` returns every series the org holds. `match` is a `k=v,k2=v2` label matcher applied as a SUPERSET test: a series matches when it carries all the named labels with those values, extra labels and all.  `start` and `end` are nanoseconds since the Unix epoch, and here is the rule worth knowing: a bound that is absent, empty or unparseable becomes 0, which this store reads as UNBOUNDED. A malformed `start` therefore silently widens the query instead of failing it. There is no limit parameter — the window and the matcher are the whole of what bounds the answer.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a query can only ever read the org the edge asserted.
+         * @summary Read your org\'s series back over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -240,7 +246,8 @@ export const MetricsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Writes every sample in a luxfi/metric `MetricBatch` into the calling org\'s store and answers `{written}`: the number of SAMPLES stored, not families and not metrics. This is the exact wire shape the ZAP `MsgMetricBatch` transport carries, so the HTTP door and the optional ZAP push receiver share one code path and one meaning — the transport is an optimisation, never a different contract.  A counter or gauge lands as one sample. A histogram or summary contributes DERIVED `<name>_sum` and `<name>_count` series, so one metric can write more than one sample and `written` can exceed the number of metrics you sent. The batch\'s own `TimestampNs` stamps every sample it carries.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org gets its own store, WAL-durable under the deployment\'s data dir. A body that does not decode is 400.
+         * @summary Ingest a MetricBatch — the same payload the ZAP transport carries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -251,7 +258,8 @@ export const MetricsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Takes `{series:[{name, labels, samples:[{t, v}]}]}`, appends every sample, creating each series on first write, and answers `{written}` — again counting SAMPLES, so three series of ten samples is 30.  A series is identified by its name PLUS its whole label set, so adding one label makes a different series rather than annotating an existing one. Timestamps `t` are NANOSECONDS since the Unix epoch; a sample sent without one is stored at 0 and is then excluded by any query that sets a lower bound, which is the usual reason a write that reported success does not read back. Retention is per series and bounded — past 65536 samples the oldest are evicted.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400; nothing else is validated or rejected.
+         * @summary Append samples to your org\'s named, labelled series
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -286,7 +294,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = MetricsApiFp(configuration)
     return {
         /**
-         * 
+         * Reports the native metrics store\'s live state for the calling tenant: the subsystem version, the resolved `org`, and `series` — the number of distinct series actually held right now, read out of the store rather than a constant. It is not a dependency probe and has nothing downstream to fail on: the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. This surface trusts the edge rather than re-deriving the org from a validated claim of its own, so it belongs behind the gateway and nowhere else.
+         * @summary How many metric series this deployment holds for your org
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -294,7 +303,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1MetricsHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Answers `{count, series}`, where `count` is the number of matching SERIES and each series carries the samples that fall inside the window. `name` selects one series name, and an absent or empty `name` returns every series the org holds. `match` is a `k=v,k2=v2` label matcher applied as a SUPERSET test: a series matches when it carries all the named labels with those values, extra labels and all.  `start` and `end` are nanoseconds since the Unix epoch, and here is the rule worth knowing: a bound that is absent, empty or unparseable becomes 0, which this store reads as UNBOUNDED. A malformed `start` therefore silently widens the query instead of failing it. There is no limit parameter — the window and the matcher are the whole of what bounds the answer.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a query can only ever read the org the edge asserted.
+         * @summary Read your org\'s series back over a time range
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -302,7 +312,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1MetricsQuery(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Writes every sample in a luxfi/metric `MetricBatch` into the calling org\'s store and answers `{written}`: the number of SAMPLES stored, not families and not metrics. This is the exact wire shape the ZAP `MsgMetricBatch` transport carries, so the HTTP door and the optional ZAP push receiver share one code path and one meaning — the transport is an optimisation, never a different contract.  A counter or gauge lands as one sample. A histogram or summary contributes DERIVED `<name>_sum` and `<name>_count` series, so one metric can write more than one sample and `written` can exceed the number of metrics you sent. The batch\'s own `TimestampNs` stamps every sample it carries.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org gets its own store, WAL-durable under the deployment\'s data dir. A body that does not decode is 400.
+         * @summary Ingest a MetricBatch — the same payload the ZAP transport carries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -310,7 +321,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPostV1MetricsBatch(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Takes `{series:[{name, labels, samples:[{t, v}]}]}`, appends every sample, creating each series on first write, and answers `{written}` — again counting SAMPLES, so three series of ten samples is 30.  A series is identified by its name PLUS its whole label set, so adding one label makes a different series rather than annotating an existing one. Timestamps `t` are NANOSECONDS since the Unix epoch; a sample sent without one is stored at 0 and is then excluded by any query that sets a lower bound, which is the usual reason a write that reported success does not read back. Retention is per series and bounded — past 65536 samples the oldest are evicted.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400; nothing else is validated or rejected.
+         * @summary Append samples to your org\'s named, labelled series
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -359,7 +371,8 @@ export interface MetricsApiCommerceGetSaaSMetricsRequest {
  */
 export class MetricsApi extends BaseAPI {
     /**
-     * 
+     * Reports the native metrics store\'s live state for the calling tenant: the subsystem version, the resolved `org`, and `series` — the number of distinct series actually held right now, read out of the store rather than a constant. It is not a dependency probe and has nothing downstream to fail on: the store is in-process, so this answers 200 whenever the process is up.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. This surface trusts the edge rather than re-deriving the org from a validated claim of its own, so it belongs behind the gateway and nowhere else.
+     * @summary How many metric series this deployment holds for your org
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetricsApi
@@ -369,7 +382,8 @@ export class MetricsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Answers `{count, series}`, where `count` is the number of matching SERIES and each series carries the samples that fall inside the window. `name` selects one series name, and an absent or empty `name` returns every series the org holds. `match` is a `k=v,k2=v2` label matcher applied as a SUPERSET test: a series matches when it carries all the named labels with those values, extra labels and all.  `start` and `end` are nanoseconds since the Unix epoch, and here is the rule worth knowing: a bound that is absent, empty or unparseable becomes 0, which this store reads as UNBOUNDED. A malformed `start` therefore silently widens the query instead of failing it. There is no limit parameter — the window and the matcher are the whole of what bounds the answer.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a query can only ever read the org the edge asserted.
+     * @summary Read your org\'s series back over a time range
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetricsApi
@@ -379,7 +393,8 @@ export class MetricsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Writes every sample in a luxfi/metric `MetricBatch` into the calling org\'s store and answers `{written}`: the number of SAMPLES stored, not families and not metrics. This is the exact wire shape the ZAP `MsgMetricBatch` transport carries, so the HTTP door and the optional ZAP push receiver share one code path and one meaning — the transport is an optimisation, never a different contract.  A counter or gauge lands as one sample. A histogram or summary contributes DERIVED `<name>_sum` and `<name>_count` series, so one metric can write more than one sample and `written` can exceed the number of metrics you sent. The batch\'s own `TimestampNs` stamps every sample it carries.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org gets its own store, WAL-durable under the deployment\'s data dir. A body that does not decode is 400.
+     * @summary Ingest a MetricBatch — the same payload the ZAP transport carries
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetricsApi
@@ -389,7 +404,8 @@ export class MetricsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Takes `{series:[{name, labels, samples:[{t, v}]}]}`, appends every sample, creating each series on first write, and answers `{written}` — again counting SAMPLES, so three series of ten samples is 30.  A series is identified by its name PLUS its whole label set, so adding one label makes a different series rather than annotating an existing one. Timestamps `t` are NANOSECONDS since the Unix epoch; a sample sent without one is stored at 0 and is then excluded by any query that sets a lower bound, which is the usual reason a write that reported success does not read back. Retention is per series and bounded — past 65536 samples the oldest are evicted.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400; nothing else is validated or rejected.
+     * @summary Append samples to your org\'s named, labelled series
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetricsApi

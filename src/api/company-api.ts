@@ -461,7 +461,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * @summary Share a pitch deck in the org\'s data room
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -800,7 +801,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
+         * @summary Charge the one-time formation fee and mark the formation paid
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1046,7 +1048,8 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * @summary Share a pitch deck in the org\'s data room
          * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1159,7 +1162,8 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
+         * @summary Charge the one-time formation fee and mark the formation paid
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1301,7 +1305,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPostV1CompanyFounders(requestParameters.cloudFoundersIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+         * @summary Share a pitch deck in the org\'s data room
          * @param {CompanyApiCloudPostV1CompanyFundraiseDeckRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1387,7 +1392,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPostV1CompanyKycRefresh(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
+         * @summary Charge the one-time formation fee and mark the formation paid
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1743,7 +1749,8 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Stores the request body as a document in the caller org\'s data room and answers with the data room id to reference it by. The deck is RAW BYTES of whatever content type is sent — a PDF, a slide export — not a JSON document: the Content-Type header is carried through to the data room as given, and `?name=` names the document, defaulting to `pitch-deck`.  Scoped to the caller\'s validated org, and only after incorporation: a formation still short of stage `company` is refused 409 and an org that never began one is 404. The route is registered AHEAD of the surface\'s JSON body cap deliberately, so a deck\'s size ceiling is the edge\'s rather than the cap meant for small structured records. An empty body is 400; a data room that will not take the bytes is 502.
+     * @summary Share a pitch deck in the org\'s data room
      * @param {CompanyApiCloudPostV1CompanyFundraiseDeckRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1847,7 +1854,8 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
+     * @summary Charge the one-time formation fee and mark the formation paid
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi

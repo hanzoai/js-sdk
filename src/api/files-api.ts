@@ -486,7 +486,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -519,7 +520,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -556,7 +558,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -589,7 +592,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -626,7 +630,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -659,7 +664,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -696,7 +702,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -729,7 +736,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -766,7 +774,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -799,7 +808,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -836,7 +846,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -869,7 +880,8 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -887,76 +899,6 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Files: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/files`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1FilesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudTraceV1FilesByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/files/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1210,7 +1152,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1221,7 +1164,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1233,7 +1177,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1244,7 +1189,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1256,7 +1202,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1267,7 +1214,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1279,7 +1227,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1290,7 +1239,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1302,7 +1252,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1313,7 +1264,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1325,7 +1277,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1336,7 +1289,8 @@ export const FilesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1345,29 +1299,6 @@ export const FilesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1FilesByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FilesApi.cloudPutV1FilesByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1Files(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1Files(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FilesApi.cloudTraceV1Files']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudTraceV1FilesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudTraceV1FilesByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FilesApi.cloudTraceV1FilesByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1514,7 +1445,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.aiUploadFile(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1522,7 +1454,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudDeleteV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1531,7 +1464,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudDeleteV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1539,7 +1473,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudGetV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1548,7 +1483,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1556,7 +1492,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudOptionsV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1565,7 +1502,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudOptionsV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1573,7 +1511,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudPatchV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1582,7 +1521,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPatchV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1590,7 +1530,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudPostV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1599,7 +1540,8 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary The session file surface
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1607,30 +1549,14 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPutV1Files(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * @summary List the files in an execution session
          * @param {FilesApiCloudPutV1FilesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         cloudPutV1FilesByWildcard1(requestParameters: FilesApiCloudPutV1FilesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPutV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1Files(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1Files(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {FilesApiCloudTraceV1FilesByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudTraceV1FilesByWildcard1(requestParameters: FilesApiCloudTraceV1FilesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudTraceV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1908,20 +1834,6 @@ export interface FilesApiCloudPutV1FilesByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudTraceV1FilesByWildcard1 operation in FilesApi.
- * @export
- * @interface FilesApiCloudTraceV1FilesByWildcard1Request
- */
-export interface FilesApiCloudTraceV1FilesByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof FilesApiCloudTraceV1FilesByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for execDownloadFile operation in FilesApi.
  * @export
  * @interface FilesApiExecDownloadFileRequest
@@ -2086,7 +1998,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2096,7 +2009,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudDeleteV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2107,7 +2021,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2117,7 +2032,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudGetV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2128,7 +2044,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2138,7 +2055,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudOptionsV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2149,7 +2067,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2159,7 +2078,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudPatchV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2170,7 +2090,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2180,7 +2101,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudPostV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2191,7 +2113,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The root of the executor\'s session-file surface. The contract addresses a session\'s files one segment down (/v1/files/{session_id}); this bare address is served because one registration owns the whole prefix, and what it answers is the executor\'s to decide.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary The session file surface
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
@@ -2201,7 +2124,8 @@ export class FilesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Lists what a session holds, addressed by session id — the uploads a run can read and the artifacts it produced, each then fetched from /v1/download. The listing\'s shape is the executor\'s own; this module names only that the address is keyed by session id.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * @summary List the files in an execution session
      * @param {FilesApiCloudPutV1FilesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2209,27 +2133,6 @@ export class FilesApi extends BaseAPI {
      */
     public cloudPutV1FilesByWildcard1(requestParameters: FilesApiCloudPutV1FilesByWildcard1Request, options?: RawAxiosRequestConfig) {
         return FilesApiFp(this.configuration).cloudPutV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilesApi
-     */
-    public cloudTraceV1Files(options?: RawAxiosRequestConfig) {
-        return FilesApiFp(this.configuration).cloudTraceV1Files(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {FilesApiCloudTraceV1FilesByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilesApi
-     */
-    public cloudTraceV1FilesByWildcard1(requestParameters: FilesApiCloudTraceV1FilesByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return FilesApiFp(this.configuration).cloudTraceV1FilesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
