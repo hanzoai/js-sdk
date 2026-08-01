@@ -1,22 +1,108 @@
-name: Publish NPM
-# Publishing = pushing a semver tag vX.Y.Z. Build then `npm publish` the root
-# `hanzoai` package. Semver only, never a sha.
+name: Publish
+# Publishing = pushing the tag `vX.Y.Z`. The tag names the version; package.json
+# must already hold it, and the receipt is what registry.npmjs.org serves — not
+# what `npm publish` printed.
+#
+# `ubuntu-latest`, not `hanzo-build-linux-amd64`, and this is the whole reason
+# the car could not move: measured 2026-08-01, the v2.0.3 and v2.0.4 publish jobs
+# each asked for that label, were never assigned a runner, and were cancelled —
+# one after sitting 24 hours. `hanzoai` then reached npm at 2.0.5 with no
+# workflow run behind it at all, because a human ran `npm publish` by hand. The
+# proof is in the bytes: npm serves 2.0.5 at integrity sha512-X3V17E…, while
+# `npm pack` on origin/main produces sha512-q7Rbz1…, so the published tarball
+# corresponds to no commit anyone can name. Image builds still belong on the arc
+# pool; this one packs a tarball.
+#
+# `npm ci`, not `npm install`: the lockfile is committed, and a release that
+# silently resolves a different axios than the gate did is not the thing that
+# was gated.
 on:
   push:
-    tags: ['v*']
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
+
+concurrency:
+  # Never cancel a publish. npm does not take a version back, so a cancelled run
+  # is indistinguishable from one that half happened.
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   publish:
-    runs-on: hanzo-build-linux-amd64
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install --no-audit --no-fund
+
+      - name: The tag and package.json must agree
+        id: what
+        # A tag that names a version package.json does not hold would publish
+        # something other than what it says. workflow_dispatch has no tag, so
+        # there the manifest is the version.
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p 'require("./package.json").version')"
+          if [ "${GITHUB_REF}" != "${GITHUB_REF#refs/tags/}" ]; then
+            TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+            [ "$TAG_VERSION" = "$VERSION" ] || {
+              echo "::error::tag says $TAG_VERSION, package.json says $VERSION"; exit 1; }
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci --no-audit --no-fund
       - run: npm run build
-      - run: npm publish --access public
+
+      - name: Pack
+        id: pack
+        # `npm pack` is byte-reproducible — it normalises mtimes — so the tarball
+        # digest is a stable identity for "this tree at this version", which is
+        # what makes the check below mean something.
+        run: |
+          set -euo pipefail
+          echo "integrity=$(npm pack --json | node -p 'JSON.parse(require("fs").readFileSync(0,"utf8"))[0].integrity')" >> "$GITHUB_OUTPUT"
+
+      - name: Already published?
+        id: exists
+        # Idempotence, stated as a rule: a version that exists with OUR digest is
+        # success — re-running the same tag is a no-op, which is what makes a
+        # stopped release resumable. A version that exists with a DIFFERENT digest
+        # is a hard failure, because someone published out of band and the tag no
+        # longer describes what a consumer installs.
+        run: |
+          set -euo pipefail
+          VERSION='${{ steps.what.outputs.version }}'
+          OURS='${{ steps.pack.outputs.integrity }}'
+          THEIRS="$(npm view "hanzoai@$VERSION" dist.integrity 2>/dev/null || true)"
+          if [ -z "$THEIRS" ]; then
+            echo "done=false" >> "$GITHUB_OUTPUT"
+          elif [ "$THEIRS" = "$OURS" ]; then
+            echo "done=true" >> "$GITHUB_OUTPUT"
+            echo "hanzoai $VERSION is already on npm with this exact digest — nothing to do"
+          else
+            echo "::error::hanzoai $VERSION is on npm at $THEIRS, but this tag packs $OURS"
+            exit 1
+          fi
+
+      - name: Publish
+        if: steps.exists.outputs.done == 'false'
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.HANZO_NPM_TOKEN || secrets.NPM_TOKEN }}
+
+      - name: Prove it from outside
+        run: |
+          set -euo pipefail
+          VERSION='${{ steps.what.outputs.version }}'
+          for _ in $(seq 1 30); do
+            THEIRS="$(npm view "hanzoai@$VERSION" dist.integrity 2>/dev/null || true)"
+            if [ "$THEIRS" = '${{ steps.pack.outputs.integrity }}' ]; then
+              echo "npm serves hanzoai $VERSION at $THEIRS"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::npm never served hanzoai $VERSION with our digest"
+          exit 1
