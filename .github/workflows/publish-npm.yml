@@ -88,9 +88,15 @@ jobs:
 
       - name: Publish
         if: steps.exists.outputs.done == 'false'
+        # One name for the credential. `HANZO_NPM_TOKEN || NPM_TOKEN` was two
+        # names for one thing, and the fallback is the failure mode it looks
+        # like a defence against: whichever exists wins silently, so a stale
+        # token shadows a good one with nothing to read. npm answers an
+        # unauthorised publish with 404 on PUT, not 401, so the symptom is
+        # "package not found" for a package that plainly exists.
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.HANZO_NPM_TOKEN || secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Prove it from outside
         run: |
