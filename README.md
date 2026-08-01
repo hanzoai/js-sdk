@@ -6,8 +6,9 @@ The official TypeScript client for the [Hanzo Cloud API](https://api.hanzo.ai) â
 AI inference plus every `/v1/<service>` product, in one install.
 
 Generated from [`hanzoai/openapi`](https://github.com/hanzoai/openapi)'s
-`hanzo.yaml`: **2452 operations, 1798 schemas**. Never hand-written, so the
-client cannot describe a route the server does not serve.
+`hanzo.yaml` â€” the same document the API serves at
+[`/v1/openapi.json`](https://api.hanzo.ai/v1/openapi.json). Never hand-written,
+so the client cannot describe a route the server does not serve.
 
 ## Install
 
@@ -41,7 +42,7 @@ const ai = new OpenAICompatibleApi(
 
 const { data } = await ai.aiCreateChatCompletion({
   aiChatCompletionRequest: {
-    model: 'zen4',
+    model: 'zen5',
     messages: [{ role: 'user', content: 'Say hello in exactly five words.' }],
   },
 });
