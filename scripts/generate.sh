@@ -44,4 +44,9 @@ fi
 
 # uv rather than a bare python3: the driver needs PyYAML, and the arc runner
 # image promises no interpreter at all, let alone one with it installed.
+# THE DOCUMENT AS AN ARGUMENT. hanzoai/ci's client: lane fetches openapi.yaml at
+# the sha hanzoai/cloud just deployed and exports SPEC; the driver projects THAT
+# rather than the checkout's own hanzo.yaml. With SPEC unset nothing changes —
+# a maintainer regenerating by hand still gets the checkout's document.
+if [ -n "${SPEC:-}" ]; then set -- --spec "$SPEC" "$@"; fi
 exec uv run --with pyyaml python3 "$OPENAPI/generate.py" typescript --repo "$PWD" "$@"
