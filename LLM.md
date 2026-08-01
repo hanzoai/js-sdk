@@ -16,8 +16,21 @@ the two no longer disagree.
 
 ## The ONE way: generated from the OpenAPI spec
 
-Generated, never hand-written. Source of truth is `hanzoai/openapi`
-`hanzo.yaml`. Generator is **openapi-generator 7.14.0** (`typescript-axios`).
+Generated, never hand-written. Source of truth is **`hanzoai/cloud`
+`openapi.yaml`** — the document cloud's own routers emit, pinned in `.spec-lock`
+by (repo, ref, sha256). Generator is **openapi-generator 7.14.0**
+(`typescript-axios`).
+
+**THE LINEAGE MOVED, AND THE OLD ONE WAS SHIPPING DEAD ADDRESSES.** Until
+`2.0.7` this package was a projection of `hanzoai/openapi` `hanzo.yaml` — the
+hand-merged master (`merge.py`, `capabilities.yaml`, document version `8.0.0`).
+Measured on the published `2.0.6` tarball: 1699 distinct `/v1` paths, of which
+**89 under `/v1/commerce` where the server serves 10**, and four billing
+addresses that **404 against api.hanzo.ai** — `gpu-charge`, `gpu-eligibility`,
+`payment-config`, `payment-methods` — while the three the server actually serves
+(`gpu/charge`, `gpu/eligibility`, `methods`, `settings`) were absent entirely.
+Cloud's document has 1208 paths / 1636 operations and carries the live spellings.
+A smaller true document beats a larger unverified one.
 
 ```bash
 ./scripts/generate.sh                    # regenerate src/ from hanzoai/openapi@main
@@ -99,11 +112,26 @@ const config = new Configuration({
 Bearer only; the org comes from the token's `owner` claim, so no route in this
 SDK takes an org argument.
 
-## Examples — the six canonical flows
+## Examples — five flows, and the sixth is waiting on the document
 
-`examples/{hello,chat,money,store,agent,tools}`, one directory each, plus
+`examples/{hello,money,store,agent,tools}`, one directory each, plus
 `examples/client.ts` which is the single place a base URL or an env var is
-resolved. The same six exist in every Hanzo SDK.
+resolved.
+
+**`chat` was REMOVED in 2.0.7, and it is a measurement rather than a decision.**
+Cloud's `openapi.yaml` declares **zero** `/v1/ai*` paths and none of the eleven
+inference addresses — `/v1/chat/completions`, `/v1/completions`, `/v1/responses`,
+`/v1/embeddings`, `/v1/messages`, `/v1/rerank`, `/v1/models`, … — because the AI
+product is mounted behind a `/v1/{wildcard1}` relay that type-erases its router.
+The routes are live (POST `/v1/chat/completions` answers 401 from `server:
+hanzo`, i.e. routed and gated); they are simply undescribed. A generated client
+cannot carry a method for an operation the document does not have, and
+hand-rolling the HTTP call inside a generated client is the exact drift these
+SDKs exist to prevent — the `tools` flow's own comment says so.
+
+**Restoring it is one step, and the test is one line:** when
+`paths['/v1/chat/completions']` appears in cloud's `openapi.yaml`, add
+`examples/chat` back as a generated call. Nothing else about this repo changes.
 
 They are a **gate, not decoration**: `npm run examples` type-checks them against
 the freshly generated client, and `hanzo.yml` runs it in CI. That gate is what
@@ -115,9 +143,10 @@ touches it.
 
 ### What they do against the live API
 
-Type-checking is not running. All six were **executed** against `api.hanzo.ai`
-with an IAM JWT, and the result is worth writing down because three of them fail
-for reasons that are not the SDK's:
+Type-checking is not running. The table below is from the run made when these
+flows still pointed at the retired master's operation names; `hello` and `tools`
+have since been repointed (see the two notes under it) and want re-running
+against a live key.
 
 | flow | result | why |
 |---|---|---|
@@ -137,15 +166,26 @@ examples type-checked perfectly the entire time, because a model id is a string.
 The default is `zen5` now; the served Zen family is `enso*` and `zen5*`, and
 `GET /v1/models` is the only authority on it.
 
-**`hello` is mounted and gating correctly** — 403 *no validated principal* with
-no key or a bogus one — and still 404s with a *valid* one, because
-`/v1/bot/auth/me` reads the **bot** user table and an ordinary IAM principal has
-no row there. 403-vs-404 is the discriminator `flows.yaml` documents, and here
-it says "route is fine, this credential is the wrong kind", not "route is
-broken". Do not repoint the flow on the strength of that 404; it wants a bot
-key. `flows.yaml`'s note to print `data.owner`/`data.name` is also loose —
-`BotUser` carries `id`/`handle`/`displayName`/`email`/`role`, which is what the
-example prints.
+**`hello` moved to `GET /v1/iam/oauth/userinfo`.** It used to call
+`/v1/bot/auth/me`, which is behind the bot relay and absent from cloud's
+document, and which 404s for an ordinary IAM principal because it reads the
+**bot** user table. userinfo is the OIDC identity endpoint of the one IAM and it
+refuses correctly — 401 `{"error":"invalid_token"}` for a bogus bearer, verified
+against api.hanzo.ai. The two routes that look right and are NOT:
+`/v1/iam/whoami` answers **200** with `{"status":"error"}` for a bad key, and
+`/v1/ai/account` answers 200 `type="anonymous-user"` with no header at all — a
+`hello` on either prints a cheerful identity for a key that is refused
+everywhere else, which is worse than no check because it reads as proof.
+
+**`tools` moved to `GET /v1/mcp/servers`,** for the second time and for the same
+reason it moved the first time. Cloud's document declares `/v1/mcp/servers` and
+`/v1/mcp/servers/{id}` but NOT the JSON-RPC door `POST /v1/mcp`, which is live
+and answers `tools/list` with 833 tools. When the door is declared, move the
+flow back onto it.
+
+**A model default is still a live dependency** for `agent`: a model id is a
+string, so the example type-checks perfectly while the gateway refuses the
+model. `zen4` is not served; `zen5` is.
 
 ## CI
 Fleet convention: root `hanzo.yml` (the `test:` gate — build, then examples) and
