@@ -633,7 +633,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1PricingPolicy2: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudGetV1PricingPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1052,10 +1052,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1PricingPolicy2(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1PricingPolicy2(options);
+        async cloudGetV1PricingPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1PricingPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.cloudGetV1PricingPolicy2']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.cloudGetV1PricingPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1288,8 +1288,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1PricingPolicy2(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.cloudGetV1PricingPolicy2(options).then((request) => request(axios, basePath));
+        cloudGetV1PricingPolicy(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.cloudGetV1PricingPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * ListProviders returns the model providers the catalog knows, each with its info object, filtered to what the caller\'s org may see. A provider an admin has disabled is absent — and so are its models everywhere else on this surface, because a provider\'s state cascades to what it serves.
@@ -1555,8 +1555,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public cloudGetV1PricingPolicy2(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).cloudGetV1PricingPolicy2(options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1PricingPolicy(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).cloudGetV1PricingPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -24,10 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { CloudEmbedStatusResp } from '../models';
 /**
- * EmbedStatusApi - axios parameter creator
+ * EmbedApi - axios parameter creator
  * @export
  */
-export const EmbedStatusApiAxiosParamCreator = function (configuration?: Configuration) {
+export const EmbedApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
@@ -36,8 +36,8 @@ export const EmbedStatusApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1EmbedStatus: async (app?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/embed-status`;
+        cloudGetV1Embed: async (app?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/embed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -72,11 +72,11 @@ export const EmbedStatusApiAxiosParamCreator = function (configuration?: Configu
 };
 
 /**
- * EmbedStatusApi - functional programming interface
+ * EmbedApi - functional programming interface
  * @export
  */
-export const EmbedStatusApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = EmbedStatusApiAxiosParamCreator(configuration)
+export const EmbedApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EmbedApiAxiosParamCreator(configuration)
     return {
         /**
          * EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
@@ -85,66 +85,66 @@ export const EmbedStatusApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1EmbedStatus(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudEmbedStatusResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1EmbedStatus(app, options);
+        async cloudGetV1Embed(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudEmbedStatusResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1Embed(app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EmbedStatusApi.cloudGetV1EmbedStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EmbedApi.cloudGetV1Embed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * EmbedStatusApi - factory interface
+ * EmbedApi - factory interface
  * @export
  */
-export const EmbedStatusApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = EmbedStatusApiFp(configuration)
+export const EmbedApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EmbedApiFp(configuration)
     return {
         /**
          * EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
          * @summary EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.
-         * @param {EmbedStatusApiCloudGetV1EmbedStatusRequest} requestParameters Request parameters.
+         * @param {EmbedApiCloudGetV1EmbedRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1EmbedStatus(requestParameters: EmbedStatusApiCloudGetV1EmbedStatusRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudEmbedStatusResp> {
-            return localVarFp.cloudGetV1EmbedStatus(requestParameters.app, options).then((request) => request(axios, basePath));
+        cloudGetV1Embed(requestParameters: EmbedApiCloudGetV1EmbedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudEmbedStatusResp> {
+            return localVarFp.cloudGetV1Embed(requestParameters.app, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for cloudGetV1EmbedStatus operation in EmbedStatusApi.
+ * Request parameters for cloudGetV1Embed operation in EmbedApi.
  * @export
- * @interface EmbedStatusApiCloudGetV1EmbedStatusRequest
+ * @interface EmbedApiCloudGetV1EmbedRequest
  */
-export interface EmbedStatusApiCloudGetV1EmbedStatusRequest {
+export interface EmbedApiCloudGetV1EmbedRequest {
     /**
      * App is the embedded app to report on: cms (Content Studio), erp or help.
      * @type {string}
-     * @memberof EmbedStatusApiCloudGetV1EmbedStatus
+     * @memberof EmbedApiCloudGetV1Embed
      */
     readonly app?: string
 }
 
 /**
- * EmbedStatusApi - object-oriented interface
+ * EmbedApi - object-oriented interface
  * @export
- * @class EmbedStatusApi
+ * @class EmbedApi
  * @extends {BaseAPI}
  */
-export class EmbedStatusApi extends BaseAPI {
+export class EmbedApi extends BaseAPI {
     /**
      * EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
      * @summary EmbedStatus reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.
-     * @param {EmbedStatusApiCloudGetV1EmbedStatusRequest} requestParameters Request parameters.
+     * @param {EmbedApiCloudGetV1EmbedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EmbedStatusApi
+     * @memberof EmbedApi
      */
-    public cloudGetV1EmbedStatus(requestParameters: EmbedStatusApiCloudGetV1EmbedStatusRequest = {}, options?: RawAxiosRequestConfig) {
-        return EmbedStatusApiFp(this.configuration).cloudGetV1EmbedStatus(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1Embed(requestParameters: EmbedApiCloudGetV1EmbedRequest = {}, options?: RawAxiosRequestConfig) {
+        return EmbedApiFp(this.configuration).cloudGetV1Embed(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

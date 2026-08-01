@@ -27,10 +27,6 @@ import type { AnalyticsGetWebsiteStats200Response } from '../models';
 import type { AnalyticsMetric } from '../models';
 // @ts-ignore
 import type { SearchIndexStats } from '../models';
-// @ts-ignore
-import type { SearchResponseError } from '../models';
-// @ts-ignore
-import type { SearchStats } from '../models';
 /**
  * StatsApi - axios parameter creator
  * @export
@@ -370,40 +366,6 @@ export const StatsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @summary Get global statistics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchGetStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/search/stats`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -500,18 +462,6 @@ export const StatsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['StatsApi.searchGetMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @summary Get global statistics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async searchGetStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchStats>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchGetStats(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StatsApi.searchGetStats']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -560,15 +510,6 @@ export const StatsApiFactory = function (configuration?: Configuration, basePath
          */
         searchGetMetrics(options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.searchGetMetrics(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get global statistics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchGetStats(options?: RawAxiosRequestConfig): AxiosPromise<SearchStats> {
-            return localVarFp.searchGetStats(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -912,17 +853,6 @@ export class StatsApi extends BaseAPI {
      */
     public searchGetMetrics(options?: RawAxiosRequestConfig) {
         return StatsApiFp(this.configuration).searchGetMetrics(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get global statistics
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StatsApi
-     */
-    public searchGetStats(options?: RawAxiosRequestConfig) {
-        return StatsApiFp(this.configuration).searchGetStats(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

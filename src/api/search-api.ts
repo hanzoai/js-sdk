@@ -32,6 +32,10 @@ import type { CloudProvisionedResource } from '../models';
 // @ts-ignore
 import type { CloudProvisionedSummary } from '../models';
 // @ts-ignore
+import type { CloudSearchIndexList } from '../models';
+// @ts-ignore
+import type { CloudSearchStats } from '../models';
+// @ts-ignore
 import type { CommerceNote } from '../models';
 // @ts-ignore
 import type { CommerceOrder } from '../models';
@@ -218,6 +222,50 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
+         * @summary Lists the search indexes with their document counts and timestamps.
+         * @param {number} [offset] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1SearchIndexes: async (offset?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/search/indexes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * GetSearch returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
          * @summary GetSearch returns one search index\'s metadata.
          * @param {string} name The user-supplied resource name (slug). Lowercased and trimmed server-side; must match &#x60;^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$&#x60;. 
@@ -229,6 +277,40 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists('cloudGetV1SearchName', 'name', name)
             const localVarPath = `/v1/search/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
+         * @summary Totals the documents across every search index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1SearchStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/search/stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -758,6 +840,20 @@ export const SearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
+         * @summary Lists the search indexes with their document counts and timestamps.
+         * @param {number} [offset] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1SearchIndexes(offset?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudSearchIndexList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1SearchIndexes(offset, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchApi.cloudGetV1SearchIndexes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * GetSearch returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
          * @summary GetSearch returns one search index\'s metadata.
          * @param {string} name The user-supplied resource name (slug). Lowercased and trimmed server-side; must match &#x60;^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$&#x60;. 
@@ -768,6 +864,18 @@ export const SearchApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1SearchName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SearchApi.cloudGetV1SearchName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
+         * @summary Totals the documents across every search index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1SearchStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudSearchStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1SearchStats(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchApi.cloudGetV1SearchStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -954,6 +1062,16 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cloudGetV1Search(options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
+         * @summary Lists the search indexes with their document counts and timestamps.
+         * @param {SearchApiCloudGetV1SearchIndexesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1SearchIndexes(requestParameters: SearchApiCloudGetV1SearchIndexesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudSearchIndexList> {
+            return localVarFp.cloudGetV1SearchIndexes(requestParameters.offset, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * GetSearch returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
          * @summary GetSearch returns one search index\'s metadata.
          * @param {SearchApiCloudGetV1SearchNameRequest} requestParameters Request parameters.
@@ -962,6 +1080,15 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          */
         cloudGetV1SearchName(requestParameters: SearchApiCloudGetV1SearchNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudProvisionedResource> {
             return localVarFp.cloudGetV1SearchName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
+         * @summary Totals the documents across every search index.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1SearchStats(options?: RawAxiosRequestConfig): AxiosPromise<CloudSearchStats> {
+            return localVarFp.cloudGetV1SearchStats(options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
@@ -1110,6 +1237,27 @@ export interface SearchApiCloudDeleteV1SearchNameRequest {
      * @memberof SearchApiCloudDeleteV1SearchName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for cloudGetV1SearchIndexes operation in SearchApi.
+ * @export
+ * @interface SearchApiCloudGetV1SearchIndexesRequest
+ */
+export interface SearchApiCloudGetV1SearchIndexesRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof SearchApiCloudGetV1SearchIndexes
+     */
+    readonly offset?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof SearchApiCloudGetV1SearchIndexes
+     */
+    readonly limit?: number
 }
 
 /**
@@ -1426,6 +1574,18 @@ export class SearchApi extends BaseAPI {
     }
 
     /**
+     * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
+     * @summary Lists the search indexes with their document counts and timestamps.
+     * @param {SearchApiCloudGetV1SearchIndexesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchApi
+     */
+    public cloudGetV1SearchIndexes(requestParameters: SearchApiCloudGetV1SearchIndexesRequest = {}, options?: RawAxiosRequestConfig) {
+        return SearchApiFp(this.configuration).cloudGetV1SearchIndexes(requestParameters.offset, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * GetSearch returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
      * @summary GetSearch returns one search index\'s metadata.
      * @param {SearchApiCloudGetV1SearchNameRequest} requestParameters Request parameters.
@@ -1435,6 +1595,17 @@ export class SearchApi extends BaseAPI {
      */
     public cloudGetV1SearchName(requestParameters: SearchApiCloudGetV1SearchNameRequest, options?: RawAxiosRequestConfig) {
         return SearchApiFp(this.configuration).cloudGetV1SearchName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
+     * @summary Totals the documents across every search index.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchApi
+     */
+    public cloudGetV1SearchStats(options?: RawAxiosRequestConfig) {
+        return SearchApiFp(this.configuration).cloudGetV1SearchStats(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

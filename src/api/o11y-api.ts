@@ -76,17 +76,17 @@ import type { O11yPrometheusResponse } from '../models';
 export const O11yApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
-         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
-         * @param {string} id ID is the annotation queue to act on, from the path.
+         * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
+         * @summary Remove a runtime object
+         * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1O11yAnnotationQueuesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudDeleteV1O11yAnnotationQueuesId', 'id', id)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        cloudDeleteV1O11yByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('cloudDeleteV1O11yByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/o11y/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -114,17 +114,17 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
-         * @summary Remove a runtime object
-         * @param {string} wildcard1 
+         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
+         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
+         * @param {string} id ID is the annotation queue to act on, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1O11yByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudDeleteV1O11yByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/o11y/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+        cloudDeleteV1O11yReviewsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudDeleteV1O11yReviewsId', 'id', id)
+            const localVarPath = `/v1/o11y/reviews/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -173,141 +173,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
-         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
-         * @param {number} [page] Page is the 1-based page to read. Default 1.
-         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueues: async (page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/o11y/annotation-queues`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
-         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
-         * @param {string} id ID is the annotation queue to act on, from the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueuesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudGetV1O11yAnnotationQueuesId', 'id', id)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
-         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-         * @param {string} id ID is the annotation queue whose items to list, from the path.
-         * @param {string} [status] Status filters to PENDING or COMPLETED items. Absent returns both.
-         * @param {number} [page] Page is the 1-based page to read. Default 1.
-         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueuesIdItems: async (id: string, status?: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudGetV1O11yAnnotationQueuesIdItems', 'id', id)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}/items`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (status !== undefined) {
-                localVarQueryParameter['status'] = status;
-            }
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
 
 
     
@@ -564,6 +429,141 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
+         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
+         * @param {number} [page] Page is the 1-based page to read. Default 1.
+         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviews: async (page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/o11y/reviews`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
+         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
+         * @param {string} id ID is the annotation queue to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviewsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudGetV1O11yReviewsId', 'id', id)
+            const localVarPath = `/v1/o11y/reviews/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
+         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
+         * @param {string} id ID is the annotation queue whose items to list, from the path.
+         * @param {string} [status] Status filters to PENDING or COMPLETED items. Absent returns both.
+         * @param {number} [page] Page is the 1-based page to read. Default 1.
+         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviewsIdItems: async (id: string, status?: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudGetV1O11yReviewsIdItems', 'id', id)
+            const localVarPath = `/v1/o11y/reviews/{id}/items`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
          * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
@@ -778,6 +778,44 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
+         * @summary Update part of a runtime object
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPatchV1O11yByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('cloudPatchV1O11yByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/v1/o11y/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
          * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
          * @param {string} id ID is the annotation queue to update, from the path.
@@ -785,12 +823,12 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1O11yAnnotationQueuesId: async (id: string, cloudUpdateQueueIn: CloudUpdateQueueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPatchV1O11yReviewsId: async (id: string, cloudUpdateQueueIn: CloudUpdateQueueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPatchV1O11yAnnotationQueuesId', 'id', id)
+            assertParamExists('cloudPatchV1O11yReviewsId', 'id', id)
             // verify required parameter 'cloudUpdateQueueIn' is not null or undefined
-            assertParamExists('cloudPatchV1O11yAnnotationQueuesId', 'cloudUpdateQueueIn', cloudUpdateQueueIn)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}`
+            assertParamExists('cloudPatchV1O11yReviewsId', 'cloudUpdateQueueIn', cloudUpdateQueueIn)
+            const localVarPath = `/v1/o11y/reviews/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -830,14 +868,14 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1O11yAnnotationQueuesIdItemsItemId: async (id: string, itemId: string, cloudUpdateItemIn: CloudUpdateItemIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPatchV1O11yReviewsIdItemsItemId: async (id: string, itemId: string, cloudUpdateItemIn: CloudUpdateItemIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPatchV1O11yAnnotationQueuesIdItemsItemId', 'id', id)
+            assertParamExists('cloudPatchV1O11yReviewsIdItemsItemId', 'id', id)
             // verify required parameter 'itemId' is not null or undefined
-            assertParamExists('cloudPatchV1O11yAnnotationQueuesIdItemsItemId', 'itemId', itemId)
+            assertParamExists('cloudPatchV1O11yReviewsIdItemsItemId', 'itemId', itemId)
             // verify required parameter 'cloudUpdateItemIn' is not null or undefined
-            assertParamExists('cloudPatchV1O11yAnnotationQueuesIdItemsItemId', 'cloudUpdateItemIn', cloudUpdateItemIn)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}/items/{itemId}`
+            assertParamExists('cloudPatchV1O11yReviewsIdItemsItemId', 'cloudUpdateItemIn', cloudUpdateItemIn)
+            const localVarPath = `/v1/o11y/reviews/{id}/items/{itemId}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"itemId"}}`, encodeURIComponent(String(itemId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -863,44 +901,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(cloudUpdateItemIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
-         * @summary Update part of a runtime object
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPatchV1O11yByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('cloudPatchV1O11yByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/o11y/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -939,90 +939,6 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
-         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
-         * @param {CloudCreateQueueReq} cloudCreateQueueReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1O11yAnnotationQueues: async (cloudCreateQueueReq: CloudCreateQueueReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cloudCreateQueueReq' is not null or undefined
-            assertParamExists('cloudPostV1O11yAnnotationQueues', 'cloudCreateQueueReq', cloudCreateQueueReq)
-            const localVarPath = `/v1/o11y/annotation-queues`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudCreateQueueReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
-         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
-         * @param {string} id ID is the annotation queue to add to, from the path.
-         * @param {CloudAddItemsIn} cloudAddItemsIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1O11yAnnotationQueuesIdItems: async (id: string, cloudAddItemsIn: CloudAddItemsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPostV1O11yAnnotationQueuesIdItems', 'id', id)
-            // verify required parameter 'cloudAddItemsIn' is not null or undefined
-            assertParamExists('cloudPostV1O11yAnnotationQueuesIdItems', 'cloudAddItemsIn', cloudAddItemsIn)
-            const localVarPath = `/v1/o11y/annotation-queues/{id}/items`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudAddItemsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1141,6 +1057,90 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yBuilderQuery, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
+         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
+         * @param {CloudCreateQueueReq} cloudCreateQueueReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1O11yReviews: async (cloudCreateQueueReq: CloudCreateQueueReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cloudCreateQueueReq' is not null or undefined
+            assertParamExists('cloudPostV1O11yReviews', 'cloudCreateQueueReq', cloudCreateQueueReq)
+            const localVarPath = `/v1/o11y/reviews`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudCreateQueueReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
+         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
+         * @param {string} id ID is the annotation queue to add to, from the path.
+         * @param {CloudAddItemsIn} cloudAddItemsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1O11yReviewsIdItems: async (id: string, cloudAddItemsIn: CloudAddItemsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudPostV1O11yReviewsIdItems', 'id', id)
+            // verify required parameter 'cloudAddItemsIn' is not null or undefined
+            assertParamExists('cloudPostV1O11yReviewsIdItems', 'cloudAddItemsIn', cloudAddItemsIn)
+            const localVarPath = `/v1/o11y/reviews/{id}/items`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudAddItemsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1372,19 +1372,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = O11yApiAxiosParamCreator(configuration)
     return {
         /**
-         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
-         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
-         * @param {string} id ID is the annotation queue to act on, from the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudDeleteV1O11yAnnotationQueuesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1O11yAnnotationQueuesId(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudDeleteV1O11yAnnotationQueuesId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
          * @summary Remove a runtime object
          * @param {string} wildcard1 
@@ -1398,6 +1385,19 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
+         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
+         * @param {string} id ID is the annotation queue to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudDeleteV1O11yReviewsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1O11yReviewsId(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudDeleteV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
          * @summary Replay the page-delivery receipts this process took
          * @param {*} [options] Override http request option.
@@ -1407,49 +1407,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yAlertsLast(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yAlertsLast']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
-         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
-         * @param {number} [page] Page is the 1-based page to read. Default 1.
-         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1O11yAnnotationQueues(page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yAnnotationQueues(page, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yAnnotationQueues']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
-         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
-         * @param {string} id ID is the annotation queue to act on, from the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1O11yAnnotationQueuesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueDetailView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yAnnotationQueuesId(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yAnnotationQueuesId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
-         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-         * @param {string} id ID is the annotation queue whose items to list, from the path.
-         * @param {string} [status] Status filters to PENDING or COMPLETED items. Absent returns both.
-         * @param {number} [page] Page is the 1-based page to read. Default 1.
-         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1O11yAnnotationQueuesIdItems(id: string, status?: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yAnnotationQueuesIdItems(id, status, page, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yAnnotationQueuesIdItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1533,6 +1490,49 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
+         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
+         * @param {number} [page] Page is the 1-based page to read. Default 1.
+         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1O11yReviews(page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yReviews(page, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yReviews']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
+         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
+         * @param {string} id ID is the annotation queue to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1O11yReviewsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueDetailView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yReviewsId(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
+         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
+         * @param {string} id ID is the annotation queue whose items to list, from the path.
+         * @param {string} [status] Status filters to PENDING or COMPLETED items. Absent returns both.
+         * @param {number} [page] Page is the 1-based page to read. Default 1.
+         * @param {number} [limit] Limit is how many rows to return. Default 20, capped at 100.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1O11yReviewsIdItems(id: string, status?: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1O11yReviewsIdItems(id, status, page, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudGetV1O11yReviewsIdItems']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
          * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
@@ -1600,35 +1600,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
-         * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
-         * @param {string} id ID is the annotation queue to update, from the path.
-         * @param {CloudUpdateQueueIn} cloudUpdateQueueIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPatchV1O11yAnnotationQueuesId(id: string, cloudUpdateQueueIn: CloudUpdateQueueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1O11yAnnotationQueuesId(id, cloudUpdateQueueIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPatchV1O11yAnnotationQueuesId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
-         * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
-         * @param {string} id ID is the annotation queue the item belongs to, from the path.
-         * @param {string} itemId ItemID is the item to update, from the path.
-         * @param {CloudUpdateItemIn} cloudUpdateItemIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPatchV1O11yAnnotationQueuesIdItemsItemId(id: string, itemId: string, cloudUpdateItemIn: CloudUpdateItemIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1O11yAnnotationQueuesIdItemsItemId(id, itemId, cloudUpdateItemIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPatchV1O11yAnnotationQueuesIdItemsItemId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
          * @summary Update part of a runtime object
          * @param {string} wildcard1 
@@ -1642,6 +1613,35 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
+         * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
+         * @param {string} id ID is the annotation queue to update, from the path.
+         * @param {CloudUpdateQueueIn} cloudUpdateQueueIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPatchV1O11yReviewsId(id: string, cloudUpdateQueueIn: CloudUpdateQueueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1O11yReviewsId(id, cloudUpdateQueueIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPatchV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
+         * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
+         * @param {string} id ID is the annotation queue the item belongs to, from the path.
+         * @param {string} itemId ItemID is the item to update, from the path.
+         * @param {CloudUpdateItemIn} cloudUpdateItemIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPatchV1O11yReviewsIdItemsItemId(id: string, itemId: string, cloudUpdateItemIn: CloudUpdateItemIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1O11yReviewsIdItemsItemId(id, itemId, cloudUpdateItemIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPatchV1O11yReviewsIdItemsItemId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
          * @summary Take an Alertmanager notification and page Slack
          * @param {string} receiver 
@@ -1652,33 +1652,6 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yAlertsByReceiver(receiver, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yAlertsByReceiver']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
-         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
-         * @param {CloudCreateQueueReq} cloudCreateQueueReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1O11yAnnotationQueues(cloudCreateQueueReq: CloudCreateQueueReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yAnnotationQueues(cloudCreateQueueReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yAnnotationQueues']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
-         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
-         * @param {string} id ID is the annotation queue to add to, from the path.
-         * @param {CloudAddItemsIn} cloudAddItemsIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1O11yAnnotationQueuesIdItems(id: string, cloudAddItemsIn: CloudAddItemsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemsCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yAnnotationQueuesIdItems(id, cloudAddItemsIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yAnnotationQueuesIdItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1718,6 +1691,33 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yQueryRange(o11yBuilderQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yQueryRange']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
+         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
+         * @param {CloudCreateQueueReq} cloudCreateQueueReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1O11yReviews(cloudCreateQueueReq: CloudCreateQueueReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnQueueView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yReviews(cloudCreateQueueReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yReviews']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
+         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
+         * @param {string} id ID is the annotation queue to add to, from the path.
+         * @param {CloudAddItemsIn} cloudAddItemsIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1O11yReviewsIdItems(id: string, cloudAddItemsIn: CloudAddItemsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAnnItemsCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1O11yReviewsIdItems(id, cloudAddItemsIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.cloudPostV1O11yReviewsIdItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1805,16 +1805,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = O11yApiFp(configuration)
     return {
         /**
-         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
-         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
-         * @param {O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudDeleteV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueDeleted> {
-            return localVarFp.cloudDeleteV1O11yAnnotationQueuesId(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
          * @summary Remove a runtime object
          * @param {O11yApiCloudDeleteV1O11yByWildcard1Request} requestParameters Request parameters.
@@ -1825,6 +1815,16 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudDeleteV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
+         * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
+         * @summary DeleteAnnotationQueue removes one review queue and every item in it.
+         * @param {O11yApiCloudDeleteV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudDeleteV1O11yReviewsId(requestParameters: O11yApiCloudDeleteV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueDeleted> {
+            return localVarFp.cloudDeleteV1O11yReviewsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
          * @summary Replay the page-delivery receipts this process took
          * @param {*} [options] Override http request option.
@@ -1832,36 +1832,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         cloudGetV1O11yAlertsLast(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudGetV1O11yAlertsLast(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
-         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
-         * @param {O11yApiCloudGetV1O11yAnnotationQueuesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueues(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueList> {
-            return localVarFp.cloudGetV1O11yAnnotationQueues(requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
-         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
-         * @param {O11yApiCloudGetV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueDetailView> {
-            return localVarFp.cloudGetV1O11yAnnotationQueuesId(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
-         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-         * @param {O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1O11yAnnotationQueuesIdItems(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemList> {
-            return localVarFp.cloudGetV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports whether every service in the runtime\'s registry is healthy, and names them grouped by state — so a failure says WHICH component is down, not merely that something is. An unhealthy registry answers 503, not a 200 with a false flag inside, so a plain status check cannot read a sick runtime as well.  UNAUTHENTICATED by design, like the other two probes: it carries no tenant data and is reached by k8s and by external checks that hold no principal.
@@ -1921,6 +1891,36 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudGetV1O11yMetrics(requestParameters.product, requestParameters.range, requestParameters.stepSec, options).then((request) => request(axios, basePath));
         },
         /**
+         * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
+         * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
+         * @param {O11yApiCloudGetV1O11yReviewsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviews(requestParameters: O11yApiCloudGetV1O11yReviewsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueList> {
+            return localVarFp.cloudGetV1O11yReviews(requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
+         * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
+         * @param {O11yApiCloudGetV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviewsId(requestParameters: O11yApiCloudGetV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueDetailView> {
+            return localVarFp.cloudGetV1O11yReviewsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
+         * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
+         * @param {O11yApiCloudGetV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1O11yReviewsIdItems(requestParameters: O11yApiCloudGetV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemList> {
+            return localVarFp.cloudGetV1O11yReviewsIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
          * @summary List the caller org\'s LLM sessions
          * @param {*} [options] Override http request option.
@@ -1970,26 +1970,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudOptionsV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
-         * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
-         * @param {O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPatchV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueView> {
-            return localVarFp.cloudPatchV1O11yAnnotationQueuesId(requestParameters.id, requestParameters.cloudUpdateQueueIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
-         * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
-         * @param {O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPatchV1O11yAnnotationQueuesIdItemsItemId(requestParameters: O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemView> {
-            return localVarFp.cloudPatchV1O11yAnnotationQueuesIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.cloudUpdateItemIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
          * @summary Update part of a runtime object
          * @param {O11yApiCloudPatchV1O11yByWildcard1Request} requestParameters Request parameters.
@@ -2000,6 +1980,26 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.cloudPatchV1O11yByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
+         * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
+         * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
+         * @param {O11yApiCloudPatchV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPatchV1O11yReviewsId(requestParameters: O11yApiCloudPatchV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueView> {
+            return localVarFp.cloudPatchV1O11yReviewsId(requestParameters.id, requestParameters.cloudUpdateQueueIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
+         * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
+         * @param {O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPatchV1O11yReviewsIdItemsItemId(requestParameters: O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemView> {
+            return localVarFp.cloudPatchV1O11yReviewsIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.cloudUpdateItemIn, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
          * @summary Take an Alertmanager notification and page Slack
          * @param {O11yApiCloudPostV1O11yAlertsByReceiverRequest} requestParameters Request parameters.
@@ -2008,26 +2008,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         cloudPostV1O11yAlertsByReceiver(requestParameters: O11yApiCloudPostV1O11yAlertsByReceiverRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPostV1O11yAlertsByReceiver(requestParameters.receiver, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
-         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
-         * @param {O11yApiCloudPostV1O11yAnnotationQueuesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1O11yAnnotationQueues(requestParameters: O11yApiCloudPostV1O11yAnnotationQueuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueView> {
-            return localVarFp.cloudPostV1O11yAnnotationQueues(requestParameters.cloudCreateQueueReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
-         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
-         * @param {O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1O11yAnnotationQueuesIdItems(requestParameters: O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemsCreated> {
-            return localVarFp.cloudPostV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.cloudAddItemsIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Carries the runtime\'s own writes and query posts — creating a dashboard, an alert rule or a saved view, and running the query bodies the explorers submit — in the runtime\'s own shapes, passed through unchanged.  It is the FALLTHROUGH: the builder query and the ingest routes this repo owns are registered ahead of it and win the match. A validated, org-scoped principal is required and the write lands in that principal\'s own tenant, pinned server-side.  ONE EXEMPTION, and it is deliberate: a Sentry error-ingest write presents a DSN public key, never a Hanzo session, so those two paths bypass the principal gate and are authenticated by the ingest verifier instead — which derives the org from the DSN itself and fails closed. The exemption is matched by method plus prefix plus suffix, never a broad prefix, so every read under the same subtree stays gated. Before the runtime is initialized, 503.
@@ -2058,6 +2038,26 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         cloudPostV1O11yQueryRange(requestParameters: O11yApiCloudPostV1O11yQueryRangeRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yBuilderQueryResult> {
             return localVarFp.cloudPostV1O11yQueryRange(requestParameters.o11yBuilderQuery, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
+         * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
+         * @param {O11yApiCloudPostV1O11yReviewsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1O11yReviews(requestParameters: O11yApiCloudPostV1O11yReviewsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnQueueView> {
+            return localVarFp.cloudPostV1O11yReviews(requestParameters.cloudCreateQueueReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
+         * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
+         * @param {O11yApiCloudPostV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1O11yReviewsIdItems(requestParameters: O11yApiCloudPostV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAnnItemsCreated> {
+            return localVarFp.cloudPostV1O11yReviewsIdItems(requestParameters.id, requestParameters.cloudAddItemsIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant: the org is minted from its claim at ingress, a client copy never survives, and nothing in the request can widen the scope. Before the runtime is initialized, 503.
@@ -2119,20 +2119,6 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
- * Request parameters for cloudDeleteV1O11yAnnotationQueuesId operation in O11yApi.
- * @export
- * @interface O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest
- */
-export interface O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest {
-    /**
-     * ID is the annotation queue to act on, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudDeleteV1O11yAnnotationQueuesId
-     */
-    readonly id: string
-}
-
-/**
  * Request parameters for cloudDeleteV1O11yByWildcard1 operation in O11yApi.
  * @export
  * @interface O11yApiCloudDeleteV1O11yByWildcard1Request
@@ -2147,73 +2133,17 @@ export interface O11yApiCloudDeleteV1O11yByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudGetV1O11yAnnotationQueues operation in O11yApi.
+ * Request parameters for cloudDeleteV1O11yReviewsId operation in O11yApi.
  * @export
- * @interface O11yApiCloudGetV1O11yAnnotationQueuesRequest
+ * @interface O11yApiCloudDeleteV1O11yReviewsIdRequest
  */
-export interface O11yApiCloudGetV1O11yAnnotationQueuesRequest {
-    /**
-     * Page is the 1-based page to read. Default 1.
-     * @type {number}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueues
-     */
-    readonly page?: number
-
-    /**
-     * Limit is how many rows to return. Default 20, capped at 100.
-     * @type {number}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueues
-     */
-    readonly limit?: number
-}
-
-/**
- * Request parameters for cloudGetV1O11yAnnotationQueuesId operation in O11yApi.
- * @export
- * @interface O11yApiCloudGetV1O11yAnnotationQueuesIdRequest
- */
-export interface O11yApiCloudGetV1O11yAnnotationQueuesIdRequest {
+export interface O11yApiCloudDeleteV1O11yReviewsIdRequest {
     /**
      * ID is the annotation queue to act on, from the path.
      * @type {string}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueuesId
+     * @memberof O11yApiCloudDeleteV1O11yReviewsId
      */
     readonly id: string
-}
-
-/**
- * Request parameters for cloudGetV1O11yAnnotationQueuesIdItems operation in O11yApi.
- * @export
- * @interface O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest
- */
-export interface O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest {
-    /**
-     * ID is the annotation queue whose items to list, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueuesIdItems
-     */
-    readonly id: string
-
-    /**
-     * Status filters to PENDING or COMPLETED items. Absent returns both.
-     * @type {string}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueuesIdItems
-     */
-    readonly status?: string
-
-    /**
-     * Page is the 1-based page to read. Default 1.
-     * @type {number}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueuesIdItems
-     */
-    readonly page?: number
-
-    /**
-     * Limit is how many rows to return. Default 20, capped at 100.
-     * @type {number}
-     * @memberof O11yApiCloudGetV1O11yAnnotationQueuesIdItems
-     */
-    readonly limit?: number
 }
 
 /**
@@ -2294,6 +2224,76 @@ export interface O11yApiCloudGetV1O11yMetricsRequest {
 }
 
 /**
+ * Request parameters for cloudGetV1O11yReviews operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudGetV1O11yReviewsRequest
+ */
+export interface O11yApiCloudGetV1O11yReviewsRequest {
+    /**
+     * Page is the 1-based page to read. Default 1.
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yReviews
+     */
+    readonly page?: number
+
+    /**
+     * Limit is how many rows to return. Default 20, capped at 100.
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yReviews
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for cloudGetV1O11yReviewsId operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudGetV1O11yReviewsIdRequest
+ */
+export interface O11yApiCloudGetV1O11yReviewsIdRequest {
+    /**
+     * ID is the annotation queue to act on, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudGetV1O11yReviewsId
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for cloudGetV1O11yReviewsIdItems operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudGetV1O11yReviewsIdItemsRequest
+ */
+export interface O11yApiCloudGetV1O11yReviewsIdItemsRequest {
+    /**
+     * ID is the annotation queue whose items to list, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudGetV1O11yReviewsIdItems
+     */
+    readonly id: string
+
+    /**
+     * Status filters to PENDING or COMPLETED items. Absent returns both.
+     * @type {string}
+     * @memberof O11yApiCloudGetV1O11yReviewsIdItems
+     */
+    readonly status?: string
+
+    /**
+     * Page is the 1-based page to read. Default 1.
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yReviewsIdItems
+     */
+    readonly page?: number
+
+    /**
+     * Limit is how many rows to return. Default 20, capped at 100.
+     * @type {number}
+     * @memberof O11yApiCloudGetV1O11yReviewsIdItems
+     */
+    readonly limit?: number
+}
+
+/**
  * Request parameters for cloudGetV1O11yStatus operation in O11yApi.
  * @export
  * @interface O11yApiCloudGetV1O11yStatusRequest
@@ -2371,55 +2371,6 @@ export interface O11yApiCloudOptionsV1O11yByWildcard1Request {
 }
 
 /**
- * Request parameters for cloudPatchV1O11yAnnotationQueuesId operation in O11yApi.
- * @export
- * @interface O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest
- */
-export interface O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest {
-    /**
-     * ID is the annotation queue to update, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudPatchV1O11yAnnotationQueuesId
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {CloudUpdateQueueIn}
-     * @memberof O11yApiCloudPatchV1O11yAnnotationQueuesId
-     */
-    readonly cloudUpdateQueueIn: CloudUpdateQueueIn
-}
-
-/**
- * Request parameters for cloudPatchV1O11yAnnotationQueuesIdItemsItemId operation in O11yApi.
- * @export
- * @interface O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest
- */
-export interface O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest {
-    /**
-     * ID is the annotation queue the item belongs to, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemId
-     */
-    readonly id: string
-
-    /**
-     * ItemID is the item to update, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemId
-     */
-    readonly itemId: string
-
-    /**
-     * 
-     * @type {CloudUpdateItemIn}
-     * @memberof O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemId
-     */
-    readonly cloudUpdateItemIn: CloudUpdateItemIn
-}
-
-/**
  * Request parameters for cloudPatchV1O11yByWildcard1 operation in O11yApi.
  * @export
  * @interface O11yApiCloudPatchV1O11yByWildcard1Request
@@ -2434,6 +2385,55 @@ export interface O11yApiCloudPatchV1O11yByWildcard1Request {
 }
 
 /**
+ * Request parameters for cloudPatchV1O11yReviewsId operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPatchV1O11yReviewsIdRequest
+ */
+export interface O11yApiCloudPatchV1O11yReviewsIdRequest {
+    /**
+     * ID is the annotation queue to update, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudPatchV1O11yReviewsId
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CloudUpdateQueueIn}
+     * @memberof O11yApiCloudPatchV1O11yReviewsId
+     */
+    readonly cloudUpdateQueueIn: CloudUpdateQueueIn
+}
+
+/**
+ * Request parameters for cloudPatchV1O11yReviewsIdItemsItemId operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest
+ */
+export interface O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest {
+    /**
+     * ID is the annotation queue the item belongs to, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudPatchV1O11yReviewsIdItemsItemId
+     */
+    readonly id: string
+
+    /**
+     * ItemID is the item to update, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudPatchV1O11yReviewsIdItemsItemId
+     */
+    readonly itemId: string
+
+    /**
+     * 
+     * @type {CloudUpdateItemIn}
+     * @memberof O11yApiCloudPatchV1O11yReviewsIdItemsItemId
+     */
+    readonly cloudUpdateItemIn: CloudUpdateItemIn
+}
+
+/**
  * Request parameters for cloudPostV1O11yAlertsByReceiver operation in O11yApi.
  * @export
  * @interface O11yApiCloudPostV1O11yAlertsByReceiverRequest
@@ -2445,41 +2445,6 @@ export interface O11yApiCloudPostV1O11yAlertsByReceiverRequest {
      * @memberof O11yApiCloudPostV1O11yAlertsByReceiver
      */
     readonly receiver: string
-}
-
-/**
- * Request parameters for cloudPostV1O11yAnnotationQueues operation in O11yApi.
- * @export
- * @interface O11yApiCloudPostV1O11yAnnotationQueuesRequest
- */
-export interface O11yApiCloudPostV1O11yAnnotationQueuesRequest {
-    /**
-     * 
-     * @type {CloudCreateQueueReq}
-     * @memberof O11yApiCloudPostV1O11yAnnotationQueues
-     */
-    readonly cloudCreateQueueReq: CloudCreateQueueReq
-}
-
-/**
- * Request parameters for cloudPostV1O11yAnnotationQueuesIdItems operation in O11yApi.
- * @export
- * @interface O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest
- */
-export interface O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest {
-    /**
-     * ID is the annotation queue to add to, from the path.
-     * @type {string}
-     * @memberof O11yApiCloudPostV1O11yAnnotationQueuesIdItems
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {CloudAddItemsIn}
-     * @memberof O11yApiCloudPostV1O11yAnnotationQueuesIdItems
-     */
-    readonly cloudAddItemsIn: CloudAddItemsIn
 }
 
 /**
@@ -2525,6 +2490,41 @@ export interface O11yApiCloudPostV1O11yQueryRangeRequest {
 }
 
 /**
+ * Request parameters for cloudPostV1O11yReviews operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPostV1O11yReviewsRequest
+ */
+export interface O11yApiCloudPostV1O11yReviewsRequest {
+    /**
+     * 
+     * @type {CloudCreateQueueReq}
+     * @memberof O11yApiCloudPostV1O11yReviews
+     */
+    readonly cloudCreateQueueReq: CloudCreateQueueReq
+}
+
+/**
+ * Request parameters for cloudPostV1O11yReviewsIdItems operation in O11yApi.
+ * @export
+ * @interface O11yApiCloudPostV1O11yReviewsIdItemsRequest
+ */
+export interface O11yApiCloudPostV1O11yReviewsIdItemsRequest {
+    /**
+     * ID is the annotation queue to add to, from the path.
+     * @type {string}
+     * @memberof O11yApiCloudPostV1O11yReviewsIdItems
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CloudAddItemsIn}
+     * @memberof O11yApiCloudPostV1O11yReviewsIdItems
+     */
+    readonly cloudAddItemsIn: CloudAddItemsIn
+}
+
+/**
  * Request parameters for cloudPutV1O11yByWildcard1 operation in O11yApi.
  * @export
  * @interface O11yApiCloudPutV1O11yByWildcard1Request
@@ -2560,18 +2560,6 @@ export interface O11yApiO11yO11yIngestRequest {
  */
 export class O11yApi extends BaseAPI {
     /**
-     * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
-     * @summary DeleteAnnotationQueue removes one review queue and every item in it.
-     * @param {O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudDeleteV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudDeleteV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudDeleteV1O11yAnnotationQueuesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Removes one of the observability runtime\'s own objects — a dashboard, an alert rule, a saved view — passing the runtime\'s answer through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the delete is confined to that principal\'s own tenant, pinned server-side from its claim, so one tenant can never reach another\'s object. Before the runtime is initialized, 503.
      * @summary Remove a runtime object
      * @param {O11yApiCloudDeleteV1O11yByWildcard1Request} requestParameters Request parameters.
@@ -2584,6 +2572,18 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
+     * DeleteAnnotationQueue removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
+     * @summary DeleteAnnotationQueue removes one review queue and every item in it.
+     * @param {O11yApiCloudDeleteV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudDeleteV1O11yReviewsId(requestParameters: O11yApiCloudDeleteV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudDeleteV1O11yReviewsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the most recent Alertmanager deliveries THIS process received, as plain text — one greppable `PAGE-DELIVERED` line per alert, newest last, so piping to `tail` reads in arrival order. `(none)` when nothing has landed.  It answers the question Alertmanager cannot: Alertmanager can tell you it dispatched a notification, never that anything received it. This ring is the far side of that hop, and it is the only record that a page actually arrived.  The ring is PROCESS-LOCAL and bounded to the last 200 lines. Both are the point: a receipt that outlived the process that took the call would be a claim about something nobody observed, and an unbounded receipt log is a memory leak with a nice name. A restart empties it.
      * @summary Replay the page-delivery receipts this process took
      * @param {*} [options] Override http request option.
@@ -2592,42 +2592,6 @@ export class O11yApi extends BaseAPI {
      */
     public cloudGetV1O11yAlertsLast(options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).cloudGetV1O11yAlertsLast(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
-     * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
-     * @param {O11yApiCloudGetV1O11yAnnotationQueuesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudGetV1O11yAnnotationQueues(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesRequest = {}, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudGetV1O11yAnnotationQueues(requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
-     * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
-     * @param {O11yApiCloudGetV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudGetV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudGetV1O11yAnnotationQueuesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
-     * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-     * @param {O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudGetV1O11yAnnotationQueuesIdItems(requestParameters: O11yApiCloudGetV1O11yAnnotationQueuesIdItemsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudGetV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2700,6 +2664,42 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
+     * ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project. Another org\'s queues are never visible.
+     * @summary ListAnnotationQueues returns a page of the caller org\'s human-review queues, newest first, narrowed to the caller\'s project.
+     * @param {O11yApiCloudGetV1O11yReviewsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudGetV1O11yReviews(requestParameters: O11yApiCloudGetV1O11yReviewsRequest = {}, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudGetV1O11yReviews(requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
+     * @summary GetAnnotationQueue returns one review queue with its pending and completed counts and its first page of items.
+     * @param {O11yApiCloudGetV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudGetV1O11yReviewsId(requestParameters: O11yApiCloudGetV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudGetV1O11yReviewsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
+     * @summary ListAnnotationQueueItems returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
+     * @param {O11yApiCloudGetV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudGetV1O11yReviewsIdItems(requestParameters: O11yApiCloudGetV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudGetV1O11yReviewsIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
      * @summary List the caller org\'s LLM sessions
      * @param {*} [options] Override http request option.
@@ -2759,30 +2759,6 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
-     * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
-     * @param {O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudPatchV1O11yAnnotationQueuesId(requestParameters: O11yApiCloudPatchV1O11yAnnotationQueuesIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPatchV1O11yAnnotationQueuesId(requestParameters.id, requestParameters.cloudUpdateQueueIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
-     * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
-     * @param {O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudPatchV1O11yAnnotationQueuesIdItemsItemId(requestParameters: O11yApiCloudPatchV1O11yAnnotationQueuesIdItemsItemIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPatchV1O11yAnnotationQueuesIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.cloudUpdateItemIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Applies a partial update to one of the observability runtime\'s own objects, in the runtime\'s own shapes, passed through unchanged. The fallthrough for the resources only the runtime knows.  A validated, org-scoped principal is required, and the write is confined to that principal\'s own tenant, pinned server-side from its claim. Before the runtime is initialized, 503.
      * @summary Update part of a runtime object
      * @param {O11yApiCloudPatchV1O11yByWildcard1Request} requestParameters Request parameters.
@@ -2795,6 +2771,30 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
+     * UpdateAnnotationQueue changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
+     * @summary UpdateAnnotationQueue changes a review queue\'s name, description or score-config set.
+     * @param {O11yApiCloudPatchV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudPatchV1O11yReviewsId(requestParameters: O11yApiCloudPatchV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPatchV1O11yReviewsId(requestParameters.id, requestParameters.cloudUpdateQueueIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
+     * @summary UpdateAnnotationQueueItem moves one queue item between PENDING and COMPLETED and sets its assignee.
+     * @param {O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudPatchV1O11yReviewsIdItemsItemId(requestParameters: O11yApiCloudPatchV1O11yReviewsIdItemsItemIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPatchV1O11yReviewsIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.cloudUpdateItemIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Records one Alertmanager webhook delivery and pages the on-call. Each alert in the payload prints a `PAGE-DELIVERED` line to the process log and joins the ring the receipt replay serves, then the batch is posted to Slack with the org\'s KMS-custodied bot token — the ONE Slack egress the product already has, not a second webhook credential. Resolved notifications page too: \"it recovered\" is the half of an incident people are actually waiting for.  It ALWAYS answers 200 with the body `ok`, and a body that will not parse is recorded with empty fields rather than rejected. Alertmanager retries on any other status, so a receipt that pushes back changes the thing it is measuring, and a 400 on a malformed payload would make it retry forever — the delivery still happened, which is the fact being recorded.  The receiver segment is Alertmanager\'s own receiver name, a parameter rather than a hand-listed route because the receiver set is config, not code. Paging is detached and fail-soft: with no channel configured nothing is posted and the receipt still lands, and a Slack failure prints its own line instead of failing the request.
      * @summary Take an Alertmanager notification and page Slack
      * @param {O11yApiCloudPostV1O11yAlertsByReceiverRequest} requestParameters Request parameters.
@@ -2804,30 +2804,6 @@ export class O11yApi extends BaseAPI {
      */
     public cloudPostV1O11yAlertsByReceiver(requestParameters: O11yApiCloudPostV1O11yAlertsByReceiverRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).cloudPostV1O11yAlertsByReceiver(requestParameters.receiver, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
-     * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
-     * @param {O11yApiCloudPostV1O11yAnnotationQueuesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudPostV1O11yAnnotationQueues(requestParameters: O11yApiCloudPostV1O11yAnnotationQueuesRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPostV1O11yAnnotationQueues(requestParameters.cloudCreateQueueReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
-     * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
-     * @param {O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof O11yApi
-     */
-    public cloudPostV1O11yAnnotationQueuesIdItems(requestParameters: O11yApiCloudPostV1O11yAnnotationQueuesIdItemsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).cloudPostV1O11yAnnotationQueuesIdItems(requestParameters.id, requestParameters.cloudAddItemsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2864,6 +2840,30 @@ export class O11yApi extends BaseAPI {
      */
     public cloudPostV1O11yQueryRange(requestParameters: O11yApiCloudPostV1O11yQueryRangeRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).cloudPostV1O11yQueryRange(requestParameters.o11yBuilderQuery, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * CreateAnnotationQueue creates a human-review queue in the caller\'s org and project. A name already used by another queue in the same project is a 409.
+     * @summary CreateAnnotationQueue creates a human-review queue in the caller\'s org and project.
+     * @param {O11yApiCloudPostV1O11yReviewsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudPostV1O11yReviews(requestParameters: O11yApiCloudPostV1O11yReviewsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPostV1O11yReviews(requestParameters.cloudCreateQueueReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
+     * @summary AddAnnotationQueueItems enqueues traces, observations or sessions on a review queue.
+     * @param {O11yApiCloudPostV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public cloudPostV1O11yReviewsIdItems(requestParameters: O11yApiCloudPostV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).cloudPostV1O11yReviewsIdItems(requestParameters.id, requestParameters.cloudAddItemsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

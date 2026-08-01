@@ -1280,10 +1280,10 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsTargetsIdClaimKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1AgentsTargetsIdKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPostV1AgentsTargetsIdClaimKey', 'id', id)
-            const localVarPath = `/v1/agents/targets/{id}/claim-key`
+            assertParamExists('cloudPostV1AgentsTargetsIdKey', 'id', id)
+            const localVarPath = `/v1/agents/targets/{id}/key`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1766,10 +1766,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1AgentsTargetsIdClaimKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudClaimKeyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsTargetsIdClaimKey(id, options);
+        async cloudPostV1AgentsTargetsIdKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudClaimKeyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AgentsTargetsIdKey(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsTargetsIdClaimKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.cloudPostV1AgentsTargetsIdKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2087,12 +2087,12 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
         /**
          * MintTargetClaimKey mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored. Rotating supersedes any prior daemon, so only the machine\'s owner — or an org admin — may call it; every other caller gets the same not-found an unknown id gets, and learns nothing about what exists.
          * @summary MintTargetClaimKey mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored.
-         * @param {AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest} requestParameters Request parameters.
+         * @param {AgentsApiCloudPostV1AgentsTargetsIdKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1AgentsTargetsIdClaimKey(requestParameters: AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudClaimKeyOut> {
-            return localVarFp.cloudPostV1AgentsTargetsIdClaimKey(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1AgentsTargetsIdKey(requestParameters: AgentsApiCloudPostV1AgentsTargetsIdKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudClaimKeyOut> {
+            return localVarFp.cloudPostV1AgentsTargetsIdKey(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * ReportRoutedRun completes a claimed run: it delivers the terminal result to the run\'s durable owner, which is what lets that workflow finish. Scoped to (org, target, run) and claim-key-authenticated, so a machine can only ever report a run it legitimately holds. Idempotent — a report for an unknown or already-finished run answers delivered:false rather than failing, because the session\'s terminal state was already set by the machine\'s own stream.
@@ -2584,15 +2584,15 @@ export interface AgentsApiCloudPostV1AgentsTargetsIdClaimRequest {
 }
 
 /**
- * Request parameters for cloudPostV1AgentsTargetsIdClaimKey operation in AgentsApi.
+ * Request parameters for cloudPostV1AgentsTargetsIdKey operation in AgentsApi.
  * @export
- * @interface AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest
+ * @interface AgentsApiCloudPostV1AgentsTargetsIdKeyRequest
  */
-export interface AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest {
+export interface AgentsApiCloudPostV1AgentsTargetsIdKeyRequest {
     /**
      * ID is the target to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiCloudPostV1AgentsTargetsIdClaimKey
+     * @memberof AgentsApiCloudPostV1AgentsTargetsIdKey
      */
     readonly id: string
 }
@@ -2980,13 +2980,13 @@ export class AgentsApi extends BaseAPI {
     /**
      * MintTargetClaimKey mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored. Rotating supersedes any prior daemon, so only the machine\'s owner — or an org admin — may call it; every other caller gets the same not-found an unknown id gets, and learns nothing about what exists.
      * @summary MintTargetClaimKey mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored.
-     * @param {AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest} requestParameters Request parameters.
+     * @param {AgentsApiCloudPostV1AgentsTargetsIdKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public cloudPostV1AgentsTargetsIdClaimKey(requestParameters: AgentsApiCloudPostV1AgentsTargetsIdClaimKeyRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).cloudPostV1AgentsTargetsIdClaimKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1AgentsTargetsIdKey(requestParameters: AgentsApiCloudPostV1AgentsTargetsIdKeyRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).cloudPostV1AgentsTargetsIdKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

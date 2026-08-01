@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { CloudCreateLBReq } from '../models';
+import type { CloudAdminAdminCreatePromo400Response } from '../models';
 // @ts-ignore
-import type { CloudLbList } from '../models';
+import type { DoListLoadBalancers200Response } from '../models';
 // @ts-ignore
-import type { CloudLbView } from '../models';
+import type { DoLoadBalancer } from '../models';
+// @ts-ignore
+import type { DoLoadBalancerCreate } from '../models';
 /**
  * LoadBalancersApi - axios parameter creator
  * @export
@@ -34,15 +36,55 @@ import type { CloudLbView } from '../models';
 export const LoadBalancersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
-         * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
+         * 
+         * @summary Create a load balancer
+         * @param {DoLoadBalancerCreate} doLoadBalancerCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        doCreateLoadBalancer: async (doLoadBalancerCreate: DoLoadBalancerCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'doLoadBalancerCreate' is not null or undefined
+            assertParamExists('doCreateLoadBalancer', 'doLoadBalancerCreate', doLoadBalancerCreate)
+            const localVarPath = `/v1/load-balancers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(doLoadBalancerCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete one load balancer (owned)
          * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1LoadBalancersId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        doDeleteLoadBalancer: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudDeleteV1LoadBalancersId', 'id', id)
+            assertParamExists('doDeleteLoadBalancer', 'id', id)
             const localVarPath = `/v1/load-balancers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -72,49 +114,15 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with. Same account-wide filter as the VPC listing: a load balancer outside the caller\'s \"o\"<orgHash>- namespace is never in the answer.
-         * @summary ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1LoadBalancers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/load-balancers`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
-         * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
+         * 
+         * @summary Get one load balancer (owned)
          * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1LoadBalancersId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        doGetLoadBalancer: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudGetV1LoadBalancersId', 'id', id)
+            assertParamExists('doGetLoadBalancer', 'id', id)
             const localVarPath = `/v1/load-balancers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -144,15 +152,12 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
-         * @summary CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it.
-         * @param {CloudCreateLBReq} cloudCreateLBReq 
+         * 
+         * @summary List the caller\'s load balancers
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1LoadBalancers: async (cloudCreateLBReq: CloudCreateLBReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cloudCreateLBReq' is not null or undefined
-            assertParamExists('cloudPostV1LoadBalancers', 'cloudCreateLBReq', cloudCreateLBReq)
+        doListLoadBalancers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/load-balancers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -161,7 +166,7 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -171,12 +176,9 @@ export const LoadBalancersApiAxiosParamCreator = function (configuration?: Confi
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudCreateLBReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -194,54 +196,54 @@ export const LoadBalancersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = LoadBalancersApiAxiosParamCreator(configuration)
     return {
         /**
-         * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
-         * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
+         * 
+         * @summary Create a load balancer
+         * @param {DoLoadBalancerCreate} doLoadBalancerCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async doCreateLoadBalancer(doLoadBalancerCreate: DoLoadBalancerCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoLoadBalancer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.doCreateLoadBalancer(doLoadBalancerCreate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.doCreateLoadBalancer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete one load balancer (owned)
          * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1LoadBalancersId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1LoadBalancersId(id, options);
+        async doDeleteLoadBalancer(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.doDeleteLoadBalancer(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.cloudDeleteV1LoadBalancersId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.doDeleteLoadBalancer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with. Same account-wide filter as the VPC listing: a load balancer outside the caller\'s \"o\"<orgHash>- namespace is never in the answer.
-         * @summary ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1LoadBalancers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudLbList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1LoadBalancers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.cloudGetV1LoadBalancers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
-         * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
+         * 
+         * @summary Get one load balancer (owned)
          * @param {string} id DO load balancer id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1LoadBalancersId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudLbView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1LoadBalancersId(id, options);
+        async doGetLoadBalancer(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoLoadBalancer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.doGetLoadBalancer(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.cloudGetV1LoadBalancersId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.doGetLoadBalancer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
-         * @summary CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it.
-         * @param {CloudCreateLBReq} cloudCreateLBReq 
+         * 
+         * @summary List the caller\'s load balancers
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1LoadBalancers(cloudCreateLBReq: CloudCreateLBReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudLbView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1LoadBalancers(cloudCreateLBReq, options);
+        async doListLoadBalancers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DoListLoadBalancers200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.doListLoadBalancers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.cloudPostV1LoadBalancers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LoadBalancersApi.doListLoadBalancers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -255,87 +257,87 @@ export const LoadBalancersApiFactory = function (configuration?: Configuration, 
     const localVarFp = LoadBalancersApiFp(configuration)
     return {
         /**
-         * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
-         * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
-         * @param {LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest} requestParameters Request parameters.
+         * 
+         * @summary Create a load balancer
+         * @param {LoadBalancersApiDoCreateLoadBalancerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1LoadBalancersId(requestParameters: LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudDeleteV1LoadBalancersId(requestParameters.id, options).then((request) => request(axios, basePath));
+        doCreateLoadBalancer(requestParameters: LoadBalancersApiDoCreateLoadBalancerRequest, options?: RawAxiosRequestConfig): AxiosPromise<DoLoadBalancer> {
+            return localVarFp.doCreateLoadBalancer(requestParameters.doLoadBalancerCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with. Same account-wide filter as the VPC listing: a load balancer outside the caller\'s \"o\"<orgHash>- namespace is never in the answer.
-         * @summary ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with.
+         * 
+         * @summary Delete one load balancer (owned)
+         * @param {LoadBalancersApiDoDeleteLoadBalancerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1LoadBalancers(options?: RawAxiosRequestConfig): AxiosPromise<CloudLbList> {
-            return localVarFp.cloudGetV1LoadBalancers(options).then((request) => request(axios, basePath));
+        doDeleteLoadBalancer(requestParameters: LoadBalancersApiDoDeleteLoadBalancerRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.doDeleteLoadBalancer(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
-         * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
-         * @param {LoadBalancersApiCloudGetV1LoadBalancersIdRequest} requestParameters Request parameters.
+         * 
+         * @summary Get one load balancer (owned)
+         * @param {LoadBalancersApiDoGetLoadBalancerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1LoadBalancersId(requestParameters: LoadBalancersApiCloudGetV1LoadBalancersIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudLbView> {
-            return localVarFp.cloudGetV1LoadBalancersId(requestParameters.id, options).then((request) => request(axios, basePath));
+        doGetLoadBalancer(requestParameters: LoadBalancersApiDoGetLoadBalancerRequest, options?: RawAxiosRequestConfig): AxiosPromise<DoLoadBalancer> {
+            return localVarFp.doGetLoadBalancer(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
-         * @summary CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it.
-         * @param {LoadBalancersApiCloudPostV1LoadBalancersRequest} requestParameters Request parameters.
+         * 
+         * @summary List the caller\'s load balancers
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1LoadBalancers(requestParameters: LoadBalancersApiCloudPostV1LoadBalancersRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudLbView> {
-            return localVarFp.cloudPostV1LoadBalancers(requestParameters.cloudCreateLBReq, options).then((request) => request(axios, basePath));
+        doListLoadBalancers(options?: RawAxiosRequestConfig): AxiosPromise<DoListLoadBalancers200Response> {
+            return localVarFp.doListLoadBalancers(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for cloudDeleteV1LoadBalancersId operation in LoadBalancersApi.
+ * Request parameters for doCreateLoadBalancer operation in LoadBalancersApi.
  * @export
- * @interface LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest
+ * @interface LoadBalancersApiDoCreateLoadBalancerRequest
  */
-export interface LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest {
-    /**
-     * DO load balancer id
-     * @type {string}
-     * @memberof LoadBalancersApiCloudDeleteV1LoadBalancersId
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for cloudGetV1LoadBalancersId operation in LoadBalancersApi.
- * @export
- * @interface LoadBalancersApiCloudGetV1LoadBalancersIdRequest
- */
-export interface LoadBalancersApiCloudGetV1LoadBalancersIdRequest {
-    /**
-     * DO load balancer id
-     * @type {string}
-     * @memberof LoadBalancersApiCloudGetV1LoadBalancersId
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for cloudPostV1LoadBalancers operation in LoadBalancersApi.
- * @export
- * @interface LoadBalancersApiCloudPostV1LoadBalancersRequest
- */
-export interface LoadBalancersApiCloudPostV1LoadBalancersRequest {
+export interface LoadBalancersApiDoCreateLoadBalancerRequest {
     /**
      * 
-     * @type {CloudCreateLBReq}
-     * @memberof LoadBalancersApiCloudPostV1LoadBalancers
+     * @type {DoLoadBalancerCreate}
+     * @memberof LoadBalancersApiDoCreateLoadBalancer
      */
-    readonly cloudCreateLBReq: CloudCreateLBReq
+    readonly doLoadBalancerCreate: DoLoadBalancerCreate
+}
+
+/**
+ * Request parameters for doDeleteLoadBalancer operation in LoadBalancersApi.
+ * @export
+ * @interface LoadBalancersApiDoDeleteLoadBalancerRequest
+ */
+export interface LoadBalancersApiDoDeleteLoadBalancerRequest {
+    /**
+     * DO load balancer id
+     * @type {string}
+     * @memberof LoadBalancersApiDoDeleteLoadBalancer
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for doGetLoadBalancer operation in LoadBalancersApi.
+ * @export
+ * @interface LoadBalancersApiDoGetLoadBalancerRequest
+ */
+export interface LoadBalancersApiDoGetLoadBalancerRequest {
+    /**
+     * DO load balancer id
+     * @type {string}
+     * @memberof LoadBalancersApiDoGetLoadBalancer
+     */
+    readonly id: string
 }
 
 /**
@@ -346,50 +348,50 @@ export interface LoadBalancersApiCloudPostV1LoadBalancersRequest {
  */
 export class LoadBalancersApi extends BaseAPI {
     /**
-     * DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
-     * @summary DeleteLoadBalancer removes one of the caller org\'s load balancers and answers 204.
-     * @param {LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest} requestParameters Request parameters.
+     * 
+     * @summary Create a load balancer
+     * @param {LoadBalancersApiDoCreateLoadBalancerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoadBalancersApi
      */
-    public cloudDeleteV1LoadBalancersId(requestParameters: LoadBalancersApiCloudDeleteV1LoadBalancersIdRequest, options?: RawAxiosRequestConfig) {
-        return LoadBalancersApiFp(this.configuration).cloudDeleteV1LoadBalancersId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public doCreateLoadBalancer(requestParameters: LoadBalancersApiDoCreateLoadBalancerRequest, options?: RawAxiosRequestConfig) {
+        return LoadBalancersApiFp(this.configuration).doCreateLoadBalancer(requestParameters.doLoadBalancerCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with. Same account-wide filter as the VPC listing: a load balancer outside the caller\'s \"o\"<orgHash>- namespace is never in the answer.
-     * @summary ListLoadBalancers returns every load balancer the caller\'s org owns, under the friendly names the org created them with.
+     * 
+     * @summary Delete one load balancer (owned)
+     * @param {LoadBalancersApiDoDeleteLoadBalancerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoadBalancersApi
      */
-    public cloudGetV1LoadBalancers(options?: RawAxiosRequestConfig) {
-        return LoadBalancersApiFp(this.configuration).cloudGetV1LoadBalancers(options).then((request) => request(this.axios, this.basePath));
+    public doDeleteLoadBalancer(requestParameters: LoadBalancersApiDoDeleteLoadBalancerRequest, options?: RawAxiosRequestConfig) {
+        return LoadBalancersApiFp(this.configuration).doDeleteLoadBalancer(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * GetLoadBalancer returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
-     * @summary GetLoadBalancer returns one of the caller org\'s load balancers by id.
-     * @param {LoadBalancersApiCloudGetV1LoadBalancersIdRequest} requestParameters Request parameters.
+     * 
+     * @summary Get one load balancer (owned)
+     * @param {LoadBalancersApiDoGetLoadBalancerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoadBalancersApi
      */
-    public cloudGetV1LoadBalancersId(requestParameters: LoadBalancersApiCloudGetV1LoadBalancersIdRequest, options?: RawAxiosRequestConfig) {
-        return LoadBalancersApiFp(this.configuration).cloudGetV1LoadBalancersId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public doGetLoadBalancer(requestParameters: LoadBalancersApiDoGetLoadBalancerRequest, options?: RawAxiosRequestConfig) {
+        return LoadBalancersApiFp(this.configuration).doGetLoadBalancer(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
-     * @summary CreateLoadBalancer creates a load balancer in the caller\'s org namespace and answers 201 with it.
-     * @param {LoadBalancersApiCloudPostV1LoadBalancersRequest} requestParameters Request parameters.
+     * 
+     * @summary List the caller\'s load balancers
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoadBalancersApi
      */
-    public cloudPostV1LoadBalancers(requestParameters: LoadBalancersApiCloudPostV1LoadBalancersRequest, options?: RawAxiosRequestConfig) {
-        return LoadBalancersApiFp(this.configuration).cloudPostV1LoadBalancers(requestParameters.cloudCreateLBReq, options).then((request) => request(this.axios, this.basePath));
+    public doListLoadBalancers(options?: RawAxiosRequestConfig) {
+        return LoadBalancersApiFp(this.configuration).doListLoadBalancers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

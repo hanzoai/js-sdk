@@ -27,7 +27,7 @@ export interface CloudProductEvent {
      */
     'distinctId'?: string;
     /**
-     * Event is the event name, e.g. $pageview.
+     * Event is the event name, e.g. page_viewed or signup_completed.
      * @type {string}
      * @memberof CloudProductEvent
      */
@@ -69,7 +69,7 @@ export interface CloudProductEvent {
      */
     'timestamp'?: string;
     /**
-     * Type is the canonical kind: pageview, error, identify, group or event.
+     * Type is the row\'s kind — the plane\'s discriminator: page, track, identify or group. (Errors are not here at all: they land on event.error and are read at /v1/errors.)
      * @type {string}
      * @memberof CloudProductEvent
      */

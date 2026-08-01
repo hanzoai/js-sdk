@@ -32,7 +32,7 @@ import type { CloudInsightsStatus } from '../models';
 export const InsightsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over the same table the capture doors write: one row per stored event, with the caller\'s own property bag returned verbatim.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary InsightsEvents returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
@@ -115,7 +115,7 @@ export const InsightsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = InsightsApiAxiosParamCreator(configuration)
     return {
         /**
-         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over the same table the capture doors write: one row per stored event, with the caller\'s own property bag returned verbatim.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary InsightsEvents returns the caller org\'s most recent product events, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
@@ -150,7 +150,7 @@ export const InsightsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = InsightsApiFp(configuration)
     return {
         /**
-         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over the same table the capture doors write: one row per stored event, with the caller\'s own property bag returned verbatim.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary InsightsEvents returns the caller org\'s most recent product events, newest first.
          * @param {InsightsApiCloudGetV1InsightsEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -193,7 +193,7 @@ export interface InsightsApiCloudGetV1InsightsEventsRequest {
  */
 export class InsightsApi extends BaseAPI {
     /**
-     * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over the same table the capture doors write: one row per stored event, with the caller\'s own property bag returned verbatim.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
+     * InsightsEvents returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
      * @summary InsightsEvents returns the caller org\'s most recent product events, newest first.
      * @param {InsightsApiCloudGetV1InsightsEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

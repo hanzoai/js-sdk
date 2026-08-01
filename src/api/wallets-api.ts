@@ -287,50 +287,6 @@ export const WalletsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
-         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
-         * @param {string} id 
-         * @param {CloudSafeTxIn} cloudSafeTxIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1WalletsIdSafeTx: async (id: string, cloudSafeTxIn: CloudSafeTxIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPostV1WalletsIdSafeTx', 'id', id)
-            // verify required parameter 'cloudSafeTxIn' is not null or undefined
-            assertParamExists('cloudPostV1WalletsIdSafeTx', 'cloudSafeTxIn', cloudSafeTxIn)
-            const localVarPath = `/v1/wallets/{id}/safe-tx`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudSafeTxIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
          * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
          * @param {string} id 
@@ -368,6 +324,50 @@ export const WalletsApiAxiosParamCreator = function (configuration?: Configurati
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(cloudSignIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
+         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
+         * @param {string} id 
+         * @param {CloudSafeTxIn} cloudSafeTxIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1WalletsIdTransactions: async (id: string, cloudSafeTxIn: CloudSafeTxIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudPostV1WalletsIdTransactions', 'id', id)
+            // verify required parameter 'cloudSafeTxIn' is not null or undefined
+            assertParamExists('cloudPostV1WalletsIdTransactions', 'cloudSafeTxIn', cloudSafeTxIn)
+            const localVarPath = `/v1/wallets/{id}/transactions`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cloudSafeTxIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -464,20 +464,6 @@ export const WalletsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
-         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
-         * @param {string} id 
-         * @param {CloudSafeTxIn} cloudSafeTxIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1WalletsIdSafeTx(id: string, cloudSafeTxIn: CloudSafeTxIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudSafeProposal>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1WalletsIdSafeTx(id, cloudSafeTxIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WalletsApi.cloudPostV1WalletsIdSafeTx']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
          * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
          * @param {string} id 
@@ -489,6 +475,20 @@ export const WalletsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1WalletsIdSign(id, cloudSignIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WalletsApi.cloudPostV1WalletsIdSign']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
+         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
+         * @param {string} id 
+         * @param {CloudSafeTxIn} cloudSafeTxIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1WalletsIdTransactions(id: string, cloudSafeTxIn: CloudSafeTxIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudSafeProposal>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1WalletsIdTransactions(id, cloudSafeTxIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['WalletsApi.cloudPostV1WalletsIdTransactions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -561,16 +561,6 @@ export const WalletsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudPostV1WalletsIdKeys(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
-         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
-         * @param {WalletsApiCloudPostV1WalletsIdSafeTxRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1WalletsIdSafeTx(requestParameters: WalletsApiCloudPostV1WalletsIdSafeTxRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudSafeProposal> {
-            return localVarFp.cloudPostV1WalletsIdSafeTx(requestParameters.id, requestParameters.cloudSafeTxIn, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
          * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
          * @param {WalletsApiCloudPostV1WalletsIdSignRequest} requestParameters Request parameters.
@@ -579,6 +569,16 @@ export const WalletsApiFactory = function (configuration?: Configuration, basePa
          */
         cloudPostV1WalletsIdSign(requestParameters: WalletsApiCloudPostV1WalletsIdSignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudSignature> {
             return localVarFp.cloudPostV1WalletsIdSign(requestParameters.id, requestParameters.cloudSignIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
+         * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
+         * @param {WalletsApiCloudPostV1WalletsIdTransactionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1WalletsIdTransactions(requestParameters: WalletsApiCloudPostV1WalletsIdTransactionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudSafeProposal> {
+            return localVarFp.cloudPostV1WalletsIdTransactions(requestParameters.id, requestParameters.cloudSafeTxIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -668,27 +668,6 @@ export interface WalletsApiCloudPostV1WalletsIdKeysRequest {
 }
 
 /**
- * Request parameters for cloudPostV1WalletsIdSafeTx operation in WalletsApi.
- * @export
- * @interface WalletsApiCloudPostV1WalletsIdSafeTxRequest
- */
-export interface WalletsApiCloudPostV1WalletsIdSafeTxRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof WalletsApiCloudPostV1WalletsIdSafeTx
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {CloudSafeTxIn}
-     * @memberof WalletsApiCloudPostV1WalletsIdSafeTx
-     */
-    readonly cloudSafeTxIn: CloudSafeTxIn
-}
-
-/**
  * Request parameters for cloudPostV1WalletsIdSign operation in WalletsApi.
  * @export
  * @interface WalletsApiCloudPostV1WalletsIdSignRequest
@@ -707,6 +686,27 @@ export interface WalletsApiCloudPostV1WalletsIdSignRequest {
      * @memberof WalletsApiCloudPostV1WalletsIdSign
      */
     readonly cloudSignIn: CloudSignIn
+}
+
+/**
+ * Request parameters for cloudPostV1WalletsIdTransactions operation in WalletsApi.
+ * @export
+ * @interface WalletsApiCloudPostV1WalletsIdTransactionsRequest
+ */
+export interface WalletsApiCloudPostV1WalletsIdTransactionsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletsApiCloudPostV1WalletsIdTransactions
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CloudSafeTxIn}
+     * @memberof WalletsApiCloudPostV1WalletsIdTransactions
+     */
+    readonly cloudSafeTxIn: CloudSafeTxIn
 }
 
 /**
@@ -788,18 +788,6 @@ export class WalletsApi extends BaseAPI {
     }
 
     /**
-     * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
-     * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
-     * @param {WalletsApiCloudPostV1WalletsIdSafeTxRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletsApi
-     */
-    public cloudPostV1WalletsIdSafeTx(requestParameters: WalletsApiCloudPostV1WalletsIdSafeTxRequest, options?: RawAxiosRequestConfig) {
-        return WalletsApiFp(this.configuration).cloudPostV1WalletsIdSafeTx(requestParameters.id, requestParameters.cloudSafeTxIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses. Give it either a `digest` (32 bytes as hex, signed verbatim) or a `message` (hashed with Keccak256 first) — exactly one is required. The private key never leaves its backend: KMS custody opens the sealed key in-process, MPC custody produces a threshold signature on the ring. The answer carries the digest that was signed alongside the signature, so a caller can verify what it got.
      * @summary Produces a secp256k1 signature from one of the caller org\'s wallets over a 32-byte digest, through whichever custody backend that wallet uses.
      * @param {WalletsApiCloudPostV1WalletsIdSignRequest} requestParameters Request parameters.
@@ -809,6 +797,18 @@ export class WalletsApi extends BaseAPI {
      */
     public cloudPostV1WalletsIdSign(requestParameters: WalletsApiCloudPostV1WalletsIdSignRequest, options?: RawAxiosRequestConfig) {
         return WalletsApiFp(this.configuration).cloudPostV1WalletsIdSign(requestParameters.id, requestParameters.cloudSignIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced. Only a wallet whose custody is \"safe\" can do this — any other custody is a 400, because the backend itself is asked whether it can propose rather than the kind being switched on. The ring computes the Safe-tx hash bound to the Safe contract and the chain id, so the hash a caller gets back is the one the Safe will verify. This PROPOSES: it does not execute the transaction.
+     * @summary Composes a Safe transaction on the MPC ring and answers its EIP-712 hash together with the owner approval the ring\'s threshold signature produced.
+     * @param {WalletsApiCloudPostV1WalletsIdTransactionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletsApi
+     */
+    public cloudPostV1WalletsIdTransactions(requestParameters: WalletsApiCloudPostV1WalletsIdTransactionsRequest, options?: RawAxiosRequestConfig) {
+        return WalletsApiFp(this.configuration).cloudPostV1WalletsIdTransactions(requestParameters.id, requestParameters.cloudSafeTxIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

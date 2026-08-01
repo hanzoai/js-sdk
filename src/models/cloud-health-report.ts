@@ -18,6 +18,9 @@
 import type { CloudHealthLenses } from './cloud-health-lenses';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { CloudHealthPlane } from './cloud-health-plane';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { CloudLoss } from './cloud-loss';
 
 /**
@@ -44,6 +47,12 @@ export interface CloudHealthReport {
      * @memberof CloudHealthReport
      */
     'lost'?: CloudLoss;
+    /**
+     * 
+     * @type {CloudHealthPlane}
+     * @memberof CloudHealthReport
+     */
+    'plane'?: CloudHealthPlane;
     /**
      * 
      * @type {string}

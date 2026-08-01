@@ -26,8 +26,6 @@ import type { SearchIndexCreateRequest } from '../models';
 // @ts-ignore
 import type { SearchIndexView } from '../models';
 // @ts-ignore
-import type { SearchPaginatedIndexes } from '../models';
-// @ts-ignore
 import type { SearchResponseError } from '../models';
 // @ts-ignore
 import type { SearchSummarizedTaskView } from '../models';
@@ -46,9 +44,9 @@ export const IndexesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchCreateIndex: async (searchIndexCreateRequest: SearchIndexCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudSearchCreateIndex: async (searchIndexCreateRequest: SearchIndexCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchIndexCreateRequest' is not null or undefined
-            assertParamExists('searchCreateIndex', 'searchIndexCreateRequest', searchIndexCreateRequest)
+            assertParamExists('cloudSearchCreateIndex', 'searchIndexCreateRequest', searchIndexCreateRequest)
             const localVarPath = `/v1/search/indexes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -157,50 +155,6 @@ export const IndexesApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary List all indexes
-         * @param {number} [offset] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchListIndexes: async (offset?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/search/indexes`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Update index (primary key)
          * @param {string} indexUid Unique index identifier
          * @param {SearchUpdateIndexRequest} searchUpdateIndexRequest 
@@ -260,10 +214,10 @@ export const IndexesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchCreateIndex(searchIndexCreateRequest: SearchIndexCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSummarizedTaskView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchCreateIndex(searchIndexCreateRequest, options);
+        async cloudSearchCreateIndex(searchIndexCreateRequest: SearchIndexCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchSummarizedTaskView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudSearchCreateIndex(searchIndexCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexesApi.searchCreateIndex']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexesApi.cloudSearchCreateIndex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -294,20 +248,6 @@ export const IndexesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all indexes
-         * @param {number} [offset] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async searchListIndexes(offset?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchPaginatedIndexes>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchListIndexes(offset, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexesApi.searchListIndexes']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Update index (primary key)
          * @param {string} indexUid Unique index identifier
          * @param {SearchUpdateIndexRequest} searchUpdateIndexRequest 
@@ -333,12 +273,12 @@ export const IndexesApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Create a new index
-         * @param {IndexesApiSearchCreateIndexRequest} requestParameters Request parameters.
+         * @param {IndexesApiCloudSearchCreateIndexRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchCreateIndex(requestParameters: IndexesApiSearchCreateIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchSummarizedTaskView> {
-            return localVarFp.searchCreateIndex(requestParameters.searchIndexCreateRequest, options).then((request) => request(axios, basePath));
+        cloudSearchCreateIndex(requestParameters: IndexesApiCloudSearchCreateIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchSummarizedTaskView> {
+            return localVarFp.cloudSearchCreateIndex(requestParameters.searchIndexCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -362,16 +302,6 @@ export const IndexesApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary List all indexes
-         * @param {IndexesApiSearchListIndexesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchListIndexes(requestParameters: IndexesApiSearchListIndexesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchPaginatedIndexes> {
-            return localVarFp.searchListIndexes(requestParameters.offset, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Update index (primary key)
          * @param {IndexesApiSearchUpdateIndexRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -384,15 +314,15 @@ export const IndexesApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for searchCreateIndex operation in IndexesApi.
+ * Request parameters for cloudSearchCreateIndex operation in IndexesApi.
  * @export
- * @interface IndexesApiSearchCreateIndexRequest
+ * @interface IndexesApiCloudSearchCreateIndexRequest
  */
-export interface IndexesApiSearchCreateIndexRequest {
+export interface IndexesApiCloudSearchCreateIndexRequest {
     /**
      * 
      * @type {SearchIndexCreateRequest}
-     * @memberof IndexesApiSearchCreateIndex
+     * @memberof IndexesApiCloudSearchCreateIndex
      */
     readonly searchIndexCreateRequest: SearchIndexCreateRequest
 }
@@ -426,27 +356,6 @@ export interface IndexesApiSearchGetIndexRequest {
 }
 
 /**
- * Request parameters for searchListIndexes operation in IndexesApi.
- * @export
- * @interface IndexesApiSearchListIndexesRequest
- */
-export interface IndexesApiSearchListIndexesRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof IndexesApiSearchListIndexes
-     */
-    readonly offset?: number
-
-    /**
-     * 
-     * @type {number}
-     * @memberof IndexesApiSearchListIndexes
-     */
-    readonly limit?: number
-}
-
-/**
  * Request parameters for searchUpdateIndex operation in IndexesApi.
  * @export
  * @interface IndexesApiSearchUpdateIndexRequest
@@ -477,13 +386,13 @@ export class IndexesApi extends BaseAPI {
     /**
      * 
      * @summary Create a new index
-     * @param {IndexesApiSearchCreateIndexRequest} requestParameters Request parameters.
+     * @param {IndexesApiCloudSearchCreateIndexRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexesApi
      */
-    public searchCreateIndex(requestParameters: IndexesApiSearchCreateIndexRequest, options?: RawAxiosRequestConfig) {
-        return IndexesApiFp(this.configuration).searchCreateIndex(requestParameters.searchIndexCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    public cloudSearchCreateIndex(requestParameters: IndexesApiCloudSearchCreateIndexRequest, options?: RawAxiosRequestConfig) {
+        return IndexesApiFp(this.configuration).cloudSearchCreateIndex(requestParameters.searchIndexCreateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -508,18 +417,6 @@ export class IndexesApi extends BaseAPI {
      */
     public searchGetIndex(requestParameters: IndexesApiSearchGetIndexRequest, options?: RawAxiosRequestConfig) {
         return IndexesApiFp(this.configuration).searchGetIndex(requestParameters.indexUid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary List all indexes
-     * @param {IndexesApiSearchListIndexesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IndexesApi
-     */
-    public searchListIndexes(requestParameters: IndexesApiSearchListIndexesRequest = {}, options?: RawAxiosRequestConfig) {
-        return IndexesApiFp(this.configuration).searchListIndexes(requestParameters.offset, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

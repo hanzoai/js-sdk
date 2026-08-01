@@ -15,30 +15,30 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { CloudStorageSnapshot } from './cloud-storage-snapshot';
+import type { CloudSignerData } from './cloud-signer-data';
 
 /**
  * 
  * @export
- * @interface CloudBlockStorageOut
+ * @interface CloudSignerOut
  */
-export interface CloudBlockStorageOut {
+export interface CloudSignerOut {
     /**
-     * 
-     * @type {CloudStorageSnapshot}
-     * @memberof CloudBlockStorageOut
+     * Data is the bound signer.
+     * @type {CloudSignerData}
+     * @memberof CloudSignerOut
      */
-    'data'?: CloudStorageSnapshot;
+    'data'?: CloudSignerData;
     /**
-     * 
+     * Msg carries an operator-facing note; empty on success.
      * @type {string}
-     * @memberof CloudBlockStorageOut
+     * @memberof CloudSignerOut
      */
     'msg'?: string;
     /**
-     * 
+     * Status is \"ok\" on success.
      * @type {string}
-     * @memberof CloudBlockStorageOut
+     * @memberof CloudSignerOut
      */
     'status'?: string;
 }

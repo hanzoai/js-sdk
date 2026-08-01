@@ -24,19 +24,11 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { BillingBalance } from '../models';
 // @ts-ignore
-import type { BillingCapVerdict } from '../models';
-// @ts-ignore
 import type { BillingGpuChargeRequest } from '../models';
 // @ts-ignore
 import type { BillingGpuEligibility } from '../models';
 // @ts-ignore
 import type { BillingPaymentMethods } from '../models';
-// @ts-ignore
-import type { BillingSpendAlert } from '../models';
-// @ts-ignore
-import type { BillingSpendAlertCreate } from '../models';
-// @ts-ignore
-import type { BillingSpendAlertUpdate } from '../models';
 // @ts-ignore
 import type { BillingUsageLedger } from '../models';
 // @ts-ignore
@@ -56,10 +48,10 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1BillingSpendAlertsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudDeleteV1BillingAlertsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudDeleteV1BillingSpendAlertsById', 'id', id)
-            const localVarPath = `/v1/billing/spend-alerts/{id}`
+            assertParamExists('cloudDeleteV1BillingAlertsById', 'id', id)
+            const localVarPath = `/v1/billing/alerts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -69,6 +61,74 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
+         * @summary List your org\'s spend caps and rate limits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BillingAlerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/alerts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
+         * @summary The per-request spend-cap verdict the metering gate consumes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BillingAlertsAuthorize: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/alerts/authorize`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -384,104 +444,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BillingSpendAlerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/billing/spend-alerts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
-         * @param {string} [user] Org billing key (equals the org slug).
-         * @param {string} [project] Scope project axis; \&quot;\&quot; or \&quot;default\&quot; &#x3D; the org-wide default scope.
-         * @param {string} [service] Scope service axis (server-derived route/provider).
-         * @param {number} [amount] Proposed charge in USD cents to test against the cap (0 &#x3D; a pure \&quot;already over?\&quot; check).
-         * @param {CloudGetV1BillingSpendAlertsAuthorizePvEnum} [pv] 1 &#x3D; the project axis is bound to a VALIDATED claim (hardens project-scoped caps); otherwise a project-scoped cap degrades to a soft warn (anti-spoof).
-         * @param {string} [currency] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BillingSpendAlertsAuthorize: async (user?: string, project?: string, service?: string, amount?: number, pv?: CloudGetV1BillingSpendAlertsAuthorizePvEnum, currency?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/billing/spend-alerts/authorize`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (user !== undefined) {
-                localVarQueryParameter['user'] = user;
-            }
-
-            if (project !== undefined) {
-                localVarQueryParameter['project'] = project;
-            }
-
-            if (service !== undefined) {
-                localVarQueryParameter['service'] = service;
-            }
-
-            if (amount !== undefined) {
-                localVarQueryParameter['amount'] = amount;
-            }
-
-            if (pv !== undefined) {
-                localVarQueryParameter['pv'] = pv;
-            }
-
-            if (currency !== undefined) {
-                localVarQueryParameter['currency'] = currency;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
          * @summary List your org\'s subscriptions
          * @param {*} [options] Override http request option.
@@ -597,16 +559,13 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
          * @summary Change one of your org\'s spend caps
          * @param {string} id 
-         * @param {BillingSpendAlertUpdate} billingSpendAlertUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1BillingSpendAlertsById: async (id: string, billingSpendAlertUpdate: BillingSpendAlertUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPatchV1BillingAlertsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPatchV1BillingSpendAlertsById', 'id', id)
-            // verify required parameter 'billingSpendAlertUpdate' is not null or undefined
-            assertParamExists('cloudPatchV1BillingSpendAlertsById', 'billingSpendAlertUpdate', billingSpendAlertUpdate)
-            const localVarPath = `/v1/billing/spend-alerts/{id}`
+            assertParamExists('cloudPatchV1BillingAlertsById', 'id', id)
+            const localVarPath = `/v1/billing/alerts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -625,12 +584,43 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(billingSpendAlertUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
+         * @summary Set a spend cap or rate limit on your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1BillingAlerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/alerts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -739,46 +729,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
-         * @param {BillingSpendAlertCreate} billingSpendAlertCreate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1BillingSpendAlerts: async (billingSpendAlertCreate: BillingSpendAlertCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'billingSpendAlertCreate' is not null or undefined
-            assertParamExists('cloudPostV1BillingSpendAlerts', 'billingSpendAlertCreate', billingSpendAlertCreate)
-            const localVarPath = `/v1/billing/spend-alerts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(billingSpendAlertCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1018,10 +968,34 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudDeleteV1BillingSpendAlertsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1BillingSpendAlertsById(id, options);
+        async cloudDeleteV1BillingAlertsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudDeleteV1BillingAlertsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudDeleteV1BillingSpendAlertsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudDeleteV1BillingAlertsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
+         * @summary List your org\'s spend caps and rate limits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1BillingAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BillingAlerts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudGetV1BillingAlerts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
+         * @summary The per-request spend-cap verdict the metering gate consumes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1BillingAlertsAuthorize(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BillingAlertsAuthorize(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudGetV1BillingAlertsAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1126,36 +1100,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1BillingSpendAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BillingSpendAlert>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BillingSpendAlerts(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudGetV1BillingSpendAlerts']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
-         * @param {string} [user] Org billing key (equals the org slug).
-         * @param {string} [project] Scope project axis; \&quot;\&quot; or \&quot;default\&quot; &#x3D; the org-wide default scope.
-         * @param {string} [service] Scope service axis (server-derived route/provider).
-         * @param {number} [amount] Proposed charge in USD cents to test against the cap (0 &#x3D; a pure \&quot;already over?\&quot; check).
-         * @param {CloudGetV1BillingSpendAlertsAuthorizePvEnum} [pv] 1 &#x3D; the project axis is bound to a VALIDATED claim (hardens project-scoped caps); otherwise a project-scoped cap degrades to a soft warn (anti-spoof).
-         * @param {string} [currency] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1BillingSpendAlertsAuthorize(user?: string, project?: string, service?: string, amount?: number, pv?: CloudGetV1BillingSpendAlertsAuthorizePvEnum, currency?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingCapVerdict>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BillingSpendAlertsAuthorize(user, project, service, amount, pv, currency, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudGetV1BillingSpendAlertsAuthorize']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
          * @summary List your org\'s subscriptions
          * @param {*} [options] Override http request option.
@@ -1197,14 +1141,25 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
          * @summary Change one of your org\'s spend caps
          * @param {string} id 
-         * @param {BillingSpendAlertUpdate} billingSpendAlertUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPatchV1BillingSpendAlertsById(id: string, billingSpendAlertUpdate: BillingSpendAlertUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSpendAlert>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1BillingSpendAlertsById(id, billingSpendAlertUpdate, options);
+        async cloudPatchV1BillingAlertsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPatchV1BillingAlertsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudPatchV1BillingSpendAlertsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudPatchV1BillingAlertsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
+         * @summary Set a spend cap or rate limit on your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1BillingAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BillingAlerts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudPostV1BillingAlerts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1242,19 +1197,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BillingPaymentMethods(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudPostV1BillingPaymentMethods']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
-         * @param {BillingSpendAlertCreate} billingSpendAlertCreate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1BillingSpendAlerts(billingSpendAlertCreate: BillingSpendAlertCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingSpendAlert>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BillingSpendAlerts(billingSpendAlertCreate, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.cloudPostV1BillingSpendAlerts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1345,12 +1287,30 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
         /**
          * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
          * @summary Remove one of your org\'s spend caps
-         * @param {BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest} requestParameters Request parameters.
+         * @param {BillingApiCloudDeleteV1BillingAlertsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudDeleteV1BillingSpendAlertsById(requestParameters: BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudDeleteV1BillingSpendAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudDeleteV1BillingAlertsById(requestParameters: BillingApiCloudDeleteV1BillingAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudDeleteV1BillingAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
+         * @summary List your org\'s spend caps and rate limits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BillingAlerts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudGetV1BillingAlerts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
+         * @summary The per-request spend-cap verdict the metering gate consumes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BillingAlertsAuthorize(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudGetV1BillingAlertsAuthorize(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
@@ -1428,25 +1388,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.cloudGetV1BillingPlans(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BillingSpendAlerts(options?: RawAxiosRequestConfig): AxiosPromise<Array<BillingSpendAlert>> {
-            return localVarFp.cloudGetV1BillingSpendAlerts(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
-         * @param {BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BillingSpendAlertsAuthorize(requestParameters: BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BillingCapVerdict> {
-            return localVarFp.cloudGetV1BillingSpendAlertsAuthorize(requestParameters.user, requestParameters.project, requestParameters.service, requestParameters.amount, requestParameters.pv, requestParameters.currency, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
          * @summary List your org\'s subscriptions
          * @param {*} [options] Override http request option.
@@ -1477,12 +1418,21 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
         /**
          * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
          * @summary Change one of your org\'s spend caps
-         * @param {BillingApiCloudPatchV1BillingSpendAlertsByIdRequest} requestParameters Request parameters.
+         * @param {BillingApiCloudPatchV1BillingAlertsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPatchV1BillingSpendAlertsById(requestParameters: BillingApiCloudPatchV1BillingSpendAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSpendAlert> {
-            return localVarFp.cloudPatchV1BillingSpendAlertsById(requestParameters.id, requestParameters.billingSpendAlertUpdate, options).then((request) => request(axios, basePath));
+        cloudPatchV1BillingAlertsById(requestParameters: BillingApiCloudPatchV1BillingAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPatchV1BillingAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
+         * @summary Set a spend cap or rate limit on your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1BillingAlerts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPostV1BillingAlerts(options).then((request) => request(axios, basePath));
         },
         /**
          * Walks every organization and, for those that enabled auto-recharge and whose available balance (balance minus holds) has fallen under their configured threshold, charges their default payment method off-session and credits the balance, answering a per-org result row for each one it touched. This is the platform cron\'s door, not a customer\'s: it is gated on the internal service token AND platform scope, so an org admin cannot run the fleet-wide sweep. An org above its threshold is skipped silently; an org with no default payment method is reported as an uncharged row with the reason rather than failing the whole run.
@@ -1511,16 +1461,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         cloudPostV1BillingPaymentMethods(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.cloudPostV1BillingPaymentMethods(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
-         * @param {BillingApiCloudPostV1BillingSpendAlertsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1BillingSpendAlerts(requestParameters: BillingApiCloudPostV1BillingSpendAlertsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BillingSpendAlert> {
-            return localVarFp.cloudPostV1BillingSpendAlerts(requestParameters.billingSpendAlertCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Vaults the tokenized card as a reusable card-on-file, charges the first period, and creates the subscription — answering the subscription and invoice ids with the amount charged. The price is SERVER-AUTHORITATIVE: it is the plan\'s catalog price times billable seats and a client-supplied amount is never consulted, so a scripted request cannot underpay; a per-seat plan below its minimum seats is refused, and a free plan is refused outright because this address is the paid path. The card PAN never reaches this service — the browser tokenizes it and only the single-use nonce arrives here. The subject is the caller\'s own org, with an in-org user honored only inside that bound, and an idempotency key (or, absent one, the nonce itself) makes a retry replay the first result instead of charging twice.
@@ -1583,15 +1523,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for cloudDeleteV1BillingSpendAlertsById operation in BillingApi.
+ * Request parameters for cloudDeleteV1BillingAlertsById operation in BillingApi.
  * @export
- * @interface BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest
+ * @interface BillingApiCloudDeleteV1BillingAlertsByIdRequest
  */
-export interface BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest {
+export interface BillingApiCloudDeleteV1BillingAlertsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof BillingApiCloudDeleteV1BillingSpendAlertsById
+     * @memberof BillingApiCloudDeleteV1BillingAlertsById
      */
     readonly id: string
 }
@@ -1653,55 +1593,6 @@ export interface BillingApiCloudGetV1BillingInvoicesByIdPdfRequest {
 }
 
 /**
- * Request parameters for cloudGetV1BillingSpendAlertsAuthorize operation in BillingApi.
- * @export
- * @interface BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest
- */
-export interface BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest {
-    /**
-     * Org billing key (equals the org slug).
-     * @type {string}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly user?: string
-
-    /**
-     * Scope project axis; \&quot;\&quot; or \&quot;default\&quot; &#x3D; the org-wide default scope.
-     * @type {string}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly project?: string
-
-    /**
-     * Scope service axis (server-derived route/provider).
-     * @type {string}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly service?: string
-
-    /**
-     * Proposed charge in USD cents to test against the cap (0 &#x3D; a pure \&quot;already over?\&quot; check).
-     * @type {number}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly amount?: number
-
-    /**
-     * 1 &#x3D; the project axis is bound to a VALIDATED claim (hardens project-scoped caps); otherwise a project-scoped cap degrades to a soft warn (anti-spoof).
-     * @type {'0' | '1'}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly pv?: CloudGetV1BillingSpendAlertsAuthorizePvEnum
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingApiCloudGetV1BillingSpendAlertsAuthorize
-     */
-    readonly currency?: string
-}
-
-/**
  * Request parameters for cloudGetV1BillingUsage operation in BillingApi.
  * @export
  * @interface BillingApiCloudGetV1BillingUsageRequest
@@ -1723,24 +1614,17 @@ export interface BillingApiCloudGetV1BillingUsageRequest {
 }
 
 /**
- * Request parameters for cloudPatchV1BillingSpendAlertsById operation in BillingApi.
+ * Request parameters for cloudPatchV1BillingAlertsById operation in BillingApi.
  * @export
- * @interface BillingApiCloudPatchV1BillingSpendAlertsByIdRequest
+ * @interface BillingApiCloudPatchV1BillingAlertsByIdRequest
  */
-export interface BillingApiCloudPatchV1BillingSpendAlertsByIdRequest {
+export interface BillingApiCloudPatchV1BillingAlertsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof BillingApiCloudPatchV1BillingSpendAlertsById
+     * @memberof BillingApiCloudPatchV1BillingAlertsById
      */
     readonly id: string
-
-    /**
-     * 
-     * @type {BillingSpendAlertUpdate}
-     * @memberof BillingApiCloudPatchV1BillingSpendAlertsById
-     */
-    readonly billingSpendAlertUpdate: BillingSpendAlertUpdate
 }
 
 /**
@@ -1755,20 +1639,6 @@ export interface BillingApiCloudPostV1BillingGpuChargeRequest {
      * @memberof BillingApiCloudPostV1BillingGpuCharge
      */
     readonly billingGpuChargeRequest: BillingGpuChargeRequest
-}
-
-/**
- * Request parameters for cloudPostV1BillingSpendAlerts operation in BillingApi.
- * @export
- * @interface BillingApiCloudPostV1BillingSpendAlertsRequest
- */
-export interface BillingApiCloudPostV1BillingSpendAlertsRequest {
-    /**
-     * 
-     * @type {BillingSpendAlertCreate}
-     * @memberof BillingApiCloudPostV1BillingSpendAlerts
-     */
-    readonly billingSpendAlertCreate: BillingSpendAlertCreate
 }
 
 /**
@@ -1823,13 +1693,35 @@ export class BillingApi extends BaseAPI {
     /**
      * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
      * @summary Remove one of your org\'s spend caps
-     * @param {BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest} requestParameters Request parameters.
+     * @param {BillingApiCloudDeleteV1BillingAlertsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public cloudDeleteV1BillingSpendAlertsById(requestParameters: BillingApiCloudDeleteV1BillingSpendAlertsByIdRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cloudDeleteV1BillingSpendAlertsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public cloudDeleteV1BillingAlertsById(requestParameters: BillingApiCloudDeleteV1BillingAlertsByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cloudDeleteV1BillingAlertsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
+     * @summary List your org\'s spend caps and rate limits
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public cloudGetV1BillingAlerts(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cloudGetV1BillingAlerts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
+     * @summary The per-request spend-cap verdict the metering gate consumes
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public cloudGetV1BillingAlertsAuthorize(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cloudGetV1BillingAlertsAuthorize(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1924,29 +1816,6 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-     * @summary List your org\'s spend caps and rate limits
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public cloudGetV1BillingSpendAlerts(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cloudGetV1BillingSpendAlerts(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-     * @summary The per-request spend-cap verdict the metering gate consumes
-     * @param {BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public cloudGetV1BillingSpendAlertsAuthorize(requestParameters: BillingApiCloudGetV1BillingSpendAlertsAuthorizeRequest = {}, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cloudGetV1BillingSpendAlertsAuthorize(requestParameters.user, requestParameters.project, requestParameters.service, requestParameters.amount, requestParameters.pv, requestParameters.currency, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
      * @summary List your org\'s subscriptions
      * @param {*} [options] Override http request option.
@@ -1983,13 +1852,24 @@ export class BillingApi extends BaseAPI {
     /**
      * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
      * @summary Change one of your org\'s spend caps
-     * @param {BillingApiCloudPatchV1BillingSpendAlertsByIdRequest} requestParameters Request parameters.
+     * @param {BillingApiCloudPatchV1BillingAlertsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public cloudPatchV1BillingSpendAlertsById(requestParameters: BillingApiCloudPatchV1BillingSpendAlertsByIdRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cloudPatchV1BillingSpendAlertsById(requestParameters.id, requestParameters.billingSpendAlertUpdate, options).then((request) => request(this.axios, this.basePath));
+    public cloudPatchV1BillingAlertsById(requestParameters: BillingApiCloudPatchV1BillingAlertsByIdRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cloudPatchV1BillingAlertsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
+     * @summary Set a spend cap or rate limit on your org
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public cloudPostV1BillingAlerts(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cloudPostV1BillingAlerts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2024,18 +1904,6 @@ export class BillingApi extends BaseAPI {
      */
     public cloudPostV1BillingPaymentMethods(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).cloudPostV1BillingPaymentMethods(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-     * @summary Set a spend cap or rate limit on your org
-     * @param {BillingApiCloudPostV1BillingSpendAlertsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public cloudPostV1BillingSpendAlerts(requestParameters: BillingApiCloudPostV1BillingSpendAlertsRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).cloudPostV1BillingSpendAlerts(requestParameters.billingSpendAlertCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2108,11 +1976,3 @@ export class BillingApi extends BaseAPI {
     }
 }
 
-/**
- * @export
- */
-export const CloudGetV1BillingSpendAlertsAuthorizePvEnum = {
-    _0: '0',
-    _1: '1'
-} as const;
-export type CloudGetV1BillingSpendAlertsAuthorizePvEnum = typeof CloudGetV1BillingSpendAlertsAuthorizePvEnum[keyof typeof CloudGetV1BillingSpendAlertsAuthorizePvEnum];
