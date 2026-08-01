@@ -155,26 +155,39 @@ a 7-line `.github/workflows/cicd.yml` importing `hanzoai/ci`. The old bespoke
 Publishing is separate and unchanged: `publish-npm.yml` on a `v*` tag.
 
 ## Release
-Push a semver tag `vX.Y.Z` → `publish-npm.yml` builds and `npm publish`es.
+Push a semver tag `vX.Y.Z`. `publish-npm.yml` refuses if `package.json` says a
+different version, `npm ci && npm run build`, packs, publishes, and then **proves
+the version against registry.npmjs.org before it goes green**. The registry —
+not `package.json`, not the tag list, not the run's colour — is the version of
+record, so the workflow ends by reading it.
 
-**A tag is not a release — confirm the registry.** For thirteen months `hanzoai`
-published only `0.0.1-alpha.1` while this tree said `2.0.x` and tags `v1.0.0`
-through `v2.0.4` all existed, so every doc that read the tree described a client
-npm could not install. The cause is structural and will recur:
-`publish-npm.yml` is `runs-on: hanzo-build-linux-amd64`, a self-hosted label, so
-when no runner has that label the job **queues instead of failing** — the v2.0.4
-run sat queued 13h31m and looked exactly like a release in flight. GitHub shows
-it as pending, never red.
+**A tag was not a release, and the cause was one word.** For thirteen months
+`hanzoai` published only `0.0.1-alpha.1` while this tree said `2.0.x` and tags
+`v1.0.0` … `v2.0.4` all existed, so every doc that read the tree described a
+client npm could not install. `publish-npm.yml` was `runs-on:
+hanzo-build-linux-amd64`, a self-hosted label; when no runner carries it the job
+**queues instead of failing** — v2.0.4 sat 24h and was cancelled, v2.0.3 the
+same, and GitHub showed both as pending, never red. That is why `2.0.5` reached
+npm by hand.
 
-So the check after tagging is `npm view hanzoai version`, not the run's colour.
-If the queue is stalled, publish from a checkout that has the package owner's
-npm credential (`npm owner ls hanzoai` → `zeekay`); `2.0.5` was released that
-way. **The registry, not `package.json` and not the tag list, is the version of
-record.**
+It is now `ubuntu-latest`. A publish packs a tarball; it is not an image build,
+and it must be schedulable on a runner that always exists. (Measured the same
+day: this repo's `cicd.yml` gate, which inherits hanzoai/ci's arc-pool default,
+was still queued after 11 minutes while the publish lane on `ubuntu-latest`
+started in 11 seconds.)
 
-Tag and artifact must agree: `v2.0.4` already pointed at the pre-regeneration
-tree, so the first real release took the next patch, `2.0.5`, rather than
-publishing different bytes under a tag that was already spoken for.
+**Re-running a tag is safe, and out-of-band publishing is loud.** The workflow
+compares the packed tarball's `dist.integrity` against what npm serves for that
+version: equal → the publish already happened, no-op; different → hard failure,
+naming both digests. `npm pack` normalises mtimes, so the tarball is
+byte-reproducible and that comparison is exact — verified here by packing the
+same tree twice for the same sha512.
+
+That check has already earned its place. npm serves `2.0.5` at
+`sha512-X3V17E…` while this tree packs `sha512-q7Rbz1…`: the published 2.0.5
+corresponds to no commit in this repo, which is what publishing by hand from an
+uncommitted tree looks like from the outside. `2.0.6` is the first version whose
+bytes are reproducible from its tag.
 
 ## Note: `packages/mcp-server`
 The Stainless-era MCP server under `packages/mcp-server` targets the old client
