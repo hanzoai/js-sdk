@@ -1,47 +1,40 @@
-// tools — list the MCP tools this key can reach.
+// tools — which MCP servers this key can reach.
 //
-// POST /v1/mcp (operationId mcp_rpc), the fleet's one MCP door: it composes the
-// typed product operations with the external MCP servers the caller's org has
-// enabled. JSON-RPC, so the method travels in the body rather than the path.
+// GET /v1/mcp/servers (operationId get_v1_mcp_servers): the external MCP servers
+// the caller's org has enabled, which is the half of the tool surface that is
+// per-org configuration rather than a property of the binary.
 //
-// This flow used to read GET /v1/tools, because /v1/mcp was live but UNDECLARED
-// and calling it would have meant a hand-rolled HTTP request inside a generated
-// client — the exact drift these SDKs exist to prevent. It is in hanzo.yaml now,
-// so the flow is finally the generated call it always wanted to be; the note
-// that used to end this comment said to make exactly this move. The REST
-// catalogue is still there and still typed, it is simply not what an MCP client
-// speaks — and it currently answers with an empty list while the door answers
-// with 833 tools, which is the other half of why this flow moved.
+// THIS FLOW HAS MOVED ONCE BEFORE, FOR EXACTLY THIS REASON, AND THE RULE IT
+// FOLLOWED THEN IS THE RULE IT FOLLOWS NOW. It used to read GET /v1/tools while
+// POST /v1/mcp — the fleet's one JSON-RPC MCP door, and the thing an MCP client
+// actually speaks — was live but UNDECLARED; calling an undeclared route would
+// have meant a hand-rolled HTTP request inside a generated client, which is the
+// exact drift these SDKs exist to prevent. It then moved onto the door when the
+// retired hand-authored master declared it.
 //
-// JSON-RPC reports failure INSIDE a 200, so `error` is read before `result`: an
-// example that trusts the HTTP status alone prints nothing at all on a
-// server-side refusal and calls it success.
-import { MCPApi, McpRequestJsonrpcEnum, McpRequestMethodEnum } from 'hanzoai';
-import type { McpCatalog } from 'hanzoai';
+// The door is STILL not in the document this client is now generated from:
+// hanzoai/cloud's openapi.yaml declares /v1/mcp/servers and /v1/mcp/servers/{id}
+// and does NOT declare POST /v1/mcp, while the live door answers tools/list with
+// 833 tools. So the flow moves back to a declared neighbour rather than reach for
+// a route the document does not carry.
+//
+// WHEN THE DOOR IS DECLARED, MOVE THIS FLOW ONTO IT. The one-line test: does
+// `paths['/v1/mcp']` exist in the document? If yes, this becomes a generated
+// mcpRpc({method: 'tools/list'}) call and reads `result.tools`, and the note
+// above becomes history for the second time.
+import { McpApi } from 'hanzoai';
 import { config, fail } from '../client';
 
 async function main() {
-  const mcp = new MCPApi(config());
-  const { data } = await mcp.mcpRpc({
-    mcpRequest: {
-      jsonrpc: McpRequestJsonrpcEnum._20,
-      id: '1',
-      method: McpRequestMethodEnum.ToolsList,
-    },
-  });
+  const mcp = new McpApi(config());
+  const { data } = await mcp.getV1McpServers();
 
-  if (data.error) throw new Error(`MCP ${data.error.code}: ${data.error.message}`);
-
-  // `result` is a union — one door serves initialize, tools/list and
-  // tools/call — and tools/list is the catalogue branch.
-  const list = (data.result as McpCatalog | undefined)?.tools ?? [];
-  if (list.length === 0) throw new Error('tools/list returned an empty catalogue');
-
-  console.log(`${list.length} tools`);
-  for (const t of list.slice(0, 3)) {
-    console.log(`  ${t.name} — ${t.description ?? '(no description)'}`);
+  const servers = data.servers ?? [];
+  console.log(`${servers.length} MCP server(s) enabled for this org`);
+  for (const s of servers.slice(0, 5)) {
+    console.log(`  ${s.name ?? '(unnamed)'} — ${s.url ?? s.source ?? '(no endpoint)'}`);
   }
-  console.log(`  … and ${list.length - 3} more`);
+  if (servers.length > 5) console.log(`  … and ${servers.length - 5} more`);
 }
 
 main().catch(fail);

@@ -1,8 +1,8 @@
 // agent — define one, run it, read the run back.
 //
-//   POST /v1/agents            cloud_post_v1_agents
-//   POST /v1/agents/{ref}/run  cloud_post_v1_agents_by_ref_run
-//   GET  /v1/agents/{ref}/runs cloud_get_v1_agents_ref_runs
+//   POST /v1/agents            post_v1_agents
+//   POST /v1/agents/{ref}/run  post_v1_agents_by_ref_run
+//   GET  /v1/agents/{ref}/runs get_v1_agents_ref_runs
 //
 // `ref` is the agent's public id (agent_...) OR its org-unique name, which is
 // why the run and the read below can both use the name we just created without
@@ -14,8 +14,10 @@
 import { AgentsApi } from 'hanzoai';
 import { config, fail } from '../client';
 
-// `zen5`, for the reason the chat flow states: the gateway rejects `zen4` with
-// 400 "not in this gateway's catalog", so an agent created on it cannot run.
+// `zen5` is the current flagship of the Zen family and what the gateway serves:
+// `zen4` answers 400 "not in this gateway's catalog", so an agent created on it
+// cannot run. An example's model default has to be one the reader's key can call
+// on the first try. `HANZO_MODEL` overrides it (zen5-mini, zen5-coder, enso, …).
 const model = process.env.HANZO_MODEL ?? 'zen5';
 // Org-unique: a fixed name collides with itself on the second run.
 const name = `example-greeter-${Date.now()}`;
@@ -23,8 +25,8 @@ const name = `example-greeter-${Date.now()}`;
 async function main() {
   const agents = new AgentsApi(config());
 
-  const { data: created } = await agents.cloudPostV1Agents({
-    cloudCreateAgentIn: {
+  const { data: created } = await agents.postV1Agents({
+    createAgentIn: {
       name,
       model,
       description: 'Created by the hanzoai SDK agent example.',
@@ -33,10 +35,10 @@ async function main() {
   });
   console.log(`created ${created.name} (${created.id}) on ${created.model}`);
 
-  await agents.cloudPostV1AgentsByRefRun({ ref: name });
+  await agents.postV1AgentsByRefRun({ ref: name });
   console.log('run started');
 
-  const { data: runs } = await agents.cloudGetV1AgentsRefRuns({ ref: name, limit: 5 });
+  const { data: runs } = await agents.getV1AgentsRefRuns({ ref: name, limit: 5 });
   console.log(`${runs.runs?.length ?? 0} run(s):`);
   for (const r of runs.runs ?? []) {
     console.log(`  ${JSON.stringify(r)}`);
