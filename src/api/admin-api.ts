@@ -76,10 +76,6 @@ import type { CloudBasesOut } from '../models';
 // @ts-ignore
 import type { CloudBasisResult } from '../models';
 // @ts-ignore
-import type { CloudBindOut } from '../models';
-// @ts-ignore
-import type { CloudBlockStorageOut } from '../models';
-// @ts-ignore
 import type { CloudCapIn } from '../models';
 // @ts-ignore
 import type { CloudComputeOut } from '../models';
@@ -170,6 +166,8 @@ import type { CloudSetEnablementBody } from '../models';
 // @ts-ignore
 import type { CloudSetFlagIn } from '../models';
 // @ts-ignore
+import type { CloudSignerOut } from '../models';
+// @ts-ignore
 import type { CloudSubscriptionsOut } from '../models';
 // @ts-ignore
 import type { CloudSubsystemsOut } from '../models';
@@ -193,6 +191,8 @@ import type { CloudVerifyOut } from '../models';
 import type { CloudVolumeIn } from '../models';
 // @ts-ignore
 import type { CloudVolumeSnapshotOut } from '../models';
+// @ts-ignore
+import type { CloudVolumesOut } from '../models';
 // @ts-ignore
 import type { CloudWaitlistBoostRequest } from '../models';
 // @ts-ignore
@@ -620,13 +620,15 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
-         * @summary Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
+         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
+         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+         * @param {string} [id] ID is the cap to edit or remove, from the path. Unused by the list and create ops.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminBlockStorage: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/admin/block-storage`;
+        cloudAdminCaps: async (org?: string, id?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/admin/caps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -641,6 +643,14 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
 
 
     
@@ -747,56 +757,16 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credit-grants, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
-         * @summary Mints credit for one org.
-         * @param {{ [key: string]: object; }} requestBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminCreateCreditGrant: async (requestBody: { [key: string]: object; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'requestBody' is not null or undefined
-            assertParamExists('cloudAdminCreateCreditGrant', 'requestBody', requestBody)
-            const localVarPath = `/v1/admin/credit-grants`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows. The body is commerce\'s spend-alert contract, forwarded byte-for-byte.
          * @summary Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows.
          * @param {CloudCapIn} cloudCapIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminCreateSpendCap: async (cloudCapIn: CloudCapIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudAdminCreateCap: async (cloudCapIn: CloudCapIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'cloudCapIn' is not null or undefined
-            assertParamExists('cloudAdminCreateSpendCap', 'cloudCapIn', cloudCapIn)
-            const localVarPath = `/v1/admin/spend-caps`;
+            assertParamExists('cloudAdminCreateCap', 'cloudCapIn', cloudCapIn)
+            const localVarPath = `/v1/admin/caps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -820,6 +790,46 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(cloudCapIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credits, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
+         * @summary Mints credit for one org.
+         * @param {{ [key: string]: object; }} requestBody 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminCreateCredit: async (requestBody: { [key: string]: object; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestBody' is not null or undefined
+            assertParamExists('cloudAdminCreateCredit', 'requestBody', requestBody)
+            const localVarPath = `/v1/admin/credits`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -886,6 +896,49 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes one cap by id, lifting the ceiling entirely.
+         * @summary Removes one cap by id, lifting the ceiling entirely.
+         * @param {string} id ID is the cap to edit or remove, from the path. Unused by the list and create ops.
+         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminDeleteCap: async (id: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cloudAdminDeleteCap', 'id', id)
+            const localVarPath = `/v1/admin/caps/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
 
 
     
@@ -972,49 +1025,6 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes one cap by id, lifting the ceiling entirely.
-         * @summary Removes one cap by id, lifting the ceiling entirely.
-         * @param {string} id ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminDeleteSpendCap: async (id: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudAdminDeleteSpendCap', 'id', id)
-            const localVarPath = `/v1/admin/spend-caps/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (org !== undefined) {
-                localVarQueryParameter['org'] = org;
-            }
 
 
     
@@ -2380,50 +2390,6 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
-         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
-         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-         * @param {string} [id] ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminSpendCaps: async (org?: string, id?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/admin/spend-caps`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (org !== undefined) {
-                localVarQueryParameter['org'] = org;
-            }
-
-            if (id !== undefined) {
-                localVarQueryParameter['id'] = id;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Answers GET /v1/admin/subscriptions.   GET /v1/admin/subscriptions?org=&status=&limit=
          * @summary Answers GET /v1/admin/subscriptions.
          * @param {string} [status] Status filters on the subscription\&#39;s LATEST lifecycle status (active, trialing, canceled, …), matched case-insensitively.
@@ -2591,12 +2557,12 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminUpdateSpendCap: async (id: string, cloudCapIn: CloudCapIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudAdminUpdateCap: async (id: string, cloudCapIn: CloudCapIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudAdminUpdateSpendCap', 'id', id)
+            assertParamExists('cloudAdminUpdateCap', 'id', id)
             // verify required parameter 'cloudCapIn' is not null or undefined
-            assertParamExists('cloudAdminUpdateSpendCap', 'cloudCapIn', cloudCapIn)
-            const localVarPath = `/v1/admin/spend-caps/{id}`
+            assertParamExists('cloudAdminUpdateCap', 'cloudCapIn', cloudCapIn)
+            const localVarPath = `/v1/admin/caps/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2792,6 +2758,40 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             if (pageSize !== undefined) {
                 localVarQueryParameter['pageSize'] = pageSize;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
+         * @summary Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminVolumes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/admin/volumes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -3706,40 +3706,6 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent: a repeat resolves the same wallet. SuperAdmin only.
-         * @summary BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1AdminTreasuryBindAnchor: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/admin/treasury/bind-anchor`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
          * @summary SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
          * @param {CloudPolicyRequest} cloudPolicyRequest 
@@ -3893,6 +3859,40 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(cloudSetEnablementBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent — a repeat resolves the same wallet, which is why the address is a PUT. SuperAdmin only.
+         * @summary Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPutV1AdminTreasuryAnchorSigner: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/admin/treasury/anchor/signer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4174,15 +4174,17 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
-         * @summary Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
+         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
+         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+         * @param {string} [id] ID is the cap to edit or remove, from the path. Unused by the list and create ops.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudAdminBlockStorage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudBlockStorageOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminBlockStorage(options);
+        async cloudAdminCaps(org?: string, id?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminCaps(org, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminBlockStorage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminCaps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4215,29 +4217,29 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credit-grants, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
-         * @summary Mints credit for one org.
-         * @param {{ [key: string]: object; }} requestBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudAdminCreateCreditGrant(requestBody: { [key: string]: object; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminCreateCreditGrant(requestBody, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminCreateCreditGrant']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows. The body is commerce\'s spend-alert contract, forwarded byte-for-byte.
          * @summary Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows.
          * @param {CloudCapIn} cloudCapIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudAdminCreateSpendCap(cloudCapIn: CloudCapIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminCreateSpendCap(cloudCapIn, options);
+        async cloudAdminCreateCap(cloudCapIn: CloudCapIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminCreateCap(cloudCapIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminCreateSpendCap']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminCreateCap']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credits, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
+         * @summary Mints credit for one org.
+         * @param {{ [key: string]: object; }} requestBody 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudAdminCreateCredit(requestBody: { [key: string]: object; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminCreateCredit(requestBody, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminCreateCredit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4266,6 +4268,20 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Removes one cap by id, lifting the ceiling entirely.
+         * @summary Removes one cap by id, lifting the ceiling entirely.
+         * @param {string} id ID is the cap to edit or remove, from the path. Unused by the list and create ops.
+         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudAdminDeleteCap(id: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminDeleteCap(id, org, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminDeleteCap']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Destroys a droplet the board has just proven is NOT a DOKS node. There is no snapshot-first undo for a droplet the way there is for a volume: the local disk goes with it.
          * @summary Destroys a droplet the board has just proven is NOT a DOKS node.
          * @param {string} id ID is the DO droplet id, from the path. Numeric.
@@ -4291,20 +4307,6 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminDeleteLoadBalancer(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminDeleteLoadBalancer']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes one cap by id, lifting the ceiling entirely.
-         * @summary Removes one cap by id, lifting the ceiling entirely.
-         * @param {string} id ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudAdminDeleteSpendCap(id: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminDeleteSpendCap(id, org, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminDeleteSpendCap']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4750,20 +4752,6 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
-         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
-         * @param {string} [org] Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-         * @param {string} [id] ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudAdminSpendCaps(org?: string, id?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminSpendCaps(org, id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminSpendCaps']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Answers GET /v1/admin/subscriptions.   GET /v1/admin/subscriptions?org=&status=&limit=
          * @summary Answers GET /v1/admin/subscriptions.
          * @param {string} [status] Status filters on the subscription\&#39;s LATEST lifecycle status (active, trialing, canceled, …), matched case-insensitively.
@@ -4824,10 +4812,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudAdminUpdateSpendCap(id: string, cloudCapIn: CloudCapIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminUpdateSpendCap(id, cloudCapIn, options);
+        async cloudAdminUpdateCap(id: string, cloudCapIn: CloudCapIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudRawOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminUpdateCap(id, cloudCapIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminUpdateSpendCap']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminUpdateCap']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4884,6 +4872,18 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminUsers(org, q, p, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminUsers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
+         * @summary Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudAdminVolumes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudVolumesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudAdminVolumes(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudAdminVolumes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5188,18 +5188,6 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent: a repeat resolves the same wallet. SuperAdmin only.
-         * @summary BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1AdminTreasuryBindAnchor(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudBindOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1AdminTreasuryBindAnchor(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudPostV1AdminTreasuryBindAnchor']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
          * @summary SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
          * @param {CloudPolicyRequest} cloudPolicyRequest 
@@ -5249,6 +5237,18 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1AdminEnablement(cloudSetEnablementBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudPutV1AdminEnablement']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent — a repeat resolves the same wallet, which is why the address is a PUT. SuperAdmin only.
+         * @summary Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPutV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudSignerOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPutV1AdminTreasuryAnchorSigner(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.cloudPutV1AdminTreasuryAnchorSigner']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5389,13 +5389,14 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudAdminBases(options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
-         * @summary Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
+         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
+         * @param {AdminApiCloudAdminCapsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminBlockStorage(options?: RawAxiosRequestConfig): AxiosPromise<CloudBlockStorageOut> {
-            return localVarFp.cloudAdminBlockStorage(options).then((request) => request(axios, basePath));
+        cloudAdminCaps(requestParameters: AdminApiCloudAdminCapsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
+            return localVarFp.cloudAdminCaps(requestParameters.org, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Rolls the fleet\'s compute usage up to one row per (org, app, project, kind): how many distinct machines ran in the window, how many are still active, what they billed, and when each group last emitted an event. The console folds these into its org → app → project tree.  A machine counts as ACTIVE when its LATEST lifecycle event is not a terminal one (stop/destroy/terminate/delete/off/shutdown/expire and their past tenses) — the same fold the console applies, done in the warehouse so the count is over every machine and not just the page.  Honest-empty when the warehouse is not connected or hanzo.compute_usage is not provisioned yet: an empty list, never a fabricated fleet.
@@ -5418,24 +5419,24 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudAdminCordonNode(requestParameters.id, requestParameters.cloudCordonIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credit-grants, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
-         * @summary Mints credit for one org.
-         * @param {AdminApiCloudAdminCreateCreditGrantRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminCreateCreditGrant(requestParameters: AdminApiCloudAdminCreateCreditGrantRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
-            return localVarFp.cloudAdminCreateCreditGrant(requestParameters.requestBody, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows. The body is commerce\'s spend-alert contract, forwarded byte-for-byte.
          * @summary Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows.
-         * @param {AdminApiCloudAdminCreateSpendCapRequest} requestParameters Request parameters.
+         * @param {AdminApiCloudAdminCreateCapRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminCreateSpendCap(requestParameters: AdminApiCloudAdminCreateSpendCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
-            return localVarFp.cloudAdminCreateSpendCap(requestParameters.cloudCapIn, options).then((request) => request(axios, basePath));
+        cloudAdminCreateCap(requestParameters: AdminApiCloudAdminCreateCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
+            return localVarFp.cloudAdminCreateCap(requestParameters.cloudCapIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credits, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
+         * @summary Mints credit for one org.
+         * @param {AdminApiCloudAdminCreateCreditRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminCreateCredit(requestParameters: AdminApiCloudAdminCreateCreditRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
+            return localVarFp.cloudAdminCreateCredit(requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers GET /v1/admin/customers/:org.
@@ -5457,6 +5458,16 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudAdminCustomers(options).then((request) => request(axios, basePath));
         },
         /**
+         * Removes one cap by id, lifting the ceiling entirely.
+         * @summary Removes one cap by id, lifting the ceiling entirely.
+         * @param {AdminApiCloudAdminDeleteCapRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminDeleteCap(requestParameters: AdminApiCloudAdminDeleteCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
+            return localVarFp.cloudAdminDeleteCap(requestParameters.id, requestParameters.org, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Destroys a droplet the board has just proven is NOT a DOKS node. There is no snapshot-first undo for a droplet the way there is for a volume: the local disk goes with it.
          * @summary Destroys a droplet the board has just proven is NOT a DOKS node.
          * @param {AdminApiCloudAdminDeleteDropletRequest} requestParameters Request parameters.
@@ -5475,16 +5486,6 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         cloudAdminDeleteLoadBalancer(requestParameters: AdminApiCloudAdminDeleteLoadBalancerRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudMutationOut> {
             return localVarFp.cloudAdminDeleteLoadBalancer(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes one cap by id, lifting the ceiling entirely.
-         * @summary Removes one cap by id, lifting the ceiling entirely.
-         * @param {AdminApiCloudAdminDeleteSpendCapRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminDeleteSpendCap(requestParameters: AdminApiCloudAdminDeleteSpendCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
-            return localVarFp.cloudAdminDeleteSpendCap(requestParameters.id, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Destroys a volume the board has just proven no PersistentVolume in any cluster references. Irreversible, so it snapshots first unless explicitly waived — the snapshot IS the undo.
@@ -5807,16 +5808,6 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudAdminSnapshotVolume(requestParameters.id, requestParameters.cloudVolumeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
-         * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
-         * @param {AdminApiCloudAdminSpendCapsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudAdminSpendCaps(requestParameters: AdminApiCloudAdminSpendCapsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
-            return localVarFp.cloudAdminSpendCaps(requestParameters.org, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Answers GET /v1/admin/subscriptions.   GET /v1/admin/subscriptions?org=&status=&limit=
          * @summary Answers GET /v1/admin/subscriptions.
          * @param {AdminApiCloudAdminSubscriptionsRequest} requestParameters Request parameters.
@@ -5858,12 +5849,12 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
         /**
          * Edits one cap by id — raise or lower the ceiling, flip enforcement. The body is commerce\'s spend-alert patch contract, forwarded byte-for-byte.
          * @summary Edits one cap by id — raise or lower the ceiling, flip enforcement.
-         * @param {AdminApiCloudAdminUpdateSpendCapRequest} requestParameters Request parameters.
+         * @param {AdminApiCloudAdminUpdateCapRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudAdminUpdateSpendCap(requestParameters: AdminApiCloudAdminUpdateSpendCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
-            return localVarFp.cloudAdminUpdateSpendCap(requestParameters.id, requestParameters.cloudCapIn, options).then((request) => request(axios, basePath));
+        cloudAdminUpdateCap(requestParameters: AdminApiCloudAdminUpdateCapRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudRawOut> {
+            return localVarFp.cloudAdminUpdateCap(requestParameters.id, requestParameters.cloudCapIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Onboards a hosted service, or edits one, so a new host comes under the launch gate WITHOUT a redeploy. Re-registering an existing service PRESERVES its live switch — editing the hosts of a service that is already open must not silently close it again.
@@ -5904,6 +5895,15 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         cloudAdminUsers(requestParameters: AdminApiCloudAdminUsersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudUsersOut> {
             return localVarFp.cloudAdminUsers(requestParameters.org, requestParameters.q, requestParameters.p, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
+         * @summary Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudAdminVolumes(options?: RawAxiosRequestConfig): AxiosPromise<CloudVolumesOut> {
+            return localVarFp.cloudAdminVolumes(options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one waitlist\'s leaderboard from the Hanzo waitlist engine — position, points and referral standing per entry — proxied server-authed with the engine secret, never a client credential.  The engine\'s payload is forwarded VERBATIM as data; the console normalizes it. When the engine is not configured on this deployment the read still succeeds, with an empty object and a msg saying so, so the panel shows an honest not-wired state instead of an error the operator would chase.
@@ -6130,15 +6130,6 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1AdminTreasuryAnchor(options).then((request) => request(axios, basePath));
         },
         /**
-         * BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent: a repeat resolves the same wallet. SuperAdmin only.
-         * @summary BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1AdminTreasuryBindAnchor(options?: RawAxiosRequestConfig): AxiosPromise<CloudBindOut> {
-            return localVarFp.cloudPostV1AdminTreasuryBindAnchor(options).then((request) => request(axios, basePath));
-        },
-        /**
          * SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
          * @summary SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
          * @param {AdminApiCloudPostV1AdminTreasuryPolicyRequest} requestParameters Request parameters.
@@ -6177,6 +6168,15 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         cloudPutV1AdminEnablement(requestParameters: AdminApiCloudPutV1AdminEnablementRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudAdminEnablementItem> {
             return localVarFp.cloudPutV1AdminEnablement(requestParameters.cloudSetEnablementBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent — a repeat resolves the same wallet, which is why the address is a PUT. SuperAdmin only.
+         * @summary Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPutV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): AxiosPromise<CloudSignerOut> {
+            return localVarFp.cloudPutV1AdminTreasuryAnchorSigner(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns server version, storage capacity, and cluster status.
@@ -6443,6 +6443,27 @@ export interface AdminApiCloudAdminAuditRequest {
 }
 
 /**
+ * Request parameters for cloudAdminCaps operation in AdminApi.
+ * @export
+ * @interface AdminApiCloudAdminCapsRequest
+ */
+export interface AdminApiCloudAdminCapsRequest {
+    /**
+     * Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+     * @type {string}
+     * @memberof AdminApiCloudAdminCaps
+     */
+    readonly org?: string
+
+    /**
+     * ID is the cap to edit or remove, from the path. Unused by the list and create ops.
+     * @type {string}
+     * @memberof AdminApiCloudAdminCaps
+     */
+    readonly id?: string
+}
+
+/**
  * Request parameters for cloudAdminCompute operation in AdminApi.
  * @export
  * @interface AdminApiCloudAdminComputeRequest
@@ -6492,31 +6513,31 @@ export interface AdminApiCloudAdminCordonNodeRequest {
 }
 
 /**
- * Request parameters for cloudAdminCreateCreditGrant operation in AdminApi.
+ * Request parameters for cloudAdminCreateCap operation in AdminApi.
  * @export
- * @interface AdminApiCloudAdminCreateCreditGrantRequest
+ * @interface AdminApiCloudAdminCreateCapRequest
  */
-export interface AdminApiCloudAdminCreateCreditGrantRequest {
-    /**
-     * 
-     * @type {{ [key: string]: object; }}
-     * @memberof AdminApiCloudAdminCreateCreditGrant
-     */
-    readonly requestBody: { [key: string]: object; }
-}
-
-/**
- * Request parameters for cloudAdminCreateSpendCap operation in AdminApi.
- * @export
- * @interface AdminApiCloudAdminCreateSpendCapRequest
- */
-export interface AdminApiCloudAdminCreateSpendCapRequest {
+export interface AdminApiCloudAdminCreateCapRequest {
     /**
      * 
      * @type {CloudCapIn}
-     * @memberof AdminApiCloudAdminCreateSpendCap
+     * @memberof AdminApiCloudAdminCreateCap
      */
     readonly cloudCapIn: CloudCapIn
+}
+
+/**
+ * Request parameters for cloudAdminCreateCredit operation in AdminApi.
+ * @export
+ * @interface AdminApiCloudAdminCreateCreditRequest
+ */
+export interface AdminApiCloudAdminCreateCreditRequest {
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof AdminApiCloudAdminCreateCredit
+     */
+    readonly requestBody: { [key: string]: object; }
 }
 
 /**
@@ -6531,6 +6552,27 @@ export interface AdminApiCloudAdminCustomerRequest {
      * @memberof AdminApiCloudAdminCustomer
      */
     readonly org: string
+}
+
+/**
+ * Request parameters for cloudAdminDeleteCap operation in AdminApi.
+ * @export
+ * @interface AdminApiCloudAdminDeleteCapRequest
+ */
+export interface AdminApiCloudAdminDeleteCapRequest {
+    /**
+     * ID is the cap to edit or remove, from the path. Unused by the list and create ops.
+     * @type {string}
+     * @memberof AdminApiCloudAdminDeleteCap
+     */
+    readonly id: string
+
+    /**
+     * Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
+     * @type {string}
+     * @memberof AdminApiCloudAdminDeleteCap
+     */
+    readonly org?: string
 }
 
 /**
@@ -6573,27 +6615,6 @@ export interface AdminApiCloudAdminDeleteLoadBalancerRequest {
      * @memberof AdminApiCloudAdminDeleteLoadBalancer
      */
     readonly id: string
-}
-
-/**
- * Request parameters for cloudAdminDeleteSpendCap operation in AdminApi.
- * @export
- * @interface AdminApiCloudAdminDeleteSpendCapRequest
- */
-export interface AdminApiCloudAdminDeleteSpendCapRequest {
-    /**
-     * ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-     * @type {string}
-     * @memberof AdminApiCloudAdminDeleteSpendCap
-     */
-    readonly id: string
-
-    /**
-     * Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-     * @type {string}
-     * @memberof AdminApiCloudAdminDeleteSpendCap
-     */
-    readonly org?: string
 }
 
 /**
@@ -7080,27 +7101,6 @@ export interface AdminApiCloudAdminSnapshotVolumeRequest {
 }
 
 /**
- * Request parameters for cloudAdminSpendCaps operation in AdminApi.
- * @export
- * @interface AdminApiCloudAdminSpendCapsRequest
- */
-export interface AdminApiCloudAdminSpendCapsRequest {
-    /**
-     * Org is the tenant to act on. Required for a SuperAdmin — they must name their target; ignored for a white-label admin, who always acts on their own org.
-     * @type {string}
-     * @memberof AdminApiCloudAdminSpendCaps
-     */
-    readonly org?: string
-
-    /**
-     * ID is the cap to edit or remove, from the path. Unused by the list and create ops.
-     * @type {string}
-     * @memberof AdminApiCloudAdminSpendCaps
-     */
-    readonly id?: string
-}
-
-/**
  * Request parameters for cloudAdminSubscriptions operation in AdminApi.
  * @export
  * @interface AdminApiCloudAdminSubscriptionsRequest
@@ -7157,22 +7157,22 @@ export interface AdminApiCloudAdminSuspendCustomerRequest {
 }
 
 /**
- * Request parameters for cloudAdminUpdateSpendCap operation in AdminApi.
+ * Request parameters for cloudAdminUpdateCap operation in AdminApi.
  * @export
- * @interface AdminApiCloudAdminUpdateSpendCapRequest
+ * @interface AdminApiCloudAdminUpdateCapRequest
  */
-export interface AdminApiCloudAdminUpdateSpendCapRequest {
+export interface AdminApiCloudAdminUpdateCapRequest {
     /**
      * ID is the cap to edit or remove, from the path. Unused by the list and create ops.
      * @type {string}
-     * @memberof AdminApiCloudAdminUpdateSpendCap
+     * @memberof AdminApiCloudAdminUpdateCap
      */
     readonly id: string
 
     /**
      * 
      * @type {CloudCapIn}
-     * @memberof AdminApiCloudAdminUpdateSpendCap
+     * @memberof AdminApiCloudAdminUpdateCap
      */
     readonly cloudCapIn: CloudCapIn
 }
@@ -7727,14 +7727,15 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
-     * @summary Is the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+     * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
+     * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
+     * @param {AdminApiCloudAdminCapsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public cloudAdminBlockStorage(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminBlockStorage(options).then((request) => request(this.axios, this.basePath));
+    public cloudAdminCaps(requestParameters: AdminApiCloudAdminCapsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminCaps(requestParameters.org, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7762,27 +7763,27 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credit-grants, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
-     * @summary Mints credit for one org.
-     * @param {AdminApiCloudAdminCreateCreditGrantRequest} requestParameters Request parameters.
+     * Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows. The body is commerce\'s spend-alert contract, forwarded byte-for-byte.
+     * @summary Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows.
+     * @param {AdminApiCloudAdminCreateCapRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public cloudAdminCreateCreditGrant(requestParameters: AdminApiCloudAdminCreateCreditGrantRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminCreateCreditGrant(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    public cloudAdminCreateCap(requestParameters: AdminApiCloudAdminCreateCapRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminCreateCap(requestParameters.cloudCapIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows. The body is commerce\'s spend-alert contract, forwarded byte-for-byte.
-     * @summary Sets a usage cap on one org — a platform override of a customer budget, written to the customer\'s own spend-alert rows.
-     * @param {AdminApiCloudAdminCreateSpendCapRequest} requestParameters Request parameters.
+     * Mints credit for one org. It is the ONE admin mint surface, and it does NOT mint in-process: it forwards the request to commerce\'s already-mint-gated POST /v1/billing/credits, authenticated by the service token and scoped to the target org, then writes one tamper-evident compliance record. Commerce stays the sole credit ledger; this is a thin, audited relay so there is exactly one place credit is created.  The body is commerce\'s OWN CreateCreditGrant contract, forwarded whole — every field it carries reaches commerce. The only two this layer reads are the target org (`org`, or `user` as the org-pool alias), which selects the namespace commerce\'s EdgeAuth trusts, and `idempotencyKey`, which makes a double-clicked grant credit once.  A FAILED grant is audited too, with the request body attached: an attempted mint is exactly as interesting to a compliance auditor as a successful one.
+     * @summary Mints credit for one org.
+     * @param {AdminApiCloudAdminCreateCreditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public cloudAdminCreateSpendCap(requestParameters: AdminApiCloudAdminCreateSpendCapRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminCreateSpendCap(requestParameters.cloudCapIn, options).then((request) => request(this.axios, this.basePath));
+    public cloudAdminCreateCredit(requestParameters: AdminApiCloudAdminCreateCreditRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminCreateCredit(requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7809,6 +7810,18 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
+     * Removes one cap by id, lifting the ceiling entirely.
+     * @summary Removes one cap by id, lifting the ceiling entirely.
+     * @param {AdminApiCloudAdminDeleteCapRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public cloudAdminDeleteCap(requestParameters: AdminApiCloudAdminDeleteCapRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminDeleteCap(requestParameters.id, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Destroys a droplet the board has just proven is NOT a DOKS node. There is no snapshot-first undo for a droplet the way there is for a volume: the local disk goes with it.
      * @summary Destroys a droplet the board has just proven is NOT a DOKS node.
      * @param {AdminApiCloudAdminDeleteDropletRequest} requestParameters Request parameters.
@@ -7830,18 +7843,6 @@ export class AdminApi extends BaseAPI {
      */
     public cloudAdminDeleteLoadBalancer(requestParameters: AdminApiCloudAdminDeleteLoadBalancerRequest, options?: RawAxiosRequestConfig) {
         return AdminApiFp(this.configuration).cloudAdminDeleteLoadBalancer(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes one cap by id, lifting the ceiling entirely.
-     * @summary Removes one cap by id, lifting the ceiling entirely.
-     * @param {AdminApiCloudAdminDeleteSpendCapRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public cloudAdminDeleteSpendCap(requestParameters: AdminApiCloudAdminDeleteSpendCapRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminDeleteSpendCap(requestParameters.id, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8231,18 +8232,6 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.  These are the SAME rows the customer edits in their own console — a platform override and a customer budget are one model, not two.
-     * @summary Reads one org\'s usage caps: its spend alerts plus the derived period spend, over/warn state and reset time.
-     * @param {AdminApiCloudAdminSpendCapsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public cloudAdminSpendCaps(requestParameters: AdminApiCloudAdminSpendCapsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminSpendCaps(requestParameters.org, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Answers GET /v1/admin/subscriptions.   GET /v1/admin/subscriptions?org=&status=&limit=
      * @summary Answers GET /v1/admin/subscriptions.
      * @param {AdminApiCloudAdminSubscriptionsRequest} requestParameters Request parameters.
@@ -8292,13 +8281,13 @@ export class AdminApi extends BaseAPI {
     /**
      * Edits one cap by id — raise or lower the ceiling, flip enforcement. The body is commerce\'s spend-alert patch contract, forwarded byte-for-byte.
      * @summary Edits one cap by id — raise or lower the ceiling, flip enforcement.
-     * @param {AdminApiCloudAdminUpdateSpendCapRequest} requestParameters Request parameters.
+     * @param {AdminApiCloudAdminUpdateCapRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public cloudAdminUpdateSpendCap(requestParameters: AdminApiCloudAdminUpdateSpendCapRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudAdminUpdateSpendCap(requestParameters.id, requestParameters.cloudCapIn, options).then((request) => request(this.axios, this.basePath));
+    public cloudAdminUpdateCap(requestParameters: AdminApiCloudAdminUpdateCapRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminUpdateCap(requestParameters.id, requestParameters.cloudCapIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8347,6 +8336,17 @@ export class AdminApi extends BaseAPI {
      */
     public cloudAdminUsers(requestParameters: AdminApiCloudAdminUsersRequest = {}, options?: RawAxiosRequestConfig) {
         return AdminApiFp(this.configuration).cloudAdminUsers(requestParameters.org, requestParameters.q, requestParameters.p, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.  A volume\'s usedGiB and pct are null, always: DO exposes capacity and attachment but no fill, so the console renders \"—\" rather than a number nobody measured. The datastore card is the one real fill here, and it is the number to scale on.  The two sources degrade independently — a DO outage still returns the datastore fill, and a disconnected datastore still returns the DO fleet.
+     * @summary Returns the realtime block-storage board: the DigitalOcean volume fleet (count, capacity, monthly list cost, per-volume region and attachment) plus the analytics datastore\'s OWN fill, read from its system.disks.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public cloudAdminVolumes(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudAdminVolumes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8620,17 +8620,6 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent: a repeat resolves the same wallet. SuperAdmin only.
-     * @summary BindTreasuryAnchorSigner makes the reserve\'s threshold MPC wallet the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public cloudPostV1AdminTreasuryBindAnchor(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).cloudPostV1AdminTreasuryBindAnchor(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
      * @summary SetTreasuryPolicy sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
      * @param {AdminApiCloudPostV1AdminTreasuryPolicyRequest} requestParameters Request parameters.
@@ -8676,6 +8665,17 @@ export class AdminApi extends BaseAPI {
      */
     public cloudPutV1AdminEnablement(requestParameters: AdminApiCloudPutV1AdminEnablementRequest, options?: RawAxiosRequestConfig) {
         return AdminApiFp(this.configuration).cloudPutV1AdminEnablement(requestParameters.cloudSetEnablementBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent — a repeat resolves the same wallet, which is why the address is a PUT. SuperAdmin only.
+     * @summary Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public cloudPutV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).cloudPutV1AdminTreasuryAnchorSigner(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

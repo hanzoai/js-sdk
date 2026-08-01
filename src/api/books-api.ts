@@ -115,50 +115,6 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
-         * @param {string} [to] To is the RFC3339 instant the statement is struck as of. Empty means all time.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BooksBalanceSheet: async (sandbox?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/balance-sheet`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (sandbox !== undefined) {
-                localVarQueryParameter['sandbox'] = sandbox;
-            }
-
-            if (to !== undefined) {
-                localVarQueryParameter['to'] = to;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @summary ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
@@ -482,6 +438,50 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
+         * @param {string} [to] To is the RFC3339 instant the statement is struck as of. Empty means all time.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BooksPosition: async (sandbox?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/books/position`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (sandbox !== undefined) {
+                localVarQueryParameter['sandbox'] = sandbox;
+            }
+
+            if (to !== undefined) {
+                localVarQueryParameter['to'] = to;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first. An empty list means the books look clean; the detector is deterministic over the ledger and invents nothing.
          * @summary ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;; anything else reads the live one.
@@ -632,8 +632,8 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1BooksTrialBalance: async (sandbox?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/trial-balance`;
+        cloudGetV1BooksTrial: async (sandbox?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/books/trial`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -824,13 +824,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
+         * SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped. One connector\'s outage is skipped rather than failing the whole sync. It reports the batch: how many transactions were seen, how many vouchers posted, how many inflows reconciled against the processor clearing account, how many raised a question, how many were own-account transfers, and how many were already-processed no-ops. It is READ-ONLY against the bank — it ingests, it never sends money.
+         * @summary SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1BooksBankLinkToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/bank/link-token`;
+        cloudPostV1BooksBankSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/books/bank/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -858,13 +858,13 @@ export const BooksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped. One connector\'s outage is skipped rather than failing the whole sync. It reports the batch: how many transactions were seen, how many vouchers posted, how many inflows reconciled against the processor clearing account, how many raised a question, how many were own-account transfers, and how many were already-processed no-ops. It is READ-ONLY against the bank — it ingests, it never sends money.
-         * @summary SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped.
+         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
+         * @summary Begin connecting a bank account (not yet available)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1BooksBankSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/books/bank/sync`;
+        cloudPostV1BooksBankToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/books/bank/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1145,20 +1145,6 @@ export const BooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
-         * @param {string} [to] To is the RFC3339 instant the statement is struck as of. Empty means all time.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudGetV1BooksBalanceSheet(sandbox?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudBalanceSheet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BooksBalanceSheet(sandbox, to, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudGetV1BooksBalanceSheet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @summary ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
@@ -1260,6 +1246,20 @@ export const BooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
+         * @param {string} [to] To is the RFC3339 instant the statement is struck as of. Empty means all time.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudGetV1BooksPosition(sandbox?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudBalanceSheet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BooksPosition(sandbox, to, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudGetV1BooksPosition']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first. An empty list means the books look clean; the detector is deterministic over the ledger and invents nothing.
          * @summary ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first.
          * @param {string} [sandbox] Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;; anything else reads the live one.
@@ -1312,10 +1312,10 @@ export const BooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudGetV1BooksTrialBalance(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudTrialBalance>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BooksTrialBalance(sandbox, from, to, options);
+        async cloudGetV1BooksTrial(sandbox?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudTrialBalance>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudGetV1BooksTrial(sandbox, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudGetV1BooksTrialBalance']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudGetV1BooksTrial']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1370,18 +1370,6 @@ export const BooksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async cloudPostV1BooksBankLinkToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BooksBankLinkToken(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudPostV1BooksBankLinkToken']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped. One connector\'s outage is skipped rather than failing the whole sync. It reports the batch: how many transactions were seen, how many vouchers posted, how many inflows reconciled against the processor clearing account, how many raised a question, how many were own-account transfers, and how many were already-processed no-ops. It is READ-ONLY against the bank — it ingests, it never sends money.
          * @summary SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped.
          * @param {*} [options] Override http request option.
@@ -1391,6 +1379,18 @@ export const BooksApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BooksBankSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudPostV1BooksBankSync']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
+         * @summary Begin connecting a bank account (not yet available)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cloudPostV1BooksBankToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1BooksBankToken(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BooksApi.cloudPostV1BooksBankToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1491,16 +1491,6 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1BooksAccounts(requestParameters.sandbox, options).then((request) => request(axios, basePath));
         },
         /**
-         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-         * @param {BooksApiCloudGetV1BooksBalanceSheetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudGetV1BooksBalanceSheet(requestParameters: BooksApiCloudGetV1BooksBalanceSheetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudBalanceSheet> {
-            return localVarFp.cloudGetV1BooksBalanceSheet(requestParameters.sandbox, requestParameters.to, options).then((request) => request(axios, basePath));
-        },
-        /**
          * ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @summary ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
          * @param {BooksApiCloudGetV1BooksBankTransactionsRequest} requestParameters Request parameters.
@@ -1571,6 +1561,16 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudGetV1BooksPnl(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
+         * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+         * @param {BooksApiCloudGetV1BooksPositionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudGetV1BooksPosition(requestParameters: BooksApiCloudGetV1BooksPositionRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudBalanceSheet> {
+            return localVarFp.cloudGetV1BooksPosition(requestParameters.sandbox, requestParameters.to, options).then((request) => request(axios, basePath));
+        },
+        /**
          * ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first. An empty list means the books look clean; the detector is deterministic over the ledger and invents nothing.
          * @summary ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first.
          * @param {BooksApiCloudGetV1BooksQuestionsRequest} requestParameters Request parameters.
@@ -1603,12 +1603,12 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
         /**
          * TrialBalance returns the org\'s trial balance over an optional [from, to] window of RFC3339 posting times, including the opening/closing columns and the TotalDebit == TotalCredit proof that the books balance.
          * @summary TrialBalance returns the org\'s trial balance over an optional [from, to] window of RFC3339 posting times, including the opening/closing columns and the TotalDebit == TotalCredit proof that the books balance.
-         * @param {BooksApiCloudGetV1BooksTrialBalanceRequest} requestParameters Request parameters.
+         * @param {BooksApiCloudGetV1BooksTrialRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudGetV1BooksTrialBalance(requestParameters: BooksApiCloudGetV1BooksTrialBalanceRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudTrialBalance> {
-            return localVarFp.cloudGetV1BooksTrialBalance(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
+        cloudGetV1BooksTrial(requestParameters: BooksApiCloudGetV1BooksTrialRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CloudTrialBalance> {
+            return localVarFp.cloudGetV1BooksTrial(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
          * ListVendors returns the org\'s vendor book: each canonical vendor, the alias spellings a receipt may print it under, and the expense account new bills from it default to. A vendor here is what makes a scanned bill self-classify instead of asking again.
@@ -1650,15 +1650,6 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.cloudPostV1BooksBankImport(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-         * @summary Begin connecting a bank account (not yet available)
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        cloudPostV1BooksBankLinkToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1BooksBankLinkToken(options).then((request) => request(axios, basePath));
-        },
-        /**
          * SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped. One connector\'s outage is skipped rather than failing the whole sync. It reports the batch: how many transactions were seen, how many vouchers posted, how many inflows reconciled against the processor clearing account, how many raised a question, how many were own-account transfers, and how many were already-processed no-ops. It is READ-ONLY against the bank — it ingests, it never sends money.
          * @summary SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped.
          * @param {*} [options] Override http request option.
@@ -1666,6 +1657,15 @@ export const BooksApiFactory = function (configuration?: Configuration, basePath
          */
         cloudPostV1BooksBankSync(options?: RawAxiosRequestConfig): AxiosPromise<CloudBankTally> {
             return localVarFp.cloudPostV1BooksBankSync(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
+         * @summary Begin connecting a bank account (not yet available)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cloudPostV1BooksBankToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPostV1BooksBankToken(options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a document as RAW BYTES and queues it in the caller org\'s inbox as `unsorted`, answering the queued item. It is the drop box: get the paperwork in now, read it later.  It EXTRACTS NOTHING and calls no model — that is what separates it from the scan. Nothing is proposed and nothing is posted; the item simply waits to be scanned, and a booked document leaves the queue.  IDEMPOTENT BY CONTENT: the item\'s id is the file hash, so re-uploading the same bytes answers the existing item rather than adding a duplicate row — and it is the same id a scan of those bytes uses, which is how the two routes address one document. Scoped to the caller\'s own org from the validated principal and refused without one; `sandbox=true` targets the sandbox ledger, and `filename` is recorded for display. An empty or oversized upload is a 400.
@@ -1741,27 +1741,6 @@ export interface BooksApiCloudGetV1BooksAccountsRequest {
      * @memberof BooksApiCloudGetV1BooksAccounts
      */
     readonly sandbox?: string
-}
-
-/**
- * Request parameters for cloudGetV1BooksBalanceSheet operation in BooksApi.
- * @export
- * @interface BooksApiCloudGetV1BooksBalanceSheetRequest
- */
-export interface BooksApiCloudGetV1BooksBalanceSheetRequest {
-    /**
-     * Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
-     * @type {string}
-     * @memberof BooksApiCloudGetV1BooksBalanceSheet
-     */
-    readonly sandbox?: string
-
-    /**
-     * To is the RFC3339 instant the statement is struck as of. Empty means all time.
-     * @type {string}
-     * @memberof BooksApiCloudGetV1BooksBalanceSheet
-     */
-    readonly to?: string
 }
 
 /**
@@ -1933,6 +1912,27 @@ export interface BooksApiCloudGetV1BooksPnlRequest {
 }
 
 /**
+ * Request parameters for cloudGetV1BooksPosition operation in BooksApi.
+ * @export
+ * @interface BooksApiCloudGetV1BooksPositionRequest
+ */
+export interface BooksApiCloudGetV1BooksPositionRequest {
+    /**
+     * Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
+     * @type {string}
+     * @memberof BooksApiCloudGetV1BooksPosition
+     */
+    readonly sandbox?: string
+
+    /**
+     * To is the RFC3339 instant the statement is struck as of. Empty means all time.
+     * @type {string}
+     * @memberof BooksApiCloudGetV1BooksPosition
+     */
+    readonly to?: string
+}
+
+/**
  * Request parameters for cloudGetV1BooksQuestions operation in BooksApi.
  * @export
  * @interface BooksApiCloudGetV1BooksQuestionsRequest
@@ -2010,29 +2010,29 @@ export interface BooksApiCloudGetV1BooksTransactionsRequest {
 }
 
 /**
- * Request parameters for cloudGetV1BooksTrialBalance operation in BooksApi.
+ * Request parameters for cloudGetV1BooksTrial operation in BooksApi.
  * @export
- * @interface BooksApiCloudGetV1BooksTrialBalanceRequest
+ * @interface BooksApiCloudGetV1BooksTrialRequest
  */
-export interface BooksApiCloudGetV1BooksTrialBalanceRequest {
+export interface BooksApiCloudGetV1BooksTrialRequest {
     /**
      * Sandbox reads the org\&#39;s SANDBOX ledger when it is exactly \&quot;true\&quot;.
      * @type {string}
-     * @memberof BooksApiCloudGetV1BooksTrialBalance
+     * @memberof BooksApiCloudGetV1BooksTrial
      */
     readonly sandbox?: string
 
     /**
      * From is the RFC3339 start of the window, exclusive. Empty means all time.
      * @type {string}
-     * @memberof BooksApiCloudGetV1BooksTrialBalance
+     * @memberof BooksApiCloudGetV1BooksTrial
      */
     readonly from?: string
 
     /**
      * To is the RFC3339 end of the window, inclusive. Empty means up to now.
      * @type {string}
-     * @memberof BooksApiCloudGetV1BooksTrialBalance
+     * @memberof BooksApiCloudGetV1BooksTrial
      */
     readonly to?: string
 }
@@ -2169,18 +2169,6 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
-     * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-     * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
-     * @param {BooksApiCloudGetV1BooksBalanceSheetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksApi
-     */
-    public cloudGetV1BooksBalanceSheet(requestParameters: BooksApiCloudGetV1BooksBalanceSheetRequest = {}, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).cloudGetV1BooksBalanceSheet(requestParameters.sandbox, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
      * @summary ListBankTransactions returns the org\'s normalized bank transactions, newest first — every row the import and connector paths have ingested, with its amount in exact cents, its direction, and whether it has been matched to a voucher yet.
      * @param {BooksApiCloudGetV1BooksBankTransactionsRequest} requestParameters Request parameters.
@@ -2265,6 +2253,18 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
+     * BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+     * @summary BalanceSheet returns the org\'s Balance Sheet as of `to` (empty = all time), with the Assets == Liabilities + Equity equation proof.
+     * @param {BooksApiCloudGetV1BooksPositionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public cloudGetV1BooksPosition(requestParameters: BooksApiCloudGetV1BooksPositionRequest = {}, options?: RawAxiosRequestConfig) {
+        return BooksApiFp(this.configuration).cloudGetV1BooksPosition(requestParameters.sandbox, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first. An empty list means the books look clean; the detector is deterministic over the ledger and invents nothing.
      * @summary ListQuestions returns the clarifying questions the caller\'s own recent GL raises — the unusual postings a founder should look at (outliers, reversals, round-offs, uncosted revenue, an overdrawn wallet), sharpest first.
      * @param {BooksApiCloudGetV1BooksQuestionsRequest} requestParameters Request parameters.
@@ -2303,13 +2303,13 @@ export class BooksApi extends BaseAPI {
     /**
      * TrialBalance returns the org\'s trial balance over an optional [from, to] window of RFC3339 posting times, including the opening/closing columns and the TotalDebit == TotalCredit proof that the books balance.
      * @summary TrialBalance returns the org\'s trial balance over an optional [from, to] window of RFC3339 posting times, including the opening/closing columns and the TotalDebit == TotalCredit proof that the books balance.
-     * @param {BooksApiCloudGetV1BooksTrialBalanceRequest} requestParameters Request parameters.
+     * @param {BooksApiCloudGetV1BooksTrialRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BooksApi
      */
-    public cloudGetV1BooksTrialBalance(requestParameters: BooksApiCloudGetV1BooksTrialBalanceRequest = {}, options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).cloudGetV1BooksTrialBalance(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
+    public cloudGetV1BooksTrial(requestParameters: BooksApiCloudGetV1BooksTrialRequest = {}, options?: RawAxiosRequestConfig) {
+        return BooksApiFp(this.configuration).cloudGetV1BooksTrial(requestParameters.sandbox, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2360,17 +2360,6 @@ export class BooksApi extends BaseAPI {
     }
 
     /**
-     * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
-     * @summary Begin connecting a bank account (not yet available)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BooksApi
-     */
-    public cloudPostV1BooksBankLinkToken(options?: RawAxiosRequestConfig) {
-        return BooksApiFp(this.configuration).cloudPostV1BooksBankLinkToken(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped. One connector\'s outage is skipped rather than failing the whole sync. It reports the batch: how many transactions were seen, how many vouchers posted, how many inflows reconciled against the processor clearing account, how many raised a question, how many were own-account transfers, and how many were already-processed no-ops. It is READ-ONLY against the bank — it ingests, it never sends money.
      * @summary SyncBank pulls every connected bank (Plaid/Teller) for the caller\'s org, maps each fetched transaction to a posting and books it idempotently, then advances that connector\'s cursor so the next sync resumes where this one stopped.
      * @param {*} [options] Override http request option.
@@ -2379,6 +2368,17 @@ export class BooksApi extends BaseAPI {
      */
     public cloudPostV1BooksBankSync(options?: RawAxiosRequestConfig) {
         return BooksApiFp(this.configuration).cloudPostV1BooksBankSync(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * ANSWERS 501 UNCONDITIONALLY. It is the intended first hop of the bank-linking handshake — mint the short-lived session token a browser hands to the provider\'s link widget — and nothing on the HTTP path reaches an implementation today.  The connectors behind it are written and tested; only the wiring is missing, so an org cannot connect a bank through the API at all. Until that lands, bank data reaches the books by statement import.  It is documented as refusing rather than declared with a success body precisely because it has never sent one. A response schema here would be invention: every generated SDK would carry a return type for a call that has only ever failed. A caller with no principal gets 401 before the 501.
+     * @summary Begin connecting a bank account (not yet available)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BooksApi
+     */
+    public cloudPostV1BooksBankToken(options?: RawAxiosRequestConfig) {
+        return BooksApiFp(this.configuration).cloudPostV1BooksBankToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -252,10 +252,10 @@ export const WebhooksApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1WebhooksIdRotateSecret: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        cloudPostV1WebhooksIdSecret: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('cloudPostV1WebhooksIdRotateSecret', 'id', id)
-            const localVarPath = `/v1/webhooks/{id}/rotate-secret`
+            assertParamExists('cloudPostV1WebhooksIdSecret', 'id', id)
+            const localVarPath = `/v1/webhooks/{id}/secret`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -509,7 +509,7 @@ export const WebhooksApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
+            // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
@@ -763,10 +763,10 @@ export const WebhooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1WebhooksIdRotateSecret(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudEndpoint>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1WebhooksIdRotateSecret(id, options);
+        async cloudPostV1WebhooksIdSecret(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudEndpoint>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1WebhooksIdSecret(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebhooksApi.cloudPostV1WebhooksIdRotateSecret']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebhooksApi.cloudPostV1WebhooksIdSecret']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -962,12 +962,12 @@ export const WebhooksApiFactory = function (configuration?: Configuration, baseP
         /**
          * Mints a NEW HMAC signing secret for the endpoint and answers the endpoint WITH it — the only other response besides create that ever carries a secret. The old secret stops working the instant this returns: every subsequent delivery signs with the new one, with no overlap window. Call it when the subscriber is ready to swap the value on its side, not before.
          * @summary Mints a NEW HMAC signing secret for the endpoint and answers the endpoint WITH it — the only other response besides create that ever carries a secret.
-         * @param {WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest} requestParameters Request parameters.
+         * @param {WebhooksApiCloudPostV1WebhooksIdSecretRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1WebhooksIdRotateSecret(requestParameters: WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudEndpoint> {
-            return localVarFp.cloudPostV1WebhooksIdRotateSecret(requestParameters.id, options).then((request) => request(axios, basePath));
+        cloudPostV1WebhooksIdSecret(requestParameters: WebhooksApiCloudPostV1WebhooksIdSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<CloudEndpoint> {
+            return localVarFp.cloudPostV1WebhooksIdSecret(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends ONE signed test event to the endpoint right now and answers the outcome inline, so the console can show whether the subscriber is reachable without waiting for real traffic. It takes the same attempt path the bus dispatcher takes — one attempt, 10s timeout, no retry ladder — and records the result in the endpoint\'s delivery log. It works on a DISABLED endpoint too: validating one you have paused is the whole point.
@@ -1141,15 +1141,15 @@ export interface WebhooksApiCloudPostV1WebhooksRequest {
 }
 
 /**
- * Request parameters for cloudPostV1WebhooksIdRotateSecret operation in WebhooksApi.
+ * Request parameters for cloudPostV1WebhooksIdSecret operation in WebhooksApi.
  * @export
- * @interface WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest
+ * @interface WebhooksApiCloudPostV1WebhooksIdSecretRequest
  */
-export interface WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest {
+export interface WebhooksApiCloudPostV1WebhooksIdSecretRequest {
     /**
      * 
      * @type {string}
-     * @memberof WebhooksApiCloudPostV1WebhooksIdRotateSecret
+     * @memberof WebhooksApiCloudPostV1WebhooksIdSecret
      */
     readonly id: string
 }
@@ -1356,13 +1356,13 @@ export class WebhooksApi extends BaseAPI {
     /**
      * Mints a NEW HMAC signing secret for the endpoint and answers the endpoint WITH it — the only other response besides create that ever carries a secret. The old secret stops working the instant this returns: every subsequent delivery signs with the new one, with no overlap window. Call it when the subscriber is ready to swap the value on its side, not before.
      * @summary Mints a NEW HMAC signing secret for the endpoint and answers the endpoint WITH it — the only other response besides create that ever carries a secret.
-     * @param {WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest} requestParameters Request parameters.
+     * @param {WebhooksApiCloudPostV1WebhooksIdSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebhooksApi
      */
-    public cloudPostV1WebhooksIdRotateSecret(requestParameters: WebhooksApiCloudPostV1WebhooksIdRotateSecretRequest, options?: RawAxiosRequestConfig) {
-        return WebhooksApiFp(this.configuration).cloudPostV1WebhooksIdRotateSecret(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1WebhooksIdSecret(requestParameters: WebhooksApiCloudPostV1WebhooksIdSecretRequest, options?: RawAxiosRequestConfig) {
+        return WebhooksApiFp(this.configuration).cloudPostV1WebhooksIdSecret(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

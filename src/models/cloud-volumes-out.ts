@@ -15,30 +15,30 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { CloudBindData } from './cloud-bind-data';
+import type { CloudStorageSnapshot } from './cloud-storage-snapshot';
 
 /**
  * 
  * @export
- * @interface CloudBindOut
+ * @interface CloudVolumesOut
  */
-export interface CloudBindOut {
+export interface CloudVolumesOut {
     /**
-     * Data is the bound signer.
-     * @type {CloudBindData}
-     * @memberof CloudBindOut
+     * 
+     * @type {CloudStorageSnapshot}
+     * @memberof CloudVolumesOut
      */
-    'data'?: CloudBindData;
+    'data'?: CloudStorageSnapshot;
     /**
-     * Msg carries an operator-facing note; empty on success.
+     * 
      * @type {string}
-     * @memberof CloudBindOut
+     * @memberof CloudVolumesOut
      */
     'msg'?: string;
     /**
-     * Status is \"ok\" on success.
+     * 
      * @type {string}
-     * @memberof CloudBindOut
+     * @memberof CloudVolumesOut
      */
     'status'?: string;
 }

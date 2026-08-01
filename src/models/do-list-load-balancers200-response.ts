@@ -13,30 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { DoLoadBalancer } from './do-load-balancer';
 
 /**
  * 
  * @export
- * @interface CloudBindData
+ * @interface DoListLoadBalancers200Response
  */
-export interface CloudBindData {
+export interface DoListLoadBalancers200Response {
     /**
-     * BoundAnchorSigner is the EVM address now signing anchors. Fund it for gas.
-     * @type {string}
-     * @memberof CloudBindData
+     * 
+     * @type {Array<DoLoadBalancer>}
+     * @memberof DoListLoadBalancers200Response
      */
-    'boundAnchorSigner'?: string;
-    /**
-     * ChainID is the EVM chain the signer is bound for.
-     * @type {number}
-     * @memberof CloudBindData
-     */
-    'chainId'?: number;
-    /**
-     * Org is the org whose treasury wallet was resolved.
-     * @type {string}
-     * @memberof CloudBindData
-     */
-    'org'?: string;
+    'loadBalancers'?: Array<DoLoadBalancer>;
 }
 

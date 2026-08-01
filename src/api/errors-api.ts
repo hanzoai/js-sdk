@@ -30,7 +30,7 @@ import type { CloudErrorList } from '../models';
 export const ErrorsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over the same table the capture doors write: only rows stored as type \'error\', each with its captured exception lifted out of the property bag as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Errors returns the caller org\'s most recently captured errors, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
@@ -79,7 +79,7 @@ export const ErrorsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ErrorsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over the same table the capture doors write: only rows stored as type \'error\', each with its captured exception lifted out of the property bag as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Errors returns the caller org\'s most recently captured errors, newest first.
          * @param {number} [limit] Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
@@ -102,7 +102,7 @@ export const ErrorsApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = ErrorsApiFp(configuration)
     return {
         /**
-         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over the same table the capture doors write: only rows stored as type \'error\', each with its captured exception lifted out of the property bag as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
+         * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Errors returns the caller org\'s most recently captured errors, newest first.
          * @param {ErrorsApiCloudGetV1ErrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -136,7 +136,7 @@ export interface ErrorsApiCloudGetV1ErrorsRequest {
  */
 export class ErrorsApi extends BaseAPI {
     /**
-     * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over the same table the capture doors write: only rows stored as type \'error\', each with its captured exception lifted out of the property bag as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
+     * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
      * @summary Errors returns the caller org\'s most recently captured errors, newest first.
      * @param {ErrorsApiCloudGetV1ErrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -1271,8 +1271,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1StoreStorefrontToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/store/storefront-token`;
+        cloudPostV1StoreToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/store/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2369,10 +2369,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cloudPostV1StoreStorefrontToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1StoreStorefrontToken(options);
+        async cloudPostV1StoreToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cloudPostV1StoreToken(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.cloudPostV1StoreStorefrontToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.cloudPostV1StoreToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2906,8 +2906,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cloudPostV1StoreStorefrontToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.cloudPostV1StoreStorefrontToken(options).then((request) => request(axios, basePath));
+        cloudPostV1StoreToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.cloudPostV1StoreToken(options).then((request) => request(axios, basePath));
         },
         /**
          * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
@@ -4235,8 +4235,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public cloudPostV1StoreStorefrontToken(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).cloudPostV1StoreStorefrontToken(options).then((request) => request(this.axios, this.basePath));
+    public cloudPostV1StoreToken(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).cloudPostV1StoreToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

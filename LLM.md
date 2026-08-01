@@ -50,8 +50,13 @@ hanzoai/openapi  merges 55 service specs ->  hanzo.yaml   <- the ONE SDK input
 this repo        scripts/generate.sh     ->  src/, then owns its bump + release
 ```
 
-Current `src/` is 2361 files (264 api + 2092 models + 5 root) from **1739 paths /
-2455 operations / 1831 schemas**.
+Current `src/` is 2364 files (265 api + 2094 models + 5 root) from **1742 paths /
+2462 operations / 1832 schemas**.
+
+`hanzo.yaml` moves under you: this tree drifted +9 −6 ~22 in the hour between
+one regeneration and the next. Run `./scripts/generate.sh --check` immediately
+before releasing, and read its **exit code** — in a pipeline `$?` is the last
+command's, so `... | tail` reports `0` while the check is failing.
 
 ## Two spec defects fixed upstream — do not re-patch them here
 
