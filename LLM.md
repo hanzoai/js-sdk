@@ -58,13 +58,34 @@ second copy of all 2143 files. Both sides now agree, and the disagreement cannot
 recur because only one side declares it.
 
 ```
-hanzoai/cloud    emits its router spec   ->  cloud/openapi.yaml
-hanzoai/openapi  merges 55 service specs ->  hanzo.yaml   <- the ONE SDK input
+hanzoai/cloud    emits its router spec   ->  cloud/openapi.yaml  <- the ONE SDK input
+hanzoai/openapi  generate.py + sdks.yaml ->  the invocation, as data
 this repo        scripts/generate.sh     ->  src/, then owns its bump + release
 ```
 
-Current `src/` is 2364 files (265 api + 2094 models + 5 root) from **1742 paths /
-2462 operations / 1832 schemas**.
+**The client is a projection of cloud's document DIRECTLY, not of `hanzo.yaml`.**
+`.spec-lock` has said `repo=hanzoai/cloud path=openapi.yaml` for a while; what
+changed is that it is now also true of how the bytes are fetched. `generate.py`
+passes `--skip-validate-spec`, so the 1012 missing-`responses` errors that once
+made cloud's emission produce zero files no longer stop it — measured here, the
+raw document generates a client that compiles and type-checks with no repair.
+`hanzo.yaml` remains the input for the doc site and the skills plane; it is not
+in this SDK's path. Regenerate with the document by value:
+
+```bash
+OPENAPI=~/work/hanzo/openapi SPEC=~/work/hanzo/cloud/openapi.yaml ./scripts/generate.sh
+```
+
+Current `src/` is 2360 files (182 api + 2173 models + 5 root) from **1700 paths /
+2354 operations / 2186 schemas**.
+
+**IAM's types are namespace-qualified now, and that is the fix, not a defect.**
+Types declared inside hanzoai/iam arrive as `iam.Role`, `iam.Application`, … and
+land as `src/models/iam-role.ts`, `iam-application.ts` — 96 of them. A bare
+`Role` used to mean two unrelated shapes (IAM's 14-property role and a
+2-property `{role, user}` membership row); both now exist side by side and say
+which is which. `src/models/role.ts` and `application.ts` still exist and belong
+to the OTHER services. Do not "restore" the bare IAM spellings.
 
 `hanzo.yaml` moves under you: this tree drifted +9 −6 ~22 in the hour between
 one regeneration and the next. Run `./scripts/generate.sh --check` immediately
