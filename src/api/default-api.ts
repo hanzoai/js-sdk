@@ -162,6 +162,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tracker`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('deleteTrackerByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/tracker/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
          * @summary Browse your org\'s repositories
          * @param {*} [options] Override http request option.
@@ -900,6 +964,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tracker`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board\'s assets and client-side routes
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getTrackerByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/tracker/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
          * @summary The Hanzo event tag — the one-line install for a surface with no bundler
          * @param {*} [options] Override http request option.
@@ -1272,6 +1400,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tracker`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('patchTrackerByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/tracker/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Accept a push, and turn it into a build
          * @param {string} org 
@@ -1617,6 +1809,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tracker`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('postTrackerByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/tracker/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1743,6 +1999,70 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tracker`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('putTrackerByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/tracker/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1801,6 +2121,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTracker(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTracker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTrackerByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2083,6 +2428,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTracker(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTracker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board\'s assets and client-side routes
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTrackerByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
          * @summary The Hanzo event tag — the one-line install for a surface with no bundler
          * @param {*} [options] Override http request option.
@@ -2230,6 +2600,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTracker(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTracker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTrackerByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Accept a push, and turn it into a build
          * @param {string} org 
@@ -2357,6 +2752,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTracker(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTracker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTrackerByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2403,6 +2823,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTracker(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTracker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTrackerByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2452,6 +2897,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         deleteTasksByWildcard1(requestParameters: DefaultApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTracker(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {DefaultApiDeleteTrackerByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTrackerByWildcard1(requestParameters: DefaultApiDeleteTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
@@ -2655,6 +3119,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTracker(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tracker board\'s assets and client-side routes
+         * @param {DefaultApiGetTrackerByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTrackerByWildcard1(requestParameters: DefaultApiGetTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
          * @summary The Hanzo event tag — the one-line install for a surface with no bundler
          * @param {*} [options] Override http request option.
@@ -2766,6 +3249,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.patchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTracker(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {DefaultApiPatchTrackerByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchTrackerByWildcard1(requestParameters: DefaultApiPatchTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Accept a push, and turn it into a build
          * @param {DefaultApiPostByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
@@ -2855,6 +3357,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTracker(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {DefaultApiPostTrackerByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTrackerByWildcard1(requestParameters: DefaultApiPostTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2891,6 +3412,25 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTracker(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tracker board
+         * @param {DefaultApiPutTrackerByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTrackerByWildcard1(requestParameters: DefaultApiPutTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -2918,6 +3458,20 @@ export interface DefaultApiDeleteTasksByWildcard1Request {
      * 
      * @type {string}
      * @memberof DefaultApiDeleteTasksByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
+ * Request parameters for deleteTrackerByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiDeleteTrackerByWildcard1Request
+ */
+export interface DefaultApiDeleteTrackerByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiDeleteTrackerByWildcard1
      */
     readonly wildcard1: string
 }
@@ -3196,6 +3750,20 @@ export interface DefaultApiGetTasksByWildcard1Request {
 }
 
 /**
+ * Request parameters for getTrackerByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiGetTrackerByWildcard1Request
+ */
+export interface DefaultApiGetTrackerByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiGetTrackerByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * Request parameters for getWellKnownAgentSkillsBySkillSkillMd operation in DefaultApi.
  * @export
  * @interface DefaultApiGetWellKnownAgentSkillsBySkillSkillMdRequest
@@ -3233,6 +3801,20 @@ export interface DefaultApiPatchTasksByWildcard1Request {
      * 
      * @type {string}
      * @memberof DefaultApiPatchTasksByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
+ * Request parameters for patchTrackerByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiPatchTrackerByWildcard1Request
+ */
+export interface DefaultApiPatchTrackerByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiPatchTrackerByWildcard1
      */
     readonly wildcard1: string
 }
@@ -3413,6 +3995,20 @@ export interface DefaultApiPostTasksByWildcard1Request {
 }
 
 /**
+ * Request parameters for postTrackerByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiPostTrackerByWildcard1Request
+ */
+export interface DefaultApiPostTrackerByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiPostTrackerByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * Request parameters for putMeetByWildcard1 operation in DefaultApi.
  * @export
  * @interface DefaultApiPutMeetByWildcard1Request
@@ -3436,6 +4032,20 @@ export interface DefaultApiPutTasksByWildcard1Request {
      * 
      * @type {string}
      * @memberof DefaultApiPutTasksByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
+ * Request parameters for putTrackerByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiPutTrackerByWildcard1Request
+ */
+export interface DefaultApiPutTrackerByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiPutTrackerByWildcard1
      */
     readonly wildcard1: string
 }
@@ -3491,6 +4101,29 @@ export class DefaultApi extends BaseAPI {
      */
     public deleteTasksByWildcard1(requestParameters: DefaultApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteTracker(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteTracker(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {DefaultApiDeleteTrackerByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteTrackerByWildcard1(requestParameters: DefaultApiDeleteTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3737,6 +4370,29 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
+     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The tracker board
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getTracker(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getTracker(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The tracker board\'s assets and client-side routes
+     * @param {DefaultApiGetTrackerByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getTrackerByWildcard1(requestParameters: DefaultApiGetTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
      * @summary The Hanzo event tag — the one-line install for a surface with no bundler
      * @param {*} [options] Override http request option.
@@ -3872,6 +4528,29 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public patchTracker(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchTracker(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {DefaultApiPatchTrackerByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public patchTrackerByWildcard1(requestParameters: DefaultApiPatchTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
      * @summary Accept a push, and turn it into a build
      * @param {DefaultApiPostByOrgByProjectByRepoGitReceivePackRequest} requestParameters Request parameters.
@@ -3979,6 +4658,29 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public postTracker(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postTracker(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {DefaultApiPostTrackerByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public postTrackerByWildcard1(requestParameters: DefaultApiPostTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the call client
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4021,6 +4723,29 @@ export class DefaultApi extends BaseAPI {
      */
     public putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public putTracker(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putTracker(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tracker board
+     * @param {DefaultApiPutTrackerByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public putTrackerByWildcard1(requestParameters: DefaultApiPutTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

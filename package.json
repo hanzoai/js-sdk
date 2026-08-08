@@ -1,6 +1,6 @@
 {
   "name": "hanzoai",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "The official TypeScript library for the Hanzo API",
   "author": "Hanzo <dev@hanzo.ai>",
   "license": "Apache-2.0",

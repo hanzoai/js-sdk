@@ -38,8 +38,8 @@ import type { TrackerProject } from '../models';
 export const TrackerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -225,8 +225,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -303,8 +303,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -383,8 +383,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TrackerApiAxiosParamCreator(configuration)
     return {
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -451,8 +451,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -479,8 +479,8 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -515,8 +515,8 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = TrackerApiFp(configuration)
     return {
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {TrackerApiDeleteV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -563,8 +563,8 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.scheduled, options).then((request) => request(axios, basePath));
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {TrackerApiPatchV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -583,8 +583,8 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.patchV1TrackerProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, requestParameters.issueEdit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-         * @summary Refuses — a board is a repository on the forge.
+         * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -752,8 +752,8 @@ export interface TrackerApiPostV1TrackerProjectsByKeyIssuesRequest {
  */
 export class TrackerApi extends BaseAPI {
     /**
-     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-     * @summary Refuses — a board is a repository on the forge.
+     * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refused — a board is a repository on the forge
      * @param {TrackerApiDeleteV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -810,8 +810,8 @@ export class TrackerApi extends BaseAPI {
     }
 
     /**
-     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-     * @summary Refuses — a board is a repository on the forge.
+     * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refused — a board is a repository on the forge
      * @param {TrackerApiPatchV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -834,8 +834,8 @@ export class TrackerApi extends BaseAPI {
     }
 
     /**
-     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
-     * @summary Refuses — a board is a repository on the forge.
+     * Answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refused — a board is a repository on the forge
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi

@@ -13,6 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { CostLine } from './cost-line';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { StatusBreakdown } from './status-breakdown';
 
 /**
  * 
@@ -21,28 +27,22 @@
  */
 export interface Usage {
     /**
-     * CPU is total user+system time this instance has consumed since it started. It only ever climbs, so a rate is the interesting derivative.
+     * null — no per-invocation cost source
      * @type {number}
      * @memberof Usage
      */
-    'cpuNs'?: number;
+    'costCents'?: number;
     /**
-     * 
-     * @type {number}
+     * one line per function that ran in the window
+     * @type {Array<CostLine>}
      * @memberof Usage
      */
-    'fds'?: number;
+    'series'?: Array<CostLine>;
     /**
-     * RSS is resident memory in bytes — the honest number for \"what does this plugin cost\", as opposed to virtual size.
-     * @type {number}
+     * how those invocations ended
+     * @type {StatusBreakdown}
      * @memberof Usage
      */
-    'rssBytes'?: number;
-    /**
-     * Threads and FDs are the two limits a busy service hits first, and both are leaks when they climb without bound.
-     * @type {number}
-     * @memberof Usage
-     */
-    'threads'?: number;
+    'status'?: StatusBreakdown;
 }
 

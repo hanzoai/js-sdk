@@ -21,22 +21,16 @@
  */
 export interface Health {
     /**
-     * Status is ok when the message plane answers, degraded otherwise.
-     * @type {string}
+     * OK is true whenever this route answers at all: reaching the handler IS the proof that the routes are registered and dispatching.
+     * @type {boolean}
      * @memberof Health
      */
-    'status'?: string;
+    'ok'?: boolean;
     /**
-     * Uptime is how long this surface has been mounted.
+     * Subsystem names what answered, so a health response read out of context still says which surface it came from.
      * @type {string}
      * @memberof Health
      */
-    'uptime'?: string;
-    /**
-     * Version is the connected broker\'s server version; empty while degraded.
-     * @type {string}
-     * @memberof Health
-     */
-    'version'?: string;
+    'subsystem'?: string;
 }
 
