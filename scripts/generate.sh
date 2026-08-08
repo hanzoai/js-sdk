@@ -20,26 +20,18 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-SPEC_REPO="${SPEC_REPO:-hanzoai/openapi}"
-SPEC_REF="${SPEC_REF:-main}"
-
+# THE GENERATOR IS A TOOL; THE DOCUMENT IS AN ARGUMENT. They had one name here
+# and it broke the lane. `SPEC_REF` is the ref of the DOCUMENT — hanzoai/ci's
+# client lane exports a hanzoai/cloud sha or v-tag — and it was also handed to
+# `git clone -b` on hanzoai/openapi, which is a different repository and has
+# never had a ref by that name. So every CI regeneration died at the clone, and
+# by hand it worked only because SPEC_REF defaulted to `main` and both repos
+# happen to have one. The generator is cloned at its own default branch now.
 OPENAPI="${OPENAPI:-}"
 if [ -z "$OPENAPI" ]; then
   OPENAPI="$(mktemp -d)"
   trap 'rm -rf "$OPENAPI"' EXIT
-  # hanzoai/openapi is PRIVATE. A runner has no git credentials, so CI passes a
-  # contents:read token as SPEC_TOKEN; on a dev box your existing gh/ssh
-  # credentials already cover it and no token is wanted.
-  #
-  # The token goes in a header, not in the remote URL — a URL is echoed back in
-  # git's own error messages and lands in the log the one time this fails.
-  if [ -n "${SPEC_TOKEN:-}" ]; then
-    auth="$(printf 'x-access-token:%s' "$SPEC_TOKEN" | base64 | tr -d '\n')"
-    git -c "http.extraheader=AUTHORIZATION: basic $auth" \
-      clone --depth 1 -q -b "$SPEC_REF" "https://github.com/$SPEC_REPO" "$OPENAPI"
-  else
-    git clone --depth 1 -q -b "$SPEC_REF" "https://github.com/$SPEC_REPO" "$OPENAPI"
-  fi
+  git clone --depth 1 -q https://git.hanzo.ai/hanzoai/openapi "$OPENAPI"
 fi
 
 # uv rather than a bare python3: the driver needs PyYAML, and the arc runner
