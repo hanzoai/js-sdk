@@ -3,15 +3,21 @@ name: Publish
 # must already hold it, and the receipt is what registry.npmjs.org serves — not
 # what `npm publish` printed.
 #
-# `ubuntu-latest`, not `hanzo-build-linux-amd64`, and this is the whole reason
-# the car could not move: measured 2026-08-01, the v2.0.3 and v2.0.4 publish jobs
-# each asked for that label, were never assigned a runner, and were cancelled —
-# one after sitting 24 hours. `hanzoai` then reached npm at 2.0.5 with no
-# workflow run behind it at all, because a human ran `npm publish` by hand. The
-# proof is in the bytes: npm serves 2.0.5 at integrity sha512-X3V17E…, while
-# `npm pack` on origin/main produces sha512-q7Rbz1…, so the published tarball
-# corresponds to no commit anyone can name. Image builds still belong on the arc
-# pool; this one packs a tarball.
+# THE DIRECTORY WAS THE WHOLE PROBLEM, not the label. This file sat in
+# `.github/workflows`, and the forge collects the FIRST of its workflow
+# directories that exists in the pushed commit and ignores the rest — this repo
+# has `.hanzo/workflows`, so git.hanzo.ai's own listing showed exactly one
+# workflow here, cicd.yml, and this one was not a job that queued, it was a job
+# that did not exist. The tag that publishes is cut on the forge, so nothing
+# could ever fire it.
+#
+# The earlier note here blamed `ubuntu-latest` and cancelled queues. That label
+# is off the forge pool, so it would also have failed — but only after this file
+# became reachable, which it was not. Both had to change: the directory to be
+# seen, the label to be run. `hanzoai` reached npm at 2.0.5 with no workflow run
+# behind it at all, published by hand; npm serves it at integrity sha512-X3V17E…
+# while `npm pack` on main produces sha512-q7Rbz1…, so the published tarball
+# corresponds to no commit anyone can name. That is what this file ends.
 #
 # `npm ci`, not `npm install`: the lockfile is committed, and a release that
 # silently resolves a different axios than the gate did is not the thing that
@@ -29,7 +35,7 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: [hanzo-build-linux-amd64]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
