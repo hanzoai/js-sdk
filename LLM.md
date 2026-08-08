@@ -29,11 +29,11 @@ Measured on the published `2.0.6` tarball: 1699 distinct `/v1` paths, of which
 addresses that **404 against api.hanzo.ai** — `gpu-charge`, `gpu-eligibility`,
 `payment-config`, `payment-methods` — while the three the server actually serves
 (`gpu/charge`, `gpu/eligibility`, `methods`, `settings`) were absent entirely.
-Cloud's document has 1208 paths / 1636 operations and carries the live spellings.
-A smaller true document beats a larger unverified one.
+Cloud's document carries the live spellings. A smaller true document beats a
+larger unverified one.
 
 ```bash
-./scripts/generate.sh                    # regenerate src/ from hanzoai/openapi@main
+./scripts/generate.sh                    # regenerate src/ from the document .spec-lock names
 OPENAPI=~/work/hanzo/openapi ./scripts/generate.sh   # use a local spec checkout
 ./scripts/generate.sh --check            # fail if committed src/ drifted
 npm run build                            # tsc -> dist (CJS) + dist/esm (ESM)
@@ -76,8 +76,12 @@ in this SDK's path. Regenerate with the document by value:
 OPENAPI=~/work/hanzo/openapi SPEC=~/work/hanzo/cloud/openapi.yaml ./scripts/generate.sh
 ```
 
-Current `src/` is 2360 files (182 api + 2173 models + 5 root) from **1700 paths /
-2354 operations / 2186 schemas**.
+How big `src/` is, and how big the document is, are not written down here. Both
+move on every cloud release and a number in prose moves on none of them — this
+file carried two pairs that disagreed with each other and with the document.
+`.spec-lock` names the release this tree is a projection of, and
+hanzoai/cloud's `openapi/floor.json` is the one place in the fleet where a count
+of the document lives.
 
 **IAM's types are namespace-qualified now, and that is the fix, not a defect.**
 Types declared inside hanzoai/iam arrive as `iam.Role`, `iam.Application`, … and
@@ -250,7 +254,14 @@ corresponds to no commit in this repo, which is what publishing by hand from an
 uncommitted tree looks like from the outside. `2.0.6` is the first version whose
 bytes are reproducible from its tag.
 
-## Note: `packages/mcp-server`
-The Stainless-era MCP server under `packages/mcp-server` targets the old client
-surface and is not rebuilt by the root pipeline. It needs its own regeneration
-against the new surface before it can be republished (tracked separately).
+## There is no MCP server here
+`packages/mcp-server` is deleted, not pending. It declared 128 addresses, of
+which 7 are in the document and 121 are not; 33 of those were pass-throughs to a
+competing AI stack under `/anthropic/`, `/bedrock/`, `/cohere/`, `/langfuse/` and
+`/azure/`. It had never been published — `hanzoai-mcp` is a 404 on npm — so
+nothing depended on it, and "regenerate it against the new surface" would have
+built a second MCP door.
+
+The one door is hanzoai/cloud's, one tool per product, its descriptions taken
+from the same handler doc comments the document is. This repo is client-side
+only, which is the shape rust-sdk arrived at first.
