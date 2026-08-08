@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AiEnvelope } from '../models';
+// @ts-ignore
 import type { AiMCPSurface } from '../models';
 /**
  * AiApi - axios parameter creator
@@ -67,8 +69,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one article.
          * @summary Delete a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -105,8 +107,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one asset.
          * @summary Delete a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -143,8 +145,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one chat.
          * @summary Delete a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -215,8 +217,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one application.
          * @summary Delete a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -253,8 +255,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one file.
          * @summary Delete a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -291,8 +293,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one form.
          * @summary Delete a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -329,8 +331,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one graph.
          * @summary Delete a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -367,8 +369,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one message.
          * @summary Delete a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -435,8 +437,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one node.
          * @summary Delete a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -473,8 +475,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one provider.
          * @summary Delete a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -511,8 +513,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one record.
          * @summary Delete a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -549,8 +551,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one connection.
          * @summary Delete a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -587,8 +589,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one model-route.
          * @summary Delete a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -625,8 +627,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one scale.
          * @summary Delete a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -663,8 +665,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one scan.
          * @summary Delete a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -701,8 +703,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one session.
          * @summary Delete a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -739,8 +741,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one store.
          * @summary Delete a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -777,8 +779,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one task.
          * @summary Delete a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -815,8 +817,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one template.
          * @summary Delete a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -853,8 +855,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one tree-file.
          * @summary Delete a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -921,8 +923,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one vector.
          * @summary Delete a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -959,8 +961,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one video.
          * @summary Delete a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -997,8 +999,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Delete one workflow.
          * @summary Delete a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1155,8 +1157,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one article by its (owner, name) key.
          * @summary Retrieve a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1253,8 +1255,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one asset by its (owner, name) key.
          * @summary Retrieve a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1321,8 +1323,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one chat by its (owner, name) key.
          * @summary Retrieve a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1611,8 +1613,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one application by its (owner, name) key.
          * @summary Retrieve a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1709,8 +1711,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one file by its (owner, name) key.
          * @summary Retrieve a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1807,8 +1809,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one form by its (owner, name) key.
          * @summary Retrieve a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1935,8 +1937,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one graph by its (owner, name) key.
          * @summary Retrieve a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2063,8 +2065,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one message by its (owner, name) key.
          * @summary Retrieve a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2101,8 +2103,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Answer (message)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2199,8 +2201,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one node by its (owner, name) key.
          * @summary Retrieve a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2237,8 +2239,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Tunnel (node)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2335,8 +2337,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one provider by its (owner, name) key.
          * @summary Retrieve a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2433,8 +2435,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one record by its (owner, name) key.
          * @summary Retrieve a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2561,8 +2563,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one connection by its (owner, name) key.
          * @summary Retrieve a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2629,8 +2631,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one model-route by its (owner, name) key.
          * @summary Retrieve a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2697,8 +2699,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one scale by its (owner, name) key.
          * @summary Retrieve a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2825,8 +2827,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one scan by its (owner, name) key.
          * @summary Retrieve a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2893,8 +2895,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one session by its (owner, name) key.
          * @summary Retrieve a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2991,8 +2993,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one store by its (owner, name) key.
          * @summary Retrieve a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3179,8 +3181,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one task by its (owner, name) key.
          * @summary Retrieve a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3277,8 +3279,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one template by its (owner, name) key.
          * @summary Retrieve a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3525,8 +3527,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one vector by its (owner, name) key.
          * @summary Retrieve a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3653,8 +3655,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one video by its (owner, name) key.
          * @summary Retrieve a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3751,8 +3753,8 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Read one workflow by its (owner, name) key.
          * @summary Retrieve a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3819,16 +3821,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one article. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiArticlesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiArticlesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiArticlesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiArticlesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiArticlesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/articles/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -3845,9 +3850,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3857,16 +3865,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one asset. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiAssetsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiAssetsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiAssetsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiAssetsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiAssetsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/assets/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -3883,9 +3894,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3895,16 +3909,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one chat. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiChatsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiChatsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiChatsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiChatsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiChatsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/chats/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -3921,9 +3938,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3933,16 +3953,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one application. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiDeploymentsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiDeploymentsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiDeploymentsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiDeploymentsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiDeploymentsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/deployments/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -3959,9 +3982,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3971,16 +3997,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one file. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiFilesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiFilesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiFilesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiFilesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiFilesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/files/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -3997,9 +4026,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4009,16 +4041,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one form. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiFormsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiFormsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiFormsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiFormsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiFormsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/forms/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4035,9 +4070,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4047,16 +4085,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one graph. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiGraphsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiGraphsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiGraphsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiGraphsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiGraphsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/graphs/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4073,9 +4114,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4085,16 +4129,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one message. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiMessagesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiMessagesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiMessagesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiMessagesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiMessagesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/messages/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4111,9 +4158,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4123,16 +4173,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one node. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiNodesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiNodesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiNodesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiNodesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiNodesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/nodes/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4149,9 +4202,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4161,10 +4217,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Preferences
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiPreferences: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiPreferences: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiPreferences', 'body', body)
             const localVarPath = `/v1/ai/preferences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4179,9 +4238,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4191,16 +4253,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one provider. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiProvidersByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiProvidersByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiProvidersByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiProvidersByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiProvidersByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/providers/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4217,9 +4282,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4229,16 +4297,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one record. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRecordsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiRecordsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiRecordsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiRecordsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiRecordsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/records/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4255,9 +4326,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4267,16 +4341,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one connection. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRemoteConnectionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiRemoteConnectionsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiRemoteConnectionsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiRemoteConnectionsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiRemoteConnectionsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/remote-connections/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4293,9 +4370,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4305,16 +4385,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one model-route. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRoutesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiRoutesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiRoutesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiRoutesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiRoutesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/routes/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4331,9 +4414,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4343,16 +4429,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one scale. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiScalesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiScalesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiScalesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiScalesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiScalesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/scales/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4369,9 +4458,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4381,16 +4473,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one scan. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiScansByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiScansByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiScansByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiScansByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiScansByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/scans/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4407,9 +4502,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4419,16 +4517,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one session. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiSigninSessionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiSigninSessionsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiSigninSessionsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiSigninSessionsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiSigninSessionsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/signin-sessions/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4445,9 +4546,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4457,16 +4561,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one store. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiStoresByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiStoresByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiStoresByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiStoresByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiStoresByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/stores/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4483,9 +4590,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4495,16 +4605,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one task. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTasksByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiTasksByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiTasksByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiTasksByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiTasksByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/tasks/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4521,9 +4634,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4533,16 +4649,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one template. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTemplatesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiTemplatesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiTemplatesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiTemplatesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiTemplatesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/templates/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4559,9 +4678,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4571,10 +4693,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Training Contribution
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTrainingContribution: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiTrainingContribution: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiTrainingContribution', 'body', body)
             const localVarPath = `/v1/ai/training-contribution`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4589,9 +4714,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4601,16 +4729,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one tree-file. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTreeFilesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiTreeFilesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiTreeFilesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiTreeFilesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiTreeFilesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/tree-files/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4627,9 +4758,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4639,16 +4773,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one vector. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiVectorsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiVectorsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiVectorsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiVectorsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiVectorsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/vectors/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4665,9 +4802,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4677,16 +4817,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one video. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiVideosByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiVideosByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiVideosByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiVideosByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiVideosByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/videos/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4703,9 +4846,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4715,16 +4861,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Update one workflow. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiWorkflowsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AiWorkflowsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('patchV1AiWorkflowsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('patchV1AiWorkflowsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('patchV1AiWorkflowsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/workflows/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4741,9 +4890,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4753,10 +4905,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one article.
          * @summary Create a article
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiArticles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiArticles: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiArticles', 'body', body)
             const localVarPath = `/v1/ai/articles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4771,9 +4926,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4783,10 +4941,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one asset.
          * @summary Create a asset
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiAssets: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiAssets', 'body', body)
             const localVarPath = `/v1/ai/assets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4801,9 +4962,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4813,16 +4977,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Scan (asset)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssetsByOwnerByNameScan: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiAssetsByOwnerByNameScan: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiAssetsByOwnerByNameScan', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiAssetsByOwnerByNameScan', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiAssetsByOwnerByNameScan', 'body', body)
             const localVarPath = `/v1/ai/assets/{owner}/{name}/scan`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -4839,9 +5006,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4851,10 +5021,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Scan (asset)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssetsScan: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiAssetsScan: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiAssetsScan', 'body', body)
             const localVarPath = `/v1/ai/assets/scan`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4869,9 +5042,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4881,10 +5057,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one chat.
          * @summary Create a chat
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiChats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiChats: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiChats', 'body', body)
             const localVarPath = `/v1/ai/chats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4899,9 +5078,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4975,10 +5157,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one application.
          * @summary Create a application
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeployments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiDeployments: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiDeployments', 'body', body)
             const localVarPath = `/v1/ai/deployments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4993,9 +5178,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5005,16 +5193,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Deploy (application)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeploymentsByOwnerByNameDeploy: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiDeploymentsByOwnerByNameDeploy: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiDeploymentsByOwnerByNameDeploy', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiDeploymentsByOwnerByNameDeploy', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiDeploymentsByOwnerByNameDeploy', 'body', body)
             const localVarPath = `/v1/ai/deployments/{owner}/{name}/deploy`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5031,9 +5222,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5043,16 +5237,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Undeploy (application)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeploymentsByOwnerByNameUndeploy: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiDeploymentsByOwnerByNameUndeploy: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiDeploymentsByOwnerByNameUndeploy', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiDeploymentsByOwnerByNameUndeploy', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiDeploymentsByOwnerByNameUndeploy', 'body', body)
             const localVarPath = `/v1/ai/deployments/{owner}/{name}/undeploy`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5069,9 +5266,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5081,10 +5281,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one file.
          * @summary Create a file
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFiles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiFiles: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiFiles', 'body', body)
             const localVarPath = `/v1/ai/files`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5099,9 +5302,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5111,10 +5317,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Activate (file)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesActivate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiFilesActivate: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiFilesActivate', 'body', body)
             const localVarPath = `/v1/ai/files/activate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5129,9 +5338,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5141,16 +5353,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Vectors (file)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesByOwnerByNameVectors: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiFilesByOwnerByNameVectors: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiFilesByOwnerByNameVectors', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiFilesByOwnerByNameVectors', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiFilesByOwnerByNameVectors', 'body', body)
             const localVarPath = `/v1/ai/files/{owner}/{name}/vectors`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5167,9 +5382,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5179,10 +5397,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Upload (file)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesUpload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiFilesUpload: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiFilesUpload', 'body', body)
             const localVarPath = `/v1/ai/files/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5197,9 +5418,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5209,10 +5433,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one form.
          * @summary Create a form
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiForms: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiForms: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiForms', 'body', body)
             const localVarPath = `/v1/ai/forms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5227,9 +5454,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5239,10 +5469,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one graph.
          * @summary Create a graph
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiGraphs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiGraphs: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiGraphs', 'body', body)
             const localVarPath = `/v1/ai/graphs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5257,9 +5490,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5269,10 +5505,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one message.
          * @summary Create a message
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiMessages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiMessages: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiMessages', 'body', body)
             const localVarPath = `/v1/ai/messages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5287,9 +5526,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5299,10 +5541,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one node.
          * @summary Create a node
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiNodes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiNodes: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiNodes', 'body', body)
             const localVarPath = `/v1/ai/nodes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5317,9 +5562,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5329,16 +5577,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Tunnel (node)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiNodesByOwnerByNameTunnel: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiNodesByOwnerByNameTunnel: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiNodesByOwnerByNameTunnel', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiNodesByOwnerByNameTunnel', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiNodesByOwnerByNameTunnel', 'body', body)
             const localVarPath = `/v1/ai/nodes/{owner}/{name}/tunnel`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5355,9 +5606,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5367,10 +5621,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one provider.
          * @summary Create a provider
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiProviders: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiProviders', 'body', body)
             const localVarPath = `/v1/ai/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5385,9 +5642,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5397,10 +5657,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Mcp Tools (provider)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiProvidersMcpTools: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiProvidersMcpTools: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiProvidersMcpTools', 'body', body)
             const localVarPath = `/v1/ai/providers/mcp-tools`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5415,9 +5678,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5427,10 +5693,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one record.
          * @summary Create a record
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecords: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRecords: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRecords', 'body', body)
             const localVarPath = `/v1/ai/records`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5445,9 +5714,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5457,10 +5729,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Batch (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsBatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRecordsBatch: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRecordsBatch', 'body', body)
             const localVarPath = `/v1/ai/records/batch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5475,9 +5750,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5487,10 +5765,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Commit (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsCommit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRecordsCommit: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRecordsCommit', 'body', body)
             const localVarPath = `/v1/ai/records/commit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5505,9 +5786,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5517,10 +5801,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Commit Second (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsCommitSecond: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRecordsCommitSecond: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRecordsCommitSecond', 'body', body)
             const localVarPath = `/v1/ai/records/commit-second`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5535,9 +5822,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5547,10 +5837,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one connection.
          * @summary Create a connection
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnections: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRemoteConnections: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRemoteConnections', 'body', body)
             const localVarPath = `/v1/ai/remote-connections`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5565,9 +5858,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5577,16 +5873,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Start (connection)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnectionsByOwnerByNameStart: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRemoteConnectionsByOwnerByNameStart: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStart', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStart', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStart', 'body', body)
             const localVarPath = `/v1/ai/remote-connections/{owner}/{name}/start`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5603,9 +5902,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5615,16 +5917,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Stop (connection)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnectionsByOwnerByNameStop: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRemoteConnectionsByOwnerByNameStop: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStop', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStop', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRemoteConnectionsByOwnerByNameStop', 'body', body)
             const localVarPath = `/v1/ai/remote-connections/{owner}/{name}/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5641,9 +5946,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5653,10 +5961,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one model-route.
          * @summary Create a model-route
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRoutes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiRoutes: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiRoutes', 'body', body)
             const localVarPath = `/v1/ai/routes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5671,9 +5982,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5683,10 +5997,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one scale.
          * @summary Create a scale
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiScales: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiScales: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiScales', 'body', body)
             const localVarPath = `/v1/ai/scales`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5701,9 +6018,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5713,10 +6033,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one scan.
          * @summary Create a scan
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiScans: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiScans: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiScans', 'body', body)
             const localVarPath = `/v1/ai/scans`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5731,9 +6054,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5743,10 +6069,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Signin
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSignin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiSignin: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiSignin', 'body', body)
             const localVarPath = `/v1/ai/signin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5761,9 +6090,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5773,10 +6105,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one session.
          * @summary Create a session
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSigninSessions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiSigninSessions: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiSigninSessions', 'body', body)
             const localVarPath = `/v1/ai/signin-sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5791,9 +6126,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5803,10 +6141,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Signout
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSignout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiSignout: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiSignout', 'body', body)
             const localVarPath = `/v1/ai/signout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5821,9 +6162,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5833,10 +6177,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one store.
          * @summary Create a store
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiStores: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiStores: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiStores', 'body', body)
             const localVarPath = `/v1/ai/stores`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5851,9 +6198,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5863,16 +6213,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Vectors (store)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiStoresByOwnerByNameVectors: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiStoresByOwnerByNameVectors: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiStoresByOwnerByNameVectors', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiStoresByOwnerByNameVectors', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiStoresByOwnerByNameVectors', 'body', body)
             const localVarPath = `/v1/ai/stores/{owner}/{name}/vectors`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5889,9 +6242,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5901,10 +6257,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one task.
          * @summary Create a task
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiTasks: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiTasks', 'body', body)
             const localVarPath = `/v1/ai/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5919,9 +6278,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5931,16 +6293,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Analyze (task)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasksByOwnerByNameAnalyze: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiTasksByOwnerByNameAnalyze: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiTasksByOwnerByNameAnalyze', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiTasksByOwnerByNameAnalyze', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiTasksByOwnerByNameAnalyze', 'body', body)
             const localVarPath = `/v1/ai/tasks/{owner}/{name}/analyze`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5957,9 +6322,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5969,16 +6337,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Document (task)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasksByOwnerByNameDocument: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiTasksByOwnerByNameDocument: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('postV1AiTasksByOwnerByNameDocument', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('postV1AiTasksByOwnerByNameDocument', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiTasksByOwnerByNameDocument', 'body', body)
             const localVarPath = `/v1/ai/tasks/{owner}/{name}/document`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -5995,9 +6366,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6007,10 +6381,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one template.
          * @summary Create a template
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiTemplates: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiTemplates', 'body', body)
             const localVarPath = `/v1/ai/templates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6025,9 +6402,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6037,10 +6417,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one tree-file.
          * @summary Create a tree-file
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTreeFiles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiTreeFiles: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiTreeFiles', 'body', body)
             const localVarPath = `/v1/ai/tree-files`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6055,9 +6438,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6067,10 +6453,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one vector.
          * @summary Create a vector
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiVectors: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiVectors', 'body', body)
             const localVarPath = `/v1/ai/vectors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6085,9 +6474,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6097,10 +6489,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one video.
          * @summary Create a video
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVideos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiVideos: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiVideos', 'body', body)
             const localVarPath = `/v1/ai/videos`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6115,9 +6510,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6127,10 +6525,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Upload (video)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVideosUpload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiVideosUpload: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiVideosUpload', 'body', body)
             const localVarPath = `/v1/ai/videos/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6145,9 +6546,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6157,10 +6561,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Create one workflow.
          * @summary Create a workflow
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiWorkflows: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AiWorkflows: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('postV1AiWorkflows', 'body', body)
             const localVarPath = `/v1/ai/workflows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6175,9 +6582,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6187,16 +6597,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiArticlesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiArticlesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiArticlesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiArticlesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiArticlesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/articles/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6213,9 +6626,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6225,16 +6641,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiAssetsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiAssetsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiAssetsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiAssetsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiAssetsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/assets/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6251,9 +6670,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6263,16 +6685,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiChatsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiChatsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiChatsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiChatsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiChatsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/chats/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6289,9 +6714,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6301,16 +6729,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiDeploymentsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiDeploymentsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiDeploymentsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiDeploymentsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiDeploymentsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/deployments/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6327,9 +6758,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6339,16 +6773,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiFilesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiFilesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiFilesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiFilesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiFilesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/files/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6365,9 +6802,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6377,16 +6817,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiFormsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiFormsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiFormsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiFormsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiFormsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/forms/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6403,9 +6846,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6415,16 +6861,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiGraphsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiGraphsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiGraphsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiGraphsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiGraphsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/graphs/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6441,9 +6890,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6453,16 +6905,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiMessagesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiMessagesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiMessagesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiMessagesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiMessagesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/messages/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6479,9 +6934,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6491,16 +6949,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiNodesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiNodesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiNodesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiNodesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiNodesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/nodes/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6517,9 +6978,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6529,10 +6993,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Preferences
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiPreferences: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiPreferences: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiPreferences', 'body', body)
             const localVarPath = `/v1/ai/preferences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6547,9 +7014,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6559,16 +7029,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiProvidersByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiProvidersByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiProvidersByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiProvidersByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiProvidersByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/providers/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6585,9 +7058,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6597,16 +7073,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRecordsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiRecordsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiRecordsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiRecordsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiRecordsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/records/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6623,9 +7102,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6635,16 +7117,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRemoteConnectionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiRemoteConnectionsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiRemoteConnectionsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiRemoteConnectionsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiRemoteConnectionsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/remote-connections/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6661,9 +7146,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6673,16 +7161,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRoutesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiRoutesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiRoutesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiRoutesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiRoutesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/routes/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6699,9 +7190,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6711,16 +7205,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiScalesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiScalesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiScalesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiScalesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiScalesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/scales/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6737,9 +7234,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6749,16 +7249,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiScansByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiScansByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiScansByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiScansByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiScansByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/scans/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6775,9 +7278,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6787,16 +7293,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiSigninSessionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiSigninSessionsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiSigninSessionsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiSigninSessionsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiSigninSessionsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/signin-sessions/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6813,9 +7322,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6825,16 +7337,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiStoresByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiStoresByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiStoresByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiStoresByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiStoresByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/stores/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6851,9 +7366,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6863,16 +7381,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTasksByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiTasksByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiTasksByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiTasksByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiTasksByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/tasks/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6889,9 +7410,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6901,16 +7425,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTemplatesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiTemplatesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiTemplatesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiTemplatesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiTemplatesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/templates/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6927,9 +7454,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6939,10 +7469,13 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * 
          * @summary Training Contribution
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTrainingContribution: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiTrainingContribution: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiTrainingContribution', 'body', body)
             const localVarPath = `/v1/ai/training-contribution`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6957,9 +7490,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6969,16 +7505,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTreeFilesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiTreeFilesByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiTreeFilesByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiTreeFilesByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiTreeFilesByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/tree-files/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -6995,9 +7534,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7007,16 +7549,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiVectorsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiVectorsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiVectorsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiVectorsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiVectorsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/vectors/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -7033,9 +7578,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7045,16 +7593,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiVideosByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiVideosByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiVideosByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiVideosByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiVideosByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/videos/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -7071,9 +7622,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7083,16 +7637,19 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiWorkflowsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AiWorkflowsByOwnerByName: async (owner: string, name: string, body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('putV1AiWorkflowsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
             assertParamExists('putV1AiWorkflowsByOwnerByName', 'name', name)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('putV1AiWorkflowsByOwnerByName', 'body', body)
             const localVarPath = `/v1/ai/workflows/{owner}/{name}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -7109,9 +7666,12 @@ export const AiApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7144,12 +7704,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one article.
          * @summary Delete a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7158,12 +7718,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one asset.
          * @summary Delete a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7172,12 +7732,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one chat.
          * @summary Delete a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7199,12 +7759,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one application.
          * @summary Delete a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7213,12 +7773,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one file.
          * @summary Delete a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7227,12 +7787,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one form.
          * @summary Delete a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7241,12 +7801,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one graph.
          * @summary Delete a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7255,12 +7815,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one message.
          * @summary Delete a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7272,7 +7832,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiMessagesWelcome(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiMessagesWelcome(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiMessagesWelcome(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiMessagesWelcome']?.[localVarOperationServerIndex]?.url;
@@ -7281,12 +7841,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one node.
          * @summary Delete a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7295,12 +7855,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one provider.
          * @summary Delete a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7309,12 +7869,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one record.
          * @summary Delete a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7323,12 +7883,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one connection.
          * @summary Delete a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7337,12 +7897,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one model-route.
          * @summary Delete a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7351,12 +7911,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one scale.
          * @summary Delete a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7365,12 +7925,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one scan.
          * @summary Delete a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7379,12 +7939,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one session.
          * @summary Delete a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7393,12 +7953,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one store.
          * @summary Delete a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7407,12 +7967,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one task.
          * @summary Delete a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7421,12 +7981,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one template.
          * @summary Delete a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7435,12 +7995,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one tree-file.
          * @summary Delete a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiTreeFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7452,7 +8012,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiVectorsAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiVectorsAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiVectorsAll(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiVectorsAll']?.[localVarOperationServerIndex]?.url;
@@ -7461,12 +8021,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one vector.
          * @summary Delete a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7475,12 +8035,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one video.
          * @summary Delete a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7489,12 +8049,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Delete one workflow.
          * @summary Delete a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteV1AiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7506,7 +8066,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiAccount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiAccount']?.[localVarOperationServerIndex]?.url;
@@ -7518,7 +8078,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiActivities(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiActivities(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiActivities(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiActivities']?.[localVarOperationServerIndex]?.url;
@@ -7530,7 +8090,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiAnswer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiAnswer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiAnswer(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiAnswer']?.[localVarOperationServerIndex]?.url;
@@ -7542,7 +8102,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiArticles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiArticles']?.[localVarOperationServerIndex]?.url;
@@ -7551,12 +8111,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one article by its (owner, name) key.
          * @summary Retrieve a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7568,7 +8128,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiArticlesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiArticlesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiArticlesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiArticlesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7580,7 +8140,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiAssets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiAssets']?.[localVarOperationServerIndex]?.url;
@@ -7589,12 +8149,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one asset by its (owner, name) key.
          * @summary Retrieve a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7606,7 +8166,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiChats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiChats']?.[localVarOperationServerIndex]?.url;
@@ -7615,12 +8175,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one chat by its (owner, name) key.
          * @summary Retrieve a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7632,7 +8192,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiChatsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiChatsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiChatsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiChatsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7695,7 +8255,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiDashboardsAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiDashboardsAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiDashboardsAgents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiDashboardsAgents']?.[localVarOperationServerIndex]?.url;
@@ -7707,7 +8267,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiDashboardsVm(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiDashboardsVm(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiDashboardsVm(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiDashboardsVm']?.[localVarOperationServerIndex]?.url;
@@ -7719,7 +8279,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiDeployments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiDeployments']?.[localVarOperationServerIndex]?.url;
@@ -7728,12 +8288,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one application by its (owner, name) key.
          * @summary Retrieve a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7745,7 +8305,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFiles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFiles']?.[localVarOperationServerIndex]?.url;
@@ -7757,7 +8317,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFilesActive(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFilesActive(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFilesActive(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFilesActive']?.[localVarOperationServerIndex]?.url;
@@ -7766,12 +8326,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one file by its (owner, name) key.
          * @summary Retrieve a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7783,7 +8343,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFilesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFilesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFilesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFilesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7795,7 +8355,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiForms(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiForms']?.[localVarOperationServerIndex]?.url;
@@ -7804,12 +8364,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one form by its (owner, name) key.
          * @summary Retrieve a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7821,7 +8381,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFormsData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFormsData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFormsData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFormsData']?.[localVarOperationServerIndex]?.url;
@@ -7833,7 +8393,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiFormsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiFormsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiFormsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiFormsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7845,7 +8405,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiGraphs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiGraphs']?.[localVarOperationServerIndex]?.url;
@@ -7854,12 +8414,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one graph by its (owner, name) key.
          * @summary Retrieve a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7871,7 +8431,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiGraphsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiGraphsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiGraphsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiGraphsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7883,7 +8443,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiK8sStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiK8sStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiK8sStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiK8sStatus']?.[localVarOperationServerIndex]?.url;
@@ -7895,7 +8455,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiMessages']?.[localVarOperationServerIndex]?.url;
@@ -7904,12 +8464,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one message by its (owner, name) key.
          * @summary Retrieve a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7918,12 +8478,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Answer (message)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiMessagesByOwnerByNameAnswer(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiMessagesByOwnerByNameAnswer(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiMessagesByOwnerByNameAnswer(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiMessagesByOwnerByNameAnswer']?.[localVarOperationServerIndex]?.url;
@@ -7935,7 +8495,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiMessagesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiMessagesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiMessagesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiMessagesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -7947,7 +8507,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiNodes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiNodes']?.[localVarOperationServerIndex]?.url;
@@ -7956,12 +8516,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one node by its (owner, name) key.
          * @summary Retrieve a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -7970,12 +8530,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Tunnel (node)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiNodesByOwnerByNameTunnel(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiNodesByOwnerByNameTunnel']?.[localVarOperationServerIndex]?.url;
@@ -7987,7 +8547,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiPrometheus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiPrometheus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiPrometheus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiPrometheus']?.[localVarOperationServerIndex]?.url;
@@ -7999,7 +8559,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiProviders']?.[localVarOperationServerIndex]?.url;
@@ -8008,12 +8568,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one provider by its (owner, name) key.
          * @summary Retrieve a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8025,7 +8585,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiProvidersGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiProvidersGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiProvidersGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiProvidersGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8037,7 +8597,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRecords(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRecords']?.[localVarOperationServerIndex]?.url;
@@ -8046,12 +8606,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one record by its (owner, name) key.
          * @summary Retrieve a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8063,7 +8623,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRecordsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRecordsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRecordsQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRecordsQuery']?.[localVarOperationServerIndex]?.url;
@@ -8075,7 +8635,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRecordsQuerySecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRecordsQuerySecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRecordsQuerySecond(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRecordsQuerySecond']?.[localVarOperationServerIndex]?.url;
@@ -8087,7 +8647,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRemoteConnections(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRemoteConnections']?.[localVarOperationServerIndex]?.url;
@@ -8096,12 +8656,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one connection by its (owner, name) key.
          * @summary Retrieve a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8113,7 +8673,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRoutes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRoutes']?.[localVarOperationServerIndex]?.url;
@@ -8122,12 +8682,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one model-route by its (owner, name) key.
          * @summary Retrieve a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8139,7 +8699,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScales(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScales']?.[localVarOperationServerIndex]?.url;
@@ -8148,12 +8708,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one scale by its (owner, name) key.
          * @summary Retrieve a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8165,7 +8725,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScalesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScalesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScalesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScalesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8177,7 +8737,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScalesPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScalesPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScalesPublic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScalesPublic']?.[localVarOperationServerIndex]?.url;
@@ -8189,7 +8749,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScans']?.[localVarOperationServerIndex]?.url;
@@ -8198,12 +8758,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one scan by its (owner, name) key.
          * @summary Retrieve a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8215,7 +8775,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiSigninSessions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiSigninSessions']?.[localVarOperationServerIndex]?.url;
@@ -8224,12 +8784,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one session by its (owner, name) key.
          * @summary Retrieve a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8241,7 +8801,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiSigninSessionsDuplicated(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiSigninSessionsDuplicated']?.[localVarOperationServerIndex]?.url;
@@ -8253,7 +8813,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiStores(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiStores']?.[localVarOperationServerIndex]?.url;
@@ -8262,12 +8822,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one store by its (owner, name) key.
          * @summary Retrieve a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8279,7 +8839,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiStoresGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiStoresGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiStoresGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiStoresGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8291,7 +8851,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiStoresNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiStoresNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiStoresNames(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiStoresNames']?.[localVarOperationServerIndex]?.url;
@@ -8303,7 +8863,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiStoresProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiStoresProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiStoresProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiStoresProviders']?.[localVarOperationServerIndex]?.url;
@@ -8315,7 +8875,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiSystem(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiSystem(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiSystem(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiSystem']?.[localVarOperationServerIndex]?.url;
@@ -8327,7 +8887,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTasks']?.[localVarOperationServerIndex]?.url;
@@ -8336,12 +8896,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one task by its (owner, name) key.
          * @summary Retrieve a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8353,7 +8913,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTasksGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTasksGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTasksGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTasksGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8365,7 +8925,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTemplates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTemplates']?.[localVarOperationServerIndex]?.url;
@@ -8374,12 +8934,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one template by its (owner, name) key.
          * @summary Retrieve a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8391,7 +8951,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiTrainingContribution(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiTrainingContribution']?.[localVarOperationServerIndex]?.url;
@@ -8403,7 +8963,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiUsages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiUsages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiUsages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiUsages']?.[localVarOperationServerIndex]?.url;
@@ -8415,7 +8975,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiUsagesByUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiUsagesByUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiUsagesByUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiUsagesByUser']?.[localVarOperationServerIndex]?.url;
@@ -8427,7 +8987,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiUsagesCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiUsagesCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiUsagesCloud(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiUsagesCloud']?.[localVarOperationServerIndex]?.url;
@@ -8439,7 +8999,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiUsagesRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiUsagesRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiUsagesRange(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiUsagesRange']?.[localVarOperationServerIndex]?.url;
@@ -8451,7 +9011,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiUsagesUserNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiUsagesUserNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiUsagesUserNames(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiUsagesUserNames']?.[localVarOperationServerIndex]?.url;
@@ -8463,7 +9023,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVectors']?.[localVarOperationServerIndex]?.url;
@@ -8472,12 +9032,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one vector by its (owner, name) key.
          * @summary Retrieve a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8489,7 +9049,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVectorsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVectorsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVectorsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVectorsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8501,7 +9061,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVersion(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVersion']?.[localVarOperationServerIndex]?.url;
@@ -8513,7 +9073,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVideos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVideos']?.[localVarOperationServerIndex]?.url;
@@ -8522,12 +9082,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one video by its (owner, name) key.
          * @summary Retrieve a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8539,7 +9099,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiVideosGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiVideosGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiVideosGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiVideosGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8551,7 +9111,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiWorkflows(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiWorkflows']?.[localVarOperationServerIndex]?.url;
@@ -8560,12 +9120,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Read one workflow by its (owner, name) key.
          * @summary Retrieve a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -8577,7 +9137,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AiWorkflowsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1AiWorkflowsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AiWorkflowsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getV1AiWorkflowsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -8586,13 +9146,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one article. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiArticlesByOwnerByName(owner, name, options);
+        async patchV1AiArticlesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiArticlesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8600,13 +9161,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one asset. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiAssetsByOwnerByName(owner, name, options);
+        async patchV1AiAssetsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiAssetsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8614,13 +9176,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one chat. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiChatsByOwnerByName(owner, name, options);
+        async patchV1AiChatsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiChatsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8628,13 +9191,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one application. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiDeploymentsByOwnerByName(owner, name, options);
+        async patchV1AiDeploymentsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiDeploymentsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8642,13 +9206,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one file. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiFilesByOwnerByName(owner, name, options);
+        async patchV1AiFilesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiFilesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8656,13 +9221,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one form. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiFormsByOwnerByName(owner, name, options);
+        async patchV1AiFormsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiFormsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8670,13 +9236,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one graph. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiGraphsByOwnerByName(owner, name, options);
+        async patchV1AiGraphsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiGraphsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8684,13 +9251,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one message. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiMessagesByOwnerByName(owner, name, options);
+        async patchV1AiMessagesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiMessagesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8698,13 +9266,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one node. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiNodesByOwnerByName(owner, name, options);
+        async patchV1AiNodesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiNodesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8712,11 +9281,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Preferences
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiPreferences(options);
+        async patchV1AiPreferences(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiPreferences(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiPreferences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8724,13 +9294,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one provider. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiProvidersByOwnerByName(owner, name, options);
+        async patchV1AiProvidersByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiProvidersByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8738,13 +9309,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one record. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRecordsByOwnerByName(owner, name, options);
+        async patchV1AiRecordsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRecordsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8752,13 +9324,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one connection. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRemoteConnectionsByOwnerByName(owner, name, options);
+        async patchV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRemoteConnectionsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8766,13 +9339,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one model-route. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRoutesByOwnerByName(owner, name, options);
+        async patchV1AiRoutesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiRoutesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8780,13 +9354,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one scale. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiScalesByOwnerByName(owner, name, options);
+        async patchV1AiScalesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiScalesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8794,13 +9369,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one scan. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiScansByOwnerByName(owner, name, options);
+        async patchV1AiScansByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiScansByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8808,13 +9384,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one session. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiSigninSessionsByOwnerByName(owner, name, options);
+        async patchV1AiSigninSessionsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiSigninSessionsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8822,13 +9399,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one store. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiStoresByOwnerByName(owner, name, options);
+        async patchV1AiStoresByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiStoresByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8836,13 +9414,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one task. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTasksByOwnerByName(owner, name, options);
+        async patchV1AiTasksByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTasksByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8850,13 +9429,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one template. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTemplatesByOwnerByName(owner, name, options);
+        async patchV1AiTemplatesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTemplatesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8864,11 +9444,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Training Contribution
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTrainingContribution(options);
+        async patchV1AiTrainingContribution(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTrainingContribution(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiTrainingContribution']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8876,13 +9457,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one tree-file. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTreeFilesByOwnerByName(owner, name, options);
+        async patchV1AiTreeFilesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiTreeFilesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8890,13 +9472,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one vector. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiVectorsByOwnerByName(owner, name, options);
+        async patchV1AiVectorsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiVectorsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8904,13 +9487,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one video. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiVideosByOwnerByName(owner, name, options);
+        async patchV1AiVideosByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiVideosByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8918,13 +9502,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Update one workflow. PATCH and PUT reach the same handler, which has always taken a whole object.
          * @summary Update a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiWorkflowsByOwnerByName(owner, name, options);
+        async patchV1AiWorkflowsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AiWorkflowsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchV1AiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8932,11 +9517,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one article.
          * @summary Create a article
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiArticles(options);
+        async postV1AiArticles(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiArticles(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiArticles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8944,11 +9530,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one asset.
          * @summary Create a asset
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssets(options);
+        async postV1AiAssets(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssets(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8956,13 +9543,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Scan (asset)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiAssetsByOwnerByNameScan(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssetsByOwnerByNameScan(owner, name, options);
+        async postV1AiAssetsByOwnerByNameScan(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssetsByOwnerByNameScan(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiAssetsByOwnerByNameScan']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8970,11 +9558,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Scan (asset)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiAssetsScan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssetsScan(options);
+        async postV1AiAssetsScan(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiAssetsScan(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiAssetsScan']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8982,11 +9571,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one chat.
          * @summary Create a chat
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiChats(options);
+        async postV1AiChats(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiChats(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiChats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9019,11 +9609,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one application.
          * @summary Create a application
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeployments(options);
+        async postV1AiDeployments(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeployments(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9031,13 +9622,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Deploy (application)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiDeploymentsByOwnerByNameDeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeploymentsByOwnerByNameDeploy(owner, name, options);
+        async postV1AiDeploymentsByOwnerByNameDeploy(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeploymentsByOwnerByNameDeploy(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiDeploymentsByOwnerByNameDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9045,13 +9637,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Undeploy (application)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiDeploymentsByOwnerByNameUndeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeploymentsByOwnerByNameUndeploy(owner, name, options);
+        async postV1AiDeploymentsByOwnerByNameUndeploy(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiDeploymentsByOwnerByNameUndeploy(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiDeploymentsByOwnerByNameUndeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9059,11 +9652,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one file.
          * @summary Create a file
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFiles(options);
+        async postV1AiFiles(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFiles(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiFiles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9071,11 +9665,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Activate (file)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiFilesActivate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesActivate(options);
+        async postV1AiFilesActivate(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesActivate(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiFilesActivate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9083,13 +9678,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Vectors (file)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiFilesByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesByOwnerByNameVectors(owner, name, options);
+        async postV1AiFilesByOwnerByNameVectors(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesByOwnerByNameVectors(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiFilesByOwnerByNameVectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9097,11 +9693,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Upload (file)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiFilesUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesUpload(options);
+        async postV1AiFilesUpload(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiFilesUpload(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiFilesUpload']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9109,11 +9706,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one form.
          * @summary Create a form
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiForms(options);
+        async postV1AiForms(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiForms(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiForms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9121,11 +9719,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one graph.
          * @summary Create a graph
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiGraphs(options);
+        async postV1AiGraphs(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiGraphs(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiGraphs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9133,11 +9732,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one message.
          * @summary Create a message
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiMessages(options);
+        async postV1AiMessages(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiMessages(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9145,11 +9745,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one node.
          * @summary Create a node
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiNodes(options);
+        async postV1AiNodes(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiNodes(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiNodes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9157,13 +9758,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Tunnel (node)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiNodesByOwnerByNameTunnel(owner, name, options);
+        async postV1AiNodesByOwnerByNameTunnel(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiNodesByOwnerByNameTunnel(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiNodesByOwnerByNameTunnel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9171,11 +9773,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one provider.
          * @summary Create a provider
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiProviders(options);
+        async postV1AiProviders(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiProviders(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9183,11 +9786,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Mcp Tools (provider)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiProvidersMcpTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiProvidersMcpTools(options);
+        async postV1AiProvidersMcpTools(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiProvidersMcpTools(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiProvidersMcpTools']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9195,11 +9799,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one record.
          * @summary Create a record
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecords(options);
+        async postV1AiRecords(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecords(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRecords']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9207,11 +9812,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Batch (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRecordsBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsBatch(options);
+        async postV1AiRecordsBatch(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsBatch(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRecordsBatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9219,11 +9825,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Commit (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRecordsCommit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsCommit(options);
+        async postV1AiRecordsCommit(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsCommit(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRecordsCommit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9231,11 +9838,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Commit Second (record)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRecordsCommitSecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsCommitSecond(options);
+        async postV1AiRecordsCommitSecond(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRecordsCommitSecond(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRecordsCommitSecond']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9243,11 +9851,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one connection.
          * @summary Create a connection
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnections(options);
+        async postV1AiRemoteConnections(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnections(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRemoteConnections']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9255,13 +9864,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Start (connection)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRemoteConnectionsByOwnerByNameStart(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnectionsByOwnerByNameStart(owner, name, options);
+        async postV1AiRemoteConnectionsByOwnerByNameStart(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnectionsByOwnerByNameStart(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRemoteConnectionsByOwnerByNameStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9269,13 +9879,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Stop (connection)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRemoteConnectionsByOwnerByNameStop(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnectionsByOwnerByNameStop(owner, name, options);
+        async postV1AiRemoteConnectionsByOwnerByNameStop(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRemoteConnectionsByOwnerByNameStop(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRemoteConnectionsByOwnerByNameStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9283,11 +9894,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one model-route.
          * @summary Create a model-route
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRoutes(options);
+        async postV1AiRoutes(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiRoutes(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiRoutes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9295,11 +9907,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one scale.
          * @summary Create a scale
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiScales(options);
+        async postV1AiScales(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiScales(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiScales']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9307,11 +9920,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one scan.
          * @summary Create a scan
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiScans(options);
+        async postV1AiScans(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiScans(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiScans']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9319,11 +9933,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Signin
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiSignin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSignin(options);
+        async postV1AiSignin(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSignin(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiSignin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9331,11 +9946,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one session.
          * @summary Create a session
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSigninSessions(options);
+        async postV1AiSigninSessions(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSigninSessions(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiSigninSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9343,11 +9959,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Signout
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiSignout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSignout(options);
+        async postV1AiSignout(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiSignout(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiSignout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9355,11 +9972,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one store.
          * @summary Create a store
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiStores(options);
+        async postV1AiStores(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiStores(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiStores']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9367,13 +9985,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Vectors (store)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiStoresByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiStoresByOwnerByNameVectors(owner, name, options);
+        async postV1AiStoresByOwnerByNameVectors(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiStoresByOwnerByNameVectors(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiStoresByOwnerByNameVectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9381,11 +10000,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one task.
          * @summary Create a task
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasks(options);
+        async postV1AiTasks(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasks(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9393,13 +10013,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Analyze (task)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiTasksByOwnerByNameAnalyze(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasksByOwnerByNameAnalyze(owner, name, options);
+        async postV1AiTasksByOwnerByNameAnalyze(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasksByOwnerByNameAnalyze(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiTasksByOwnerByNameAnalyze']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9407,13 +10028,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Document (task)
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiTasksByOwnerByNameDocument(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasksByOwnerByNameDocument(owner, name, options);
+        async postV1AiTasksByOwnerByNameDocument(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTasksByOwnerByNameDocument(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiTasksByOwnerByNameDocument']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9421,11 +10043,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one template.
          * @summary Create a template
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTemplates(options);
+        async postV1AiTemplates(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTemplates(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9433,11 +10056,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one tree-file.
          * @summary Create a tree-file
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiTreeFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTreeFiles(options);
+        async postV1AiTreeFiles(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiTreeFiles(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiTreeFiles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9445,11 +10069,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one vector.
          * @summary Create a vector
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVectors(options);
+        async postV1AiVectors(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVectors(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiVectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9457,11 +10082,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one video.
          * @summary Create a video
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVideos(options);
+        async postV1AiVideos(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVideos(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiVideos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9469,11 +10095,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Upload (video)
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiVideosUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVideosUpload(options);
+        async postV1AiVideosUpload(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiVideosUpload(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiVideosUpload']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9481,11 +10108,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Create one workflow.
          * @summary Create a workflow
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiWorkflows(options);
+        async postV1AiWorkflows(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AiWorkflows(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postV1AiWorkflows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9493,13 +10121,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a article
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiArticlesByOwnerByName(owner, name, options);
+        async putV1AiArticlesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiArticlesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9507,13 +10136,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a asset
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiAssetsByOwnerByName(owner, name, options);
+        async putV1AiAssetsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiAssetsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9521,13 +10151,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a chat
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiChatsByOwnerByName(owner, name, options);
+        async putV1AiChatsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiChatsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9535,13 +10166,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a application
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiDeploymentsByOwnerByName(owner, name, options);
+        async putV1AiDeploymentsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiDeploymentsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9549,13 +10181,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiFilesByOwnerByName(owner, name, options);
+        async putV1AiFilesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiFilesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9563,13 +10196,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a form
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiFormsByOwnerByName(owner, name, options);
+        async putV1AiFormsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiFormsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9577,13 +10211,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a graph
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiGraphsByOwnerByName(owner, name, options);
+        async putV1AiGraphsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiGraphsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9591,13 +10226,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a message
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiMessagesByOwnerByName(owner, name, options);
+        async putV1AiMessagesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiMessagesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9605,13 +10241,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a node
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiNodesByOwnerByName(owner, name, options);
+        async putV1AiNodesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiNodesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9619,11 +10256,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Preferences
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiPreferences(options);
+        async putV1AiPreferences(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiPreferences(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiPreferences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9631,13 +10269,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a provider
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiProvidersByOwnerByName(owner, name, options);
+        async putV1AiProvidersByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiProvidersByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9645,13 +10284,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a record
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRecordsByOwnerByName(owner, name, options);
+        async putV1AiRecordsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRecordsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9659,13 +10299,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a connection
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRemoteConnectionsByOwnerByName(owner, name, options);
+        async putV1AiRemoteConnectionsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRemoteConnectionsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9673,13 +10314,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a model-route
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRoutesByOwnerByName(owner, name, options);
+        async putV1AiRoutesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiRoutesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9687,13 +10329,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a scale
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiScalesByOwnerByName(owner, name, options);
+        async putV1AiScalesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiScalesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9701,13 +10344,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a scan
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiScansByOwnerByName(owner, name, options);
+        async putV1AiScansByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiScansByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9715,13 +10359,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a session
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiSigninSessionsByOwnerByName(owner, name, options);
+        async putV1AiSigninSessionsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiSigninSessionsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9729,13 +10374,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a store
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiStoresByOwnerByName(owner, name, options);
+        async putV1AiStoresByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiStoresByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9743,13 +10389,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a task
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTasksByOwnerByName(owner, name, options);
+        async putV1AiTasksByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTasksByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9757,13 +10404,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a template
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTemplatesByOwnerByName(owner, name, options);
+        async putV1AiTemplatesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTemplatesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9771,11 +10419,12 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Training Contribution
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTrainingContribution(options);
+        async putV1AiTrainingContribution(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTrainingContribution(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiTrainingContribution']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9783,13 +10432,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a tree-file
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTreeFilesByOwnerByName(owner, name, options);
+        async putV1AiTreeFilesByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiTreeFilesByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9797,13 +10447,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a vector
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiVectorsByOwnerByName(owner, name, options);
+        async putV1AiVectorsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiVectorsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9811,13 +10462,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a video
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiVideosByOwnerByName(owner, name, options);
+        async putV1AiVideosByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiVideosByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9825,13 +10477,14 @@ export const AiApiFp = function(configuration?: Configuration) {
         /**
          * Identical to PATCH — the handler takes a whole object either way.
          * @summary Replace a workflow
-         * @param {string} owner 
-         * @param {string} name 
+         * @param {string} owner Owning organization.
+         * @param {string} name Resource name, unique within the owner.
+         * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiWorkflowsByOwnerByName(owner, name, options);
+        async putV1AiWorkflowsByOwnerByName(owner: string, name: string, body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AiWorkflowsByOwnerByName(owner, name, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putV1AiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9863,7 +10516,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiArticlesByOwnerByName(requestParameters: AiApiDeleteV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiArticlesByOwnerByName(requestParameters: AiApiDeleteV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9873,7 +10526,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiAssetsByOwnerByName(requestParameters: AiApiDeleteV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiAssetsByOwnerByName(requestParameters: AiApiDeleteV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9883,7 +10536,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiChatsByOwnerByName(requestParameters: AiApiDeleteV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiChatsByOwnerByName(requestParameters: AiApiDeleteV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9903,7 +10556,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiDeploymentsByOwnerByName(requestParameters: AiApiDeleteV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiDeploymentsByOwnerByName(requestParameters: AiApiDeleteV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9913,7 +10566,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiFilesByOwnerByName(requestParameters: AiApiDeleteV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiFilesByOwnerByName(requestParameters: AiApiDeleteV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9923,7 +10576,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiFormsByOwnerByName(requestParameters: AiApiDeleteV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiFormsByOwnerByName(requestParameters: AiApiDeleteV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9933,7 +10586,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiGraphsByOwnerByName(requestParameters: AiApiDeleteV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiGraphsByOwnerByName(requestParameters: AiApiDeleteV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9943,7 +10596,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiMessagesByOwnerByName(requestParameters: AiApiDeleteV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiMessagesByOwnerByName(requestParameters: AiApiDeleteV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9952,7 +10605,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiMessagesWelcome(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiMessagesWelcome(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiMessagesWelcome(options).then((request) => request(axios, basePath));
         },
         /**
@@ -9962,7 +10615,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiNodesByOwnerByName(requestParameters: AiApiDeleteV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiNodesByOwnerByName(requestParameters: AiApiDeleteV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9972,7 +10625,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiProvidersByOwnerByName(requestParameters: AiApiDeleteV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiProvidersByOwnerByName(requestParameters: AiApiDeleteV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9982,7 +10635,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiRecordsByOwnerByName(requestParameters: AiApiDeleteV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiRecordsByOwnerByName(requestParameters: AiApiDeleteV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9992,7 +10645,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiDeleteV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiDeleteV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10002,7 +10655,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiRoutesByOwnerByName(requestParameters: AiApiDeleteV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiRoutesByOwnerByName(requestParameters: AiApiDeleteV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10012,7 +10665,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiScalesByOwnerByName(requestParameters: AiApiDeleteV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiScalesByOwnerByName(requestParameters: AiApiDeleteV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10022,7 +10675,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiScansByOwnerByName(requestParameters: AiApiDeleteV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiScansByOwnerByName(requestParameters: AiApiDeleteV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10032,7 +10685,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiSigninSessionsByOwnerByName(requestParameters: AiApiDeleteV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiSigninSessionsByOwnerByName(requestParameters: AiApiDeleteV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10042,7 +10695,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiStoresByOwnerByName(requestParameters: AiApiDeleteV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiStoresByOwnerByName(requestParameters: AiApiDeleteV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10052,7 +10705,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiTasksByOwnerByName(requestParameters: AiApiDeleteV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiTasksByOwnerByName(requestParameters: AiApiDeleteV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10062,7 +10715,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiTemplatesByOwnerByName(requestParameters: AiApiDeleteV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiTemplatesByOwnerByName(requestParameters: AiApiDeleteV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10072,7 +10725,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiTreeFilesByOwnerByName(requestParameters: AiApiDeleteV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiTreeFilesByOwnerByName(requestParameters: AiApiDeleteV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10081,7 +10734,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiVectorsAll(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiVectorsAll(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiVectorsAll(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10091,7 +10744,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiVectorsByOwnerByName(requestParameters: AiApiDeleteV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiVectorsByOwnerByName(requestParameters: AiApiDeleteV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10101,7 +10754,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiVideosByOwnerByName(requestParameters: AiApiDeleteV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiVideosByOwnerByName(requestParameters: AiApiDeleteV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10111,7 +10764,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AiWorkflowsByOwnerByName(requestParameters: AiApiDeleteV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteV1AiWorkflowsByOwnerByName(requestParameters: AiApiDeleteV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.deleteV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10120,7 +10773,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiAccount(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiAccount(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10129,7 +10782,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiActivities(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiActivities(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiActivities(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10138,7 +10791,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiAnswer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiAnswer(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiAnswer(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10147,7 +10800,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiArticles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiArticles(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiArticles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10157,7 +10810,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiArticlesByOwnerByName(requestParameters: AiApiGetV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiArticlesByOwnerByName(requestParameters: AiApiGetV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10166,7 +10819,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiArticlesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiArticlesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiArticlesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10175,7 +10828,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiAssets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiAssets(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiAssets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10185,7 +10838,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiAssetsByOwnerByName(requestParameters: AiApiGetV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiAssetsByOwnerByName(requestParameters: AiApiGetV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10194,7 +10847,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiChats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiChats(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiChats(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10204,7 +10857,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiChatsByOwnerByName(requestParameters: AiApiGetV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiChatsByOwnerByName(requestParameters: AiApiGetV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10213,7 +10866,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiChatsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiChatsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiChatsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10261,7 +10914,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiDashboardsAgents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiDashboardsAgents(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiDashboardsAgents(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10270,7 +10923,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiDashboardsVm(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiDashboardsVm(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiDashboardsVm(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10279,7 +10932,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiDeployments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10289,7 +10942,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiDeploymentsByOwnerByName(requestParameters: AiApiGetV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiDeploymentsByOwnerByName(requestParameters: AiApiGetV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10298,7 +10951,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFiles(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFiles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10307,7 +10960,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFilesActive(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFilesActive(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFilesActive(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10317,7 +10970,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFilesByOwnerByName(requestParameters: AiApiGetV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFilesByOwnerByName(requestParameters: AiApiGetV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10326,7 +10979,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFilesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFilesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFilesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10335,7 +10988,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiForms(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiForms(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiForms(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10345,7 +10998,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFormsByOwnerByName(requestParameters: AiApiGetV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFormsByOwnerByName(requestParameters: AiApiGetV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10354,7 +11007,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFormsData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFormsData(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFormsData(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10363,7 +11016,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiFormsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiFormsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiFormsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10372,7 +11025,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiGraphs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10382,7 +11035,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiGraphsByOwnerByName(requestParameters: AiApiGetV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiGraphsByOwnerByName(requestParameters: AiApiGetV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10391,7 +11044,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiGraphsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiGraphsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiGraphsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10400,7 +11053,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiK8sStatus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10409,7 +11062,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiMessages(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiMessages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10419,7 +11072,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiMessagesByOwnerByName(requestParameters: AiApiGetV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiMessagesByOwnerByName(requestParameters: AiApiGetV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10429,7 +11082,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetV1AiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetV1AiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiMessagesByOwnerByNameAnswer(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10438,7 +11091,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiMessagesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiMessagesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiMessagesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10447,7 +11100,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiNodes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiNodes(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiNodes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10457,7 +11110,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiNodesByOwnerByName(requestParameters: AiApiGetV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiNodesByOwnerByName(requestParameters: AiApiGetV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10467,7 +11120,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiNodesByOwnerByNameTunnel(requestParameters: AiApiGetV1AiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiNodesByOwnerByNameTunnel(requestParameters: AiApiGetV1AiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10476,7 +11129,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiPrometheus(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiPrometheus(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiPrometheus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10485,7 +11138,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiProviders(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10495,7 +11148,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiProvidersByOwnerByName(requestParameters: AiApiGetV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiProvidersByOwnerByName(requestParameters: AiApiGetV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10504,7 +11157,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiProvidersGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiProvidersGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiProvidersGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10513,7 +11166,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRecords(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRecords(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRecords(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10523,7 +11176,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRecordsByOwnerByName(requestParameters: AiApiGetV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRecordsByOwnerByName(requestParameters: AiApiGetV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10532,7 +11185,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRecordsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRecordsQuery(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRecordsQuery(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10541,7 +11194,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRecordsQuerySecond(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRecordsQuerySecond(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRecordsQuerySecond(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10550,7 +11203,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRemoteConnections(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10560,7 +11213,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiGetV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiGetV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10569,7 +11222,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRoutes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10579,7 +11232,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiRoutesByOwnerByName(requestParameters: AiApiGetV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiRoutesByOwnerByName(requestParameters: AiApiGetV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10588,7 +11241,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScales(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScales(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScales(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10598,7 +11251,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScalesByOwnerByName(requestParameters: AiApiGetV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScalesByOwnerByName(requestParameters: AiApiGetV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10607,7 +11260,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScalesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScalesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScalesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10616,7 +11269,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScalesPublic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScalesPublic(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScalesPublic(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10625,7 +11278,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScans(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScans(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScans(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10635,7 +11288,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiScansByOwnerByName(requestParameters: AiApiGetV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiScansByOwnerByName(requestParameters: AiApiGetV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10644,7 +11297,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiSigninSessions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10654,7 +11307,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiSigninSessionsByOwnerByName(requestParameters: AiApiGetV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiSigninSessionsByOwnerByName(requestParameters: AiApiGetV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10663,7 +11316,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiSigninSessionsDuplicated(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10672,7 +11325,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiStores(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiStores(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiStores(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10682,7 +11335,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiStoresByOwnerByName(requestParameters: AiApiGetV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiStoresByOwnerByName(requestParameters: AiApiGetV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10691,7 +11344,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiStoresGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiStoresGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiStoresGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10700,7 +11353,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiStoresNames(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiStoresNames(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiStoresNames(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10709,7 +11362,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiStoresProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiStoresProviders(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiStoresProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10718,7 +11371,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiSystem(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiSystem(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiSystem(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10727,7 +11380,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTasks(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTasks(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10737,7 +11390,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTasksByOwnerByName(requestParameters: AiApiGetV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTasksByOwnerByName(requestParameters: AiApiGetV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10746,7 +11399,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTasksGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTasksGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTasksGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10755,7 +11408,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTemplates(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10765,7 +11418,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTemplatesByOwnerByName(requestParameters: AiApiGetV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTemplatesByOwnerByName(requestParameters: AiApiGetV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10774,7 +11427,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiTrainingContribution(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10783,7 +11436,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiUsages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiUsages(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiUsages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10792,7 +11445,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiUsagesByUser(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiUsagesByUser(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiUsagesByUser(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10801,7 +11454,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiUsagesCloud(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiUsagesCloud(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiUsagesCloud(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10810,7 +11463,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiUsagesRange(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiUsagesRange(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiUsagesRange(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10819,7 +11472,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiUsagesUserNames(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiUsagesUserNames(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiUsagesUserNames(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10828,7 +11481,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVectors(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVectors(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVectors(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10838,7 +11491,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVectorsByOwnerByName(requestParameters: AiApiGetV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVectorsByOwnerByName(requestParameters: AiApiGetV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10847,7 +11500,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVectorsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVectorsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVectorsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10856,7 +11509,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVersion(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVersion(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVersion(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10865,7 +11518,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVideos(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVideos(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVideos(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10875,7 +11528,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVideosByOwnerByName(requestParameters: AiApiGetV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVideosByOwnerByName(requestParameters: AiApiGetV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10884,7 +11537,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiVideosGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiVideosGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiVideosGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10893,7 +11546,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiWorkflows(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10903,7 +11556,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiWorkflowsByOwnerByName(requestParameters: AiApiGetV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiWorkflowsByOwnerByName(requestParameters: AiApiGetV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10912,7 +11565,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AiWorkflowsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1AiWorkflowsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
             return localVarFp.getV1AiWorkflowsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -10922,8 +11575,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiArticlesByOwnerByName(requestParameters: AiApiPatchV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiArticlesByOwnerByName(requestParameters: AiApiPatchV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one asset. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10932,8 +11585,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiAssetsByOwnerByName(requestParameters: AiApiPatchV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiAssetsByOwnerByName(requestParameters: AiApiPatchV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one chat. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10942,8 +11595,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiChatsByOwnerByName(requestParameters: AiApiPatchV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiChatsByOwnerByName(requestParameters: AiApiPatchV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one application. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10952,8 +11605,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiDeploymentsByOwnerByName(requestParameters: AiApiPatchV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiDeploymentsByOwnerByName(requestParameters: AiApiPatchV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one file. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10962,8 +11615,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiFilesByOwnerByName(requestParameters: AiApiPatchV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiFilesByOwnerByName(requestParameters: AiApiPatchV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one form. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10972,8 +11625,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiFormsByOwnerByName(requestParameters: AiApiPatchV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiFormsByOwnerByName(requestParameters: AiApiPatchV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one graph. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10982,8 +11635,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiGraphsByOwnerByName(requestParameters: AiApiPatchV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiGraphsByOwnerByName(requestParameters: AiApiPatchV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one message. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -10992,8 +11645,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiMessagesByOwnerByName(requestParameters: AiApiPatchV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiMessagesByOwnerByName(requestParameters: AiApiPatchV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one node. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11002,17 +11655,18 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiNodesByOwnerByName(requestParameters: AiApiPatchV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiNodesByOwnerByName(requestParameters: AiApiPatchV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Preferences
+         * @param {AiApiPatchV1AiPreferencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiPreferences(options).then((request) => request(axios, basePath));
+        patchV1AiPreferences(requestParameters: AiApiPatchV1AiPreferencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiPreferences(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one provider. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11021,8 +11675,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiProvidersByOwnerByName(requestParameters: AiApiPatchV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiProvidersByOwnerByName(requestParameters: AiApiPatchV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one record. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11031,8 +11685,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRecordsByOwnerByName(requestParameters: AiApiPatchV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiRecordsByOwnerByName(requestParameters: AiApiPatchV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one connection. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11041,8 +11695,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPatchV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPatchV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one model-route. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11051,8 +11705,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiRoutesByOwnerByName(requestParameters: AiApiPatchV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiRoutesByOwnerByName(requestParameters: AiApiPatchV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one scale. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11061,8 +11715,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiScalesByOwnerByName(requestParameters: AiApiPatchV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiScalesByOwnerByName(requestParameters: AiApiPatchV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one scan. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11071,8 +11725,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiScansByOwnerByName(requestParameters: AiApiPatchV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiScansByOwnerByName(requestParameters: AiApiPatchV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one session. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11081,8 +11735,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPatchV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPatchV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one store. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11091,8 +11745,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiStoresByOwnerByName(requestParameters: AiApiPatchV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiStoresByOwnerByName(requestParameters: AiApiPatchV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one task. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11101,8 +11755,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTasksByOwnerByName(requestParameters: AiApiPatchV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiTasksByOwnerByName(requestParameters: AiApiPatchV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one template. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11111,17 +11765,18 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTemplatesByOwnerByName(requestParameters: AiApiPatchV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiTemplatesByOwnerByName(requestParameters: AiApiPatchV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Training Contribution
+         * @param {AiApiPatchV1AiTrainingContributionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiTrainingContribution(options).then((request) => request(axios, basePath));
+        patchV1AiTrainingContribution(requestParameters: AiApiPatchV1AiTrainingContributionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiTrainingContribution(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one tree-file. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11130,8 +11785,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiTreeFilesByOwnerByName(requestParameters: AiApiPatchV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiTreeFilesByOwnerByName(requestParameters: AiApiPatchV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one vector. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11140,8 +11795,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiVectorsByOwnerByName(requestParameters: AiApiPatchV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiVectorsByOwnerByName(requestParameters: AiApiPatchV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one video. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11150,8 +11805,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiVideosByOwnerByName(requestParameters: AiApiPatchV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiVideosByOwnerByName(requestParameters: AiApiPatchV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Update one workflow. PATCH and PUT reach the same handler, which has always taken a whole object.
@@ -11160,26 +11815,28 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AiWorkflowsByOwnerByName(requestParameters: AiApiPatchV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        patchV1AiWorkflowsByOwnerByName(requestParameters: AiApiPatchV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.patchV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one article.
          * @summary Create a article
+         * @param {AiApiPostV1AiArticlesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiArticles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiArticles(options).then((request) => request(axios, basePath));
+        postV1AiArticles(requestParameters: AiApiPostV1AiArticlesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiArticles(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one asset.
          * @summary Create a asset
+         * @param {AiApiPostV1AiAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiAssets(options).then((request) => request(axios, basePath));
+        postV1AiAssets(requestParameters: AiApiPostV1AiAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiAssets(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11188,26 +11845,28 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssetsByOwnerByNameScan(requestParameters: AiApiPostV1AiAssetsByOwnerByNameScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiAssetsByOwnerByNameScan(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiAssetsByOwnerByNameScan(requestParameters: AiApiPostV1AiAssetsByOwnerByNameScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiAssetsByOwnerByNameScan(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Scan (asset)
+         * @param {AiApiPostV1AiAssetsScanRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiAssetsScan(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiAssetsScan(options).then((request) => request(axios, basePath));
+        postV1AiAssetsScan(requestParameters: AiApiPostV1AiAssetsScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiAssetsScan(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one chat.
          * @summary Create a chat
+         * @param {AiApiPostV1AiChatsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiChats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiChats(options).then((request) => request(axios, basePath));
+        postV1AiChats(requestParameters: AiApiPostV1AiChatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiChats(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Connects (or reconnects) a third-party AI account for the org by sealing the supplied key into KMS and upserting the org\'s provider row. The raw key is sealed BEFORE the row is built and is never persisted or echoed.
@@ -11231,11 +11890,12 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Create one application.
          * @summary Create a application
+         * @param {AiApiPostV1AiDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiDeployments(options).then((request) => request(axios, basePath));
+        postV1AiDeployments(requestParameters: AiApiPostV1AiDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiDeployments(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11244,8 +11904,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeploymentsByOwnerByNameDeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiDeploymentsByOwnerByNameDeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiDeploymentsByOwnerByNameDeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiDeploymentsByOwnerByNameDeploy(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11254,26 +11914,28 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameUndeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameUndeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one file.
          * @summary Create a file
+         * @param {AiApiPostV1AiFilesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiFiles(options).then((request) => request(axios, basePath));
+        postV1AiFiles(requestParameters: AiApiPostV1AiFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiFiles(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Activate (file)
+         * @param {AiApiPostV1AiFilesActivateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesActivate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiFilesActivate(options).then((request) => request(axios, basePath));
+        postV1AiFilesActivate(requestParameters: AiApiPostV1AiFilesActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiFilesActivate(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11282,53 +11944,58 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesByOwnerByNameVectors(requestParameters: AiApiPostV1AiFilesByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiFilesByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiFilesByOwnerByNameVectors(requestParameters: AiApiPostV1AiFilesByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiFilesByOwnerByNameVectors(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Upload (file)
+         * @param {AiApiPostV1AiFilesUploadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiFilesUpload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiFilesUpload(options).then((request) => request(axios, basePath));
+        postV1AiFilesUpload(requestParameters: AiApiPostV1AiFilesUploadRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiFilesUpload(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one form.
          * @summary Create a form
+         * @param {AiApiPostV1AiFormsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiForms(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiForms(options).then((request) => request(axios, basePath));
+        postV1AiForms(requestParameters: AiApiPostV1AiFormsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiForms(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one graph.
          * @summary Create a graph
+         * @param {AiApiPostV1AiGraphsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiGraphs(options).then((request) => request(axios, basePath));
+        postV1AiGraphs(requestParameters: AiApiPostV1AiGraphsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiGraphs(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one message.
          * @summary Create a message
+         * @param {AiApiPostV1AiMessagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiMessages(options).then((request) => request(axios, basePath));
+        postV1AiMessages(requestParameters: AiApiPostV1AiMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiMessages(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one node.
          * @summary Create a node
+         * @param {AiApiPostV1AiNodesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiNodes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiNodes(options).then((request) => request(axios, basePath));
+        postV1AiNodes(requestParameters: AiApiPostV1AiNodesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiNodes(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11337,71 +12004,78 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiNodesByOwnerByNameTunnel(requestParameters: AiApiPostV1AiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiNodesByOwnerByNameTunnel(requestParameters: AiApiPostV1AiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one provider.
          * @summary Create a provider
+         * @param {AiApiPostV1AiProvidersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiProviders(options).then((request) => request(axios, basePath));
+        postV1AiProviders(requestParameters: AiApiPostV1AiProvidersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiProviders(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Mcp Tools (provider)
+         * @param {AiApiPostV1AiProvidersMcpToolsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiProvidersMcpTools(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiProvidersMcpTools(options).then((request) => request(axios, basePath));
+        postV1AiProvidersMcpTools(requestParameters: AiApiPostV1AiProvidersMcpToolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiProvidersMcpTools(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one record.
          * @summary Create a record
+         * @param {AiApiPostV1AiRecordsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecords(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRecords(options).then((request) => request(axios, basePath));
+        postV1AiRecords(requestParameters: AiApiPostV1AiRecordsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRecords(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Batch (record)
+         * @param {AiApiPostV1AiRecordsBatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRecordsBatch(options).then((request) => request(axios, basePath));
+        postV1AiRecordsBatch(requestParameters: AiApiPostV1AiRecordsBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRecordsBatch(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Commit (record)
+         * @param {AiApiPostV1AiRecordsCommitRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsCommit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRecordsCommit(options).then((request) => request(axios, basePath));
+        postV1AiRecordsCommit(requestParameters: AiApiPostV1AiRecordsCommitRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRecordsCommit(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Commit Second (record)
+         * @param {AiApiPostV1AiRecordsCommitSecondRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRecordsCommitSecond(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRecordsCommitSecond(options).then((request) => request(axios, basePath));
+        postV1AiRecordsCommitSecond(requestParameters: AiApiPostV1AiRecordsCommitSecondRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRecordsCommitSecond(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one connection.
          * @summary Create a connection
+         * @param {AiApiPostV1AiRemoteConnectionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRemoteConnections(options).then((request) => request(axios, basePath));
+        postV1AiRemoteConnections(requestParameters: AiApiPostV1AiRemoteConnectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRemoteConnections(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11410,8 +12084,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11420,71 +12094,78 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one model-route.
          * @summary Create a model-route
+         * @param {AiApiPostV1AiRoutesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiRoutes(options).then((request) => request(axios, basePath));
+        postV1AiRoutes(requestParameters: AiApiPostV1AiRoutesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiRoutes(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one scale.
          * @summary Create a scale
+         * @param {AiApiPostV1AiScalesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiScales(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiScales(options).then((request) => request(axios, basePath));
+        postV1AiScales(requestParameters: AiApiPostV1AiScalesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiScales(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one scan.
          * @summary Create a scan
+         * @param {AiApiPostV1AiScansRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiScans(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiScans(options).then((request) => request(axios, basePath));
+        postV1AiScans(requestParameters: AiApiPostV1AiScansRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiScans(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Signin
+         * @param {AiApiPostV1AiSigninRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSignin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiSignin(options).then((request) => request(axios, basePath));
+        postV1AiSignin(requestParameters: AiApiPostV1AiSigninRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiSignin(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one session.
          * @summary Create a session
+         * @param {AiApiPostV1AiSigninSessionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiSigninSessions(options).then((request) => request(axios, basePath));
+        postV1AiSigninSessions(requestParameters: AiApiPostV1AiSigninSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiSigninSessions(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Signout
+         * @param {AiApiPostV1AiSignoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiSignout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiSignout(options).then((request) => request(axios, basePath));
+        postV1AiSignout(requestParameters: AiApiPostV1AiSignoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiSignout(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one store.
          * @summary Create a store
+         * @param {AiApiPostV1AiStoresRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiStores(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiStores(options).then((request) => request(axios, basePath));
+        postV1AiStores(requestParameters: AiApiPostV1AiStoresRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiStores(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11493,17 +12174,18 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiStoresByOwnerByNameVectors(requestParameters: AiApiPostV1AiStoresByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiStoresByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiStoresByOwnerByNameVectors(requestParameters: AiApiPostV1AiStoresByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiStoresByOwnerByNameVectors(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one task.
          * @summary Create a task
+         * @param {AiApiPostV1AiTasksRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiTasks(options).then((request) => request(axios, basePath));
+        postV1AiTasks(requestParameters: AiApiPostV1AiTasksRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiTasks(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11512,8 +12194,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasksByOwnerByNameAnalyze(requestParameters: AiApiPostV1AiTasksByOwnerByNameAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiTasksByOwnerByNameAnalyze(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiTasksByOwnerByNameAnalyze(requestParameters: AiApiPostV1AiTasksByOwnerByNameAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiTasksByOwnerByNameAnalyze(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11522,62 +12204,68 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTasksByOwnerByNameDocument(requestParameters: AiApiPostV1AiTasksByOwnerByNameDocumentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiTasksByOwnerByNameDocument(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1AiTasksByOwnerByNameDocument(requestParameters: AiApiPostV1AiTasksByOwnerByNameDocumentRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiTasksByOwnerByNameDocument(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one template.
          * @summary Create a template
+         * @param {AiApiPostV1AiTemplatesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiTemplates(options).then((request) => request(axios, basePath));
+        postV1AiTemplates(requestParameters: AiApiPostV1AiTemplatesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiTemplates(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one tree-file.
          * @summary Create a tree-file
+         * @param {AiApiPostV1AiTreeFilesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiTreeFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiTreeFiles(options).then((request) => request(axios, basePath));
+        postV1AiTreeFiles(requestParameters: AiApiPostV1AiTreeFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiTreeFiles(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one vector.
          * @summary Create a vector
+         * @param {AiApiPostV1AiVectorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVectors(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiVectors(options).then((request) => request(axios, basePath));
+        postV1AiVectors(requestParameters: AiApiPostV1AiVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiVectors(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one video.
          * @summary Create a video
+         * @param {AiApiPostV1AiVideosRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVideos(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiVideos(options).then((request) => request(axios, basePath));
+        postV1AiVideos(requestParameters: AiApiPostV1AiVideosRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiVideos(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Upload (video)
+         * @param {AiApiPostV1AiVideosUploadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiVideosUpload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiVideosUpload(options).then((request) => request(axios, basePath));
+        postV1AiVideosUpload(requestParameters: AiApiPostV1AiVideosUploadRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiVideosUpload(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Create one workflow.
          * @summary Create a workflow
+         * @param {AiApiPostV1AiWorkflowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AiWorkflows(options).then((request) => request(axios, basePath));
+        postV1AiWorkflows(requestParameters: AiApiPostV1AiWorkflowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.postV1AiWorkflows(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11586,8 +12274,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiArticlesByOwnerByName(requestParameters: AiApiPutV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiArticlesByOwnerByName(requestParameters: AiApiPutV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11596,8 +12284,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiAssetsByOwnerByName(requestParameters: AiApiPutV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiAssetsByOwnerByName(requestParameters: AiApiPutV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11606,8 +12294,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiChatsByOwnerByName(requestParameters: AiApiPutV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiChatsByOwnerByName(requestParameters: AiApiPutV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11616,8 +12304,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiDeploymentsByOwnerByName(requestParameters: AiApiPutV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiDeploymentsByOwnerByName(requestParameters: AiApiPutV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11626,8 +12314,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiFilesByOwnerByName(requestParameters: AiApiPutV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiFilesByOwnerByName(requestParameters: AiApiPutV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11636,8 +12324,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiFormsByOwnerByName(requestParameters: AiApiPutV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiFormsByOwnerByName(requestParameters: AiApiPutV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11646,8 +12334,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiGraphsByOwnerByName(requestParameters: AiApiPutV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiGraphsByOwnerByName(requestParameters: AiApiPutV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11656,8 +12344,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiMessagesByOwnerByName(requestParameters: AiApiPutV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiMessagesByOwnerByName(requestParameters: AiApiPutV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11666,17 +12354,18 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiNodesByOwnerByName(requestParameters: AiApiPutV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiNodesByOwnerByName(requestParameters: AiApiPutV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Preferences
+         * @param {AiApiPutV1AiPreferencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiPreferences(options).then((request) => request(axios, basePath));
+        putV1AiPreferences(requestParameters: AiApiPutV1AiPreferencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiPreferences(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11685,8 +12374,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiProvidersByOwnerByName(requestParameters: AiApiPutV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiProvidersByOwnerByName(requestParameters: AiApiPutV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11695,8 +12384,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRecordsByOwnerByName(requestParameters: AiApiPutV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiRecordsByOwnerByName(requestParameters: AiApiPutV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11705,8 +12394,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPutV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPutV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11715,8 +12404,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiRoutesByOwnerByName(requestParameters: AiApiPutV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiRoutesByOwnerByName(requestParameters: AiApiPutV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11725,8 +12414,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiScalesByOwnerByName(requestParameters: AiApiPutV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiScalesByOwnerByName(requestParameters: AiApiPutV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11735,8 +12424,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiScansByOwnerByName(requestParameters: AiApiPutV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiScansByOwnerByName(requestParameters: AiApiPutV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11745,8 +12434,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPutV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPutV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11755,8 +12444,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiStoresByOwnerByName(requestParameters: AiApiPutV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiStoresByOwnerByName(requestParameters: AiApiPutV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11765,8 +12454,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTasksByOwnerByName(requestParameters: AiApiPutV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiTasksByOwnerByName(requestParameters: AiApiPutV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11775,17 +12464,18 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTemplatesByOwnerByName(requestParameters: AiApiPutV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiTemplatesByOwnerByName(requestParameters: AiApiPutV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Training Contribution
+         * @param {AiApiPutV1AiTrainingContributionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiTrainingContribution(options).then((request) => request(axios, basePath));
+        putV1AiTrainingContribution(requestParameters: AiApiPutV1AiTrainingContributionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiTrainingContribution(requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11794,8 +12484,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiTreeFilesByOwnerByName(requestParameters: AiApiPutV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiTreeFilesByOwnerByName(requestParameters: AiApiPutV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11804,8 +12494,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiVectorsByOwnerByName(requestParameters: AiApiPutV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiVectorsByOwnerByName(requestParameters: AiApiPutV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11814,8 +12504,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiVideosByOwnerByName(requestParameters: AiApiPutV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiVideosByOwnerByName(requestParameters: AiApiPutV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
          * Identical to PATCH — the handler takes a whole object either way.
@@ -11824,8 +12514,8 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AiWorkflowsByOwnerByName(requestParameters: AiApiPutV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        putV1AiWorkflowsByOwnerByName(requestParameters: AiApiPutV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiEnvelope> {
+            return localVarFp.putV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -11851,14 +12541,14 @@ export interface AiApiAiMCPToolsRequest {
  */
 export interface AiApiDeleteV1AiArticlesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiArticlesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiArticlesByOwnerByName
      */
@@ -11872,14 +12562,14 @@ export interface AiApiDeleteV1AiArticlesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiAssetsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiAssetsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiAssetsByOwnerByName
      */
@@ -11893,14 +12583,14 @@ export interface AiApiDeleteV1AiAssetsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiChatsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiChatsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiChatsByOwnerByName
      */
@@ -11928,14 +12618,14 @@ export interface AiApiDeleteV1AiConnectionsByProviderRequest {
  */
 export interface AiApiDeleteV1AiDeploymentsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiDeploymentsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiDeploymentsByOwnerByName
      */
@@ -11949,14 +12639,14 @@ export interface AiApiDeleteV1AiDeploymentsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiFilesByOwnerByName
      */
@@ -11970,14 +12660,14 @@ export interface AiApiDeleteV1AiFilesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiFormsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiFormsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiFormsByOwnerByName
      */
@@ -11991,14 +12681,14 @@ export interface AiApiDeleteV1AiFormsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiGraphsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiGraphsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiGraphsByOwnerByName
      */
@@ -12012,14 +12702,14 @@ export interface AiApiDeleteV1AiGraphsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiMessagesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiMessagesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiMessagesByOwnerByName
      */
@@ -12033,14 +12723,14 @@ export interface AiApiDeleteV1AiMessagesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiNodesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiNodesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiNodesByOwnerByName
      */
@@ -12054,14 +12744,14 @@ export interface AiApiDeleteV1AiNodesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiProvidersByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiProvidersByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiProvidersByOwnerByName
      */
@@ -12075,14 +12765,14 @@ export interface AiApiDeleteV1AiProvidersByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiRecordsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiRecordsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiRecordsByOwnerByName
      */
@@ -12096,14 +12786,14 @@ export interface AiApiDeleteV1AiRecordsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiRemoteConnectionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiRemoteConnectionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiRemoteConnectionsByOwnerByName
      */
@@ -12117,14 +12807,14 @@ export interface AiApiDeleteV1AiRemoteConnectionsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiRoutesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiRoutesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiRoutesByOwnerByName
      */
@@ -12138,14 +12828,14 @@ export interface AiApiDeleteV1AiRoutesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiScalesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiScalesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiScalesByOwnerByName
      */
@@ -12159,14 +12849,14 @@ export interface AiApiDeleteV1AiScalesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiScansByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiScansByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiScansByOwnerByName
      */
@@ -12180,14 +12870,14 @@ export interface AiApiDeleteV1AiScansByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiSigninSessionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiSigninSessionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiSigninSessionsByOwnerByName
      */
@@ -12201,14 +12891,14 @@ export interface AiApiDeleteV1AiSigninSessionsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiStoresByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiStoresByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiStoresByOwnerByName
      */
@@ -12222,14 +12912,14 @@ export interface AiApiDeleteV1AiStoresByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiTasksByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiTasksByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiTasksByOwnerByName
      */
@@ -12243,14 +12933,14 @@ export interface AiApiDeleteV1AiTasksByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiTemplatesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiTemplatesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiTemplatesByOwnerByName
      */
@@ -12264,14 +12954,14 @@ export interface AiApiDeleteV1AiTemplatesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiTreeFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiTreeFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiTreeFilesByOwnerByName
      */
@@ -12285,14 +12975,14 @@ export interface AiApiDeleteV1AiTreeFilesByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiVectorsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiVectorsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiVectorsByOwnerByName
      */
@@ -12306,14 +12996,14 @@ export interface AiApiDeleteV1AiVectorsByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiVideosByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiVideosByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiVideosByOwnerByName
      */
@@ -12327,14 +13017,14 @@ export interface AiApiDeleteV1AiVideosByOwnerByNameRequest {
  */
 export interface AiApiDeleteV1AiWorkflowsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiDeleteV1AiWorkflowsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiDeleteV1AiWorkflowsByOwnerByName
      */
@@ -12348,14 +13038,14 @@ export interface AiApiDeleteV1AiWorkflowsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiArticlesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiArticlesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiArticlesByOwnerByName
      */
@@ -12369,14 +13059,14 @@ export interface AiApiGetV1AiArticlesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiAssetsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiAssetsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiAssetsByOwnerByName
      */
@@ -12390,14 +13080,14 @@ export interface AiApiGetV1AiAssetsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiChatsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiChatsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiChatsByOwnerByName
      */
@@ -12453,14 +13143,14 @@ export interface AiApiGetV1AiConnectionsByProviderUsageRequest {
  */
 export interface AiApiGetV1AiDeploymentsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiDeploymentsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiDeploymentsByOwnerByName
      */
@@ -12474,14 +13164,14 @@ export interface AiApiGetV1AiDeploymentsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiFilesByOwnerByName
      */
@@ -12495,14 +13185,14 @@ export interface AiApiGetV1AiFilesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiFormsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiFormsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiFormsByOwnerByName
      */
@@ -12516,14 +13206,14 @@ export interface AiApiGetV1AiFormsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiGraphsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiGraphsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiGraphsByOwnerByName
      */
@@ -12537,14 +13227,14 @@ export interface AiApiGetV1AiGraphsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiMessagesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiMessagesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiMessagesByOwnerByName
      */
@@ -12558,14 +13248,14 @@ export interface AiApiGetV1AiMessagesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiMessagesByOwnerByNameAnswerRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiMessagesByOwnerByNameAnswer
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiMessagesByOwnerByNameAnswer
      */
@@ -12579,14 +13269,14 @@ export interface AiApiGetV1AiMessagesByOwnerByNameAnswerRequest {
  */
 export interface AiApiGetV1AiNodesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiNodesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiNodesByOwnerByName
      */
@@ -12600,14 +13290,14 @@ export interface AiApiGetV1AiNodesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiNodesByOwnerByNameTunnelRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiNodesByOwnerByNameTunnel
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiNodesByOwnerByNameTunnel
      */
@@ -12621,14 +13311,14 @@ export interface AiApiGetV1AiNodesByOwnerByNameTunnelRequest {
  */
 export interface AiApiGetV1AiProvidersByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiProvidersByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiProvidersByOwnerByName
      */
@@ -12642,14 +13332,14 @@ export interface AiApiGetV1AiProvidersByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiRecordsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiRecordsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiRecordsByOwnerByName
      */
@@ -12663,14 +13353,14 @@ export interface AiApiGetV1AiRecordsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiRemoteConnectionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiRemoteConnectionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiRemoteConnectionsByOwnerByName
      */
@@ -12684,14 +13374,14 @@ export interface AiApiGetV1AiRemoteConnectionsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiRoutesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiRoutesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiRoutesByOwnerByName
      */
@@ -12705,14 +13395,14 @@ export interface AiApiGetV1AiRoutesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiScalesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiScalesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiScalesByOwnerByName
      */
@@ -12726,14 +13416,14 @@ export interface AiApiGetV1AiScalesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiScansByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiScansByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiScansByOwnerByName
      */
@@ -12747,14 +13437,14 @@ export interface AiApiGetV1AiScansByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiSigninSessionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiSigninSessionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiSigninSessionsByOwnerByName
      */
@@ -12768,14 +13458,14 @@ export interface AiApiGetV1AiSigninSessionsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiStoresByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiStoresByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiStoresByOwnerByName
      */
@@ -12789,14 +13479,14 @@ export interface AiApiGetV1AiStoresByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiTasksByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiTasksByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiTasksByOwnerByName
      */
@@ -12810,14 +13500,14 @@ export interface AiApiGetV1AiTasksByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiTemplatesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiTemplatesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiTemplatesByOwnerByName
      */
@@ -12831,14 +13521,14 @@ export interface AiApiGetV1AiTemplatesByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiVectorsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiVectorsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiVectorsByOwnerByName
      */
@@ -12852,14 +13542,14 @@ export interface AiApiGetV1AiVectorsByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiVideosByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiVideosByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiVideosByOwnerByName
      */
@@ -12873,14 +13563,14 @@ export interface AiApiGetV1AiVideosByOwnerByNameRequest {
  */
 export interface AiApiGetV1AiWorkflowsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiGetV1AiWorkflowsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiGetV1AiWorkflowsByOwnerByName
      */
@@ -12894,18 +13584,25 @@ export interface AiApiGetV1AiWorkflowsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiArticlesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiArticlesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiArticlesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiArticlesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -12915,18 +13612,25 @@ export interface AiApiPatchV1AiArticlesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiAssetsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiAssetsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiAssetsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiAssetsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -12936,18 +13640,25 @@ export interface AiApiPatchV1AiAssetsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiChatsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiChatsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiChatsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiChatsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -12957,18 +13668,25 @@ export interface AiApiPatchV1AiChatsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiDeploymentsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiDeploymentsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiDeploymentsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiDeploymentsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -12978,18 +13696,25 @@ export interface AiApiPatchV1AiDeploymentsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiFilesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiFilesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -12999,18 +13724,25 @@ export interface AiApiPatchV1AiFilesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiFormsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiFormsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiFormsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiFormsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13020,18 +13752,25 @@ export interface AiApiPatchV1AiFormsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiGraphsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiGraphsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiGraphsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiGraphsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13041,18 +13780,25 @@ export interface AiApiPatchV1AiGraphsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiMessagesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiMessagesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiMessagesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiMessagesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13062,18 +13808,39 @@ export interface AiApiPatchV1AiMessagesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiNodesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiNodesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiNodesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiNodesByOwnerByName
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for patchV1AiPreferences operation in AiApi.
+ * @export
+ * @interface AiApiPatchV1AiPreferencesRequest
+ */
+export interface AiApiPatchV1AiPreferencesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiPreferences
+     */
+    readonly body: object
 }
 
 /**
@@ -13083,18 +13850,25 @@ export interface AiApiPatchV1AiNodesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiProvidersByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiProvidersByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiProvidersByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiProvidersByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13104,18 +13878,25 @@ export interface AiApiPatchV1AiProvidersByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiRecordsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiRecordsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiRecordsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiRecordsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13125,18 +13906,25 @@ export interface AiApiPatchV1AiRecordsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiRemoteConnectionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiRemoteConnectionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiRemoteConnectionsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiRemoteConnectionsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13146,18 +13934,25 @@ export interface AiApiPatchV1AiRemoteConnectionsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiRoutesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiRoutesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiRoutesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiRoutesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13167,18 +13962,25 @@ export interface AiApiPatchV1AiRoutesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiScalesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiScalesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiScalesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiScalesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13188,18 +13990,25 @@ export interface AiApiPatchV1AiScalesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiScansByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiScansByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiScansByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiScansByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13209,18 +14018,25 @@ export interface AiApiPatchV1AiScansByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiSigninSessionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiSigninSessionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiSigninSessionsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiSigninSessionsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13230,18 +14046,25 @@ export interface AiApiPatchV1AiSigninSessionsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiStoresByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiStoresByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiStoresByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiStoresByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13251,18 +14074,25 @@ export interface AiApiPatchV1AiStoresByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiTasksByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiTasksByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiTasksByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiTasksByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13272,18 +14102,39 @@ export interface AiApiPatchV1AiTasksByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiTemplatesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiTemplatesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiTemplatesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiTemplatesByOwnerByName
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for patchV1AiTrainingContribution operation in AiApi.
+ * @export
+ * @interface AiApiPatchV1AiTrainingContributionRequest
+ */
+export interface AiApiPatchV1AiTrainingContributionRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiTrainingContribution
+     */
+    readonly body: object
 }
 
 /**
@@ -13293,18 +14144,25 @@ export interface AiApiPatchV1AiTemplatesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiTreeFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiTreeFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiTreeFilesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiTreeFilesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13314,18 +14172,25 @@ export interface AiApiPatchV1AiTreeFilesByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiVectorsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiVectorsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiVectorsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiVectorsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13335,18 +14200,25 @@ export interface AiApiPatchV1AiVectorsByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiVideosByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiVideosByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiVideosByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiVideosByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13356,18 +14228,53 @@ export interface AiApiPatchV1AiVideosByOwnerByNameRequest {
  */
 export interface AiApiPatchV1AiWorkflowsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPatchV1AiWorkflowsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPatchV1AiWorkflowsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPatchV1AiWorkflowsByOwnerByName
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiArticles operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiArticlesRequest
+ */
+export interface AiApiPostV1AiArticlesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiArticles
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiAssets operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiAssetsRequest
+ */
+export interface AiApiPostV1AiAssetsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiAssets
+     */
+    readonly body: object
 }
 
 /**
@@ -13377,18 +14284,53 @@ export interface AiApiPatchV1AiWorkflowsByOwnerByNameRequest {
  */
 export interface AiApiPostV1AiAssetsByOwnerByNameScanRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiAssetsByOwnerByNameScan
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiAssetsByOwnerByNameScan
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiAssetsByOwnerByNameScan
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiAssetsScan operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiAssetsScanRequest
+ */
+export interface AiApiPostV1AiAssetsScanRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiAssetsScan
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiChats operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiChatsRequest
+ */
+export interface AiApiPostV1AiChatsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiChats
+     */
+    readonly body: object
 }
 
 /**
@@ -13406,24 +14348,45 @@ export interface AiApiPostV1AiConnectionsByProviderRequest {
 }
 
 /**
+ * Request parameters for postV1AiDeployments operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiDeploymentsRequest
+ */
+export interface AiApiPostV1AiDeploymentsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiDeployments
+     */
+    readonly body: object
+}
+
+/**
  * Request parameters for postV1AiDeploymentsByOwnerByNameDeploy operation in AiApi.
  * @export
  * @interface AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest
  */
 export interface AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiDeploymentsByOwnerByNameDeploy
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiDeploymentsByOwnerByNameDeploy
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiDeploymentsByOwnerByNameDeploy
+     */
+    readonly body: object
 }
 
 /**
@@ -13433,18 +14396,53 @@ export interface AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest {
  */
 export interface AiApiPostV1AiDeploymentsByOwnerByNameUndeployRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiDeploymentsByOwnerByNameUndeploy
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiDeploymentsByOwnerByNameUndeploy
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiDeploymentsByOwnerByNameUndeploy
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiFiles operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiFilesRequest
+ */
+export interface AiApiPostV1AiFilesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiFiles
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiFilesActivate operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiFilesActivateRequest
+ */
+export interface AiApiPostV1AiFilesActivateRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiFilesActivate
+     */
+    readonly body: object
 }
 
 /**
@@ -13454,18 +14452,95 @@ export interface AiApiPostV1AiDeploymentsByOwnerByNameUndeployRequest {
  */
 export interface AiApiPostV1AiFilesByOwnerByNameVectorsRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiFilesByOwnerByNameVectors
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiFilesByOwnerByNameVectors
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiFilesByOwnerByNameVectors
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiFilesUpload operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiFilesUploadRequest
+ */
+export interface AiApiPostV1AiFilesUploadRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiFilesUpload
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiForms operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiFormsRequest
+ */
+export interface AiApiPostV1AiFormsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiForms
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiGraphs operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiGraphsRequest
+ */
+export interface AiApiPostV1AiGraphsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiGraphs
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiMessages operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiMessagesRequest
+ */
+export interface AiApiPostV1AiMessagesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiMessages
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiNodes operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiNodesRequest
+ */
+export interface AiApiPostV1AiNodesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiNodes
+     */
+    readonly body: object
 }
 
 /**
@@ -13475,18 +14550,123 @@ export interface AiApiPostV1AiFilesByOwnerByNameVectorsRequest {
  */
 export interface AiApiPostV1AiNodesByOwnerByNameTunnelRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiNodesByOwnerByNameTunnel
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiNodesByOwnerByNameTunnel
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiNodesByOwnerByNameTunnel
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiProviders operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiProvidersRequest
+ */
+export interface AiApiPostV1AiProvidersRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiProviders
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiProvidersMcpTools operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiProvidersMcpToolsRequest
+ */
+export interface AiApiPostV1AiProvidersMcpToolsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiProvidersMcpTools
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRecords operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRecordsRequest
+ */
+export interface AiApiPostV1AiRecordsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRecords
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRecordsBatch operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRecordsBatchRequest
+ */
+export interface AiApiPostV1AiRecordsBatchRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRecordsBatch
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRecordsCommit operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRecordsCommitRequest
+ */
+export interface AiApiPostV1AiRecordsCommitRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRecordsCommit
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRecordsCommitSecond operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRecordsCommitSecondRequest
+ */
+export interface AiApiPostV1AiRecordsCommitSecondRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRecordsCommitSecond
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRemoteConnections operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRemoteConnectionsRequest
+ */
+export interface AiApiPostV1AiRemoteConnectionsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRemoteConnections
+     */
+    readonly body: object
 }
 
 /**
@@ -13496,18 +14676,25 @@ export interface AiApiPostV1AiNodesByOwnerByNameTunnelRequest {
  */
 export interface AiApiPostV1AiRemoteConnectionsByOwnerByNameStartRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStart
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStart
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStart
+     */
+    readonly body: object
 }
 
 /**
@@ -13517,18 +14704,123 @@ export interface AiApiPostV1AiRemoteConnectionsByOwnerByNameStartRequest {
  */
 export interface AiApiPostV1AiRemoteConnectionsByOwnerByNameStopRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStop
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStop
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRemoteConnectionsByOwnerByNameStop
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiRoutes operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiRoutesRequest
+ */
+export interface AiApiPostV1AiRoutesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiRoutes
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiScales operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiScalesRequest
+ */
+export interface AiApiPostV1AiScalesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiScales
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiScans operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiScansRequest
+ */
+export interface AiApiPostV1AiScansRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiScans
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiSignin operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiSigninRequest
+ */
+export interface AiApiPostV1AiSigninRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiSignin
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiSigninSessions operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiSigninSessionsRequest
+ */
+export interface AiApiPostV1AiSigninSessionsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiSigninSessions
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiSignout operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiSignoutRequest
+ */
+export interface AiApiPostV1AiSignoutRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiSignout
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiStores operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiStoresRequest
+ */
+export interface AiApiPostV1AiStoresRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiStores
+     */
+    readonly body: object
 }
 
 /**
@@ -13538,18 +14830,39 @@ export interface AiApiPostV1AiRemoteConnectionsByOwnerByNameStopRequest {
  */
 export interface AiApiPostV1AiStoresByOwnerByNameVectorsRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiStoresByOwnerByNameVectors
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiStoresByOwnerByNameVectors
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiStoresByOwnerByNameVectors
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiTasks operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiTasksRequest
+ */
+export interface AiApiPostV1AiTasksRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiTasks
+     */
+    readonly body: object
 }
 
 /**
@@ -13559,18 +14872,25 @@ export interface AiApiPostV1AiStoresByOwnerByNameVectorsRequest {
  */
 export interface AiApiPostV1AiTasksByOwnerByNameAnalyzeRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiTasksByOwnerByNameAnalyze
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiTasksByOwnerByNameAnalyze
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiTasksByOwnerByNameAnalyze
+     */
+    readonly body: object
 }
 
 /**
@@ -13580,18 +14900,109 @@ export interface AiApiPostV1AiTasksByOwnerByNameAnalyzeRequest {
  */
 export interface AiApiPostV1AiTasksByOwnerByNameDocumentRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPostV1AiTasksByOwnerByNameDocument
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPostV1AiTasksByOwnerByNameDocument
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiTasksByOwnerByNameDocument
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiTemplates operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiTemplatesRequest
+ */
+export interface AiApiPostV1AiTemplatesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiTemplates
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiTreeFiles operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiTreeFilesRequest
+ */
+export interface AiApiPostV1AiTreeFilesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiTreeFiles
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiVectors operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiVectorsRequest
+ */
+export interface AiApiPostV1AiVectorsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiVectors
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiVideos operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiVideosRequest
+ */
+export interface AiApiPostV1AiVideosRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiVideos
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiVideosUpload operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiVideosUploadRequest
+ */
+export interface AiApiPostV1AiVideosUploadRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiVideosUpload
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for postV1AiWorkflows operation in AiApi.
+ * @export
+ * @interface AiApiPostV1AiWorkflowsRequest
+ */
+export interface AiApiPostV1AiWorkflowsRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPostV1AiWorkflows
+     */
+    readonly body: object
 }
 
 /**
@@ -13601,18 +15012,25 @@ export interface AiApiPostV1AiTasksByOwnerByNameDocumentRequest {
  */
 export interface AiApiPutV1AiArticlesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiArticlesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiArticlesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiArticlesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13622,18 +15040,25 @@ export interface AiApiPutV1AiArticlesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiAssetsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiAssetsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiAssetsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiAssetsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13643,18 +15068,25 @@ export interface AiApiPutV1AiAssetsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiChatsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiChatsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiChatsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiChatsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13664,18 +15096,25 @@ export interface AiApiPutV1AiChatsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiDeploymentsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiDeploymentsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiDeploymentsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiDeploymentsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13685,18 +15124,25 @@ export interface AiApiPutV1AiDeploymentsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiFilesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiFilesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13706,18 +15152,25 @@ export interface AiApiPutV1AiFilesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiFormsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiFormsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiFormsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiFormsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13727,18 +15180,25 @@ export interface AiApiPutV1AiFormsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiGraphsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiGraphsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiGraphsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiGraphsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13748,18 +15208,25 @@ export interface AiApiPutV1AiGraphsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiMessagesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiMessagesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiMessagesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiMessagesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13769,18 +15236,39 @@ export interface AiApiPutV1AiMessagesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiNodesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiNodesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiNodesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiNodesByOwnerByName
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for putV1AiPreferences operation in AiApi.
+ * @export
+ * @interface AiApiPutV1AiPreferencesRequest
+ */
+export interface AiApiPutV1AiPreferencesRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiPreferences
+     */
+    readonly body: object
 }
 
 /**
@@ -13790,18 +15278,25 @@ export interface AiApiPutV1AiNodesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiProvidersByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiProvidersByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiProvidersByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiProvidersByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13811,18 +15306,25 @@ export interface AiApiPutV1AiProvidersByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiRecordsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiRecordsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiRecordsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiRecordsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13832,18 +15334,25 @@ export interface AiApiPutV1AiRecordsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiRemoteConnectionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiRemoteConnectionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiRemoteConnectionsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiRemoteConnectionsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13853,18 +15362,25 @@ export interface AiApiPutV1AiRemoteConnectionsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiRoutesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiRoutesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiRoutesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiRoutesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13874,18 +15390,25 @@ export interface AiApiPutV1AiRoutesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiScalesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiScalesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiScalesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiScalesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13895,18 +15418,25 @@ export interface AiApiPutV1AiScalesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiScansByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiScansByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiScansByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiScansByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13916,18 +15446,25 @@ export interface AiApiPutV1AiScansByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiSigninSessionsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiSigninSessionsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiSigninSessionsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiSigninSessionsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13937,18 +15474,25 @@ export interface AiApiPutV1AiSigninSessionsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiStoresByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiStoresByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiStoresByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiStoresByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13958,18 +15502,25 @@ export interface AiApiPutV1AiStoresByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiTasksByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiTasksByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiTasksByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiTasksByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -13979,18 +15530,39 @@ export interface AiApiPutV1AiTasksByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiTemplatesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiTemplatesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiTemplatesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiTemplatesByOwnerByName
+     */
+    readonly body: object
+}
+
+/**
+ * Request parameters for putV1AiTrainingContribution operation in AiApi.
+ * @export
+ * @interface AiApiPutV1AiTrainingContributionRequest
+ */
+export interface AiApiPutV1AiTrainingContributionRequest {
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiTrainingContribution
+     */
+    readonly body: object
 }
 
 /**
@@ -14000,18 +15572,25 @@ export interface AiApiPutV1AiTemplatesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiTreeFilesByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiTreeFilesByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiTreeFilesByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiTreeFilesByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -14021,18 +15600,25 @@ export interface AiApiPutV1AiTreeFilesByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiVectorsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiVectorsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiVectorsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiVectorsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -14042,18 +15628,25 @@ export interface AiApiPutV1AiVectorsByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiVideosByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiVideosByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiVideosByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiVideosByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -14063,18 +15656,25 @@ export interface AiApiPutV1AiVideosByOwnerByNameRequest {
  */
 export interface AiApiPutV1AiWorkflowsByOwnerByNameRequest {
     /**
-     * 
+     * Owning organization.
      * @type {string}
      * @memberof AiApiPutV1AiWorkflowsByOwnerByName
      */
     readonly owner: string
 
     /**
-     * 
+     * Resource name, unique within the owner.
      * @type {string}
      * @memberof AiApiPutV1AiWorkflowsByOwnerByName
      */
     readonly name: string
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AiApiPutV1AiWorkflowsByOwnerByName
+     */
+    readonly body: object
 }
 
 /**
@@ -15388,7 +16988,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiArticlesByOwnerByName(requestParameters: AiApiPatchV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15400,7 +17000,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiAssetsByOwnerByName(requestParameters: AiApiPatchV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15412,7 +17012,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiChatsByOwnerByName(requestParameters: AiApiPatchV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15424,7 +17024,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiDeploymentsByOwnerByName(requestParameters: AiApiPatchV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15436,7 +17036,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiFilesByOwnerByName(requestParameters: AiApiPatchV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15448,7 +17048,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiFormsByOwnerByName(requestParameters: AiApiPatchV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15460,7 +17060,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiGraphsByOwnerByName(requestParameters: AiApiPatchV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15472,7 +17072,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiMessagesByOwnerByName(requestParameters: AiApiPatchV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15484,18 +17084,19 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiNodesByOwnerByName(requestParameters: AiApiPatchV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Preferences
+     * @param {AiApiPatchV1AiPreferencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public patchV1AiPreferences(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiPreferences(options).then((request) => request(this.axios, this.basePath));
+    public patchV1AiPreferences(requestParameters: AiApiPatchV1AiPreferencesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).patchV1AiPreferences(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15507,7 +17108,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiProvidersByOwnerByName(requestParameters: AiApiPatchV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15519,7 +17120,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiRecordsByOwnerByName(requestParameters: AiApiPatchV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15531,7 +17132,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPatchV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15543,7 +17144,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiRoutesByOwnerByName(requestParameters: AiApiPatchV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15555,7 +17156,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiScalesByOwnerByName(requestParameters: AiApiPatchV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15567,7 +17168,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiScansByOwnerByName(requestParameters: AiApiPatchV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15579,7 +17180,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPatchV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15591,7 +17192,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiStoresByOwnerByName(requestParameters: AiApiPatchV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15603,7 +17204,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiTasksByOwnerByName(requestParameters: AiApiPatchV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15615,18 +17216,19 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiTemplatesByOwnerByName(requestParameters: AiApiPatchV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Training Contribution
+     * @param {AiApiPatchV1AiTrainingContributionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public patchV1AiTrainingContribution(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiTrainingContribution(options).then((request) => request(this.axios, this.basePath));
+    public patchV1AiTrainingContribution(requestParameters: AiApiPatchV1AiTrainingContributionRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).patchV1AiTrainingContribution(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15638,7 +17240,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiTreeFilesByOwnerByName(requestParameters: AiApiPatchV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15650,7 +17252,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiVectorsByOwnerByName(requestParameters: AiApiPatchV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15662,7 +17264,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiVideosByOwnerByName(requestParameters: AiApiPatchV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15674,29 +17276,31 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public patchV1AiWorkflowsByOwnerByName(requestParameters: AiApiPatchV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).patchV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).patchV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one article.
      * @summary Create a article
+     * @param {AiApiPostV1AiArticlesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiArticles(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiArticles(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiArticles(requestParameters: AiApiPostV1AiArticlesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiArticles(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one asset.
      * @summary Create a asset
+     * @param {AiApiPostV1AiAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiAssets(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiAssets(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiAssets(requestParameters: AiApiPostV1AiAssetsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiAssets(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15708,29 +17312,31 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiAssetsByOwnerByNameScan(requestParameters: AiApiPostV1AiAssetsByOwnerByNameScanRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiAssetsByOwnerByNameScan(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiAssetsByOwnerByNameScan(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Scan (asset)
+     * @param {AiApiPostV1AiAssetsScanRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiAssetsScan(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiAssetsScan(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiAssetsScan(requestParameters: AiApiPostV1AiAssetsScanRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiAssetsScan(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one chat.
      * @summary Create a chat
+     * @param {AiApiPostV1AiChatsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiChats(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiChats(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiChats(requestParameters: AiApiPostV1AiChatsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiChats(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15759,12 +17365,13 @@ export class AiApi extends BaseAPI {
     /**
      * Create one application.
      * @summary Create a application
+     * @param {AiApiPostV1AiDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiDeployments(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiDeployments(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiDeployments(requestParameters: AiApiPostV1AiDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiDeployments(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15776,7 +17383,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiDeploymentsByOwnerByNameDeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameDeployRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiDeploymentsByOwnerByNameDeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiDeploymentsByOwnerByNameDeploy(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15788,29 +17395,31 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters: AiApiPostV1AiDeploymentsByOwnerByNameUndeployRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiDeploymentsByOwnerByNameUndeploy(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one file.
      * @summary Create a file
+     * @param {AiApiPostV1AiFilesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiFiles(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiFiles(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiFiles(requestParameters: AiApiPostV1AiFilesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiFiles(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Activate (file)
+     * @param {AiApiPostV1AiFilesActivateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiFilesActivate(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiFilesActivate(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiFilesActivate(requestParameters: AiApiPostV1AiFilesActivateRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiFilesActivate(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15822,62 +17431,67 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiFilesByOwnerByNameVectors(requestParameters: AiApiPostV1AiFilesByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiFilesByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiFilesByOwnerByNameVectors(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Upload (file)
+     * @param {AiApiPostV1AiFilesUploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiFilesUpload(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiFilesUpload(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiFilesUpload(requestParameters: AiApiPostV1AiFilesUploadRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiFilesUpload(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one form.
      * @summary Create a form
+     * @param {AiApiPostV1AiFormsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiForms(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiForms(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiForms(requestParameters: AiApiPostV1AiFormsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiForms(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one graph.
      * @summary Create a graph
+     * @param {AiApiPostV1AiGraphsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiGraphs(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiGraphs(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiGraphs(requestParameters: AiApiPostV1AiGraphsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiGraphs(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one message.
      * @summary Create a message
+     * @param {AiApiPostV1AiMessagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiMessages(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiMessages(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiMessages(requestParameters: AiApiPostV1AiMessagesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiMessages(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one node.
      * @summary Create a node
+     * @param {AiApiPostV1AiNodesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiNodes(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiNodes(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiNodes(requestParameters: AiApiPostV1AiNodesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiNodes(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15889,84 +17503,91 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiNodesByOwnerByNameTunnel(requestParameters: AiApiPostV1AiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one provider.
      * @summary Create a provider
+     * @param {AiApiPostV1AiProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiProviders(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiProviders(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiProviders(requestParameters: AiApiPostV1AiProvidersRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiProviders(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Mcp Tools (provider)
+     * @param {AiApiPostV1AiProvidersMcpToolsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiProvidersMcpTools(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiProvidersMcpTools(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiProvidersMcpTools(requestParameters: AiApiPostV1AiProvidersMcpToolsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiProvidersMcpTools(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one record.
      * @summary Create a record
+     * @param {AiApiPostV1AiRecordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRecords(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRecords(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRecords(requestParameters: AiApiPostV1AiRecordsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRecords(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Batch (record)
+     * @param {AiApiPostV1AiRecordsBatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRecordsBatch(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRecordsBatch(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRecordsBatch(requestParameters: AiApiPostV1AiRecordsBatchRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRecordsBatch(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Commit (record)
+     * @param {AiApiPostV1AiRecordsCommitRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRecordsCommit(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRecordsCommit(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRecordsCommit(requestParameters: AiApiPostV1AiRecordsCommitRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRecordsCommit(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Commit Second (record)
+     * @param {AiApiPostV1AiRecordsCommitSecondRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRecordsCommitSecond(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRecordsCommitSecond(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRecordsCommitSecond(requestParameters: AiApiPostV1AiRecordsCommitSecondRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRecordsCommitSecond(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one connection.
      * @summary Create a connection
+     * @param {AiApiPostV1AiRemoteConnectionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRemoteConnections(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRemoteConnections(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRemoteConnections(requestParameters: AiApiPostV1AiRemoteConnectionsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRemoteConnections(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15978,7 +17599,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStartRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiRemoteConnectionsByOwnerByNameStart(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15990,84 +17611,91 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters: AiApiPostV1AiRemoteConnectionsByOwnerByNameStopRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiRemoteConnectionsByOwnerByNameStop(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one model-route.
      * @summary Create a model-route
+     * @param {AiApiPostV1AiRoutesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiRoutes(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiRoutes(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiRoutes(requestParameters: AiApiPostV1AiRoutesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiRoutes(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one scale.
      * @summary Create a scale
+     * @param {AiApiPostV1AiScalesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiScales(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiScales(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiScales(requestParameters: AiApiPostV1AiScalesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiScales(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one scan.
      * @summary Create a scan
+     * @param {AiApiPostV1AiScansRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiScans(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiScans(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiScans(requestParameters: AiApiPostV1AiScansRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiScans(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Signin
+     * @param {AiApiPostV1AiSigninRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiSignin(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiSignin(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiSignin(requestParameters: AiApiPostV1AiSigninRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiSignin(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one session.
      * @summary Create a session
+     * @param {AiApiPostV1AiSigninSessionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiSigninSessions(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiSigninSessions(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiSigninSessions(requestParameters: AiApiPostV1AiSigninSessionsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiSigninSessions(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Signout
+     * @param {AiApiPostV1AiSignoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiSignout(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiSignout(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiSignout(requestParameters: AiApiPostV1AiSignoutRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiSignout(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one store.
      * @summary Create a store
+     * @param {AiApiPostV1AiStoresRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiStores(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiStores(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiStores(requestParameters: AiApiPostV1AiStoresRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiStores(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16079,18 +17707,19 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiStoresByOwnerByNameVectors(requestParameters: AiApiPostV1AiStoresByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiStoresByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiStoresByOwnerByNameVectors(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one task.
      * @summary Create a task
+     * @param {AiApiPostV1AiTasksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiTasks(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiTasks(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiTasks(requestParameters: AiApiPostV1AiTasksRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiTasks(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16102,7 +17731,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiTasksByOwnerByNameAnalyze(requestParameters: AiApiPostV1AiTasksByOwnerByNameAnalyzeRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiTasksByOwnerByNameAnalyze(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiTasksByOwnerByNameAnalyze(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16114,73 +17743,79 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public postV1AiTasksByOwnerByNameDocument(requestParameters: AiApiPostV1AiTasksByOwnerByNameDocumentRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiTasksByOwnerByNameDocument(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).postV1AiTasksByOwnerByNameDocument(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one template.
      * @summary Create a template
+     * @param {AiApiPostV1AiTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiTemplates(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiTemplates(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiTemplates(requestParameters: AiApiPostV1AiTemplatesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiTemplates(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one tree-file.
      * @summary Create a tree-file
+     * @param {AiApiPostV1AiTreeFilesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiTreeFiles(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiTreeFiles(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiTreeFiles(requestParameters: AiApiPostV1AiTreeFilesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiTreeFiles(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one vector.
      * @summary Create a vector
+     * @param {AiApiPostV1AiVectorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiVectors(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiVectors(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiVectors(requestParameters: AiApiPostV1AiVectorsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiVectors(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one video.
      * @summary Create a video
+     * @param {AiApiPostV1AiVideosRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiVideos(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiVideos(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiVideos(requestParameters: AiApiPostV1AiVideosRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiVideos(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Upload (video)
+     * @param {AiApiPostV1AiVideosUploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiVideosUpload(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiVideosUpload(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiVideosUpload(requestParameters: AiApiPostV1AiVideosUploadRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiVideosUpload(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create one workflow.
      * @summary Create a workflow
+     * @param {AiApiPostV1AiWorkflowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public postV1AiWorkflows(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).postV1AiWorkflows(options).then((request) => request(this.axios, this.basePath));
+    public postV1AiWorkflows(requestParameters: AiApiPostV1AiWorkflowsRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).postV1AiWorkflows(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16192,7 +17827,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiArticlesByOwnerByName(requestParameters: AiApiPutV1AiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16204,7 +17839,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiAssetsByOwnerByName(requestParameters: AiApiPutV1AiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16216,7 +17851,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiChatsByOwnerByName(requestParameters: AiApiPutV1AiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiChatsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16228,7 +17863,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiDeploymentsByOwnerByName(requestParameters: AiApiPutV1AiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16240,7 +17875,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiFilesByOwnerByName(requestParameters: AiApiPutV1AiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16252,7 +17887,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiFormsByOwnerByName(requestParameters: AiApiPutV1AiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiFormsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16264,7 +17899,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiGraphsByOwnerByName(requestParameters: AiApiPutV1AiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16276,7 +17911,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiMessagesByOwnerByName(requestParameters: AiApiPutV1AiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16288,18 +17923,19 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiNodesByOwnerByName(requestParameters: AiApiPutV1AiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiNodesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Preferences
+     * @param {AiApiPutV1AiPreferencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public putV1AiPreferences(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiPreferences(options).then((request) => request(this.axios, this.basePath));
+    public putV1AiPreferences(requestParameters: AiApiPutV1AiPreferencesRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).putV1AiPreferences(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16311,7 +17947,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiProvidersByOwnerByName(requestParameters: AiApiPutV1AiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16323,7 +17959,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiRecordsByOwnerByName(requestParameters: AiApiPutV1AiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16335,7 +17971,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiRemoteConnectionsByOwnerByName(requestParameters: AiApiPutV1AiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16347,7 +17983,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiRoutesByOwnerByName(requestParameters: AiApiPutV1AiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16359,7 +17995,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiScalesByOwnerByName(requestParameters: AiApiPutV1AiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiScalesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16371,7 +18007,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiScansByOwnerByName(requestParameters: AiApiPutV1AiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiScansByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16383,7 +18019,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiSigninSessionsByOwnerByName(requestParameters: AiApiPutV1AiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16395,7 +18031,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiStoresByOwnerByName(requestParameters: AiApiPutV1AiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiStoresByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16407,7 +18043,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiTasksByOwnerByName(requestParameters: AiApiPutV1AiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiTasksByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16419,18 +18055,19 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiTemplatesByOwnerByName(requestParameters: AiApiPutV1AiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Training Contribution
+     * @param {AiApiPutV1AiTrainingContributionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AiApi
      */
-    public putV1AiTrainingContribution(options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiTrainingContribution(options).then((request) => request(this.axios, this.basePath));
+    public putV1AiTrainingContribution(requestParameters: AiApiPutV1AiTrainingContributionRequest, options?: RawAxiosRequestConfig) {
+        return AiApiFp(this.configuration).putV1AiTrainingContribution(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16442,7 +18079,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiTreeFilesByOwnerByName(requestParameters: AiApiPutV1AiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16454,7 +18091,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiVectorsByOwnerByName(requestParameters: AiApiPutV1AiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16466,7 +18103,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiVideosByOwnerByName(requestParameters: AiApiPutV1AiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiVideosByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16478,7 +18115,7 @@ export class AiApi extends BaseAPI {
      * @memberof AiApi
      */
     public putV1AiWorkflowsByOwnerByName(requestParameters: AiApiPutV1AiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
-        return AiApiFp(this.configuration).putV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+        return AiApiFp(this.configuration).putV1AiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
