@@ -507,49 +507,15 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
-         * @summary Mark a step of your org\'s journey started
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1GuideStepsByIdStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdStart', 'id', id)
-            const localVarPath = `/v1/guide/steps/{id}/start`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
          * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
          * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsIdReset: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GuideStepsByIdReset: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsIdReset', 'id', id)
+            assertParamExists('postV1GuideStepsByIdReset', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/reset`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -581,10 +547,44 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsIdSkip: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GuideStepsByIdSkip: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsIdSkip', 'id', id)
+            assertParamExists('postV1GuideStepsByIdSkip', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/skip`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
+         * @summary Mark a step of your org\'s journey started
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GuideStepsByIdStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1GuideStepsByIdStart', 'id', id)
+            const localVarPath = `/v1/guide/steps/{id}/start`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -855,6 +855,32 @@ export const GuideApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
+         * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1GuideStepsByIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdReset(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdReset']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
+         * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1GuideStepsByIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdSkip(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdSkip']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
          * @summary Mark a step of your org\'s journey started
          * @param {string} id 
@@ -865,32 +891,6 @@ export const GuideApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdStart(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdStart']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
-         * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
-         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1GuideStepsIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsIdReset(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsIdReset']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
-         * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
-         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1GuideStepsIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsIdSkip(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsIdSkip']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1059,6 +1059,26 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postV1GuideStepsByIdDone(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
+         * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
+         * @param {GuideApiPostV1GuideStepsByIdResetRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GuideStepsByIdReset(requestParameters: GuideApiPostV1GuideStepsByIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+            return localVarFp.postV1GuideStepsByIdReset(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
+         * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
+         * @param {GuideApiPostV1GuideStepsByIdSkipRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GuideStepsByIdSkip(requestParameters: GuideApiPostV1GuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+            return localVarFp.postV1GuideStepsByIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
          * @summary Mark a step of your org\'s journey started
          * @param {GuideApiPostV1GuideStepsByIdStartRequest} requestParameters Request parameters.
@@ -1067,26 +1087,6 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          */
         postV1GuideStepsByIdStart(requestParameters: GuideApiPostV1GuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1GuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
-         * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
-         * @param {GuideApiPostV1GuideStepsIdResetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1GuideStepsIdReset(requestParameters: GuideApiPostV1GuideStepsIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
-            return localVarFp.postV1GuideStepsIdReset(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
-         * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
-         * @param {GuideApiPostV1GuideStepsIdSkipRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1GuideStepsIdSkip(requestParameters: GuideApiPostV1GuideStepsIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
-            return localVarFp.postV1GuideStepsIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
@@ -1201,6 +1201,34 @@ export interface GuideApiPostV1GuideStepsByIdDoneRequest {
 }
 
 /**
+ * Request parameters for postV1GuideStepsByIdReset operation in GuideApi.
+ * @export
+ * @interface GuideApiPostV1GuideStepsByIdResetRequest
+ */
+export interface GuideApiPostV1GuideStepsByIdResetRequest {
+    /**
+     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
+     * @type {string}
+     * @memberof GuideApiPostV1GuideStepsByIdReset
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postV1GuideStepsByIdSkip operation in GuideApi.
+ * @export
+ * @interface GuideApiPostV1GuideStepsByIdSkipRequest
+ */
+export interface GuideApiPostV1GuideStepsByIdSkipRequest {
+    /**
+     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
+     * @type {string}
+     * @memberof GuideApiPostV1GuideStepsByIdSkip
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for postV1GuideStepsByIdStart operation in GuideApi.
  * @export
  * @interface GuideApiPostV1GuideStepsByIdStartRequest
@@ -1210,34 +1238,6 @@ export interface GuideApiPostV1GuideStepsByIdStartRequest {
      * 
      * @type {string}
      * @memberof GuideApiPostV1GuideStepsByIdStart
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for postV1GuideStepsIdReset operation in GuideApi.
- * @export
- * @interface GuideApiPostV1GuideStepsIdResetRequest
- */
-export interface GuideApiPostV1GuideStepsIdResetRequest {
-    /**
-     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
-     * @type {string}
-     * @memberof GuideApiPostV1GuideStepsIdReset
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for postV1GuideStepsIdSkip operation in GuideApi.
- * @export
- * @interface GuideApiPostV1GuideStepsIdSkipRequest
- */
-export interface GuideApiPostV1GuideStepsIdSkipRequest {
-    /**
-     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
-     * @type {string}
-     * @memberof GuideApiPostV1GuideStepsIdSkip
      */
     readonly id: string
 }
@@ -1409,6 +1409,30 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
+     * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
+     * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
+     * @param {GuideApiPostV1GuideStepsByIdResetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public postV1GuideStepsByIdReset(requestParameters: GuideApiPostV1GuideStepsByIdResetRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postV1GuideStepsByIdReset(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
+     * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
+     * @param {GuideApiPostV1GuideStepsByIdSkipRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GuideApi
+     */
+    public postV1GuideStepsByIdSkip(requestParameters: GuideApiPostV1GuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postV1GuideStepsByIdSkip(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
      * @summary Mark a step of your org\'s journey started
      * @param {GuideApiPostV1GuideStepsByIdStartRequest} requestParameters Request parameters.
@@ -1418,30 +1442,6 @@ export class GuideApi extends BaseAPI {
      */
     public postV1GuideStepsByIdStart(requestParameters: GuideApiPostV1GuideStepsByIdStartRequest, options?: RawAxiosRequestConfig) {
         return GuideApiFp(this.configuration).postV1GuideStepsByIdStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
-     * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
-     * @param {GuideApiPostV1GuideStepsIdResetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public postV1GuideStepsIdReset(requestParameters: GuideApiPostV1GuideStepsIdResetRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsIdReset(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
-     * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
-     * @param {GuideApiPostV1GuideStepsIdSkipRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof GuideApi
-     */
-    public postV1GuideStepsIdSkip(requestParameters: GuideApiPostV1GuideStepsIdSkipRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsIdSkip(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -71,6 +71,40 @@ export const ValidatorsApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
+         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
+         * @param {string} tokenId TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1ValidatorsByTokenid: async (tokenId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tokenId' is not null or undefined
+            assertParamExists('getV1ValidatorsByTokenid', 'tokenId', tokenId)
+            const localVarPath = `/v1/validators/{tokenId}`
+                .replace(`{${"tokenId"}}`, encodeURIComponent(String(tokenId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.  The nonce is bound to (validated org, slot) and stored server-side, so a signature obtained for one org or one slot can never be replayed for another, and the message POST /v1/validators verifies is rebuilt from those same server facts rather than trusted from the caller. Redeem it with POST /v1/validators before it expires; it can be redeemed once.  A tokenId outside the Validator tier is refused here rather than after signing.
          * @summary Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.
          * @param {string} [tokenId] TokenID is the Validator-tier GenesisNFT token id, as a decimal string in the &#x60;?tokenId&#x3D;&#x60; query. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
@@ -93,40 +127,6 @@ export const ValidatorsApiAxiosParamCreator = function (configuration?: Configur
             if (tokenId !== undefined) {
                 localVarQueryParameter['tokenId'] = tokenId;
             }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
-         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
-         * @param {string} tokenId TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1ValidatorsTokenId: async (tokenId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'tokenId' is not null or undefined
-            assertParamExists('getV1ValidatorsTokenId', 'tokenId', tokenId)
-            const localVarPath = `/v1/validators/{tokenId}`
-                .replace(`{${"tokenId"}}`, encodeURIComponent(String(tokenId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -199,6 +199,19 @@ export const ValidatorsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
+         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
+         * @param {string} tokenId TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1ValidatorsByTokenid(tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlotView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ValidatorsByTokenid(tokenId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ValidatorsApi.getV1ValidatorsByTokenid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.  The nonce is bound to (validated org, slot) and stored server-side, so a signature obtained for one org or one slot can never be replayed for another, and the message POST /v1/validators verifies is rebuilt from those same server facts rather than trusted from the caller. Redeem it with POST /v1/validators before it expires; it can be redeemed once.  A tokenId outside the Validator tier is refused here rather than after signing.
          * @summary Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.
          * @param {string} [tokenId] TokenID is the Validator-tier GenesisNFT token id, as a decimal string in the &#x60;?tokenId&#x3D;&#x60; query. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
@@ -209,19 +222,6 @@ export const ValidatorsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ValidatorsChallenge(tokenId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ValidatorsApi.getV1ValidatorsChallenge']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
-         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
-         * @param {string} tokenId TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1ValidatorsTokenId(tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SlotView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ValidatorsTokenId(tokenId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ValidatorsApi.getV1ValidatorsTokenId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -258,6 +258,16 @@ export const ValidatorsApiFactory = function (configuration?: Configuration, bas
             return localVarFp.getV1Validators(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
+         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
+         * @param {ValidatorsApiGetV1ValidatorsByTokenidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1ValidatorsByTokenid(requestParameters: ValidatorsApiGetV1ValidatorsByTokenidRequest, options?: RawAxiosRequestConfig): AxiosPromise<SlotView> {
+            return localVarFp.getV1ValidatorsByTokenid(requestParameters.tokenId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.  The nonce is bound to (validated org, slot) and stored server-side, so a signature obtained for one org or one slot can never be replayed for another, and the message POST /v1/validators verifies is rebuilt from those same server facts rather than trusted from the caller. Redeem it with POST /v1/validators before it expires; it can be redeemed once.  A tokenId outside the Validator tier is refused here rather than after signing.
          * @summary Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.
          * @param {ValidatorsApiGetV1ValidatorsChallengeRequest} requestParameters Request parameters.
@@ -266,16 +276,6 @@ export const ValidatorsApiFactory = function (configuration?: Configuration, bas
          */
         getV1ValidatorsChallenge(requestParameters: ValidatorsApiGetV1ValidatorsChallengeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ChallengeView> {
             return localVarFp.getV1ValidatorsChallenge(requestParameters.tokenId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
-         * @summary Returns one claimed validator slot, scoped to the caller\'s org.
-         * @param {ValidatorsApiGetV1ValidatorsTokenIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1ValidatorsTokenId(requestParameters: ValidatorsApiGetV1ValidatorsTokenIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SlotView> {
-            return localVarFp.getV1ValidatorsTokenId(requestParameters.tokenId, options).then((request) => request(axios, basePath));
         },
         /**
          * Claims a validator slot and provisions its node, after proving the caller\'s wallet owns the slot\'s NFT.  The pipeline, all server-enforced: burn the single-use challenge (so a replayed or forged nonce dies before any chain read), recover the signer from the message this server rebuilds, require that wallet to hold Validator-tier GenesisNFT #tokenId on Ethereum mainnet, generate a fresh luxd staking identity and seal it into KMS, write a LuxNetwork CR for a NEW node, and ENQUEUE an owner-gated registration. The registration is never auto-submitted to any P-Chain — the owner co-signs it out of band — and the stake weight is set at co-sign time, never derived from the NFT.  It fails CLOSED at every gate: a bad signature, a non-owner, a non-tier slot or an unavailable KMS all leave no claim persisted and no key material exposed. Re-claiming a slot this org already holds re-applies the node CR and returns 200 with the existing identity (keys and NodeID are stable); a slot held by another org is 409. A cluster-less deployment still claims the slot, seals the keys and queues the registration, reporting the node as \"node_pending\".
@@ -305,6 +305,20 @@ export interface ValidatorsApiGetV1ValidatorsRequest {
 }
 
 /**
+ * Request parameters for getV1ValidatorsByTokenid operation in ValidatorsApi.
+ * @export
+ * @interface ValidatorsApiGetV1ValidatorsByTokenidRequest
+ */
+export interface ValidatorsApiGetV1ValidatorsByTokenidRequest {
+    /**
+     * TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
+     * @type {string}
+     * @memberof ValidatorsApiGetV1ValidatorsByTokenid
+     */
+    readonly tokenId: string
+}
+
+/**
  * Request parameters for getV1ValidatorsChallenge operation in ValidatorsApi.
  * @export
  * @interface ValidatorsApiGetV1ValidatorsChallengeRequest
@@ -316,20 +330,6 @@ export interface ValidatorsApiGetV1ValidatorsChallengeRequest {
      * @memberof ValidatorsApiGetV1ValidatorsChallenge
      */
     readonly tokenId?: string
-}
-
-/**
- * Request parameters for getV1ValidatorsTokenId operation in ValidatorsApi.
- * @export
- * @interface ValidatorsApiGetV1ValidatorsTokenIdRequest
- */
-export interface ValidatorsApiGetV1ValidatorsTokenIdRequest {
-    /**
-     * TokenID is the slot\&#39;s GenesisNFT token id, from the path, as a decimal string. A value that is not a positive integer is 400. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
-     * @type {string}
-     * @memberof ValidatorsApiGetV1ValidatorsTokenId
-     */
-    readonly tokenId: string
 }
 
 /**
@@ -366,6 +366,18 @@ export class ValidatorsApi extends BaseAPI {
     }
 
     /**
+     * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
+     * @summary Returns one claimed validator slot, scoped to the caller\'s org.
+     * @param {ValidatorsApiGetV1ValidatorsByTokenidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ValidatorsApi
+     */
+    public getV1ValidatorsByTokenid(requestParameters: ValidatorsApiGetV1ValidatorsByTokenidRequest, options?: RawAxiosRequestConfig) {
+        return ValidatorsApiFp(this.configuration).getV1ValidatorsByTokenid(requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.  The nonce is bound to (validated org, slot) and stored server-side, so a signature obtained for one org or one slot can never be replayed for another, and the message POST /v1/validators verifies is rebuilt from those same server facts rather than trusted from the caller. Redeem it with POST /v1/validators before it expires; it can be redeemed once.  A tokenId outside the Validator tier is refused here rather than after signing.
      * @summary Issues the single-use nonce and the exact message a wallet must sign to claim a validator slot.
      * @param {ValidatorsApiGetV1ValidatorsChallengeRequest} requestParameters Request parameters.
@@ -375,18 +387,6 @@ export class ValidatorsApi extends BaseAPI {
      */
     public getV1ValidatorsChallenge(requestParameters: ValidatorsApiGetV1ValidatorsChallengeRequest = {}, options?: RawAxiosRequestConfig) {
         return ValidatorsApiFp(this.configuration).getV1ValidatorsChallenge(requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one claimed validator slot, scoped to the caller\'s org.  A slot another org holds, and a slot nobody holds, are both 404 — never a different status, so this route cannot be used to probe which slots are taken.
-     * @summary Returns one claimed validator slot, scoped to the caller\'s org.
-     * @param {ValidatorsApiGetV1ValidatorsTokenIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ValidatorsApi
-     */
-    public getV1ValidatorsTokenId(requestParameters: ValidatorsApiGetV1ValidatorsTokenIdRequest, options?: RawAxiosRequestConfig) {
-        return ValidatorsApiFp(this.configuration).getV1ValidatorsTokenId(requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

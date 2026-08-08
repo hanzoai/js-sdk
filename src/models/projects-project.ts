@@ -150,6 +150,12 @@ export interface ProjectsProject {
      */
     'status'?: string;
     /**
+     * Tags is the site\'s browser tag config: platform slug → non-secret pixel id (GA measurement, Meta pixel, …) — what track.js injects and the server CAPI reads, per site. Omitted when none are set. The API SECRET is never here (KMS).
+     * @type {{ [key: string]: string; }}
+     * @memberof ProjectsProject
+     */
+    'tags'?: { [key: string]: string; };
+    /**
      * 
      * @type {number}
      * @memberof ProjectsProject

@@ -38,9 +38,9 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MlModelsName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1MlModelsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1MlModelsName', 'name', name)
+            assertParamExists('deleteV1MlModelsByName', 'name', name)
             const localVarPath = `/v1/ml/models/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -132,9 +132,9 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MlModelsName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1MlModelsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1MlModelsName', 'name', name)
+            assertParamExists('getV1MlModelsByName', 'name', name)
             const localVarPath = `/v1/ml/models/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -274,10 +274,10 @@ export const MlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MlModelsName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MlModelsName(name, options);
+        async deleteV1MlModelsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MlModelsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MlApi.deleteV1MlModelsName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MlApi.deleteV1MlModelsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -311,10 +311,10 @@ export const MlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MlModelsName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MlModelsName(name, options);
+        async getV1MlModelsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MlModelsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MlApi.getV1MlModelsName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MlApi.getV1MlModelsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -368,12 +368,12 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Deletes a deployed inference model. kserve owns the teardown: the InferenceService goes away and the serving deployment behind it follows, so the model stops answering predict calls. Answers 204, or 404 for a name the caller\'s org does not own.
          * @summary Deletes a deployed inference model.
-         * @param {MlApiDeleteV1MlModelsNameRequest} requestParameters Request parameters.
+         * @param {MlApiDeleteV1MlModelsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MlModelsName(requestParameters: MlApiDeleteV1MlModelsNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MlModelsName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1MlModelsByName(requestParameters: MlApiDeleteV1MlModelsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1MlModelsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports whether the model-serving plane is genuinely usable: that the Kubernetes API answers, that the InferenceService CRD is actually served by this cluster, and that the cluster holds at least one serving runtime to run a model ON. It is a REAL probe, not status theatre — it makes a live call rather than reporting a flag set at boot.  200 only when everything checks out. Otherwise 503 CARRYING THE REPORT — which component failed, and the real error — and that body is the reason this is not a typed op: a typed op reaches a non-2xx by returning an error, and the envelope that produces would drop exactly the detail the probe exists to deliver.  The runtime count is reported as its own field and is a SEPARATE fact from the CRD being served: a cluster with the CRD but no runtime accepts a deploy and then never schedules it, so reporting only the CRD would answer 200 while every model hangs. A runtime list this service cannot read reports the read error instead of a count, because a missing grant is a broken probe and not an empty cluster.  It answers about the cluster, not about a tenant, so it takes no org and reveals no tenant data. A cluster with no kserve CRD reports degraded honestly rather than failing later at the first deploy.
@@ -396,12 +396,12 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Returns one deployed inference model. Its spec comes with it, and kserve\'s live status, which is where readiness and the serving address appear. A name the caller\'s org does not own answers 404, exactly as an unknown name does, so a probe learns nothing about another tenant\'s models.
          * @summary Returns one deployed inference model.
-         * @param {MlApiGetV1MlModelsNameRequest} requestParameters Request parameters.
+         * @param {MlApiGetV1MlModelsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MlModelsName(requestParameters: MlApiGetV1MlModelsNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlResource> {
-            return localVarFp.getV1MlModelsName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1MlModelsByName(requestParameters: MlApiGetV1MlModelsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlResource> {
+            return localVarFp.getV1MlModelsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Applies a JSON merge patch to one of the caller org\'s deployed models and answers the updated resource — the way to change a model\'s image, replica count or resource requests without tearing the deployment down.  The body is relayed to Kubernetes VERBATIM. That is deliberate and it is why this route is not a typed op: re-encoding a merge patch changes what it means, because an integer that round-trips through a generic decoder comes back a float. Merge-patch semantics apply as written — a null removes a field, and a list is replaced whole rather than merged.  Scoped to the caller\'s own tenant namespace, resolved from the validated org and project; a name the caller\'s tenant does not hold is a 404, never another tenant\'s resource. An empty body is refused, and a patch Kubernetes rejects comes back 422 with its reason rather than being silently dropped.
@@ -436,29 +436,29 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
 };
 
 /**
- * Request parameters for deleteV1MlModelsName operation in MlApi.
+ * Request parameters for deleteV1MlModelsByName operation in MlApi.
  * @export
- * @interface MlApiDeleteV1MlModelsNameRequest
+ * @interface MlApiDeleteV1MlModelsByNameRequest
  */
-export interface MlApiDeleteV1MlModelsNameRequest {
+export interface MlApiDeleteV1MlModelsByNameRequest {
     /**
      * Name is the resource to act on, taken from the path. Lower-cased and trimmed to the DNS-1123 label a CustomResource\&#39;s metadata.name must be.
      * @type {string}
-     * @memberof MlApiDeleteV1MlModelsName
+     * @memberof MlApiDeleteV1MlModelsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1MlModelsName operation in MlApi.
+ * Request parameters for getV1MlModelsByName operation in MlApi.
  * @export
- * @interface MlApiGetV1MlModelsNameRequest
+ * @interface MlApiGetV1MlModelsByNameRequest
  */
-export interface MlApiGetV1MlModelsNameRequest {
+export interface MlApiGetV1MlModelsByNameRequest {
     /**
      * Name is the resource to act on, taken from the path. Lower-cased and trimmed to the DNS-1123 label a CustomResource\&#39;s metadata.name must be.
      * @type {string}
-     * @memberof MlApiGetV1MlModelsName
+     * @memberof MlApiGetV1MlModelsByName
      */
     readonly name: string
 }
@@ -501,13 +501,13 @@ export class MlApi extends BaseAPI {
     /**
      * Deletes a deployed inference model. kserve owns the teardown: the InferenceService goes away and the serving deployment behind it follows, so the model stops answering predict calls. Answers 204, or 404 for a name the caller\'s org does not own.
      * @summary Deletes a deployed inference model.
-     * @param {MlApiDeleteV1MlModelsNameRequest} requestParameters Request parameters.
+     * @param {MlApiDeleteV1MlModelsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
      */
-    public deleteV1MlModelsName(requestParameters: MlApiDeleteV1MlModelsNameRequest, options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).deleteV1MlModelsName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1MlModelsByName(requestParameters: MlApiDeleteV1MlModelsByNameRequest, options?: RawAxiosRequestConfig) {
+        return MlApiFp(this.configuration).deleteV1MlModelsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -535,13 +535,13 @@ export class MlApi extends BaseAPI {
     /**
      * Returns one deployed inference model. Its spec comes with it, and kserve\'s live status, which is where readiness and the serving address appear. A name the caller\'s org does not own answers 404, exactly as an unknown name does, so a probe learns nothing about another tenant\'s models.
      * @summary Returns one deployed inference model.
-     * @param {MlApiGetV1MlModelsNameRequest} requestParameters Request parameters.
+     * @param {MlApiGetV1MlModelsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
      */
-    public getV1MlModelsName(requestParameters: MlApiGetV1MlModelsNameRequest, options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).getV1MlModelsName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1MlModelsByName(requestParameters: MlApiGetV1MlModelsByNameRequest, options?: RawAxiosRequestConfig) {
+        return MlApiFp(this.configuration).getV1MlModelsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

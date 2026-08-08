@@ -21,19 +21,19 @@
  */
 export interface VersionView {
     /**
-     * 
+     * CreatedAt is when this revision was appended, RFC 3339 UTC.
      * @type {string}
      * @memberof VersionView
      */
     'createdAt'?: string;
     /**
-     * 
+     * Type is the kind this revision was written with, which may differ from the current one.
      * @type {string}
      * @memberof VersionView
      */
     'type'?: string;
     /**
-     * 
+     * Version is this revision\'s number, 1 for the first. Numbers are dense and never reused: deleting the prompt drops the whole history with it.
      * @type {number}
      * @memberof VersionView
      */

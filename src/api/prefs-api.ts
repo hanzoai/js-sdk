@@ -60,8 +60,8 @@ export const PrefsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED. The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
-         * @summary Save the preference keys your surface owns, leaving every other key alone
+         * Saves the preference keys a surface owns, leaving every other key alone.  It merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED.  The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
+         * @summary Saves the preference keys a surface owns, leaving every other key alone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -112,8 +112,8 @@ export const PrefsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED. The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
-         * @summary Save the preference keys your surface owns, leaving every other key alone
+         * Saves the preference keys a surface owns, leaving every other key alone.  It merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED.  The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
+         * @summary Saves the preference keys a surface owns, leaving every other key alone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -143,8 +143,8 @@ export const PrefsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getV1Prefs(options).then((request) => request(axios, basePath));
         },
         /**
-         * Merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED. The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
-         * @summary Save the preference keys your surface owns, leaving every other key alone
+         * Saves the preference keys a surface owns, leaving every other key alone.  It merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED.  The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
+         * @summary Saves the preference keys a surface owns, leaving every other key alone.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -173,8 +173,8 @@ export class PrefsApi extends BaseAPI {
     }
 
     /**
-     * Merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED. The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
-     * @summary Save the preference keys your surface owns, leaving every other key alone
+     * Saves the preference keys a surface owns, leaving every other key alone.  It merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED.  The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
+     * @summary Saves the preference keys a surface owns, leaving every other key alone.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PrefsApi

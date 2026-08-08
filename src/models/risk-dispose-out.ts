@@ -21,7 +21,7 @@
  */
 export interface RiskDisposeOut {
     /**
-     * 
+     * Before echoes the retention boundary that was applied, RFC 3339 in UTC, as this plane parsed it from the request. What was disposed of is every record WRITTEN strictly before it and not under litigation hold — written, measured against the server clock at the write, and not against the event or observation times the asserting caller supplies, because a tenant that could back-date could delete a compliance record on demand. A boundary younger than the platform floor of five years is refused before anything is removed.
      * @type {string}
      * @memberof RiskDisposeOut
      */
@@ -39,7 +39,7 @@ export interface RiskDisposeOut {
      */
     'held'?: number;
     /**
-     * 
+     * Oldest is the WRITE time of the oldest assertion this tenant still holds after the sweep, RFC 3339, and it is omitted exactly when nothing remains at all. Still older than Before means records survived on purpose and says which mechanism kept them: a litigation hold (Held), or the per-call bound with more to sweep on the next call (Remaining).
      * @type {string}
      * @memberof RiskDisposeOut
      */

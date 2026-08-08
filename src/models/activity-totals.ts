@@ -21,37 +21,37 @@
  */
 export interface ActivityTotals {
     /**
-     * days with any usage
+     * ActiveDays counts the days with any usage at all — the streak/consistency number. Compare it against len(days) for the share of days the subject showed up.
      * @type {number}
      * @memberof ActivityTotals
      */
     'activeDays'?: number;
     /**
-     * 
+     * CostCents is the window\'s spend in whole US cents, the sum of Days[].CostCents.
      * @type {number}
      * @memberof ActivityTotals
      */
     'costCents'?: number;
     /**
-     * 
+     * MaxRequests is the same ceiling for a request-based heatmap — the busiest single day\'s request count, 0 for an idle window.
      * @type {number}
      * @memberof ActivityTotals
      */
     'maxRequests'?: number;
     /**
-     * busiest day\'s tokens (heatmap intensity ceiling)
+     * MaxTokens is the busiest single day\'s token count: the ceiling to normalize a token heatmap against, so the darkest cell is that day. 0 for an idle window, which a client must not divide by.
      * @type {number}
      * @memberof ActivityTotals
      */
     'maxTokens'?: number;
     /**
-     * 
+     * Requests is the sum of Days[].Requests over the whole window.
      * @type {number}
      * @memberof ActivityTotals
      */
     'requests'?: number;
     /**
-     * 
+     * Tokens is the sum of Days[].Tokens over the whole window.
      * @type {number}
      * @memberof ActivityTotals
      */

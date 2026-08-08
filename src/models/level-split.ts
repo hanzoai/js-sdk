@@ -21,19 +21,19 @@
  */
 export interface LevelSplit {
     /**
-     * 
+     * L1Cents is lifetime commission accrued to DIRECT referrers, in cents.
      * @type {number}
      * @memberof LevelSplit
      */
     'l1Cents'?: number;
     /**
-     * 
+     * L2Cents is lifetime commission accrued one step above the direct referrer, in cents, at the platform-wide level-2 rate.
      * @type {number}
      * @memberof LevelSplit
      */
     'l2Cents'?: number;
     /**
-     * 
+     * L3Cents is lifetime commission accrued two steps above, in cents. Nothing accrues past level 3, so l1+l2+l3 is the whole accrual.
      * @type {number}
      * @memberof LevelSplit
      */

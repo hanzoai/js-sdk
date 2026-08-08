@@ -27,67 +27,67 @@ import type { SelfRank } from './self-rank';
  */
 export interface LeaderboardView {
     /**
-     * 
+     * Available is false when the usage warehouse is not connected or its rollup is not ready. Rows is then empty because nothing could be read — not because nobody used anything. Show that difference; never render an unavailable board as a real one.
      * @type {boolean}
      * @memberof LeaderboardView
      */
     'available'?: boolean;
     /**
-     * 
+     * End is the EXCLUSIVE upper bound of the window, \"2006-01-02\" — the day after the last one counted. A board through today reports tomorrow\'s date here.
      * @type {string}
      * @memberof LeaderboardView
      */
     'end'?: string;
     /**
-     * tokens|requests|cost
+     * Metric echoes the value ranked: tokens|requests|cost.
      * @type {string}
      * @memberof LeaderboardView
      */
     'metric'?: string;
     /**
-     * day|week|month|all|custom
+     * Period is the window\'s canonical label: day|week|month|all. The server resolves aliases (7d, 30d, today, …) to these, so this may differ from what was sent.
      * @type {string}
      * @memberof LeaderboardView
      */
     'period'?: string;
     /**
-     * 
+     * Rows are the ranked subjects, best first, at most the requested limit of them. Always a list, never null: an empty one means nothing was read, not an error.
      * @type {Array<LeaderboardRow>}
      * @memberof LeaderboardView
      */
     'rows'?: Array<LeaderboardRow>;
     /**
-     * personal|org|global
+     * Scope echoes the board that was served: personal|org|global.
      * @type {string}
      * @memberof LeaderboardView
      */
     'scope'?: string;
     /**
-     * 
+     * Self is the caller\'s own standing, reported even when they fall outside Rows. Absent when the caller\'s ledger identity cannot be resolved, or when the query behind it failed — never faked to keep the shape tidy.
      * @type {SelfRank}
      * @memberof LeaderboardView
      */
     'self'?: SelfRank;
     /**
-     * 
+     * Source names the table these numbers were aggregated from (the derived daily rollup, hanzo.usage_rollup_daily), so an operator can tell exactly what was read.
      * @type {string}
      * @memberof LeaderboardView
      */
     'source'?: string;
     /**
-     * \"\" for all
+     * Start is the first day counted, \"2006-01-02\" inclusive. Empty for period=all, which has no lower bound at all.
      * @type {string}
      * @memberof LeaderboardView
      */
     'start'?: string;
     /**
-     * user|org
+     * Subject is what the rows stand for — \"user\" on a personal or org board, \"org\" on the global one. It tells a client whether Handle names a person or a company.
      * @type {string}
      * @memberof LeaderboardView
      */
     'subject'?: string;
     /**
-     * ranked subjects in the window
+     * Total is how many subjects were ranked in the window — the org\'s active users, or the active/opted-in orgs on the global board. It is the universe the ranks are out of, so it is normally larger than len(rows).
      * @type {number}
      * @memberof LeaderboardView
      */

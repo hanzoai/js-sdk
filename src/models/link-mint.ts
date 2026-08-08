@@ -24,7 +24,7 @@ import type { CodeView } from './code-view';
  */
 export interface LinkMint {
     /**
-     * 
+     * Link is the link just minted, with its full shareable URL. Its funnel counters all start at zero — nothing has clicked or signed up through it yet.
      * @type {CodeView}
      * @memberof LinkMint
      */

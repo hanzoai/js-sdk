@@ -24,7 +24,7 @@ import type { AdminAffiliateView } from './admin-affiliate-view';
  */
 export interface AffiliateData {
     /**
-     * 
+     * Affiliate is the row as it stands AFTER the action that returned it. Its referredCount is 0 here: these single-affiliate answers do not run the count.
      * @type {AdminAffiliateView}
      * @memberof AffiliateData
      */

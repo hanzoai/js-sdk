@@ -21,31 +21,31 @@
  */
 export interface LeaderboardRow {
     /**
-     * 
+     * AccruedCents is that affiliate\'s lifetime commission accrued, in cents, and what the board is ordered by. An aggregate: no per-customer figure is exposed.
      * @type {number}
      * @memberof LeaderboardRow
      */
     'accruedCents'?: number;
     /**
-     * 
+     * Handle is the affiliate\'s self-chosen display name — the only identity the board ever carries. The org behind it is never disclosed.
      * @type {string}
      * @memberof LeaderboardRow
      */
     'handle'?: string;
     /**
-     * 
+     * IsYou marks the caller\'s own row, so a client can highlight it without matching on a handle. Absent on every other row.
      * @type {boolean}
      * @memberof LeaderboardRow
      */
     'isYou'?: boolean;
     /**
-     * 
+     * Rank is the position in the GLOBAL approved set ordered by lifetime accrued commission, 1-based. Affiliates that set no handle still occupy their rank and are simply not listed, so the visible ranks have gaps and the board is not a complete roster. On the caller\'s own row the rank is computed over the whole set, so it is exact well outside the top page.
      * @type {number}
      * @memberof LeaderboardRow
      */
     'rank'?: number;
     /**
-     * 
+     * ReferredCount is how many orgs that affiliate directly referred — a count only, never which orgs.
      * @type {number}
      * @memberof LeaderboardRow
      */

@@ -30,6 +30,12 @@ export interface RunnerBuildReq {
      */
     'arch'?: string;
     /**
+     * Args are --build-arg values. They are what lets several images off ONE Dockerfile mean different things — the sandbox classes are three entries differing only by STAGE. Validated at the k8s choke point, with VERSION and REVISION taking precedence: those are receipts the builder derives from the tag and the commit, and a caller that could overwrite them could make an image lie about which commit it is.
+     * @type {{ [key: string]: string; }}
+     * @memberof RunnerBuildReq
+     */
+    'args'?: { [key: string]: string; };
+    /**
      * Binaries selects the ARTIFACT lane (artifact.go): build what the repo\'s hanzo.yml `binaries:` block declares — a Go binary, an npm tarball, a Rust binary — and publish it to hanzoai/s3 instead of pushing an image. It is the same recipe hanzoai/ci reads, sent verbatim, so `image` is meaningless here and must be absent.
      * @type {Array<BinarySpec>}
      * @memberof RunnerBuildReq

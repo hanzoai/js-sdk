@@ -21,37 +21,37 @@
  */
 export interface ChannelSpec {
     /**
-     * provider account ref (ad-account/page/list id)
+     * Account is the provider account this channel runs under: an ad-account, a page or a mailing-list id. An executor may replace it at launch with the account it actually used.
      * @type {string}
      * @memberof ChannelSpec
      */
     'account'?: string;
     /**
-     * honest last-outcome detail (never a secret)
+     * Detail is the last outcome in one secret-free line — the failure reason, or what the executor reported. Absent when there is nothing to explain.
      * @type {string}
      * @memberof ChannelSpec
      */
     'detail'?: string;
     /**
-     * 
+     * ExternalID is the provider-side id of the running execution, recorded by the orchestrator at launch and handed back verbatim to read spend or to pause. Server-owned and absent until this channel has launched; anything a caller sends for it is dropped.
      * @type {string}
      * @memberof ChannelSpec
      */
     'externalId'?: string;
     /**
-     * paid | organic | email
+     * Kind is the channel and the identity a campaign holds at most one of: paid, organic or email. It picks the executor the launch fans out to.
      * @type {string}
      * @memberof ChannelSpec
      */
     'kind'?: string;
     /**
-     * meta | google | x | instagram | (email provider)
+     * Platform is the provider within the kind — meta, google, x, instagram, or the email provider.
      * @type {string}
      * @memberof ChannelSpec
      */
     'platform'?: string;
     /**
-     * pending | live | paused | failed | unavailable
+     * Status is this channel\'s own launch outcome, not the campaign\'s: pending (added, never launched), live, paused, failed (Detail says why) or unavailable (no executor wired on this deployment). Server-owned — a caller can never assert it.
      * @type {string}
      * @memberof ChannelSpec
      */

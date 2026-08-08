@@ -206,6 +206,70 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
+         * @summary The billing account you are signed in to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/accounts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
+         * @summary Who is on a billing account
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingAccountsByIdMembers: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getV1BillingAccountsByIdMembers', 'id', id)
+            const localVarPath = `/v1/billing/accounts/{id}/members`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
          * @summary List your org\'s spend caps and rate limits
          * @param {*} [options] Override http request option.
@@ -266,13 +330,43 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
-         * @summary Prepaid credit the caller\'s org can still spend
+         * Answers the prepaid credit the caller\'s org can still spend.  It is the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * @summary Answers the prepaid credit the caller\'s org can still spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getV1BillingBalance: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/balance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
+         * @summary What is left of your credit, as one number
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingCreditBalance: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/credit-balance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -367,36 +461,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          */
         getV1BillingCryptoOptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/crypto/options`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers `eligible` plus the exact `reason` — `ok`, `card_required` or `insufficient_prepaid` — with the org\'s prepaid available, whether a card is on file, and the cents required. It answers 200 in EVERY case: a no is data the launch UI renders as a remedy, never a 402.  Eligibility is prepaid REAL money and a chargeable card, both. `creditsRemaining` is reported and is NOT usable — a GPU debit is gpu-tagged and drawn from the prepaid bucket — so an org sitting on grant credit with zero prepaid is refused, deliberately.  `amountCents` is the immediate charge and `minPrepaidCents` the 24h floor GPU policy requires; the gate needs prepaid available >= the larger of the two. Both default to 0, so asking with neither answers whether a card exists, not whether a launch is affordable.  The wallet is pinned server-side to the caller\'s own org, so this reads exactly the wallet a charge debits — the gate and the debit can never address two wallets. 401 without a validated principal.
-         * @summary Whether the caller\'s org may launch a GPU right now, and what is missing
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1BillingGpuEligibility: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/billing/gpu/eligibility`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -694,8 +758,38 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
-         * @summary Every billed call the caller\'s org made, attributed to a product
+         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
+         * @summary List the movements on your own balance, newest first
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingTransactions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/transactions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers every billed call the caller\'s org made, attributed to a product.  One row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
+         * @summary Answers every billed call the caller\'s org made, attributed to a product.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -889,36 +983,6 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          */
         postV1BillingCryptoDeposit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/crypto/deposit`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Records a gpu-tagged debit against the caller\'s own org and answers 201 with the transaction id and the prepaid balance left. This is the ONE endpoint on the customer billing surface that moves an org\'s ledger.  `requestId` IS THE IDEMPOTENCY KEY. Two posts carrying the same one are ONE debit: the ledger recognizes the ref inside the same transaction as the insert, so the replay moves no money and answers the ORIGINAL transaction id — a retry, a proxy replay and a double-clicked launch button all cost one GPU. Send it. OMITTED, the debit takes a fresh ref and is additive, which is the same rule every other write on this ledger states for a missing key: without one there is nothing to recognize a repeat by, and two posts are two charges.  THE PAYER IS NOT A FIELD. Every billing-subject key in the body — `user`, `userId`, `customerId` — is ignored and the wallet is resolved server-side from the caller\'s own validated org, so a forged body can never charge another tenant. `amountCents`, `currency`, `requestId`, `notes` and `tag` are the request, and `tag` is FORCED into the gpu bucket so this can never mint a credit-eligible debit.  Two gates, both fail-closed: a chargeable card on file (402 `card_required`) and prepaid alone covering the amount (402 `insufficient_prepaid`) — credits are never consulted, so a GPU cannot draw on a grant. The prepaid gate reads the SAME wallet the debit posts to, so the gate and the charge can never address two wallets. A gate that cannot be READ is 502 and the charge does not happen: unknown is never permission, and a money verdict is never 500-masked.  `amountCents` is whole USD cents and debits EXACTLY, with no rounding — the ledger holds 18-decimal USD, so the cents asked for are the cents taken.  401 without a validated principal — a customer charging its OWN wallet, so an absent identity is not signed in, never not authorized.
-         * @summary Debit the caller\'s org prepaid balance for a GPU
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1BillingGpuCharge: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/billing/gpu/charge`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1160,6 +1224,36 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
+         * @summary Add credit to your balance by charging one of your saved cards
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1BillingTopup: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/topup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
          * @summary Add credit to your balance by charging a tokenized card once
          * @param {*} [options] Override http request option.
@@ -1369,6 +1463,31 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
+         * @summary The billing account you are signed in to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1BillingAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingAccounts(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingAccounts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
+         * @summary Who is on a billing account
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1BillingAccountsByIdMembers(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingAccountsByIdMembers(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingAccountsByIdMembers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
          * @summary List your org\'s spend caps and rate limits
          * @param {*} [options] Override http request option.
@@ -1393,8 +1512,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
-         * @summary Prepaid credit the caller\'s org can still spend
+         * Answers the prepaid credit the caller\'s org can still spend.  It is the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * @summary Answers the prepaid credit the caller\'s org can still spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1402,6 +1521,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingBalance(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingBalance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
+         * @summary What is left of your credit, as one number
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1BillingCreditBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingCreditBalance(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingCreditBalance']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1439,18 +1570,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingCryptoOptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingCryptoOptions']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers `eligible` plus the exact `reason` — `ok`, `card_required` or `insufficient_prepaid` — with the org\'s prepaid available, whether a card is on file, and the cents required. It answers 200 in EVERY case: a no is data the launch UI renders as a remedy, never a 402.  Eligibility is prepaid REAL money and a chargeable card, both. `creditsRemaining` is reported and is NOT usable — a GPU debit is gpu-tagged and drawn from the prepaid bucket — so an org sitting on grant credit with zero prepaid is refused, deliberately.  `amountCents` is the immediate charge and `minPrepaidCents` the 24h floor GPU policy requires; the gate needs prepaid available >= the larger of the two. Both default to 0, so asking with neither answers whether a card exists, not whether a launch is affordable.  The wallet is pinned server-side to the caller\'s own org, so this reads exactly the wallet a charge debits — the gate and the debit can never address two wallets. 401 without a validated principal.
-         * @summary Whether the caller\'s org may launch a GPU right now, and what is missing
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1BillingGpuEligibility(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingGpuEligibility(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingGpuEligibility']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1563,8 +1682,20 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
-         * @summary Every billed call the caller\'s org made, attributed to a product
+         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
+         * @summary List the movements on your own balance, newest first
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1BillingTransactions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BillingTransactions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getV1BillingTransactions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers every billed call the caller\'s org made, attributed to a product.  One row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
+         * @summary Answers every billed call the caller\'s org made, attributed to a product.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1646,18 +1777,6 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BillingCryptoDeposit(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postV1BillingCryptoDeposit']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Records a gpu-tagged debit against the caller\'s own org and answers 201 with the transaction id and the prepaid balance left. This is the ONE endpoint on the customer billing surface that moves an org\'s ledger.  `requestId` IS THE IDEMPOTENCY KEY. Two posts carrying the same one are ONE debit: the ledger recognizes the ref inside the same transaction as the insert, so the replay moves no money and answers the ORIGINAL transaction id — a retry, a proxy replay and a double-clicked launch button all cost one GPU. Send it. OMITTED, the debit takes a fresh ref and is additive, which is the same rule every other write on this ledger states for a missing key: without one there is nothing to recognize a repeat by, and two posts are two charges.  THE PAYER IS NOT A FIELD. Every billing-subject key in the body — `user`, `userId`, `customerId` — is ignored and the wallet is resolved server-side from the caller\'s own validated org, so a forged body can never charge another tenant. `amountCents`, `currency`, `requestId`, `notes` and `tag` are the request, and `tag` is FORCED into the gpu bucket so this can never mint a credit-eligible debit.  Two gates, both fail-closed: a chargeable card on file (402 `card_required`) and prepaid alone covering the amount (402 `insufficient_prepaid`) — credits are never consulted, so a GPU cannot draw on a grant. The prepaid gate reads the SAME wallet the debit posts to, so the gate and the charge can never address two wallets. A gate that cannot be READ is 502 and the charge does not happen: unknown is never permission, and a money verdict is never 500-masked.  `amountCents` is whole USD cents and debits EXACTLY, with no rounding — the ledger holds 18-decimal USD, so the cents asked for are the cents taken.  401 without a validated principal — a customer charging its OWN wallet, so an absent identity is not signed in, never not authorized.
-         * @summary Debit the caller\'s org prepaid balance for a GPU
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1BillingGpuCharge(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BillingGpuCharge(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.postV1BillingGpuCharge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1744,6 +1863,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BillingSubscriptionsByIdReactivate(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postV1BillingSubscriptionsByIdReactivate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
+         * @summary Add credit to your balance by charging one of your saved cards
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1BillingTopup(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BillingTopup(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.postV1BillingTopup']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1858,6 +1989,25 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
+         * @summary The billing account you are signed in to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1BillingAccounts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
+         * @summary Who is on a billing account
+         * @param {BillingApiGetV1BillingAccountsByIdMembersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingAccountsByIdMembers(requestParameters: BillingApiGetV1BillingAccountsByIdMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1BillingAccountsByIdMembers(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
          * @summary List your org\'s spend caps and rate limits
          * @param {*} [options] Override http request option.
@@ -1876,13 +2026,22 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getV1BillingAlertsAuthorize(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
-         * @summary Prepaid credit the caller\'s org can still spend
+         * Answers the prepaid credit the caller\'s org can still spend.  It is the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
+         * @summary Answers the prepaid credit the caller\'s org can still spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getV1BillingBalance(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getV1BillingBalance(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
+         * @summary What is left of your credit, as one number
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingCreditBalance(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1BillingCreditBalance(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
@@ -1911,15 +2070,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getV1BillingCryptoOptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getV1BillingCryptoOptions(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers `eligible` plus the exact `reason` — `ok`, `card_required` or `insufficient_prepaid` — with the org\'s prepaid available, whether a card is on file, and the cents required. It answers 200 in EVERY case: a no is data the launch UI renders as a remedy, never a 402.  Eligibility is prepaid REAL money and a chargeable card, both. `creditsRemaining` is reported and is NOT usable — a GPU debit is gpu-tagged and drawn from the prepaid bucket — so an org sitting on grant credit with zero prepaid is refused, deliberately.  `amountCents` is the immediate charge and `minPrepaidCents` the 24h floor GPU policy requires; the gate needs prepaid available >= the larger of the two. Both default to 0, so asking with neither answers whether a card exists, not whether a launch is affordable.  The wallet is pinned server-side to the caller\'s own org, so this reads exactly the wallet a charge debits — the gate and the debit can never address two wallets. 401 without a validated principal.
-         * @summary Whether the caller\'s org may launch a GPU right now, and what is missing
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1BillingGpuEligibility(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1BillingGpuEligibility(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s invoices with a count, read from that org\'s own namespaced store, narrowable by userId, status or subscriptionId. The org is the one the gateway validated and the caller\'s billing subject is pinned into the query before the handler runs, so a read can never widen past the caller. A request that carries no resolvable org gets an honest empty list rather than an error or another tenant\'s rows.
@@ -2004,8 +2154,17 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getV1BillingTier(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
-         * @summary Every billed call the caller\'s org made, attributed to a product
+         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
+         * @summary List the movements on your own balance, newest first
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1BillingTransactions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1BillingTransactions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers every billed call the caller\'s org made, attributed to a product.  One row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
+         * @summary Answers every billed call the caller\'s org made, attributed to a product.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2067,15 +2226,6 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postV1BillingCryptoDeposit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1BillingCryptoDeposit(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Records a gpu-tagged debit against the caller\'s own org and answers 201 with the transaction id and the prepaid balance left. This is the ONE endpoint on the customer billing surface that moves an org\'s ledger.  `requestId` IS THE IDEMPOTENCY KEY. Two posts carrying the same one are ONE debit: the ledger recognizes the ref inside the same transaction as the insert, so the replay moves no money and answers the ORIGINAL transaction id — a retry, a proxy replay and a double-clicked launch button all cost one GPU. Send it. OMITTED, the debit takes a fresh ref and is additive, which is the same rule every other write on this ledger states for a missing key: without one there is nothing to recognize a repeat by, and two posts are two charges.  THE PAYER IS NOT A FIELD. Every billing-subject key in the body — `user`, `userId`, `customerId` — is ignored and the wallet is resolved server-side from the caller\'s own validated org, so a forged body can never charge another tenant. `amountCents`, `currency`, `requestId`, `notes` and `tag` are the request, and `tag` is FORCED into the gpu bucket so this can never mint a credit-eligible debit.  Two gates, both fail-closed: a chargeable card on file (402 `card_required`) and prepaid alone covering the amount (402 `insufficient_prepaid`) — credits are never consulted, so a GPU cannot draw on a grant. The prepaid gate reads the SAME wallet the debit posts to, so the gate and the charge can never address two wallets. A gate that cannot be READ is 502 and the charge does not happen: unknown is never permission, and a money verdict is never 500-masked.  `amountCents` is whole USD cents and debits EXACTLY, with no rounding — the ledger holds 18-decimal USD, so the cents asked for are the cents taken.  401 without a validated principal — a customer charging its OWN wallet, so an absent identity is not signed in, never not authorized.
-         * @summary Debit the caller\'s org prepaid balance for a GPU
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1BillingGpuCharge(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1BillingGpuCharge(options).then((request) => request(axios, basePath));
         },
         /**
          * Vaults the card the processor already holds — you send its one-time reference, never a card number — as a reusable card on file, and stores the billing address with it. That vaulted card is what a subscription renewal or an auto-recharge charges later, which is why saving one is the step that makes a monthly plan billable at all.  It charges nothing. Saving a card moves no money; the first charge is whatever arrangement you then attach it to.  The subject is pinned from the validated caller and OVERWRITES the customerId in the body while leaving the card fields untouched, so a card can only ever be attached to the caller\'s OWN account whatever the body claims. That pin is the whole control on this write, not decoration: this is the one handler in the family that reads its subject from the body.
@@ -2141,6 +2291,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         postV1BillingSubscriptionsByIdReactivate(requestParameters: BillingApiPostV1BillingSubscriptionsByIdReactivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1BillingSubscriptionsByIdReactivate(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
+         * @summary Add credit to your balance by charging one of your saved cards
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1BillingTopup(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postV1BillingTopup(options).then((request) => request(axios, basePath));
         },
         /**
          * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
@@ -2250,6 +2409,20 @@ export interface BillingApiGetInvoiceRequest {
      * ID is the invoice id.
      * @type {string}
      * @memberof BillingApiGetInvoice
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getV1BillingAccountsByIdMembers operation in BillingApi.
+ * @export
+ * @interface BillingApiGetV1BillingAccountsByIdMembersRequest
+ */
+export interface BillingApiGetV1BillingAccountsByIdMembersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiGetV1BillingAccountsByIdMembers
      */
     readonly id: string
 }
@@ -2448,6 +2621,29 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
+     * @summary The billing account you are signed in to
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getV1BillingAccounts(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getV1BillingAccounts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
+     * @summary Who is on a billing account
+     * @param {BillingApiGetV1BillingAccountsByIdMembersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getV1BillingAccountsByIdMembers(requestParameters: BillingApiGetV1BillingAccountsByIdMembersRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getV1BillingAccountsByIdMembers(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
      * @summary List your org\'s spend caps and rate limits
      * @param {*} [options] Override http request option.
@@ -2470,14 +2666,25 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
-     * @summary Prepaid credit the caller\'s org can still spend
+     * Answers the prepaid credit the caller\'s org can still spend.  It is the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
+     * @summary Answers the prepaid credit the caller\'s org can still spend.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
     public getV1BillingBalance(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getV1BillingBalance(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
+     * @summary What is left of your credit, as one number
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getV1BillingCreditBalance(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getV1BillingCreditBalance(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2512,17 +2719,6 @@ export class BillingApi extends BaseAPI {
      */
     public getV1BillingCryptoOptions(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getV1BillingCryptoOptions(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers `eligible` plus the exact `reason` — `ok`, `card_required` or `insufficient_prepaid` — with the org\'s prepaid available, whether a card is on file, and the cents required. It answers 200 in EVERY case: a no is data the launch UI renders as a remedy, never a 402.  Eligibility is prepaid REAL money and a chargeable card, both. `creditsRemaining` is reported and is NOT usable — a GPU debit is gpu-tagged and drawn from the prepaid bucket — so an org sitting on grant credit with zero prepaid is refused, deliberately.  `amountCents` is the immediate charge and `minPrepaidCents` the 24h floor GPU policy requires; the gate needs prepaid available >= the larger of the two. Both default to 0, so asking with neither answers whether a card exists, not whether a launch is affordable.  The wallet is pinned server-side to the caller\'s own org, so this reads exactly the wallet a charge debits — the gate and the debit can never address two wallets. 401 without a validated principal.
-     * @summary Whether the caller\'s org may launch a GPU right now, and what is missing
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public getV1BillingGpuEligibility(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).getV1BillingGpuEligibility(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2626,8 +2822,19 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
-     * @summary Every billed call the caller\'s org made, attributed to a product
+     * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
+     * @summary List the movements on your own balance, newest first
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getV1BillingTransactions(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getV1BillingTransactions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers every billed call the caller\'s org made, attributed to a product.  One row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
+     * @summary Answers every billed call the caller\'s org made, attributed to a product.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2702,17 +2909,6 @@ export class BillingApi extends BaseAPI {
      */
     public postV1BillingCryptoDeposit(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postV1BillingCryptoDeposit(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Records a gpu-tagged debit against the caller\'s own org and answers 201 with the transaction id and the prepaid balance left. This is the ONE endpoint on the customer billing surface that moves an org\'s ledger.  `requestId` IS THE IDEMPOTENCY KEY. Two posts carrying the same one are ONE debit: the ledger recognizes the ref inside the same transaction as the insert, so the replay moves no money and answers the ORIGINAL transaction id — a retry, a proxy replay and a double-clicked launch button all cost one GPU. Send it. OMITTED, the debit takes a fresh ref and is additive, which is the same rule every other write on this ledger states for a missing key: without one there is nothing to recognize a repeat by, and two posts are two charges.  THE PAYER IS NOT A FIELD. Every billing-subject key in the body — `user`, `userId`, `customerId` — is ignored and the wallet is resolved server-side from the caller\'s own validated org, so a forged body can never charge another tenant. `amountCents`, `currency`, `requestId`, `notes` and `tag` are the request, and `tag` is FORCED into the gpu bucket so this can never mint a credit-eligible debit.  Two gates, both fail-closed: a chargeable card on file (402 `card_required`) and prepaid alone covering the amount (402 `insufficient_prepaid`) — credits are never consulted, so a GPU cannot draw on a grant. The prepaid gate reads the SAME wallet the debit posts to, so the gate and the charge can never address two wallets. A gate that cannot be READ is 502 and the charge does not happen: unknown is never permission, and a money verdict is never 500-masked.  `amountCents` is whole USD cents and debits EXACTLY, with no rounding — the ledger holds 18-decimal USD, so the cents asked for are the cents taken.  401 without a validated principal — a customer charging its OWN wallet, so an absent identity is not signed in, never not authorized.
-     * @summary Debit the caller\'s org prepaid balance for a GPU
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public postV1BillingGpuCharge(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postV1BillingGpuCharge(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2792,6 +2988,17 @@ export class BillingApi extends BaseAPI {
      */
     public postV1BillingSubscriptionsByIdReactivate(requestParameters: BillingApiPostV1BillingSubscriptionsByIdReactivateRequest, options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postV1BillingSubscriptionsByIdReactivate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
+     * @summary Add credit to your balance by charging one of your saved cards
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public postV1BillingTopup(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postV1BillingTopup(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

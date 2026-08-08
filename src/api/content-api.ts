@@ -26,6 +26,10 @@ import type { BoardPage } from '../models';
 // @ts-ignore
 import type { ChannelList } from '../models';
 // @ts-ignore
+import type { GenerateInput } from '../models';
+// @ts-ignore
+import type { GenerateResult } from '../models';
+// @ts-ignore
 import type { PublishInput } from '../models';
 // @ts-ignore
 import type { PublishResult } from '../models';
@@ -160,13 +164,13 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentDoctypeNameTransition: async (doctype: string, name: string, transitionIn: TransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ContentByDoctypeByNameTransition: async (doctype: string, name: string, transitionIn: TransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('postV1ContentDoctypeNameTransition', 'doctype', doctype)
+            assertParamExists('postV1ContentByDoctypeByNameTransition', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1ContentDoctypeNameTransition', 'name', name)
+            assertParamExists('postV1ContentByDoctypeByNameTransition', 'name', name)
             // verify required parameter 'transitionIn' is not null or undefined
-            assertParamExists('postV1ContentDoctypeNameTransition', 'transitionIn', transitionIn)
+            assertParamExists('postV1ContentByDoctypeByNameTransition', 'transitionIn', transitionIn)
             const localVarPath = `/v1/content/{doctype}/{name}/transition`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -196,12 +200,15 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
          * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+         * @param {GenerateInput} generateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentGenerate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ContentGenerate: async (generateInput: GenerateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'generateInput' is not null or undefined
+            assertParamExists('postV1ContentGenerate', 'generateInput', generateInput)
             const localVarPath = `/v1/content/generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -216,9 +223,12 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(generateInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -320,20 +330,21 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ContentDoctypeNameTransition(doctype: string, name: string, transitionIn: TransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransitionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentDoctypeNameTransition(doctype, name, transitionIn, options);
+        async postV1ContentByDoctypeByNameTransition(doctype: string, name: string, transitionIn: TransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransitionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentByDoctypeByNameTransition(doctype, name, transitionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentDoctypeNameTransition']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentByDoctypeByNameTransition']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
          * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+         * @param {GenerateInput} generateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ContentGenerate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentGenerate(options);
+        async postV1ContentGenerate(generateInput: GenerateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentGenerate(generateInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentGenerate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -392,21 +403,22 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
         /**
          * Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels. The edge must be legal for the item\'s current state — an illegal move is refused with 409 — and the status write re-validates it at the storage boundary. Distribution is best effort: its honest state is reported on the result and a distribution failure never rolls the status change back.
          * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
-         * @param {ContentApiPostV1ContentDoctypeNameTransitionRequest} requestParameters Request parameters.
+         * @param {ContentApiPostV1ContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentDoctypeNameTransition(requestParameters: ContentApiPostV1ContentDoctypeNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TransitionResult> {
-            return localVarFp.postV1ContentDoctypeNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(axios, basePath));
+        postV1ContentByDoctypeByNameTransition(requestParameters: ContentApiPostV1ContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TransitionResult> {
+            return localVarFp.postV1ContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+         * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
          * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+         * @param {ContentApiPostV1ContentGenerateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentGenerate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ContentGenerate(options).then((request) => request(axios, basePath));
+        postV1ContentGenerate(requestParameters: ContentApiPostV1ContentGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<GenerateResult> {
+            return localVarFp.postV1ContentGenerate(requestParameters.generateInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
@@ -457,31 +469,45 @@ export interface ContentApiGetV1ContentBoardRequest {
 }
 
 /**
- * Request parameters for postV1ContentDoctypeNameTransition operation in ContentApi.
+ * Request parameters for postV1ContentByDoctypeByNameTransition operation in ContentApi.
  * @export
- * @interface ContentApiPostV1ContentDoctypeNameTransitionRequest
+ * @interface ContentApiPostV1ContentByDoctypeByNameTransitionRequest
  */
-export interface ContentApiPostV1ContentDoctypeNameTransitionRequest {
+export interface ContentApiPostV1ContentByDoctypeByNameTransitionRequest {
     /**
      * DocType is the content type to act on, from the path.
      * @type {string}
-     * @memberof ContentApiPostV1ContentDoctypeNameTransition
+     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
      */
     readonly doctype: string
 
     /**
      * Name is the document to act on, from the path.
      * @type {string}
-     * @memberof ContentApiPostV1ContentDoctypeNameTransition
+     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
      */
     readonly name: string
 
     /**
      * 
      * @type {TransitionIn}
-     * @memberof ContentApiPostV1ContentDoctypeNameTransition
+     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
      */
     readonly transitionIn: TransitionIn
+}
+
+/**
+ * Request parameters for postV1ContentGenerate operation in ContentApi.
+ * @export
+ * @interface ContentApiPostV1ContentGenerateRequest
+ */
+export interface ContentApiPostV1ContentGenerateRequest {
+    /**
+     * 
+     * @type {GenerateInput}
+     * @memberof ContentApiPostV1ContentGenerate
+     */
+    readonly generateInput: GenerateInput
 }
 
 /**
@@ -542,24 +568,25 @@ export class ContentApi extends BaseAPI {
     /**
      * Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels. The edge must be legal for the item\'s current state — an illegal move is refused with 409 — and the status write re-validates it at the storage boundary. Distribution is best effort: its honest state is reported on the result and a distribution failure never rolls the status change back.
      * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
-     * @param {ContentApiPostV1ContentDoctypeNameTransitionRequest} requestParameters Request parameters.
+     * @param {ContentApiPostV1ContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public postV1ContentDoctypeNameTransition(requestParameters: ContentApiPostV1ContentDoctypeNameTransitionRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postV1ContentDoctypeNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1ContentByDoctypeByNameTransition(requestParameters: ContentApiPostV1ContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).postV1ContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
+     * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
      * @summary Draft a piece of marketing content and file it in the CMS as a draft.
+     * @param {ContentApiPostV1ContentGenerateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public postV1ContentGenerate(options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postV1ContentGenerate(options).then((request) => request(this.axios, this.basePath));
+    public postV1ContentGenerate(requestParameters: ContentApiPostV1ContentGenerateRequest, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).postV1ContentGenerate(requestParameters.generateInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

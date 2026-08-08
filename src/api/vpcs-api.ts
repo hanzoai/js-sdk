@@ -40,9 +40,9 @@ export const VpcsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1VpcsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1VpcsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1VpcsId', 'id', id)
+            assertParamExists('deleteV1VpcsById', 'id', id)
             const localVarPath = `/v1/vpcs/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -104,9 +104,9 @@ export const VpcsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VpcsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1VpcsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1VpcsId', 'id', id)
+            assertParamExists('getV1VpcsById', 'id', id)
             const localVarPath = `/v1/vpcs/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,10 +184,10 @@ export const VpcsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1VpcsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1VpcsId(id, options);
+        async deleteV1VpcsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1VpcsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VpcsApi.deleteV1VpcsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VpcsApi.deleteV1VpcsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const VpcsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1VpcsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VpcView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VpcsId(id, options);
+        async getV1VpcsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VpcView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VpcsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VpcsApi.getV1VpcsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VpcsApi.getV1VpcsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,12 +241,12 @@ export const VpcsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Removes one of the caller org\'s VPCs and answers 204. Ownership is confirmed by re-fetching the resource and checking its physical name carries the caller\'s org prefix BEFORE anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s VPC.
          * @summary Removes one of the caller org\'s VPCs and answers 204.
-         * @param {VpcsApiDeleteV1VpcsIdRequest} requestParameters Request parameters.
+         * @param {VpcsApiDeleteV1VpcsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1VpcsId(requestParameters: VpcsApiDeleteV1VpcsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1VpcsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1VpcsById(requestParameters: VpcsApiDeleteV1VpcsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1VpcsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every VPC the caller\'s org owns, under the friendly names the org created them with. DigitalOcean is one account for the whole deployment, so the account-wide inventory is filtered to the caller\'s own \"o\"<orgHash>- name prefix and the prefix is stripped — another org\'s VPC is not merely hidden, it is never in the answer.
@@ -260,12 +260,12 @@ export const VpcsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one of the caller org\'s VPCs by id. A VPC that exists but sits in another org\'s namespace is reported 404, never 403 — the answer must not tell one tenant that another tenant\'s resource exists.
          * @summary Returns one of the caller org\'s VPCs by id.
-         * @param {VpcsApiGetV1VpcsIdRequest} requestParameters Request parameters.
+         * @param {VpcsApiGetV1VpcsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VpcsId(requestParameters: VpcsApiGetV1VpcsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<VpcView> {
-            return localVarFp.getV1VpcsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1VpcsById(requestParameters: VpcsApiGetV1VpcsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<VpcView> {
+            return localVarFp.getV1VpcsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a VPC in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org, so a tenant can only ever create inside its own namespace; a name that already exists there is a 409.
@@ -281,29 +281,29 @@ export const VpcsApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
- * Request parameters for deleteV1VpcsId operation in VpcsApi.
+ * Request parameters for deleteV1VpcsById operation in VpcsApi.
  * @export
- * @interface VpcsApiDeleteV1VpcsIdRequest
+ * @interface VpcsApiDeleteV1VpcsByIdRequest
  */
-export interface VpcsApiDeleteV1VpcsIdRequest {
+export interface VpcsApiDeleteV1VpcsByIdRequest {
     /**
      * ID is the DigitalOcean resource id (a UUID), from the path.
      * @type {string}
-     * @memberof VpcsApiDeleteV1VpcsId
+     * @memberof VpcsApiDeleteV1VpcsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1VpcsId operation in VpcsApi.
+ * Request parameters for getV1VpcsById operation in VpcsApi.
  * @export
- * @interface VpcsApiGetV1VpcsIdRequest
+ * @interface VpcsApiGetV1VpcsByIdRequest
  */
-export interface VpcsApiGetV1VpcsIdRequest {
+export interface VpcsApiGetV1VpcsByIdRequest {
     /**
      * ID is the DigitalOcean resource id (a UUID), from the path.
      * @type {string}
-     * @memberof VpcsApiGetV1VpcsId
+     * @memberof VpcsApiGetV1VpcsById
      */
     readonly id: string
 }
@@ -332,13 +332,13 @@ export class VpcsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s VPCs and answers 204. Ownership is confirmed by re-fetching the resource and checking its physical name carries the caller\'s org prefix BEFORE anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s VPC.
      * @summary Removes one of the caller org\'s VPCs and answers 204.
-     * @param {VpcsApiDeleteV1VpcsIdRequest} requestParameters Request parameters.
+     * @param {VpcsApiDeleteV1VpcsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VpcsApi
      */
-    public deleteV1VpcsId(requestParameters: VpcsApiDeleteV1VpcsIdRequest, options?: RawAxiosRequestConfig) {
-        return VpcsApiFp(this.configuration).deleteV1VpcsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1VpcsById(requestParameters: VpcsApiDeleteV1VpcsByIdRequest, options?: RawAxiosRequestConfig) {
+        return VpcsApiFp(this.configuration).deleteV1VpcsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -355,13 +355,13 @@ export class VpcsApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s VPCs by id. A VPC that exists but sits in another org\'s namespace is reported 404, never 403 — the answer must not tell one tenant that another tenant\'s resource exists.
      * @summary Returns one of the caller org\'s VPCs by id.
-     * @param {VpcsApiGetV1VpcsIdRequest} requestParameters Request parameters.
+     * @param {VpcsApiGetV1VpcsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VpcsApi
      */
-    public getV1VpcsId(requestParameters: VpcsApiGetV1VpcsIdRequest, options?: RawAxiosRequestConfig) {
-        return VpcsApiFp(this.configuration).getV1VpcsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1VpcsById(requestParameters: VpcsApiGetV1VpcsByIdRequest, options?: RawAxiosRequestConfig) {
+        return VpcsApiFp(this.configuration).getV1VpcsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

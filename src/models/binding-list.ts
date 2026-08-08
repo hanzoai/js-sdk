@@ -24,7 +24,7 @@ import type { AgentBinding } from './agent-binding';
  */
 export interface BindingList {
     /**
-     * AgentBindings is one row per bound machine, emitted verbatim as vm reports it so vm stays the single source of truth for the binding shape.
+     * AgentBindings is one row per bound machine, emitted verbatim as vm reports it.
      * @type {Array<AgentBinding>}
      * @memberof BindingList
      */

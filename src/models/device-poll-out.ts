@@ -24,7 +24,7 @@ import type { ConnView } from './conn-view';
  */
 export interface DevicePollOut {
     /**
-     * Connector is the connected connector. Present only on \"connected\".
+     * Connection is the connected connector. Present only on \"connected\".
      * @type {ConnView}
      * @memberof DevicePollOut
      */

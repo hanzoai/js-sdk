@@ -30,19 +30,19 @@ export interface RiskResolved {
      */
     'asOf'?: string;
     /**
-     * 
+     * At is the event\'s instant, RFC 3339, echoed. It is what the horizon is measured from, so At plus the horizon is AsOf.
      * @type {string}
      * @memberof RiskResolved
      */
     'at'?: string;
     /**
-     * 
+     * By is the identity that filed the WINNING assertion, `<home org>/<user>`, stamped server-side from the validated principal at the write and never taken from a body — an attribution the caller chose is not attribution. It is the winner\'s alone; every losing assertion keeps its own and is returned whole in Conflicts.
      * @type {string}
      * @memberof RiskResolved
      */
     'by'?: string;
     /**
-     * 
+     * Confidence is the winning assertion\'s own confidence in [0,1], zero when its filer stated none. It is reported because it is a term of the rule that picked the winner, and it is the weakest term but one: it breaks a tie inside one rank and never lifts a weak source above a strong one.
      * @type {number}
      * @memberof RiskResolved
      */
@@ -60,37 +60,37 @@ export interface RiskResolved {
      */
     'contested'?: boolean;
     /**
-     * 
+     * Disposition is the claim IN FORCE at AsOf: productive, unproductive, or the empty string for an explicit unjudged. It is the winning assertion\'s own claim, never a vote or an average — an average of two adjudications is a third claim nobody made. A matured event nobody judged is not answered here at all; it is counted in Unlabelled, because manufacturing a negative there is how a fraud model comes to describe the incumbent block list.
      * @type {string}
      * @memberof RiskResolved
      */
     'disposition'?: string;
     /**
-     * 
+     * Evidence is the winning assertion\'s pointer to the record behind it — the dispute, case or decision id it was filed with, opaque and verbatim. It travels with the answer so an adverse action can name what judged the subject without a second read.
      * @type {string}
      * @memberof RiskResolved
      */
     'evidence'?: string;
     /**
-     * 
+     * ID is the winning assertion\'s content digest, so this answer traces to the exact record it came from — and that record can be placed under litigation hold by naming this id.
      * @type {string}
      * @memberof RiskResolved
      */
     'id'?: string;
     /**
-     * 
+     * Kind is the judged entity\'s type, echoed from the event that was named. With Subject and At it is how a caller joins this answer back onto the training row or the decision it asked about.
      * @type {string}
      * @memberof RiskResolved
      */
     'kind'?: string;
     /**
-     * 
+     * Source is who filed the winning assertion, and it is the PRIMARY term of the rule that picked it. Sources rank by adjudication weight — chargeoff, dispute, case, refund, review, sample, strongest first — and only inside one rank do the tie-breaks run, in order: the assertion that became KNOWABLE latest, then the higher confidence, then the lower id. The vocabulary op publishes that order from the same declaration the resolver reads, so a caller holding a contested answer can reproduce it.
      * @type {string}
      * @memberof RiskResolved
      */
     'source'?: string;
     /**
-     * 
+     * Subject is the entity id, echoed from the event that was named — the tenant\'s own key, returned verbatim.
      * @type {string}
      * @memberof RiskResolved
      */

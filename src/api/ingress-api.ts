@@ -52,9 +52,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressMiddlewaresId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1IngressMiddlewaresById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1IngressMiddlewaresId', 'id', id)
+            assertParamExists('deleteV1IngressMiddlewaresById', 'id', id)
             const localVarPath = `/v1/ingress/middlewares/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -86,9 +86,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressRoutesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1IngressRoutesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1IngressRoutesId', 'id', id)
+            assertParamExists('deleteV1IngressRoutesById', 'id', id)
             const localVarPath = `/v1/ingress/routes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -120,9 +120,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressServicesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1IngressServicesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1IngressServicesId', 'id', id)
+            assertParamExists('deleteV1IngressServicesById', 'id', id)
             const localVarPath = `/v1/ingress/services/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,9 +184,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressMiddlewaresId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IngressMiddlewaresById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1IngressMiddlewaresId', 'id', id)
+            assertParamExists('getV1IngressMiddlewaresById', 'id', id)
             const localVarPath = `/v1/ingress/middlewares/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -248,9 +248,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressRoutesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IngressRoutesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1IngressRoutesId', 'id', id)
+            assertParamExists('getV1IngressRoutesById', 'id', id)
             const localVarPath = `/v1/ingress/routes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -312,9 +312,9 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressServicesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IngressServicesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1IngressServicesId', 'id', id)
+            assertParamExists('getV1IngressServicesById', 'id', id)
             const localVarPath = `/v1/ingress/services/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -515,11 +515,11 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressMiddlewaresId: async (id: string, middleware: Middleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1IngressMiddlewaresById: async (id: string, middleware: Middleware, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1IngressMiddlewaresId', 'id', id)
+            assertParamExists('putV1IngressMiddlewaresById', 'id', id)
             // verify required parameter 'middleware' is not null or undefined
-            assertParamExists('putV1IngressMiddlewaresId', 'middleware', middleware)
+            assertParamExists('putV1IngressMiddlewaresById', 'middleware', middleware)
             const localVarPath = `/v1/ingress/middlewares/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -555,11 +555,11 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressRoutesId: async (id: string, route: Route, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1IngressRoutesById: async (id: string, route: Route, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1IngressRoutesId', 'id', id)
+            assertParamExists('putV1IngressRoutesById', 'id', id)
             // verify required parameter 'route' is not null or undefined
-            assertParamExists('putV1IngressRoutesId', 'route', route)
+            assertParamExists('putV1IngressRoutesById', 'route', route)
             const localVarPath = `/v1/ingress/routes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -595,11 +595,11 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressServicesId: async (id: string, service: Service, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1IngressServicesById: async (id: string, service: Service, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1IngressServicesId', 'id', id)
+            assertParamExists('putV1IngressServicesById', 'id', id)
             // verify required parameter 'service' is not null or undefined
-            assertParamExists('putV1IngressServicesId', 'service', service)
+            assertParamExists('putV1IngressServicesById', 'service', service)
             const localVarPath = `/v1/ingress/services/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -680,10 +680,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IngressMiddlewaresId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressMiddlewaresId(id, options);
+        async deleteV1IngressMiddlewaresById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressMiddlewaresById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressMiddlewaresId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressMiddlewaresById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -693,10 +693,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IngressRoutesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressRoutesId(id, options);
+        async deleteV1IngressRoutesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressRoutesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressRoutesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressRoutesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -706,10 +706,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IngressServicesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressServicesId(id, options);
+        async deleteV1IngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IngressServicesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressServicesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.deleteV1IngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -731,10 +731,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IngressMiddlewaresId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressMiddlewaresId(id, options);
+        async getV1IngressMiddlewaresById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressMiddlewaresById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressMiddlewaresId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressMiddlewaresById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -756,10 +756,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IngressRoutesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressRoutesId(id, options);
+        async getV1IngressRoutesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressRoutesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressRoutesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressRoutesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -781,10 +781,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IngressServicesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressServicesId(id, options);
+        async getV1IngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressServicesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressServicesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -858,10 +858,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IngressMiddlewaresId(id: string, middleware: Middleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressMiddlewaresId(id, middleware, options);
+        async putV1IngressMiddlewaresById(id: string, middleware: Middleware, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Middleware>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressMiddlewaresById(id, middleware, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressMiddlewaresId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressMiddlewaresById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -872,10 +872,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IngressRoutesId(id: string, route: Route, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressRoutesId(id, route, options);
+        async putV1IngressRoutesById(id: string, route: Route, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Route>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressRoutesById(id, route, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressRoutesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressRoutesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -886,10 +886,10 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IngressServicesId(id: string, service: Service, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressServicesId(id, service, options);
+        async putV1IngressServicesById(id: string, service: Service, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressServicesById(id, service, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressServicesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -918,32 +918,32 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
         /**
          * Removes one of the caller org\'s edge transforms and hot-applies the change. Routes still naming it stop being served (they compile as skipped) until they name a transform that exists. Answers 204; an id this org does not hold is 404.
          * @summary Removes one of the caller org\'s edge transforms and hot-applies the change.
-         * @param {IngressApiDeleteV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+         * @param {IngressApiDeleteV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressMiddlewaresId(requestParameters: IngressApiDeleteV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1IngressMiddlewaresId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1IngressMiddlewaresById(requestParameters: IngressApiDeleteV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1IngressMiddlewaresById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s routing rules and hot-applies the shrunken table, freeing its host for another claim. Answers 204; an id this org does not hold is 404.
          * @summary Removes one of the caller org\'s routing rules and hot-applies the shrunken table, freeing its host for another claim.
-         * @param {IngressApiDeleteV1IngressRoutesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiDeleteV1IngressRoutesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressRoutesId(requestParameters: IngressApiDeleteV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1IngressRoutesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1IngressRoutesById(requestParameters: IngressApiDeleteV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1IngressRoutesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s backend pools and hot-applies the change. Routes still pointing at it stop being served (they compile as skipped) until they name a pool that exists. Answers 204; an id this org does not hold is 404.
          * @summary Removes one of the caller org\'s backend pools and hot-applies the change.
-         * @param {IngressApiDeleteV1IngressServicesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiDeleteV1IngressServicesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IngressServicesId(requestParameters: IngressApiDeleteV1IngressServicesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1IngressServicesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1IngressServicesById(requestParameters: IngressApiDeleteV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1IngressServicesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every edge transform the caller\'s org has configured, ordered by id. A route names the ones it wants, in order.
@@ -957,12 +957,12 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
         /**
          * Returns one of the caller org\'s edge transforms by id.
          * @summary Returns one of the caller org\'s edge transforms by id.
-         * @param {IngressApiGetV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+         * @param {IngressApiGetV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressMiddlewaresId(requestParameters: IngressApiGetV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
-            return localVarFp.getV1IngressMiddlewaresId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1IngressMiddlewaresById(requestParameters: IngressApiGetV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
+            return localVarFp.getV1IngressMiddlewaresById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every routing rule the caller\'s org has configured, ordered by id. A route maps an exact Host (and optional path prefix) to a service.
@@ -976,12 +976,12 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
         /**
          * Returns one of the caller org\'s routing rules by id.
          * @summary Returns one of the caller org\'s routing rules by id.
-         * @param {IngressApiGetV1IngressRoutesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiGetV1IngressRoutesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressRoutesId(requestParameters: IngressApiGetV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
-            return localVarFp.getV1IngressRoutesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1IngressRoutesById(requestParameters: IngressApiGetV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
+            return localVarFp.getV1IngressRoutesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every backend pool the caller\'s org has configured, ordered by id. A service is the weighted round-robin target a route dispatches to.
@@ -995,12 +995,12 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
         /**
          * Returns one of the caller org\'s backend pools by id.
          * @summary Returns one of the caller org\'s backend pools by id.
-         * @param {IngressApiGetV1IngressServicesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiGetV1IngressServicesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressServicesId(requestParameters: IngressApiGetV1IngressServicesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
-            return localVarFp.getV1IngressServicesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1IngressServicesById(requestParameters: IngressApiGetV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
+            return localVarFp.getV1IngressServicesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Status reports the ingress edge\'s live posture: the role this instance runs in (app or edge), whether its listeners are bound and on which addresses, the ACME posture (staging flag and certificate cache directory), how many hosts the compiled route table currently serves, and how many the ACME HostPolicy will issue a certificate for.
@@ -1053,32 +1053,32 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
         /**
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
          * @summary Creates or replaces one edge transform and hot-applies it.
-         * @param {IngressApiPutV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+         * @param {IngressApiPutV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressMiddlewaresId(requestParameters: IngressApiPutV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
-            return localVarFp.putV1IngressMiddlewaresId(requestParameters.id, requestParameters.middleware, options).then((request) => request(axios, basePath));
+        putV1IngressMiddlewaresById(requestParameters: IngressApiPutV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Middleware> {
+            return localVarFp.putV1IngressMiddlewaresById(requestParameters.id, requestParameters.middleware, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
          * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
-         * @param {IngressApiPutV1IngressRoutesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiPutV1IngressRoutesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressRoutesId(requestParameters: IngressApiPutV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
-            return localVarFp.putV1IngressRoutesId(requestParameters.id, requestParameters.route, options).then((request) => request(axios, basePath));
+        putV1IngressRoutesById(requestParameters: IngressApiPutV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Route> {
+            return localVarFp.putV1IngressRoutesById(requestParameters.id, requestParameters.route, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
-         * @param {IngressApiPutV1IngressServicesIdRequest} requestParameters Request parameters.
+         * @param {IngressApiPutV1IngressServicesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressServicesId(requestParameters: IngressApiPutV1IngressServicesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
-            return localVarFp.putV1IngressServicesId(requestParameters.id, requestParameters.service, options).then((request) => request(axios, basePath));
+        putV1IngressServicesById(requestParameters: IngressApiPutV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
+            return localVarFp.putV1IngressServicesById(requestParameters.id, requestParameters.service, options).then((request) => request(axios, basePath));
         },
         /**
          * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
@@ -1094,85 +1094,85 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for deleteV1IngressMiddlewaresId operation in IngressApi.
+ * Request parameters for deleteV1IngressMiddlewaresById operation in IngressApi.
  * @export
- * @interface IngressApiDeleteV1IngressMiddlewaresIdRequest
+ * @interface IngressApiDeleteV1IngressMiddlewaresByIdRequest
  */
-export interface IngressApiDeleteV1IngressMiddlewaresIdRequest {
+export interface IngressApiDeleteV1IngressMiddlewaresByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiDeleteV1IngressMiddlewaresId
+     * @memberof IngressApiDeleteV1IngressMiddlewaresById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1IngressRoutesId operation in IngressApi.
+ * Request parameters for deleteV1IngressRoutesById operation in IngressApi.
  * @export
- * @interface IngressApiDeleteV1IngressRoutesIdRequest
+ * @interface IngressApiDeleteV1IngressRoutesByIdRequest
  */
-export interface IngressApiDeleteV1IngressRoutesIdRequest {
+export interface IngressApiDeleteV1IngressRoutesByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiDeleteV1IngressRoutesId
+     * @memberof IngressApiDeleteV1IngressRoutesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1IngressServicesId operation in IngressApi.
+ * Request parameters for deleteV1IngressServicesById operation in IngressApi.
  * @export
- * @interface IngressApiDeleteV1IngressServicesIdRequest
+ * @interface IngressApiDeleteV1IngressServicesByIdRequest
  */
-export interface IngressApiDeleteV1IngressServicesIdRequest {
+export interface IngressApiDeleteV1IngressServicesByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiDeleteV1IngressServicesId
+     * @memberof IngressApiDeleteV1IngressServicesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1IngressMiddlewaresId operation in IngressApi.
+ * Request parameters for getV1IngressMiddlewaresById operation in IngressApi.
  * @export
- * @interface IngressApiGetV1IngressMiddlewaresIdRequest
+ * @interface IngressApiGetV1IngressMiddlewaresByIdRequest
  */
-export interface IngressApiGetV1IngressMiddlewaresIdRequest {
+export interface IngressApiGetV1IngressMiddlewaresByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiGetV1IngressMiddlewaresId
+     * @memberof IngressApiGetV1IngressMiddlewaresById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1IngressRoutesId operation in IngressApi.
+ * Request parameters for getV1IngressRoutesById operation in IngressApi.
  * @export
- * @interface IngressApiGetV1IngressRoutesIdRequest
+ * @interface IngressApiGetV1IngressRoutesByIdRequest
  */
-export interface IngressApiGetV1IngressRoutesIdRequest {
+export interface IngressApiGetV1IngressRoutesByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiGetV1IngressRoutesId
+     * @memberof IngressApiGetV1IngressRoutesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1IngressServicesId operation in IngressApi.
+ * Request parameters for getV1IngressServicesById operation in IngressApi.
  * @export
- * @interface IngressApiGetV1IngressServicesIdRequest
+ * @interface IngressApiGetV1IngressServicesByIdRequest
  */
-export interface IngressApiGetV1IngressServicesIdRequest {
+export interface IngressApiGetV1IngressServicesByIdRequest {
     /**
      * ID is the object to act on, from the path.
      * @type {string}
-     * @memberof IngressApiGetV1IngressServicesId
+     * @memberof IngressApiGetV1IngressServicesById
      */
     readonly id: string
 }
@@ -1220,64 +1220,64 @@ export interface IngressApiPostV1IngressServicesRequest {
 }
 
 /**
- * Request parameters for putV1IngressMiddlewaresId operation in IngressApi.
+ * Request parameters for putV1IngressMiddlewaresById operation in IngressApi.
  * @export
- * @interface IngressApiPutV1IngressMiddlewaresIdRequest
+ * @interface IngressApiPutV1IngressMiddlewaresByIdRequest
  */
-export interface IngressApiPutV1IngressMiddlewaresIdRequest {
+export interface IngressApiPutV1IngressMiddlewaresByIdRequest {
     /**
      * ID identifies the transform within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
      * @type {string}
-     * @memberof IngressApiPutV1IngressMiddlewaresId
+     * @memberof IngressApiPutV1IngressMiddlewaresById
      */
     readonly id: string
 
     /**
      * 
      * @type {Middleware}
-     * @memberof IngressApiPutV1IngressMiddlewaresId
+     * @memberof IngressApiPutV1IngressMiddlewaresById
      */
     readonly middleware: Middleware
 }
 
 /**
- * Request parameters for putV1IngressRoutesId operation in IngressApi.
+ * Request parameters for putV1IngressRoutesById operation in IngressApi.
  * @export
- * @interface IngressApiPutV1IngressRoutesIdRequest
+ * @interface IngressApiPutV1IngressRoutesByIdRequest
  */
-export interface IngressApiPutV1IngressRoutesIdRequest {
+export interface IngressApiPutV1IngressRoutesByIdRequest {
     /**
      * ID identifies the route within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one.
      * @type {string}
-     * @memberof IngressApiPutV1IngressRoutesId
+     * @memberof IngressApiPutV1IngressRoutesById
      */
     readonly id: string
 
     /**
      * 
      * @type {Route}
-     * @memberof IngressApiPutV1IngressRoutesId
+     * @memberof IngressApiPutV1IngressRoutesById
      */
     readonly route: Route
 }
 
 /**
- * Request parameters for putV1IngressServicesId operation in IngressApi.
+ * Request parameters for putV1IngressServicesById operation in IngressApi.
  * @export
- * @interface IngressApiPutV1IngressServicesIdRequest
+ * @interface IngressApiPutV1IngressServicesByIdRequest
  */
-export interface IngressApiPutV1IngressServicesIdRequest {
+export interface IngressApiPutV1IngressServicesByIdRequest {
     /**
      * ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
      * @type {string}
-     * @memberof IngressApiPutV1IngressServicesId
+     * @memberof IngressApiPutV1IngressServicesById
      */
     readonly id: string
 
     /**
      * 
      * @type {Service}
-     * @memberof IngressApiPutV1IngressServicesId
+     * @memberof IngressApiPutV1IngressServicesById
      */
     readonly service: Service
 }
@@ -1306,37 +1306,37 @@ export class IngressApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s edge transforms and hot-applies the change. Routes still naming it stop being served (they compile as skipped) until they name a transform that exists. Answers 204; an id this org does not hold is 404.
      * @summary Removes one of the caller org\'s edge transforms and hot-applies the change.
-     * @param {IngressApiDeleteV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+     * @param {IngressApiDeleteV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public deleteV1IngressMiddlewaresId(requestParameters: IngressApiDeleteV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).deleteV1IngressMiddlewaresId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1IngressMiddlewaresById(requestParameters: IngressApiDeleteV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).deleteV1IngressMiddlewaresById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s routing rules and hot-applies the shrunken table, freeing its host for another claim. Answers 204; an id this org does not hold is 404.
      * @summary Removes one of the caller org\'s routing rules and hot-applies the shrunken table, freeing its host for another claim.
-     * @param {IngressApiDeleteV1IngressRoutesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiDeleteV1IngressRoutesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public deleteV1IngressRoutesId(requestParameters: IngressApiDeleteV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).deleteV1IngressRoutesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1IngressRoutesById(requestParameters: IngressApiDeleteV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).deleteV1IngressRoutesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s backend pools and hot-applies the change. Routes still pointing at it stop being served (they compile as skipped) until they name a pool that exists. Answers 204; an id this org does not hold is 404.
      * @summary Removes one of the caller org\'s backend pools and hot-applies the change.
-     * @param {IngressApiDeleteV1IngressServicesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiDeleteV1IngressServicesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public deleteV1IngressServicesId(requestParameters: IngressApiDeleteV1IngressServicesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).deleteV1IngressServicesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1IngressServicesById(requestParameters: IngressApiDeleteV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).deleteV1IngressServicesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1353,13 +1353,13 @@ export class IngressApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s edge transforms by id.
      * @summary Returns one of the caller org\'s edge transforms by id.
-     * @param {IngressApiGetV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+     * @param {IngressApiGetV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public getV1IngressMiddlewaresId(requestParameters: IngressApiGetV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).getV1IngressMiddlewaresId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1IngressMiddlewaresById(requestParameters: IngressApiGetV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).getV1IngressMiddlewaresById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1376,13 +1376,13 @@ export class IngressApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s routing rules by id.
      * @summary Returns one of the caller org\'s routing rules by id.
-     * @param {IngressApiGetV1IngressRoutesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiGetV1IngressRoutesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public getV1IngressRoutesId(requestParameters: IngressApiGetV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).getV1IngressRoutesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1IngressRoutesById(requestParameters: IngressApiGetV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).getV1IngressRoutesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1399,13 +1399,13 @@ export class IngressApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s backend pools by id.
      * @summary Returns one of the caller org\'s backend pools by id.
-     * @param {IngressApiGetV1IngressServicesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiGetV1IngressServicesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public getV1IngressServicesId(requestParameters: IngressApiGetV1IngressServicesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).getV1IngressServicesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1IngressServicesById(requestParameters: IngressApiGetV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).getV1IngressServicesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1469,37 +1469,37 @@ export class IngressApi extends BaseAPI {
     /**
      * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
      * @summary Creates or replaces one edge transform and hot-applies it.
-     * @param {IngressApiPutV1IngressMiddlewaresIdRequest} requestParameters Request parameters.
+     * @param {IngressApiPutV1IngressMiddlewaresByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public putV1IngressMiddlewaresId(requestParameters: IngressApiPutV1IngressMiddlewaresIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putV1IngressMiddlewaresId(requestParameters.id, requestParameters.middleware, options).then((request) => request(this.axios, this.basePath));
+    public putV1IngressMiddlewaresById(requestParameters: IngressApiPutV1IngressMiddlewaresByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).putV1IngressMiddlewaresById(requestParameters.id, requestParameters.middleware, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A route\'s host is a GLOBALLY unique DNS claim: a host another org\'s route already holds is refused 409, so no tenant can hijack another\'s hostname.
      * @summary Creates or replaces one routing rule and hot-applies the new table — there is no config file and no restart.
-     * @param {IngressApiPutV1IngressRoutesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiPutV1IngressRoutesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public putV1IngressRoutesId(requestParameters: IngressApiPutV1IngressRoutesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putV1IngressRoutesId(requestParameters.id, requestParameters.route, options).then((request) => request(this.axios, this.basePath));
+    public putV1IngressRoutesById(requestParameters: IngressApiPutV1IngressRoutesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).putV1IngressRoutesById(requestParameters.id, requestParameters.route, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
      * @summary Creates or replaces one backend pool and hot-applies it.
-     * @param {IngressApiPutV1IngressServicesIdRequest} requestParameters Request parameters.
+     * @param {IngressApiPutV1IngressServicesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IngressApi
      */
-    public putV1IngressServicesId(requestParameters: IngressApiPutV1IngressServicesIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putV1IngressServicesId(requestParameters.id, requestParameters.service, options).then((request) => request(this.axios, this.basePath));
+    public putV1IngressServicesById(requestParameters: IngressApiPutV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig) {
+        return IngressApiFp(this.configuration).putV1IngressServicesById(requestParameters.id, requestParameters.service, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

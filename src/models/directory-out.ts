@@ -24,7 +24,7 @@ import type { DirectoryData } from './directory-data';
  */
 export interface DirectoryOut {
     /**
-     * 
+     * Data is the affiliate directory and its tally.
      * @type {DirectoryData}
      * @memberof DirectoryOut
      */

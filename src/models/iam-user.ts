@@ -765,6 +765,12 @@ export interface IamUser {
      */
     'mfaRememberDeadline'?: string;
     /**
+     * MfaRememberDigest is the digest of the token held by the ONE browser the deadline above applies to. Without it the deadline is account-wide and \"don\'t ask again on this browser\" switches the second factor off everywhere. It is a digest, never the token, so a database dump yields nothing presentable — and it carries a REAL json tag because orm persists via json.Marshal, so `json:\"-\"` would never be stored (the trap PasswordHash documents above); Mask() strips it from every response instead.
+     * @type {string}
+     * @memberof IamUser
+     */
+    'mfaRememberDigest'?: string;
+    /**
      * 
      * @type {string}
      * @memberof IamUser

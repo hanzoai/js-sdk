@@ -21,37 +21,37 @@
  */
 export interface ReferrerRow {
     /**
-     * 
+     * AccruedCents is lifetime commission accrued, in cents. The board is sorted by this, descending.
      * @type {number}
      * @memberof ReferrerRow
      */
     'accruedCents'?: number;
     /**
-     * 
+     * Code is that affiliate\'s minted referral code; empty if it is not approved.
      * @type {string}
      * @memberof ReferrerRow
      */
     'code'?: string;
     /**
-     * 
+     * Org is the partner\'s own org slug. Named only here, on the SuperAdmin board — the partner-facing leaderboard shows an opt-in handle and never an org.
      * @type {string}
      * @memberof ReferrerRow
      */
     'org'?: string;
     /**
-     * 
+     * PendingCents is accrued minus paid, in cents — what is still owed to this affiliate. Never negative.
      * @type {number}
      * @memberof ReferrerRow
      */
     'pendingCents'?: number;
     /**
-     * 
+     * ReferredCount is how many orgs this affiliate is the DIRECT referrer of — its level-1 downline, not the whole three-level chain.
      * @type {number}
      * @memberof ReferrerRow
      */
     'referredCount'?: number;
     /**
-     * 
+     * Status is \"applied\", \"approved\" or \"suspended\".
      * @type {string}
      * @memberof ReferrerRow
      */

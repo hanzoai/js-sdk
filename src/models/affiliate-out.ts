@@ -24,7 +24,7 @@ import type { AffiliateData } from './affiliate-data';
  */
 export interface AffiliateOut {
     /**
-     * 
+     * Data carries the affiliate row the action just wrote.
      * @type {AffiliateData}
      * @memberof AffiliateOut
      */

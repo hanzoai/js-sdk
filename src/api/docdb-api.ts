@@ -42,9 +42,9 @@ export const DocdbApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DocdbName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1DocdbByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1DocdbName', 'name', name)
+            assertParamExists('deleteV1DocdbByName', 'name', name)
             const localVarPath = `/v1/docdb/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -106,9 +106,9 @@ export const DocdbApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocdbName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DocdbByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DocdbName', 'name', name)
+            assertParamExists('getV1DocdbByName', 'name', name)
             const localVarPath = `/v1/docdb/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,10 +184,10 @@ export const DocdbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1DocdbName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DocdbName(name, options);
+        async deleteV1DocdbByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DocdbByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DocdbApi.deleteV1DocdbName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DocdbApi.deleteV1DocdbByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const DocdbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DocdbName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DocdbName(name, options);
+        async getV1DocdbByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DocdbByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DocdbApi.getV1DocdbName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DocdbApi.getV1DocdbByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,12 +241,12 @@ export const DocdbApiFactory = function (configuration?: Configuration, basePath
         /**
          * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
          * @summary DropDocDB deprovisions one Hanzo DocDB database.
-         * @param {DocdbApiDeleteV1DocdbNameRequest} requestParameters Request parameters.
+         * @param {DocdbApiDeleteV1DocdbByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DocdbName(requestParameters: DocdbApiDeleteV1DocdbNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1DocdbName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1DocdbByName(requestParameters: DocdbApiDeleteV1DocdbByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1DocdbByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * ListDocDB lists the caller org\'s Hanzo DocDB document databases. Each one is a DEDICATED FerretDB instance the org alone runs, speaking the MongoDB wire protocol, so the host is that instance\'s own in-cluster Service and the port is 27017.
@@ -260,12 +260,12 @@ export const DocdbApiFactory = function (configuration?: Configuration, basePath
         /**
          * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
          * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
-         * @param {DocdbApiGetV1DocdbNameRequest} requestParameters Request parameters.
+         * @param {DocdbApiGetV1DocdbByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocdbName(requestParameters: DocdbApiGetV1DocdbNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1DocdbName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1DocdbByName(requestParameters: DocdbApiGetV1DocdbByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1DocdbByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Launches your org\'s OWN document-database instance — it speaks the MongoDB wire protocol, so existing MongoDB drivers connect unchanged — and answers with its `mongodb://` connection string. The instance is yours alone: a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
@@ -281,29 +281,29 @@ export const DocdbApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * Request parameters for deleteV1DocdbName operation in DocdbApi.
+ * Request parameters for deleteV1DocdbByName operation in DocdbApi.
  * @export
- * @interface DocdbApiDeleteV1DocdbNameRequest
+ * @interface DocdbApiDeleteV1DocdbByNameRequest
  */
-export interface DocdbApiDeleteV1DocdbNameRequest {
+export interface DocdbApiDeleteV1DocdbByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof DocdbApiDeleteV1DocdbName
+     * @memberof DocdbApiDeleteV1DocdbByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1DocdbName operation in DocdbApi.
+ * Request parameters for getV1DocdbByName operation in DocdbApi.
  * @export
- * @interface DocdbApiGetV1DocdbNameRequest
+ * @interface DocdbApiGetV1DocdbByNameRequest
  */
-export interface DocdbApiGetV1DocdbNameRequest {
+export interface DocdbApiGetV1DocdbByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof DocdbApiGetV1DocdbName
+     * @memberof DocdbApiGetV1DocdbByName
      */
     readonly name: string
 }
@@ -332,13 +332,13 @@ export class DocdbApi extends BaseAPI {
     /**
      * DropDocDB deprovisions one Hanzo DocDB database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated FerretDB instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
      * @summary DropDocDB deprovisions one Hanzo DocDB database.
-     * @param {DocdbApiDeleteV1DocdbNameRequest} requestParameters Request parameters.
+     * @param {DocdbApiDeleteV1DocdbByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DocdbApi
      */
-    public deleteV1DocdbName(requestParameters: DocdbApiDeleteV1DocdbNameRequest, options?: RawAxiosRequestConfig) {
-        return DocdbApiFp(this.configuration).deleteV1DocdbName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1DocdbByName(requestParameters: DocdbApiDeleteV1DocdbByNameRequest, options?: RawAxiosRequestConfig) {
+        return DocdbApiFp(this.configuration).deleteV1DocdbByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -355,13 +355,13 @@ export class DocdbApi extends BaseAPI {
     /**
      * GetDocDB returns one Hanzo DocDB database\'s metadata. It carries the database\'s status, its instance address and the SCRAM user the instance was set up with — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
      * @summary GetDocDB returns one Hanzo DocDB database\'s metadata.
-     * @param {DocdbApiGetV1DocdbNameRequest} requestParameters Request parameters.
+     * @param {DocdbApiGetV1DocdbByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DocdbApi
      */
-    public getV1DocdbName(requestParameters: DocdbApiGetV1DocdbNameRequest, options?: RawAxiosRequestConfig) {
-        return DocdbApiFp(this.configuration).getV1DocdbName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1DocdbByName(requestParameters: DocdbApiGetV1DocdbByNameRequest, options?: RawAxiosRequestConfig) {
+        return DocdbApiFp(this.configuration).getV1DocdbByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

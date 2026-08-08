@@ -21,37 +21,37 @@
  */
 export interface ChannelMetric {
     /**
-     * 
+     * ExternalID is the provider-side id of the execution the spend belongs to. Absent until the channel has launched.
      * @type {string}
      * @memberof ChannelMetric
      */
     'externalId'?: string;
     /**
-     * 
+     * Kind is which channel this row is: paid, organic or email. It is also the row\'s identity — a campaign carries at most one channel per kind.
      * @type {string}
      * @memberof ChannelMetric
      */
     'kind'?: string;
     /**
-     * 
+     * Platform is the provider the spend was read from: meta, google, x, instagram, or the email provider.
      * @type {string}
      * @memberof ChannelMetric
      */
     'platform'?: string;
     /**
-     * 
+     * SpendCents is what the provider itself reports this channel spent, in CENTS. 0 when the channel never launched, when no executor is wired for it, or when the read failed — SpendError tells the last case apart from a genuine zero.
      * @type {number}
      * @memberof ChannelMetric
      */
     'spendCents'?: number;
     /**
-     * honest: connector spend read failed
+     * SpendError is why this channel\'s spend could not be read (connector not connected, provider error), as one secret-free line. Present only on failure; the campaign total then simply omits this channel rather than failing.
      * @type {string}
      * @memberof ChannelMetric
      */
     'spendError'?: string;
     /**
-     * 
+     * Status is the channel\'s launch state on the campaign — pending, live, paused, failed or unavailable. Only a live channel is asked for its spend at all.
      * @type {string}
      * @memberof ChannelMetric
      */

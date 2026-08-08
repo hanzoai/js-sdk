@@ -163,8 +163,8 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s. Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one.
-         * @summary Live news refreshes for the caller\'s org and project, as Server-Sent Events.
+         * Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.  It holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s.  Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one. Org-scoped fail-closed: the bus filters on org and the loop drops any update whose Project differs, so a subscriber only ever receives its own tenant+project.  It streams over both the plain HTTP listener and the ZAP machine transport with no transport-specific code (zip SendStreamWriter is transport-agnostic). org and project are captured (both cloned by scope) BEFORE SendStreamWriter, so the loop never touches the request Ctx after the handler returns — client-gone is a flush error, bounded by the heartbeat.
+         * @summary Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -288,8 +288,8 @@ export const WorldApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s. Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one.
-         * @summary Live news refreshes for the caller\'s org and project, as Server-Sent Events.
+         * Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.  It holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s.  Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one. Org-scoped fail-closed: the bus filters on org and the loop drops any update whose Project differs, so a subscriber only ever receives its own tenant+project.  It streams over both the plain HTTP listener and the ZAP machine transport with no transport-specific code (zip SendStreamWriter is transport-agnostic). org and project are captured (both cloned by scope) BEFORE SendStreamWriter, so the loop never touches the request Ctx after the handler returns — client-gone is a flush error, bounded by the heartbeat.
+         * @summary Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -360,8 +360,8 @@ export const WorldApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getV1WorldPipeline(options).then((request) => request(axios, basePath));
         },
         /**
-         * Holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s. Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one.
-         * @summary Live news refreshes for the caller\'s org and project, as Server-Sent Events.
+         * Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.  It holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s.  Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one. Org-scoped fail-closed: the bus filters on org and the loop drops any update whose Project differs, so a subscriber only ever receives its own tenant+project.  It streams over both the plain HTTP listener and the ZAP machine transport with no transport-specific code (zip SendStreamWriter is transport-agnostic). org and project are captured (both cloned by scope) BEFORE SendStreamWriter, so the loop never touches the request Ctx after the handler returns — client-gone is a flush error, bounded by the heartbeat.
+         * @summary Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -462,8 +462,8 @@ export class WorldApi extends BaseAPI {
     }
 
     /**
-     * Holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s. Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one.
-     * @summary Live news refreshes for the caller\'s org and project, as Server-Sent Events.
+     * Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.  It holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s.  Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one. Org-scoped fail-closed: the bus filters on org and the loop drops any update whose Project differs, so a subscriber only ever receives its own tenant+project.  It streams over both the plain HTTP listener and the ZAP machine transport with no transport-specific code (zip SendStreamWriter is transport-agnostic). org and project are captured (both cloned by scope) BEFORE SendStreamWriter, so the loop never touches the request Ctx after the handler returns — client-gone is a flush error, bounded by the heartbeat.
+     * @summary Pushes live news refreshes for the caller\'s org and project as Server-Sent Events.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorldApi

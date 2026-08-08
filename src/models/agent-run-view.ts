@@ -25,6 +25,24 @@ export interface AgentRunView {
      * @type {string}
      * @memberof AgentRunView
      */
+    'actor'?: string;
+    /**
+     * What an operator needs to answer \"what ran, for whom, and what did it do\" — and, through traceId, to leave this record for the waterfall of the very same run rather than a search that hopefully lands near it.  Agent is on the row because the org-wide feed lists runs across agents, and a run that cannot name its agent is an orphan in exactly the view built to make sense of many of them. Every field is omitempty: a run recorded before these columns existed reports absence rather than a zero it never measured.
+     * @type {string}
+     * @memberof AgentRunView
+     */
+    'agent'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentRunView
+     */
+    'completionTokens'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentRunView
+     */
     'createdAt'?: string;
     /**
      * 
@@ -64,9 +82,27 @@ export interface AgentRunView {
     'output'?: string;
     /**
      * 
+     * @type {number}
+     * @memberof AgentRunView
+     */
+    'promptTokens'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof AgentRunView
      */
     'status'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgentRunView
+     */
+    'toolCalls'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentRunView
+     */
+    'traceId'?: string;
 }
 

@@ -2586,9 +2586,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1O11yExplorerViewsViewId: async (viewId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1O11yExplorerViewsByViewid: async (viewId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'viewId' is not null or undefined
-            assertParamExists('deleteV1O11yExplorerViewsViewId', 'viewId', viewId)
+            assertParamExists('deleteV1O11yExplorerViewsByViewid', 'viewId', viewId)
             const localVarPath = `/v1/o11y/explorer/views/{viewId}`
                 .replace(`{${"viewId"}}`, encodeURIComponent(String(viewId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2620,9 +2620,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1O11yReviewsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1O11yReviewsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1O11yReviewsId', 'id', id)
+            assertParamExists('deleteV1O11yReviewsById', 'id', id)
             const localVarPath = `/v1/o11y/reviews/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -6202,11 +6202,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrorFromErrorID: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yErrorfromerrorid: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timestamp' is not null or undefined
-            assertParamExists('getV1O11yErrorFromErrorID', 'timestamp', timestamp)
+            assertParamExists('getV1O11yErrorfromerrorid', 'timestamp', timestamp)
             // verify required parameter 'groupID' is not null or undefined
-            assertParamExists('getV1O11yErrorFromErrorID', 'groupID', groupID)
+            assertParamExists('getV1O11yErrorfromerrorid', 'groupID', groupID)
             const localVarPath = `/v1/o11y/errorFromErrorID`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6251,11 +6251,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrorFromGroupID: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yErrorfromgroupid: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timestamp' is not null or undefined
-            assertParamExists('getV1O11yErrorFromGroupID', 'timestamp', timestamp)
+            assertParamExists('getV1O11yErrorfromgroupid', 'timestamp', timestamp)
             // verify required parameter 'groupID' is not null or undefined
-            assertParamExists('getV1O11yErrorFromGroupID', 'groupID', groupID)
+            assertParamExists('getV1O11yErrorfromgroupid', 'groupID', groupID)
             const localVarPath = `/v1/o11y/errorFromGroupID`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6368,9 +6368,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrortrackingIssuesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yErrortrackingIssuesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1O11yErrortrackingIssuesId', 'id', id)
+            assertParamExists('getV1O11yErrortrackingIssuesById', 'id', id)
             const localVarPath = `/v1/o11y/errortracking/issues/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -6447,9 +6447,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yExplorerViewsViewId: async (viewId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yExplorerViewsByViewid: async (viewId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'viewId' is not null or undefined
-            assertParamExists('getV1O11yExplorerViewsViewId', 'viewId', viewId)
+            assertParamExists('getV1O11yExplorerViewsByViewid', 'viewId', viewId)
             const localVarPath = `/v1/o11y/explorer/views/{viewId}`
                 .replace(`{${"viewId"}}`, encodeURIComponent(String(viewId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7385,9 +7385,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yLogsPipelinesVersion: async (version: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yLogsPipelinesByVersion: async (version: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'version' is not null or undefined
-            assertParamExists('getV1O11yLogsPipelinesVersion', 'version', version)
+            assertParamExists('getV1O11yLogsPipelinesByVersion', 'version', version)
             const localVarPath = `/v1/o11y/logs/pipelines/{version}`
                 .replace(`{${"version"}}`, encodeURIComponent(String(version)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7621,11 +7621,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yNextPrevErrorIDs: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yNextpreverrorids: async (timestamp: string, groupID: string, errorID?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'timestamp' is not null or undefined
-            assertParamExists('getV1O11yNextPrevErrorIDs', 'timestamp', timestamp)
+            assertParamExists('getV1O11yNextpreverrorids', 'timestamp', timestamp)
             // verify required parameter 'groupID' is not null or undefined
-            assertParamExists('getV1O11yNextPrevErrorIDs', 'groupID', groupID)
+            assertParamExists('getV1O11yNextpreverrorids', 'groupID', groupID)
             const localVarPath = `/v1/o11y/nextPrevErrorIDs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8453,9 +8453,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yReviewsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yReviewsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1O11yReviewsId', 'id', id)
+            assertParamExists('getV1O11yReviewsById', 'id', id)
             const localVarPath = `/v1/o11y/reviews/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8490,9 +8490,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yReviewsIdItems: async (id: string, status?: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1O11yReviewsByIdItems: async (id: string, status?: string, page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1O11yReviewsIdItems', 'id', id)
+            assertParamExists('getV1O11yReviewsByIdItems', 'id', id)
             const localVarPath = `/v1/o11y/reviews/{id}/items`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8560,8 +8560,8 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
-         * @summary List the caller org\'s LLM sessions
+         * Lists the caller org\'s LLM sessions.  It answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.  Why an explicit cloud route rather than only the order-70 wildcard: this pins the public flat path to the runtime\'s internal /api/sessions route SERVER-SIDE AND enforces the tenant gate at the cloud boundary — an org-less caller gets a clean 403 here before the request reaches the runtime, and the org the runtime binds (gen_ai.hanzo.org_id from X-Org-Id) is the SAME validated tenant this handler refuses to proceed without. Registered by mountScope (order 69), so it precedes the wildcard.  This used to cite query.go\'s composite-query pin as the precedent for the move. That file is GONE — it pinned POST /v1/o11y/query_range to the v3 engine, and when it went the module\'s v5 querier took the address, whose composite accepts only {queries:[…]}. The console still sent the v3 {queryType,panelType,builderQueries} envelope and every Logs page 400\'d on \"unknown field \\\"queryType\\\" in composite query\". Citing a deleted pin as the discipline to follow is how the next route inherits the same break, so the reference is removed rather than reworded: this route stands on its OWN pin, three lines below, which is still here.  The list query (?limit=&offset=) rides through unchanged; the runtime returns the llmobstypes.GettableSessions {items,offset,limit} under the {status,data} envelope the console\'s O11yApi.sessions already unwraps.
+         * @summary Lists the caller org\'s LLM sessions.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10521,11 +10521,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1O11yReviewsId: async (id: string, o11yUpdateQueueIn: O11yUpdateQueueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1O11yReviewsById: async (id: string, o11yUpdateQueueIn: O11yUpdateQueueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1O11yReviewsId', 'id', id)
+            assertParamExists('patchV1O11yReviewsById', 'id', id)
             // verify required parameter 'o11yUpdateQueueIn' is not null or undefined
-            assertParamExists('patchV1O11yReviewsId', 'o11yUpdateQueueIn', o11yUpdateQueueIn)
+            assertParamExists('patchV1O11yReviewsById', 'o11yUpdateQueueIn', o11yUpdateQueueIn)
             const localVarPath = `/v1/o11y/reviews/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10562,13 +10562,13 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1O11yReviewsIdItemsItemId: async (id: string, itemId: string, o11yUpdateItemIn: O11yUpdateItemIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1O11yReviewsByIdItemsByItemid: async (id: string, itemId: string, o11yUpdateItemIn: O11yUpdateItemIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1O11yReviewsIdItemsItemId', 'id', id)
+            assertParamExists('patchV1O11yReviewsByIdItemsByItemid', 'id', id)
             // verify required parameter 'itemId' is not null or undefined
-            assertParamExists('patchV1O11yReviewsIdItemsItemId', 'itemId', itemId)
+            assertParamExists('patchV1O11yReviewsByIdItemsByItemid', 'itemId', itemId)
             // verify required parameter 'o11yUpdateItemIn' is not null or undefined
-            assertParamExists('patchV1O11yReviewsIdItemsItemId', 'o11yUpdateItemIn', o11yUpdateItemIn)
+            assertParamExists('patchV1O11yReviewsByIdItemsByItemid', 'o11yUpdateItemIn', o11yUpdateItemIn)
             const localVarPath = `/v1/o11y/reviews/{id}/items/{itemId}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"itemId"}}`, encodeURIComponent(String(itemId)));
@@ -10842,9 +10842,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yCountErrors: async (o11yO11yErrorsCountIn: O11yO11yErrorsCountIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1O11yCounterrors: async (o11yO11yErrorsCountIn: O11yO11yErrorsCountIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'o11yO11yErrorsCountIn' is not null or undefined
-            assertParamExists('postV1O11yCountErrors', 'o11yO11yErrorsCountIn', o11yO11yErrorsCountIn)
+            assertParamExists('postV1O11yCounterrors', 'o11yO11yErrorsCountIn', o11yO11yErrorsCountIn)
             const localVarPath = `/v1/o11y/countErrors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10987,11 +10987,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yErrortrackingIssuesId: async (id: string, o11yO11yErrorUpdateIssueIn: O11yO11yErrorUpdateIssueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1O11yErrortrackingIssuesById: async (id: string, o11yO11yErrorUpdateIssueIn: O11yO11yErrorUpdateIssueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1O11yErrortrackingIssuesId', 'id', id)
+            assertParamExists('postV1O11yErrortrackingIssuesById', 'id', id)
             // verify required parameter 'o11yO11yErrorUpdateIssueIn' is not null or undefined
-            assertParamExists('postV1O11yErrortrackingIssuesId', 'o11yO11yErrorUpdateIssueIn', o11yO11yErrorUpdateIssueIn)
+            assertParamExists('postV1O11yErrortrackingIssuesById', 'o11yO11yErrorUpdateIssueIn', o11yO11yErrorUpdateIssueIn)
             const localVarPath = `/v1/o11y/errortracking/issues/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11560,9 +11560,9 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yListErrors: async (o11yO11yErrorsListIn: O11yO11yErrorsListIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1O11yListerrors: async (o11yO11yErrorsListIn: O11yO11yErrorsListIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'o11yO11yErrorsListIn' is not null or undefined
-            assertParamExists('postV1O11yListErrors', 'o11yO11yErrorsListIn', o11yO11yErrorsListIn)
+            assertParamExists('postV1O11yListerrors', 'o11yO11yErrorsListIn', o11yO11yErrorsListIn)
             const localVarPath = `/v1/o11y/listErrors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12641,11 +12641,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yReviewsIdItems: async (id: string, o11yAddItemsIn: O11yAddItemsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1O11yReviewsByIdItems: async (id: string, o11yAddItemsIn: O11yAddItemsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1O11yReviewsIdItems', 'id', id)
+            assertParamExists('postV1O11yReviewsByIdItems', 'id', id)
             // verify required parameter 'o11yAddItemsIn' is not null or undefined
-            assertParamExists('postV1O11yReviewsIdItems', 'o11yAddItemsIn', o11yAddItemsIn)
+            assertParamExists('postV1O11yReviewsByIdItems', 'o11yAddItemsIn', o11yAddItemsIn)
             const localVarPath = `/v1/o11y/reviews/{id}/items`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -13221,11 +13221,11 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1O11yExplorerViewsViewId: async (viewId: string, o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1O11yExplorerViewsByViewid: async (viewId: string, o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'viewId' is not null or undefined
-            assertParamExists('putV1O11yExplorerViewsViewId', 'viewId', viewId)
+            assertParamExists('putV1O11yExplorerViewsByViewid', 'viewId', viewId)
             // verify required parameter 'o11yO11ySavedViewUpdateIn' is not null or undefined
-            assertParamExists('putV1O11yExplorerViewsViewId', 'o11yO11ySavedViewUpdateIn', o11yO11ySavedViewUpdateIn)
+            assertParamExists('putV1O11yExplorerViewsByViewid', 'o11yO11ySavedViewUpdateIn', o11yO11ySavedViewUpdateIn)
             const localVarPath = `/v1/o11y/explorer/views/{viewId}`
                 .replace(`{${"viewId"}}`, encodeURIComponent(String(viewId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -15843,10 +15843,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1O11yExplorerViewsViewId(viewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewDeleteOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1O11yExplorerViewsViewId(viewId, options);
+        async deleteV1O11yExplorerViewsByViewid(viewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewDeleteOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1O11yExplorerViewsByViewid(viewId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteV1O11yExplorerViewsViewId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteV1O11yExplorerViewsByViewid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -15856,10 +15856,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1O11yReviewsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1O11yReviewsId(id, options);
+        async deleteV1O11yReviewsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1O11yReviewsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteV1O11yReviewsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17125,10 +17125,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yErrorFromErrorID(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorWithSpan>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrorFromErrorID(timestamp, groupID, errorID, options);
+        async getV1O11yErrorfromerrorid(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorWithSpan>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrorfromerrorid(timestamp, groupID, errorID, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrorFromErrorID']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrorfromerrorid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17140,10 +17140,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yErrorFromGroupID(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorWithSpan>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrorFromGroupID(timestamp, groupID, errorID, options);
+        async getV1O11yErrorfromgroupid(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorWithSpan>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrorfromgroupid(timestamp, groupID, errorID, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrorFromGroupID']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrorfromgroupid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17173,10 +17173,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yErrortrackingIssuesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorGettableIssueOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrortrackingIssuesId(id, options);
+        async getV1O11yErrortrackingIssuesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorGettableIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yErrortrackingIssuesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrortrackingIssuesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yErrortrackingIssuesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17201,10 +17201,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yExplorerViewsViewId(viewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yExplorerViewsViewId(viewId, options);
+        async getV1O11yExplorerViewsByViewid(viewId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yExplorerViewsByViewid(viewId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yExplorerViewsViewId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yExplorerViewsByViewid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17514,10 +17514,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yLogsPipelinesVersion(version: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yLogPipelinesOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yLogsPipelinesVersion(version, options);
+        async getV1O11yLogsPipelinesByVersion(version: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yLogPipelinesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yLogsPipelinesByVersion(version, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yLogsPipelinesVersion']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yLogsPipelinesByVersion']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17593,10 +17593,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yNextPrevErrorIDs(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yNextPrevErrorIDs>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yNextPrevErrorIDs(timestamp, groupID, errorID, options);
+        async getV1O11yNextpreverrorids(timestamp: string, groupID: string, errorID?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yNextPrevErrorIDs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yNextpreverrorids(timestamp, groupID, errorID, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yNextPrevErrorIDs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yNextpreverrorids']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17845,10 +17845,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yReviewsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueDetailView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yReviewsId(id, options);
+        async getV1O11yReviewsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueDetailView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yReviewsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yReviewsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17861,10 +17861,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1O11yReviewsIdItems(id: string, status?: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yReviewsIdItems(id, status, page, limit, options);
+        async getV1O11yReviewsByIdItems(id: string, status?: string, page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1O11yReviewsByIdItems(id, status, page, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yReviewsIdItems']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getV1O11yReviewsByIdItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -17880,8 +17880,8 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
-         * @summary List the caller org\'s LLM sessions
+         * Lists the caller org\'s LLM sessions.  It answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.  Why an explicit cloud route rather than only the order-70 wildcard: this pins the public flat path to the runtime\'s internal /api/sessions route SERVER-SIDE AND enforces the tenant gate at the cloud boundary — an org-less caller gets a clean 403 here before the request reaches the runtime, and the org the runtime binds (gen_ai.hanzo.org_id from X-Org-Id) is the SAME validated tenant this handler refuses to proceed without. Registered by mountScope (order 69), so it precedes the wildcard.  This used to cite query.go\'s composite-query pin as the precedent for the move. That file is GONE — it pinned POST /v1/o11y/query_range to the v3 engine, and when it went the module\'s v5 querier took the address, whose composite accepts only {queries:[…]}. The console still sent the v3 {queryType,panelType,builderQueries} envelope and every Logs page 400\'d on \"unknown field \\\"queryType\\\" in composite query\". Citing a deleted pin as the discipline to follow is how the next route inherits the same break, so the reference is removed rather than reworded: this route stands on its OWN pin, three lines below, which is still here.  The list query (?limit=&offset=) rides through unchanged; the runtime returns the llmobstypes.GettableSessions {items,offset,limit} under the {status,data} envelope the console\'s O11yApi.sessions already unwraps.
+         * @summary Lists the caller org\'s LLM sessions.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18554,10 +18554,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1O11yReviewsId(id: string, o11yUpdateQueueIn: O11yUpdateQueueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1O11yReviewsId(id, o11yUpdateQueueIn, options);
+        async patchV1O11yReviewsById(id: string, o11yUpdateQueueIn: O11yUpdateQueueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnQueueView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1O11yReviewsById(id, o11yUpdateQueueIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.patchV1O11yReviewsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.patchV1O11yReviewsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18569,10 +18569,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1O11yReviewsIdItemsItemId(id: string, itemId: string, o11yUpdateItemIn: O11yUpdateItemIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1O11yReviewsIdItemsItemId(id, itemId, o11yUpdateItemIn, options);
+        async patchV1O11yReviewsByIdItemsByItemid(id: string, itemId: string, o11yUpdateItemIn: O11yUpdateItemIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1O11yReviewsByIdItemsByItemid(id, itemId, o11yUpdateItemIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.patchV1O11yReviewsIdItemsItemId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.patchV1O11yReviewsByIdItemsByItemid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18672,10 +18672,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1O11yCountErrors(o11yO11yErrorsCountIn: O11yO11yErrorsCountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yCountErrors(o11yO11yErrorsCountIn, options);
+        async postV1O11yCounterrors(o11yO11yErrorsCountIn: O11yO11yErrorsCountIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yCounterrors(o11yO11yErrorsCountIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yCountErrors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yCounterrors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18725,10 +18725,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1O11yErrortrackingIssuesId(id: string, o11yO11yErrorUpdateIssueIn: O11yO11yErrorUpdateIssueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssueOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yErrortrackingIssuesId(id, o11yO11yErrorUpdateIssueIn, options);
+        async postV1O11yErrortrackingIssuesById(id: string, o11yO11yErrorUpdateIssueIn: O11yO11yErrorUpdateIssueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yErrortrackingIssuesById(id, o11yO11yErrorUpdateIssueIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yErrortrackingIssuesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yErrortrackingIssuesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18932,10 +18932,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1O11yListErrors(o11yO11yErrorsListIn: O11yO11yErrorsListIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<O11yO11yListError>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yListErrors(o11yO11yErrorsListIn, options);
+        async postV1O11yListerrors(o11yO11yErrorsListIn: O11yO11yErrorsListIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<O11yO11yListError>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yListerrors(o11yO11yErrorsListIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yListErrors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yListerrors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -19323,10 +19323,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1O11yReviewsIdItems(id: string, o11yAddItemsIn: O11yAddItemsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemsCreated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yReviewsIdItems(id, o11yAddItemsIn, options);
+        async postV1O11yReviewsByIdItems(id: string, o11yAddItemsIn: O11yAddItemsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yAnnItemsCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1O11yReviewsByIdItems(id, o11yAddItemsIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yReviewsIdItems']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postV1O11yReviewsByIdItems']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -19532,10 +19532,10 @@ export const O11yApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1O11yExplorerViewsViewId(viewId: string, o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1O11yExplorerViewsViewId(viewId, o11yO11ySavedViewUpdateIn, options);
+        async putV1O11yExplorerViewsByViewid(viewId: string, o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySavedViewOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1O11yExplorerViewsByViewid(viewId, o11yO11ySavedViewUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['O11yApi.putV1O11yExplorerViewsViewId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.putV1O11yExplorerViewsByViewid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -20742,22 +20742,22 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Deletes one saved explorer view by id.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Deletes one saved explorer view by id.
-         * @param {O11yApiDeleteV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+         * @param {O11yApiDeleteV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1O11yExplorerViewsViewId(requestParameters: O11yApiDeleteV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewDeleteOut> {
-            return localVarFp.deleteV1O11yExplorerViewsViewId(requestParameters.viewId, options).then((request) => request(axios, basePath));
+        deleteV1O11yExplorerViewsByViewid(requestParameters: O11yApiDeleteV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewDeleteOut> {
+            return localVarFp.deleteV1O11yExplorerViewsByViewid(requestParameters.viewId, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
          * @summary Removes one review queue and every item in it.
-         * @param {O11yApiDeleteV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {O11yApiDeleteV1O11yReviewsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1O11yReviewsId(requestParameters: O11yApiDeleteV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueDeleted> {
-            return localVarFp.deleteV1O11yReviewsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1O11yReviewsById(requestParameters: O11yApiDeleteV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueDeleted> {
+            return localVarFp.deleteV1O11yReviewsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Tears down a connected account for the given provider, by id. Admin gate.
@@ -21646,22 +21646,22 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one exception instance and the span it happened on, by its error id within a group at a timestamp.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one exception instance and the span it happened on, by its error id within a group at a timestamp.
-         * @param {O11yApiGetV1O11yErrorFromErrorIDRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yErrorfromerroridRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrorFromErrorID(requestParameters: O11yApiGetV1O11yErrorFromErrorIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorWithSpan> {
-            return localVarFp.getV1O11yErrorFromErrorID(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
+        getV1O11yErrorfromerrorid(requestParameters: O11yApiGetV1O11yErrorfromerroridRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorWithSpan> {
+            return localVarFp.getV1O11yErrorfromerrorid(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the representative exception instance of a group at a timestamp, and the span it happened on.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns the representative exception instance of a group at a timestamp, and the span it happened on.
-         * @param {O11yApiGetV1O11yErrorFromGroupIDRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yErrorfromgroupidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrorFromGroupID(requestParameters: O11yApiGetV1O11yErrorFromGroupIDRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorWithSpan> {
-            return localVarFp.getV1O11yErrorFromGroupID(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
+        getV1O11yErrorfromgroupid(requestParameters: O11yApiGetV1O11yErrorfromgroupidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorWithSpan> {
+            return localVarFp.getV1O11yErrorfromgroupid(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller\'s org\'s grouped error issues (by fingerprint) with status, level, counts and first/last-seen.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -21676,12 +21676,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one grouped issue with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one grouped issue with its latest occurrence sample.
-         * @param {O11yApiGetV1O11yErrortrackingIssuesIdRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yErrortrackingIssuesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yErrortrackingIssuesId(requestParameters: O11yApiGetV1O11yErrortrackingIssuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorGettableIssueOut> {
-            return localVarFp.getV1O11yErrortrackingIssuesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1O11yErrortrackingIssuesById(requestParameters: O11yApiGetV1O11yErrortrackingIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorGettableIssueOut> {
+            return localVarFp.getV1O11yErrortrackingIssuesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller\'s org\'s saved explorer views, optionally narrowed to one source page, name or category.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -21696,12 +21696,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one saved explorer view by id.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one saved explorer view by id.
-         * @param {O11yApiGetV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yExplorerViewsViewId(requestParameters: O11yApiGetV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewOut> {
-            return localVarFp.getV1O11yExplorerViewsViewId(requestParameters.viewId, options).then((request) => request(axios, basePath));
+        getV1O11yExplorerViewsByViewid(requestParameters: O11yApiGetV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewOut> {
+            return localVarFp.getV1O11yExplorerViewsByViewid(requestParameters.viewId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the supported feature flags and their resolved values for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -21896,12 +21896,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns the caller\'s org\'s log parsing pipelines at one config version — \"latest\" for the newest — along with that version\'s deployment record and the recent version history.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns the caller\'s org\'s log parsing pipelines at one config version — \"latest\" for the newest — along with that version\'s deployment record and the recent version history.
-         * @param {O11yApiGetV1O11yLogsPipelinesVersionRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yLogsPipelinesByVersionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yLogsPipelinesVersion(requestParameters: O11yApiGetV1O11yLogsPipelinesVersionRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yLogPipelinesOut> {
-            return localVarFp.getV1O11yLogsPipelinesVersion(requestParameters.version, options).then((request) => request(axios, basePath));
+        getV1O11yLogsPipelinesByVersion(requestParameters: O11yApiGetV1O11yLogsPipelinesByVersionRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yLogPipelinesOut> {
+            return localVarFp.getV1O11yLogsPipelinesByVersion(requestParameters.version, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the log body paths already promoted or indexed, with the indexes each carries.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -21945,12 +21945,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns the ids of the exception instances immediately after and before a given one within its group — the paging cursor the error detail view walks.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns the ids of the exception instances immediately after and before a given one within its group — the paging cursor the error detail view walks.
-         * @param {O11yApiGetV1O11yNextPrevErrorIDsRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yNextpreverroridsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yNextPrevErrorIDs(requestParameters: O11yApiGetV1O11yNextPrevErrorIDsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yNextPrevErrorIDs> {
-            return localVarFp.getV1O11yNextPrevErrorIDs(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
+        getV1O11yNextpreverrorids(requestParameters: O11yApiGetV1O11yNextpreverroridsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yNextPrevErrorIDs> {
+            return localVarFp.getV1O11yNextpreverrorids(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the metric attribute keys Kubernetes nodes report, for building node filters.
@@ -22093,22 +22093,22 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
          * @summary Returns one review queue with its pending and completed counts and its first page of items.
-         * @param {O11yApiGetV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yReviewsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yReviewsId(requestParameters: O11yApiGetV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueDetailView> {
-            return localVarFp.getV1O11yReviewsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1O11yReviewsById(requestParameters: O11yApiGetV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueDetailView> {
+            return localVarFp.getV1O11yReviewsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
          * @summary Returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-         * @param {O11yApiGetV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+         * @param {O11yApiGetV1O11yReviewsByIdItemsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1O11yReviewsIdItems(requestParameters: O11yApiGetV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemList> {
-            return localVarFp.getV1O11yReviewsIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getV1O11yReviewsByIdItems(requestParameters: O11yApiGetV1O11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemList> {
+            return localVarFp.getV1O11yReviewsByIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the name of every service the trace store holds, with no window applied — the complete catalog, for pickers and autocomplete.
@@ -22120,8 +22120,8 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getV1O11yServicesList(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
-         * @summary List the caller org\'s LLM sessions
+         * Lists the caller org\'s LLM sessions.  It answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.  Why an explicit cloud route rather than only the order-70 wildcard: this pins the public flat path to the runtime\'s internal /api/sessions route SERVER-SIDE AND enforces the tenant gate at the cloud boundary — an org-less caller gets a clean 403 here before the request reaches the runtime, and the org the runtime binds (gen_ai.hanzo.org_id from X-Org-Id) is the SAME validated tenant this handler refuses to proceed without. Registered by mountScope (order 69), so it precedes the wildcard.  This used to cite query.go\'s composite-query pin as the precedent for the move. That file is GONE — it pinned POST /v1/o11y/query_range to the v3 engine, and when it went the module\'s v5 querier took the address, whose composite accepts only {queries:[…]}. The console still sent the v3 {queryType,panelType,builderQueries} envelope and every Logs page 400\'d on \"unknown field \\\"queryType\\\" in composite query\". Citing a deleted pin as the discipline to follow is how the next route inherits the same break, so the reference is removed rather than reworded: this route stands on its OWN pin, three lines below, which is still here.  The list query (?limit=&offset=) rides through unchanged; the runtime returns the llmobstypes.GettableSessions {items,offset,limit} under the {status,data} envelope the console\'s O11yApi.sessions already unwraps.
+         * @summary Lists the caller org\'s LLM sessions.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -22567,22 +22567,22 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
          * @summary Changes a review queue\'s name, description or score-config set.
-         * @param {O11yApiPatchV1O11yReviewsIdRequest} requestParameters Request parameters.
+         * @param {O11yApiPatchV1O11yReviewsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1O11yReviewsId(requestParameters: O11yApiPatchV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueView> {
-            return localVarFp.patchV1O11yReviewsId(requestParameters.id, requestParameters.o11yUpdateQueueIn, options).then((request) => request(axios, basePath));
+        patchV1O11yReviewsById(requestParameters: O11yApiPatchV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnQueueView> {
+            return localVarFp.patchV1O11yReviewsById(requestParameters.id, requestParameters.o11yUpdateQueueIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
          * @summary Moves one queue item between PENDING and COMPLETED and sets its assignee.
-         * @param {O11yApiPatchV1O11yReviewsIdItemsItemIdRequest} requestParameters Request parameters.
+         * @param {O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1O11yReviewsIdItemsItemId(requestParameters: O11yApiPatchV1O11yReviewsIdItemsItemIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemView> {
-            return localVarFp.patchV1O11yReviewsIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.o11yUpdateItemIn, options).then((request) => request(axios, basePath));
+        patchV1O11yReviewsByIdItemsByItemid(requestParameters: O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemView> {
+            return localVarFp.patchV1O11yReviewsByIdItemsByItemid(requestParameters.id, requestParameters.itemId, requestParameters.o11yUpdateItemIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Pins a dashboard for the calling user. A user can pin at most ten dashboards; pinning at the limit refuses with the runtime\'s conflict. Re-pinning an already-pinned dashboard is a no-op success. Pinning mutates only the caller\'s pin list, not the dashboard, so a viewer may pin what a viewer may read.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -22656,12 +22656,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Counts the grouped exceptions in the query window for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Counts the grouped exceptions in the query window for the caller\'s org.
-         * @param {O11yApiPostV1O11yCountErrorsRequest} requestParameters Request parameters.
+         * @param {O11yApiPostV1O11yCounterrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yCountErrors(requestParameters: O11yApiPostV1O11yCountErrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<number> {
-            return localVarFp.postV1O11yCountErrors(requestParameters.o11yO11yErrorsCountIn, options).then((request) => request(axios, basePath));
+        postV1O11yCounterrors(requestParameters: O11yApiPostV1O11yCounterrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<number> {
+            return localVarFp.postV1O11yCounterrors(requestParameters.o11yO11yErrorsCountIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists Kubernetes daemonsets over a time range, each with the CPU and memory its pods used against request and limit, desired and available node counts, restarts and attributes; filterable, groupable and paginated.
@@ -22696,12 +22696,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
-         * @param {O11yApiPostV1O11yErrortrackingIssuesIdRequest} requestParameters Request parameters.
+         * @param {O11yApiPostV1O11yErrortrackingIssuesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yErrortrackingIssuesId(requestParameters: O11yApiPostV1O11yErrortrackingIssuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssueOut> {
-            return localVarFp.postV1O11yErrortrackingIssuesId(requestParameters.id, requestParameters.o11yO11yErrorUpdateIssueIn, options).then((request) => request(axios, basePath));
+        postV1O11yErrortrackingIssuesById(requestParameters: O11yApiPostV1O11yErrortrackingIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssueOut> {
+            return localVarFp.postV1O11yErrortrackingIssuesById(requestParameters.id, requestParameters.o11yO11yErrorUpdateIssueIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records one product-analytics event for the signed-in user — a track event with a name and free-form attributes.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -22855,12 +22855,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Lists the grouped exceptions in the query window — each an exception type with its message, count, service and first/last-seen — for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Lists the grouped exceptions in the query window — each an exception type with its message, count, service and first/last-seen — for the caller\'s org.
-         * @param {O11yApiPostV1O11yListErrorsRequest} requestParameters Request parameters.
+         * @param {O11yApiPostV1O11yListerrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yListErrors(requestParameters: O11yApiPostV1O11yListErrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<O11yO11yListError>> {
-            return localVarFp.postV1O11yListErrors(requestParameters.o11yO11yErrorsListIn, options).then((request) => request(axios, basePath));
+        postV1O11yListerrors(requestParameters: O11yApiPostV1O11yListerrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<O11yO11yListError>> {
+            return localVarFp.postV1O11yListerrors(requestParameters.o11yO11yErrorsListIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes how one log field is stored — selects or deselects it as a materialized column and tunes its index — and echoes the setting back.  Callers need the editor role; the runtime\'s own gate enforces it.
@@ -23155,12 +23155,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
          * @summary Enqueues traces, observations or sessions on a review queue.
-         * @param {O11yApiPostV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+         * @param {O11yApiPostV1O11yReviewsByIdItemsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1O11yReviewsIdItems(requestParameters: O11yApiPostV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemsCreated> {
-            return localVarFp.postV1O11yReviewsIdItems(requestParameters.id, requestParameters.o11yAddItemsIn, options).then((request) => request(axios, basePath));
+        postV1O11yReviewsByIdItems(requestParameters: O11yApiPostV1O11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemsCreated> {
+            return localVarFp.postV1O11yReviewsByIdItems(requestParameters.id, requestParameters.o11yAddItemsIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
@@ -23315,12 +23315,12 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Replaces one saved explorer view by id with the given view and echoes it back.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Replaces one saved explorer view by id with the given view and echoes it back.
-         * @param {O11yApiPutV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+         * @param {O11yApiPutV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1O11yExplorerViewsViewId(requestParameters: O11yApiPutV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewOut> {
-            return localVarFp.putV1O11yExplorerViewsViewId(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(axios, basePath));
+        putV1O11yExplorerViewsByViewid(requestParameters: O11yApiPutV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewOut> {
+            return localVarFp.putV1O11yExplorerViewsByViewid(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a role away from one org member, by user id and role id — someone else, never the caller. Admin gate.
@@ -24604,29 +24604,29 @@ export interface O11yApiDeleteUserDeprecatedRequest {
 }
 
 /**
- * Request parameters for deleteV1O11yExplorerViewsViewId operation in O11yApi.
+ * Request parameters for deleteV1O11yExplorerViewsByViewid operation in O11yApi.
  * @export
- * @interface O11yApiDeleteV1O11yExplorerViewsViewIdRequest
+ * @interface O11yApiDeleteV1O11yExplorerViewsByViewidRequest
  */
-export interface O11yApiDeleteV1O11yExplorerViewsViewIdRequest {
+export interface O11yApiDeleteV1O11yExplorerViewsByViewidRequest {
     /**
      * ViewID is the view\&#39;s id.
      * @type {string}
-     * @memberof O11yApiDeleteV1O11yExplorerViewsViewId
+     * @memberof O11yApiDeleteV1O11yExplorerViewsByViewid
      */
     readonly viewId: string
 }
 
 /**
- * Request parameters for deleteV1O11yReviewsId operation in O11yApi.
+ * Request parameters for deleteV1O11yReviewsById operation in O11yApi.
  * @export
- * @interface O11yApiDeleteV1O11yReviewsIdRequest
+ * @interface O11yApiDeleteV1O11yReviewsByIdRequest
  */
-export interface O11yApiDeleteV1O11yReviewsIdRequest {
+export interface O11yApiDeleteV1O11yReviewsByIdRequest {
     /**
      * ID is the annotation queue to act on, from the path.
      * @type {string}
-     * @memberof O11yApiDeleteV1O11yReviewsId
+     * @memberof O11yApiDeleteV1O11yReviewsById
      */
     readonly id: string
 }
@@ -26368,57 +26368,57 @@ export interface O11yApiGetV1O11yDeploymentsAttributeValuesRequest {
 }
 
 /**
- * Request parameters for getV1O11yErrorFromErrorID operation in O11yApi.
+ * Request parameters for getV1O11yErrorfromerrorid operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yErrorFromErrorIDRequest
+ * @interface O11yApiGetV1O11yErrorfromerroridRequest
  */
-export interface O11yApiGetV1O11yErrorFromErrorIDRequest {
+export interface O11yApiGetV1O11yErrorfromerroridRequest {
     /**
      * Timestamp is the instance\&#39;s time as a nanosecond epoch spelled as a string. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromErrorID
+     * @memberof O11yApiGetV1O11yErrorfromerrorid
      */
     readonly timestamp: string
 
     /**
      * GroupID is the exception group the instance belongs to. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromErrorID
+     * @memberof O11yApiGetV1O11yErrorfromerrorid
      */
     readonly groupID: string
 
     /**
      * ErrorID is the exception instance id. Required by errorFromErrorID and nextPrevErrorIDs; unused by errorFromGroupID.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromErrorID
+     * @memberof O11yApiGetV1O11yErrorfromerrorid
      */
     readonly errorID?: string
 }
 
 /**
- * Request parameters for getV1O11yErrorFromGroupID operation in O11yApi.
+ * Request parameters for getV1O11yErrorfromgroupid operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yErrorFromGroupIDRequest
+ * @interface O11yApiGetV1O11yErrorfromgroupidRequest
  */
-export interface O11yApiGetV1O11yErrorFromGroupIDRequest {
+export interface O11yApiGetV1O11yErrorfromgroupidRequest {
     /**
      * Timestamp is the instance\&#39;s time as a nanosecond epoch spelled as a string. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromGroupID
+     * @memberof O11yApiGetV1O11yErrorfromgroupid
      */
     readonly timestamp: string
 
     /**
      * GroupID is the exception group the instance belongs to. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromGroupID
+     * @memberof O11yApiGetV1O11yErrorfromgroupid
      */
     readonly groupID: string
 
     /**
      * ErrorID is the exception instance id. Required by errorFromErrorID and nextPrevErrorIDs; unused by errorFromGroupID.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrorFromGroupID
+     * @memberof O11yApiGetV1O11yErrorfromgroupid
      */
     readonly errorID?: string
 }
@@ -26487,15 +26487,15 @@ export interface O11yApiGetV1O11yErrortrackingIssuesRequest {
 }
 
 /**
- * Request parameters for getV1O11yErrortrackingIssuesId operation in O11yApi.
+ * Request parameters for getV1O11yErrortrackingIssuesById operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yErrortrackingIssuesIdRequest
+ * @interface O11yApiGetV1O11yErrortrackingIssuesByIdRequest
  */
-export interface O11yApiGetV1O11yErrortrackingIssuesIdRequest {
+export interface O11yApiGetV1O11yErrortrackingIssuesByIdRequest {
     /**
      * ID is the issue id.
      * @type {string}
-     * @memberof O11yApiGetV1O11yErrortrackingIssuesId
+     * @memberof O11yApiGetV1O11yErrortrackingIssuesById
      */
     readonly id: string
 }
@@ -26529,15 +26529,15 @@ export interface O11yApiGetV1O11yExplorerViewsRequest {
 }
 
 /**
- * Request parameters for getV1O11yExplorerViewsViewId operation in O11yApi.
+ * Request parameters for getV1O11yExplorerViewsByViewid operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yExplorerViewsViewIdRequest
+ * @interface O11yApiGetV1O11yExplorerViewsByViewidRequest
  */
-export interface O11yApiGetV1O11yExplorerViewsViewIdRequest {
+export interface O11yApiGetV1O11yExplorerViewsByViewidRequest {
     /**
      * ViewID is the view\&#39;s id.
      * @type {string}
-     * @memberof O11yApiGetV1O11yExplorerViewsViewId
+     * @memberof O11yApiGetV1O11yExplorerViewsByViewid
      */
     readonly viewId: string
 }
@@ -27033,15 +27033,15 @@ export interface O11yApiGetV1O11yLogsRequest {
 }
 
 /**
- * Request parameters for getV1O11yLogsPipelinesVersion operation in O11yApi.
+ * Request parameters for getV1O11yLogsPipelinesByVersion operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yLogsPipelinesVersionRequest
+ * @interface O11yApiGetV1O11yLogsPipelinesByVersionRequest
  */
-export interface O11yApiGetV1O11yLogsPipelinesVersionRequest {
+export interface O11yApiGetV1O11yLogsPipelinesByVersionRequest {
     /**
      * Version is the config version to read — a positive number, or \&quot;latest\&quot;.
      * @type {string}
-     * @memberof O11yApiGetV1O11yLogsPipelinesVersion
+     * @memberof O11yApiGetV1O11yLogsPipelinesByVersion
      */
     readonly version: string
 }
@@ -27180,29 +27180,29 @@ export interface O11yApiGetV1O11yNamespacesAttributeValuesRequest {
 }
 
 /**
- * Request parameters for getV1O11yNextPrevErrorIDs operation in O11yApi.
+ * Request parameters for getV1O11yNextpreverrorids operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yNextPrevErrorIDsRequest
+ * @interface O11yApiGetV1O11yNextpreverroridsRequest
  */
-export interface O11yApiGetV1O11yNextPrevErrorIDsRequest {
+export interface O11yApiGetV1O11yNextpreverroridsRequest {
     /**
      * Timestamp is the instance\&#39;s time as a nanosecond epoch spelled as a string. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yNextPrevErrorIDs
+     * @memberof O11yApiGetV1O11yNextpreverrorids
      */
     readonly timestamp: string
 
     /**
      * GroupID is the exception group the instance belongs to. Required.
      * @type {string}
-     * @memberof O11yApiGetV1O11yNextPrevErrorIDs
+     * @memberof O11yApiGetV1O11yNextpreverrorids
      */
     readonly groupID: string
 
     /**
      * ErrorID is the exception instance id. Required by errorFromErrorID and nextPrevErrorIDs; unused by errorFromGroupID.
      * @type {string}
-     * @memberof O11yApiGetV1O11yNextPrevErrorIDs
+     * @memberof O11yApiGetV1O11yNextpreverrorids
      */
     readonly errorID?: string
 }
@@ -27789,50 +27789,50 @@ export interface O11yApiGetV1O11yReviewsRequest {
 }
 
 /**
- * Request parameters for getV1O11yReviewsId operation in O11yApi.
+ * Request parameters for getV1O11yReviewsById operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yReviewsIdRequest
+ * @interface O11yApiGetV1O11yReviewsByIdRequest
  */
-export interface O11yApiGetV1O11yReviewsIdRequest {
+export interface O11yApiGetV1O11yReviewsByIdRequest {
     /**
      * ID is the annotation queue to act on, from the path.
      * @type {string}
-     * @memberof O11yApiGetV1O11yReviewsId
+     * @memberof O11yApiGetV1O11yReviewsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1O11yReviewsIdItems operation in O11yApi.
+ * Request parameters for getV1O11yReviewsByIdItems operation in O11yApi.
  * @export
- * @interface O11yApiGetV1O11yReviewsIdItemsRequest
+ * @interface O11yApiGetV1O11yReviewsByIdItemsRequest
  */
-export interface O11yApiGetV1O11yReviewsIdItemsRequest {
+export interface O11yApiGetV1O11yReviewsByIdItemsRequest {
     /**
      * ID is the annotation queue whose items to list, from the path.
      * @type {string}
-     * @memberof O11yApiGetV1O11yReviewsIdItems
+     * @memberof O11yApiGetV1O11yReviewsByIdItems
      */
     readonly id: string
 
     /**
      * Status filters to PENDING or COMPLETED items. Absent returns both.
      * @type {string}
-     * @memberof O11yApiGetV1O11yReviewsIdItems
+     * @memberof O11yApiGetV1O11yReviewsByIdItems
      */
     readonly status?: string
 
     /**
      * Page is the 1-based page to read. Default 1.
      * @type {number}
-     * @memberof O11yApiGetV1O11yReviewsIdItems
+     * @memberof O11yApiGetV1O11yReviewsByIdItems
      */
     readonly page?: number
 
     /**
      * Limit is how many rows to return. Default 20, capped at 100.
      * @type {number}
-     * @memberof O11yApiGetV1O11yReviewsIdItems
+     * @memberof O11yApiGetV1O11yReviewsByIdItems
      */
     readonly limit?: number
 }
@@ -28860,50 +28860,50 @@ export interface O11yApiPatchRuleByIDRequest {
 }
 
 /**
- * Request parameters for patchV1O11yReviewsId operation in O11yApi.
+ * Request parameters for patchV1O11yReviewsById operation in O11yApi.
  * @export
- * @interface O11yApiPatchV1O11yReviewsIdRequest
+ * @interface O11yApiPatchV1O11yReviewsByIdRequest
  */
-export interface O11yApiPatchV1O11yReviewsIdRequest {
+export interface O11yApiPatchV1O11yReviewsByIdRequest {
     /**
      * ID is the annotation queue to update, from the path.
      * @type {string}
-     * @memberof O11yApiPatchV1O11yReviewsId
+     * @memberof O11yApiPatchV1O11yReviewsById
      */
     readonly id: string
 
     /**
      * 
      * @type {O11yUpdateQueueIn}
-     * @memberof O11yApiPatchV1O11yReviewsId
+     * @memberof O11yApiPatchV1O11yReviewsById
      */
     readonly o11yUpdateQueueIn: O11yUpdateQueueIn
 }
 
 /**
- * Request parameters for patchV1O11yReviewsIdItemsItemId operation in O11yApi.
+ * Request parameters for patchV1O11yReviewsByIdItemsByItemid operation in O11yApi.
  * @export
- * @interface O11yApiPatchV1O11yReviewsIdItemsItemIdRequest
+ * @interface O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest
  */
-export interface O11yApiPatchV1O11yReviewsIdItemsItemIdRequest {
+export interface O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest {
     /**
      * ID is the annotation queue the item belongs to, from the path.
      * @type {string}
-     * @memberof O11yApiPatchV1O11yReviewsIdItemsItemId
+     * @memberof O11yApiPatchV1O11yReviewsByIdItemsByItemid
      */
     readonly id: string
 
     /**
      * ItemID is the item to update, from the path.
      * @type {string}
-     * @memberof O11yApiPatchV1O11yReviewsIdItemsItemId
+     * @memberof O11yApiPatchV1O11yReviewsByIdItemsByItemid
      */
     readonly itemId: string
 
     /**
      * 
      * @type {O11yUpdateItemIn}
-     * @memberof O11yApiPatchV1O11yReviewsIdItemsItemId
+     * @memberof O11yApiPatchV1O11yReviewsByIdItemsByItemid
      */
     readonly o11yUpdateItemIn: O11yUpdateItemIn
 }
@@ -28993,15 +28993,15 @@ export interface O11yApiPostV1O11yClustersListRequest {
 }
 
 /**
- * Request parameters for postV1O11yCountErrors operation in O11yApi.
+ * Request parameters for postV1O11yCounterrors operation in O11yApi.
  * @export
- * @interface O11yApiPostV1O11yCountErrorsRequest
+ * @interface O11yApiPostV1O11yCounterrorsRequest
  */
-export interface O11yApiPostV1O11yCountErrorsRequest {
+export interface O11yApiPostV1O11yCounterrorsRequest {
     /**
      * 
      * @type {O11yO11yErrorsCountIn}
-     * @memberof O11yApiPostV1O11yCountErrors
+     * @memberof O11yApiPostV1O11yCounterrors
      */
     readonly o11yO11yErrorsCountIn: O11yO11yErrorsCountIn
 }
@@ -29049,22 +29049,22 @@ export interface O11yApiPostV1O11yDeploymentsListRequest {
 }
 
 /**
- * Request parameters for postV1O11yErrortrackingIssuesId operation in O11yApi.
+ * Request parameters for postV1O11yErrortrackingIssuesById operation in O11yApi.
  * @export
- * @interface O11yApiPostV1O11yErrortrackingIssuesIdRequest
+ * @interface O11yApiPostV1O11yErrortrackingIssuesByIdRequest
  */
-export interface O11yApiPostV1O11yErrortrackingIssuesIdRequest {
+export interface O11yApiPostV1O11yErrortrackingIssuesByIdRequest {
     /**
      * ID is the issue id.
      * @type {string}
-     * @memberof O11yApiPostV1O11yErrortrackingIssuesId
+     * @memberof O11yApiPostV1O11yErrortrackingIssuesById
      */
     readonly id: string
 
     /**
      * 
      * @type {O11yO11yErrorUpdateIssueIn}
-     * @memberof O11yApiPostV1O11yErrortrackingIssuesId
+     * @memberof O11yApiPostV1O11yErrortrackingIssuesById
      */
     readonly o11yO11yErrorUpdateIssueIn: O11yO11yErrorUpdateIssueIn
 }
@@ -29266,15 +29266,15 @@ export interface O11yApiPostV1O11yJobsListRequest {
 }
 
 /**
- * Request parameters for postV1O11yListErrors operation in O11yApi.
+ * Request parameters for postV1O11yListerrors operation in O11yApi.
  * @export
- * @interface O11yApiPostV1O11yListErrorsRequest
+ * @interface O11yApiPostV1O11yListerrorsRequest
  */
-export interface O11yApiPostV1O11yListErrorsRequest {
+export interface O11yApiPostV1O11yListerrorsRequest {
     /**
      * 
      * @type {O11yO11yErrorsListIn}
-     * @memberof O11yApiPostV1O11yListErrors
+     * @memberof O11yApiPostV1O11yListerrors
      */
     readonly o11yO11yErrorsListIn: O11yO11yErrorsListIn
 }
@@ -29686,22 +29686,22 @@ export interface O11yApiPostV1O11yReviewsRequest {
 }
 
 /**
- * Request parameters for postV1O11yReviewsIdItems operation in O11yApi.
+ * Request parameters for postV1O11yReviewsByIdItems operation in O11yApi.
  * @export
- * @interface O11yApiPostV1O11yReviewsIdItemsRequest
+ * @interface O11yApiPostV1O11yReviewsByIdItemsRequest
  */
-export interface O11yApiPostV1O11yReviewsIdItemsRequest {
+export interface O11yApiPostV1O11yReviewsByIdItemsRequest {
     /**
      * ID is the annotation queue to add to, from the path.
      * @type {string}
-     * @memberof O11yApiPostV1O11yReviewsIdItems
+     * @memberof O11yApiPostV1O11yReviewsByIdItems
      */
     readonly id: string
 
     /**
      * 
      * @type {O11yAddItemsIn}
-     * @memberof O11yApiPostV1O11yReviewsIdItems
+     * @memberof O11yApiPostV1O11yReviewsByIdItems
      */
     readonly o11yAddItemsIn: O11yAddItemsIn
 }
@@ -29917,22 +29917,22 @@ export interface O11yApiPutProfileRequest {
 }
 
 /**
- * Request parameters for putV1O11yExplorerViewsViewId operation in O11yApi.
+ * Request parameters for putV1O11yExplorerViewsByViewid operation in O11yApi.
  * @export
- * @interface O11yApiPutV1O11yExplorerViewsViewIdRequest
+ * @interface O11yApiPutV1O11yExplorerViewsByViewidRequest
  */
-export interface O11yApiPutV1O11yExplorerViewsViewIdRequest {
+export interface O11yApiPutV1O11yExplorerViewsByViewidRequest {
     /**
      * ViewID is the id of the view to replace, taken from the URL.
      * @type {string}
-     * @memberof O11yApiPutV1O11yExplorerViewsViewId
+     * @memberof O11yApiPutV1O11yExplorerViewsByViewid
      */
     readonly viewId: string
 
     /**
      * 
      * @type {O11yO11ySavedViewUpdateIn}
-     * @memberof O11yApiPutV1O11yExplorerViewsViewId
+     * @memberof O11yApiPutV1O11yExplorerViewsByViewid
      */
     readonly o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn
 }
@@ -31520,25 +31520,25 @@ export class O11yApi extends BaseAPI {
     /**
      * Deletes one saved explorer view by id.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Deletes one saved explorer view by id.
-     * @param {O11yApiDeleteV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+     * @param {O11yApiDeleteV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public deleteV1O11yExplorerViewsViewId(requestParameters: O11yApiDeleteV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteV1O11yExplorerViewsViewId(requestParameters.viewId, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1O11yExplorerViewsByViewid(requestParameters: O11yApiDeleteV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).deleteV1O11yExplorerViewsByViewid(requestParameters.viewId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one review queue and every item in it. A queue id belonging to another org answers the same 404 an unknown id does, so a probe learns nothing about what exists.
      * @summary Removes one review queue and every item in it.
-     * @param {O11yApiDeleteV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {O11yApiDeleteV1O11yReviewsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public deleteV1O11yReviewsId(requestParameters: O11yApiDeleteV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).deleteV1O11yReviewsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1O11yReviewsById(requestParameters: O11yApiDeleteV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).deleteV1O11yReviewsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32608,25 +32608,25 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns one exception instance and the span it happened on, by its error id within a group at a timestamp.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one exception instance and the span it happened on, by its error id within a group at a timestamp.
-     * @param {O11yApiGetV1O11yErrorFromErrorIDRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yErrorfromerroridRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yErrorFromErrorID(requestParameters: O11yApiGetV1O11yErrorFromErrorIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yErrorFromErrorID(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yErrorfromerrorid(requestParameters: O11yApiGetV1O11yErrorfromerroridRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yErrorfromerrorid(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the representative exception instance of a group at a timestamp, and the span it happened on.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns the representative exception instance of a group at a timestamp, and the span it happened on.
-     * @param {O11yApiGetV1O11yErrorFromGroupIDRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yErrorfromgroupidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yErrorFromGroupID(requestParameters: O11yApiGetV1O11yErrorFromGroupIDRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yErrorFromGroupID(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yErrorfromgroupid(requestParameters: O11yApiGetV1O11yErrorfromgroupidRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yErrorfromgroupid(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32644,13 +32644,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns one grouped issue with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one grouped issue with its latest occurrence sample.
-     * @param {O11yApiGetV1O11yErrortrackingIssuesIdRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yErrortrackingIssuesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yErrortrackingIssuesId(requestParameters: O11yApiGetV1O11yErrortrackingIssuesIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yErrortrackingIssuesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yErrortrackingIssuesById(requestParameters: O11yApiGetV1O11yErrortrackingIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yErrortrackingIssuesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32668,13 +32668,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns one saved explorer view by id.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one saved explorer view by id.
-     * @param {O11yApiGetV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yExplorerViewsViewId(requestParameters: O11yApiGetV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yExplorerViewsViewId(requestParameters.viewId, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yExplorerViewsByViewid(requestParameters: O11yApiGetV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yExplorerViewsByViewid(requestParameters.viewId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32910,13 +32910,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns the caller\'s org\'s log parsing pipelines at one config version — \"latest\" for the newest — along with that version\'s deployment record and the recent version history.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns the caller\'s org\'s log parsing pipelines at one config version — \"latest\" for the newest — along with that version\'s deployment record and the recent version history.
-     * @param {O11yApiGetV1O11yLogsPipelinesVersionRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yLogsPipelinesByVersionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yLogsPipelinesVersion(requestParameters: O11yApiGetV1O11yLogsPipelinesVersionRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yLogsPipelinesVersion(requestParameters.version, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yLogsPipelinesByVersion(requestParameters: O11yApiGetV1O11yLogsPipelinesByVersionRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yLogsPipelinesByVersion(requestParameters.version, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -32969,13 +32969,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns the ids of the exception instances immediately after and before a given one within its group — the paging cursor the error detail view walks.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns the ids of the exception instances immediately after and before a given one within its group — the paging cursor the error detail view walks.
-     * @param {O11yApiGetV1O11yNextPrevErrorIDsRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yNextpreverroridsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yNextPrevErrorIDs(requestParameters: O11yApiGetV1O11yNextPrevErrorIDsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yNextPrevErrorIDs(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yNextpreverrorids(requestParameters: O11yApiGetV1O11yNextpreverroridsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yNextpreverrorids(requestParameters.timestamp, requestParameters.groupID, requestParameters.errorID, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33147,25 +33147,25 @@ export class O11yApi extends BaseAPI {
     /**
      * Returns one review queue with its pending and completed counts and its first page of items. A queue id belonging to another org is a 404, never a cross-tenant read.
      * @summary Returns one review queue with its pending and completed counts and its first page of items.
-     * @param {O11yApiGetV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yReviewsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yReviewsId(requestParameters: O11yApiGetV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yReviewsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yReviewsById(requestParameters: O11yApiGetV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yReviewsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED. A queue id belonging to another org is a 404, never a cross-tenant list.
      * @summary Returns a page of one review queue\'s items, newest first, optionally filtered to PENDING or COMPLETED.
-     * @param {O11yApiGetV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+     * @param {O11yApiGetV1O11yReviewsByIdItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public getV1O11yReviewsIdItems(requestParameters: O11yApiGetV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).getV1O11yReviewsIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getV1O11yReviewsByIdItems(requestParameters: O11yApiGetV1O11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getV1O11yReviewsByIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33180,8 +33180,8 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.
-     * @summary List the caller org\'s LLM sessions
+     * Lists the caller org\'s LLM sessions.  It answers the caller org\'s LLM-observability sessions — traces grouped by session id on the gen_ai span plane — paged by limit and offset, in the runtime\'s own envelope, passed through unchanged.  An org-less caller is refused HERE, at the cloud boundary, before the request reaches the runtime, and the org the runtime then scopes on is that SAME validated tenant. The two cannot disagree: the tenant is minted from the principal\'s own claim at ingress and a client copy never survives it.  There is deliberately no session-detail route to pair with this. The runtime serves the list only; detail is composed client-side from this list plus the traces filtered by session, so a caller looking for one is looking for something that was never served rather than something that broke.  Why an explicit cloud route rather than only the order-70 wildcard: this pins the public flat path to the runtime\'s internal /api/sessions route SERVER-SIDE AND enforces the tenant gate at the cloud boundary — an org-less caller gets a clean 403 here before the request reaches the runtime, and the org the runtime binds (gen_ai.hanzo.org_id from X-Org-Id) is the SAME validated tenant this handler refuses to proceed without. Registered by mountScope (order 69), so it precedes the wildcard.  This used to cite query.go\'s composite-query pin as the precedent for the move. That file is GONE — it pinned POST /v1/o11y/query_range to the v3 engine, and when it went the module\'s v5 querier took the address, whose composite accepts only {queries:[…]}. The console still sent the v3 {queryType,panelType,builderQueries} envelope and every Logs page 400\'d on \"unknown field \\\"queryType\\\" in composite query\". Citing a deleted pin as the discipline to follow is how the next route inherits the same break, so the reference is removed rather than reworded: this route stands on its OWN pin, three lines below, which is still here.  The list query (?limit=&offset=) rides through unchanged; the runtime returns the llmobstypes.GettableSessions {items,offset,limit} under the {status,data} envelope the console\'s O11yApi.sessions already unwraps.
+     * @summary Lists the caller org\'s LLM sessions.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
@@ -33719,25 +33719,25 @@ export class O11yApi extends BaseAPI {
     /**
      * Changes a review queue\'s name, description or score-config set. A field the request omits is left alone. A name another queue in the same project already uses is a 409; a queue id belonging to another org is a 404.
      * @summary Changes a review queue\'s name, description or score-config set.
-     * @param {O11yApiPatchV1O11yReviewsIdRequest} requestParameters Request parameters.
+     * @param {O11yApiPatchV1O11yReviewsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public patchV1O11yReviewsId(requestParameters: O11yApiPatchV1O11yReviewsIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).patchV1O11yReviewsId(requestParameters.id, requestParameters.o11yUpdateQueueIn, options).then((request) => request(this.axios, this.basePath));
+    public patchV1O11yReviewsById(requestParameters: O11yApiPatchV1O11yReviewsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).patchV1O11yReviewsById(requestParameters.id, requestParameters.o11yUpdateQueueIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves one queue item between PENDING and COMPLETED and sets its assignee. Completing an item stamps its completedAt. An item that exists under a different queue answers the same 404 an unknown item does, and so does a queue belonging to another org.
      * @summary Moves one queue item between PENDING and COMPLETED and sets its assignee.
-     * @param {O11yApiPatchV1O11yReviewsIdItemsItemIdRequest} requestParameters Request parameters.
+     * @param {O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public patchV1O11yReviewsIdItemsItemId(requestParameters: O11yApiPatchV1O11yReviewsIdItemsItemIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).patchV1O11yReviewsIdItemsItemId(requestParameters.id, requestParameters.itemId, requestParameters.o11yUpdateItemIn, options).then((request) => request(this.axios, this.basePath));
+    public patchV1O11yReviewsByIdItemsByItemid(requestParameters: O11yApiPatchV1O11yReviewsByIdItemsByItemidRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).patchV1O11yReviewsByIdItemsByItemid(requestParameters.id, requestParameters.itemId, requestParameters.o11yUpdateItemIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33826,13 +33826,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Counts the grouped exceptions in the query window for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Counts the grouped exceptions in the query window for the caller\'s org.
-     * @param {O11yApiPostV1O11yCountErrorsRequest} requestParameters Request parameters.
+     * @param {O11yApiPostV1O11yCounterrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public postV1O11yCountErrors(requestParameters: O11yApiPostV1O11yCountErrorsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postV1O11yCountErrors(requestParameters.o11yO11yErrorsCountIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1O11yCounterrors(requestParameters: O11yApiPostV1O11yCounterrorsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postV1O11yCounterrors(requestParameters.o11yO11yErrorsCountIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -33874,13 +33874,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
-     * @param {O11yApiPostV1O11yErrortrackingIssuesIdRequest} requestParameters Request parameters.
+     * @param {O11yApiPostV1O11yErrortrackingIssuesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public postV1O11yErrortrackingIssuesId(requestParameters: O11yApiPostV1O11yErrortrackingIssuesIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postV1O11yErrortrackingIssuesId(requestParameters.id, requestParameters.o11yO11yErrorUpdateIssueIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1O11yErrortrackingIssuesById(requestParameters: O11yApiPostV1O11yErrortrackingIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postV1O11yErrortrackingIssuesById(requestParameters.id, requestParameters.o11yO11yErrorUpdateIssueIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34065,13 +34065,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Lists the grouped exceptions in the query window — each an exception type with its message, count, service and first/last-seen — for the caller\'s org.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Lists the grouped exceptions in the query window — each an exception type with its message, count, service and first/last-seen — for the caller\'s org.
-     * @param {O11yApiPostV1O11yListErrorsRequest} requestParameters Request parameters.
+     * @param {O11yApiPostV1O11yListerrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public postV1O11yListErrors(requestParameters: O11yApiPostV1O11yListErrorsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postV1O11yListErrors(requestParameters.o11yO11yErrorsListIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1O11yListerrors(requestParameters: O11yApiPostV1O11yListerrorsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postV1O11yListerrors(requestParameters.o11yO11yErrorsListIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34425,13 +34425,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Enqueues traces, observations or sessions on a review queue. Each item names exactly one object, either by traceId / observationId / sessionId or by objectType plus objectId; every item enters PENDING. A queue id belonging to another org is a 404.
      * @summary Enqueues traces, observations or sessions on a review queue.
-     * @param {O11yApiPostV1O11yReviewsIdItemsRequest} requestParameters Request parameters.
+     * @param {O11yApiPostV1O11yReviewsByIdItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public postV1O11yReviewsIdItems(requestParameters: O11yApiPostV1O11yReviewsIdItemsRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).postV1O11yReviewsIdItems(requestParameters.id, requestParameters.o11yAddItemsIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1O11yReviewsByIdItems(requestParameters: O11yApiPostV1O11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postV1O11yReviewsByIdItems(requestParameters.id, requestParameters.o11yAddItemsIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34617,13 +34617,13 @@ export class O11yApi extends BaseAPI {
     /**
      * Replaces one saved explorer view by id with the given view and echoes it back.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Replaces one saved explorer view by id with the given view and echoes it back.
-     * @param {O11yApiPutV1O11yExplorerViewsViewIdRequest} requestParameters Request parameters.
+     * @param {O11yApiPutV1O11yExplorerViewsByViewidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof O11yApi
      */
-    public putV1O11yExplorerViewsViewId(requestParameters: O11yApiPutV1O11yExplorerViewsViewIdRequest, options?: RawAxiosRequestConfig) {
-        return O11yApiFp(this.configuration).putV1O11yExplorerViewsViewId(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(this.axios, this.basePath));
+    public putV1O11yExplorerViewsByViewid(requestParameters: O11yApiPutV1O11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).putV1O11yExplorerViewsByViewid(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

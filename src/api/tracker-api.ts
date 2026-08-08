@@ -22,11 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { IssuePatch } from '../models';
+import type { IssueEdit } from '../models';
 // @ts-ignore
 import type { IssueView } from '../models';
 // @ts-ignore
-import type { ProjectPatch } from '../models';
+import type { MilestoneView } from '../models';
+// @ts-ignore
+import type { NewIssue } from '../models';
 // @ts-ignore
 import type { TrackerProject } from '../models';
 /**
@@ -36,15 +38,15 @@ import type { TrackerProject } from '../models';
 export const TrackerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
-         * @summary Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TrackerProjectsKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1TrackerProjectsByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteV1TrackerProjectsKey', 'key', key)
+            assertParamExists('deleteV1TrackerProjectsByKey', 'key', key)
             const localVarPath = `/v1/tracker/projects/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -70,21 +72,13 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
-         * @summary Removes one issue from a tracker project and answers 204 with no body.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.  The forge scopes milestones to a repository and publishes no org-level list, so this is a server-side fan-out over the repositories you can see. It runs here rather than in the browser because a client-side fan-out would need the forge reachable from the page and a credential held there.
+         * @summary Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TrackerProjectsKeyIssuesNum: async (key: string, num: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteV1TrackerProjectsKeyIssuesNum', 'key', key)
-            // verify required parameter 'num' is not null or undefined
-            assertParamExists('deleteV1TrackerProjectsKeyIssuesNum', 'num', num)
-            const localVarPath = `/v1/tracker/projects/{key}/issues/{num}`
-                .replace(`{${"key"}}`, encodeURIComponent(String(key)))
-                .replace(`{${"num"}}`, encodeURIComponent(String(num)));
+        getV1TrackerMilestones: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/tracker/milestones`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -92,7 +86,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -108,8 +102,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns every tracker project in the caller\'s org, newest first.  A project is the board: it owns a KEY (the uppercase handle that prefixes every issue identifier, \"ENG-14\") and the issues filed under it. The listing is org-scoped server-side — the org is the validated bearer claim, never a client-supplied header — so one org can never see another\'s boards.
-         * @summary Returns every tracker project in the caller\'s org, newest first.
+         * Returns the boards of your org — one per repository on the deployment\'s forge that you can see. The key is the repository name, and it is what addresses the board\'s issues.  Archived repositories are omitted: they are not live work. The set is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
+         * @summary Returns the boards of your org — one per repository on the deployment\'s forge that you can see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -138,15 +132,15 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
-         * @summary Returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
+         * Returns one board of your org by its key — the repository name. 404 when your org has no repository under that key, or when your own forge account cannot see it.
+         * @summary Returns one board of your org by its key — the repository name.
          * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrackerProjectsKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1TrackerProjectsByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1TrackerProjectsKey', 'key', key)
+            assertParamExists('getV1TrackerProjectsByKey', 'key', key)
             const localVarPath = `/v1/tracker/projects/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -172,19 +166,20 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
-         * @summary Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
+         * Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.  The column is a LABEL on the forge, so the board and the forge web UI are the same object seen twice: relabelling in either moves the card in both. A closed issue reads as done whatever its labels say.
+         * @summary Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.
          * @param {string} key Key is the project whose issues to list, from the path.
          * @param {string} [status] Status keeps only issues in that board column: backlog, todo, in_progress, done or canceled. An unknown value is refused with 400.
          * @param {string} [kind] Kind keeps only work items of that shape: issue, pr or epic. An unknown value is refused with 400.
          * @param {string} [repo] Repo keeps only issues bound to that git repository.
          * @param {string} [source] Source keeps only issues opened from that surface: team, git, crm, helpdesk, cms or agent. An unknown value is refused with 400.
+         * @param {boolean} [scheduled] Scheduled keeps only issues that carry a date — a start, a due date or both. This is the timeline\&#39;s slice of the board: pass scheduled&#x3D;true to get exactly the rows a gantt has somewhere to draw, instead of fetching every issue and discarding the undated ones client-side.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrackerProjectsKeyIssues: async (key: string, status?: string, kind?: string, repo?: string, source?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1TrackerProjectsByKeyIssues: async (key: string, status?: string, kind?: string, repo?: string, source?: string, scheduled?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1TrackerProjectsKeyIssues', 'key', key)
+            assertParamExists('getV1TrackerProjectsByKeyIssues', 'key', key)
             const localVarPath = `/v1/tracker/projects/{key}/issues`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -214,44 +209,10 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['source'] = source;
             }
 
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
-         * @summary Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1TrackerProjectsKeyIssuesNum: async (key: string, num: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1TrackerProjectsKeyIssuesNum', 'key', key)
-            // verify required parameter 'num' is not null or undefined
-            assertParamExists('getV1TrackerProjectsKeyIssuesNum', 'num', num)
-            const localVarPath = `/v1/tracker/projects/{key}/issues/{num}`
-                .replace(`{${"key"}}`, encodeURIComponent(String(key)))
-                .replace(`{${"num"}}`, encodeURIComponent(String(num)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+            if (scheduled !== undefined) {
+                localVarQueryParameter['scheduled'] = scheduled;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -264,18 +225,15 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
-         * @summary Renames a tracker project or rewrites its description, and returns the updated project.
-         * @param {string} key Key is the project to update, from the path.
-         * @param {ProjectPatch} projectPatch 
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1TrackerProjectsKey: async (key: string, projectPatch: ProjectPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1TrackerProjectsByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('patchV1TrackerProjectsKey', 'key', key)
-            // verify required parameter 'projectPatch' is not null or undefined
-            assertParamExists('patchV1TrackerProjectsKey', 'projectPatch', projectPatch)
+            assertParamExists('patchV1TrackerProjectsByKey', 'key', key)
             const localVarPath = `/v1/tracker/projects/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -291,12 +249,9 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectPatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -304,21 +259,21 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
-         * @summary Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project, from the path.
-         * @param {IssuePatch} issuePatch 
+         * Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it. Absent fields are left alone.  MOVING A CARD IS A RELABEL. The column lives in the forge\'s label set, so the move replaces that set rather than writing a status column here that a forge-side change could contradict. Moving to `done` also CLOSES the issue on the forge, because a done card and an open issue are a contradiction.
+         * @summary Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it.
+         * @param {string} key Key is the board — the repository name, from the path.
+         * @param {number} num Num is the issue number on that repository, from the path.
+         * @param {IssueEdit} issueEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1TrackerProjectsKeyIssuesNum: async (key: string, num: number, issuePatch: IssuePatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1TrackerProjectsByKeyIssuesByNum: async (key: string, num: number, issueEdit: IssueEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('patchV1TrackerProjectsKeyIssuesNum', 'key', key)
+            assertParamExists('patchV1TrackerProjectsByKeyIssuesByNum', 'key', key)
             // verify required parameter 'num' is not null or undefined
-            assertParamExists('patchV1TrackerProjectsKeyIssuesNum', 'num', num)
-            // verify required parameter 'issuePatch' is not null or undefined
-            assertParamExists('patchV1TrackerProjectsKeyIssuesNum', 'issuePatch', issuePatch)
+            assertParamExists('patchV1TrackerProjectsByKeyIssuesByNum', 'num', num)
+            // verify required parameter 'issueEdit' is not null or undefined
+            assertParamExists('patchV1TrackerProjectsByKeyIssuesByNum', 'issueEdit', issueEdit)
             const localVarPath = `/v1/tracker/projects/{key}/issues/{num}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)))
                 .replace(`{${"num"}}`, encodeURIComponent(String(num)));
@@ -340,7 +295,7 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(issuePatch, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(issueEdit, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -348,8 +303,8 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
-         * @summary Open a tracker board in your org
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -378,15 +333,18 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
-         * @summary File an issue on a tracker board
-         * @param {string} key 
+         * Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.  The column and priority are written as LABELS, which is what makes the card and the forge issue the same object: someone relabelling in the forge web UI has moved your card.
+         * @summary Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.
+         * @param {string} key Key is the board — the repository name, from the path.
+         * @param {NewIssue} newIssue 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TrackerProjectsByKeyIssues: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1TrackerProjectsByKeyIssues: async (key: string, newIssue: NewIssue, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
             assertParamExists('postV1TrackerProjectsByKeyIssues', 'key', key)
+            // verify required parameter 'newIssue' is not null or undefined
+            assertParamExists('postV1TrackerProjectsByKeyIssues', 'newIssue', newIssue)
             const localVarPath = `/v1/tracker/projects/{key}/issues`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -402,9 +360,12 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(newIssue, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -422,35 +383,33 @@ export const TrackerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TrackerApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
-         * @summary Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-         * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TrackerProjectsKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TrackerProjectsKey(key, options);
+        async deleteV1TrackerProjectsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TrackerProjectsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.deleteV1TrackerProjectsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.deleteV1TrackerProjectsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
-         * @summary Removes one issue from a tracker project and answers 204 with no body.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.  The forge scopes milestones to a repository and publishes no org-level list, so this is a server-side fan-out over the repositories you can see. It runs here rather than in the browser because a client-side fan-out would need the forge reachable from the page and a credential held there.
+         * @summary Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TrackerProjectsKeyIssuesNum(key: string, num: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TrackerProjectsKeyIssuesNum(key, num, options);
+        async getV1TrackerMilestones(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MilestoneView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerMilestones(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.deleteV1TrackerProjectsKeyIssuesNum']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerMilestones']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every tracker project in the caller\'s org, newest first.  A project is the board: it owns a KEY (the uppercase handle that prefixes every issue identifier, \"ENG-14\") and the issues filed under it. The listing is org-scoped server-side — the org is the validated bearer claim, never a client-supplied header — so one org can never see another\'s boards.
-         * @summary Returns every tracker project in the caller\'s org, newest first.
+         * Returns the boards of your org — one per repository on the deployment\'s forge that you can see. The key is the repository name, and it is what addresses the board\'s issues.  Archived repositories are omitted: they are not live work. The set is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
+         * @summary Returns the boards of your org — one per repository on the deployment\'s forge that you can see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -461,81 +420,67 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
-         * @summary Returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
+         * Returns one board of your org by its key — the repository name. 404 when your org has no repository under that key, or when your own forge account cannot see it.
+         * @summary Returns one board of your org by its key — the repository name.
          * @param {string} key Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TrackerProjectsKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackerProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerProjectsKey(key, options);
+        async getV1TrackerProjectsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackerProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerProjectsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerProjectsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerProjectsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
-         * @summary Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
+         * Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.  The column is a LABEL on the forge, so the board and the forge web UI are the same object seen twice: relabelling in either moves the card in both. A closed issue reads as done whatever its labels say.
+         * @summary Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.
          * @param {string} key Key is the project whose issues to list, from the path.
          * @param {string} [status] Status keeps only issues in that board column: backlog, todo, in_progress, done or canceled. An unknown value is refused with 400.
          * @param {string} [kind] Kind keeps only work items of that shape: issue, pr or epic. An unknown value is refused with 400.
          * @param {string} [repo] Repo keeps only issues bound to that git repository.
          * @param {string} [source] Source keeps only issues opened from that surface: team, git, crm, helpdesk, cms or agent. An unknown value is refused with 400.
+         * @param {boolean} [scheduled] Scheduled keeps only issues that carry a date — a start, a due date or both. This is the timeline\&#39;s slice of the board: pass scheduled&#x3D;true to get exactly the rows a gantt has somewhere to draw, instead of fetching every issue and discarding the undated ones client-side.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TrackerProjectsKeyIssues(key: string, status?: string, kind?: string, repo?: string, source?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IssueView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerProjectsKeyIssues(key, status, kind, repo, source, options);
+        async getV1TrackerProjectsByKeyIssues(key: string, status?: string, kind?: string, repo?: string, source?: string, scheduled?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IssueView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerProjectsByKeyIssues(key, status, kind, repo, source, scheduled, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerProjectsKeyIssues']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerProjectsByKeyIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
-         * @summary Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {string} key 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TrackerProjectsKeyIssuesNum(key: string, num: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerProjectsKeyIssuesNum(key, num, options);
+        async patchV1TrackerProjectsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1TrackerProjectsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerProjectsKeyIssuesNum']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.patchV1TrackerProjectsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
-         * @summary Renames a tracker project or rewrites its description, and returns the updated project.
-         * @param {string} key Key is the project to update, from the path.
-         * @param {ProjectPatch} projectPatch 
+         * Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it. Absent fields are left alone.  MOVING A CARD IS A RELABEL. The column lives in the forge\'s label set, so the move replaces that set rather than writing a status column here that a forge-side change could contradict. Moving to `done` also CLOSES the issue on the forge, because a done card and an open issue are a contradiction.
+         * @summary Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it.
+         * @param {string} key Key is the board — the repository name, from the path.
+         * @param {number} num Num is the issue number on that repository, from the path.
+         * @param {IssueEdit} issueEdit 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1TrackerProjectsKey(key: string, projectPatch: ProjectPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrackerProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1TrackerProjectsKey(key, projectPatch, options);
+        async patchV1TrackerProjectsByKeyIssuesByNum(key: string, num: number, issueEdit: IssueEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1TrackerProjectsByKeyIssuesByNum(key, num, issueEdit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.patchV1TrackerProjectsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.patchV1TrackerProjectsByKeyIssuesByNum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
-         * @summary Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-         * @param {string} key Key is the issue\&#39;s project, from the path.
-         * @param {number} num Num is the issue\&#39;s number within that project, from the path.
-         * @param {IssuePatch} issuePatch 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchV1TrackerProjectsKeyIssuesNum(key: string, num: number, issuePatch: IssuePatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1TrackerProjectsKeyIssuesNum(key, num, issuePatch, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrackerApi.patchV1TrackerProjectsKeyIssuesNum']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
-         * @summary Open a tracker board in your org
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -546,14 +491,15 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
-         * @summary File an issue on a tracker board
-         * @param {string} key 
+         * Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.  The column and priority are written as LABELS, which is what makes the card and the forge issue the same object: someone relabelling in the forge web UI has moved your card.
+         * @summary Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.
+         * @param {string} key Key is the board — the repository name, from the path.
+         * @param {NewIssue} newIssue 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1TrackerProjectsByKeyIssues(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TrackerProjectsByKeyIssues(key, options);
+        async postV1TrackerProjectsByKeyIssues(key: string, newIssue: NewIssue, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TrackerProjectsByKeyIssues(key, newIssue, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.postV1TrackerProjectsByKeyIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -569,28 +515,27 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = TrackerApiFp(configuration)
     return {
         /**
-         * Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
-         * @summary Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-         * @param {TrackerApiDeleteV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {TrackerApiDeleteV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TrackerProjectsKey(requestParameters: TrackerApiDeleteV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1TrackerProjectsKey(requestParameters.key, options).then((request) => request(axios, basePath));
+        deleteV1TrackerProjectsByKey(requestParameters: TrackerApiDeleteV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
-         * @summary Removes one issue from a tracker project and answers 204 with no body.
-         * @param {TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
+         * Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.  The forge scopes milestones to a repository and publishes no org-level list, so this is a server-side fan-out over the repositories you can see. It runs here rather than in the browser because a client-side fan-out would need the forge reachable from the page and a credential held there.
+         * @summary Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
+        getV1TrackerMilestones(options?: RawAxiosRequestConfig): AxiosPromise<Array<MilestoneView>> {
+            return localVarFp.getV1TrackerMilestones(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every tracker project in the caller\'s org, newest first.  A project is the board: it owns a KEY (the uppercase handle that prefixes every issue identifier, \"ENG-14\") and the issues filed under it. The listing is org-scoped server-side — the org is the validated bearer claim, never a client-supplied header — so one org can never see another\'s boards.
-         * @summary Returns every tracker project in the caller\'s org, newest first.
+         * Returns the boards of your org — one per repository on the deployment\'s forge that you can see. The key is the repository name, and it is what addresses the board\'s issues.  Archived repositories are omitted: they are not live work. The set is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
+         * @summary Returns the boards of your org — one per repository on the deployment\'s forge that you can see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -598,58 +543,48 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getV1TrackerProjects(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
-         * @summary Returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
-         * @param {TrackerApiGetV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+         * Returns one board of your org by its key — the repository name. 404 when your org has no repository under that key, or when your own forge account cannot see it.
+         * @summary Returns one board of your org by its key — the repository name.
+         * @param {TrackerApiGetV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrackerProjectsKey(requestParameters: TrackerApiGetV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrackerProject> {
-            return localVarFp.getV1TrackerProjectsKey(requestParameters.key, options).then((request) => request(axios, basePath));
+        getV1TrackerProjectsByKey(requestParameters: TrackerApiGetV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrackerProject> {
+            return localVarFp.getV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
-         * @summary Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
-         * @param {TrackerApiGetV1TrackerProjectsKeyIssuesRequest} requestParameters Request parameters.
+         * Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.  The column is a LABEL on the forge, so the board and the forge web UI are the same object seen twice: relabelling in either moves the card in both. A closed issue reads as done whatever its labels say.
+         * @summary Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.
+         * @param {TrackerApiGetV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrackerProjectsKeyIssues(requestParameters: TrackerApiGetV1TrackerProjectsKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<IssueView>> {
-            return localVarFp.getV1TrackerProjectsKeyIssues(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, options).then((request) => request(axios, basePath));
+        getV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiGetV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<IssueView>> {
+            return localVarFp.getV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.scheduled, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
-         * @summary Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-         * @param {TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
+         * @param {TrackerApiPatchV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
-            return localVarFp.getV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
+        patchV1TrackerProjectsByKey(requestParameters: TrackerApiPatchV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
-         * @summary Renames a tracker project or rewrites its description, and returns the updated project.
-         * @param {TrackerApiPatchV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+         * Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it. Absent fields are left alone.  MOVING A CARD IS A RELABEL. The column lives in the forge\'s label set, so the move replaces that set rather than writing a status column here that a forge-side change could contradict. Moving to `done` also CLOSES the issue on the forge, because a done card and an open issue are a contradiction.
+         * @summary Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it.
+         * @param {TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1TrackerProjectsKey(requestParameters: TrackerApiPatchV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrackerProject> {
-            return localVarFp.patchV1TrackerProjectsKey(requestParameters.key, requestParameters.projectPatch, options).then((request) => request(axios, basePath));
+        patchV1TrackerProjectsByKeyIssuesByNum(requestParameters: TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
+            return localVarFp.patchV1TrackerProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, requestParameters.issueEdit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
-         * @summary Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-         * @param {TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
-            return localVarFp.patchV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, requestParameters.issuePatch, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
-         * @summary Open a tracker board in your org
+         * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+         * @summary Refuses — a board is a repository on the forge.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -657,177 +592,135 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postV1TrackerProjects(options).then((request) => request(axios, basePath));
         },
         /**
-         * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
-         * @summary File an issue on a tracker board
+         * Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.  The column and priority are written as LABELS, which is what makes the card and the forge issue the same object: someone relabelling in the forge web UI has moved your card.
+         * @summary Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.
          * @param {TrackerApiPostV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1TrackerProjectsByKeyIssues(requestParameters.key, options).then((request) => request(axios, basePath));
+        postV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
+            return localVarFp.postV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.newIssue, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1TrackerProjectsKey operation in TrackerApi.
+ * Request parameters for deleteV1TrackerProjectsByKey operation in TrackerApi.
  * @export
- * @interface TrackerApiDeleteV1TrackerProjectsKeyRequest
+ * @interface TrackerApiDeleteV1TrackerProjectsByKeyRequest
  */
-export interface TrackerApiDeleteV1TrackerProjectsKeyRequest {
+export interface TrackerApiDeleteV1TrackerProjectsByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackerApiDeleteV1TrackerProjectsByKey
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for getV1TrackerProjectsByKey operation in TrackerApi.
+ * @export
+ * @interface TrackerApiGetV1TrackerProjectsByKeyRequest
+ */
+export interface TrackerApiGetV1TrackerProjectsByKeyRequest {
     /**
      * Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
      * @type {string}
-     * @memberof TrackerApiDeleteV1TrackerProjectsKey
+     * @memberof TrackerApiGetV1TrackerProjectsByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for deleteV1TrackerProjectsKeyIssuesNum operation in TrackerApi.
+ * Request parameters for getV1TrackerProjectsByKeyIssues operation in TrackerApi.
  * @export
- * @interface TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest
+ * @interface TrackerApiGetV1TrackerProjectsByKeyIssuesRequest
  */
-export interface TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest {
-    /**
-     * Key is the issue\&#39;s project, from the path.
-     * @type {string}
-     * @memberof TrackerApiDeleteV1TrackerProjectsKeyIssuesNum
-     */
-    readonly key: string
-
-    /**
-     * Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
-     * @type {number}
-     * @memberof TrackerApiDeleteV1TrackerProjectsKeyIssuesNum
-     */
-    readonly num: number
-}
-
-/**
- * Request parameters for getV1TrackerProjectsKey operation in TrackerApi.
- * @export
- * @interface TrackerApiGetV1TrackerProjectsKeyRequest
- */
-export interface TrackerApiGetV1TrackerProjectsKeyRequest {
-    /**
-     * Key is the project\&#39;s org-unique handle: 2-8 uppercase alphanumerics starting with a letter (\&quot;ENG\&quot;, \&quot;OPS2\&quot;). Matched case-insensitively.
-     * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKey
-     */
-    readonly key: string
-}
-
-/**
- * Request parameters for getV1TrackerProjectsKeyIssues operation in TrackerApi.
- * @export
- * @interface TrackerApiGetV1TrackerProjectsKeyIssuesRequest
- */
-export interface TrackerApiGetV1TrackerProjectsKeyIssuesRequest {
+export interface TrackerApiGetV1TrackerProjectsByKeyIssuesRequest {
     /**
      * Key is the project whose issues to list, from the path.
      * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssues
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
      */
     readonly key: string
 
     /**
      * Status keeps only issues in that board column: backlog, todo, in_progress, done or canceled. An unknown value is refused with 400.
      * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssues
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
      */
     readonly status?: string
 
     /**
      * Kind keeps only work items of that shape: issue, pr or epic. An unknown value is refused with 400.
      * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssues
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
      */
     readonly kind?: string
 
     /**
      * Repo keeps only issues bound to that git repository.
      * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssues
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
      */
     readonly repo?: string
 
     /**
      * Source keeps only issues opened from that surface: team, git, crm, helpdesk, cms or agent. An unknown value is refused with 400.
      * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssues
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
      */
     readonly source?: string
+
+    /**
+     * Scheduled keeps only issues that carry a date — a start, a due date or both. This is the timeline\&#39;s slice of the board: pass scheduled&#x3D;true to get exactly the rows a gantt has somewhere to draw, instead of fetching every issue and discarding the undated ones client-side.
+     * @type {boolean}
+     * @memberof TrackerApiGetV1TrackerProjectsByKeyIssues
+     */
+    readonly scheduled?: boolean
 }
 
 /**
- * Request parameters for getV1TrackerProjectsKeyIssuesNum operation in TrackerApi.
+ * Request parameters for patchV1TrackerProjectsByKey operation in TrackerApi.
  * @export
- * @interface TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest
+ * @interface TrackerApiPatchV1TrackerProjectsByKeyRequest
  */
-export interface TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest {
-    /**
-     * Key is the issue\&#39;s project, from the path.
-     * @type {string}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssuesNum
-     */
-    readonly key: string
-
-    /**
-     * Num is the issue\&#39;s number within that project — the digits of KEY-14. Positive; anything else is refused with 400.
-     * @type {number}
-     * @memberof TrackerApiGetV1TrackerProjectsKeyIssuesNum
-     */
-    readonly num: number
-}
-
-/**
- * Request parameters for patchV1TrackerProjectsKey operation in TrackerApi.
- * @export
- * @interface TrackerApiPatchV1TrackerProjectsKeyRequest
- */
-export interface TrackerApiPatchV1TrackerProjectsKeyRequest {
-    /**
-     * Key is the project to update, from the path.
-     * @type {string}
-     * @memberof TrackerApiPatchV1TrackerProjectsKey
-     */
-    readonly key: string
-
+export interface TrackerApiPatchV1TrackerProjectsByKeyRequest {
     /**
      * 
-     * @type {ProjectPatch}
-     * @memberof TrackerApiPatchV1TrackerProjectsKey
+     * @type {string}
+     * @memberof TrackerApiPatchV1TrackerProjectsByKey
      */
-    readonly projectPatch: ProjectPatch
+    readonly key: string
 }
 
 /**
- * Request parameters for patchV1TrackerProjectsKeyIssuesNum operation in TrackerApi.
+ * Request parameters for patchV1TrackerProjectsByKeyIssuesByNum operation in TrackerApi.
  * @export
- * @interface TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest
+ * @interface TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest
  */
-export interface TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest {
+export interface TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest {
     /**
-     * Key is the issue\&#39;s project, from the path.
+     * Key is the board — the repository name, from the path.
      * @type {string}
-     * @memberof TrackerApiPatchV1TrackerProjectsKeyIssuesNum
+     * @memberof TrackerApiPatchV1TrackerProjectsByKeyIssuesByNum
      */
     readonly key: string
 
     /**
-     * Num is the issue\&#39;s number within that project, from the path.
+     * Num is the issue number on that repository, from the path.
      * @type {number}
-     * @memberof TrackerApiPatchV1TrackerProjectsKeyIssuesNum
+     * @memberof TrackerApiPatchV1TrackerProjectsByKeyIssuesByNum
      */
     readonly num: number
 
     /**
      * 
-     * @type {IssuePatch}
-     * @memberof TrackerApiPatchV1TrackerProjectsKeyIssuesNum
+     * @type {IssueEdit}
+     * @memberof TrackerApiPatchV1TrackerProjectsByKeyIssuesByNum
      */
-    readonly issuePatch: IssuePatch
+    readonly issueEdit: IssueEdit
 }
 
 /**
@@ -837,11 +730,18 @@ export interface TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest {
  */
 export interface TrackerApiPostV1TrackerProjectsByKeyIssuesRequest {
     /**
-     * 
+     * Key is the board — the repository name, from the path.
      * @type {string}
      * @memberof TrackerApiPostV1TrackerProjectsByKeyIssues
      */
     readonly key: string
+
+    /**
+     * 
+     * @type {NewIssue}
+     * @memberof TrackerApiPostV1TrackerProjectsByKeyIssues
+     */
+    readonly newIssue: NewIssue
 }
 
 /**
@@ -852,32 +752,31 @@ export interface TrackerApiPostV1TrackerProjectsByKeyIssuesRequest {
  */
 export class TrackerApi extends BaseAPI {
     /**
-     * Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body. 404 when the org has no project under that key.  The cascade is the point: an issue has no meaning without the board whose key names it, so deleting the board deletes them together rather than leaving orphans addressable by an identifier that no longer resolves.
-     * @summary Removes one tracker project of the caller\'s org AND every issue filed under it, and answers 204 with no body.
-     * @param {TrackerApiDeleteV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refuses — a board is a repository on the forge.
+     * @param {TrackerApiDeleteV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public deleteV1TrackerProjectsKey(requestParameters: TrackerApiDeleteV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).deleteV1TrackerProjectsKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1TrackerProjectsByKey(requestParameters: TrackerApiDeleteV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).deleteV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Removes one issue from a tracker project and answers 204 with no body. 404 when the project or the issue does not exist in the caller\'s org.  The issue\'s number is NOT reused: the next issue on the board takes the next number, so a deleted identifier stays retired rather than silently pointing at different work.
-     * @summary Removes one issue from a tracker project and answers 204 with no body.
-     * @param {TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
+     * Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.  The forge scopes milestones to a repository and publishes no org-level list, so this is a server-side fan-out over the repositories you can see. It runs here rather than in the browser because a client-side fan-out would need the forge reachable from the page and a credential held there.
+     * @summary Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public deleteV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiDeleteV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).deleteV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
+    public getV1TrackerMilestones(options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).getV1TrackerMilestones(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns every tracker project in the caller\'s org, newest first.  A project is the board: it owns a KEY (the uppercase handle that prefixes every issue identifier, \"ENG-14\") and the issues filed under it. The listing is org-scoped server-side — the org is the validated bearer claim, never a client-supplied header — so one org can never see another\'s boards.
-     * @summary Returns every tracker project in the caller\'s org, newest first.
+     * Returns the boards of your org — one per repository on the deployment\'s forge that you can see. The key is the repository name, and it is what addresses the board\'s issues.  Archived repositories are omitted: they are not live work. The set is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
+     * @summary Returns the boards of your org — one per repository on the deployment\'s forge that you can see.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
@@ -887,68 +786,56 @@ export class TrackerApi extends BaseAPI {
     }
 
     /**
-     * Returns one tracker project of the caller\'s org by its key — its name, description and timestamps. 404 when the org has no project under that key.
-     * @summary Returns one tracker project of the caller\'s org by its key — its name, description and timestamps.
-     * @param {TrackerApiGetV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+     * Returns one board of your org by its key — the repository name. 404 when your org has no repository under that key, or when your own forge account cannot see it.
+     * @summary Returns one board of your org by its key — the repository name.
+     * @param {TrackerApiGetV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public getV1TrackerProjectsKey(requestParameters: TrackerApiGetV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).getV1TrackerProjectsKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getV1TrackerProjectsByKey(requestParameters: TrackerApiGetV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).getV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.  This is the ONE place a surface takes its slice of the shared issue table: hanzo.team passes no filter or a status, a git repository\'s Issues tab passes kind=issue&repo=<r> and its Pull Requests tab kind=pr&repo=<r>. A filter value outside its closed set is refused with 400 rather than silently returning an empty board.
-     * @summary Returns the issues of one tracker project, optionally filtered by status, kind, repo and source.
-     * @param {TrackerApiGetV1TrackerProjectsKeyIssuesRequest} requestParameters Request parameters.
+     * Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.  The column is a LABEL on the forge, so the board and the forge web UI are the same object seen twice: relabelling in either moves the card in both. A closed issue reads as done whatever its labels say.
+     * @summary Returns one board\'s issues — the work items of that repository on the forge, with their column, priority, assignee and labels.
+     * @param {TrackerApiGetV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public getV1TrackerProjectsKeyIssues(requestParameters: TrackerApiGetV1TrackerProjectsKeyIssuesRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).getV1TrackerProjectsKeyIssues(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, options).then((request) => request(this.axios, this.basePath));
+    public getV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiGetV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).getV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.scheduled, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings. 404 when the project or the issue does not exist in the caller\'s org.
-     * @summary Returns one issue of one tracker project by its per-project number — title, description, status, priority, assignee, labels, kind, source and its git bindings.
-     * @param {TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
+     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refuses — a board is a repository on the forge.
+     * @param {TrackerApiPatchV1TrackerProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public getV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiGetV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).getV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
+    public patchV1TrackerProjectsByKey(requestParameters: TrackerApiPatchV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).patchV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Renames a tracker project or rewrites its description, and returns the updated project. Both fields are optional: one the caller omits keeps its stored value.  The project KEY is never editable — it prefixes every issue identifier already filed under the board, so changing it would rewrite the human handle of every issue in it.
-     * @summary Renames a tracker project or rewrites its description, and returns the updated project.
-     * @param {TrackerApiPatchV1TrackerProjectsKeyRequest} requestParameters Request parameters.
+     * Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it. Absent fields are left alone.  MOVING A CARD IS A RELABEL. The column lives in the forge\'s label set, so the move replaces that set rather than writing a status column here that a forge-side change could contradict. Moving to `done` also CLOSES the issue on the forge, because a done card and an open issue are a contradiction.
+     * @summary Edits a work item — rename it, rewrite it, move it to another column, or re-prioritise it.
+     * @param {TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
-    public patchV1TrackerProjectsKey(requestParameters: TrackerApiPatchV1TrackerProjectsKeyRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).patchV1TrackerProjectsKey(requestParameters.key, requestParameters.projectPatch, options).then((request) => request(this.axios, this.basePath));
+    public patchV1TrackerProjectsByKeyIssuesByNum(requestParameters: TrackerApiPatchV1TrackerProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).patchV1TrackerProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, requestParameters.issueEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels. Every field is optional: one the caller omits keeps its stored value, and `labels` REPLACES the set rather than adding to it.  The issue\'s kind, source and git bindings are not editable here: they record where the work item came FROM, which is a fact about its origin rather than its current state.
-     * @summary Edits one issue in place and returns it — retitle it, rewrite its body, move it between board columns, reprioritize, reassign, or replace its labels.
-     * @param {TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TrackerApi
-     */
-    public patchV1TrackerProjectsKeyIssuesNum(requestParameters: TrackerApiPatchV1TrackerProjectsKeyIssuesNumRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).patchV1TrackerProjectsKeyIssuesNum(requestParameters.key, requestParameters.num, requestParameters.issuePatch, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a board and returns it, including the KEY that will prefix every issue identifier filed under it — the same key GET, PATCH and DELETE address the board by, and the ENG in ENG-14.  `name` is required. `key` is optional and is UPPERCASED: omit it and one is derived from the name — its first four letters and digits, or PRJ when that yields nothing usable. A key that is not 2-8 characters starting with a letter is 400.  THE KEY IS UNIQUE PER ORG AND A COLLISION IS REFUSED, NOT MERGED: a second board on a key already taken is 409, and the derived key is not made unique for you, so two similarly named boards collide and the second caller must name a key. Re-POSTing is therefore not idempotent — it fails rather than returning the existing board.  The org is the validated bearer\'s own, never a client header, and the board is stored under the caller\'s selected IAM PROJECT: the same key in two IAM projects is two unrelated boards. 403 without a validated org.  Free by default. The create runs the shared per-org balance gate at a fee of zero unless a deployment prices it, and a priced deployment out of balance refuses with the nested {\"error\":{\"code\",\"message\"}} body at 402/503 rather than a flat error.
-     * @summary Open a tracker board in your org
+     * Refuses — a board is a repository on the forge.  It answers 405. A tracker board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and roll milestones up across the org. Those are the routes beside this one.
+     * @summary Refuses — a board is a repository on the forge.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
@@ -958,15 +845,15 @@ export class TrackerApi extends BaseAPI {
     }
 
     /**
-     * Files a work item on one board and returns it, carrying the `identifier` — KEY-<number> — it will be known by everywhere else.  THE NUMBER IS THE SERVER\'S TO ASSIGN and is not accepted from the caller: it is the board\'s highest plus one, taken inside the insert\'s own transaction, and it counts PER BOARD — ENG-1 and OPS-1 are different issues.  `title` is required; everything else is optional and defaults. `kind` (issue, pr, epic) says what the item IS, `source` (team, git, crm, helpdesk, cms, agent) says which surface OPENED it, and the two are orthogonal — an issue escalated from support is kind=issue&source=helpdesk. `status` defaults to backlog, `priority` to none. A value outside one of these closed sets is 400, never silently defaulted. `labels` may not contain a comma, the storage separator.  `repo` and `extRef` RECORD an external binding; they do not create one. Filing here writes to your tracker and reaches no external system — nothing is pushed to GitHub. The GitHub integration runs the other way, mirroring upstream issues INTO this tracker.  404 when the caller\'s org has no board under that key. The org is the validated bearer\'s own and the board is resolved within the caller\'s selected IAM project; 403 without a validated org. Free by default, on the same balance gate as the board create — an epic, a pull request and an issue are priced identically, since the fee is per work item rather than per kind.
-     * @summary File an issue on a tracker board
+     * Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.  The column and priority are written as LABELS, which is what makes the card and the forge issue the same object: someone relabelling in the forge web UI has moved your card.
+     * @summary Opens a work item on the board — an issue on that repository on the deployment\'s forge, filed as YOU.
      * @param {TrackerApiPostV1TrackerProjectsByKeyIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TrackerApi
      */
     public postV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig) {
-        return TrackerApiFp(this.configuration).postV1TrackerProjectsByKeyIssues(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+        return TrackerApiFp(this.configuration).postV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.newIssue, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

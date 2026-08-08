@@ -44,9 +44,9 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PromptsName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1PromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1PromptsName', 'name', name)
+            assertParamExists('deleteV1PromptsByName', 'name', name)
             const localVarPath = `/v1/prompts/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -79,6 +79,40 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          */
         getV1Prompts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prompts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1PromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1PromptsByName', 'name', name)
+            const localVarPath = `/v1/prompts/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -162,40 +196,6 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {string} name Name is the prompt to act on, from the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1PromptsName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1PromptsName', 'name', name)
-            const localVarPath = `/v1/prompts/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
          * @summary Create records a prompt for the caller\'s org and answers 201 with it.
          * @param {PromptReq} promptReq 
@@ -248,10 +248,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PromptsName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PromptsName(name, options);
+        async deleteV1PromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PromptsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.deleteV1PromptsName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.deleteV1PromptsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -264,6 +264,19 @@ export const PromptsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Prompts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1Prompts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * @param {string} name Name is the prompt to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1PromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -288,19 +301,6 @@ export const PromptsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsMetrics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsMetrics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {string} name Name is the prompt to act on, from the path.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1PromptsName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -329,12 +329,12 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
         /**
          * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
          * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-         * @param {PromptsApiDeleteV1PromptsNameRequest} requestParameters Request parameters.
+         * @param {PromptsApiDeleteV1PromptsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PromptsName(requestParameters: PromptsApiDeleteV1PromptsNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PromptsName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1PromptsByName(requestParameters: PromptsApiDeleteV1PromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1PromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
@@ -344,6 +344,16 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
          */
         getV1Prompts(options?: RawAxiosRequestConfig): AxiosPromise<PromptList> {
             return localVarFp.getV1Prompts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+         * @param {PromptsApiGetV1PromptsByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1PromptsByName(requestParameters: PromptsApiGetV1PromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
+            return localVarFp.getV1PromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompts. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
@@ -364,16 +374,6 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getV1PromptsMetrics(options).then((request) => request(axios, basePath));
         },
         /**
-         * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-         * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {PromptsApiGetV1PromptsNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1PromptsName(requestParameters: PromptsApiGetV1PromptsNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
-            return localVarFp.getV1PromptsName(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
          * @summary Create records a prompt for the caller\'s org and answers 201 with it.
          * @param {PromptsApiPostV1PromptsRequest} requestParameters Request parameters.
@@ -387,29 +387,29 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for deleteV1PromptsName operation in PromptsApi.
+ * Request parameters for deleteV1PromptsByName operation in PromptsApi.
  * @export
- * @interface PromptsApiDeleteV1PromptsNameRequest
+ * @interface PromptsApiDeleteV1PromptsByNameRequest
  */
-export interface PromptsApiDeleteV1PromptsNameRequest {
+export interface PromptsApiDeleteV1PromptsByNameRequest {
     /**
      * Name is the prompt to act on, from the path.
      * @type {string}
-     * @memberof PromptsApiDeleteV1PromptsName
+     * @memberof PromptsApiDeleteV1PromptsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1PromptsName operation in PromptsApi.
+ * Request parameters for getV1PromptsByName operation in PromptsApi.
  * @export
- * @interface PromptsApiGetV1PromptsNameRequest
+ * @interface PromptsApiGetV1PromptsByNameRequest
  */
-export interface PromptsApiGetV1PromptsNameRequest {
+export interface PromptsApiGetV1PromptsByNameRequest {
     /**
      * Name is the prompt to act on, from the path.
      * @type {string}
-     * @memberof PromptsApiGetV1PromptsName
+     * @memberof PromptsApiGetV1PromptsByName
      */
     readonly name: string
 }
@@ -438,13 +438,13 @@ export class PromptsApi extends BaseAPI {
     /**
      * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
      * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-     * @param {PromptsApiDeleteV1PromptsNameRequest} requestParameters Request parameters.
+     * @param {PromptsApiDeleteV1PromptsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public deleteV1PromptsName(requestParameters: PromptsApiDeleteV1PromptsNameRequest, options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).deleteV1PromptsName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1PromptsByName(requestParameters: PromptsApiDeleteV1PromptsByNameRequest, options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).deleteV1PromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -456,6 +456,18 @@ export class PromptsApi extends BaseAPI {
      */
     public getV1Prompts(options?: RawAxiosRequestConfig) {
         return PromptsApiFp(this.configuration).getV1Prompts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
+     * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
+     * @param {PromptsApiGetV1PromptsByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PromptsApi
+     */
+    public getV1PromptsByName(requestParameters: PromptsApiGetV1PromptsByNameRequest, options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).getV1PromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -478,18 +490,6 @@ export class PromptsApi extends BaseAPI {
      */
     public getV1PromptsMetrics(options?: RawAxiosRequestConfig) {
         return PromptsApiFp(this.configuration).getV1PromptsMetrics(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
-     * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-     * @param {PromptsApiGetV1PromptsNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PromptsApi
-     */
-    public getV1PromptsName(requestParameters: PromptsApiGetV1PromptsNameRequest, options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).getV1PromptsName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { IamAnswer } from '../models';
+// @ts-ignore
 import type { IamApplication } from '../models';
 // @ts-ignore
 import type { IamApplicationListResult } from '../models';
@@ -39,6 +41,8 @@ import type { IamCertsDeleteOutput } from '../models';
 import type { IamCertsListOutput } from '../models';
 // @ts-ignore
 import type { IamCertsRef } from '../models';
+// @ts-ignore
+import type { IamConfig } from '../models';
 // @ts-ignore
 import type { IamCreateInput } from '../models';
 // @ts-ignore
@@ -102,6 +106,8 @@ import type { IamPermissionListResponse } from '../models';
 // @ts-ignore
 import type { IamPermissionRef } from '../models';
 // @ts-ignore
+import type { IamPerson } from '../models';
+// @ts-ignore
 import type { IamProject } from '../models';
 // @ts-ignore
 import type { IamProjectsDeleteOutput } from '../models';
@@ -117,6 +123,10 @@ import type { IamProviderKey } from '../models';
 import type { IamProviderResult } from '../models';
 // @ts-ignore
 import type { IamRef } from '../models';
+// @ts-ignore
+import type { IamRegistration } from '../models';
+// @ts-ignore
+import type { IamReply } from '../models';
 // @ts-ignore
 import type { IamResponse } from '../models';
 // @ts-ignore
@@ -998,10 +1008,12 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamAuthApplication: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamAuthApplication: async (clientId?: string, responseType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/auth/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1013,6 +1025,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (clientId !== undefined) {
+                localVarQueryParameter['clientId'] = clientId;
+            }
+
+            if (responseType !== undefined) {
+                localVarQueryParameter['responseType'] = responseType;
+            }
 
 
     
@@ -1028,10 +1048,11 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.  Public by design: it is read before anyone has signed in, and it exposes only which methods exist, never their credentials.
          * @summary Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamAuthMethods: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamAuthMethods: async (clientId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/auth/methods`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1043,6 +1064,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (clientId !== undefined) {
+                localVarQueryParameter['clientId'] = clientId;
+            }
 
 
     
@@ -1091,7 +1116,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show.
+         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1153,10 +1178,12 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamGetAppLogin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamGetAppLogin: async (clientId?: string, responseType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/get-app-login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1168,6 +1195,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (clientId !== undefined) {
+                localVarQueryParameter['clientId'] = clientId;
+            }
+
+            if (responseType !== undefined) {
+                localVarQueryParameter['responseType'] = responseType;
+            }
 
 
     
@@ -1363,10 +1398,12 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+         * @param {string} [org] Org is an organization — who may act in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamGetMemberships: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamGetMemberships: async (user?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/get-memberships`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1378,6 +1415,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
+            }
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
 
 
     
@@ -1923,10 +1968,12 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+         * @param {string} [org] Org is an organization — who may act in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamMemberships: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamMemberships: async (user?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/memberships`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1938,6 +1985,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
+            }
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
 
 
     
@@ -2534,10 +2589,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns your organization\'s service accounts — what each is called and when it was created. Never their secrets: a key\'s secret half exists in a response exactly once, when it is minted. Paginated in memory over the already org-scoped slice — the set per org is small, so a dedicated count query is overkill (v1 service_account.go:296-307).
          * @summary Returns your organization\'s service accounts — what each is called and when it was created.
+         * @param {string} [organization] Organization is the organization whose service accounts to list. Required.
+         * @param {number} [p] P is the 1-indexed page to return. Paging takes both p and pageSize — leave either out, or send something that is not a number, and the whole list comes back.
+         * @param {number} [pageSize] Size is how many accounts a page holds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamServiceAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IamServiceAccounts: async (organization?: string, p?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/service-accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2549,6 +2607,18 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (organization !== undefined) {
+                localVarQueryParameter['organization'] = organization;
+            }
+
+            if (p !== undefined) {
+                localVarQueryParameter['p'] = p;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -3385,36 +3455,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
-         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamAdminApplicationsUpsert: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/admin/applications/upsert`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -3422,36 +3462,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         postV1IamAdminProvision: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/admin/provision`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
-         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamAdminUsersUpsert: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/admin/users/upsert`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3973,8 +3983,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4561,6 +4571,36 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * @summary Starts connecting another sign-in identity to the account you are already signed in as.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IamLink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/link`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it. A second factor, if the account has one, is asked for and required here.  The password is compared against a stored one-way hash and is never logged, echoed or stored as typed.
          * @summary Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it.
          * @param {*} [options] Override http request option.
@@ -4621,8 +4661,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4651,8 +4691,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4681,8 +4721,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app. Repeating it re-enrols rather than failing.
-         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4711,43 +4751,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.  Nothing is switched on yet. The enrolment counts only once it is confirmed with a code from the app, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{secret, url, recoveryCodes:[code]}}.
-         * @summary Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.
+         * Starts enrolling a factor and hands over whatever the person needs to prove they hold it:   app   a fresh secret and the otpauth:// URL to render as a QR code  sms   a code texted to the number on the account  email a code mailed to the address on the account  Nothing is switched on yet, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{mfaType, secret, url}} — secret and url only for the authenticator.
+         * @summary Starts enrolling a factor and hands over whatever the person needs to prove they hold it: app a fresh secret and the otpauth:// URL to render as a QR code sms a code texted to the number on the account email a code mailed to the address on the account Nothing is switched on yet, so abandoning this step leaves the account exactly as it was.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postV1IamMfaSetupInitiate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/mfa/setup/initiate`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required. Clocks a step out either way are accepted. A valid code → {status:\"ok\"}; an invalid one → 200 {status:\"error\"} (the casibase convention: clients branch on status, not the HTTP code).
-         * @summary Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamMfaSetupVerify: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/mfa/setup/verify`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4861,8 +4871,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers \"what am I approving?\" for a pending user_code, so the approval page can name the application a human is about to authorize. Both fields come off the pending code\'s OWN application — never off the portal the browser happens to be on — so the screen cannot name one application while the code belongs to another.  Requires a signed-in session, resolved from the browser\'s session cookie exactly as the approval itself resolves it. Not signed in is not a refusal to explain: it carries the stable login-required code the approval page branches on to sign the human in first.  POST for a read, deliberately, for the same reason RFC 7662 introspection beside it is POST: the argument is a SECRET. A user_code in a request line is copied into ingress and proxy access logs, which a POST body is not.  Unknown, expired, already used and already approved all get ONE opaque refusal — the same one the approval attempt would get. The user_code carries only 40 bits, so an answer that distinguished those states would be an oracle for hunting live codes; gated and opaque, this reveals strictly less than the approval the same caller could already attempt.
-         * @summary Name the application a pending device code is asking to sign in.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5617,8 +5627,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5711,8 +5721,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6179,8 +6189,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6419,13 +6429,43 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  It merges rather than replaces, so saving a consent screen never discards a preference some other screen set at the same moment.
+         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  Send only the answers you are changing. A question you leave out keeps the answer it already had, so a screen that saves one switch never revokes the other, and two screens saving at once do not undo each other.  An answer this version does not recognize is refused here rather than stored, so nothing is ever persisted for a later reader to have to interpret.
          * @summary Records the calling person\'s privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putV1IamConsent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/consent`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces the calling person\'s password. Only their own — there is no shape of this request that writes somebody else\'s.  Prove who you are with the password you are replacing, or — when you cannot sign in at all — with a code sent to the address the account already holds. Exactly one of the two: a request carrying both proves nothing more than either, and answering it would mean deciding which one mattered.  A reset also clears the account lockout, in the SAME transaction as the digest. Replacing a credential retires the run of guesses against the old one, and without this a person who reset a forgotten password was still refused for up to fifteen more minutes — with the brand-new password they had just chosen.
+         * @summary Replaces the calling person\'s password.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putV1IamPassword: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/password`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6660,6 +6700,86 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamWebauthnCredential, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
+         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
+         * @param {IamRegistration} iamRegistration 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upsertApplication: async (iamRegistration: IamRegistration, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamRegistration' is not null or undefined
+            assertParamExists('upsertApplication', 'iamRegistration', iamRegistration)
+            const localVarPath = `/v1/iam/admin/applications/upsert`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamRegistration, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
+         * @param {IamPerson} iamPerson 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upsertUser: async (iamPerson: IamPerson, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamPerson' is not null or undefined
+            assertParamExists('upsertUser', 'iamPerson', iamPerson)
+            const localVarPath = `/v1/iam/admin/users/upsert`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamPerson, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6969,11 +7089,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamAuthApplication(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamAuthApplication(options);
+        async getV1IamAuthApplication(clientId?: string, responseType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamAuthApplication(clientId, responseType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamAuthApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6981,11 +7103,12 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.  Public by design: it is read before anyone has signed in, and it exposes only which methods exist, never their credentials.
          * @summary Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamAuthMethods(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamAuthMethods(options);
+        async getV1IamAuthMethods(clientId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamAuthMethods(clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamAuthMethods']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7004,7 +7127,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show.
+         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7030,11 +7153,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamGetAppLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamGetAppLogin(options);
+        async getV1IamGetAppLogin(clientId?: string, responseType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamGetAppLogin(clientId, responseType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamGetAppLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7114,11 +7239,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+         * @param {string} [org] Org is an organization — who may act in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamGetMemberships(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamGetMemberships(options);
+        async getV1IamGetMemberships(user?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamGetMemberships(user, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamGetMemberships']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7334,11 +7461,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+         * @param {string} [org] Org is an organization — who may act in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamMemberships(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamMemberships(options);
+        async getV1IamMemberships(user?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamMemberships(user, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamMemberships']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7486,7 +7615,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamScimV2Resourcetypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1IamScimV2Resourcetypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamScimV2Resourcetypes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamScimV2Resourcetypes']?.[localVarOperationServerIndex]?.url;
@@ -7499,7 +7628,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamScimV2ResourcetypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1IamScimV2ResourcetypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamScimV2ResourcetypesByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamScimV2ResourcetypesByName']?.[localVarOperationServerIndex]?.url;
@@ -7511,7 +7640,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamScimV2Schemas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1IamScimV2Schemas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamScimV2Schemas(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamScimV2Schemas']?.[localVarOperationServerIndex]?.url;
@@ -7524,7 +7653,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamScimV2SchemasById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1IamScimV2SchemasById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamScimV2SchemasById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamScimV2SchemasById']?.[localVarOperationServerIndex]?.url;
@@ -7536,7 +7665,7 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamScimV2Serviceproviderconfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getV1IamScimV2Serviceproviderconfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamConfig>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamScimV2Serviceproviderconfig(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamScimV2Serviceproviderconfig']?.[localVarOperationServerIndex]?.url;
@@ -7571,11 +7700,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns your organization\'s service accounts — what each is called and when it was created. Never their secrets: a key\'s secret half exists in a response exactly once, when it is minted. Paginated in memory over the already org-scoped slice — the set per org is small, so a dedicated count query is overkill (v1 service_account.go:296-307).
          * @summary Returns your organization\'s service accounts — what each is called and when it was created.
+         * @param {string} [organization] Organization is the organization whose service accounts to list. Required.
+         * @param {number} [p] P is the 1-indexed page to return. Paging takes both p and pageSize — leave either out, or send something that is not a number, and the whole list comes back.
+         * @param {number} [pageSize] Size is how many accounts a page holds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamServiceAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamServiceAccounts(options);
+        async getV1IamServiceAccounts(organization?: string, p?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamServiceAccounts(organization, p, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getV1IamServiceAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7881,18 +8013,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
-         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IamAdminApplicationsUpsert(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAdminApplicationsUpsert(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamAdminApplicationsUpsert']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -7902,18 +8022,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAdminProvision(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamAdminProvision']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
-         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IamAdminUsersUpsert(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAdminUsersUpsert(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamAdminUsersUpsert']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8098,8 +8206,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8315,6 +8423,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * @summary Starts connecting another sign-in identity to the account you are already signed in as.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IamLink(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamLink(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamLink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it. A second factor, if the account has one, is asked for and required here.  The password is compared against a stored one-way hash and is never logged, echoed or stored as typed.
          * @summary Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it.
          * @param {*} [options] Override http request option.
@@ -8339,8 +8459,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8351,8 +8471,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8363,8 +8483,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app. Repeating it re-enrols rather than failing.
-         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8375,8 +8495,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.  Nothing is switched on yet. The enrolment counts only once it is confirmed with a code from the app, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{secret, url, recoveryCodes:[code]}}.
-         * @summary Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.
+         * Starts enrolling a factor and hands over whatever the person needs to prove they hold it:   app   a fresh secret and the otpauth:// URL to render as a QR code  sms   a code texted to the number on the account  email a code mailed to the address on the account  Nothing is switched on yet, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{mfaType, secret, url}} — secret and url only for the authenticator.
+         * @summary Starts enrolling a factor and hands over whatever the person needs to prove they hold it: app a fresh secret and the otpauth:// URL to render as a QR code sms a code texted to the number on the account email a code mailed to the address on the account Nothing is switched on yet, so abandoning this step leaves the account exactly as it was.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8384,18 +8504,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamMfaSetupInitiate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamMfaSetupInitiate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required. Clocks a step out either way are accepted. A valid code → {status:\"ok\"}; an invalid one → 200 {status:\"error\"} (the casibase convention: clients branch on status, not the HTTP code).
-         * @summary Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IamMfaSetupVerify(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamMfaSetupVerify(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postV1IamMfaSetupVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8435,8 +8543,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers \"what am I approving?\" for a pending user_code, so the approval page can name the application a human is about to authorize. Both fields come off the pending code\'s OWN application — never off the portal the browser happens to be on — so the screen cannot name one application while the code belongs to another.  Requires a signed-in session, resolved from the browser\'s session cookie exactly as the approval itself resolves it. Not signed in is not a refusal to explain: it carries the stable login-required code the approval page branches on to sign the human in first.  POST for a read, deliberately, for the same reason RFC 7662 introspection beside it is POST: the argument is a SECRET. A user_code in a request line is copied into ingress and proxy access logs, which a POST body is not.  Unknown, expired, already used and already approved all get ONE opaque refusal — the same one the approval attempt would get. The user_code carries only 40 bits, so an answer that distinguished those states would be an oracle for hunting live codes; gated and opaque, this reveals strictly less than the approval the same caller could already attempt.
-         * @summary Name the application a pending device code is asking to sign in.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8722,8 +8830,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8759,8 +8867,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8935,8 +9043,8 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9024,7 +9132,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  It merges rather than replaces, so saving a consent screen never discards a preference some other screen set at the same moment.
+         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  Send only the answers you are changing. A question you leave out keeps the answer it already had, so a screen that saves one switch never revokes the other, and two screens saving at once do not undo each other.  An answer this version does not recognize is refused here rather than stored, so nothing is ever persisted for a later reader to have to interpret.
          * @summary Records the calling person\'s privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9033,6 +9141,18 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IamConsent(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putV1IamConsent']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Replaces the calling person\'s password. Only their own — there is no shape of this request that writes somebody else\'s.  Prove who you are with the password you are replacing, or — when you cannot sign in at all — with a code sent to the address the account already holds. Exactly one of the two: a request carrying both proves nothing more than either, and answering it would mean deciding which one mattered.  A reset also clears the account lockout, in the SAME transaction as the digest. Replacing a credential retires the run of guesses against the old one, and without this a person who reset a forgotten password was still refused for up to fifteen more minutes — with the brand-new password they had just chosen.
+         * @summary Replaces the calling person\'s password.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putV1IamPassword(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IamPassword(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putV1IamPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9112,6 +9232,34 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateWebauthnCredential(iamWebauthnCredential, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateWebauthnCredential']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
+         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
+         * @param {IamRegistration} iamRegistration 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async upsertApplication(iamRegistration: IamRegistration, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.upsertApplication(iamRegistration, authorization, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.upsertApplication']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
+         * @param {IamPerson} iamPerson 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async upsertUser(iamPerson: IamPerson, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamReply>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.upsertUser(iamPerson, authorization, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.upsertUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -9346,20 +9494,22 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {IamApiGetV1IamAuthApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamAuthApplication(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamAuthApplication(options).then((request) => request(axios, basePath));
+        getV1IamAuthApplication(requestParameters: IamApiGetV1IamAuthApplicationRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamAuthApplication(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.  Public by design: it is read before anyone has signed in, and it exposes only which methods exist, never their credentials.
          * @summary Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.
+         * @param {IamApiGetV1IamAuthMethodsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamAuthMethods(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamAuthMethods(options).then((request) => request(axios, basePath));
+        getV1IamAuthMethods(requestParameters: IamApiGetV1IamAuthMethodsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamAuthMethods(requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your organization\'s signing certificates, newest first — the keys the tokens your applications verify are signed with. Private key material is masked.  You see your own organization\'s certificates and no one else\'s; which organization that is comes from your credentials, not from the request, so a query parameter can never widen the listing.
@@ -9372,7 +9522,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getV1IamCerts(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show.
+         * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9392,11 +9542,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
          * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+         * @param {IamApiGetV1IamGetAppLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamGetAppLogin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamGetAppLogin(options).then((request) => request(axios, basePath));
+        getV1IamGetAppLogin(requestParameters: IamApiGetV1IamGetAppLoginRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamGetAppLogin(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
@@ -9455,11 +9606,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {IamApiGetV1IamGetMembershipsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamGetMemberships(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamGetMemberships(options).then((request) => request(axios, basePath));
+        getV1IamGetMemberships(requestParameters: IamApiGetV1IamGetMembershipsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamGetMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
@@ -9620,11 +9772,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
          * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+         * @param {IamApiGetV1IamMembershipsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamMemberships(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamMemberships(options).then((request) => request(axios, basePath));
+        getV1IamMemberships(requestParameters: IamApiGetV1IamMembershipsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
@@ -9735,7 +9888,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamScimV2Resourcetypes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1IamScimV2Resourcetypes(options?: RawAxiosRequestConfig): AxiosPromise<IamListResponse> {
             return localVarFp.getV1IamScimV2Resourcetypes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -9745,7 +9898,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamScimV2ResourcetypesByName(requestParameters: IamApiGetV1IamScimV2ResourcetypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1IamScimV2ResourcetypesByName(requestParameters: IamApiGetV1IamScimV2ResourcetypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getV1IamScimV2ResourcetypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9754,7 +9907,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamScimV2Schemas(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1IamScimV2Schemas(options?: RawAxiosRequestConfig): AxiosPromise<IamListResponse> {
             return localVarFp.getV1IamScimV2Schemas(options).then((request) => request(axios, basePath));
         },
         /**
@@ -9764,7 +9917,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamScimV2SchemasById(requestParameters: IamApiGetV1IamScimV2SchemasByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1IamScimV2SchemasById(requestParameters: IamApiGetV1IamScimV2SchemasByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getV1IamScimV2SchemasById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -9773,7 +9926,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamScimV2Serviceproviderconfig(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getV1IamScimV2Serviceproviderconfig(options?: RawAxiosRequestConfig): AxiosPromise<IamConfig> {
             return localVarFp.getV1IamScimV2Serviceproviderconfig(options).then((request) => request(axios, basePath));
         },
         /**
@@ -9798,11 +9951,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns your organization\'s service accounts — what each is called and when it was created. Never their secrets: a key\'s secret half exists in a response exactly once, when it is minted. Paginated in memory over the already org-scoped slice — the set per org is small, so a dedicated count query is overkill (v1 service_account.go:296-307).
          * @summary Returns your organization\'s service accounts — what each is called and when it was created.
+         * @param {IamApiGetV1IamServiceAccountsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamServiceAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IamServiceAccounts(options).then((request) => request(axios, basePath));
+        getV1IamServiceAccounts(requestParameters: IamApiGetV1IamServiceAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.getV1IamServiceAccounts(requestParameters.organization, requestParameters.p, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
@@ -10029,15 +10183,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
-         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamAdminApplicationsUpsert(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IamAdminApplicationsUpsert(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -10045,15 +10190,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postV1IamAdminProvision(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1IamAdminProvision(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
-         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamAdminUsersUpsert(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IamAdminUsersUpsert(options).then((request) => request(axios, basePath));
         },
         /**
          * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
@@ -10195,8 +10331,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamDeleteMembership(options).then((request) => request(axios, basePath));
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10361,6 +10497,15 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamKeysUpdate(requestParameters.iamKey, options).then((request) => request(axios, basePath));
         },
         /**
+         * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+         * @summary Starts connecting another sign-in identity to the account you are already signed in as.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IamLink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postV1IamLink(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it. A second factor, if the account has one, is asked for and required here.  The password is compared against a stored one-way hash and is never logged, echoed or stored as typed.
          * @summary Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it.
          * @param {*} [options] Override http request option.
@@ -10379,8 +10524,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamMemberships(options).then((request) => request(axios, basePath));
         },
         /**
-         * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-         * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10388,8 +10533,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamMfaDisable(options).then((request) => request(axios, basePath));
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10397,8 +10542,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamMfaPreferred(options).then((request) => request(axios, basePath));
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app. Repeating it re-enrols rather than failing.
-         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10406,22 +10551,13 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamMfaSetupEnable(options).then((request) => request(axios, basePath));
         },
         /**
-         * Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.  Nothing is switched on yet. The enrolment counts only once it is confirmed with a code from the app, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{secret, url, recoveryCodes:[code]}}.
-         * @summary Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.
+         * Starts enrolling a factor and hands over whatever the person needs to prove they hold it:   app   a fresh secret and the otpauth:// URL to render as a QR code  sms   a code texted to the number on the account  email a code mailed to the address on the account  Nothing is switched on yet, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{mfaType, secret, url}} — secret and url only for the authenticator.
+         * @summary Starts enrolling a factor and hands over whatever the person needs to prove they hold it: app a fresh secret and the otpauth:// URL to render as a QR code sms a code texted to the number on the account email a code mailed to the address on the account Nothing is switched on yet, so abandoning this step leaves the account exactly as it was.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postV1IamMfaSetupInitiate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1IamMfaSetupInitiate(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required. Clocks a step out either way are accepted. A valid code → {status:\"ok\"}; an invalid one → 200 {status:\"error\"} (the casibase convention: clients branch on status, not the HTTP code).
-         * @summary Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IamMfaSetupVerify(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IamMfaSetupVerify(options).then((request) => request(axios, basePath));
         },
         /**
          * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
@@ -10451,8 +10587,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamOauthDevice(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers \"what am I approving?\" for a pending user_code, so the approval page can name the application a human is about to authorize. Both fields come off the pending code\'s OWN application — never off the portal the browser happens to be on — so the screen cannot name one application while the code belongs to another.  Requires a signed-in session, resolved from the browser\'s session cookie exactly as the approval itself resolves it. Not signed in is not a refusal to explain: it carries the stable login-required code the approval page branches on to sign the human in first.  POST for a read, deliberately, for the same reason RFC 7662 introspection beside it is POST: the argument is a SECRET. A user_code in a request line is copied into ingress and proxy access logs, which a POST body is not.  Unknown, expired, already used and already approved all get ONE opaque refusal — the same one the approval attempt would get. The user_code carries only 40 bits, so an answer that distinguished those states would be an oracle for hunting live codes; gated and opaque, this reveals strictly less than the approval the same caller could already attempt.
-         * @summary Name the application a pending device code is asking to sign in.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10669,8 +10805,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamScimV2Users(options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10697,8 +10833,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamServiceAccountsByNameKeys(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Picks which second factor an account is asked for first when it has more than one enrolled.
-         * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+         * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10831,8 +10967,8 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1IamUsersUpdate(requestParameters.iamUpdateInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request, mints + persists an OTP, and reports success.
+         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+         * @summary Validates the request and asks otp to get a code to the person.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10899,13 +11035,22 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putV1IamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
-         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  It merges rather than replaces, so saving a consent screen never discards a preference some other screen set at the same moment.
+         * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  Send only the answers you are changing. A question you leave out keeps the answer it already had, so a screen that saves one switch never revokes the other, and two screens saving at once do not undo each other.  An answer this version does not recognize is refused here rather than stored, so nothing is ever persisted for a later reader to have to interpret.
          * @summary Records the calling person\'s privacy and communication choices.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         putV1IamConsent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putV1IamConsent(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the calling person\'s password. Only their own — there is no shape of this request that writes somebody else\'s.  Prove who you are with the password you are replacing, or — when you cannot sign in at all — with a code sent to the address the account already holds. Exactly one of the two: a request carrying both proves nothing more than either, and answering it would mean deciding which one mattered.  A reset also clears the account lockout, in the SAME transaction as the digest. Replacing a credential retires the run of guesses against the old one, and without this a person who reset a forgotten password was still refused for up to fifteen more minutes — with the brand-new password they had just chosen.
+         * @summary Replaces the calling person\'s password.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putV1IamPassword(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putV1IamPassword(options).then((request) => request(axios, basePath));
         },
         /**
          * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
@@ -10966,6 +11111,26 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         updateWebauthnCredential(requestParameters: IamApiUpdateWebauthnCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWebauthnCredentialMutationResult> {
             return localVarFp.updateWebauthnCredential(requestParameters.iamWebauthnCredential, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
+         * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
+         * @param {IamApiUpsertApplicationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upsertApplication(requestParameters: IamApiUpsertApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamReply> {
+            return localVarFp.upsertApplication(requestParameters.iamRegistration, requestParameters.authorization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
+         * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        upsertUser(requestParameters: IamApiUpsertUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamReply> {
+            return localVarFp.upsertUser(requestParameters.iamPerson, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -11300,6 +11465,41 @@ export interface IamApiGetV1IamAuditLogsRequest {
 }
 
 /**
+ * Request parameters for getV1IamAuthApplication operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamAuthApplicationRequest
+ */
+export interface IamApiGetV1IamAuthApplicationRequest {
+    /**
+     * ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+     * @type {string}
+     * @memberof IamApiGetV1IamAuthApplication
+     */
+    readonly clientId?: string
+
+    /**
+     * ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
+     * @type {string}
+     * @memberof IamApiGetV1IamAuthApplication
+     */
+    readonly responseType?: string
+}
+
+/**
+ * Request parameters for getV1IamAuthMethods operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamAuthMethodsRequest
+ */
+export interface IamApiGetV1IamAuthMethodsRequest {
+    /**
+     * ClientId is the application\&#39;s OAuth client id.
+     * @type {string}
+     * @memberof IamApiGetV1IamAuthMethods
+     */
+    readonly clientId?: string
+}
+
+/**
  * Request parameters for getV1IamCerts operation in IamApi.
  * @export
  * @interface IamApiGetV1IamCertsRequest
@@ -11311,6 +11511,48 @@ export interface IamApiGetV1IamCertsRequest {
      * @memberof IamApiGetV1IamCerts
      */
     readonly owner?: string
+}
+
+/**
+ * Request parameters for getV1IamGetAppLogin operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamGetAppLoginRequest
+ */
+export interface IamApiGetV1IamGetAppLoginRequest {
+    /**
+     * ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
+     * @type {string}
+     * @memberof IamApiGetV1IamGetAppLogin
+     */
+    readonly clientId?: string
+
+    /**
+     * ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
+     * @type {string}
+     * @memberof IamApiGetV1IamGetAppLogin
+     */
+    readonly responseType?: string
+}
+
+/**
+ * Request parameters for getV1IamGetMemberships operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamGetMembershipsRequest
+ */
+export interface IamApiGetV1IamGetMembershipsRequest {
+    /**
+     * User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+     * @type {string}
+     * @memberof IamApiGetV1IamGetMemberships
+     */
+    readonly user?: string
+
+    /**
+     * Org is an organization — who may act in it.
+     * @type {string}
+     * @memberof IamApiGetV1IamGetMemberships
+     */
+    readonly org?: string
 }
 
 /**
@@ -11360,6 +11602,27 @@ export interface IamApiGetV1IamKeysGetRequest {
      * @memberof IamApiGetV1IamKeysGet
      */
     readonly name?: string
+}
+
+/**
+ * Request parameters for getV1IamMemberships operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamMembershipsRequest
+ */
+export interface IamApiGetV1IamMembershipsRequest {
+    /**
+     * User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
+     * @type {string}
+     * @memberof IamApiGetV1IamMemberships
+     */
+    readonly user?: string
+
+    /**
+     * Org is an organization — who may act in it.
+     * @type {string}
+     * @memberof IamApiGetV1IamMemberships
+     */
+    readonly org?: string
 }
 
 /**
@@ -11472,6 +11735,34 @@ export interface IamApiGetV1IamScimV2UsersByOwnerByNameRequest {
      * @memberof IamApiGetV1IamScimV2UsersByOwnerByName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for getV1IamServiceAccounts operation in IamApi.
+ * @export
+ * @interface IamApiGetV1IamServiceAccountsRequest
+ */
+export interface IamApiGetV1IamServiceAccountsRequest {
+    /**
+     * Organization is the organization whose service accounts to list. Required.
+     * @type {string}
+     * @memberof IamApiGetV1IamServiceAccounts
+     */
+    readonly organization?: string
+
+    /**
+     * P is the 1-indexed page to return. Paging takes both p and pageSize — leave either out, or send something that is not a number, and the whole list comes back.
+     * @type {number}
+     * @memberof IamApiGetV1IamServiceAccounts
+     */
+    readonly p?: number
+
+    /**
+     * Size is how many accounts a page holds.
+     * @type {number}
+     * @memberof IamApiGetV1IamServiceAccounts
+     */
+    readonly pageSize?: number
 }
 
 /**
@@ -12567,6 +12858,48 @@ export interface IamApiUpdateWebauthnCredentialRequest {
 }
 
 /**
+ * Request parameters for upsertApplication operation in IamApi.
+ * @export
+ * @interface IamApiUpsertApplicationRequest
+ */
+export interface IamApiUpsertApplicationRequest {
+    /**
+     * 
+     * @type {IamRegistration}
+     * @memberof IamApiUpsertApplication
+     */
+    readonly iamRegistration: IamRegistration
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpsertApplication
+     */
+    readonly authorization?: string
+}
+
+/**
+ * Request parameters for upsertUser operation in IamApi.
+ * @export
+ * @interface IamApiUpsertUserRequest
+ */
+export interface IamApiUpsertUserRequest {
+    /**
+     * 
+     * @type {IamPerson}
+     * @memberof IamApiUpsertUser
+     */
+    readonly iamPerson: IamPerson
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpsertUser
+     */
+    readonly authorization?: string
+}
+
+/**
  * IamApi - object-oriented interface
  * @export
  * @class IamApi
@@ -12839,23 +13172,25 @@ export class IamApi extends BaseAPI {
     /**
      * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
      * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+     * @param {IamApiGetV1IamAuthApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamAuthApplication(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamAuthApplication(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamAuthApplication(requestParameters: IamApiGetV1IamAuthApplicationRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamAuthApplication(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.  Public by design: it is read before anyone has signed in, and it exposes only which methods exist, never their credentials.
      * @summary Returns the sign-in methods one application actually has switched on, so a login screen can render the right buttons for it without you hard-coding a list that drifts the moment you add a provider.
+     * @param {IamApiGetV1IamAuthMethodsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamAuthMethods(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamAuthMethods(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamAuthMethods(requestParameters: IamApiGetV1IamAuthMethodsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamAuthMethods(requestParameters.clientId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12871,7 +13206,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show.
+     * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
      * @summary Returns the calling person\'s own privacy and communication choices.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12895,12 +13230,13 @@ export class IamApi extends BaseAPI {
     /**
      * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
      * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
+     * @param {IamApiGetV1IamGetAppLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamGetAppLogin(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamGetAppLogin(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamGetAppLogin(requestParameters: IamApiGetV1IamGetAppLoginRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamGetAppLogin(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12972,12 +13308,13 @@ export class IamApi extends BaseAPI {
     /**
      * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
      * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+     * @param {IamApiGetV1IamGetMembershipsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamGetMemberships(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamGetMemberships(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamGetMemberships(requestParameters: IamApiGetV1IamGetMembershipsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamGetMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13173,12 +13510,13 @@ export class IamApi extends BaseAPI {
     /**
      * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
      * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
+     * @param {IamApiGetV1IamMembershipsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamMemberships(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamMemberships(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamMemberships(requestParameters: IamApiGetV1IamMembershipsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13389,12 +13727,13 @@ export class IamApi extends BaseAPI {
     /**
      * Returns your organization\'s service accounts — what each is called and when it was created. Never their secrets: a key\'s secret half exists in a response exactly once, when it is minted. Paginated in memory over the already org-scoped slice — the set per org is small, so a dedicated count query is overkill (v1 service_account.go:296-307).
      * @summary Returns your organization\'s service accounts — what each is called and when it was created.
+     * @param {IamApiGetV1IamServiceAccountsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getV1IamServiceAccounts(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getV1IamServiceAccounts(options).then((request) => request(this.axios, this.basePath));
+    public getV1IamServiceAccounts(requestParameters: IamApiGetV1IamServiceAccountsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getV1IamServiceAccounts(requestParameters.organization, requestParameters.p, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13668,17 +14007,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
-     * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postV1IamAdminApplicationsUpsert(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postV1IamAdminApplicationsUpsert(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
      * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
      * @param {*} [options] Override http request option.
@@ -13687,17 +14015,6 @@ export class IamApi extends BaseAPI {
      */
     public postV1IamAdminProvision(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postV1IamAdminProvision(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
-     * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postV1IamAdminUsersUpsert(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postV1IamAdminUsersUpsert(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13868,8 +14185,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-     * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+     * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+     * @summary Turns a factor off, so sign-in stops asking for it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14068,6 +14385,17 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
+     * @summary Starts connecting another sign-in identity to the account you are already signed in as.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postV1IamLink(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postV1IamLink(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it. A second factor, if the account has one, is asked for and required here.  The password is compared against a stored one-way hash and is never logged, echoed or stored as typed.
      * @summary Signs a person in with the credential they typed, and — when the request is part of an OAuth flow — hands back the one-time code that finishes it.
      * @param {*} [options] Override http request option.
@@ -14090,8 +14418,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Turns off the authenticator app for an account, so sign-in stops asking for a code. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the reset path when a phone is lost.
-     * @summary Turns off the authenticator app for an account, so sign-in stops asking for a code.
+     * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+     * @summary Turns a factor off, so sign-in stops asking for it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14101,8 +14429,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Picks which second factor an account is asked for first when it has more than one enrolled.
-     * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+     * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+     * @summary Picks which second factor an account is asked for first when it has more than one.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14112,8 +14440,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app. Repeating it re-enrols rather than failing.
-     * @summary Finishes the enrolment: from here the account\'s sign-ins ask for a code from the authenticator app.
+     * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+     * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14123,25 +14451,14 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.  Nothing is switched on yet. The enrolment counts only once it is confirmed with a code from the app, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{secret, url, recoveryCodes:[code]}}.
-     * @summary Starts enrolling an authenticator app: it returns a fresh secret, a URL to render as a QR code, and one recovery code to keep somewhere safe.
+     * Starts enrolling a factor and hands over whatever the person needs to prove they hold it:   app   a fresh secret and the otpauth:// URL to render as a QR code  sms   a code texted to the number on the account  email a code mailed to the address on the account  Nothing is switched on yet, so abandoning this step leaves the account exactly as it was. Response: {status:\"ok\", data:{mfaType, secret, url}} — secret and url only for the authenticator.
+     * @summary Starts enrolling a factor and hands over whatever the person needs to prove they hold it: app a fresh secret and the otpauth:// URL to render as a QR code sms a code texted to the number on the account email a code mailed to the address on the account Nothing is switched on yet, so abandoning this step leaves the account exactly as it was.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
     public postV1IamMfaSetupInitiate(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postV1IamMfaSetupInitiate(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required. Clocks a step out either way are accepted. A valid code → {status:\"ok\"}; an invalid one → 200 {status:\"error\"} (the casibase convention: clients branch on status, not the HTTP code).
-     * @summary Checks a six-digit code against an enrolment in progress, so somebody can confirm their authenticator app is set up correctly before it starts being required.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postV1IamMfaSetupVerify(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postV1IamMfaSetupVerify(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14178,8 +14495,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers \"what am I approving?\" for a pending user_code, so the approval page can name the application a human is about to authorize. Both fields come off the pending code\'s OWN application — never off the portal the browser happens to be on — so the screen cannot name one application while the code belongs to another.  Requires a signed-in session, resolved from the browser\'s session cookie exactly as the approval itself resolves it. Not signed in is not a refusal to explain: it carries the stable login-required code the approval page branches on to sign the human in first.  POST for a read, deliberately, for the same reason RFC 7662 introspection beside it is POST: the argument is a SECRET. A user_code in a request line is copied into ingress and proxy access logs, which a POST body is not.  Unknown, expired, already used and already approved all get ONE opaque refusal — the same one the approval attempt would get. The user_code carries only 40 bits, so an answer that distinguished those states would be an oracle for hunting live codes; gated and opaque, this reveals strictly less than the approval the same caller could already attempt.
-     * @summary Name the application a pending device code is asking to sign in.
+     * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+     * @summary Answers \"what am I approving?\" for a pending device code.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14442,8 +14759,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-     * @summary Validates the request, mints + persists an OTP, and reports success.
+     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+     * @summary Validates the request and asks otp to get a code to the person.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14476,8 +14793,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Picks which second factor an account is asked for first when it has more than one enrolled.
-     * @summary Picks which second factor an account is asked for first when it has more than one enrolled.
+     * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
+     * @summary Picks which second factor an account is asked for first when it has more than one.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14638,8 +14955,8 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Validates the request, mints + persists an OTP, and reports success. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/ checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-     * @summary Validates the request, mints + persists an OTP, and reports success.
+     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
+     * @summary Validates the request and asks otp to get a code to the person.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
@@ -14720,7 +15037,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  It merges rather than replaces, so saving a consent screen never discards a preference some other screen set at the same moment.
+     * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  Send only the answers you are changing. A question you leave out keeps the answer it already had, so a screen that saves one switch never revokes the other, and two screens saving at once do not undo each other.  An answer this version does not recognize is refused here rather than stored, so nothing is ever persisted for a later reader to have to interpret.
      * @summary Records the calling person\'s privacy and communication choices.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14728,6 +15045,17 @@ export class IamApi extends BaseAPI {
      */
     public putV1IamConsent(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).putV1IamConsent(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the calling person\'s password. Only their own — there is no shape of this request that writes somebody else\'s.  Prove who you are with the password you are replacing, or — when you cannot sign in at all — with a code sent to the address the account already holds. Exactly one of the two: a request carrying both proves nothing more than either, and answering it would mean deciding which one mattered.  A reset also clears the account lockout, in the SAME transaction as the digest. Replacing a credential retires the run of guesses against the old one, and without this a person who reset a forgotten password was still refused for up to fifteen more minutes — with the brand-new password they had just chosen.
+     * @summary Replaces the calling person\'s password.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putV1IamPassword(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putV1IamPassword(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14800,6 +15128,30 @@ export class IamApi extends BaseAPI {
      */
     public updateWebauthnCredential(requestParameters: IamApiUpdateWebauthnCredentialRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).updateWebauthnCredential(requestParameters.iamWebauthnCredential, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
+     * @summary Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.
+     * @param {IamApiUpsertApplicationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public upsertApplication(requestParameters: IamApiUpsertApplicationRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).upsertApplication(requestParameters.iamRegistration, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+     * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
+     * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public upsertUser(requestParameters: IamApiUpsertUserRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).upsertUser(requestParameters.iamPerson, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

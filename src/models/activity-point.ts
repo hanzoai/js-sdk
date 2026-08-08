@@ -21,25 +21,25 @@
  */
 export interface ActivityPoint {
     /**
-     * 
+     * CostCents is the day\'s spend in whole US cents. A series is only ever returned for a subject the caller is authorized to see, so this is never withheld: 0 means no spend that day.
      * @type {number}
      * @memberof ActivityPoint
      */
     'costCents'?: number;
     /**
-     * \"2006-01-02\"
+     * Day is the UTC calendar day this point covers, \"2006-01-02\".
      * @type {string}
      * @memberof ActivityPoint
      */
     'day'?: string;
     /**
-     * 
+     * Requests is the subject\'s request count on this day. 0 is a real, quiet day: the series is gap-filled, so every day in the range is present whether or not anything happened.
      * @type {number}
      * @memberof ActivityPoint
      */
     'requests'?: number;
     /**
-     * 
+     * Tokens is prompt+completion tokens on this day — normally the heatmap\'s intensity, scaled against ActivityTotals.MaxTokens.
      * @type {number}
      * @memberof ActivityPoint
      */

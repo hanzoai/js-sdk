@@ -21,55 +21,55 @@
  */
 export interface SelfRank {
     /**
-     * 
+     * CostCents is the caller\'s own spend in whole US cents. Always populated — your own spend is never withheld from you — so here 0 really does mean zero.
      * @type {number}
      * @memberof SelfRank
      */
     'costCents'?: number;
     /**
-     * 
+     * Handle is how the caller appears on this board: their chosen handle, falling back to their username, on a user board; their org id on the global board. Present even when unlisted — this is the caller looking at themselves.
      * @type {string}
      * @memberof SelfRank
      */
     'handle'?: string;
     /**
-     * is the caller publicly listed (opted in)
+     * Listed says whether the caller is publicly visible on this board: opted in on a user board, org opted in (or the viewer is a platform admin) on the global one. False is the prompt to offer the opt-in, and explains an unranked global self.
      * @type {boolean}
      * @memberof SelfRank
      */
     'listed'?: boolean;
     /**
-     * 
+     * Metric is whichever of the three values above the board was ranked by, so a client can compare the caller against the rows without re-reading the request. Metric <= 0 is exactly the case that leaves Ranked false.
      * @type {number}
      * @memberof SelfRank
      */
     'metric'?: number;
     /**
-     * 
+     * OfTotal is the size of the universe Rank is out of — \"rank N of OfTotal\". On a user board that is the org\'s users with any usage in the window; on the global board it is every active org for a platform admin, and the count of opted-in orgs for everyone else.
      * @type {number}
      * @memberof SelfRank
      */
     'ofTotal'?: number;
     /**
-     * 
+     * Rank is the caller\'s 1-based standing, computed as (subjects whose windowed metric strictly exceeds the caller\'s) + 1. It is exact against the whole ranked universe, not just the returned page, so it can far exceed len(rows). Read it only when Ranked.
      * @type {number}
      * @memberof SelfRank
      */
     'rank'?: number;
     /**
-     * 
+     * Ranked is false when the caller holds no position: they had no usage in the window, or (on the global board) their org has not opted into public listing and so is not ranked against a set it never joined. Rank is then 0 and means nothing.
      * @type {boolean}
      * @memberof SelfRank
      */
     'ranked'?: boolean;
     /**
-     * 
+     * Requests is the caller\'s own request count in the window, 0 if they were idle.
      * @type {number}
      * @memberof SelfRank
      */
     'requests'?: number;
     /**
-     * 
+     * Tokens is the caller\'s own prompt+completion tokens in the window.
      * @type {number}
      * @memberof SelfRank
      */

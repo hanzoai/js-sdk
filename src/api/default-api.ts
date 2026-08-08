@@ -34,8 +34,72 @@ import type { Liveness } from '../models';
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/meet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('deleteMeetByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/meet/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -64,8 +128,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -368,13 +432,43 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
-         * @summary Open the live collaborative-editing socket
+         * Opens the live collaborative-editing socket.  It upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Opens the live collaborative-editing socket.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getCollaborator: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/collaborator`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceDeposits: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/_/commerce/deposits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -405,36 +499,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          */
         getCommerceHealthz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/_/commerce/healthz`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
-         * @summary List the payment providers configured for your own tenant
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/_/commerce/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -708,7 +772,71 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/meet/.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/meet`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client\'s assets and client-side routes
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('getMeetByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/meet/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -738,7 +866,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
@@ -1016,13 +1144,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        optionsTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tasks`;
+        patchMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1030,7 +1158,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1046,16 +1174,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        optionsTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('optionsTasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tasks/{wildcard1}`
+            assertParamExists('patchMeetByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1064,7 +1192,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1080,8 +1208,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1110,8 +1238,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1327,11 +1455,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCollaboratorRpcDocumentId: async (documentId: string, collabRequest: CollabRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCollaboratorRpcByDocumentid: async (documentId: string, collabRequest: CollabRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'documentId' is not null or undefined
-            assertParamExists('postCollaboratorRpcDocumentId', 'documentId', documentId)
+            assertParamExists('postCollaboratorRpcByDocumentid', 'documentId', documentId)
             // verify required parameter 'collabRequest' is not null or undefined
-            assertParamExists('postCollaboratorRpcDocumentId', 'collabRequest', collabRequest)
+            assertParamExists('postCollaboratorRpcByDocumentid', 'collabRequest', collabRequest)
             const localVarPath = `/collaborator/rpc/{documentId}`
                 .replace(`{${"documentId"}}`, encodeURIComponent(String(documentId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1360,13 +1488,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
-         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCommerceTenants: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/_/commerce/tenants`;
+        postMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1390,8 +1518,42 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('postMeetByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/meet/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1420,8 +1582,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1454,17 +1616,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Flips the enabled flag on the named provider in the caller\'s own tenant row, so a rail can be taken out of service — or put back — without touching its credentials. The KMS paths are never read, written or echoed here; this verb owns exactly one bit.  Disabling is what a checkout page sees immediately: only ENABLED providers are listed by the public tenant read, so a rail turned off here stops being offered rather than failing at authorization time. Re-enabling restores the same stored credential, which is why this is a switch and not a delete.  The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant write is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A provider name with no row on that tenant is 404, the same answer a cross-tenant probe gets.
-         * @summary Turn one payment rail on or off for your own tenant
-         * @param {string} name 
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCommerceProvidersByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('putCommerceProvidersByName', 'name', name)
-            const localVarPath = `/_/commerce/providers/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+        putMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1488,8 +1646,42 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'wildcard1' is not null or undefined
+            assertParamExists('putMeetByWildcard1', 'wildcard1', wildcard1)
+            const localVarPath = `/meet/{wildcard1}`
+                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1518,8 +1710,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1551,70 +1743,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tasks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('traceTasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1626,8 +1754,33 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeetByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1638,8 +1791,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1750,8 +1903,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
-         * @summary Open the live collaborative-editing socket
+         * Opens the live collaborative-editing socket.  It upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Opens the live collaborative-editing socket.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1759,6 +1912,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCollaborator(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getCollaborator']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceDeposits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDeposits(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getCommerceDeposits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1771,18 +1936,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceHealthz(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.getCommerceHealthz']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
-         * @summary List the payment providers configured for your own tenant
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCommerceProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceProviders(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getCommerceProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1880,7 +2033,32 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/meet/.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client\'s assets and client-side routes
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1892,7 +2070,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console\'s assets and client-side routes
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
@@ -2002,33 +2180,33 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async optionsTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsTasks(options);
+        async patchMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.optionsTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async optionsTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsTasksByWildcard1(wildcard1, options);
+        async patchMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeetByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.optionsTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2039,8 +2217,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2121,27 +2299,40 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCollaboratorRpcDocumentId(documentId: string, collabRequest: CollabRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CollabResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCollaboratorRpcDocumentId(documentId, collabRequest, options);
+        async postCollaboratorRpcByDocumentid(documentId: string, collabRequest: CollabRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CollabResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCollaboratorRpcByDocumentid(documentId, collabRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postCollaboratorRpcDocumentId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postCollaboratorRpcByDocumentid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
-         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCommerceTenants(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceTenants(options);
+        async postMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postCommerceTenants']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeetByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2152,8 +2343,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2165,21 +2356,33 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Flips the enabled flag on the named provider in the caller\'s own tenant row, so a rail can be taken out of service — or put back — without touching its credentials. The KMS paths are never read, written or echoed here; this verb owns exactly one bit.  Disabling is what a checkout page sees immediately: only ENABLED providers are listed by the public tenant read, so a rail turned off here stops being offered rather than failing at authorization time. Re-enabling restores the same stored credential, which is why this is a switch and not a delete.  The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant write is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A provider name with no row on that tenant is 404, the same answer a cross-tenant probe gets.
-         * @summary Turn one payment rail on or off for your own tenant
-         * @param {string} name 
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCommerceProvidersByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceProvidersByName(name, options);
+        async putMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putCommerceProvidersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {string} wildcard1 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeetByWildcard1(wildcard1, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2190,8 +2393,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2200,31 +2403,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceTasks(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.traceTasks']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceTasksByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.traceTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2238,8 +2416,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = DefaultApiFp(configuration)
     return {
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMeet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {DefaultApiDeleteMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMeetByWildcard1(requestParameters: DefaultApiDeleteMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2247,8 +2444,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {DefaultApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2326,13 +2523,22 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getByOrgByRepoTreeByWildcard1(requestParameters.org, requestParameters.repo, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
-         * @summary Open the live collaborative-editing socket
+         * Opens the live collaborative-editing socket.  It upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Opens the live collaborative-editing socket.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getCollaborator(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCollaborator(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceDeposits(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDeposits(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers ok whenever the commerce subsystem is mounted. It is registered before the module embed boots, so it keeps answering even when the embed failed and every business route serves the fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated, and under /_ so the ingress withholds it publicly.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2342,15 +2548,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getCommerceHealthz(options?: RawAxiosRequestConfig): AxiosPromise<Liveness> {
             return localVarFp.getCommerceHealthz(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
-         * @summary List the payment providers configured for your own tenant
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCommerceProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCommerceProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
@@ -2420,7 +2617,26 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getGitExplore(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/meet/.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMeet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The call client\'s assets and client-side routes
+         * @param {DefaultApiGetMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeetByWildcard1(requestParameters: DefaultApiGetMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2429,7 +2645,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The tasks console\'s assets and client-side routes
          * @param {DefaultApiGetTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2512,27 +2728,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getWsQueryProgress(options).then((request) => request(axios, basePath));
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        optionsTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsTasks(options).then((request) => request(axios, basePath));
+        patchMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchMeet(options).then((request) => request(axios, basePath));
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {DefaultApiOptionsTasksByWildcard1Request} requestParameters Request parameters.
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {DefaultApiPatchMeetByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        optionsTasksByWildcard1(requestParameters: DefaultApiOptionsTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchMeetByWildcard1(requestParameters: DefaultApiPatchMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2540,8 +2756,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.patchTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {DefaultApiPatchTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2592,25 +2808,35 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
          * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
-         * @param {DefaultApiPostCollaboratorRpcDocumentIdRequest} requestParameters Request parameters.
+         * @param {DefaultApiPostCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCollaboratorRpcDocumentId(requestParameters: DefaultApiPostCollaboratorRpcDocumentIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CollabResult> {
-            return localVarFp.postCollaboratorRpcDocumentId(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(axios, basePath));
+        postCollaboratorRpcByDocumentid(requestParameters: DefaultApiPostCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig): AxiosPromise<CollabResult> {
+            return localVarFp.postCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
-         * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCommerceTenants(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCommerceTenants(options).then((request) => request(axios, basePath));
+        postMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMeet(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {DefaultApiPostMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postMeetByWildcard1(requestParameters: DefaultApiPostMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2618,8 +2844,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {DefaultApiPostTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2628,18 +2854,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
-         * Flips the enabled flag on the named provider in the caller\'s own tenant row, so a rail can be taken out of service — or put back — without touching its credentials. The KMS paths are never read, written or echoed here; this verb owns exactly one bit.  Disabling is what a checkout page sees immediately: only ENABLED providers are listed by the public tenant read, so a rail turned off here stops being offered rather than failing at authorization time. Re-enabling restores the same stored credential, which is why this is a switch and not a delete.  The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant write is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A provider name with no row on that tenant is 404, the same answer a cross-tenant probe gets.
-         * @summary Turn one payment rail on or off for your own tenant
-         * @param {DefaultApiPutCommerceProvidersByNameRequest} requestParameters Request parameters.
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCommerceProvidersByName(requestParameters: DefaultApiPutCommerceProvidersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putCommerceProvidersByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        putMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putMeet(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the call client
+         * @param {DefaultApiPutMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putMeetByWildcard1(requestParameters: DefaultApiPutMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2647,8 +2882,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.putTasks(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-         * @summary The tasks console\'s assets and client-side routes
+         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+         * @summary Not served by the tasks console
          * @param {DefaultApiPutTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2656,27 +2891,22 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceTasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {DefaultApiTraceTasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceTasksByWildcard1(requestParameters: DefaultApiTraceTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
     };
 };
+
+/**
+ * Request parameters for deleteMeetByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiDeleteMeetByWildcard1Request
+ */
+export interface DefaultApiDeleteMeetByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiDeleteMeetByWildcard1
+     */
+    readonly wildcard1: string
+}
 
 /**
  * Request parameters for deleteTasksByWildcard1 operation in DefaultApi.
@@ -2938,6 +3168,20 @@ export interface DefaultApiGetGitByOrgByRepoTreeByWildcard1Request {
 }
 
 /**
+ * Request parameters for getMeetByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiGetMeetByWildcard1Request
+ */
+export interface DefaultApiGetMeetByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiGetMeetByWildcard1
+     */
+    readonly wildcard1: string
+}
+
+/**
  * Request parameters for getTasksByWildcard1 operation in DefaultApi.
  * @export
  * @interface DefaultApiGetTasksByWildcard1Request
@@ -2966,15 +3210,15 @@ export interface DefaultApiGetWellKnownAgentSkillsBySkillSkillMdRequest {
 }
 
 /**
- * Request parameters for optionsTasksByWildcard1 operation in DefaultApi.
+ * Request parameters for patchMeetByWildcard1 operation in DefaultApi.
  * @export
- * @interface DefaultApiOptionsTasksByWildcard1Request
+ * @interface DefaultApiPatchMeetByWildcard1Request
  */
-export interface DefaultApiOptionsTasksByWildcard1Request {
+export interface DefaultApiPatchMeetByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiOptionsTasksByWildcard1
+     * @memberof DefaultApiPatchMeetByWildcard1
      */
     readonly wildcard1: string
 }
@@ -3120,24 +3364,38 @@ export interface DefaultApiPostByOrgByRepoGitUploadPackRequest {
 }
 
 /**
- * Request parameters for postCollaboratorRpcDocumentId operation in DefaultApi.
+ * Request parameters for postCollaboratorRpcByDocumentid operation in DefaultApi.
  * @export
- * @interface DefaultApiPostCollaboratorRpcDocumentIdRequest
+ * @interface DefaultApiPostCollaboratorRpcByDocumentidRequest
  */
-export interface DefaultApiPostCollaboratorRpcDocumentIdRequest {
+export interface DefaultApiPostCollaboratorRpcByDocumentidRequest {
     /**
      * DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
      * @type {string}
-     * @memberof DefaultApiPostCollaboratorRpcDocumentId
+     * @memberof DefaultApiPostCollaboratorRpcByDocumentid
      */
     readonly documentId: string
 
     /**
      * 
      * @type {CollabRequest}
-     * @memberof DefaultApiPostCollaboratorRpcDocumentId
+     * @memberof DefaultApiPostCollaboratorRpcByDocumentid
      */
     readonly collabRequest: CollabRequest
+}
+
+/**
+ * Request parameters for postMeetByWildcard1 operation in DefaultApi.
+ * @export
+ * @interface DefaultApiPostMeetByWildcard1Request
+ */
+export interface DefaultApiPostMeetByWildcard1Request {
+    /**
+     * 
+     * @type {string}
+     * @memberof DefaultApiPostMeetByWildcard1
+     */
+    readonly wildcard1: string
 }
 
 /**
@@ -3155,17 +3413,17 @@ export interface DefaultApiPostTasksByWildcard1Request {
 }
 
 /**
- * Request parameters for putCommerceProvidersByName operation in DefaultApi.
+ * Request parameters for putMeetByWildcard1 operation in DefaultApi.
  * @export
- * @interface DefaultApiPutCommerceProvidersByNameRequest
+ * @interface DefaultApiPutMeetByWildcard1Request
  */
-export interface DefaultApiPutCommerceProvidersByNameRequest {
+export interface DefaultApiPutMeetByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPutCommerceProvidersByName
+     * @memberof DefaultApiPutMeetByWildcard1
      */
-    readonly name: string
+    readonly wildcard1: string
 }
 
 /**
@@ -3183,20 +3441,6 @@ export interface DefaultApiPutTasksByWildcard1Request {
 }
 
 /**
- * Request parameters for traceTasksByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiTraceTasksByWildcard1Request
- */
-export interface DefaultApiTraceTasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiTraceTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * DefaultApi - object-oriented interface
  * @export
  * @class DefaultApi
@@ -3204,8 +3448,31 @@ export interface DefaultApiTraceTasksByWildcard1Request {
  */
 export class DefaultApi extends BaseAPI {
     /**
-     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteMeet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMeet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
+     * @param {DefaultApiDeleteMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public deleteMeetByWildcard1(requestParameters: DefaultApiDeleteMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -3215,8 +3482,8 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console\'s assets and client-side routes
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {DefaultApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3310,14 +3577,25 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
-     * @summary Open the live collaborative-editing socket
+     * Opens the live collaborative-editing socket.  It upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  IT SITS OUTSIDE /v1 ON PURPOSE. The client derives both collaborator lanes from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so the path is fixed by the editor library\'s contract rather than chosen by this service.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+     * @summary Opens the live collaborative-editing socket.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
     public getCollaborator(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getCollaborator(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+     * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getCommerceDeposits(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getCommerceDeposits(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3329,17 +3607,6 @@ export class DefaultApi extends BaseAPI {
      */
     public getCommerceHealthz(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getCommerceHealthz(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the caller\'s own tenant row projected to a public view with the KMS paths stripped, so a provider\'s name and enabled flag are visible and its credential location never is. The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant read is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A caller whose owner claim has no tenant row gets a 404 byte-identical to the one a cross-tenant probe would get.
-     * @summary List the payment providers configured for your own tenant
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getCommerceProviders(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getCommerceProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3424,7 +3691,30 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/meet/.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The call client
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getMeet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMeet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The call client\'s assets and client-side routes
+     * @param {DefaultApiGetMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getMeetByWildcard1(requestParameters: DefaultApiGetMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
      * @summary The tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3435,7 +3725,7 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
+     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
      * @summary The tasks console\'s assets and client-side routes
      * @param {DefaultApiGetTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3536,31 +3826,31 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public optionsTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).optionsTasks(options).then((request) => request(this.axios, this.basePath));
+    public patchMeet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchMeet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {DefaultApiOptionsTasksByWildcard1Request} requestParameters Request parameters.
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
+     * @param {DefaultApiPatchMeetByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public optionsTasksByWildcard1(requestParameters: DefaultApiOptionsTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).optionsTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchMeetByWildcard1(requestParameters: DefaultApiPatchMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -3570,8 +3860,8 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console\'s assets and client-side routes
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {DefaultApiPatchTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3632,29 +3922,41 @@ export class DefaultApi extends BaseAPI {
     /**
      * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
      * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
-     * @param {DefaultApiPostCollaboratorRpcDocumentIdRequest} requestParameters Request parameters.
+     * @param {DefaultApiPostCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postCollaboratorRpcDocumentId(requestParameters: DefaultApiPostCollaboratorRpcDocumentIdRequest, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postCollaboratorRpcDocumentId(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(this.axios, this.basePath));
+    public postCollaboratorRpcByDocumentid(requestParameters: DefaultApiPostCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Registers a new hosted-checkout tenant so its hostnames resolve to their own branding, identity config, payment providers and broker backend. PLATFORM admin only — the reserved admin org\'s owner claim; an org owner with the org-level admin bit is refused 403 and an anonymous caller 401, so a tenant can never be minted from inside a tenant. A duplicate name is 409 and a malformed hostname 400. The response echoes only the identity and timestamps, never the provider records the caller just sent, and the mutation is audited by hash rather than by content so a credential that slips into the body is not replayable from the log.
-     * @summary Create a checkout tenant: hostnames, brand, IAM, IDV, providers and backend
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postCommerceTenants(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postCommerceTenants(options).then((request) => request(this.axios, this.basePath));
+    public postMeet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postMeet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
+     * @param {DefaultApiPostMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public postMeetByWildcard1(requestParameters: DefaultApiPostMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -3664,8 +3966,8 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console\'s assets and client-side routes
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {DefaultApiPostTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3676,20 +3978,31 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Flips the enabled flag on the named provider in the caller\'s own tenant row, so a rail can be taken out of service — or put back — without touching its credentials. The KMS paths are never read, written or echoed here; this verb owns exactly one bit.  Disabling is what a checkout page sees immediately: only ENABLED providers are listed by the public tenant read, so a rail turned off here stops being offered rather than failing at authorization time. Re-enabling restores the same stored credential, which is why this is a switch and not a delete.  The tenant is derived from the IAM owner claim and from nothing else — there is no tenant parameter to supply, so a cross-tenant write is not expressible. A tenant admin or a platform admin may call it; a plain authenticated user is refused 403 and an anonymous one 401. A provider name with no row on that tenant is 404, the same answer a cross-tenant probe gets.
-     * @summary Turn one payment rail on or off for your own tenant
-     * @param {DefaultApiPutCommerceProvidersByNameRequest} requestParameters Request parameters.
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public putCommerceProvidersByName(requestParameters: DefaultApiPutCommerceProvidersByNameRequest, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putCommerceProvidersByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public putMeet(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putMeet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Serves the console\'s application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the call client
+     * @param {DefaultApiPutMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public putMeetByWildcard1(requestParameters: DefaultApiPutMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
@@ -3699,8 +4012,8 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
-     * Serves the console\'s static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link into the console is a shell load, not a 404.  A path that looks like a missing asset therefore answers 200 with HTML rather than 404; look at the content type, not the status, when a resource seems to be missing.  This is the task console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale console on the next request.
-     * @summary The tasks console\'s assets and client-side routes
+     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
+     * @summary Not served by the tasks console
      * @param {DefaultApiPutTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3708,29 +4021,6 @@ export class DefaultApi extends BaseAPI {
      */
     public putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public traceTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).traceTasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {DefaultApiTraceTasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public traceTasksByWildcard1(requestParameters: DefaultApiTraceTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).traceTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

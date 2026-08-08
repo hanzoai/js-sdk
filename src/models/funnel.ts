@@ -21,19 +21,19 @@
  */
 export interface Funnel {
     /**
-     * 
+     * ConvertedOrgs is how many distinct referred orgs have produced positive commission at least once — a referral that actually spent.
      * @type {number}
      * @memberof Funnel
      */
     'convertedOrgs'?: number;
     /**
-     * 
+     * RatePct is convertedOrgs over referredOrgs as a PERCENTAGE, 0–100, and the one non-integer figure on this board. It is 0 when nothing has been referred yet, not undefined.
      * @type {number}
      * @memberof Funnel
      */
     'ratePct'?: number;
     /**
-     * 
+     * ReferredOrgs is how many attribution edges exist fleet-wide — one per referred org, first-touch, so it is also the count of distinct referred orgs.
      * @type {number}
      * @memberof Funnel
      */

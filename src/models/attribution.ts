@@ -21,25 +21,25 @@
  */
 export interface Attribution {
     /**
-     * 
+     * Code is the affiliate code the edge was recorded under, normalized to lower case. On a re-post it is the code of the STANDING edge, which may differ from the one just sent — first touch wins.
      * @type {string}
      * @memberof Attribution
      */
     'code'?: string;
     /**
-     * 
+     * Created says whether THIS call made the edge. false means the caller org was already attributed and nothing moved. The HTTP status says the same: 201 when true, 200 when false.
      * @type {boolean}
      * @memberof Attribution
      */
     'created'?: boolean;
     /**
-     * 
+     * CreatedAt is when the edge was FIRST recorded, Unix seconds UTC. On a re-post it is the original time, not now.
      * @type {number}
      * @memberof Attribution
      */
     'createdAt'?: number;
     /**
-     * 
+     * ID is the attribution edge\'s server-minted handle, \"afr_\"-prefixed.
      * @type {string}
      * @memberof Attribution
      */

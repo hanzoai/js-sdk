@@ -48,13 +48,13 @@ export interface AffiliateStanding {
      */
     'handle'?: string;
     /**
-     * 
+     * ID is the affiliate\'s server-minted handle, \"aff_\"-prefixed — what staff approve, suspend, re-rate and pay against. Absent until the org applies.
      * @type {string}
      * @memberof AffiliateStanding
      */
     'id'?: string;
     /**
-     * 
+     * IsAffiliate says whether the caller org has an affiliate record at all. It is the ONE field an org that never applied gets besides defaultRateBps: on false, read nothing else here — every other field is absent, not zero.
      * @type {boolean}
      * @memberof AffiliateStanding
      */
@@ -102,13 +102,13 @@ export interface AffiliateStanding {
      */
     'referredCount'?: number;
     /**
-     * 
+     * RequestedCode is the vanity code asked for at apply time — a request, not an allocation. Approval mints `code`, which may be a different slug if this one was already taken.
      * @type {string}
      * @memberof AffiliateStanding
      */
     'requestedCode'?: string;
     /**
-     * 
+     * Status is \"applied\", \"approved\" or \"suspended\". Only an approved affiliate has a code that resolves for attribution and accrues commission; suspended keeps what it already earned but stops earning more.
      * @type {string}
      * @memberof AffiliateStanding
      */

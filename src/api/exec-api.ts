@@ -21,6 +21,10 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { CodeResult } from '../models';
+// @ts-ignore
+import type { CodeRun } from '../models';
 /**
  * ExecApi - axios parameter creator
  * @export
@@ -28,268 +32,15 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const ExecApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
          * @summary Run a code snippet in a sandboxed interpreter
+         * @param {CodeRun} codeRun 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('optionsV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1Exec: async (codeRun: CodeRun, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'codeRun' is not null or undefined
+            assertParamExists('postV1Exec', 'codeRun', codeRun)
             const localVarPath = `/v1/exec`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -304,9 +55,12 @@ export const ExecApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(codeRun, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -314,17 +68,13 @@ export const ExecApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
+         * Answers 501. This address belongs to a DIFFERENT protocol from /v1/exec: the server suspends a program on each tool call, returns the pending calls with a continuation token, and resumes when the client posts results back. Serving it means implementing suspension and resumption, so it refuses in the open rather than answering with a shape the caller\'s parser cannot read.
+         * @summary Programmatic tool calling (not served here)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+        postV1ExecProgrammatic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/exec/programmatic`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -333,134 +83,6 @@ export const ExecApiAxiosParamCreator = function (configuration?: Configuration)
             }
 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1Exec: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/exec`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1ExecByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('traceV1ExecByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/exec/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -486,178 +108,28 @@ export const ExecApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ExecApiAxiosParamCreator(configuration)
     return {
         /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
          * @summary Run a code snippet in a sandboxed interpreter
+         * @param {CodeRun} codeRun 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.deleteV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.deleteV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.getV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.getV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async optionsV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.optionsV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async optionsV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.optionsV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.patchV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.patchV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Exec(options);
+        async postV1Exec(codeRun: CodeRun, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Exec(codeRun, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExecApi.postV1Exec']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
+         * Answers 501. This address belongs to a DIFFERENT protocol from /v1/exec: the server suspends a program on each tool call, returns the pending calls with a continuation token, and resumes when the client posts results back. Serving it means implementing suspension and resumption, so it refuses in the open rather than answering with a shape the caller\'s parser cannot read.
+         * @summary Programmatic tool calling (not served here)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ExecByWildcard1(wildcard1, options);
+        async postV1ExecProgrammatic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ExecProgrammatic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.postV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.putV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.putV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceV1Exec(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceV1Exec(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.traceV1Exec']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceV1ExecByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceV1ExecByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.traceV1ExecByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ExecApi.postV1ExecProgrammatic']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -671,237 +143,39 @@ export const ExecApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = ExecApiFp(configuration)
     return {
         /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+         * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
          * @summary Run a code snippet in a sandboxed interpreter
+         * @param {ExecApiPostV1ExecRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1Exec(options).then((request) => request(axios, basePath));
+        postV1Exec(requestParameters: ExecApiPostV1ExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeResult> {
+            return localVarFp.postV1Exec(requestParameters.codeRun, options).then((request) => request(axios, basePath));
         },
         /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiDeleteV1ExecByWildcard1Request} requestParameters Request parameters.
+         * Answers 501. This address belongs to a DIFFERENT protocol from /v1/exec: the server suspends a program on each tool call, returns the pending calls with a continuation token, and resumes when the client posts results back. Serving it means implementing suspension and resumption, so it refuses in the open rather than answering with a shape the caller\'s parser cannot read.
+         * @summary Programmatic tool calling (not served here)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1ExecByWildcard1(requestParameters: ExecApiDeleteV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiGetV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1ExecByWildcard1(requestParameters: ExecApiGetV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiOptionsV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1ExecByWildcard1(requestParameters: ExecApiOptionsV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiPatchV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchV1ExecByWildcard1(requestParameters: ExecApiPatchV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiPostV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1ExecByWildcard1(requestParameters: ExecApiPostV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiPutV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putV1ExecByWildcard1(requestParameters: ExecApiPutV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary Run a code snippet in a sandboxed interpreter
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1Exec(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceV1Exec(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-         * @summary The interpreter\'s own execution subpaths
-         * @param {ExecApiTraceV1ExecByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1ExecByWildcard1(requestParameters: ExecApiTraceV1ExecByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postV1ExecProgrammatic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postV1ExecProgrammatic(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1ExecByWildcard1 operation in ExecApi.
+ * Request parameters for postV1Exec operation in ExecApi.
  * @export
- * @interface ExecApiDeleteV1ExecByWildcard1Request
+ * @interface ExecApiPostV1ExecRequest
  */
-export interface ExecApiDeleteV1ExecByWildcard1Request {
+export interface ExecApiPostV1ExecRequest {
     /**
      * 
-     * @type {string}
-     * @memberof ExecApiDeleteV1ExecByWildcard1
+     * @type {CodeRun}
+     * @memberof ExecApiPostV1Exec
      */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for getV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiGetV1ExecByWildcard1Request
- */
-export interface ExecApiGetV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiGetV1ExecByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for optionsV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiOptionsV1ExecByWildcard1Request
- */
-export interface ExecApiOptionsV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiOptionsV1ExecByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for patchV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiPatchV1ExecByWildcard1Request
- */
-export interface ExecApiPatchV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiPatchV1ExecByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for postV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiPostV1ExecByWildcard1Request
- */
-export interface ExecApiPostV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiPostV1ExecByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for putV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiPutV1ExecByWildcard1Request
- */
-export interface ExecApiPutV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiPutV1ExecByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for traceV1ExecByWildcard1 operation in ExecApi.
- * @export
- * @interface ExecApiTraceV1ExecByWildcard1Request
- */
-export interface ExecApiTraceV1ExecByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExecApiTraceV1ExecByWildcard1
-     */
-    readonly wildcard1: string
+    readonly codeRun: CodeRun
 }
 
 /**
@@ -912,164 +186,26 @@ export interface ExecApiTraceV1ExecByWildcard1Request {
  */
 export class ExecApi extends BaseAPI {
     /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
+     * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
      * @summary Run a code snippet in a sandboxed interpreter
+     * @param {ExecApiPostV1ExecRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExecApi
      */
-    public deleteV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).deleteV1Exec(options).then((request) => request(this.axios, this.basePath));
+    public postV1Exec(requestParameters: ExecApiPostV1ExecRequest, options?: RawAxiosRequestConfig) {
+        return ExecApiFp(this.configuration).postV1Exec(requestParameters.codeRun, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiDeleteV1ExecByWildcard1Request} requestParameters Request parameters.
+     * Answers 501. This address belongs to a DIFFERENT protocol from /v1/exec: the server suspends a program on each tool call, returns the pending calls with a continuation token, and resumes when the client posts results back. Serving it means implementing suspension and resumption, so it refuses in the open rather than answering with a shape the caller\'s parser cannot read.
+     * @summary Programmatic tool calling (not served here)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExecApi
      */
-    public deleteV1ExecByWildcard1(requestParameters: ExecApiDeleteV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).deleteV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public getV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).getV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiGetV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public getV1ExecByWildcard1(requestParameters: ExecApiGetV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).getV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public optionsV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).optionsV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiOptionsV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public optionsV1ExecByWildcard1(requestParameters: ExecApiOptionsV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).optionsV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public patchV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).patchV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiPatchV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public patchV1ExecByWildcard1(requestParameters: ExecApiPatchV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).patchV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public postV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).postV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiPostV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public postV1ExecByWildcard1(requestParameters: ExecApiPostV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).postV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public putV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).putV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiPutV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public putV1ExecByWildcard1(requestParameters: ExecApiPutV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).putV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The code-interpreter entry point: a snippet with its language, plus any files already uploaded to the session, runs in an isolated executor and comes back as the session id, stdout, stderr and the files the run produced. This is what a chat agent\'s code tool calls.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary Run a code snippet in a sandboxed interpreter
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public traceV1Exec(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).traceV1Exec(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Whatever the executor serves below /exec, addressed verbatim — /exec/programmatic is the one this repo names, and the rest of that tree is the executor\'s to define. It is deliberately ONE greedy route: enumerating the executor\'s subpaths here would 404 every one left out of the list, so cloud carries the whole tree rather than a guess at it.  NOTHING RUNS HERE. cloud forwards the request to the sandboxed executor byte for byte and forwards its answer back the same way — the status, the Content-Type and every field are the executor\'s, including fields this repo has never named and including its own 4xx. There is no os/exec anywhere in this process: the sandbox is the isolation boundary, and cloud adds only the credential check and the single public address.  AUTH is a shared SERVICE key on X-API-Key, compared in constant time — not a user JWT. The chat server calls this server-side on a user\'s behalf, so this surface carries no org scope and no per-user identity; separation between callers is the executor\'s session, not this edge\'s. A wrong key is 401, and a deployment with no key configured is 503 rather than open.  One registration owns this address for every method, so which methods actually answer is the executor\'s decision, not this edge\'s.
-     * @summary The interpreter\'s own execution subpaths
-     * @param {ExecApiTraceV1ExecByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExecApi
-     */
-    public traceV1ExecByWildcard1(requestParameters: ExecApiTraceV1ExecByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).traceV1ExecByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postV1ExecProgrammatic(options?: RawAxiosRequestConfig) {
+        return ExecApiFp(this.configuration).postV1ExecProgrammatic(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -76,9 +76,9 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SitesSlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1SitesSlugReleases', 'slug', slug)
+            assertParamExists('getV1SitesBySlugReleases', 'slug', slug)
             const localVarPath = `/v1/sites/{slug}/releases`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -140,42 +140,6 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
-         * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
-         * @param {ProjectsDeploySite} projectsDeploySite 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1SitesDeploy: async (projectsDeploySite: ProjectsDeploySite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectsDeploySite' is not null or undefined
-            assertParamExists('postV1SitesDeploy', 'projectsDeploySite', projectsDeploySite)
-            const localVarPath = `/v1/sites/deploy`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsDeploySite, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
          * @param {string} slug Slug is the site to publish, from the path.
@@ -183,11 +147,11 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SitesSlugPublish: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1SitesBySlugPublish: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1SitesSlugPublish', 'slug', slug)
+            assertParamExists('postV1SitesBySlugPublish', 'slug', slug)
             // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postV1SitesSlugPublish', 'projectsPublish', projectsPublish)
+            assertParamExists('postV1SitesBySlugPublish', 'projectsPublish', projectsPublish)
             const localVarPath = `/v1/sites/{slug}/publish`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -223,11 +187,11 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SitesSlugReleases: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1SitesBySlugReleases: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1SitesSlugReleases', 'slug', slug)
+            assertParamExists('postV1SitesBySlugReleases', 'slug', slug)
             // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postV1SitesSlugReleases', 'projectsPublish', projectsPublish)
+            assertParamExists('postV1SitesBySlugReleases', 'projectsPublish', projectsPublish)
             const localVarPath = `/v1/sites/{slug}/releases`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -263,11 +227,11 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SitesSlugReleasesReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1SitesBySlugReleasesByReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1SitesSlugReleasesReleaseActivate', 'slug', slug)
+            assertParamExists('postV1SitesBySlugReleasesByReleaseActivate', 'slug', slug)
             // verify required parameter 'release' is not null or undefined
-            assertParamExists('postV1SitesSlugReleasesReleaseActivate', 'release', release)
+            assertParamExists('postV1SitesBySlugReleasesByReleaseActivate', 'release', release)
             const localVarPath = `/v1/sites/{slug}/releases/{release}/activate`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"release"}}`, encodeURIComponent(String(release)));
@@ -287,6 +251,42 @@ export const SitesApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
+         * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
+         * @param {ProjectsDeploySite} projectsDeploySite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1SitesDeploy: async (projectsDeploySite: ProjectsDeploySite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectsDeploySite' is not null or undefined
+            assertParamExists('postV1SitesDeploy', 'projectsDeploySite', projectsDeploySite)
+            const localVarPath = `/v1/sites/deploy`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(projectsDeploySite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -322,10 +322,10 @@ export const SitesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SitesSlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsRelease>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SitesSlugReleases(slug, options);
+        async getV1SitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsRelease>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SitesBySlugReleases(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SitesApi.getV1SitesSlugReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SitesApi.getV1SitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -342,19 +342,6 @@ export const SitesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
-         * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
-         * @param {ProjectsDeploySite} projectsDeploySite 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1SitesDeploy(projectsDeploySite: ProjectsDeploySite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsSiteDeploy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesDeploy(projectsDeploySite, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesDeploy']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
          * @param {string} slug Slug is the site to publish, from the path.
@@ -362,10 +349,10 @@ export const SitesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SitesSlugPublish(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesSlugPublish(slug, projectsPublish, options);
+        async postV1SitesBySlugPublish(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesBySlugPublish(slug, projectsPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesSlugPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesBySlugPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -376,10 +363,10 @@ export const SitesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SitesSlugReleases(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesSlugReleases(slug, projectsPublish, options);
+        async postV1SitesBySlugReleases(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesBySlugReleases(slug, projectsPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesSlugReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -390,10 +377,23 @@ export const SitesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SitesSlugReleasesReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesSlugReleasesReleaseActivate(slug, release, options);
+        async postV1SitesBySlugReleasesByReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesBySlugReleasesByReleaseActivate(slug, release, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesSlugReleasesReleaseActivate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesBySlugReleasesByReleaseActivate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
+         * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
+         * @param {ProjectsDeploySite} projectsDeploySite 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1SitesDeploy(projectsDeploySite: ProjectsDeploySite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsSiteDeploy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SitesDeploy(projectsDeploySite, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SitesApi.postV1SitesDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -418,12 +418,12 @@ export const SitesApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-         * @param {SitesApiGetV1SitesSlugReleasesRequest} requestParameters Request parameters.
+         * @param {SitesApiGetV1SitesBySlugReleasesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SitesSlugReleases(requestParameters: SitesApiGetV1SitesSlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsRelease>> {
-            return localVarFp.getV1SitesSlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getV1SitesBySlugReleases(requestParameters: SitesApiGetV1SitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsRelease>> {
+            return localVarFp.getV1SitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Generates a self-contained, mobile-responsive static site from a natural-language brief and deploys it live in one call.  One inference call turns `brief` (capped at 8 KiB) into a file manifest, which then runs through the SAME validation, guards and viewport guarantee as a hand-supplied manifest: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one. The generated site is fully inline — no CDNs, no remote fonts or images — so it is CSP-safe. `slug` and `name` are optional: the model\'s own title is preferred, and a slug is derived or minted when none is given.  It writes into the SAME org-scoped store as /v1/projects — it ensures a project (framework `static`) for the resolved slug and records a deployment — so this is a second door onto one publish pipeline, not a second copy of project state. Ordering is the billing contract: the hosting gate runs BEFORE any inference or upload, so a denied gate generates and uploads NOTHING, and the debit lands once, only after the site is actually live. The tokens are billed to the same ledger the hosting fee was reserved against.  Answers 503 when object storage or inference is unconfigured, and 400 when the model\'s manifest cannot be parsed or fails the guards.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
@@ -436,6 +436,36 @@ export const SitesApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postV1Sites(requestParameters.projectsBuildSite, options).then((request) => request(axios, basePath));
         },
         /**
+         * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
+         * @param {SitesApiPostV1SitesBySlugPublishRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1SitesBySlugPublish(requestParameters: SitesApiPostV1SitesBySlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postV1SitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
+         * @param {SitesApiPostV1SitesBySlugReleasesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1SitesBySlugReleases(requestParameters: SitesApiPostV1SitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postV1SitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
+         * @param {SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1SitesBySlugReleasesByReleaseActivate(requestParameters: SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postV1SitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
          * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
          * @param {SitesApiPostV1SitesDeployRequest} requestParameters Request parameters.
@@ -445,49 +475,19 @@ export const SitesApiFactory = function (configuration?: Configuration, basePath
         postV1SitesDeploy(requestParameters: SitesApiPostV1SitesDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsSiteDeploy> {
             return localVarFp.postV1SitesDeploy(requestParameters.projectsDeploySite, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-         * @param {SitesApiPostV1SitesSlugPublishRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1SitesSlugPublish(requestParameters: SitesApiPostV1SitesSlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1SitesSlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-         * @param {SitesApiPostV1SitesSlugReleasesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1SitesSlugReleases(requestParameters: SitesApiPostV1SitesSlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1SitesSlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-         * @param {SitesApiPostV1SitesSlugReleasesReleaseActivateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1SitesSlugReleasesReleaseActivate(requestParameters: SitesApiPostV1SitesSlugReleasesReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1SitesSlugReleasesReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
 /**
- * Request parameters for getV1SitesSlugReleases operation in SitesApi.
+ * Request parameters for getV1SitesBySlugReleases operation in SitesApi.
  * @export
- * @interface SitesApiGetV1SitesSlugReleasesRequest
+ * @interface SitesApiGetV1SitesBySlugReleasesRequest
  */
-export interface SitesApiGetV1SitesSlugReleasesRequest {
+export interface SitesApiGetV1SitesBySlugReleasesRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof SitesApiGetV1SitesSlugReleases
+     * @memberof SitesApiGetV1SitesBySlugReleases
      */
     readonly slug: string
 }
@@ -507,6 +507,69 @@ export interface SitesApiPostV1SitesRequest {
 }
 
 /**
+ * Request parameters for postV1SitesBySlugPublish operation in SitesApi.
+ * @export
+ * @interface SitesApiPostV1SitesBySlugPublishRequest
+ */
+export interface SitesApiPostV1SitesBySlugPublishRequest {
+    /**
+     * Slug is the site to publish, from the path.
+     * @type {string}
+     * @memberof SitesApiPostV1SitesBySlugPublish
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {ProjectsPublish}
+     * @memberof SitesApiPostV1SitesBySlugPublish
+     */
+    readonly projectsPublish: ProjectsPublish
+}
+
+/**
+ * Request parameters for postV1SitesBySlugReleases operation in SitesApi.
+ * @export
+ * @interface SitesApiPostV1SitesBySlugReleasesRequest
+ */
+export interface SitesApiPostV1SitesBySlugReleasesRequest {
+    /**
+     * Slug is the site to publish, from the path.
+     * @type {string}
+     * @memberof SitesApiPostV1SitesBySlugReleases
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {ProjectsPublish}
+     * @memberof SitesApiPostV1SitesBySlugReleases
+     */
+    readonly projectsPublish: ProjectsPublish
+}
+
+/**
+ * Request parameters for postV1SitesBySlugReleasesByReleaseActivate operation in SitesApi.
+ * @export
+ * @interface SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest
+ */
+export interface SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest {
+    /**
+     * Slug is the site the release belongs to, from the path.
+     * @type {string}
+     * @memberof SitesApiPostV1SitesBySlugReleasesByReleaseActivate
+     */
+    readonly slug: string
+
+    /**
+     * Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
+     * @type {string}
+     * @memberof SitesApiPostV1SitesBySlugReleasesByReleaseActivate
+     */
+    readonly release: string
+}
+
+/**
  * Request parameters for postV1SitesDeploy operation in SitesApi.
  * @export
  * @interface SitesApiPostV1SitesDeployRequest
@@ -518,69 +581,6 @@ export interface SitesApiPostV1SitesDeployRequest {
      * @memberof SitesApiPostV1SitesDeploy
      */
     readonly projectsDeploySite: ProjectsDeploySite
-}
-
-/**
- * Request parameters for postV1SitesSlugPublish operation in SitesApi.
- * @export
- * @interface SitesApiPostV1SitesSlugPublishRequest
- */
-export interface SitesApiPostV1SitesSlugPublishRequest {
-    /**
-     * Slug is the site to publish, from the path.
-     * @type {string}
-     * @memberof SitesApiPostV1SitesSlugPublish
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsPublish}
-     * @memberof SitesApiPostV1SitesSlugPublish
-     */
-    readonly projectsPublish: ProjectsPublish
-}
-
-/**
- * Request parameters for postV1SitesSlugReleases operation in SitesApi.
- * @export
- * @interface SitesApiPostV1SitesSlugReleasesRequest
- */
-export interface SitesApiPostV1SitesSlugReleasesRequest {
-    /**
-     * Slug is the site to publish, from the path.
-     * @type {string}
-     * @memberof SitesApiPostV1SitesSlugReleases
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsPublish}
-     * @memberof SitesApiPostV1SitesSlugReleases
-     */
-    readonly projectsPublish: ProjectsPublish
-}
-
-/**
- * Request parameters for postV1SitesSlugReleasesReleaseActivate operation in SitesApi.
- * @export
- * @interface SitesApiPostV1SitesSlugReleasesReleaseActivateRequest
- */
-export interface SitesApiPostV1SitesSlugReleasesReleaseActivateRequest {
-    /**
-     * Slug is the site the release belongs to, from the path.
-     * @type {string}
-     * @memberof SitesApiPostV1SitesSlugReleasesReleaseActivate
-     */
-    readonly slug: string
-
-    /**
-     * Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-     * @type {string}
-     * @memberof SitesApiPostV1SitesSlugReleasesReleaseActivate
-     */
-    readonly release: string
 }
 
 /**
@@ -604,13 +604,13 @@ export class SitesApi extends BaseAPI {
     /**
      * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-     * @param {SitesApiGetV1SitesSlugReleasesRequest} requestParameters Request parameters.
+     * @param {SitesApiGetV1SitesBySlugReleasesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SitesApi
      */
-    public getV1SitesSlugReleases(requestParameters: SitesApiGetV1SitesSlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return SitesApiFp(this.configuration).getV1SitesSlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getV1SitesBySlugReleases(requestParameters: SitesApiGetV1SitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return SitesApiFp(this.configuration).getV1SitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -626,6 +626,42 @@ export class SitesApi extends BaseAPI {
     }
 
     /**
+     * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
+     * @param {SitesApiPostV1SitesBySlugPublishRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SitesApi
+     */
+    public postV1SitesBySlugPublish(requestParameters: SitesApiPostV1SitesBySlugPublishRequest, options?: RawAxiosRequestConfig) {
+        return SitesApiFp(this.configuration).postV1SitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
+     * @param {SitesApiPostV1SitesBySlugReleasesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SitesApi
+     */
+    public postV1SitesBySlugReleases(requestParameters: SitesApiPostV1SitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return SitesApiFp(this.configuration).postV1SitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
+     * @param {SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SitesApi
+     */
+    public postV1SitesBySlugReleasesByReleaseActivate(requestParameters: SitesApiPostV1SitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig) {
+        return SitesApiFp(this.configuration).postV1SitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.  `files` is a list of {path, content} pairs, the same shape the brief build emits, and it runs through the SAME guards: index.html required at the root, absolute and traversal paths rejected, per-file and total size capped, and a mobile viewport meta tag injected into every HTML document that lacks one — so a hand-built site is exactly as safe and as responsive as a generated one. `slug` and `name` are optional; a slug is derived from the name or minted.  It writes into the SAME org-scoped store as /v1/projects, ensuring a project (framework `static`) for the resolved slug and recording a deployment. The hosting gate runs before the upload and the debit lands once, after the site is live — a failed upload is never billed. Answers 503 when object storage is unconfigured.  Scope: a validated principal is required (403 without one) and the site is published into THAT principal\'s org.
      * @summary Deploys a caller-supplied file manifest — the deploy_site capability an agent calls — and answers with where it went live.
      * @param {SitesApiPostV1SitesDeployRequest} requestParameters Request parameters.
@@ -635,42 +671,6 @@ export class SitesApi extends BaseAPI {
      */
     public postV1SitesDeploy(requestParameters: SitesApiPostV1SitesDeployRequest, options?: RawAxiosRequestConfig) {
         return SitesApiFp(this.configuration).postV1SitesDeploy(requestParameters.projectsDeploySite, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-     * @param {SitesApiPostV1SitesSlugPublishRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SitesApi
-     */
-    public postV1SitesSlugPublish(requestParameters: SitesApiPostV1SitesSlugPublishRequest, options?: RawAxiosRequestConfig) {
-        return SitesApiFp(this.configuration).postV1SitesSlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-     * @param {SitesApiPostV1SitesSlugReleasesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SitesApi
-     */
-    public postV1SitesSlugReleases(requestParameters: SitesApiPostV1SitesSlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return SitesApiFp(this.configuration).postV1SitesSlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-     * @param {SitesApiPostV1SitesSlugReleasesReleaseActivateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SitesApi
-     */
-    public postV1SitesSlugReleasesReleaseActivate(requestParameters: SitesApiPostV1SitesSlugReleasesReleaseActivateRequest, options?: RawAxiosRequestConfig) {
-        return SitesApiFp(this.configuration).postV1SitesSlugReleasesReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

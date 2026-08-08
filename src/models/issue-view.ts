@@ -39,6 +39,12 @@ export interface IssueView {
      */
     'description'?: string;
     /**
+     * unix seconds; absent = no due date
+     * @type {number}
+     * @memberof IssueView
+     */
+    'dueAt'?: number;
+    /**
      * external anchor
      * @type {string}
      * @memberof IssueView
@@ -98,6 +104,12 @@ export interface IssueView {
      * @memberof IssueView
      */
     'source'?: string;
+    /**
+     * unix seconds; absent = unscheduled
+     * @type {number}
+     * @memberof IssueView
+     */
+    'startAt'?: number;
     /**
      * 
      * @type {string}

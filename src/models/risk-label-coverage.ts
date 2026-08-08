@@ -30,7 +30,7 @@ export interface RiskLabelCoverage {
      */
     'contested'?: number;
     /**
-     * 
+     * Events is how many DISTINCT judged events those assertions name, keyed on (kind, subject, at). It counts only events something was ASSERTED about: what share of the whole event stream carries a label is a question about the feature plane\'s denominator and is not answerable here. Matured + Unmatured is Events.
      * @type {number}
      * @memberof RiskLabelCoverage
      */
@@ -48,13 +48,13 @@ export interface RiskLabelCoverage {
      */
     'facts'?: number;
     /**
-     * 
+     * From is the INCLUSIVE start of the EVENT window these counts were folded over, RFC 3339, echoed with the defaults filled in — the caller\'s, or 90 days before To. An assertion is in the window when its event time satisfies at >= From.
      * @type {string}
      * @memberof RiskLabelCoverage
      */
     'from'?: string;
     /**
-     * 
+     * Horizon is the maturity horizon these counts were measured under, IN DAYS — the caller\'s, or 120. It decides Matured (an event is matured when its `at` plus this many days is not after now), it sets each event\'s own as-of and so which assertions were visible to it, and when the caller bounds nothing it also places the default window\'s end.
      * @type {number}
      * @memberof RiskLabelCoverage
      */
@@ -78,7 +78,7 @@ export interface RiskLabelCoverage {
      */
     'pending'?: number;
     /**
-     * 
+     * Productive is how many matured events resolve, at their own as-of, to a WINNING assertion of `productive` — the event led somewhere: escalated, reported, charged back. It is the positive class a supervised fit would train on, and a near-zero count is the number that says the fit is not worth running.
      * @type {number}
      * @memberof RiskLabelCoverage
      */
@@ -90,7 +90,7 @@ export interface RiskLabelCoverage {
      */
     'sources'?: Array<RiskSourceCoverage>;
     /**
-     * 
+     * To is the EXCLUSIVE end of that window (at < To). Unstated it is one horizon before now, never now: a window running to now under a maturity horizon can hold no matured event at all, so every count below would read zero however much ground truth the tenant held.
      * @type {string}
      * @memberof RiskLabelCoverage
      */
@@ -108,7 +108,7 @@ export interface RiskLabelCoverage {
      */
     'unmatured'?: number;
     /**
-     * 
+     * Unproductive is every OTHER judged event: the winner claimed `unproductive`, judged not suspicious. Productive + Unproductive is Judged exactly, because a winner of the explicit unjudged is counted in neither — it is a matured event somebody looked at and could not conclude about, and rolling it into the negatives would hand a model a claim nobody made.
      * @type {number}
      * @memberof RiskLabelCoverage
      */

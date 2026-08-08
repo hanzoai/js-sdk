@@ -21,43 +21,43 @@
  */
 export interface Totals {
     /**
-     * 
+     * AccruedCents is lifetime commission accrued summed over those rows, in cents.
      * @type {number}
      * @memberof Totals
      */
     'accruedCents'?: number;
     /**
-     * 
+     * Applied is how many of those rows are still awaiting approval — no code, no accrual yet.
      * @type {number}
      * @memberof Totals
      */
     'applied'?: number;
     /**
-     * 
+     * Approved is how many are approved: the only rows whose code resolves for attribution and whose balance can still grow.
      * @type {number}
      * @memberof Totals
      */
     'approved'?: number;
     /**
-     * 
+     * PaidCents is lifetime commission already paid out summed over those rows, in cents.
      * @type {number}
      * @memberof Totals
      */
     'paidCents'?: number;
     /**
-     * 
+     * PendingCents is accrued minus paid summed over those rows, in cents — the outstanding liability across the page.
      * @type {number}
      * @memberof Totals
      */
     'pendingCents'?: number;
     /**
-     * 
+     * Suspended is how many were suspended. What they already accrued stays accrued and stays payable.
      * @type {number}
      * @memberof Totals
      */
     'suspended'?: number;
     /**
-     * 
+     * Total is how many affiliate rows this page covered, at every status. It is the page, not the table: a limit that truncates truncates this too.
      * @type {number}
      * @memberof Totals
      */

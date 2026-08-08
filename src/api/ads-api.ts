@@ -44,9 +44,9 @@ export const AdsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AdsCampaignsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1AdsCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1AdsCampaignsId', 'id', id)
+            assertParamExists('deleteV1AdsCampaignsById', 'id', id)
             const localVarPath = `/v1/ads/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -118,9 +118,9 @@ export const AdsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdsCampaignsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1AdsCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AdsCampaignsId', 'id', id)
+            assertParamExists('getV1AdsCampaignsById', 'id', id)
             const localVarPath = `/v1/ads/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -212,8 +212,8 @@ export const AdsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
-         * @summary Run one of your stored campaigns on its ad network
+         * Runs one of the caller\'s stored campaigns on its ad network.  It creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make.  Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Runs one of the caller\'s stored campaigns on its ad network.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -253,11 +253,11 @@ export const AdsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdsCampaignsId: async (id: string, updateCampaignIn: UpdateCampaignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1AdsCampaignsById: async (id: string, updateCampaignIn: UpdateCampaignIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1AdsCampaignsId', 'id', id)
+            assertParamExists('putV1AdsCampaignsById', 'id', id)
             // verify required parameter 'updateCampaignIn' is not null or undefined
-            assertParamExists('putV1AdsCampaignsId', 'updateCampaignIn', updateCampaignIn)
+            assertParamExists('putV1AdsCampaignsById', 'updateCampaignIn', updateCampaignIn)
             const localVarPath = `/v1/ads/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -302,10 +302,10 @@ export const AdsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AdsCampaignsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AdsCampaignsId(id, options);
+        async deleteV1AdsCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AdsCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdsApi.deleteV1AdsCampaignsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdsApi.deleteV1AdsCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -329,10 +329,10 @@ export const AdsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdsCampaignsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdsCampaignsId(id, options);
+        async getV1AdsCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdsCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdsApi.getV1AdsCampaignsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdsApi.getV1AdsCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -361,8 +361,8 @@ export const AdsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
-         * @summary Run one of your stored campaigns on its ad network
+         * Runs one of the caller\'s stored campaigns on its ad network.  It creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make.  Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Runs one of the caller\'s stored campaigns on its ad network.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -381,10 +381,10 @@ export const AdsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AdsCampaignsId(id: string, updateCampaignIn: UpdateCampaignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AdsCampaignsId(id, updateCampaignIn, options);
+        async putV1AdsCampaignsById(id: string, updateCampaignIn: UpdateCampaignIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AdsCampaignsById(id, updateCampaignIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdsApi.putV1AdsCampaignsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdsApi.putV1AdsCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -400,12 +400,12 @@ export const AdsApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Removes one of the caller org\'s campaigns and answers 204 with no body. It deletes the stored record only: a campaign already launched keeps running on the ad network, which must be stopped there. An id another org owns reads as not found.
          * @summary Removes one of the caller org\'s campaigns and answers 204 with no body.
-         * @param {AdsApiDeleteV1AdsCampaignsIdRequest} requestParameters Request parameters.
+         * @param {AdsApiDeleteV1AdsCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AdsCampaignsId(requestParameters: AdsApiDeleteV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1AdsCampaignsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1AdsCampaignsById(requestParameters: AdsApiDeleteV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1AdsCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s ad campaigns, most recently updated first, optionally narrowed to one lifecycle status. The listing is bounded by the org: another tenant\'s campaigns are not reachable from here at all.
@@ -420,12 +420,12 @@ export const AdsApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns one of the caller org\'s campaigns. An id another org owns reads as not found, so the response cannot confirm that it exists.
          * @summary Returns one of the caller org\'s campaigns.
-         * @param {AdsApiGetV1AdsCampaignsIdRequest} requestParameters Request parameters.
+         * @param {AdsApiGetV1AdsCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdsCampaignsId(requestParameters: AdsApiGetV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
-            return localVarFp.getV1AdsCampaignsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1AdsCampaignsById(requestParameters: AdsApiGetV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
+            return localVarFp.getV1AdsCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Rolls the caller org\'s ad campaigns up into four numbers: how many campaigns exist, how many are active, and the summed budget and spend across all of them. Budget and spend are MINOR units (cents), the same units the campaign rows carry. It counts only this org\'s campaigns.
@@ -447,8 +447,8 @@ export const AdsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postV1AdsCampaigns(requestParameters.campaignInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
-         * @summary Run one of your stored campaigns on its ad network
+         * Runs one of the caller\'s stored campaigns on its ad network.  It creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make.  Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+         * @summary Runs one of the caller\'s stored campaigns on its ad network.
          * @param {AdsApiPostV1AdsCampaignsByIdLaunchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -459,26 +459,26 @@ export const AdsApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row. It is a full replace, not a patch: every field is written from the request, so an omitted one is cleared. externalId is launch-owned and is never touched here, so editing a campaign cannot break its link to a live provider execution.
          * @summary Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row.
-         * @param {AdsApiPutV1AdsCampaignsIdRequest} requestParameters Request parameters.
+         * @param {AdsApiPutV1AdsCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdsCampaignsId(requestParameters: AdsApiPutV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
-            return localVarFp.putV1AdsCampaignsId(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(axios, basePath));
+        putV1AdsCampaignsById(requestParameters: AdsApiPutV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdCampaign> {
+            return localVarFp.putV1AdsCampaignsById(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1AdsCampaignsId operation in AdsApi.
+ * Request parameters for deleteV1AdsCampaignsById operation in AdsApi.
  * @export
- * @interface AdsApiDeleteV1AdsCampaignsIdRequest
+ * @interface AdsApiDeleteV1AdsCampaignsByIdRequest
  */
-export interface AdsApiDeleteV1AdsCampaignsIdRequest {
+export interface AdsApiDeleteV1AdsCampaignsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof AdsApiDeleteV1AdsCampaignsId
+     * @memberof AdsApiDeleteV1AdsCampaignsById
      */
     readonly id: string
 }
@@ -505,15 +505,15 @@ export interface AdsApiGetV1AdsCampaignsRequest {
 }
 
 /**
- * Request parameters for getV1AdsCampaignsId operation in AdsApi.
+ * Request parameters for getV1AdsCampaignsById operation in AdsApi.
  * @export
- * @interface AdsApiGetV1AdsCampaignsIdRequest
+ * @interface AdsApiGetV1AdsCampaignsByIdRequest
  */
-export interface AdsApiGetV1AdsCampaignsIdRequest {
+export interface AdsApiGetV1AdsCampaignsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof AdsApiGetV1AdsCampaignsId
+     * @memberof AdsApiGetV1AdsCampaignsById
      */
     readonly id: string
 }
@@ -547,22 +547,22 @@ export interface AdsApiPostV1AdsCampaignsByIdLaunchRequest {
 }
 
 /**
- * Request parameters for putV1AdsCampaignsId operation in AdsApi.
+ * Request parameters for putV1AdsCampaignsById operation in AdsApi.
  * @export
- * @interface AdsApiPutV1AdsCampaignsIdRequest
+ * @interface AdsApiPutV1AdsCampaignsByIdRequest
  */
-export interface AdsApiPutV1AdsCampaignsIdRequest {
+export interface AdsApiPutV1AdsCampaignsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof AdsApiPutV1AdsCampaignsId
+     * @memberof AdsApiPutV1AdsCampaignsById
      */
     readonly id: string
 
     /**
      * 
      * @type {UpdateCampaignIn}
-     * @memberof AdsApiPutV1AdsCampaignsId
+     * @memberof AdsApiPutV1AdsCampaignsById
      */
     readonly updateCampaignIn: UpdateCampaignIn
 }
@@ -577,13 +577,13 @@ export class AdsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s campaigns and answers 204 with no body. It deletes the stored record only: a campaign already launched keeps running on the ad network, which must be stopped there. An id another org owns reads as not found.
      * @summary Removes one of the caller org\'s campaigns and answers 204 with no body.
-     * @param {AdsApiDeleteV1AdsCampaignsIdRequest} requestParameters Request parameters.
+     * @param {AdsApiDeleteV1AdsCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdsApi
      */
-    public deleteV1AdsCampaignsId(requestParameters: AdsApiDeleteV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig) {
-        return AdsApiFp(this.configuration).deleteV1AdsCampaignsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1AdsCampaignsById(requestParameters: AdsApiDeleteV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AdsApiFp(this.configuration).deleteV1AdsCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -601,13 +601,13 @@ export class AdsApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s campaigns. An id another org owns reads as not found, so the response cannot confirm that it exists.
      * @summary Returns one of the caller org\'s campaigns.
-     * @param {AdsApiGetV1AdsCampaignsIdRequest} requestParameters Request parameters.
+     * @param {AdsApiGetV1AdsCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdsApi
      */
-    public getV1AdsCampaignsId(requestParameters: AdsApiGetV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig) {
-        return AdsApiFp(this.configuration).getV1AdsCampaignsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1AdsCampaignsById(requestParameters: AdsApiGetV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AdsApiFp(this.configuration).getV1AdsCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -634,8 +634,8 @@ export class AdsApi extends BaseAPI {
     }
 
     /**
-     * Creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make. Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
-     * @summary Run one of your stored campaigns on its ad network
+     * Runs one of the caller\'s stored campaigns on its ad network.  It creates the campaign on its platform under the CALLER ORG\'S own connected ad account, records the provider campaign id, flips the stored campaign to active and answers the updated record. No ad-network token is held here: it is resolved from KMS through the org\'s connector at launch time, BEFORE any provider call, so an org that has not connected that platform gets 424 and no spend can ever start on a connection the org did not make.  Meta is executed for real; a campaign on a platform whose provider is not wired yet answers 501 even when the connector is connected, and an edge failure at the platform is 502. The optional {account} body overrides the target ad account for this launch and is TOLERANT — a malformed or non-JSON body is ignored and the campaign launches on its stored account rather than being refused. A campaign id another org owns reads as not found.
+     * @summary Runs one of the caller\'s stored campaigns on its ad network.
      * @param {AdsApiPostV1AdsCampaignsByIdLaunchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -648,13 +648,13 @@ export class AdsApi extends BaseAPI {
     /**
      * Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row. It is a full replace, not a patch: every field is written from the request, so an omitted one is cleared. externalId is launch-owned and is never touched here, so editing a campaign cannot break its link to a live provider execution.
      * @summary Replaces the user-owned fields of one of the caller org\'s campaigns and answers the stored row.
-     * @param {AdsApiPutV1AdsCampaignsIdRequest} requestParameters Request parameters.
+     * @param {AdsApiPutV1AdsCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdsApi
      */
-    public putV1AdsCampaignsId(requestParameters: AdsApiPutV1AdsCampaignsIdRequest, options?: RawAxiosRequestConfig) {
-        return AdsApiFp(this.configuration).putV1AdsCampaignsId(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(this.axios, this.basePath));
+    public putV1AdsCampaignsById(requestParameters: AdsApiPutV1AdsCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AdsApiFp(this.configuration).putV1AdsCampaignsById(requestParameters.id, requestParameters.updateCampaignIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

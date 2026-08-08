@@ -27,19 +27,19 @@ import type { Remittance } from './remittance';
  */
 export interface AffiliateSelf {
     /**
-     * 
+     * AccruedCents is lifetime commission accrued, in cents. It only grows — a payout is recorded against paidCents and never reduces this.
      * @type {number}
      * @memberof AffiliateSelf
      */
     'accruedCents'?: number;
     /**
-     * 
+     * Code is the minted referral code, the slug the ?aff link carries. Absent until staff approve; codes live in ONE global namespace across all affiliates.
      * @type {string}
      * @memberof AffiliateSelf
      */
     'code'?: string;
     /**
-     * 
+     * DefaultRateBps is the direct rate a new affiliate starts at, in basis points of margin (2000 = 20%). Answered ONLY to a caller that has not applied, as the quote beside `schedule`.
      * @type {number}
      * @memberof AffiliateSelf
      */
@@ -51,19 +51,19 @@ export interface AffiliateSelf {
      */
     'downlineTotal'?: number;
     /**
-     * 
+     * Handle is the opt-in public leaderboard name. Empty means opted out: the caller keeps its rank and still sees its own row, it is just not listed.
      * @type {string}
      * @memberof AffiliateSelf
      */
     'handle'?: string;
     /**
-     * 
+     * ID is the affiliate\'s server-minted handle, \"aff_\"-prefixed. Absent until the org applies.
      * @type {string}
      * @memberof AffiliateSelf
      */
     'id'?: string;
     /**
-     * 
+     * IsAffiliate says whether the caller org has an affiliate record. On false the answer carries the rate SCHEDULE and the default rate instead of a downline, so the console can show what the caller would earn.
      * @type {boolean}
      * @memberof AffiliateSelf
      */
@@ -75,37 +75,37 @@ export interface AffiliateSelf {
      */
     'levels'?: Array<LevelView>;
     /**
-     * 
+     * Link is the shareable ?aff URL built from the code. Empty until a code is minted, since there is nothing to share before approval.
      * @type {string}
      * @memberof AffiliateSelf
      */
     'link'?: string;
     /**
-     * 
+     * MarginBps is the platform gross-margin fraction, in basis points, that every rate here is a rate OF. Read live per request, so it is the value in force now, not the one that applied to commission already accrued.
      * @type {number}
      * @memberof AffiliateSelf
      */
     'marginBps'?: number;
     /**
-     * 
+     * PaidCents is lifetime commission already paid out, in cents — credits grants and record-only cash disbursements alike.
      * @type {number}
      * @memberof AffiliateSelf
      */
     'paidCents'?: number;
     /**
-     * 
+     * Payouts is the payout history, newest first, bounded to the last 100 rows.
      * @type {Array<Remittance>}
      * @memberof AffiliateSelf
      */
     'payouts'?: Array<Remittance>;
     /**
-     * 
+     * PendingCents is accrued minus paid, in cents — what the platform still owes and the ceiling on the next payout. Never negative.
      * @type {number}
      * @memberof AffiliateSelf
      */
     'pendingCents'?: number;
     /**
-     * 
+     * RateBps is the caller\'s OWN direct (level 1) commission rate, in basis points of margin. Levels 2 and 3 are platform-wide and appear in `levels`.
      * @type {number}
      * @memberof AffiliateSelf
      */
@@ -117,7 +117,7 @@ export interface AffiliateSelf {
      */
     'schedule'?: Array<LevelView>;
     /**
-     * 
+     * Status is \"applied\", \"approved\" or \"suspended\"; absent for a caller that never applied. Only \"approved\" mints links and accrues.
      * @type {string}
      * @memberof AffiliateSelf
      */

@@ -27,13 +27,13 @@ import type { UserOptinView } from './user-optin-view';
  */
 export interface OptinView {
     /**
-     * 
+     * Org is the caller\'s org\'s listing preference on the cross-org board, and whether this caller is allowed to change it. It is read for every caller — a member sees where their org stands even though only an admin may edit it.
      * @type {OrgOptinView}
      * @memberof OptinView
      */
     'org'?: OrgOptinView;
     /**
-     * 
+     * User is the caller\'s OWN listing preference, and whether they may change it.
      * @type {UserOptinView}
      * @memberof OptinView
      */

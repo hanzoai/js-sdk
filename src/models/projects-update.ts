@@ -78,6 +78,12 @@ export interface ProjectsUpdate {
      */
     'slug'?: string;
     /**
+     * Tags sets the site\'s browser tag config: platform slug → non-secret pixel id (e.g. {\"ga4\":\"G-…\",\"meta\":\"…\"}). track.js injects these first-party and the server CAPI reads them, per site. Absent LEAVES them; a present object REPLACES the set (send {} to clear). The ids are public — they ship in the page — so this is not the SECRET path (a CAPI token is sealed via POST /v1/destinations).
+     * @type {{ [key: string]: string; }}
+     * @memberof ProjectsUpdate
+     */
+    'tags'?: { [key: string]: string; };
+    /**
      * Upstream/License credit the third-party work this app was published from — settable after the fact, because the demos that need crediting most are the ones already live. Pointers so \"\" clears a credit and absent leaves it.
      * @type {string}
      * @memberof ProjectsUpdate

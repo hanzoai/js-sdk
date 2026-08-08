@@ -36,6 +36,41 @@ import type { RevokedKey } from '../models';
 export const KeysApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * @summary Revokes the caller\'s own API key of the requested class.
+         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteV1Keys: async (type?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/keys`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
          * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
          * @param {*} [options] Override http request option.
@@ -66,50 +101,15 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1DeleteKeys: async (type?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
          * @param {KeyTypeIn} keyTypeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostKeys: async (keyTypeIn: KeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1Keys: async (keyTypeIn: KeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'keyTypeIn' is not null or undefined
-            assertParamExists('v1PostKeys', 'keyTypeIn', keyTypeIn)
+            assertParamExists('postV1Keys', 'keyTypeIn', keyTypeIn)
             const localVarPath = `/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -147,6 +147,19 @@ export const KeysApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = KeysApiAxiosParamCreator(configuration)
     return {
         /**
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * @summary Revokes the caller\'s own API key of the requested class.
+         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteV1Keys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokedKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1Keys(type, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['KeysApi.deleteV1Keys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
          * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
          * @param {*} [options] Override http request option.
@@ -159,29 +172,16 @@ export const KeysApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {string} [type] Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1DeleteKeys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1DeleteKeys(type, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.v1DeleteKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
          * @param {KeyTypeIn} keyTypeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1PostKeys(keyTypeIn: KeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MintedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1PostKeys(keyTypeIn, options);
+        async postV1Keys(keyTypeIn: KeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MintedKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Keys(keyTypeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.v1PostKeys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KeysApi.postV1Keys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -195,6 +195,16 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = KeysApiFp(configuration)
     return {
         /**
+         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+         * @summary Revokes the caller\'s own API key of the requested class.
+         * @param {KeysApiDeleteV1KeysRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteV1Keys(requestParameters: KeysApiDeleteV1KeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RevokedKey> {
+            return localVarFp.deleteV1Keys(requestParameters.type, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
          * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
          * @param {*} [options] Override http request option.
@@ -204,52 +214,42 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getV1Keys(options).then((request) => request(axios, basePath));
         },
         /**
-         * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-         * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {KeysApiV1DeleteKeysRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1DeleteKeys(requestParameters: KeysApiV1DeleteKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RevokedKey> {
-            return localVarFp.v1DeleteKeys(requestParameters.type, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {KeysApiV1PostKeysRequest} requestParameters Request parameters.
+         * @param {KeysApiPostV1KeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostKeys(requestParameters: KeysApiV1PostKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<MintedKey> {
-            return localVarFp.v1PostKeys(requestParameters.keyTypeIn, options).then((request) => request(axios, basePath));
+        postV1Keys(requestParameters: KeysApiPostV1KeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<MintedKey> {
+            return localVarFp.postV1Keys(requestParameters.keyTypeIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for v1DeleteKeys operation in KeysApi.
+ * Request parameters for deleteV1Keys operation in KeysApi.
  * @export
- * @interface KeysApiV1DeleteKeysRequest
+ * @interface KeysApiDeleteV1KeysRequest
  */
-export interface KeysApiV1DeleteKeysRequest {
+export interface KeysApiDeleteV1KeysRequest {
     /**
      * Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
      * @type {string}
-     * @memberof KeysApiV1DeleteKeys
+     * @memberof KeysApiDeleteV1Keys
      */
     readonly type?: string
 }
 
 /**
- * Request parameters for v1PostKeys operation in KeysApi.
+ * Request parameters for postV1Keys operation in KeysApi.
  * @export
- * @interface KeysApiV1PostKeysRequest
+ * @interface KeysApiPostV1KeysRequest
  */
-export interface KeysApiV1PostKeysRequest {
+export interface KeysApiPostV1KeysRequest {
     /**
      * 
      * @type {KeyTypeIn}
-     * @memberof KeysApiV1PostKeys
+     * @memberof KeysApiPostV1Keys
      */
     readonly keyTypeIn: KeyTypeIn
 }
@@ -262,6 +262,18 @@ export interface KeysApiV1PostKeysRequest {
  */
 export class KeysApi extends BaseAPI {
     /**
+     * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
+     * @summary Revokes the caller\'s own API key of the requested class.
+     * @param {KeysApiDeleteV1KeysRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeysApi
+     */
+    public deleteV1Keys(requestParameters: KeysApiDeleteV1KeysRequest = {}, options?: RawAxiosRequestConfig) {
+        return KeysApiFp(this.configuration).deleteV1Keys(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
      * @summary Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago.
      * @param {*} [options] Override http request option.
@@ -273,27 +285,15 @@ export class KeysApi extends BaseAPI {
     }
 
     /**
-     * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
-     * @summary Revokes the caller\'s own API key of the requested class.
-     * @param {KeysApiV1DeleteKeysRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeysApi
-     */
-    public v1DeleteKeys(requestParameters: KeysApiV1DeleteKeysRequest = {}, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).v1DeleteKeys(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
      * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-     * @param {KeysApiV1PostKeysRequest} requestParameters Request parameters.
+     * @param {KeysApiPostV1KeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public v1PostKeys(requestParameters: KeysApiV1PostKeysRequest, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).v1PostKeys(requestParameters.keyTypeIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1Keys(requestParameters: KeysApiPostV1KeysRequest, options?: RawAxiosRequestConfig) {
+        return KeysApiFp(this.configuration).postV1Keys(requestParameters.keyTypeIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

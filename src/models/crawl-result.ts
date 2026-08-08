@@ -24,19 +24,19 @@ import type { CrawlDocument } from './crawl-document';
  */
 export interface CrawlResult {
     /**
-     * 
+     * Data is the page, present exactly when Success.
      * @type {CrawlDocument}
      * @memberof CrawlResult
      */
     'data'?: CrawlDocument;
     /**
-     * 
+     * Error says what stopped the fetch: the host was refused, unreachable, or served something that is not a document.
      * @type {string}
      * @memberof CrawlResult
      */
     'error'?: string;
     /**
-     * 
+     * Success is whether the page was fetched and read. FALSE with an Error is a complete answer, not a fault — check this before reading Data.
      * @type {boolean}
      * @memberof CrawlResult
      */

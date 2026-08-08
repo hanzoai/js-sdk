@@ -118,6 +118,36 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]). It mirrors AudioSpeech exactly: authenticate the caller, resolve `model` to its STT provider through the SAME model-route resolution (so the in-cluster speech service — or any BYO node registered as an STT provider — works transparently), transcribe, and return the OpenAI body. One code path, OpenAI-shaped, no store coupling (unlike the legacy /v1/process-speech-to-text, which is bound to a chat store).
+         * @summary The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AudioTranscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/audio/transcriptions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
          * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
          * @param {*} [options] Override http request option.
@@ -194,6 +224,18 @@ export const AudioApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]). It mirrors AudioSpeech exactly: authenticate the caller, resolve `model` to its STT provider through the SAME model-route resolution (so the in-cluster speech service — or any BYO node registered as an STT provider — works transparently), transcribe, and return the OpenAI body. One code path, OpenAI-shaped, no store coupling (unlike the legacy /v1/process-speech-to-text, which is bound to a chat store).
+         * @summary The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AudioTranscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioTranscriptions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioTranscriptions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
          * @summary Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively.
          * @param {*} [options] Override http request option.
@@ -241,6 +283,15 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          */
         postV1AudioSpeech(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1AudioSpeech(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]). It mirrors AudioSpeech exactly: authenticate the caller, resolve `model` to its STT provider through the SAME model-route resolution (so the in-cluster speech service — or any BYO node registered as an STT provider — works transparently), transcribe, and return the OpenAI body. One code path, OpenAI-shaped, no store coupling (unlike the legacy /v1/process-speech-to-text, which is bound to a chat store).
+         * @summary The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AudioTranscriptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postV1AudioTranscriptions(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
@@ -292,6 +343,17 @@ export class AudioApi extends BaseAPI {
      */
     public postV1AudioSpeech(options?: RawAxiosRequestConfig) {
         return AudioApiFp(this.configuration).postV1AudioSpeech(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]). It mirrors AudioSpeech exactly: authenticate the caller, resolve `model` to its STT provider through the SAME model-route resolution (so the in-cluster speech service — or any BYO node registered as an STT provider — works transparently), transcribe, and return the OpenAI body. One code path, OpenAI-shaped, no store coupling (unlike the legacy /v1/process-speech-to-text, which is bound to a chat store).
+     * @summary The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AudioApi
+     */
+    public postV1AudioTranscriptions(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postV1AudioTranscriptions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -33,25 +33,25 @@ import type { Tally } from './tally';
  */
 export interface ReferralBoard {
     /**
-     * 
+     * AccrualByLevel splits the lifetime accrual across the three upline levels — how much of the liability comes from direct referrals versus the chain above.
      * @type {LevelSplit}
      * @memberof ReferralBoard
      */
     'accrualByLevel'?: LevelSplit;
     /**
-     * 
+     * Conversion is the funnel: referred orgs against those that actually earned.
      * @type {Funnel}
      * @memberof ReferralBoard
      */
     'conversion'?: Funnel;
     /**
-     * 
+     * Summary is the fleet tally — population by status, and lifetime accrued, paid and still-owed commission.
      * @type {Tally}
      * @memberof ReferralBoard
      */
     'summary'?: Tally;
     /**
-     * 
+     * TopReferrers is the 25 affiliates with the most lifetime accrued commission, descending, orgs named.
      * @type {Array<ReferrerRow>}
      * @memberof ReferralBoard
      */
