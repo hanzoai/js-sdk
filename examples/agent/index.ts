@@ -38,7 +38,7 @@ async function main() {
   await agents.postV1AgentsByRefRun({ ref: name });
   console.log('run started');
 
-  const { data: runs } = await agents.getV1AgentsRefRuns({ ref: name, limit: 5 });
+  const { data: runs } = await agents.getV1AgentsByRefRuns({ ref: name, limit: 5 });
   console.log(`${runs.runs?.length ?? 0} run(s):`);
   for (const r of runs.runs ?? []) {
     console.log(`  ${JSON.stringify(r)}`);
