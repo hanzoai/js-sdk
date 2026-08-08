@@ -24,11 +24,11 @@ async function main() {
   console.log(`provisioned ${name}`);
 
   try {
-    const { data: store } = await kv.getV1KvName({ name });
+    const { data: store } = await kv.getV1KvByName({ name });
     console.log(`read back: ${store.name} · ${store.kind} · status ${store.status}`);
     console.log(`  host ${store.host}:${store.port}`);
   } finally {
-    await kv.deleteV1KvName({ name });
+    await kv.deleteV1KvByName({ name });
     console.log(`deleted ${name}`);
   }
 }
