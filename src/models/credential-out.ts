@@ -30,7 +30,7 @@ export interface CredentialOut {
      */
     'connected'?: boolean;
     /**
-     * Connector is the connector as it now stands.
+     * Connection is the connector as it now stands.
      * @type {ConnView}
      * @memberof CredentialOut
      */

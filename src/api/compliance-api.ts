@@ -99,9 +99,9 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceAccreditationId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ComplianceAccreditationById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ComplianceAccreditationId', 'id', id)
+            assertParamExists('getV1ComplianceAccreditationById', 'id', id)
             const localVarPath = `/v1/compliance/accreditation/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -298,9 +298,9 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceSubjectsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ComplianceSubjectsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ComplianceSubjectsId', 'id', id)
+            assertParamExists('getV1ComplianceSubjectsById', 'id', id)
             const localVarPath = `/v1/compliance/subjects/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -367,9 +367,9 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceVerificationsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ComplianceVerificationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ComplianceVerificationsId', 'id', id)
+            assertParamExists('getV1ComplianceVerificationsById', 'id', id)
             const localVarPath = `/v1/compliance/verifications/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -438,11 +438,11 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceAccreditationIdDecision: async (id: string, accreditationDecision: AccreditationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ComplianceAccreditationByIdDecision: async (id: string, accreditationDecision: AccreditationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1ComplianceAccreditationIdDecision', 'id', id)
+            assertParamExists('postV1ComplianceAccreditationByIdDecision', 'id', id)
             // verify required parameter 'accreditationDecision' is not null or undefined
-            assertParamExists('postV1ComplianceAccreditationIdDecision', 'accreditationDecision', accreditationDecision)
+            assertParamExists('postV1ComplianceAccreditationByIdDecision', 'accreditationDecision', accreditationDecision)
             const localVarPath = `/v1/compliance/accreditation/{id}/decision`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -550,11 +550,11 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceVerificationsIdDecision: async (id: string, verificationDecision: VerificationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ComplianceVerificationsByIdDecision: async (id: string, verificationDecision: VerificationDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1ComplianceVerificationsIdDecision', 'id', id)
+            assertParamExists('postV1ComplianceVerificationsByIdDecision', 'id', id)
             // verify required parameter 'verificationDecision' is not null or undefined
-            assertParamExists('postV1ComplianceVerificationsIdDecision', 'verificationDecision', verificationDecision)
+            assertParamExists('postV1ComplianceVerificationsByIdDecision', 'verificationDecision', verificationDecision)
             const localVarPath = `/v1/compliance/verifications/{id}/decision`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -589,9 +589,9 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceVerificationsIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ComplianceVerificationsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1ComplianceVerificationsIdRefresh', 'id', id)
+            assertParamExists('postV1ComplianceVerificationsByIdRefresh', 'id', id)
             const localVarPath = `/v1/compliance/verifications/{id}/refresh`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -617,8 +617,8 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * The external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
-         * @summary Provider push that settles a verification, authenticated by HMAC signature
+         * Is the provider push that settles a verification, authenticated by HMAC signature.  It is the external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
+         * @summary Is the provider push that settles a verification, authenticated by HMAC signature.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -676,10 +676,10 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ComplianceAccreditationId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceAccreditationId(id, options);
+        async getV1ComplianceAccreditationById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceAccreditationById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceAccreditationId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceAccreditationById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -752,10 +752,10 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ComplianceSubjectsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceSubjectsId(id, options);
+        async getV1ComplianceSubjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceSubjectsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceSubjectsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceSubjectsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -778,10 +778,10 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ComplianceVerificationsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceVerificationsId(id, options);
+        async getV1ComplianceVerificationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComplianceVerificationsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceVerificationsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.getV1ComplianceVerificationsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -805,10 +805,10 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ComplianceAccreditationIdDecision(id: string, accreditationDecision: AccreditationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceAccreditationIdDecision(id, accreditationDecision, options);
+        async postV1ComplianceAccreditationByIdDecision(id: string, accreditationDecision: AccreditationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceAccreditationByIdDecision(id, accreditationDecision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceAccreditationIdDecision']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceAccreditationByIdDecision']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -845,10 +845,10 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ComplianceVerificationsIdDecision(id: string, verificationDecision: VerificationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceVerificationsIdDecision(id, verificationDecision, options);
+        async postV1ComplianceVerificationsByIdDecision(id: string, verificationDecision: VerificationDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceVerificationsByIdDecision(id, verificationDecision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceVerificationsIdDecision']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceVerificationsByIdDecision']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -858,15 +858,15 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ComplianceVerificationsIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceVerificationsIdRefresh(id, options);
+        async postV1ComplianceVerificationsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComplianceVerificationsByIdRefresh(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceVerificationsIdRefresh']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComplianceApi.postV1ComplianceVerificationsByIdRefresh']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
-         * @summary Provider push that settles a verification, authenticated by HMAC signature
+         * Is the provider push that settles a verification, authenticated by HMAC signature.  It is the external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
+         * @summary Is the provider push that settles a verification, authenticated by HMAC signature.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -899,12 +899,12 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
         /**
          * Returns one tracked accreditation record.
          * @summary Returns one tracked accreditation record.
-         * @param {ComplianceApiGetV1ComplianceAccreditationIdRequest} requestParameters Request parameters.
+         * @param {ComplianceApiGetV1ComplianceAccreditationByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceAccreditationId(requestParameters: ComplianceApiGetV1ComplianceAccreditationIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
-            return localVarFp.getV1ComplianceAccreditationId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1ComplianceAccreditationById(requestParameters: ComplianceApiGetV1ComplianceAccreditationByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
+            return localVarFp.getV1ComplianceAccreditationById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
@@ -957,12 +957,12 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
         /**
          * Returns one subject WITH its contact PII — the only surface that returns it, and only to the owning org. The response is never cached by any intermediary.
          * @summary Returns one subject WITH its contact PII — the only surface that returns it, and only to the owning org.
-         * @param {ComplianceApiGetV1ComplianceSubjectsIdRequest} requestParameters Request parameters.
+         * @param {ComplianceApiGetV1ComplianceSubjectsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceSubjectsId(requestParameters: ComplianceApiGetV1ComplianceSubjectsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subject> {
-            return localVarFp.getV1ComplianceSubjectsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1ComplianceSubjectsById(requestParameters: ComplianceApiGetV1ComplianceSubjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subject> {
+            return localVarFp.getV1ComplianceSubjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s KYC/KYB verifications, newest first — opaque subject references and provider-reported statuses only, no subject PII.
@@ -977,12 +977,12 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
         /**
          * Returns one verification — its opaque subject reference and provider-reported status, no subject PII.
          * @summary Returns one verification — its opaque subject reference and provider-reported status, no subject PII.
-         * @param {ComplianceApiGetV1ComplianceVerificationsIdRequest} requestParameters Request parameters.
+         * @param {ComplianceApiGetV1ComplianceVerificationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComplianceVerificationsId(requestParameters: ComplianceApiGetV1ComplianceVerificationsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
-            return localVarFp.getV1ComplianceVerificationsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1ComplianceVerificationsById(requestParameters: ComplianceApiGetV1ComplianceVerificationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
+            return localVarFp.getV1ComplianceVerificationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Records an ASSERTED accreditation state for a subject — the subject\'s own assertion, with no verifier. Every CONFIRMED state (provider_verified, reviewer_confirmed) and every rejected/expired state is a DECISION recorded via the decision endpoint, attributed to the reviewer — a create can never stamp a confirmation. The underlying figures (income, net worth) are never stored; only the method, category, and state.
@@ -997,12 +997,12 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
         /**
          * Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry. ROLE-GATED (an org admin or platform reviewer) and ATTRIBUTED: the reviewer\'s identity is recorded as ReviewerSub and audited. Human-in-the-loop: the platform never confirms on its own, and even a provider_verified state carries the reviewer who recorded it.
          * @summary Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry.
-         * @param {ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest} requestParameters Request parameters.
+         * @param {ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceAccreditationIdDecision(requestParameters: ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
-            return localVarFp.postV1ComplianceAccreditationIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(axios, basePath));
+        postV1ComplianceAccreditationByIdDecision(requestParameters: ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccView> {
+            return localVarFp.postV1ComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a party the org is verifying as part of its own onboarding/compliance — a team member, vendor, customer, or counterparty. The subject\'s contact PII (name/email) is sealed at rest and returned only to the owning org; downstream records reference the subject by opaque id.
@@ -1027,26 +1027,26 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
         /**
          * Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider_verified (a provider decision is the provider\'s to report, via the webhook or a reconcile), and it is ROLE-GATED (an org admin or platform reviewer) AND ATTRIBUTED (the reviewer\'s user id is DecidedBy), so a manual pass is always accountable.
          * @summary Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired.
-         * @param {ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest} requestParameters Request parameters.
+         * @param {ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceVerificationsIdDecision(requestParameters: ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
-            return localVarFp.postV1ComplianceVerificationsIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(axios, basePath));
+        postV1ComplianceVerificationsByIdDecision(requestParameters: ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
+            return localVarFp.postV1ComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(axios, basePath));
         },
         /**
          * Polls the wired provider for its current decision and records it, ATTRIBUTED to the provider — the internal PULL reconcile. For the Manual provider the check stays pending; for a hosted provider it reflects the provider\'s settled status. A poll error is a 502, never a verification.
          * @summary Polls the wired provider for its current decision and records it, ATTRIBUTED to the provider — the internal PULL reconcile.
-         * @param {ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest} requestParameters Request parameters.
+         * @param {ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComplianceVerificationsIdRefresh(requestParameters: ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
-            return localVarFp.postV1ComplianceVerificationsIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
+        postV1ComplianceVerificationsByIdRefresh(requestParameters: ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckView> {
+            return localVarFp.postV1ComplianceVerificationsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * The external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
-         * @summary Provider push that settles a verification, authenticated by HMAC signature
+         * Is the provider push that settles a verification, authenticated by HMAC signature.  It is the external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
+         * @summary Is the provider push that settles a verification, authenticated by HMAC signature.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1071,15 +1071,15 @@ export interface ComplianceApiGetV1ComplianceAccreditationRequest {
 }
 
 /**
- * Request parameters for getV1ComplianceAccreditationId operation in ComplianceApi.
+ * Request parameters for getV1ComplianceAccreditationById operation in ComplianceApi.
  * @export
- * @interface ComplianceApiGetV1ComplianceAccreditationIdRequest
+ * @interface ComplianceApiGetV1ComplianceAccreditationByIdRequest
  */
-export interface ComplianceApiGetV1ComplianceAccreditationIdRequest {
+export interface ComplianceApiGetV1ComplianceAccreditationByIdRequest {
     /**
      * ID is the accreditation record to read, from the path.
      * @type {string}
-     * @memberof ComplianceApiGetV1ComplianceAccreditationId
+     * @memberof ComplianceApiGetV1ComplianceAccreditationById
      */
     readonly id: string
 }
@@ -1127,15 +1127,15 @@ export interface ComplianceApiGetV1ComplianceSubjectsRequest {
 }
 
 /**
- * Request parameters for getV1ComplianceSubjectsId operation in ComplianceApi.
+ * Request parameters for getV1ComplianceSubjectsById operation in ComplianceApi.
  * @export
- * @interface ComplianceApiGetV1ComplianceSubjectsIdRequest
+ * @interface ComplianceApiGetV1ComplianceSubjectsByIdRequest
  */
-export interface ComplianceApiGetV1ComplianceSubjectsIdRequest {
+export interface ComplianceApiGetV1ComplianceSubjectsByIdRequest {
     /**
      * ID is the subject to read, from the path.
      * @type {string}
-     * @memberof ComplianceApiGetV1ComplianceSubjectsId
+     * @memberof ComplianceApiGetV1ComplianceSubjectsById
      */
     readonly id: string
 }
@@ -1155,15 +1155,15 @@ export interface ComplianceApiGetV1ComplianceVerificationsRequest {
 }
 
 /**
- * Request parameters for getV1ComplianceVerificationsId operation in ComplianceApi.
+ * Request parameters for getV1ComplianceVerificationsById operation in ComplianceApi.
  * @export
- * @interface ComplianceApiGetV1ComplianceVerificationsIdRequest
+ * @interface ComplianceApiGetV1ComplianceVerificationsByIdRequest
  */
-export interface ComplianceApiGetV1ComplianceVerificationsIdRequest {
+export interface ComplianceApiGetV1ComplianceVerificationsByIdRequest {
     /**
      * ID is the verification to act on, from the path.
      * @type {string}
-     * @memberof ComplianceApiGetV1ComplianceVerificationsId
+     * @memberof ComplianceApiGetV1ComplianceVerificationsById
      */
     readonly id: string
 }
@@ -1183,22 +1183,22 @@ export interface ComplianceApiPostV1ComplianceAccreditationRequest {
 }
 
 /**
- * Request parameters for postV1ComplianceAccreditationIdDecision operation in ComplianceApi.
+ * Request parameters for postV1ComplianceAccreditationByIdDecision operation in ComplianceApi.
  * @export
- * @interface ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest
+ * @interface ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest
  */
-export interface ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest {
+export interface ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest {
     /**
      * ID is the accreditation record to decide, from the path.
      * @type {string}
-     * @memberof ComplianceApiPostV1ComplianceAccreditationIdDecision
+     * @memberof ComplianceApiPostV1ComplianceAccreditationByIdDecision
      */
     readonly id: string
 
     /**
      * 
      * @type {AccreditationDecision}
-     * @memberof ComplianceApiPostV1ComplianceAccreditationIdDecision
+     * @memberof ComplianceApiPostV1ComplianceAccreditationByIdDecision
      */
     readonly accreditationDecision: AccreditationDecision
 }
@@ -1232,36 +1232,36 @@ export interface ComplianceApiPostV1ComplianceVerificationsRequest {
 }
 
 /**
- * Request parameters for postV1ComplianceVerificationsIdDecision operation in ComplianceApi.
+ * Request parameters for postV1ComplianceVerificationsByIdDecision operation in ComplianceApi.
  * @export
- * @interface ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest
+ * @interface ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest
  */
-export interface ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest {
+export interface ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest {
     /**
      * ID is the verification to decide, from the path.
      * @type {string}
-     * @memberof ComplianceApiPostV1ComplianceVerificationsIdDecision
+     * @memberof ComplianceApiPostV1ComplianceVerificationsByIdDecision
      */
     readonly id: string
 
     /**
      * 
      * @type {VerificationDecision}
-     * @memberof ComplianceApiPostV1ComplianceVerificationsIdDecision
+     * @memberof ComplianceApiPostV1ComplianceVerificationsByIdDecision
      */
     readonly verificationDecision: VerificationDecision
 }
 
 /**
- * Request parameters for postV1ComplianceVerificationsIdRefresh operation in ComplianceApi.
+ * Request parameters for postV1ComplianceVerificationsByIdRefresh operation in ComplianceApi.
  * @export
- * @interface ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest
+ * @interface ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest
  */
-export interface ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest {
+export interface ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest {
     /**
      * ID is the verification to act on, from the path.
      * @type {string}
-     * @memberof ComplianceApiPostV1ComplianceVerificationsIdRefresh
+     * @memberof ComplianceApiPostV1ComplianceVerificationsByIdRefresh
      */
     readonly id: string
 }
@@ -1288,13 +1288,13 @@ export class ComplianceApi extends BaseAPI {
     /**
      * Returns one tracked accreditation record.
      * @summary Returns one tracked accreditation record.
-     * @param {ComplianceApiGetV1ComplianceAccreditationIdRequest} requestParameters Request parameters.
+     * @param {ComplianceApiGetV1ComplianceAccreditationByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public getV1ComplianceAccreditationId(requestParameters: ComplianceApiGetV1ComplianceAccreditationIdRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).getV1ComplianceAccreditationId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1ComplianceAccreditationById(requestParameters: ComplianceApiGetV1ComplianceAccreditationByIdRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).getV1ComplianceAccreditationById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1358,13 +1358,13 @@ export class ComplianceApi extends BaseAPI {
     /**
      * Returns one subject WITH its contact PII — the only surface that returns it, and only to the owning org. The response is never cached by any intermediary.
      * @summary Returns one subject WITH its contact PII — the only surface that returns it, and only to the owning org.
-     * @param {ComplianceApiGetV1ComplianceSubjectsIdRequest} requestParameters Request parameters.
+     * @param {ComplianceApiGetV1ComplianceSubjectsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public getV1ComplianceSubjectsId(requestParameters: ComplianceApiGetV1ComplianceSubjectsIdRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).getV1ComplianceSubjectsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1ComplianceSubjectsById(requestParameters: ComplianceApiGetV1ComplianceSubjectsByIdRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).getV1ComplianceSubjectsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1382,13 +1382,13 @@ export class ComplianceApi extends BaseAPI {
     /**
      * Returns one verification — its opaque subject reference and provider-reported status, no subject PII.
      * @summary Returns one verification — its opaque subject reference and provider-reported status, no subject PII.
-     * @param {ComplianceApiGetV1ComplianceVerificationsIdRequest} requestParameters Request parameters.
+     * @param {ComplianceApiGetV1ComplianceVerificationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public getV1ComplianceVerificationsId(requestParameters: ComplianceApiGetV1ComplianceVerificationsIdRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).getV1ComplianceVerificationsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1ComplianceVerificationsById(requestParameters: ComplianceApiGetV1ComplianceVerificationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).getV1ComplianceVerificationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1406,13 +1406,13 @@ export class ComplianceApi extends BaseAPI {
     /**
      * Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry. ROLE-GATED (an org admin or platform reviewer) and ATTRIBUTED: the reviewer\'s identity is recorded as ReviewerSub and audited. Human-in-the-loop: the platform never confirms on its own, and even a provider_verified state carries the reviewer who recorded it.
      * @summary Records an org reviewer\'s decision on an accreditation record — a reviewer confirmation, a provider verification the reviewer has evidence of (a CPA/attorney letter, a verifier report), a rejection, or an expiry.
-     * @param {ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest} requestParameters Request parameters.
+     * @param {ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public postV1ComplianceAccreditationIdDecision(requestParameters: ComplianceApiPostV1ComplianceAccreditationIdDecisionRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postV1ComplianceAccreditationIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(this.axios, this.basePath));
+    public postV1ComplianceAccreditationByIdDecision(requestParameters: ComplianceApiPostV1ComplianceAccreditationByIdDecisionRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).postV1ComplianceAccreditationByIdDecision(requestParameters.id, requestParameters.accreditationDecision, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1442,30 +1442,30 @@ export class ComplianceApi extends BaseAPI {
     /**
      * Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired. It produces a DISTINCT reviewer_confirmed, never a provider_verified (a provider decision is the provider\'s to report, via the webhook or a reconcile), and it is ROLE-GATED (an org admin or platform reviewer) AND ATTRIBUTED (the reviewer\'s user id is DecidedBy), so a manual pass is always accountable.
      * @summary Records a privileged reviewer\'s MANUAL decision on a verification — the human-in-the-loop path, and the ONLY route to a passing status when no real provider is wired.
-     * @param {ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest} requestParameters Request parameters.
+     * @param {ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public postV1ComplianceVerificationsIdDecision(requestParameters: ComplianceApiPostV1ComplianceVerificationsIdDecisionRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postV1ComplianceVerificationsIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(this.axios, this.basePath));
+    public postV1ComplianceVerificationsByIdDecision(requestParameters: ComplianceApiPostV1ComplianceVerificationsByIdDecisionRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).postV1ComplianceVerificationsByIdDecision(requestParameters.id, requestParameters.verificationDecision, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Polls the wired provider for its current decision and records it, ATTRIBUTED to the provider — the internal PULL reconcile. For the Manual provider the check stays pending; for a hosted provider it reflects the provider\'s settled status. A poll error is a 502, never a verification.
      * @summary Polls the wired provider for its current decision and records it, ATTRIBUTED to the provider — the internal PULL reconcile.
-     * @param {ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest} requestParameters Request parameters.
+     * @param {ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi
      */
-    public postV1ComplianceVerificationsIdRefresh(requestParameters: ComplianceApiPostV1ComplianceVerificationsIdRefreshRequest, options?: RawAxiosRequestConfig) {
-        return ComplianceApiFp(this.configuration).postV1ComplianceVerificationsIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postV1ComplianceVerificationsByIdRefresh(requestParameters: ComplianceApiPostV1ComplianceVerificationsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
+        return ComplianceApiFp(this.configuration).postV1ComplianceVerificationsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
-     * @summary Provider push that settles a verification, authenticated by HMAC signature
+     * Is the provider push that settles a verification, authenticated by HMAC signature.  It is the external PUSH reconcile: a verification provider (or a Hanzo relay) signals that a check settled, and the reconciled check comes back. It authenticates by an HMAC SIGNATURE over the RAW body bytes rather than by a principal — an external caller has no validated org — and the org is then resolved FROM the record the signed provider reference matches, so a call can only ever touch the one tenant that owns that reference.  The body carries NO trusted decision. A valid signature cannot force a status: the reference only says WHICH check to re-read, and the status is then pulled from the wired provider, which stays the source of truth. With no real provider configured a check stays pending, and the only route to a passing status is the role-gated, attributed reviewer decision.  An unknown reference is a benign 200 `{\"ignored\": ...}` no-op, not an error, so a provider replaying stale events neither retry-storms nor learns whether a reference exists in some other tenant. Fails closed otherwise: 501 unless a webhook secret is configured, 401 on a signature that does not verify, 400 with no provider reference, 413 over 1 MiB, and 502 if the secret or the provider is unreachable.
+     * @summary Is the provider push that settles a verification, authenticated by HMAC signature.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComplianceApi

@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { IamKey } from './iam-key';
 
 /**
  * 
@@ -25,9 +22,33 @@ import type { IamKey } from './iam-key';
 export interface IamListResponse {
     /**
      * 
-     * @type {Array<IamKey>}
+     * @type {Array<object>}
      * @memberof IamListResponse
      */
-    'keys'?: Array<IamKey>;
+    'Resources'?: Array<object>;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamListResponse
+     */
+    'itemsPerPage'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof IamListResponse
+     */
+    'schemas'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamListResponse
+     */
+    'startIndex'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamListResponse
+     */
+    'totalResults'?: number;
 }
 

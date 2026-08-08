@@ -24,7 +24,7 @@ import type { RiskLabelResult } from './risk-label-result';
  */
 export interface RiskLabelOut {
     /**
-     * 
+     * Duplicate is how many members this tenant already held, byte for byte. The idempotency key is the assertion\'s CONTENT digest — kind, subject, at, seen, disposition, source, evidence, the asserting identity and confidence, folded in length-prefixed — so a webhook redelivering one chargeback is a duplicate and costs nothing, while an assertion differing in ANY of those fields is a DIFFERENT assertion and is recorded beside the first. Nothing was written and nothing was overwritten; it is an outcome, never an error. The asserting identity is in the digest, so the same claim filed by a second credential is two assertions and not a redelivery.
      * @type {number}
      * @memberof RiskLabelOut
      */
@@ -42,13 +42,13 @@ export interface RiskLabelOut {
      */
     'pending'?: number;
     /**
-     * 
+     * Recorded is how many members became a NEW row in the tenant\'s record. Recorded + Duplicate + Refused is exactly the number of labels sent, so a caller reconciling a webhook delivery can do it on the counts alone.
      * @type {number}
      * @memberof RiskLabelOut
      */
     'recorded'?: number;
     /**
-     * 
+     * Refused is how many members failed admission and were NOT recorded. Refusal is per member and never discards the rest of the batch: an empty or over-512-byte subject or evidence, a kind, disposition or source outside the closed vocabulary, an `at` or `seen` that is not RFC 3339, a `seen` before the `at` it judges, either instant more than five minutes past the server clock, or a confidence outside [0,1]. Results names which member and why, so the refused ones are exactly the ones to fix and resend.
      * @type {number}
      * @memberof RiskLabelOut
      */

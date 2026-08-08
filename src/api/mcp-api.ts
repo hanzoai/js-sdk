@@ -40,9 +40,9 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1McpServersId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1McpServersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1McpServersId', 'id', id)
+            assertParamExists('deleteV1McpServersById', 'id', id)
             const localVarPath = `/v1/mcp/servers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -150,10 +150,10 @@ export const McpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1McpServersId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1McpServersId(id, options);
+        async deleteV1McpServersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1McpServersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['McpApi.deleteV1McpServersId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['McpApi.deleteV1McpServersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -194,12 +194,12 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
          * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
-         * @param {McpApiDeleteV1McpServersIdRequest} requestParameters Request parameters.
+         * @param {McpApiDeleteV1McpServersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1McpServersId(requestParameters: McpApiDeleteV1McpServersIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1McpServersId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1McpServersById(requestParameters: McpApiDeleteV1McpServersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1McpServersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
@@ -224,15 +224,15 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
 };
 
 /**
- * Request parameters for deleteV1McpServersId operation in McpApi.
+ * Request parameters for deleteV1McpServersById operation in McpApi.
  * @export
- * @interface McpApiDeleteV1McpServersIdRequest
+ * @interface McpApiDeleteV1McpServersByIdRequest
  */
-export interface McpApiDeleteV1McpServersIdRequest {
+export interface McpApiDeleteV1McpServersByIdRequest {
     /**
      * ID is the server to deregister, from the path.
      * @type {string}
-     * @memberof McpApiDeleteV1McpServersId
+     * @memberof McpApiDeleteV1McpServersById
      */
     readonly id: string
 }
@@ -261,13 +261,13 @@ export class McpApi extends BaseAPI {
     /**
      * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
      * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
-     * @param {McpApiDeleteV1McpServersIdRequest} requestParameters Request parameters.
+     * @param {McpApiDeleteV1McpServersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApi
      */
-    public deleteV1McpServersId(requestParameters: McpApiDeleteV1McpServersIdRequest, options?: RawAxiosRequestConfig) {
-        return McpApiFp(this.configuration).deleteV1McpServersId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1McpServersById(requestParameters: McpApiDeleteV1McpServersByIdRequest, options?: RawAxiosRequestConfig) {
+        return McpApiFp(this.configuration).deleteV1McpServersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

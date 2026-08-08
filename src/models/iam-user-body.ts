@@ -769,6 +769,12 @@ export interface IamUserBody {
      * @type {string}
      * @memberof IamUserBody
      */
+    'mfaRememberDigest'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamUserBody
+     */
     'microsoftonline'?: string;
     /**
      * 

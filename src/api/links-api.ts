@@ -56,9 +56,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1LinksId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1LinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1LinksId', 'id', id)
+            assertParamExists('deleteV1LinksById', 'id', id)
             const localVarPath = `/v1/links/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -114,17 +114,17 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
-         * @summary Shows one machine: its accounts, usage and live sessions.
-         * @param {string} machine Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
+         * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
+         * @summary Reads one linked account.
+         * @param {string} id ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksDevicesMachine: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'machine' is not null or undefined
-            assertParamExists('getV1LinksDevicesMachine', 'machine', machine)
-            const localVarPath = `/v1/links/devices/{machine}`
-                .replace(`{${"machine"}}`, encodeURIComponent(String(machine)));
+        getV1LinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getV1LinksById', 'id', id)
+            const localVarPath = `/v1/links/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -148,17 +148,17 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
-         * @summary Reads one linked account.
-         * @param {string} id ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
+         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
+         * @summary Shows one machine: its accounts, usage and live sessions.
+         * @param {string} machine Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1LinksId', 'id', id)
-            const localVarPath = `/v1/links/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        getV1LinksDevicesByMachine: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'machine' is not null or undefined
+            assertParamExists('getV1LinksDevicesByMachine', 'machine', machine)
+            const localVarPath = `/v1/links/devices/{machine}`
+                .replace(`{${"machine"}}`, encodeURIComponent(String(machine)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -369,9 +369,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksDevicesMachineRevoke: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1LinksDevicesByMachineRevoke: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'machine' is not null or undefined
-            assertParamExists('postV1LinksDevicesMachineRevoke', 'machine', machine)
+            assertParamExists('postV1LinksDevicesByMachineRevoke', 'machine', machine)
             const localVarPath = `/v1/links/devices/{machine}/revoke`
                 .replace(`{${"machine"}}`, encodeURIComponent(String(machine)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -449,10 +449,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1LinksId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1LinksId(id, options);
+        async deleteV1LinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1LinksById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.deleteV1LinksId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.deleteV1LinksById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -468,29 +468,29 @@ export const LinksApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
-         * @summary Shows one machine: its accounts, usage and live sessions.
-         * @param {string} machine Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1LinksDevicesMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksDevicesMachine(machine, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksDevicesMachine']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
          * @summary Reads one linked account.
          * @param {string} id ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksId(id, options);
+        async getV1LinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
+         * @summary Shows one machine: its accounts, usage and live sessions.
+         * @param {string} machine Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1LinksDevicesByMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksDevicesByMachine(machine, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksDevicesByMachine']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -566,10 +566,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LinksDevicesMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LinksDevicesMachineRevoke(machine, options);
+        async postV1LinksDevicesByMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LinksDevicesByMachineRevoke(machine, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.postV1LinksDevicesMachineRevoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.postV1LinksDevicesByMachineRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -598,12 +598,12 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
         /**
          * Logs out one account and stops the sessions it was running.  It revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it. The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404.
          * @summary Logs out one account and stops the sessions it was running.
-         * @param {LinksApiDeleteV1LinksIdRequest} requestParameters Request parameters.
+         * @param {LinksApiDeleteV1LinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1LinksId(requestParameters: LinksApiDeleteV1LinksIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
-            return localVarFp.deleteV1LinksId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1LinksById(requestParameters: LinksApiDeleteV1LinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+            return localVarFp.deleteV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists your linked accounts and the devices they sit on.  It answers the caller\'s own links plus a devices projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403.
@@ -615,24 +615,24 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getV1Links(options).then((request) => request(axios, basePath));
         },
         /**
-         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
-         * @summary Shows one machine: its accounts, usage and live sessions.
-         * @param {LinksApiGetV1LinksDevicesMachineRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1LinksDevicesMachine(requestParameters: LinksApiGetV1LinksDevicesMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceView> {
-            return localVarFp.getV1LinksDevicesMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
          * @summary Reads one linked account.
-         * @param {LinksApiGetV1LinksIdRequest} requestParameters Request parameters.
+         * @param {LinksApiGetV1LinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksId(requestParameters: LinksApiGetV1LinksIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
-            return localVarFp.getV1LinksId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1LinksById(requestParameters: LinksApiGetV1LinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
+            return localVarFp.getV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
+         * @summary Shows one machine: its accounts, usage and live sessions.
+         * @param {LinksApiGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1LinksDevicesByMachine(requestParameters: LinksApiGetV1LinksDevicesByMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceView> {
+            return localVarFp.getV1LinksDevicesByMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets the failover order across your linked accounts.  It answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (plan or commerce), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom.
@@ -685,12 +685,12 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
         /**
          * Logs out every account on one machine and stops its sessions.  It revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button. Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404.
          * @summary Logs out every account on one machine and stops its sessions.
-         * @param {LinksApiPostV1LinksDevicesMachineRevokeRequest} requestParameters Request parameters.
+         * @param {LinksApiPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksDevicesMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
-            return localVarFp.postV1LinksDevicesMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
+        postV1LinksDevicesByMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+            return localVarFp.postV1LinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports usage samples from the device collector.  It ingests a batch of usage samples and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and stored says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way. Send either one sample inline or up to 256 in samples; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported.
@@ -706,45 +706,45 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * Request parameters for deleteV1LinksId operation in LinksApi.
+ * Request parameters for deleteV1LinksById operation in LinksApi.
  * @export
- * @interface LinksApiDeleteV1LinksIdRequest
+ * @interface LinksApiDeleteV1LinksByIdRequest
  */
-export interface LinksApiDeleteV1LinksIdRequest {
+export interface LinksApiDeleteV1LinksByIdRequest {
     /**
      * ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
      * @type {string}
-     * @memberof LinksApiDeleteV1LinksId
+     * @memberof LinksApiDeleteV1LinksById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1LinksDevicesMachine operation in LinksApi.
+ * Request parameters for getV1LinksById operation in LinksApi.
  * @export
- * @interface LinksApiGetV1LinksDevicesMachineRequest
+ * @interface LinksApiGetV1LinksByIdRequest
  */
-export interface LinksApiGetV1LinksDevicesMachineRequest {
+export interface LinksApiGetV1LinksByIdRequest {
+    /**
+     * ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
+     * @type {string}
+     * @memberof LinksApiGetV1LinksById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getV1LinksDevicesByMachine operation in LinksApi.
+ * @export
+ * @interface LinksApiGetV1LinksDevicesByMachineRequest
+ */
+export interface LinksApiGetV1LinksDevicesByMachineRequest {
     /**
      * Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
      * @type {string}
-     * @memberof LinksApiGetV1LinksDevicesMachine
+     * @memberof LinksApiGetV1LinksDevicesByMachine
      */
     readonly machine: string
-}
-
-/**
- * Request parameters for getV1LinksId operation in LinksApi.
- * @export
- * @interface LinksApiGetV1LinksIdRequest
- */
-export interface LinksApiGetV1LinksIdRequest {
-    /**
-     * ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
-     * @type {string}
-     * @memberof LinksApiGetV1LinksId
-     */
-    readonly id: string
 }
 
 /**
@@ -811,15 +811,15 @@ export interface LinksApiPostV1LinksRequest {
 }
 
 /**
- * Request parameters for postV1LinksDevicesMachineRevoke operation in LinksApi.
+ * Request parameters for postV1LinksDevicesByMachineRevoke operation in LinksApi.
  * @export
- * @interface LinksApiPostV1LinksDevicesMachineRevokeRequest
+ * @interface LinksApiPostV1LinksDevicesByMachineRevokeRequest
  */
-export interface LinksApiPostV1LinksDevicesMachineRevokeRequest {
+export interface LinksApiPostV1LinksDevicesByMachineRevokeRequest {
     /**
      * Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
      * @type {string}
-     * @memberof LinksApiPostV1LinksDevicesMachineRevoke
+     * @memberof LinksApiPostV1LinksDevicesByMachineRevoke
      */
     readonly machine: string
 }
@@ -848,13 +848,13 @@ export class LinksApi extends BaseAPI {
     /**
      * Logs out one account and stops the sessions it was running.  It revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it. The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404.
      * @summary Logs out one account and stops the sessions it was running.
-     * @param {LinksApiDeleteV1LinksIdRequest} requestParameters Request parameters.
+     * @param {LinksApiDeleteV1LinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public deleteV1LinksId(requestParameters: LinksApiDeleteV1LinksIdRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).deleteV1LinksId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1LinksById(requestParameters: LinksApiDeleteV1LinksByIdRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).deleteV1LinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -869,27 +869,27 @@ export class LinksApi extends BaseAPI {
     }
 
     /**
-     * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
-     * @summary Shows one machine: its accounts, usage and live sessions.
-     * @param {LinksApiGetV1LinksDevicesMachineRequest} requestParameters Request parameters.
+     * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
+     * @summary Reads one linked account.
+     * @param {LinksApiGetV1LinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksDevicesMachine(requestParameters: LinksApiGetV1LinksDevicesMachineRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksDevicesMachine(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
+    public getV1LinksById(requestParameters: LinksApiGetV1LinksByIdRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getV1LinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
-     * @summary Reads one linked account.
-     * @param {LinksApiGetV1LinksIdRequest} requestParameters Request parameters.
+     * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
+     * @summary Shows one machine: its accounts, usage and live sessions.
+     * @param {LinksApiGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksId(requestParameters: LinksApiGetV1LinksIdRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1LinksDevicesByMachine(requestParameters: LinksApiGetV1LinksDevicesByMachineRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getV1LinksDevicesByMachine(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -953,13 +953,13 @@ export class LinksApi extends BaseAPI {
     /**
      * Logs out every account on one machine and stops its sessions.  It revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button. Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404.
      * @summary Logs out every account on one machine and stops its sessions.
-     * @param {LinksApiPostV1LinksDevicesMachineRevokeRequest} requestParameters Request parameters.
+     * @param {LinksApiPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public postV1LinksDevicesMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesMachineRevokeRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).postV1LinksDevicesMachineRevoke(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
+    public postV1LinksDevicesByMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).postV1LinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

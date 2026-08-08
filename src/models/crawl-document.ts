@@ -21,25 +21,25 @@
  */
 export interface CrawlDocument {
     /**
-     * 
+     * Markdown is the page\'s content, extracted and rendered to markdown. This is the field to read.
      * @type {string}
      * @memberof CrawlDocument
      */
     'markdown'?: string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {any}
      * @memberof CrawlDocument
      */
-    'metadata'?: { [key: string]: any; };
+    'metadata'?: any;
     /**
-     * 
+     * Title is the document\'s title, when it carried one.
      * @type {string}
      * @memberof CrawlDocument
      */
     'title'?: string;
     /**
-     * 
+     * URL is the address actually read, after redirects.
      * @type {string}
      * @memberof CrawlDocument
      */

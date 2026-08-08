@@ -44,7 +44,13 @@ import type { MirrorTargetReq } from '../models';
 // @ts-ignore
 import type { MirrorTargetView } from '../models';
 // @ts-ignore
+import type { OpenReq } from '../models';
+// @ts-ignore
 import type { PatchIn } from '../models';
+// @ts-ignore
+import type { PullList } from '../models';
+// @ts-ignore
+import type { PullView } from '../models';
 // @ts-ignore
 import type { PushReq } from '../models';
 // @ts-ignore
@@ -84,9 +90,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitKeysId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1GitKeysById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1GitKeysId', 'id', id)
+            assertParamExists('deleteV1GitKeysById', 'id', id)
             const localVarPath = `/v1/git/keys/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -118,9 +124,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1GitReposByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1GitReposName', 'name', name)
+            assertParamExists('deleteV1GitReposByName', 'name', name)
             const localVarPath = `/v1/git/repos/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -153,11 +159,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposNameMirrorsId: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1GitReposByNameMirrorsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1GitReposNameMirrorsId', 'name', name)
+            assertParamExists('deleteV1GitReposByNameMirrorsById', 'name', name)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1GitReposNameMirrorsId', 'id', id)
+            assertParamExists('deleteV1GitReposByNameMirrorsById', 'id', id)
             const localVarPath = `/v1/git/repos/{name}/mirrors/{id}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -191,11 +197,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposNameSubscriptionsId: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1GitReposByNameSubscriptionsById: async (name: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1GitReposNameSubscriptionsId', 'name', name)
+            assertParamExists('deleteV1GitReposByNameSubscriptionsById', 'name', name)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1GitReposNameSubscriptionsId', 'id', id)
+            assertParamExists('deleteV1GitReposByNameSubscriptionsById', 'id', id)
             const localVarPath = `/v1/git/repos/{name}/subscriptions/{id}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -368,9 +374,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposName', 'name', name)
+            assertParamExists('getV1GitReposByName', 'name', name)
             const localVarPath = `/v1/git/repos/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -404,9 +410,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameBlob: async (name: string, ref?: string, path?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameBlob: async (name: string, ref?: string, path?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameBlob', 'name', name)
+            assertParamExists('getV1GitReposByNameBlob', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/blob`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -449,9 +455,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameCommits: async (name: string, ref?: string, path?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameCommits: async (name: string, ref?: string, path?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameCommits', 'name', name)
+            assertParamExists('getV1GitReposByNameCommits', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/commits`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -497,9 +503,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameFiles: async (name: string, ref?: string, glob?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameFiles: async (name: string, ref?: string, glob?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameFiles', 'name', name)
+            assertParamExists('getV1GitReposByNameFiles', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/files`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -539,11 +545,88 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameMirrors: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameMirrors: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameMirrors', 'name', name)
+            assertParamExists('getV1GitReposByNameMirrors', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/mirrors`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
+         * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {string} [state] State narrows the list to \&quot;open\&quot; or \&quot;merged\&quot;. Omit it for every proposal.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1GitReposByNamePulls: async (name: string, state?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1GitReposByNamePulls', 'name', name)
+            const localVarPath = `/v1/git/repos/{name}/pulls`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (state !== undefined) {
+                localVarQueryParameter['state'] = state;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one pull request by its per-repo number. A number belonging to another tenant\'s repo is not found, exactly as the repo itself is not.
+         * @summary Returns one pull request by its per-repo number.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {number} number Number is the proposal\&#39;s per-repo number, from the :number path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1GitReposByNamePullsByNumber: async (name: string, number: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1GitReposByNamePullsByNumber', 'name', name)
+            // verify required parameter 'number' is not null or undefined
+            assertParamExists('getV1GitReposByNamePullsByNumber', 'number', number)
+            const localVarPath = `/v1/git/repos/{name}/pulls/{number}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"number"}}`, encodeURIComponent(String(number)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -574,9 +657,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameReadme: async (name: string, ref?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameReadme: async (name: string, ref?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameReadme', 'name', name)
+            assertParamExists('getV1GitReposByNameReadme', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/readme`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -612,9 +695,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameRefs: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameRefs: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameRefs', 'name', name)
+            assertParamExists('getV1GitReposByNameRefs', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/refs`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -646,9 +729,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameSubscriptions: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameSubscriptions: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameSubscriptions', 'name', name)
+            assertParamExists('getV1GitReposByNameSubscriptions', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/subscriptions`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -682,9 +765,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameTree: async (name: string, ref?: string, path?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1GitReposByNameTree: async (name: string, ref?: string, path?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1GitReposNameTree', 'name', name)
+            assertParamExists('getV1GitReposByNameTree', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/tree`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -755,11 +838,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1GitReposName: async (name: string, patchIn: PatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1GitReposByName: async (name: string, patchIn: PatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('patchV1GitReposName', 'name', name)
+            assertParamExists('patchV1GitReposByName', 'name', name)
             // verify required parameter 'patchIn' is not null or undefined
-            assertParamExists('patchV1GitReposName', 'patchIn', patchIn)
+            assertParamExists('patchV1GitReposByName', 'patchIn', patchIn)
             const localVarPath = `/v1/git/repos/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1042,9 +1125,9 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameGc: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GitReposByNameGc: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1GitReposNameGc', 'name', name)
+            assertParamExists('postV1GitReposByNameGc', 'name', name)
             const localVarPath = `/v1/git/repos/{name}/gc`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1077,11 +1160,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameMirror: async (name: string, mirrorReq: MirrorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GitReposByNameMirror: async (name: string, mirrorReq: MirrorReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1GitReposNameMirror', 'name', name)
+            assertParamExists('postV1GitReposByNameMirror', 'name', name)
             // verify required parameter 'mirrorReq' is not null or undefined
-            assertParamExists('postV1GitReposNameMirror', 'mirrorReq', mirrorReq)
+            assertParamExists('postV1GitReposByNameMirror', 'mirrorReq', mirrorReq)
             const localVarPath = `/v1/git/repos/{name}/mirror`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1117,11 +1200,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameMirrors: async (name: string, mirrorTargetReq: MirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GitReposByNameMirrors: async (name: string, mirrorTargetReq: MirrorTargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1GitReposNameMirrors', 'name', name)
+            assertParamExists('postV1GitReposByNameMirrors', 'name', name)
             // verify required parameter 'mirrorTargetReq' is not null or undefined
-            assertParamExists('postV1GitReposNameMirrors', 'mirrorTargetReq', mirrorTargetReq)
+            assertParamExists('postV1GitReposByNameMirrors', 'mirrorTargetReq', mirrorTargetReq)
             const localVarPath = `/v1/git/repos/{name}/mirrors`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1150,6 +1233,84 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
+         * @summary Proposes a branch for merging and returns it with its number.
+         * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
+         * @param {OpenReq} openReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GitReposByNamePulls: async (name: string, openReq: OpenReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postV1GitReposByNamePulls', 'name', name)
+            // verify required parameter 'openReq' is not null or undefined
+            assertParamExists('postV1GitReposByNamePulls', 'openReq', openReq)
+            const localVarPath = `/v1/git/repos/{name}/pulls`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(openReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.  It merges only when base is already an ancestor of head — the case where head contains every commit base has, so moving the branch loses nothing and invents nothing. When base has moved on independently, this REFUSES with 409 and says so: a real three-way merge is not implemented here, and reporting one would claim a result these bytes do not produce. Rebase head onto base and merge again.  The move is judged by the same ref policy a `git push` of it would face, and fires the same build and notify reactions, so merging is not a way around either. Merging an already-merged proposal is a 409.
+         * @summary Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {number} number Number is the proposal\&#39;s per-repo number, from the :number path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GitReposByNamePullsByNumberMerge: async (name: string, number: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postV1GitReposByNamePullsByNumberMerge', 'name', name)
+            // verify required parameter 'number' is not null or undefined
+            assertParamExists('postV1GitReposByNamePullsByNumberMerge', 'number', number)
+            const localVarPath = `/v1/git/repos/{name}/pulls/{number}/merge`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"number"}}`, encodeURIComponent(String(number)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
          * @param {string} name Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
@@ -1157,11 +1318,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNamePush: async (name: string, pushReq: PushReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GitReposByNamePush: async (name: string, pushReq: PushReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1GitReposNamePush', 'name', name)
+            assertParamExists('postV1GitReposByNamePush', 'name', name)
             // verify required parameter 'pushReq' is not null or undefined
-            assertParamExists('postV1GitReposNamePush', 'pushReq', pushReq)
+            assertParamExists('postV1GitReposByNamePush', 'pushReq', pushReq)
             const localVarPath = `/v1/git/repos/{name}/push`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1197,11 +1358,11 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameSubscriptions: async (name: string, subscribeReq: SubscribeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1GitReposByNameSubscriptions: async (name: string, subscribeReq: SubscribeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1GitReposNameSubscriptions', 'name', name)
+            assertParamExists('postV1GitReposByNameSubscriptions', 'name', name)
             // verify required parameter 'subscribeReq' is not null or undefined
-            assertParamExists('postV1GitReposNameSubscriptions', 'subscribeReq', subscribeReq)
+            assertParamExists('postV1GitReposByNameSubscriptions', 'subscribeReq', subscribeReq)
             const localVarPath = `/v1/git/repos/{name}/subscriptions`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1230,8 +1391,8 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \'the API is switched off\' — the wrong conclusion this estate has already drawn twice.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * Is retired — forge pushes build via platform.hanzo.ai.  GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \"the API is switched off\" — the wrong conclusion this estate has already drawn twice. It reads no body: there is nothing here to authenticate and nothing to parse.
+         * @summary Is retired — forge pushes build via platform.hanzo.ai.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1438,10 +1599,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1GitKeysId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitKeysId(id, options);
+        async deleteV1GitKeysById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitKeysById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitKeysId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitKeysById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1451,10 +1612,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1GitReposName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposName(name, options);
+        async deleteV1GitReposByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1465,10 +1626,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1GitReposNameMirrorsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposNameMirrorsId(name, id, options);
+        async deleteV1GitReposByNameMirrorsById(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposByNameMirrorsById(name, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposNameMirrorsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposByNameMirrorsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1479,10 +1640,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1GitReposNameSubscriptionsId(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposNameSubscriptionsId(name, id, options);
+        async deleteV1GitReposByNameSubscriptionsById(name: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GitReposByNameSubscriptionsById(name, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposNameSubscriptionsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.deleteV1GitReposByNameSubscriptionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1545,10 +1706,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposName(name, options);
+        async getV1GitReposByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1560,10 +1721,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameBlob(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlobJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameBlob(name, ref, path, options);
+        async getV1GitReposByNameBlob(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlobJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameBlob(name, ref, path, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameBlob']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameBlob']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1576,10 +1737,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameCommits(name: string, ref?: string, path?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameCommits(name, ref, path, limit, options);
+        async getV1GitReposByNameCommits(name: string, ref?: string, path?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CommitsJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameCommits(name, ref, path, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameCommits']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameCommits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1591,10 +1752,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameFiles(name: string, ref?: string, glob?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilesJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameFiles(name, ref, glob, options);
+        async getV1GitReposByNameFiles(name: string, ref?: string, glob?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilesJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameFiles(name, ref, glob, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameFiles']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameFiles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1604,10 +1765,38 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameMirrors(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameMirrors(name, options);
+        async getV1GitReposByNameMirrors(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameMirrors(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameMirrors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameMirrors']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
+         * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {string} [state] State narrows the list to \&quot;open\&quot; or \&quot;merged\&quot;. Omit it for every proposal.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1GitReposByNamePulls(name: string, state?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNamePulls(name, state, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNamePulls']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one pull request by its per-repo number. A number belonging to another tenant\'s repo is not found, exactly as the repo itself is not.
+         * @summary Returns one pull request by its per-repo number.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {number} number Number is the proposal\&#39;s per-repo number, from the :number path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1GitReposByNamePullsByNumber(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNamePullsByNumber(name, number, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNamePullsByNumber']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1618,10 +1807,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameReadme(name: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadmeJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameReadme(name, ref, options);
+        async getV1GitReposByNameReadme(name: string, ref?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadmeJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameReadme(name, ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameReadme']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameReadme']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1631,10 +1820,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameRefs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefsJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameRefs(name, options);
+        async getV1GitReposByNameRefs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefsJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameRefs(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameRefs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameRefs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1644,10 +1833,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameSubscriptions(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameSubscriptions(name, options);
+        async getV1GitReposByNameSubscriptions(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameSubscriptions(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameSubscriptions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameSubscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1659,10 +1848,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GitReposNameTree(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreeJSON>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposNameTree(name, ref, path, options);
+        async getV1GitReposByNameTree(name: string, ref?: string, path?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreeJSON>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GitReposByNameTree(name, ref, path, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposNameTree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getV1GitReposByNameTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1685,10 +1874,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1GitReposName(name: string, patchIn: PatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1GitReposName(name, patchIn, options);
+        async patchV1GitReposByName(name: string, patchIn: PatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1GitReposByName(name, patchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.patchV1GitReposName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.patchV1GitReposByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1786,10 +1975,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GitReposNameGc(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GcOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposNameGc(name, options);
+        async postV1GitReposByNameGc(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GcOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNameGc(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposNameGc']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNameGc']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1800,10 +1989,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GitReposNameMirror(name: string, mirrorReq: MirrorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposNameMirror(name, mirrorReq, options);
+        async postV1GitReposByNameMirror(name: string, mirrorReq: MirrorReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNameMirror(name, mirrorReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposNameMirror']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNameMirror']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1814,10 +2003,38 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GitReposNameMirrors(name: string, mirrorTargetReq: MirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorTargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposNameMirrors(name, mirrorTargetReq, options);
+        async postV1GitReposByNameMirrors(name: string, mirrorTargetReq: MirrorTargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MirrorTargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNameMirrors(name, mirrorTargetReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposNameMirrors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNameMirrors']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
+         * @summary Proposes a branch for merging and returns it with its number.
+         * @param {string} name Name is the repo the proposal belongs to, from the :name path segment.
+         * @param {OpenReq} openReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1GitReposByNamePulls(name: string, openReq: OpenReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNamePulls(name, openReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNamePulls']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.  It merges only when base is already an ancestor of head — the case where head contains every commit base has, so moving the branch loses nothing and invents nothing. When base has moved on independently, this REFUSES with 409 and says so: a real three-way merge is not implemented here, and reporting one would claim a result these bytes do not produce. Rebase head onto base and merge again.  The move is judged by the same ref policy a `git push` of it would face, and fires the same build and notify reactions, so merging is not a way around either. Merging an already-merged proposal is a 409.
+         * @summary Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.
+         * @param {string} name Name is the repo, from the :name path segment.
+         * @param {number} number Number is the proposal\&#39;s per-repo number, from the :number path segment.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1GitReposByNamePullsByNumberMerge(name: string, number: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PullView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNamePullsByNumberMerge(name, number, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNamePullsByNumberMerge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1828,10 +2045,10 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GitReposNamePush(name: string, pushReq: PushReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PushResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposNamePush(name, pushReq, options);
+        async postV1GitReposByNamePush(name: string, pushReq: PushReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PushResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNamePush(name, pushReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposNamePush']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNamePush']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1842,15 +2059,15 @@ export const GitApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GitReposNameSubscriptions(name: string, subscribeReq: SubscribeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposNameSubscriptions(name, subscribeReq, options);
+        async postV1GitReposByNameSubscriptions(name: string, subscribeReq: SubscribeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubscriptionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GitReposByNameSubscriptions(name, subscribeReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposNameSubscriptions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.postV1GitReposByNameSubscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \'the API is switched off\' — the wrong conclusion this estate has already drawn twice.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * Is retired — forge pushes build via platform.hanzo.ai.  GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \"the API is switched off\" — the wrong conclusion this estate has already drawn twice. It reads no body: there is nothing here to authenticate and nothing to parse.
+         * @summary Is retired — forge pushes build via platform.hanzo.ai.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1936,42 +2153,42 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
          * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-         * @param {GitApiDeleteV1GitKeysIdRequest} requestParameters Request parameters.
+         * @param {GitApiDeleteV1GitKeysByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitKeysId(requestParameters: GitApiDeleteV1GitKeysIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1GitKeysId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1GitKeysById(requestParameters: GitApiDeleteV1GitKeysByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1GitKeysById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
          * @summary Removes a repo\'s metadata and purges its storage.
-         * @param {GitApiDeleteV1GitReposNameRequest} requestParameters Request parameters.
+         * @param {GitApiDeleteV1GitReposByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposName(requestParameters: GitApiDeleteV1GitReposNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1GitReposName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1GitReposByName(requestParameters: GitApiDeleteV1GitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1GitReposByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
          * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
-         * @param {GitApiDeleteV1GitReposNameMirrorsIdRequest} requestParameters Request parameters.
+         * @param {GitApiDeleteV1GitReposByNameMirrorsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposNameMirrorsId(requestParameters: GitApiDeleteV1GitReposNameMirrorsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1GitReposNameMirrorsId(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1GitReposByNameMirrorsById(requestParameters: GitApiDeleteV1GitReposByNameMirrorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1GitReposByNameMirrorsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
          * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
-         * @param {GitApiDeleteV1GitReposNameSubscriptionsIdRequest} requestParameters Request parameters.
+         * @param {GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GitReposNameSubscriptionsId(requestParameters: GitApiDeleteV1GitReposNameSubscriptionsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1GitReposNameSubscriptionsId(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1GitReposByNameSubscriptionsById(requestParameters: GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1GitReposByNameSubscriptionsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
@@ -2014,92 +2231,112 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
          * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
-         * @param {GitApiGetV1GitReposNameRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposName(requestParameters: GitApiGetV1GitReposNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.getV1GitReposName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1GitReposByName(requestParameters: GitApiGetV1GitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
+            return localVarFp.getV1GitReposByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
          * @summary Returns one file\'s bytes at one revision.
-         * @param {GitApiGetV1GitReposNameBlobRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameBlobRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameBlob(requestParameters: GitApiGetV1GitReposNameBlobRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlobJSON> {
-            return localVarFp.getV1GitReposNameBlob(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameBlob(requestParameters: GitApiGetV1GitReposByNameBlobRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlobJSON> {
+            return localVarFp.getV1GitReposByNameBlob(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
         },
         /**
          * Walks a ref\'s history newest first, or one path\'s history when a path is given. There is no cursor: the page is the newest `limit` commits.
          * @summary Walks a ref\'s history newest first, or one path\'s history when a path is given.
-         * @param {GitApiGetV1GitReposNameCommitsRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameCommitsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameCommits(requestParameters: GitApiGetV1GitReposNameCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommitsJSON> {
-            return localVarFp.getV1GitReposNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameCommits(requestParameters: GitApiGetV1GitReposByNameCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CommitsJSON> {
+            return localVarFp.getV1GitReposByNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every file a glob selects at one revision, WITH its bytes and the revision they came from. It is the read a delivery generator makes: one call answers \"what is the inventory at this commit, and what does it say\", where listing and then fetching would be a request per file.  Returning the resolved revision matters as much as the bytes. A generator that lists at `main` and then reads at `main` can straddle a push and assemble half its inventory from one commit and half from the next; resolving once makes the whole read consistent by construction.  A file past the read cap comes back Truncated with no content rather than being dropped. A caller building a desired set has to know the difference between \"this file is empty\" and \"this file was not read\" — silently omitting it is how a pruning reconcile deletes what the missing file declared.
          * @summary Returns every file a glob selects at one revision, WITH its bytes and the revision they came from.
-         * @param {GitApiGetV1GitReposNameFilesRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameFilesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameFiles(requestParameters: GitApiGetV1GitReposNameFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<FilesJSON> {
-            return localVarFp.getV1GitReposNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameFiles(requestParameters: GitApiGetV1GitReposByNameFilesRequest, options?: RawAxiosRequestConfig): AxiosPromise<FilesJSON> {
+            return localVarFp.getV1GitReposByNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
          * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-         * @param {GitApiGetV1GitReposNameMirrorsRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameMirrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameMirrors(requestParameters: GitApiGetV1GitReposNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorList> {
-            return localVarFp.getV1GitReposNameMirrors(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameMirrors(requestParameters: GitApiGetV1GitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorList> {
+            return localVarFp.getV1GitReposByNameMirrors(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
+         * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
+         * @param {GitApiGetV1GitReposByNamePullsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1GitReposByNamePulls(requestParameters: GitApiGetV1GitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullList> {
+            return localVarFp.getV1GitReposByNamePulls(requestParameters.name, requestParameters.state, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one pull request by its per-repo number. A number belonging to another tenant\'s repo is not found, exactly as the repo itself is not.
+         * @summary Returns one pull request by its per-repo number.
+         * @param {GitApiGetV1GitReposByNamePullsByNumberRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1GitReposByNamePullsByNumber(requestParameters: GitApiGetV1GitReposByNamePullsByNumberRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
+            return localVarFp.getV1GitReposByNamePullsByNumber(requestParameters.name, requestParameters.number, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the README at the tree root as plain text — unrendered, so the caller decides how to present it. A repo with no README is not found.
          * @summary Returns the README at the tree root as plain text — unrendered, so the caller decides how to present it.
-         * @param {GitApiGetV1GitReposNameReadmeRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameReadmeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameReadme(requestParameters: GitApiGetV1GitReposNameReadmeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadmeJSON> {
-            return localVarFp.getV1GitReposNameReadme(requestParameters.name, requestParameters.ref, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameReadme(requestParameters: GitApiGetV1GitReposByNameReadmeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadmeJSON> {
+            return localVarFp.getV1GitReposByNameReadme(requestParameters.name, requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists a repo\'s branches, tags and default branch — what a branch picker needs in one call. Unlike the other read ops it tolerates a repo with no commits: the ref sets come back empty and the default branch is still named.
          * @summary Lists a repo\'s branches, tags and default branch — what a branch picker needs in one call.
-         * @param {GitApiGetV1GitReposNameRefsRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameRefsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameRefs(requestParameters: GitApiGetV1GitReposNameRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefsJSON> {
-            return localVarFp.getV1GitReposNameRefs(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameRefs(requestParameters: GitApiGetV1GitReposByNameRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefsJSON> {
+            return localVarFp.getV1GitReposByNameRefs(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a repo\'s Slack subscriptions — which channels the lifecycle notifier posts this repo\'s push and deploy events to.
          * @summary Returns a repo\'s Slack subscriptions — which channels the lifecycle notifier posts this repo\'s push and deploy events to.
-         * @param {GitApiGetV1GitReposNameSubscriptionsRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameSubscriptionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameSubscriptions(requestParameters: GitApiGetV1GitReposNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionList> {
-            return localVarFp.getV1GitReposNameSubscriptions(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameSubscriptions(requestParameters: GitApiGetV1GitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionList> {
+            return localVarFp.getV1GitReposByNameSubscriptions(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
          * @summary Lists the immediate children of one directory at one revision, directories before files.
-         * @param {GitApiGetV1GitReposNameTreeRequest} requestParameters Request parameters.
+         * @param {GitApiGetV1GitReposByNameTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GitReposNameTree(requestParameters: GitApiGetV1GitReposNameTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TreeJSON> {
-            return localVarFp.getV1GitReposNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
+        getV1GitReposByNameTree(requestParameters: GitApiGetV1GitReposByNameTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TreeJSON> {
+            return localVarFp.getV1GitReposByNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns per-repo and total storage bytes for the caller\'s org — the queryable, per-tenant number commerce and o11y meter on. It spans EVERY project sub-scope, unlike the repo list, so a billing consumer sees the whole tenant footprint in one call. Sizes are last-measured values (create, push, mirror and gc each re-measure), not a live walk of the disk.
@@ -2113,12 +2350,12 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
          * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-         * @param {GitApiPatchV1GitReposNameRequest} requestParameters Request parameters.
+         * @param {GitApiPatchV1GitReposByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1GitReposName(requestParameters: GitApiPatchV1GitReposNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.patchV1GitReposName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(axios, basePath));
+        patchV1GitReposByName(requestParameters: GitApiPatchV1GitReposByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
+            return localVarFp.patchV1GitReposByName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(axios, basePath));
         },
         /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
@@ -2183,56 +2420,76 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph. Idempotent, and safe to interrupt — git swaps both artifacts atomically. It runs under one pack slot with the same memory bounds as a clone, so it can block behind heavy pack traffic rather than compete with it. Storage usage is re-measured afterwards, since a repack reclaims space.
          * @summary Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph.
-         * @param {GitApiPostV1GitReposNameGcRequest} requestParameters Request parameters.
+         * @param {GitApiPostV1GitReposByNameGcRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameGc(requestParameters: GitApiPostV1GitReposNameGcRequest, options?: RawAxiosRequestConfig): AxiosPromise<GcOut> {
-            return localVarFp.postV1GitReposNameGc(requestParameters.name, options).then((request) => request(axios, basePath));
+        postV1GitReposByNameGc(requestParameters: GitApiPostV1GitReposByNameGcRequest, options?: RawAxiosRequestConfig): AxiosPromise<GcOut> {
+            return localVarFp.postV1GitReposByNameGc(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
          * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-         * @param {GitApiPostV1GitReposNameMirrorRequest} requestParameters Request parameters.
+         * @param {GitApiPostV1GitReposByNameMirrorRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameMirror(requestParameters: GitApiPostV1GitReposNameMirrorRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
-            return localVarFp.postV1GitReposNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(axios, basePath));
+        postV1GitReposByNameMirror(requestParameters: GitApiPostV1GitReposByNameMirrorRequest, options?: RawAxiosRequestConfig): AxiosPromise<RepoView> {
+            return localVarFp.postV1GitReposByNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
          * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-         * @param {GitApiPostV1GitReposNameMirrorsRequest} requestParameters Request parameters.
+         * @param {GitApiPostV1GitReposByNameMirrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameMirrors(requestParameters: GitApiPostV1GitReposNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorTargetView> {
-            return localVarFp.postV1GitReposNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
+        postV1GitReposByNameMirrors(requestParameters: GitApiPostV1GitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MirrorTargetView> {
+            return localVarFp.postV1GitReposByNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
+         * @summary Proposes a branch for merging and returns it with its number.
+         * @param {GitApiPostV1GitReposByNamePullsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GitReposByNamePulls(requestParameters: GitApiPostV1GitReposByNamePullsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
+            return localVarFp.postV1GitReposByNamePulls(requestParameters.name, requestParameters.openReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.  It merges only when base is already an ancestor of head — the case where head contains every commit base has, so moving the branch loses nothing and invents nothing. When base has moved on independently, this REFUSES with 409 and says so: a real three-way merge is not implemented here, and reporting one would claim a result these bytes do not produce. Rebase head onto base and merge again.  The move is judged by the same ref policy a `git push` of it would face, and fires the same build and notify reactions, so merging is not a way around either. Merging an already-merged proposal is a 409.
+         * @summary Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.
+         * @param {GitApiPostV1GitReposByNamePullsByNumberMergeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1GitReposByNamePullsByNumberMerge(requestParameters: GitApiPostV1GitReposByNamePullsByNumberMergeRequest, options?: RawAxiosRequestConfig): AxiosPromise<PullView> {
+            return localVarFp.postV1GitReposByNamePullsByNumberMerge(requestParameters.name, requestParameters.number, options).then((request) => request(axios, basePath));
         },
         /**
          * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
          * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
-         * @param {GitApiPostV1GitReposNamePushRequest} requestParameters Request parameters.
+         * @param {GitApiPostV1GitReposByNamePushRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNamePush(requestParameters: GitApiPostV1GitReposNamePushRequest, options?: RawAxiosRequestConfig): AxiosPromise<PushResp> {
-            return localVarFp.postV1GitReposNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(axios, basePath));
+        postV1GitReposByNamePush(requestParameters: GitApiPostV1GitReposByNamePushRequest, options?: RawAxiosRequestConfig): AxiosPromise<PushResp> {
+            return localVarFp.postV1GitReposByNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there. Answers 201. The same channel twice on one repo is a 409; a repo outside the caller\'s scope is a 404, exactly as reading it is.
          * @summary Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there.
-         * @param {GitApiPostV1GitReposNameSubscriptionsRequest} requestParameters Request parameters.
+         * @param {GitApiPostV1GitReposByNameSubscriptionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GitReposNameSubscriptions(requestParameters: GitApiPostV1GitReposNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionView> {
-            return localVarFp.postV1GitReposNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(axios, basePath));
+        postV1GitReposByNameSubscriptions(requestParameters: GitApiPostV1GitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubscriptionView> {
+            return localVarFp.postV1GitReposByNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \'the API is switched off\' — the wrong conclusion this estate has already drawn twice.
-         * @summary Retired — forge pushes build via platform.hanzo.ai
+         * Is retired — forge pushes build via platform.hanzo.ai.  GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \"the API is switched off\" — the wrong conclusion this estate has already drawn twice. It reads no body: there is nothing here to authenticate and nothing to parse.
+         * @summary Is retired — forge pushes build via platform.hanzo.ai.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2291,71 +2548,71 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
 };
 
 /**
- * Request parameters for deleteV1GitKeysId operation in GitApi.
+ * Request parameters for deleteV1GitKeysById operation in GitApi.
  * @export
- * @interface GitApiDeleteV1GitKeysIdRequest
+ * @interface GitApiDeleteV1GitKeysByIdRequest
  */
-export interface GitApiDeleteV1GitKeysIdRequest {
+export interface GitApiDeleteV1GitKeysByIdRequest {
     /**
      * ID is the key\&#39;s identifier (\&quot;gitkey_…\&quot;), from the :id path segment.
      * @type {string}
-     * @memberof GitApiDeleteV1GitKeysId
+     * @memberof GitApiDeleteV1GitKeysById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1GitReposName operation in GitApi.
+ * Request parameters for deleteV1GitReposByName operation in GitApi.
  * @export
- * @interface GitApiDeleteV1GitReposNameRequest
+ * @interface GitApiDeleteV1GitReposByNameRequest
  */
-export interface GitApiDeleteV1GitReposNameRequest {
+export interface GitApiDeleteV1GitReposByNameRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiDeleteV1GitReposName
+     * @memberof GitApiDeleteV1GitReposByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for deleteV1GitReposNameMirrorsId operation in GitApi.
+ * Request parameters for deleteV1GitReposByNameMirrorsById operation in GitApi.
  * @export
- * @interface GitApiDeleteV1GitReposNameMirrorsIdRequest
+ * @interface GitApiDeleteV1GitReposByNameMirrorsByIdRequest
  */
-export interface GitApiDeleteV1GitReposNameMirrorsIdRequest {
+export interface GitApiDeleteV1GitReposByNameMirrorsByIdRequest {
     /**
      * Name is the repo, from the :name path segment.
      * @type {string}
-     * @memberof GitApiDeleteV1GitReposNameMirrorsId
+     * @memberof GitApiDeleteV1GitReposByNameMirrorsById
      */
     readonly name: string
 
     /**
      * ID is the row to remove, from the :id path segment.
      * @type {string}
-     * @memberof GitApiDeleteV1GitReposNameMirrorsId
+     * @memberof GitApiDeleteV1GitReposByNameMirrorsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1GitReposNameSubscriptionsId operation in GitApi.
+ * Request parameters for deleteV1GitReposByNameSubscriptionsById operation in GitApi.
  * @export
- * @interface GitApiDeleteV1GitReposNameSubscriptionsIdRequest
+ * @interface GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest
  */
-export interface GitApiDeleteV1GitReposNameSubscriptionsIdRequest {
+export interface GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest {
     /**
      * Name is the repo, from the :name path segment.
      * @type {string}
-     * @memberof GitApiDeleteV1GitReposNameSubscriptionsId
+     * @memberof GitApiDeleteV1GitReposByNameSubscriptionsById
      */
     readonly name: string
 
     /**
      * ID is the row to remove, from the :id path segment.
      * @type {string}
-     * @memberof GitApiDeleteV1GitReposNameSubscriptionsId
+     * @memberof GitApiDeleteV1GitReposByNameSubscriptionsById
      */
     readonly id: string
 }
@@ -2410,218 +2667,260 @@ export interface GitApiGetV1GitByOrgByRepoInfoRefsRequest {
 }
 
 /**
- * Request parameters for getV1GitReposName operation in GitApi.
+ * Request parameters for getV1GitReposByName operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameRequest
+ * @interface GitApiGetV1GitReposByNameRequest
  */
-export interface GitApiGetV1GitReposNameRequest {
+export interface GitApiGetV1GitReposByNameRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposName
+     * @memberof GitApiGetV1GitReposByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1GitReposNameBlob operation in GitApi.
+ * Request parameters for getV1GitReposByNameBlob operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameBlobRequest
+ * @interface GitApiGetV1GitReposByNameBlobRequest
  */
-export interface GitApiGetV1GitReposNameBlobRequest {
+export interface GitApiGetV1GitReposByNameBlobRequest {
     /**
      * Name is the repo to read, from the :name path segment.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameBlob
+     * @memberof GitApiGetV1GitReposByNameBlob
      */
     readonly name: string
 
     /**
      * Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameBlob
+     * @memberof GitApiGetV1GitReposByNameBlob
      */
     readonly ref?: string
 
     /**
      * Path is repo-relative; empty is the tree root. Traversal is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameBlob
+     * @memberof GitApiGetV1GitReposByNameBlob
      */
     readonly path?: string
 }
 
 /**
- * Request parameters for getV1GitReposNameCommits operation in GitApi.
+ * Request parameters for getV1GitReposByNameCommits operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameCommitsRequest
+ * @interface GitApiGetV1GitReposByNameCommitsRequest
  */
-export interface GitApiGetV1GitReposNameCommitsRequest {
+export interface GitApiGetV1GitReposByNameCommitsRequest {
     /**
      * Name is the repo to read, from the :name path segment.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameCommits
+     * @memberof GitApiGetV1GitReposByNameCommits
      */
     readonly name: string
 
     /**
      * Ref is the branch, tag or commit to walk back from; empty means HEAD.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameCommits
+     * @memberof GitApiGetV1GitReposByNameCommits
      */
     readonly ref?: string
 
     /**
      * Path narrows the history to commits touching it; empty walks the whole ref.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameCommits
+     * @memberof GitApiGetV1GitReposByNameCommits
      */
     readonly path?: string
 
     /**
      * Limit caps the page. Anything not positive means 50; the cap is 100.
      * @type {number}
-     * @memberof GitApiGetV1GitReposNameCommits
+     * @memberof GitApiGetV1GitReposByNameCommits
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1GitReposNameFiles operation in GitApi.
+ * Request parameters for getV1GitReposByNameFiles operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameFilesRequest
+ * @interface GitApiGetV1GitReposByNameFilesRequest
  */
-export interface GitApiGetV1GitReposNameFilesRequest {
+export interface GitApiGetV1GitReposByNameFilesRequest {
     /**
      * Name is the repo to read, from the :name path segment.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameFiles
+     * @memberof GitApiGetV1GitReposByNameFiles
      */
     readonly name: string
 
     /**
      * Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameFiles
+     * @memberof GitApiGetV1GitReposByNameFiles
      */
     readonly ref?: string
 
     /**
      * Glob selects files, matched segment by segment so &#x60;*&#x60; never crosses a &#x60;/&#x60;. &#x60;**&#x60; matches zero or more whole segments.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameFiles
+     * @memberof GitApiGetV1GitReposByNameFiles
      */
     readonly glob?: string
 }
 
 /**
- * Request parameters for getV1GitReposNameMirrors operation in GitApi.
+ * Request parameters for getV1GitReposByNameMirrors operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameMirrorsRequest
+ * @interface GitApiGetV1GitReposByNameMirrorsRequest
  */
-export interface GitApiGetV1GitReposNameMirrorsRequest {
+export interface GitApiGetV1GitReposByNameMirrorsRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameMirrors
+     * @memberof GitApiGetV1GitReposByNameMirrors
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1GitReposNameReadme operation in GitApi.
+ * Request parameters for getV1GitReposByNamePulls operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameReadmeRequest
+ * @interface GitApiGetV1GitReposByNamePullsRequest
  */
-export interface GitApiGetV1GitReposNameReadmeRequest {
+export interface GitApiGetV1GitReposByNamePullsRequest {
+    /**
+     * Name is the repo, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiGetV1GitReposByNamePulls
+     */
+    readonly name: string
+
+    /**
+     * State narrows the list to \&quot;open\&quot; or \&quot;merged\&quot;. Omit it for every proposal.
+     * @type {string}
+     * @memberof GitApiGetV1GitReposByNamePulls
+     */
+    readonly state?: string
+}
+
+/**
+ * Request parameters for getV1GitReposByNamePullsByNumber operation in GitApi.
+ * @export
+ * @interface GitApiGetV1GitReposByNamePullsByNumberRequest
+ */
+export interface GitApiGetV1GitReposByNamePullsByNumberRequest {
+    /**
+     * Name is the repo, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiGetV1GitReposByNamePullsByNumber
+     */
+    readonly name: string
+
+    /**
+     * Number is the proposal\&#39;s per-repo number, from the :number path segment.
+     * @type {number}
+     * @memberof GitApiGetV1GitReposByNamePullsByNumber
+     */
+    readonly number: number
+}
+
+/**
+ * Request parameters for getV1GitReposByNameReadme operation in GitApi.
+ * @export
+ * @interface GitApiGetV1GitReposByNameReadmeRequest
+ */
+export interface GitApiGetV1GitReposByNameReadmeRequest {
     /**
      * Name is the repo to read, from the :name path segment.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameReadme
+     * @memberof GitApiGetV1GitReposByNameReadme
      */
     readonly name: string
 
     /**
      * Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameReadme
+     * @memberof GitApiGetV1GitReposByNameReadme
      */
     readonly ref?: string
 }
 
 /**
- * Request parameters for getV1GitReposNameRefs operation in GitApi.
+ * Request parameters for getV1GitReposByNameRefs operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameRefsRequest
+ * @interface GitApiGetV1GitReposByNameRefsRequest
  */
-export interface GitApiGetV1GitReposNameRefsRequest {
+export interface GitApiGetV1GitReposByNameRefsRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameRefs
+     * @memberof GitApiGetV1GitReposByNameRefs
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1GitReposNameSubscriptions operation in GitApi.
+ * Request parameters for getV1GitReposByNameSubscriptions operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameSubscriptionsRequest
+ * @interface GitApiGetV1GitReposByNameSubscriptionsRequest
  */
-export interface GitApiGetV1GitReposNameSubscriptionsRequest {
+export interface GitApiGetV1GitReposByNameSubscriptionsRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameSubscriptions
+     * @memberof GitApiGetV1GitReposByNameSubscriptions
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1GitReposNameTree operation in GitApi.
+ * Request parameters for getV1GitReposByNameTree operation in GitApi.
  * @export
- * @interface GitApiGetV1GitReposNameTreeRequest
+ * @interface GitApiGetV1GitReposByNameTreeRequest
  */
-export interface GitApiGetV1GitReposNameTreeRequest {
+export interface GitApiGetV1GitReposByNameTreeRequest {
     /**
      * Name is the repo to read, from the :name path segment.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameTree
+     * @memberof GitApiGetV1GitReposByNameTree
      */
     readonly name: string
 
     /**
      * Ref is a branch, tag or commit; empty means the repo\&#39;s HEAD.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameTree
+     * @memberof GitApiGetV1GitReposByNameTree
      */
     readonly ref?: string
 
     /**
      * Path is repo-relative; empty is the tree root. Traversal is stripped.
      * @type {string}
-     * @memberof GitApiGetV1GitReposNameTree
+     * @memberof GitApiGetV1GitReposByNameTree
      */
     readonly path?: string
 }
 
 /**
- * Request parameters for patchV1GitReposName operation in GitApi.
+ * Request parameters for patchV1GitReposByName operation in GitApi.
  * @export
- * @interface GitApiPatchV1GitReposNameRequest
+ * @interface GitApiPatchV1GitReposByNameRequest
  */
-export interface GitApiPatchV1GitReposNameRequest {
+export interface GitApiPatchV1GitReposByNameRequest {
     /**
      * Name is the repo to update, from the :name path segment.
      * @type {string}
-     * @memberof GitApiPatchV1GitReposName
+     * @memberof GitApiPatchV1GitReposByName
      */
     readonly name: string
 
     /**
      * 
      * @type {PatchIn}
-     * @memberof GitApiPatchV1GitReposName
+     * @memberof GitApiPatchV1GitReposByName
      */
     readonly patchIn: PatchIn
 }
@@ -2781,99 +3080,141 @@ export interface GitApiPostV1GitReposRequest {
 }
 
 /**
- * Request parameters for postV1GitReposNameGc operation in GitApi.
+ * Request parameters for postV1GitReposByNameGc operation in GitApi.
  * @export
- * @interface GitApiPostV1GitReposNameGcRequest
+ * @interface GitApiPostV1GitReposByNameGcRequest
  */
-export interface GitApiPostV1GitReposNameGcRequest {
+export interface GitApiPostV1GitReposByNameGcRequest {
     /**
      * Name is the repo\&#39;s org-unique handle, from the :name path segment. A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof GitApiPostV1GitReposNameGc
+     * @memberof GitApiPostV1GitReposByNameGc
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1GitReposNameMirror operation in GitApi.
+ * Request parameters for postV1GitReposByNameMirror operation in GitApi.
  * @export
- * @interface GitApiPostV1GitReposNameMirrorRequest
+ * @interface GitApiPostV1GitReposByNameMirrorRequest
  */
-export interface GitApiPostV1GitReposNameMirrorRequest {
+export interface GitApiPostV1GitReposByNameMirrorRequest {
     /**
      * Name is the local repo to mirror into, from the :name path segment. It is CREATED on first use.
      * @type {string}
-     * @memberof GitApiPostV1GitReposNameMirror
+     * @memberof GitApiPostV1GitReposByNameMirror
      */
     readonly name: string
 
     /**
      * 
      * @type {MirrorReq}
-     * @memberof GitApiPostV1GitReposNameMirror
+     * @memberof GitApiPostV1GitReposByNameMirror
      */
     readonly mirrorReq: MirrorReq
 }
 
 /**
- * Request parameters for postV1GitReposNameMirrors operation in GitApi.
+ * Request parameters for postV1GitReposByNameMirrors operation in GitApi.
  * @export
- * @interface GitApiPostV1GitReposNameMirrorsRequest
+ * @interface GitApiPostV1GitReposByNameMirrorsRequest
  */
-export interface GitApiPostV1GitReposNameMirrorsRequest {
+export interface GitApiPostV1GitReposByNameMirrorsRequest {
     /**
      * Name is the repo whose advanced refs are pushed downstream, from the :name path segment.
      * @type {string}
-     * @memberof GitApiPostV1GitReposNameMirrors
+     * @memberof GitApiPostV1GitReposByNameMirrors
      */
     readonly name: string
 
     /**
      * 
      * @type {MirrorTargetReq}
-     * @memberof GitApiPostV1GitReposNameMirrors
+     * @memberof GitApiPostV1GitReposByNameMirrors
      */
     readonly mirrorTargetReq: MirrorTargetReq
 }
 
 /**
- * Request parameters for postV1GitReposNamePush operation in GitApi.
+ * Request parameters for postV1GitReposByNamePulls operation in GitApi.
  * @export
- * @interface GitApiPostV1GitReposNamePushRequest
+ * @interface GitApiPostV1GitReposByNamePullsRequest
  */
-export interface GitApiPostV1GitReposNamePushRequest {
+export interface GitApiPostV1GitReposByNamePullsRequest {
+    /**
+     * Name is the repo the proposal belongs to, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiPostV1GitReposByNamePulls
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {OpenReq}
+     * @memberof GitApiPostV1GitReposByNamePulls
+     */
+    readonly openReq: OpenReq
+}
+
+/**
+ * Request parameters for postV1GitReposByNamePullsByNumberMerge operation in GitApi.
+ * @export
+ * @interface GitApiPostV1GitReposByNamePullsByNumberMergeRequest
+ */
+export interface GitApiPostV1GitReposByNamePullsByNumberMergeRequest {
+    /**
+     * Name is the repo, from the :name path segment.
+     * @type {string}
+     * @memberof GitApiPostV1GitReposByNamePullsByNumberMerge
+     */
+    readonly name: string
+
+    /**
+     * Number is the proposal\&#39;s per-repo number, from the :number path segment.
+     * @type {number}
+     * @memberof GitApiPostV1GitReposByNamePullsByNumberMerge
+     */
+    readonly number: number
+}
+
+/**
+ * Request parameters for postV1GitReposByNamePush operation in GitApi.
+ * @export
+ * @interface GitApiPostV1GitReposByNamePushRequest
+ */
+export interface GitApiPostV1GitReposByNamePushRequest {
     /**
      * Name is the repo to push into, from the :name path segment. It is CREATED on first push if it does not exist.
      * @type {string}
-     * @memberof GitApiPostV1GitReposNamePush
+     * @memberof GitApiPostV1GitReposByNamePush
      */
     readonly name: string
 
     /**
      * 
      * @type {PushReq}
-     * @memberof GitApiPostV1GitReposNamePush
+     * @memberof GitApiPostV1GitReposByNamePush
      */
     readonly pushReq: PushReq
 }
 
 /**
- * Request parameters for postV1GitReposNameSubscriptions operation in GitApi.
+ * Request parameters for postV1GitReposByNameSubscriptions operation in GitApi.
  * @export
- * @interface GitApiPostV1GitReposNameSubscriptionsRequest
+ * @interface GitApiPostV1GitReposByNameSubscriptionsRequest
  */
-export interface GitApiPostV1GitReposNameSubscriptionsRequest {
+export interface GitApiPostV1GitReposByNameSubscriptionsRequest {
     /**
      * Name is the repo to subscribe, from the :name path segment.
      * @type {string}
-     * @memberof GitApiPostV1GitReposNameSubscriptions
+     * @memberof GitApiPostV1GitReposByNameSubscriptions
      */
     readonly name: string
 
     /**
      * 
      * @type {SubscribeReq}
-     * @memberof GitApiPostV1GitReposNameSubscriptions
+     * @memberof GitApiPostV1GitReposByNameSubscriptions
      */
     readonly subscribeReq: SubscribeReq
 }
@@ -2930,49 +3271,49 @@ export class GitApi extends BaseAPI {
     /**
      * Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found. Answers 204 with no body. Once removed the key no longer authenticates any SSH git access.
      * @summary Removes a registered SSH key, scoped to the caller\'s org: an org can only delete its own, and a key id it does not own is not found.
-     * @param {GitApiDeleteV1GitKeysIdRequest} requestParameters Request parameters.
+     * @param {GitApiDeleteV1GitKeysByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public deleteV1GitKeysId(requestParameters: GitApiDeleteV1GitKeysIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteV1GitKeysId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1GitKeysById(requestParameters: GitApiDeleteV1GitKeysByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteV1GitKeysById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a repo\'s metadata and purges its storage. Answers 204 with no body. The metadata row is the source of truth for existence, so a storage purge that fails is logged and the delete still succeeds — and a second call is a 404, not a second delete.
      * @summary Removes a repo\'s metadata and purges its storage.
-     * @param {GitApiDeleteV1GitReposNameRequest} requestParameters Request parameters.
+     * @param {GitApiDeleteV1GitReposByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public deleteV1GitReposName(requestParameters: GitApiDeleteV1GitReposNameRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteV1GitReposName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1GitReposByName(requestParameters: GitApiDeleteV1GitReposByNameRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteV1GitReposByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one outbound mirror target; later pushes stop being forwarded to it. Answers 204 with no body. Nothing is done to the downstream remote itself — only this repo\'s intent to push there is dropped.
      * @summary Removes one outbound mirror target; later pushes stop being forwarded to it.
-     * @param {GitApiDeleteV1GitReposNameMirrorsIdRequest} requestParameters Request parameters.
+     * @param {GitApiDeleteV1GitReposByNameMirrorsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public deleteV1GitReposNameMirrorsId(requestParameters: GitApiDeleteV1GitReposNameMirrorsIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteV1GitReposNameMirrorsId(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1GitReposByNameMirrorsById(requestParameters: GitApiDeleteV1GitReposByNameMirrorsByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteV1GitReposByNameMirrorsById(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel. Answers 204 with no body. An id that is not this repo\'s subscription is not found.
      * @summary Removes one Slack subscription from a repo; the notifier stops posting that repo\'s events to that channel.
-     * @param {GitApiDeleteV1GitReposNameSubscriptionsIdRequest} requestParameters Request parameters.
+     * @param {GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public deleteV1GitReposNameSubscriptionsId(requestParameters: GitApiDeleteV1GitReposNameSubscriptionsIdRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).deleteV1GitReposNameSubscriptionsId(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1GitReposByNameSubscriptionsById(requestParameters: GitApiDeleteV1GitReposByNameSubscriptionsByIdRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).deleteV1GitReposByNameSubscriptionsById(requestParameters.name, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3024,109 +3365,133 @@ export class GitApi extends BaseAPI {
     /**
      * Returns one repo with its live ref state: every branch name and the resolved HEAD commit. Both are read from the object store on each call, so an empty repo reports no branches and an empty head rather than failing. A repo outside the caller\'s scope is not found.
      * @summary Returns one repo with its live ref state: every branch name and the resolved HEAD commit.
-     * @param {GitApiGetV1GitReposNameRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposName(requestParameters: GitApiGetV1GitReposNameRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByName(requestParameters: GitApiGetV1GitReposByNameRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one file\'s bytes at one revision. Text comes back verbatim, binary comes back base64, and a file past the 1 MiB view cap comes back marked truncated with NO content — the client is expected to clone instead.
      * @summary Returns one file\'s bytes at one revision.
-     * @param {GitApiGetV1GitReposNameBlobRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameBlobRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameBlob(requestParameters: GitApiGetV1GitReposNameBlobRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameBlob(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameBlob(requestParameters: GitApiGetV1GitReposByNameBlobRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameBlob(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Walks a ref\'s history newest first, or one path\'s history when a path is given. There is no cursor: the page is the newest `limit` commits.
      * @summary Walks a ref\'s history newest first, or one path\'s history when a path is given.
-     * @param {GitApiGetV1GitReposNameCommitsRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameCommitsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameCommits(requestParameters: GitApiGetV1GitReposNameCommitsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameCommits(requestParameters: GitApiGetV1GitReposByNameCommitsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameCommits(requestParameters.name, requestParameters.ref, requestParameters.path, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every file a glob selects at one revision, WITH its bytes and the revision they came from. It is the read a delivery generator makes: one call answers \"what is the inventory at this commit, and what does it say\", where listing and then fetching would be a request per file.  Returning the resolved revision matters as much as the bytes. A generator that lists at `main` and then reads at `main` can straddle a push and assemble half its inventory from one commit and half from the next; resolving once makes the whole read consistent by construction.  A file past the read cap comes back Truncated with no content rather than being dropped. A caller building a desired set has to know the difference between \"this file is empty\" and \"this file was not read\" — silently omitting it is how a pruning reconcile deletes what the missing file declared.
      * @summary Returns every file a glob selects at one revision, WITH its bytes and the revision they came from.
-     * @param {GitApiGetV1GitReposNameFilesRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameFilesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameFiles(requestParameters: GitApiGetV1GitReposNameFilesRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameFiles(requestParameters: GitApiGetV1GitReposByNameFilesRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameFiles(requestParameters.name, requestParameters.ref, requestParameters.glob, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
      * @summary Returns a repo\'s outbound mirror targets — the downstream remotes the mirror reactor pushes to whenever a push lands here.
-     * @param {GitApiGetV1GitReposNameMirrorsRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameMirrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameMirrors(requestParameters: GitApiGetV1GitReposNameMirrorsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameMirrors(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameMirrors(requestParameters: GitApiGetV1GitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameMirrors(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed. Narrow it with ?state=open or ?state=merged; omit state for every proposal.
+     * @summary Returns a repo\'s pull requests, newest number first — what is waiting to be reviewed, and what has already landed.
+     * @param {GitApiGetV1GitReposByNamePullsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getV1GitReposByNamePulls(requestParameters: GitApiGetV1GitReposByNamePullsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNamePulls(requestParameters.name, requestParameters.state, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one pull request by its per-repo number. A number belonging to another tenant\'s repo is not found, exactly as the repo itself is not.
+     * @summary Returns one pull request by its per-repo number.
+     * @param {GitApiGetV1GitReposByNamePullsByNumberRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getV1GitReposByNamePullsByNumber(requestParameters: GitApiGetV1GitReposByNamePullsByNumberRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNamePullsByNumber(requestParameters.name, requestParameters.number, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the README at the tree root as plain text — unrendered, so the caller decides how to present it. A repo with no README is not found.
      * @summary Returns the README at the tree root as plain text — unrendered, so the caller decides how to present it.
-     * @param {GitApiGetV1GitReposNameReadmeRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameReadmeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameReadme(requestParameters: GitApiGetV1GitReposNameReadmeRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameReadme(requestParameters.name, requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameReadme(requestParameters: GitApiGetV1GitReposByNameReadmeRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameReadme(requestParameters.name, requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists a repo\'s branches, tags and default branch — what a branch picker needs in one call. Unlike the other read ops it tolerates a repo with no commits: the ref sets come back empty and the default branch is still named.
      * @summary Lists a repo\'s branches, tags and default branch — what a branch picker needs in one call.
-     * @param {GitApiGetV1GitReposNameRefsRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameRefsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameRefs(requestParameters: GitApiGetV1GitReposNameRefsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameRefs(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameRefs(requestParameters: GitApiGetV1GitReposByNameRefsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameRefs(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a repo\'s Slack subscriptions — which channels the lifecycle notifier posts this repo\'s push and deploy events to.
      * @summary Returns a repo\'s Slack subscriptions — which channels the lifecycle notifier posts this repo\'s push and deploy events to.
-     * @param {GitApiGetV1GitReposNameSubscriptionsRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameSubscriptionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameSubscriptions(requestParameters: GitApiGetV1GitReposNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameSubscriptions(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameSubscriptions(requestParameters: GitApiGetV1GitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameSubscriptions(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists the immediate children of one directory at one revision, directories before files. It does not recurse — walk down a level at a time.
      * @summary Lists the immediate children of one directory at one revision, directories before files.
-     * @param {GitApiGetV1GitReposNameTreeRequest} requestParameters Request parameters.
+     * @param {GitApiGetV1GitReposByNameTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public getV1GitReposNameTree(requestParameters: GitApiGetV1GitReposNameTreeRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).getV1GitReposNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(this.axios, this.basePath));
+    public getV1GitReposByNameTree(requestParameters: GitApiGetV1GitReposByNameTreeRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getV1GitReposByNameTree(requestParameters.name, requestParameters.ref, requestParameters.path, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3143,13 +3508,13 @@ export class GitApi extends BaseAPI {
     /**
      * Flips a repo\'s public bit, the one mutable repo setting today. Public grants ANONYMOUS fetch only; push and the whole control plane stay org-authed. Returns the updated repo.
      * @summary Flips a repo\'s public bit, the one mutable repo setting today.
-     * @param {GitApiPatchV1GitReposNameRequest} requestParameters Request parameters.
+     * @param {GitApiPatchV1GitReposByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public patchV1GitReposName(requestParameters: GitApiPatchV1GitReposNameRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).patchV1GitReposName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(this.axios, this.basePath));
+    public patchV1GitReposByName(requestParameters: GitApiPatchV1GitReposByNameRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).patchV1GitReposByName(requestParameters.name, requestParameters.patchIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3227,66 +3592,90 @@ export class GitApi extends BaseAPI {
     /**
      * Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph. Idempotent, and safe to interrupt — git swaps both artifacts atomically. It runs under one pack slot with the same memory bounds as a clone, so it can block behind heavy pack traffic rather than compete with it. Storage usage is re-measured afterwards, since a repack reclaims space.
      * @summary Repacks a repo into one bitmapped pack and rewrites its commit-graph, so the next clone reuses the bitmap instead of walking the whole object graph.
-     * @param {GitApiPostV1GitReposNameGcRequest} requestParameters Request parameters.
+     * @param {GitApiPostV1GitReposByNameGcRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postV1GitReposNameGc(requestParameters: GitApiPostV1GitReposNameGcRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postV1GitReposNameGc(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public postV1GitReposByNameGc(requestParameters: GitApiPostV1GitReposByNameGcRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNameGc(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Imports an external git repository into the caller\'s repo, provisioning it on first use. Fetch is FORCED and covers every ref, so a first call clones the source and a repeat call re-syncs it — the endpoint is idempotent by mirror semantics. Mirrored bytes are metered exactly like a push, and a push.landed event is emitted for the default branch so the code index picks the repo up.
      * @summary Imports an external git repository into the caller\'s repo, provisioning it on first use.
-     * @param {GitApiPostV1GitReposNameMirrorRequest} requestParameters Request parameters.
+     * @param {GitApiPostV1GitReposByNameMirrorRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postV1GitReposNameMirror(requestParameters: GitApiPostV1GitReposNameMirrorRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postV1GitReposNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(this.axios, this.basePath));
+    public postV1GitReposByNameMirror(requestParameters: GitApiPostV1GitReposByNameMirrorRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNameMirror(requestParameters.name, requestParameters.mirrorReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here. Answers 201. The URL must be https to a host on the mirror allowlist (github.com / gitlab.com): the same set the mirror credential may be sent to, so a target can never capture the shared token or point the push at an internal service. Any embedded userinfo is stripped — credentials ride env-only at push time and never enter the stored URL. One mirror per host per repo; a second is a 409.
      * @summary Registers a downstream remote the repo\'s advanced refs are pushed to whenever a push lands here.
-     * @param {GitApiPostV1GitReposNameMirrorsRequest} requestParameters Request parameters.
+     * @param {GitApiPostV1GitReposByNameMirrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postV1GitReposNameMirrors(requestParameters: GitApiPostV1GitReposNameMirrorsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postV1GitReposNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
+    public postV1GitReposByNameMirrors(requestParameters: GitApiPostV1GitReposByNameMirrorsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNameMirrors(requestParameters.name, requestParameters.mirrorTargetReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Proposes a branch for merging and returns it with its number. Answers 201. Both branches must already exist — a proposal naming a branch nobody pushed is a typo, not a plan — and base defaults to the repo\'s default branch.  Proposing the same head into the same base twice is a 409 while the first proposal is still open, so a retried agent run leaves ONE thing to review rather than a pile of identical ones. A repo outside the caller\'s scope is a 404, exactly as reading it is.
+     * @summary Proposes a branch for merging and returns it with its number.
+     * @param {GitApiPostV1GitReposByNamePullsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postV1GitReposByNamePulls(requestParameters: GitApiPostV1GitReposByNamePullsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNamePulls(requestParameters.name, requestParameters.openReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.  It merges only when base is already an ancestor of head — the case where head contains every commit base has, so moving the branch loses nothing and invents nothing. When base has moved on independently, this REFUSES with 409 and says so: a real three-way merge is not implemented here, and reporting one would claim a result these bytes do not produce. Rebase head onto base and merge again.  The move is judged by the same ref policy a `git push` of it would face, and fires the same build and notify reactions, so merging is not a way around either. Merging an already-merged proposal is a 409.
+     * @summary Merges an open pull request by FAST-FORWARDING base to head, and answers the proposal in its merged state with the revision base now points at.
+     * @param {GitApiPostV1GitReposByNamePullsByNumberMergeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public postV1GitReposByNamePullsByNumberMerge(requestParameters: GitApiPostV1GitReposByNamePullsByNumberMergeRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNamePullsByNumberMerge(requestParameters.name, requestParameters.number, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lands a set of files as one commit without a git client — the hanzo.app builder\'s push. The repo is CREATED on first push, the files are merged onto the branch tip (unlisted files survive), and the same push-to-deploy hook a real receive-pack fires is fired, so downstream this is indistinguishable from a `git push`.
      * @summary Lands a set of files as one commit without a git client — the hanzo.app builder\'s push.
-     * @param {GitApiPostV1GitReposNamePushRequest} requestParameters Request parameters.
+     * @param {GitApiPostV1GitReposByNamePushRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postV1GitReposNamePush(requestParameters: GitApiPostV1GitReposNamePushRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postV1GitReposNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(this.axios, this.basePath));
+    public postV1GitReposByNamePush(requestParameters: GitApiPostV1GitReposByNamePushRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNamePush(requestParameters.name, requestParameters.pushReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there. Answers 201. The same channel twice on one repo is a 409; a repo outside the caller\'s scope is a 404, exactly as reading it is.
      * @summary Binds a Slack channel to a repo, so the lifecycle notifier posts that repo\'s push and deploy events there.
-     * @param {GitApiPostV1GitReposNameSubscriptionsRequest} requestParameters Request parameters.
+     * @param {GitApiPostV1GitReposByNameSubscriptionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi
      */
-    public postV1GitReposNameSubscriptions(requestParameters: GitApiPostV1GitReposNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
-        return GitApiFp(this.configuration).postV1GitReposNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(this.axios, this.basePath));
+    public postV1GitReposByNameSubscriptions(requestParameters: GitApiPostV1GitReposByNameSubscriptionsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).postV1GitReposByNameSubscriptions(requestParameters.name, requestParameters.subscribeReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \'the API is switched off\' — the wrong conclusion this estate has already drawn twice.
-     * @summary Retired — forge pushes build via platform.hanzo.ai
+     * Is retired — forge pushes build via platform.hanzo.ai.  GONE (410). This was the canonical forge\'s push-to-deploy door, and it never dispatched a build in its life.  It handed each verified push to cloud.OnGitPush, a single-registrant seam whose only registrant lives in apps/platform. cloud runs each app as its own OS process, so in the git process that builder is nil forever — and this handler answered 204 either way. Delivered, signature valid, green on the forge\'s hook page, and nothing built.  Push-to-deploy now belongs to POST https://platform.hanzo.ai/v1/git-webhook, which owns the build system-of-record and dispatches BuildKit Jobs. git.hanzo.ai delivers there through ONE forge-wide system webhook covering every repository; a repo opts in by committing hanzo.yml, not by owning a hook of its own.  The route is kept, and answers 410 naming that address, precisely so a misdirected delivery says what is wrong. Deleting it would 404, and a 404 here reads as \"the API is switched off\" — the wrong conclusion this estate has already drawn twice. It reads no body: there is nothing here to authenticate and nothing to parse.
+     * @summary Is retired — forge pushes build via platform.hanzo.ai.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GitApi

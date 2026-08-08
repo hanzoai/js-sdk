@@ -60,9 +60,9 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomAnalyticsDataroomDataroomId: async (dataroomId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DataroomAnalyticsDataroomByDataroomid: async (dataroomId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'dataroomId' is not null or undefined
-            assertParamExists('getV1DataroomAnalyticsDataroomDataroomId', 'dataroomId', dataroomId)
+            assertParamExists('getV1DataroomAnalyticsDataroomByDataroomid', 'dataroomId', dataroomId)
             const localVarPath = `/v1/dataroom/analytics/dataroom/{dataroomId}`
                 .replace(`{${"dataroomId"}}`, encodeURIComponent(String(dataroomId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -94,9 +94,9 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomAnalyticsLinkLinkId: async (linkId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DataroomAnalyticsLinkByLinkid: async (linkId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'linkId' is not null or undefined
-            assertParamExists('getV1DataroomAnalyticsLinkLinkId', 'linkId', linkId)
+            assertParamExists('getV1DataroomAnalyticsLinkByLinkid', 'linkId', linkId)
             const localVarPath = `/v1/dataroom/analytics/link/{linkId}`
                 .replace(`{${"linkId"}}`, encodeURIComponent(String(linkId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -158,9 +158,9 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomDataroomsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DataroomDataroomsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1DataroomDataroomsId', 'id', id)
+            assertParamExists('getV1DataroomDataroomsById', 'id', id)
             const localVarPath = `/v1/dataroom/datarooms/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -216,16 +216,16 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
-         * @summary Download a document\'s bytes as its owner
-         * @param {string} id 
+         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
+         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
+         * @param {string} id ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomDocumentsByIdFile: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DataroomDocumentsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1DataroomDocumentsByIdFile', 'id', id)
-            const localVarPath = `/v1/dataroom/documents/{id}/file`
+            assertParamExists('getV1DataroomDocumentsById', 'id', id)
+            const localVarPath = `/v1/dataroom/documents/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -250,16 +250,16 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
-         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
-         * @param {string} id ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+         * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
+         * @summary Download a document\'s bytes as its owner
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomDocumentsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DataroomDocumentsByIdFile: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1DataroomDocumentsId', 'id', id)
-            const localVarPath = `/v1/dataroom/documents/{id}`
+            assertParamExists('getV1DataroomDocumentsByIdFile', 'id', id)
+            const localVarPath = `/v1/dataroom/documents/{id}/file`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -459,11 +459,11 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DataroomDataroomsIdDocuments: async (id: string, dataroomAddDocument: DataroomAddDocument, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1DataroomDataroomsByIdDocuments: async (id: string, dataroomAddDocument: DataroomAddDocument, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1DataroomDataroomsIdDocuments', 'id', id)
+            assertParamExists('postV1DataroomDataroomsByIdDocuments', 'id', id)
             // verify required parameter 'dataroomAddDocument' is not null or undefined
-            assertParamExists('postV1DataroomDataroomsIdDocuments', 'dataroomAddDocument', dataroomAddDocument)
+            assertParamExists('postV1DataroomDataroomsByIdDocuments', 'dataroomAddDocument', dataroomAddDocument)
             const localVarPath = `/v1/dataroom/datarooms/{id}/documents`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -642,10 +642,10 @@ export const DataroomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DataroomAnalyticsDataroomDataroomId(dataroomId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomStats>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomAnalyticsDataroomDataroomId(dataroomId, options);
+        async getV1DataroomAnalyticsDataroomByDataroomid(dataroomId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomAnalyticsDataroomByDataroomid(dataroomId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomAnalyticsDataroomDataroomId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomAnalyticsDataroomByDataroomid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -655,10 +655,10 @@ export const DataroomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DataroomAnalyticsLinkLinkId(linkId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomLinkStats>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomAnalyticsLinkLinkId(linkId, options);
+        async getV1DataroomAnalyticsLinkByLinkid(linkId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomLinkStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomAnalyticsLinkByLinkid(linkId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomAnalyticsLinkLinkId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomAnalyticsLinkByLinkid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -680,10 +680,10 @@ export const DataroomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DataroomDataroomsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomRoomDetailOne>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomDataroomsId(id, options);
+        async getV1DataroomDataroomsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomRoomDetailOne>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomDataroomsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomDataroomsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomDataroomsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -699,6 +699,19 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
+         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
+         * @param {string} id ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1DataroomDocumentsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomDocumentOne>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomDocumentsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomDocumentsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
          * @summary Download a document\'s bytes as its owner
          * @param {string} id 
@@ -709,19 +722,6 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomDocumentsByIdFile(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomDocumentsByIdFile']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
-         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
-         * @param {string} id ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1DataroomDocumentsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomDocumentOne>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DataroomDocumentsId(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getV1DataroomDocumentsId']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -796,10 +796,10 @@ export const DataroomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DataroomDataroomsIdDocuments(id: string, dataroomAddDocument: DataroomAddDocument, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomMembership>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DataroomDataroomsIdDocuments(id, dataroomAddDocument, options);
+        async postV1DataroomDataroomsByIdDocuments(id: string, dataroomAddDocument: DataroomAddDocument, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomMembership>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DataroomDataroomsByIdDocuments(id, dataroomAddDocument, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postV1DataroomDataroomsIdDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postV1DataroomDataroomsByIdDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -866,22 +866,22 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
         /**
          * Rolls up every share link pointing at one data room: session and page-view totals for the room, plus the per-page breakdown for each link beneath it.  A room id outside the caller\'s own tenant store is not found. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
          * @summary Rolls up every share link pointing at one data room: session and page-view totals for the room, plus the per-page breakdown for each link beneath it.
-         * @param {DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest} requestParameters Request parameters.
+         * @param {DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomAnalyticsDataroomDataroomId(requestParameters: DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomStats> {
-            return localVarFp.getV1DataroomAnalyticsDataroomDataroomId(requestParameters.dataroomId, options).then((request) => request(axios, basePath));
+        getV1DataroomAnalyticsDataroomByDataroomid(requestParameters: DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomStats> {
+            return localVarFp.getV1DataroomAnalyticsDataroomByDataroomid(requestParameters.dataroomId, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports how one share link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is not found — knowing a link id is enough to OPEN the room it shares, and never enough to read who has been reading it.
          * @summary Reports how one share link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.
-         * @param {DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest} requestParameters Request parameters.
+         * @param {DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomAnalyticsLinkLinkId(requestParameters: DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomLinkStats> {
-            return localVarFp.getV1DataroomAnalyticsLinkLinkId(requestParameters.linkId, options).then((request) => request(axios, basePath));
+        getV1DataroomAnalyticsLinkByLinkid(requestParameters: DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomLinkStats> {
+            return localVarFp.getV1DataroomAnalyticsLinkByLinkid(requestParameters.linkId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every data room in the caller org\'s own store, newest first, with its short public id, name, description and timestamps.  Documents are not included — a room\'s contents come from reading the single room.
@@ -895,12 +895,12 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
         /**
          * Reads one of the caller org\'s data rooms together with every document in it, each carrying its membership id and order index.  The documents are sorted by that index with unordered ones last and creation time breaking ties — the SAME order a link\'s visitor sees, so this is what the room looks like from the outside. A room id outside the caller\'s own tenant store is not found.
          * @summary Reads one of the caller org\'s data rooms together with every document in it, each carrying its membership id and order index.
-         * @param {DataroomApiGetV1DataroomDataroomsIdRequest} requestParameters Request parameters.
+         * @param {DataroomApiGetV1DataroomDataroomsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DataroomDataroomsId(requestParameters: DataroomApiGetV1DataroomDataroomsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomRoomDetailOne> {
-            return localVarFp.getV1DataroomDataroomsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1DataroomDataroomsById(requestParameters: DataroomApiGetV1DataroomDataroomsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomRoomDetailOne> {
+            return localVarFp.getV1DataroomDataroomsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every document in the caller org\'s own store, newest first — name, opaque storage key, content type, page count, size and timestamps.  Tenant isolation is the per-org store itself: there is one SQLite file per org and the org is never a parameter, so no input the caller controls can address another tenant\'s documents. Metadata only — the bytes come from the file route.
@@ -912,6 +912,16 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getV1DataroomDocuments(options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
+         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
+         * @param {DataroomApiGetV1DataroomDocumentsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1DataroomDocumentsById(requestParameters: DataroomApiGetV1DataroomDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomDocumentOne> {
+            return localVarFp.getV1DataroomDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
          * @summary Download a document\'s bytes as its owner
          * @param {DataroomApiGetV1DataroomDocumentsByIdFileRequest} requestParameters Request parameters.
@@ -920,16 +930,6 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
          */
         getV1DataroomDocumentsByIdFile(requestParameters: DataroomApiGetV1DataroomDocumentsByIdFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getV1DataroomDocumentsByIdFile(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
-         * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
-         * @param {DataroomApiGetV1DataroomDocumentsIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1DataroomDocumentsId(requestParameters: DataroomApiGetV1DataroomDocumentsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomDocumentOne> {
-            return localVarFp.getV1DataroomDocumentsId(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
@@ -982,12 +982,12 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
         /**
          * Puts an already-uploaded document into one of the caller org\'s data rooms and answers with the new membership id.  It ATTACHES, it never uploads: the bytes must already be stored, so the usual order is upload the document, then add it to the room. Both the room and the document must exist in the caller\'s own store — either missing is not found — and a document already in the room is refused as a conflict rather than duplicated.
          * @summary Puts an already-uploaded document into one of the caller org\'s data rooms and answers with the new membership id.
-         * @param {DataroomApiPostV1DataroomDataroomsIdDocumentsRequest} requestParameters Request parameters.
+         * @param {DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DataroomDataroomsIdDocuments(requestParameters: DataroomApiPostV1DataroomDataroomsIdDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomMembership> {
-            return localVarFp.postV1DataroomDataroomsIdDocuments(requestParameters.id, requestParameters.dataroomAddDocument, options).then((request) => request(axios, basePath));
+        postV1DataroomDataroomsByIdDocuments(requestParameters: DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataroomMembership> {
+            return localVarFp.postV1DataroomDataroomsByIdDocuments(requestParameters.id, requestParameters.dataroomAddDocument, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
@@ -1032,43 +1032,57 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for getV1DataroomAnalyticsDataroomDataroomId operation in DataroomApi.
+ * Request parameters for getV1DataroomAnalyticsDataroomByDataroomid operation in DataroomApi.
  * @export
- * @interface DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest
+ * @interface DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest
  */
-export interface DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest {
+export interface DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest {
     /**
      * DataroomID is the room to report on. It is the path segment, resolved in the caller\&#39;s own tenant store.
      * @type {string}
-     * @memberof DataroomApiGetV1DataroomAnalyticsDataroomDataroomId
+     * @memberof DataroomApiGetV1DataroomAnalyticsDataroomByDataroomid
      */
     readonly dataroomId: string
 }
 
 /**
- * Request parameters for getV1DataroomAnalyticsLinkLinkId operation in DataroomApi.
+ * Request parameters for getV1DataroomAnalyticsLinkByLinkid operation in DataroomApi.
  * @export
- * @interface DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest
+ * @interface DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest
  */
-export interface DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest {
+export interface DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest {
     /**
      * LinkID is the link to report on. It is the path segment, resolved in the caller\&#39;s own tenant store.
      * @type {string}
-     * @memberof DataroomApiGetV1DataroomAnalyticsLinkLinkId
+     * @memberof DataroomApiGetV1DataroomAnalyticsLinkByLinkid
      */
     readonly linkId: string
 }
 
 /**
- * Request parameters for getV1DataroomDataroomsId operation in DataroomApi.
+ * Request parameters for getV1DataroomDataroomsById operation in DataroomApi.
  * @export
- * @interface DataroomApiGetV1DataroomDataroomsIdRequest
+ * @interface DataroomApiGetV1DataroomDataroomsByIdRequest
  */
-export interface DataroomApiGetV1DataroomDataroomsIdRequest {
+export interface DataroomApiGetV1DataroomDataroomsByIdRequest {
     /**
      * ID is the room to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
      * @type {string}
-     * @memberof DataroomApiGetV1DataroomDataroomsId
+     * @memberof DataroomApiGetV1DataroomDataroomsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getV1DataroomDocumentsById operation in DataroomApi.
+ * @export
+ * @interface DataroomApiGetV1DataroomDocumentsByIdRequest
+ */
+export interface DataroomApiGetV1DataroomDocumentsByIdRequest {
+    /**
+     * ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+     * @type {string}
+     * @memberof DataroomApiGetV1DataroomDocumentsById
      */
     readonly id: string
 }
@@ -1083,20 +1097,6 @@ export interface DataroomApiGetV1DataroomDocumentsByIdFileRequest {
      * 
      * @type {string}
      * @memberof DataroomApiGetV1DataroomDocumentsByIdFile
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getV1DataroomDocumentsId operation in DataroomApi.
- * @export
- * @interface DataroomApiGetV1DataroomDocumentsIdRequest
- */
-export interface DataroomApiGetV1DataroomDocumentsIdRequest {
-    /**
-     * ID is the document to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-     * @type {string}
-     * @memberof DataroomApiGetV1DataroomDocumentsId
      */
     readonly id: string
 }
@@ -1151,22 +1151,22 @@ export interface DataroomApiPostV1DataroomDataroomsRequest {
 }
 
 /**
- * Request parameters for postV1DataroomDataroomsIdDocuments operation in DataroomApi.
+ * Request parameters for postV1DataroomDataroomsByIdDocuments operation in DataroomApi.
  * @export
- * @interface DataroomApiPostV1DataroomDataroomsIdDocumentsRequest
+ * @interface DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest
  */
-export interface DataroomApiPostV1DataroomDataroomsIdDocumentsRequest {
+export interface DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest {
     /**
      * ID is the room to add to. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
      * @type {string}
-     * @memberof DataroomApiPostV1DataroomDataroomsIdDocuments
+     * @memberof DataroomApiPostV1DataroomDataroomsByIdDocuments
      */
     readonly id: string
 
     /**
      * 
      * @type {DataroomAddDocument}
-     * @memberof DataroomApiPostV1DataroomDataroomsIdDocuments
+     * @memberof DataroomApiPostV1DataroomDataroomsByIdDocuments
      */
     readonly dataroomAddDocument: DataroomAddDocument
 }
@@ -1223,25 +1223,25 @@ export class DataroomApi extends BaseAPI {
     /**
      * Rolls up every share link pointing at one data room: session and page-view totals for the room, plus the per-page breakdown for each link beneath it.  A room id outside the caller\'s own tenant store is not found. Only links that NAME the room are counted — a link created over a single document contributes nothing here, even when that document also sits in the room.
      * @summary Rolls up every share link pointing at one data room: session and page-view totals for the room, plus the per-page breakdown for each link beneath it.
-     * @param {DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest} requestParameters Request parameters.
+     * @param {DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
      */
-    public getV1DataroomAnalyticsDataroomDataroomId(requestParameters: DataroomApiGetV1DataroomAnalyticsDataroomDataroomIdRequest, options?: RawAxiosRequestConfig) {
-        return DataroomApiFp(this.configuration).getV1DataroomAnalyticsDataroomDataroomId(requestParameters.dataroomId, options).then((request) => request(this.axios, this.basePath));
+    public getV1DataroomAnalyticsDataroomByDataroomid(requestParameters: DataroomApiGetV1DataroomAnalyticsDataroomByDataroomidRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getV1DataroomAnalyticsDataroomByDataroomid(requestParameters.dataroomId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reports how one share link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.  The link is resolved in the caller\'s OWN tenant store, so another org\'s link id is not found — knowing a link id is enough to OPEN the room it shares, and never enough to read who has been reading it.
      * @summary Reports how one share link was actually read: total viewing sessions, total page views, and per page the view count, the summed dwell measure and its average.
-     * @param {DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest} requestParameters Request parameters.
+     * @param {DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
      */
-    public getV1DataroomAnalyticsLinkLinkId(requestParameters: DataroomApiGetV1DataroomAnalyticsLinkLinkIdRequest, options?: RawAxiosRequestConfig) {
-        return DataroomApiFp(this.configuration).getV1DataroomAnalyticsLinkLinkId(requestParameters.linkId, options).then((request) => request(this.axios, this.basePath));
+    public getV1DataroomAnalyticsLinkByLinkid(requestParameters: DataroomApiGetV1DataroomAnalyticsLinkByLinkidRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getV1DataroomAnalyticsLinkByLinkid(requestParameters.linkId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1258,13 +1258,13 @@ export class DataroomApi extends BaseAPI {
     /**
      * Reads one of the caller org\'s data rooms together with every document in it, each carrying its membership id and order index.  The documents are sorted by that index with unordered ones last and creation time breaking ties — the SAME order a link\'s visitor sees, so this is what the room looks like from the outside. A room id outside the caller\'s own tenant store is not found.
      * @summary Reads one of the caller org\'s data rooms together with every document in it, each carrying its membership id and order index.
-     * @param {DataroomApiGetV1DataroomDataroomsIdRequest} requestParameters Request parameters.
+     * @param {DataroomApiGetV1DataroomDataroomsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
      */
-    public getV1DataroomDataroomsId(requestParameters: DataroomApiGetV1DataroomDataroomsIdRequest, options?: RawAxiosRequestConfig) {
-        return DataroomApiFp(this.configuration).getV1DataroomDataroomsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1DataroomDataroomsById(requestParameters: DataroomApiGetV1DataroomDataroomsByIdRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getV1DataroomDataroomsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1279,6 +1279,18 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
+     * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
+     * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
+     * @param {DataroomApiGetV1DataroomDocumentsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public getV1DataroomDocumentsById(requestParameters: DataroomApiGetV1DataroomDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getV1DataroomDocumentsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Streams the stored file back under its recorded content type, falling back to application/octet-stream when none was recorded.  Requires a validated principal; 403 without one, and the document is resolved in the caller\'s own tenant store, so another org\'s id is a 404. This is the OWNER\'s path and applies no link gate at all — the per-link password, email and download controls live on the viewer surface, not here. Bytes that cannot be fetched from object storage are 502, never a truncated or empty file.
      * @summary Download a document\'s bytes as its owner
      * @param {DataroomApiGetV1DataroomDocumentsByIdFileRequest} requestParameters Request parameters.
@@ -1288,18 +1300,6 @@ export class DataroomApi extends BaseAPI {
      */
     public getV1DataroomDocumentsByIdFile(requestParameters: DataroomApiGetV1DataroomDocumentsByIdFileRequest, options?: RawAxiosRequestConfig) {
         return DataroomApiFp(this.configuration).getV1DataroomDocumentsByIdFile(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.  The lookup runs in the caller\'s own tenant store, so an id belonging to another org is not found exactly like one that never existed. Metadata only: the bytes are a separate read.
-     * @summary Reads one of the caller org\'s documents — its name, opaque storage key, content type, page count, size and timestamps.
-     * @param {DataroomApiGetV1DataroomDocumentsIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataroomApi
-     */
-    public getV1DataroomDocumentsId(requestParameters: DataroomApiGetV1DataroomDocumentsIdRequest, options?: RawAxiosRequestConfig) {
-        return DataroomApiFp(this.configuration).getV1DataroomDocumentsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1363,13 +1363,13 @@ export class DataroomApi extends BaseAPI {
     /**
      * Puts an already-uploaded document into one of the caller org\'s data rooms and answers with the new membership id.  It ATTACHES, it never uploads: the bytes must already be stored, so the usual order is upload the document, then add it to the room. Both the room and the document must exist in the caller\'s own store — either missing is not found — and a document already in the room is refused as a conflict rather than duplicated.
      * @summary Puts an already-uploaded document into one of the caller org\'s data rooms and answers with the new membership id.
-     * @param {DataroomApiPostV1DataroomDataroomsIdDocumentsRequest} requestParameters Request parameters.
+     * @param {DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
      */
-    public postV1DataroomDataroomsIdDocuments(requestParameters: DataroomApiPostV1DataroomDataroomsIdDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return DataroomApiFp(this.configuration).postV1DataroomDataroomsIdDocuments(requestParameters.id, requestParameters.dataroomAddDocument, options).then((request) => request(this.axios, this.basePath));
+    public postV1DataroomDataroomsByIdDocuments(requestParameters: DataroomApiPostV1DataroomDataroomsByIdDocumentsRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).postV1DataroomDataroomsByIdDocuments(requestParameters.id, requestParameters.dataroomAddDocument, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

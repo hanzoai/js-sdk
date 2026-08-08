@@ -44,9 +44,9 @@ export const SkillsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SkillsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1SkillsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SkillsId', 'id', id)
+            assertParamExists('deleteV1SkillsById', 'id', id)
             const localVarPath = `/v1/skills/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -189,10 +189,10 @@ export const SkillsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SkillsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SkillsId(id, options);
+        async deleteV1SkillsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SkillsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SkillsApi.deleteV1SkillsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SkillsApi.deleteV1SkillsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -246,12 +246,12 @@ export const SkillsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
          * @summary Removes one of the caller org\'s authored skills.
-         * @param {SkillsApiDeleteV1SkillsIdRequest} requestParameters Request parameters.
+         * @param {SkillsApiDeleteV1SkillsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SkillsId(requestParameters: SkillsApiDeleteV1SkillsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillDeleted> {
-            return localVarFp.deleteV1SkillsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1SkillsById(requestParameters: SkillsApiDeleteV1SkillsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillDeleted> {
+            return localVarFp.deleteV1SkillsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the skills the caller\'s org can reach — the brand\'s embedded catalogue plus the org\'s own authored ones — with each one\'s activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tools narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
@@ -286,15 +286,15 @@ export const SkillsApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for deleteV1SkillsId operation in SkillsApi.
+ * Request parameters for deleteV1SkillsById operation in SkillsApi.
  * @export
- * @interface SkillsApiDeleteV1SkillsIdRequest
+ * @interface SkillsApiDeleteV1SkillsByIdRequest
  */
-export interface SkillsApiDeleteV1SkillsIdRequest {
+export interface SkillsApiDeleteV1SkillsByIdRequest {
     /**
      * ID is the skill to remove, from the path. It is the skill\&#39;s name.
      * @type {string}
-     * @memberof SkillsApiDeleteV1SkillsId
+     * @memberof SkillsApiDeleteV1SkillsById
      */
     readonly id: string
 }
@@ -337,13 +337,13 @@ export class SkillsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
      * @summary Removes one of the caller org\'s authored skills.
-     * @param {SkillsApiDeleteV1SkillsIdRequest} requestParameters Request parameters.
+     * @param {SkillsApiDeleteV1SkillsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SkillsApi
      */
-    public deleteV1SkillsId(requestParameters: SkillsApiDeleteV1SkillsIdRequest, options?: RawAxiosRequestConfig) {
-        return SkillsApiFp(this.configuration).deleteV1SkillsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1SkillsById(requestParameters: SkillsApiDeleteV1SkillsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SkillsApiFp(this.configuration).deleteV1SkillsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

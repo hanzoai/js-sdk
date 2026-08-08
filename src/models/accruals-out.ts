@@ -24,7 +24,7 @@ import type { Accruals } from './accruals';
  */
 export interface AccrualsOut {
     /**
-     * 
+     * Data is what the run did: sources visited, new accruals, royalties alongside.
      * @type {Accruals}
      * @memberof AccrualsOut
      */

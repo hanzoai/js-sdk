@@ -24,7 +24,7 @@ import type { CodeView } from './code-view';
  */
 export interface AffiliateLinks {
     /**
-     * 
+     * IsAffiliate says whether the caller org has an affiliate record. On false only maxLinks comes back — there are no links, and there is no link to mint until the org applies and is approved.
      * @type {boolean}
      * @memberof AffiliateLinks
      */
@@ -42,7 +42,7 @@ export interface AffiliateLinks {
      */
     'maxLinks'?: number;
     /**
-     * 
+     * Status is the caller\'s affiliate status: \"applied\", \"approved\" or \"suspended\"; absent for a non-affiliate. Minting a link requires \"approved\", because a link that cannot accrue quietly loses the referral.
      * @type {string}
      * @memberof AffiliateLinks
      */

@@ -2550,9 +2550,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthorsIdBasis: async (id: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1AdminAuthorsByIdBasis: async (id: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AdminAuthorsIdBasis', 'id', id)
+            assertParamExists('getV1AdminAuthorsByIdBasis', 'id', id)
             const localVarPath = `/v1/admin/authors/{id}/basis`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2742,8 +2742,8 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
-         * @summary Turn one model off, into beta for named orgs, or generally available
+         * Turns one model off, into beta for named orgs, or generally available.  It sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
+         * @summary Turns one model off, into beta for named orgs, or generally available.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2783,11 +2783,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogProvidersName: async (name: string, providerPatchIn: ProviderPatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1AdminCatalogProvidersByName: async (name: string, providerPatchIn: ProviderPatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('patchV1AdminCatalogProvidersName', 'name', name)
+            assertParamExists('patchV1AdminCatalogProvidersByName', 'name', name)
             // verify required parameter 'providerPatchIn' is not null or undefined
-            assertParamExists('patchV1AdminCatalogProvidersName', 'providerPatchIn', providerPatchIn)
+            assertParamExists('patchV1AdminCatalogProvidersByName', 'providerPatchIn', providerPatchIn)
             const localVarPath = `/v1/admin/catalog/providers/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2816,6 +2816,190 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
+         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
+         * @param {string} id ID is the affiliate to approve, from the path.
+         * @param {Approval} approval 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdApprove: async (id: string, approval: Approval, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdApprove', 'id', id)
+            // verify required parameter 'approval' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdApprove', 'approval', approval)
+            const localVarPath = `/v1/admin/affiliates/{id}/approve`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(approval, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
+         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
+         * @param {string} id ID is the affiliate to pay, from the path.
+         * @param {Disbursal} disbursal 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdPayout: async (id: string, disbursal: Disbursal, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdPayout', 'id', id)
+            // verify required parameter 'disbursal' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdPayout', 'disbursal', disbursal)
+            const localVarPath = `/v1/admin/affiliates/{id}/payout`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(disbursal, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
+         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
+         * @param {string} id ID is the affiliate whose direct rate moves, from the path.
+         * @param {RateSet} rateSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdRate: async (id: string, rateSet: RateSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdRate', 'id', id)
+            // verify required parameter 'rateSet' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdRate', 'rateSet', rateSet)
+            const localVarPath = `/v1/admin/affiliates/{id}/rate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(rateSet, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
+         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
+         * @param {string} id ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1AdminAffiliatesByIdSuspend', 'id', id)
+            const localVarPath = `/v1/admin/affiliates/{id}/suspend`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
+         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/admin/affiliates/sweep`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Admits one author to EARNING, optionally on a negotiated royalty share. Until this runs, a connected author accrues nothing however many verified repositories they have.  A share override applies from here forward only — existing ledger rows keep the share that was applied when they were written, because a rate change must never rewrite what was already owed.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Admits one author to EARNING, optionally on a negotiated royalty share.
          * @param {string} id ID is the author to approve, from the path.
@@ -2823,11 +3007,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdApprove: async (id: string, approveRequest: ApproveRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AdminAuthorsByIdApprove: async (id: string, approveRequest: ApproveRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsIdApprove', 'id', id)
+            assertParamExists('postV1AdminAuthorsByIdApprove', 'id', id)
             // verify required parameter 'approveRequest' is not null or undefined
-            assertParamExists('postV1AdminAuthorsIdApprove', 'approveRequest', approveRequest)
+            assertParamExists('postV1AdminAuthorsByIdApprove', 'approveRequest', approveRequest)
             const localVarPath = `/v1/admin/authors/{id}/approve`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2863,11 +3047,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdPayout: async (id: string, payoutRequest: PayoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AdminAuthorsByIdPayout: async (id: string, payoutRequest: PayoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsIdPayout', 'id', id)
+            assertParamExists('postV1AdminAuthorsByIdPayout', 'id', id)
             // verify required parameter 'payoutRequest' is not null or undefined
-            assertParamExists('postV1AdminAuthorsIdPayout', 'payoutRequest', payoutRequest)
+            assertParamExists('postV1AdminAuthorsByIdPayout', 'payoutRequest', payoutRequest)
             const localVarPath = `/v1/admin/authors/{id}/payout`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2902,9 +3086,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1AdminAuthorsByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsIdSuspend', 'id', id)
+            assertParamExists('postV1AdminAuthorsByIdSuspend', 'id', id)
             const localVarPath = `/v1/admin/authors/{id}/suspend`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3179,190 +3363,6 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             }
 
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
-         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-         * @param {string} id ID is the affiliate to approve, from the path.
-         * @param {Approval} approval 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdApprove: async (id: string, approval: Approval, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdApprove', 'id', id)
-            // verify required parameter 'approval' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdApprove', 'approval', approval)
-            const localVarPath = `/v1/admin/affiliates/{id}/approve`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(approval, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
-         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-         * @param {string} id ID is the affiliate to pay, from the path.
-         * @param {Disbursal} disbursal 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdPayout: async (id: string, disbursal: Disbursal, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdPayout', 'id', id)
-            // verify required parameter 'disbursal' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdPayout', 'disbursal', disbursal)
-            const localVarPath = `/v1/admin/affiliates/{id}/payout`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(disbursal, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
-         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-         * @param {string} id ID is the affiliate whose direct rate moves, from the path.
-         * @param {RateSet} rateSet 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdRate: async (id: string, rateSet: RateSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdRate', 'id', id)
-            // verify required parameter 'rateSet' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdRate', 'rateSet', rateSet)
-            const localVarPath = `/v1/admin/affiliates/{id}/rate`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(rateSet, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
-         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-         * @param {string} id ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1AdminAffiliatesPostIdSuspend', 'id', id)
-            const localVarPath = `/v1/admin/affiliates/{id}/suspend`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
-         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/admin/affiliates/sweep`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4236,10 +4236,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminAuthorsIdBasis(id: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BasisResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminAuthorsIdBasis(id, period, options);
+        async getV1AdminAuthorsByIdBasis(id: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BasisResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminAuthorsByIdBasis(id, period, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminAuthorsIdBasis']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminAuthorsByIdBasis']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4305,8 +4305,8 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
-         * @summary Turn one model off, into beta for named orgs, or generally available
+         * Turns one model off, into beta for named orgs, or generally available.  It sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
+         * @summary Turns one model off, into beta for named orgs, or generally available.
          * @param {string} wildcard1 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4325,10 +4325,77 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AdminCatalogProvidersName(name: string, providerPatchIn: ProviderPatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overlay>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AdminCatalogProvidersName(name, providerPatchIn, options);
+        async patchV1AdminCatalogProvidersByName(name: string, providerPatchIn: ProviderPatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overlay>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AdminCatalogProvidersByName(name, providerPatchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchV1AdminCatalogProvidersName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchV1AdminCatalogProvidersByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
+         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
+         * @param {string} id ID is the affiliate to approve, from the path.
+         * @param {Approval} approval 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AdminAffiliatesByIdApprove(id: string, approval: Approval, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdApprove(id, approval, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdApprove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
+         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
+         * @param {string} id ID is the affiliate to pay, from the path.
+         * @param {Disbursal} disbursal 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AdminAffiliatesByIdPayout(id: string, disbursal: Disbursal, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdPayout(id, disbursal, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdPayout']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
+         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
+         * @param {string} id ID is the affiliate whose direct rate moves, from the path.
+         * @param {RateSet} rateSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AdminAffiliatesByIdRate(id: string, rateSet: RateSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdRate(id, rateSet, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdRate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
+         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
+         * @param {string} id ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AdminAffiliatesByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdSuspend(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdSuspend']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
+         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccrualsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesSweep(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesSweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4339,10 +4406,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsIdApprove(id: string, approveRequest: ApproveRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsIdApprove(id, approveRequest, options);
+        async postV1AdminAuthorsByIdApprove(id: string, approveRequest: ApproveRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdApprove(id, approveRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsIdApprove']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdApprove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4353,10 +4420,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsIdPayout(id: string, payoutRequest: PayoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsIdPayout(id, payoutRequest, options);
+        async postV1AdminAuthorsByIdPayout(id: string, payoutRequest: PayoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdPayout(id, payoutRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsIdPayout']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdPayout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4366,10 +4433,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsIdSuspend(id, options);
+        async postV1AdminAuthorsByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdSuspend(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsIdSuspend']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdSuspend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4470,73 +4537,6 @@ export const AdminApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AdminTreasuryAnchorSigner(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminApi.putV1AdminTreasuryAnchorSigner']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
-         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-         * @param {string} id ID is the affiliate to approve, from the path.
-         * @param {Approval} approval 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1AdminAffiliatesPostIdApprove(id: string, approval: Approval, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1AdminAffiliatesPostIdApprove(id, approval, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.v1AdminAffiliatesPostIdApprove']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
-         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-         * @param {string} id ID is the affiliate to pay, from the path.
-         * @param {Disbursal} disbursal 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1AdminAffiliatesPostIdPayout(id: string, disbursal: Disbursal, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1AdminAffiliatesPostIdPayout(id, disbursal, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.v1AdminAffiliatesPostIdPayout']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
-         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-         * @param {string} id ID is the affiliate whose direct rate moves, from the path.
-         * @param {RateSet} rateSet 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1AdminAffiliatesPostIdRate(id: string, rateSet: RateSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1AdminAffiliatesPostIdRate(id, rateSet, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.v1AdminAffiliatesPostIdRate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
-         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-         * @param {string} id ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1AdminAffiliatesPostIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1AdminAffiliatesPostIdSuspend(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.v1AdminAffiliatesPostIdSuspend']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
-         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1AdminAffiliatesPostSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccrualsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1AdminAffiliatesPostSweep(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.v1AdminAffiliatesPostSweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -5157,12 +5157,12 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.  The data object carries: id, status, asOf, shareBps, platformShareBps, defaultShareBps, shareSource, settlesTo, method (the formula, the rate card and the sizing), ledger (every row with its spend, the share applied then, the platform\'s matching half, whether it satisfies the formula and the attribution edges that explain it), reconciliation (does the ledger foot to the balance) and window (what slice was actually returned) — plus period when one was requested.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.
-         * @param {AdminApiGetV1AdminAuthorsIdBasisRequest} requestParameters Request parameters.
+         * @param {AdminApiGetV1AdminAuthorsByIdBasisRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthorsIdBasis(requestParameters: AdminApiGetV1AdminAuthorsIdBasisRequest, options?: RawAxiosRequestConfig): AxiosPromise<BasisResult> {
-            return localVarFp.getV1AdminAuthorsIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(axios, basePath));
+        getV1AdminAuthorsByIdBasis(requestParameters: AdminApiGetV1AdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig): AxiosPromise<BasisResult> {
+            return localVarFp.getV1AdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the full model and provider catalog annotated with each entry\'s enablement state, for the operator console. Nothing is hidden: this is the admin\'s view of what exists and what is currently off, in beta or generally available. SuperAdmin only; every other caller is refused.
@@ -5212,8 +5212,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getV1AdminTreasury(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
-         * @summary Turn one model off, into beta for named orgs, or generally available
+         * Turns one model off, into beta for named orgs, or generally available.  It sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
+         * @summary Turns one model off, into beta for named orgs, or generally available.
          * @param {AdminApiPatchV1AdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5224,42 +5224,91 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
         /**
          * Sets one provider\'s availability overlay.  The overlay decides whether a provider is off, in beta for named orgs, or generally available, and carries the price overrides applied on top of the catalog. Only the fields the patch names change; every other field keeps the value it had, and an absent overlay starts from the catalog default (enabled). Answers the new effective overlay, so a console needs no second read.  SuperAdmin only.
          * @summary Sets one provider\'s availability overlay.
-         * @param {AdminApiPatchV1AdminCatalogProvidersNameRequest} requestParameters Request parameters.
+         * @param {AdminApiPatchV1AdminCatalogProvidersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogProvidersName(requestParameters: AdminApiPatchV1AdminCatalogProvidersNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Overlay> {
-            return localVarFp.patchV1AdminCatalogProvidersName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(axios, basePath));
+        patchV1AdminCatalogProvidersByName(requestParameters: AdminApiPatchV1AdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Overlay> {
+            return localVarFp.patchV1AdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
+         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
+         * @param {AdminApiPostV1AdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdApprove(requestParameters: AdminApiPostV1AdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postV1AdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
+         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
+         * @param {AdminApiPostV1AdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdPayout(requestParameters: AdminApiPostV1AdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutOut> {
+            return localVarFp.postV1AdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
+         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
+         * @param {AdminApiPostV1AdminAffiliatesByIdRateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdRate(requestParameters: AdminApiPostV1AdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postV1AdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
+         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
+         * @param {AdminApiPostV1AdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesByIdSuspend(requestParameters: AdminApiPostV1AdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postV1AdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
+         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig): AxiosPromise<AccrualsOut> {
+            return localVarFp.postV1AdminAffiliatesSweep(options).then((request) => request(axios, basePath));
         },
         /**
          * Admits one author to EARNING, optionally on a negotiated royalty share. Until this runs, a connected author accrues nothing however many verified repositories they have.  A share override applies from here forward only — existing ledger rows keep the share that was applied when they were written, because a rate change must never rewrite what was already owed.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Admits one author to EARNING, optionally on a negotiated royalty share.
-         * @param {AdminApiPostV1AdminAuthorsIdApproveRequest} requestParameters Request parameters.
+         * @param {AdminApiPostV1AdminAuthorsByIdApproveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdApprove(requestParameters: AdminApiPostV1AdminAuthorsIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
-            return localVarFp.postV1AdminAuthorsIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(axios, basePath));
+        postV1AdminAuthorsByIdApprove(requestParameters: AdminApiPostV1AdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
+            return localVarFp.postV1AdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a payout of accrued royalty and settles it.  The amount is RESERVED against the author\'s pending royalty atomically before anything is paid, so a payout can never exceed what is owed even under concurrent calls. An external author\'s payout is then BACKED against the platform reserve fund — a second, independent guard — and refused with 402 if the reserve cannot cover it, with the reservation voided. A \"credits\" method issues the actual wallet grant after both guards; a cash method is record-only. A first-party (treasury) author\'s royalty is realized into Hanzo\'s own reserve instead of an external wallet, and every payout row discloses which of the three it was.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Records a payout of accrued royalty and settles it.
-         * @param {AdminApiPostV1AdminAuthorsIdPayoutRequest} requestParameters Request parameters.
+         * @param {AdminApiPostV1AdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdPayout(requestParameters: AdminApiPostV1AdminAuthorsIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutResult> {
-            return localVarFp.postV1AdminAuthorsIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(axios, basePath));
+        postV1AdminAuthorsByIdPayout(requestParameters: AdminApiPostV1AdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutResult> {
+            return localVarFp.postV1AdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Stops one author earning. Their record, verified claims and ledger are untouched — suspension halts future accrual, it does not erase what was already owed, and it does not delete the evidence behind it.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Stops one author earning.
-         * @param {AdminApiPostV1AdminAuthorsIdSuspendRequest} requestParameters Request parameters.
+         * @param {AdminApiPostV1AdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
-            return localVarFp.postV1AdminAuthorsIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
+        postV1AdminAuthorsByIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
+            return localVarFp.postV1AdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the accrual sweep across every approved author: for each of their deploying orgs it computes this period\'s royalty from that org\'s metered spend and latches it at most once per period.  It is an OVERRIDE, not the mechanism: a background scheduler runs the same sweep on its own, and every author\'s dashboard read sweeps their own accruals lazily. This is the manual trigger for an operator who needs the numbers now. It is idempotent — the per-period latch means running it twice accrues nothing the second time.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
@@ -5336,55 +5385,6 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          */
         putV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): AxiosPromise<SignerOut> {
             return localVarFp.putV1AdminTreasuryAnchorSigner(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
-         * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-         * @param {AdminApiV1AdminAffiliatesPostIdApproveRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdApprove(requestParameters: AdminApiV1AdminAffiliatesPostIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.v1AdminAffiliatesPostIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
-         * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-         * @param {AdminApiV1AdminAffiliatesPostIdPayoutRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdPayout(requestParameters: AdminApiV1AdminAffiliatesPostIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutOut> {
-            return localVarFp.v1AdminAffiliatesPostIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
-         * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-         * @param {AdminApiV1AdminAffiliatesPostIdRateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdRate(requestParameters: AdminApiV1AdminAffiliatesPostIdRateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.v1AdminAffiliatesPostIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
-         * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-         * @param {AdminApiV1AdminAffiliatesPostIdSuspendRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostIdSuspend(requestParameters: AdminApiV1AdminAffiliatesPostIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.v1AdminAffiliatesPostIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
-         * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1AdminAffiliatesPostSweep(options?: RawAxiosRequestConfig): AxiosPromise<AccrualsOut> {
-            return localVarFp.v1AdminAffiliatesPostSweep(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6398,22 +6398,22 @@ export interface AdminApiGetV1AdminAuthorsRequest {
 }
 
 /**
- * Request parameters for getV1AdminAuthorsIdBasis operation in AdminApi.
+ * Request parameters for getV1AdminAuthorsByIdBasis operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminAuthorsIdBasisRequest
+ * @interface AdminApiGetV1AdminAuthorsByIdBasisRequest
  */
-export interface AdminApiGetV1AdminAuthorsIdBasisRequest {
+export interface AdminApiGetV1AdminAuthorsByIdBasisRequest {
     /**
      * ID is the author record\&#39;s handle, from the path.
      * @type {string}
-     * @memberof AdminApiGetV1AdminAuthorsIdBasis
+     * @memberof AdminApiGetV1AdminAuthorsByIdBasis
      */
     readonly id: string
 
     /**
      * Period is the UTC accrual month, YYYY-MM. Empty means every period; any other shape is refused with 400.
      * @type {string}
-     * @memberof AdminApiGetV1AdminAuthorsIdBasis
+     * @memberof AdminApiGetV1AdminAuthorsByIdBasis
      */
     readonly period?: string
 }
@@ -6461,78 +6461,155 @@ export interface AdminApiPatchV1AdminCatalogModelsByWildcard1Request {
 }
 
 /**
- * Request parameters for patchV1AdminCatalogProvidersName operation in AdminApi.
+ * Request parameters for patchV1AdminCatalogProvidersByName operation in AdminApi.
  * @export
- * @interface AdminApiPatchV1AdminCatalogProvidersNameRequest
+ * @interface AdminApiPatchV1AdminCatalogProvidersByNameRequest
  */
-export interface AdminApiPatchV1AdminCatalogProvidersNameRequest {
+export interface AdminApiPatchV1AdminCatalogProvidersByNameRequest {
     /**
      * Name is the provider the overlay belongs to, from the URL.
      * @type {string}
-     * @memberof AdminApiPatchV1AdminCatalogProvidersName
+     * @memberof AdminApiPatchV1AdminCatalogProvidersByName
      */
     readonly name: string
 
     /**
      * 
      * @type {ProviderPatchIn}
-     * @memberof AdminApiPatchV1AdminCatalogProvidersName
+     * @memberof AdminApiPatchV1AdminCatalogProvidersByName
      */
     readonly providerPatchIn: ProviderPatchIn
 }
 
 /**
- * Request parameters for postV1AdminAuthorsIdApprove operation in AdminApi.
+ * Request parameters for postV1AdminAffiliatesByIdApprove operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsIdApproveRequest
+ * @interface AdminApiPostV1AdminAffiliatesByIdApproveRequest
  */
-export interface AdminApiPostV1AdminAuthorsIdApproveRequest {
+export interface AdminApiPostV1AdminAffiliatesByIdApproveRequest {
+    /**
+     * ID is the affiliate to approve, from the path.
+     * @type {string}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdApprove
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {Approval}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdApprove
+     */
+    readonly approval: Approval
+}
+
+/**
+ * Request parameters for postV1AdminAffiliatesByIdPayout operation in AdminApi.
+ * @export
+ * @interface AdminApiPostV1AdminAffiliatesByIdPayoutRequest
+ */
+export interface AdminApiPostV1AdminAffiliatesByIdPayoutRequest {
+    /**
+     * ID is the affiliate to pay, from the path.
+     * @type {string}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdPayout
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {Disbursal}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdPayout
+     */
+    readonly disbursal: Disbursal
+}
+
+/**
+ * Request parameters for postV1AdminAffiliatesByIdRate operation in AdminApi.
+ * @export
+ * @interface AdminApiPostV1AdminAffiliatesByIdRateRequest
+ */
+export interface AdminApiPostV1AdminAffiliatesByIdRateRequest {
+    /**
+     * ID is the affiliate whose direct rate moves, from the path.
+     * @type {string}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdRate
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {RateSet}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdRate
+     */
+    readonly rateSet: RateSet
+}
+
+/**
+ * Request parameters for postV1AdminAffiliatesByIdSuspend operation in AdminApi.
+ * @export
+ * @interface AdminApiPostV1AdminAffiliatesByIdSuspendRequest
+ */
+export interface AdminApiPostV1AdminAffiliatesByIdSuspendRequest {
+    /**
+     * ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
+     * @type {string}
+     * @memberof AdminApiPostV1AdminAffiliatesByIdSuspend
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postV1AdminAuthorsByIdApprove operation in AdminApi.
+ * @export
+ * @interface AdminApiPostV1AdminAuthorsByIdApproveRequest
+ */
+export interface AdminApiPostV1AdminAuthorsByIdApproveRequest {
     /**
      * ID is the author to approve, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsIdApprove
+     * @memberof AdminApiPostV1AdminAuthorsByIdApprove
      */
     readonly id: string
 
     /**
      * 
      * @type {ApproveRequest}
-     * @memberof AdminApiPostV1AdminAuthorsIdApprove
+     * @memberof AdminApiPostV1AdminAuthorsByIdApprove
      */
     readonly approveRequest: ApproveRequest
 }
 
 /**
- * Request parameters for postV1AdminAuthorsIdPayout operation in AdminApi.
+ * Request parameters for postV1AdminAuthorsByIdPayout operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsIdPayoutRequest
+ * @interface AdminApiPostV1AdminAuthorsByIdPayoutRequest
  */
-export interface AdminApiPostV1AdminAuthorsIdPayoutRequest {
+export interface AdminApiPostV1AdminAuthorsByIdPayoutRequest {
     /**
      * ID is the author to pay, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsIdPayout
+     * @memberof AdminApiPostV1AdminAuthorsByIdPayout
      */
     readonly id: string
 
     /**
      * 
      * @type {PayoutRequest}
-     * @memberof AdminApiPostV1AdminAuthorsIdPayout
+     * @memberof AdminApiPostV1AdminAuthorsByIdPayout
      */
     readonly payoutRequest: PayoutRequest
 }
 
 /**
- * Request parameters for postV1AdminAuthorsIdSuspend operation in AdminApi.
+ * Request parameters for postV1AdminAuthorsByIdSuspend operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsIdSuspendRequest
+ * @interface AdminApiPostV1AdminAuthorsByIdSuspendRequest
  */
-export interface AdminApiPostV1AdminAuthorsIdSuspendRequest {
+export interface AdminApiPostV1AdminAuthorsByIdSuspendRequest {
     /**
      * ID is the author record\&#39;s handle, \&quot;aut_\&quot;-prefixed.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsIdSuspend
+     * @memberof AdminApiPostV1AdminAuthorsByIdSuspend
      */
     readonly id: string
 }
@@ -6591,83 +6668,6 @@ export interface AdminApiPutV1AdminEnablementRequest {
      * @memberof AdminApiPutV1AdminEnablement
      */
     readonly setEnablementBody: SetEnablementBody
-}
-
-/**
- * Request parameters for v1AdminAffiliatesPostIdApprove operation in AdminApi.
- * @export
- * @interface AdminApiV1AdminAffiliatesPostIdApproveRequest
- */
-export interface AdminApiV1AdminAffiliatesPostIdApproveRequest {
-    /**
-     * ID is the affiliate to approve, from the path.
-     * @type {string}
-     * @memberof AdminApiV1AdminAffiliatesPostIdApprove
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {Approval}
-     * @memberof AdminApiV1AdminAffiliatesPostIdApprove
-     */
-    readonly approval: Approval
-}
-
-/**
- * Request parameters for v1AdminAffiliatesPostIdPayout operation in AdminApi.
- * @export
- * @interface AdminApiV1AdminAffiliatesPostIdPayoutRequest
- */
-export interface AdminApiV1AdminAffiliatesPostIdPayoutRequest {
-    /**
-     * ID is the affiliate to pay, from the path.
-     * @type {string}
-     * @memberof AdminApiV1AdminAffiliatesPostIdPayout
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {Disbursal}
-     * @memberof AdminApiV1AdminAffiliatesPostIdPayout
-     */
-    readonly disbursal: Disbursal
-}
-
-/**
- * Request parameters for v1AdminAffiliatesPostIdRate operation in AdminApi.
- * @export
- * @interface AdminApiV1AdminAffiliatesPostIdRateRequest
- */
-export interface AdminApiV1AdminAffiliatesPostIdRateRequest {
-    /**
-     * ID is the affiliate whose direct rate moves, from the path.
-     * @type {string}
-     * @memberof AdminApiV1AdminAffiliatesPostIdRate
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {RateSet}
-     * @memberof AdminApiV1AdminAffiliatesPostIdRate
-     */
-    readonly rateSet: RateSet
-}
-
-/**
- * Request parameters for v1AdminAffiliatesPostIdSuspend operation in AdminApi.
- * @export
- * @interface AdminApiV1AdminAffiliatesPostIdSuspendRequest
- */
-export interface AdminApiV1AdminAffiliatesPostIdSuspendRequest {
-    /**
-     * ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
-     * @type {string}
-     * @memberof AdminApiV1AdminAffiliatesPostIdSuspend
-     */
-    readonly id: string
 }
 
 /**
@@ -7409,13 +7409,13 @@ export class AdminApi extends BaseAPI {
     /**
      * Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.  The data object carries: id, status, asOf, shareBps, platformShareBps, defaultShareBps, shareSource, settlesTo, method (the formula, the rate card and the sizing), ledger (every row with its spend, the share applied then, the platform\'s matching half, whether it satisfies the formula and the attribution edges that explain it), reconciliation (does the ledger foot to the balance) and window (what slice was actually returned) — plus period when one was requested.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.
-     * @param {AdminApiGetV1AdminAuthorsIdBasisRequest} requestParameters Request parameters.
+     * @param {AdminApiGetV1AdminAuthorsByIdBasisRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminAuthorsIdBasis(requestParameters: AdminApiGetV1AdminAuthorsIdBasisRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminAuthorsIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
+    public getV1AdminAuthorsByIdBasis(requestParameters: AdminApiGetV1AdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getV1AdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7476,8 +7476,8 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
-     * @summary Turn one model off, into beta for named orgs, or generally available
+     * Turns one model off, into beta for named orgs, or generally available.  It sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
+     * @summary Turns one model off, into beta for named orgs, or generally available.
      * @param {AdminApiPatchV1AdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7490,49 +7490,108 @@ export class AdminApi extends BaseAPI {
     /**
      * Sets one provider\'s availability overlay.  The overlay decides whether a provider is off, in beta for named orgs, or generally available, and carries the price overrides applied on top of the catalog. Only the fields the patch names change; every other field keeps the value it had, and an absent overlay starts from the catalog default (enabled). Answers the new effective overlay, so a console needs no second read.  SuperAdmin only.
      * @summary Sets one provider\'s availability overlay.
-     * @param {AdminApiPatchV1AdminCatalogProvidersNameRequest} requestParameters Request parameters.
+     * @param {AdminApiPatchV1AdminCatalogProvidersByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public patchV1AdminCatalogProvidersName(requestParameters: AdminApiPatchV1AdminCatalogProvidersNameRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).patchV1AdminCatalogProvidersName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(this.axios, this.basePath));
+    public patchV1AdminCatalogProvidersByName(requestParameters: AdminApiPatchV1AdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).patchV1AdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
+     * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
+     * @param {AdminApiPostV1AdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public postV1AdminAffiliatesByIdApprove(requestParameters: AdminApiPostV1AdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
+     * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
+     * @param {AdminApiPostV1AdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public postV1AdminAffiliatesByIdPayout(requestParameters: AdminApiPostV1AdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
+     * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
+     * @param {AdminApiPostV1AdminAffiliatesByIdRateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public postV1AdminAffiliatesByIdRate(requestParameters: AdminApiPostV1AdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
+     * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
+     * @param {AdminApiPostV1AdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public postV1AdminAffiliatesByIdSuspend(requestParameters: AdminApiPostV1AdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
+     * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminApi
+     */
+    public postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAffiliatesSweep(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Admits one author to EARNING, optionally on a negotiated royalty share. Until this runs, a connected author accrues nothing however many verified repositories they have.  A share override applies from here forward only — existing ledger rows keep the share that was applied when they were written, because a rate change must never rewrite what was already owed.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Admits one author to EARNING, optionally on a negotiated royalty share.
-     * @param {AdminApiPostV1AdminAuthorsIdApproveRequest} requestParameters Request parameters.
+     * @param {AdminApiPostV1AdminAuthorsByIdApproveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsIdApprove(requestParameters: AdminApiPostV1AdminAuthorsIdApproveRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(this.axios, this.basePath));
+    public postV1AdminAuthorsByIdApprove(requestParameters: AdminApiPostV1AdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records a payout of accrued royalty and settles it.  The amount is RESERVED against the author\'s pending royalty atomically before anything is paid, so a payout can never exceed what is owed even under concurrent calls. An external author\'s payout is then BACKED against the platform reserve fund — a second, independent guard — and refused with 402 if the reserve cannot cover it, with the reservation voided. A \"credits\" method issues the actual wallet grant after both guards; a cash method is record-only. A first-party (treasury) author\'s royalty is realized into Hanzo\'s own reserve instead of an external wallet, and every payout row discloses which of the three it was.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Records a payout of accrued royalty and settles it.
-     * @param {AdminApiPostV1AdminAuthorsIdPayoutRequest} requestParameters Request parameters.
+     * @param {AdminApiPostV1AdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsIdPayout(requestParameters: AdminApiPostV1AdminAuthorsIdPayoutRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(this.axios, this.basePath));
+    public postV1AdminAuthorsByIdPayout(requestParameters: AdminApiPostV1AdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stops one author earning. Their record, verified claims and ledger are untouched — suspension halts future accrual, it does not erase what was already owed, and it does not delete the evidence behind it.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Stops one author earning.
-     * @param {AdminApiPostV1AdminAuthorsIdSuspendRequest} requestParameters Request parameters.
+     * @param {AdminApiPostV1AdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsIdSuspendRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postV1AdminAuthorsByIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7625,65 +7684,6 @@ export class AdminApi extends BaseAPI {
      */
     public putV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig) {
         return AdminApiFp(this.configuration).putV1AdminTreasuryAnchorSigner(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
-     * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-     * @param {AdminApiV1AdminAffiliatesPostIdApproveRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public v1AdminAffiliatesPostIdApprove(requestParameters: AdminApiV1AdminAffiliatesPostIdApproveRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).v1AdminAffiliatesPostIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
-     * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-     * @param {AdminApiV1AdminAffiliatesPostIdPayoutRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public v1AdminAffiliatesPostIdPayout(requestParameters: AdminApiV1AdminAffiliatesPostIdPayoutRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).v1AdminAffiliatesPostIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
-     * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-     * @param {AdminApiV1AdminAffiliatesPostIdRateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public v1AdminAffiliatesPostIdRate(requestParameters: AdminApiV1AdminAffiliatesPostIdRateRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).v1AdminAffiliatesPostIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
-     * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-     * @param {AdminApiV1AdminAffiliatesPostIdSuspendRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public v1AdminAffiliatesPostIdSuspend(requestParameters: AdminApiV1AdminAffiliatesPostIdSuspendRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).v1AdminAffiliatesPostIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
-     * @summary Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminApi
-     */
-    public v1AdminAffiliatesPostSweep(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).v1AdminAffiliatesPostSweep(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

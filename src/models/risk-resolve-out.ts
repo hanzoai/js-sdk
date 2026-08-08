@@ -24,13 +24,13 @@ import type { RiskResolved } from './risk-resolved';
  */
 export interface RiskResolveOut {
     /**
-     * 
+     * Horizon is the maturity horizon this answer was computed under, IN DAYS — the caller\'s, or 120 when it stated none. Each event\'s as-of is its own `at` plus this many days, and that as-of is what decides which assertions were visible to it; an event whose as-of falls after Now is not resolved at all and is counted in Unmatured instead.
      * @type {number}
      * @memberof RiskResolveOut
      */
     'horizon'?: number;
     /**
-     * 
+     * Labels is one entry per named event that BOTH matured and had at least one assertion knowable by its own as-of, in the order the events were named. The three outcomes partition the ask: len(labels) + Unmatured + Unlabelled is the number of DISTINCT events named, an event named twice having been answered once.
      * @type {Array<RiskResolved>}
      * @memberof RiskResolveOut
      */

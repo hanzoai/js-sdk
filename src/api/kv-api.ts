@@ -42,9 +42,9 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1KvName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1KvByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1KvName', 'name', name)
+            assertParamExists('deleteV1KvByName', 'name', name)
             const localVarPath = `/v1/kv/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -106,9 +106,9 @@ export const KvApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KvName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1KvByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1KvName', 'name', name)
+            assertParamExists('getV1KvByName', 'name', name)
             const localVarPath = `/v1/kv/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,10 +184,10 @@ export const KvApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1KvName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1KvName(name, options);
+        async deleteV1KvByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1KvByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KvApi.deleteV1KvName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KvApi.deleteV1KvByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const KvApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KvName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KvName(name, options);
+        async getV1KvByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KvByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KvApi.getV1KvName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KvApi.getV1KvByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,12 +241,12 @@ export const KvApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
          * @summary DropKV deprovisions one Hanzo KV store.
-         * @param {KvApiDeleteV1KvNameRequest} requestParameters Request parameters.
+         * @param {KvApiDeleteV1KvByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1KvName(requestParameters: KvApiDeleteV1KvNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1KvName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1KvByName(requestParameters: KvApiDeleteV1KvByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1KvByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * ListKV lists the caller org\'s Hanzo KV stores. Each one is a DEDICATED Valkey instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 6379.
@@ -260,12 +260,12 @@ export const KvApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
          * @summary GetKV returns one Hanzo KV store\'s metadata.
-         * @param {KvApiGetV1KvNameRequest} requestParameters Request parameters.
+         * @param {KvApiGetV1KvByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KvName(requestParameters: KvApiGetV1KvNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1KvName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1KvByName(requestParameters: KvApiGetV1KvByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1KvByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Launches your org\'s OWN key-value instance and answers with its `kv://` connection string. The instance is yours alone: a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
@@ -281,29 +281,29 @@ export const KvApiFactory = function (configuration?: Configuration, basePath?: 
 };
 
 /**
- * Request parameters for deleteV1KvName operation in KvApi.
+ * Request parameters for deleteV1KvByName operation in KvApi.
  * @export
- * @interface KvApiDeleteV1KvNameRequest
+ * @interface KvApiDeleteV1KvByNameRequest
  */
-export interface KvApiDeleteV1KvNameRequest {
+export interface KvApiDeleteV1KvByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof KvApiDeleteV1KvName
+     * @memberof KvApiDeleteV1KvByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1KvName operation in KvApi.
+ * Request parameters for getV1KvByName operation in KvApi.
  * @export
- * @interface KvApiGetV1KvNameRequest
+ * @interface KvApiGetV1KvByNameRequest
  */
-export interface KvApiGetV1KvNameRequest {
+export interface KvApiGetV1KvByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof KvApiGetV1KvName
+     * @memberof KvApiGetV1KvByName
      */
     readonly name: string
 }
@@ -332,13 +332,13 @@ export class KvApi extends BaseAPI {
     /**
      * DropKV deprovisions one Hanzo KV store. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Valkey instance, then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404.
      * @summary DropKV deprovisions one Hanzo KV store.
-     * @param {KvApiDeleteV1KvNameRequest} requestParameters Request parameters.
+     * @param {KvApiDeleteV1KvByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KvApi
      */
-    public deleteV1KvName(requestParameters: KvApiDeleteV1KvNameRequest, options?: RawAxiosRequestConfig) {
-        return KvApiFp(this.configuration).deleteV1KvName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1KvByName(requestParameters: KvApiDeleteV1KvByNameRequest, options?: RawAxiosRequestConfig) {
+        return KvApiFp(this.configuration).deleteV1KvByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -355,13 +355,13 @@ export class KvApi extends BaseAPI {
     /**
      * GetKV returns one Hanzo KV store\'s metadata. It carries the store\'s status, its instance address and the Valkey user it authenticates as (\"default\", the only user a requirepass instance has) — never the password. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view.
      * @summary GetKV returns one Hanzo KV store\'s metadata.
-     * @param {KvApiGetV1KvNameRequest} requestParameters Request parameters.
+     * @param {KvApiGetV1KvByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KvApi
      */
-    public getV1KvName(requestParameters: KvApiGetV1KvNameRequest, options?: RawAxiosRequestConfig) {
-        return KvApiFp(this.configuration).getV1KvName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1KvByName(requestParameters: KvApiGetV1KvByNameRequest, options?: RawAxiosRequestConfig) {
+        return KvApiFp(this.configuration).getV1KvByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

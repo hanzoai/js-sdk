@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Role } from './role';
+import type { RoleAssignment } from './role-assignment';
 
 /**
  * 
@@ -25,9 +25,9 @@ import type { Role } from './role';
 export interface RoleList {
     /**
      * Data is every (user, role) assignment in the caller\'s org.
-     * @type {Array<Role>}
+     * @type {Array<RoleAssignment>}
      * @memberof RoleList
      */
-    'data'?: Array<Role>;
+    'data'?: Array<RoleAssignment>;
 }
 

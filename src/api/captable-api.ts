@@ -68,9 +68,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableConvertiblesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1CaptableConvertiblesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CaptableConvertiblesId', 'id', id)
+            assertParamExists('deleteV1CaptableConvertiblesById', 'id', id)
             const localVarPath = `/v1/captable/convertibles/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -102,9 +102,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableOptionsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1CaptableOptionsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CaptableOptionsId', 'id', id)
+            assertParamExists('deleteV1CaptableOptionsById', 'id', id)
             const localVarPath = `/v1/captable/options/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -136,9 +136,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableSafesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1CaptableSafesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CaptableSafesId', 'id', id)
+            assertParamExists('deleteV1CaptableSafesById', 'id', id)
             const localVarPath = `/v1/captable/safes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -170,9 +170,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableSharesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1CaptableSharesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CaptableSharesId', 'id', id)
+            assertParamExists('deleteV1CaptableSharesById', 'id', id)
             const localVarPath = `/v1/captable/shares/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -204,9 +204,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableStakeholdersId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1CaptableStakeholdersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CaptableStakeholdersId', 'id', id)
+            assertParamExists('deleteV1CaptableStakeholdersById', 'id', id)
             const localVarPath = `/v1/captable/stakeholders/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -448,9 +448,9 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CaptableRoundsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1CaptableRoundsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CaptableRoundsId', 'id', id)
+            assertParamExists('getV1CaptableRoundsById', 'id', id)
             const localVarPath = `/v1/captable/rounds/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -596,8 +596,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Amend a share class
+         * Amends a share class.  It rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Amends a share class.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -637,11 +637,11 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CaptableStakeholdersId: async (id: string, captableStakeholderPatch: CaptableStakeholderPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1CaptableStakeholdersById: async (id: string, captableStakeholderPatch: CaptableStakeholderPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1CaptableStakeholdersId', 'id', id)
+            assertParamExists('patchV1CaptableStakeholdersById', 'id', id)
             // verify required parameter 'captableStakeholderPatch' is not null or undefined
-            assertParamExists('patchV1CaptableStakeholdersId', 'captableStakeholderPatch', captableStakeholderPatch)
+            assertParamExists('patchV1CaptableStakeholdersById', 'captableStakeholderPatch', captableStakeholderPatch)
             const localVarPath = `/v1/captable/stakeholders/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -670,8 +670,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Define a share class
+         * Defines a share class.  It creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Defines a share class.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -700,8 +700,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a convertible note
+         * Records a convertible note.  It records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a convertible note.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -730,8 +730,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Grant options from an equity plan
+         * Grants options from an equity plan.  It records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Grants options from an equity plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -760,8 +760,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open an equity incentive plan
+         * Opens an equity incentive plan.  It reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens an equity incentive plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -790,8 +790,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Opens a round with its name, type and target amount. It starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open a funding round
+         * Opens a funding round.  It opens a round with its name, type and target amount. The round starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens a funding round.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -820,8 +820,48 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record an investment into a round
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
+         * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1CaptableRoundsByIdClose: async (id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postV1CaptableRoundsByIdClose', 'id', id)
+            // verify required parameter 'captableRoundCloseRequest' is not null or undefined
+            assertParamExists('postV1CaptableRoundsByIdClose', 'captableRoundCloseRequest', captableRoundCloseRequest)
+            const localVarPath = `/v1/captable/rounds/{id}/close`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(captableRoundCloseRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records an investment into a round.  It records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records an investment into a round.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -854,48 +894,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
-         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
-         * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1CaptableRoundsIdClose: async (id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1CaptableRoundsIdClose', 'id', id)
-            // verify required parameter 'captableRoundCloseRequest' is not null or undefined
-            assertParamExists('postV1CaptableRoundsIdClose', 'captableRoundCloseRequest', captableRoundCloseRequest)
-            const localVarPath = `/v1/captable/rounds/{id}/close`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(captableRoundCloseRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a SAFE
+         * Records a SAFE.  It records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a SAFE.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -924,8 +924,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Issue a share certificate
+         * Issues a share certificate.  It issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Issues a share certificate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -954,8 +954,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Transfer shares to another stakeholder
+         * Transfers shares to another stakeholder.  It moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Transfers shares to another stakeholder.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -984,8 +984,8 @@ export const CaptableApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Add stakeholders to the cap table
+         * Adds stakeholders to the cap table.  It records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  The body is a single object OR an array, which is why this is not a typed op: a Go struct decodes one or the other, never both.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Adds stakeholders to the cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1066,10 +1066,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CaptableConvertiblesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableConvertiblesId(id, options);
+        async deleteV1CaptableConvertiblesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableConvertiblesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableConvertiblesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableConvertiblesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1079,10 +1079,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CaptableOptionsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableOptionsId(id, options);
+        async deleteV1CaptableOptionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableOptionsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableOptionsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableOptionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1092,10 +1092,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CaptableSafesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableSafesId(id, options);
+        async deleteV1CaptableSafesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableSafesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableSafesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableSafesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1105,10 +1105,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CaptableSharesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableSharesId(id, options);
+        async deleteV1CaptableSharesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableSharesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableSharesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableSharesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1118,10 +1118,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CaptableStakeholdersId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableStakeholdersId(id, options);
+        async deleteV1CaptableStakeholdersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CaptableStakeholdersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableStakeholdersId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.deleteV1CaptableStakeholdersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1215,10 +1215,10 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CaptableRoundsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableRoundDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CaptableRoundsId(id, options);
+        async getV1CaptableRoundsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableRoundDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CaptableRoundsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.getV1CaptableRoundsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.getV1CaptableRoundsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1270,8 +1270,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Amend a share class
+         * Amends a share class.  It rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Amends a share class.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1290,15 +1290,15 @@ export const CaptableApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CaptableStakeholdersId(id: string, captableStakeholderPatch: CaptableStakeholderPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CaptableStakeholdersId(id, captableStakeholderPatch, options);
+        async patchV1CaptableStakeholdersById(id: string, captableStakeholderPatch: CaptableStakeholderPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CaptableStakeholdersById(id, captableStakeholderPatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.patchV1CaptableStakeholdersId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.patchV1CaptableStakeholdersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Define a share class
+         * Defines a share class.  It creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Defines a share class.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1309,8 +1309,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a convertible note
+         * Records a convertible note.  It records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a convertible note.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1321,8 +1321,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Grant options from an equity plan
+         * Grants options from an equity plan.  It records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Grants options from an equity plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1333,8 +1333,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open an equity incentive plan
+         * Opens an equity incentive plan.  It reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens an equity incentive plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1345,8 +1345,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Opens a round with its name, type and target amount. It starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open a funding round
+         * Opens a funding round.  It opens a round with its name, type and target amount. The round starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens a funding round.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1357,8 +1357,22 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record an investment into a round
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
+         * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1CaptableRoundsByIdClose(id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CaptableRoundsByIdClose(id, captableRoundCloseRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CaptableApi.postV1CaptableRoundsByIdClose']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records an investment into a round.  It records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records an investment into a round.
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1370,22 +1384,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
-         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
-         * @param {string} id ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-         * @param {CaptableRoundCloseRequest} captableRoundCloseRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1CaptableRoundsIdClose(id: string, captableRoundCloseRequest: CaptableRoundCloseRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptableUpdated>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CaptableRoundsIdClose(id, captableRoundCloseRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CaptableApi.postV1CaptableRoundsIdClose']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a SAFE
+         * Records a SAFE.  It records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a SAFE.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1396,8 +1396,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Issue a share certificate
+         * Issues a share certificate.  It issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Issues a share certificate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1408,8 +1408,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Transfer shares to another stakeholder
+         * Transfers shares to another stakeholder.  It moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Transfers shares to another stakeholder.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1420,8 +1420,8 @@ export const CaptableApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Add stakeholders to the cap table
+         * Adds stakeholders to the cap table.  It records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  The body is a single object OR an array, which is why this is not a typed op: a Go struct decodes one or the other, never both.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Adds stakeholders to the cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1457,52 +1457,52 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
         /**
          * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
          * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
-         * @param {CaptableApiDeleteV1CaptableConvertiblesIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiDeleteV1CaptableConvertiblesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableConvertiblesId(requestParameters: CaptableApiDeleteV1CaptableConvertiblesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
-            return localVarFp.deleteV1CaptableConvertiblesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1CaptableConvertiblesById(requestParameters: CaptableApiDeleteV1CaptableConvertiblesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+            return localVarFp.deleteV1CaptableConvertiblesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
          * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
-         * @param {CaptableApiDeleteV1CaptableOptionsIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiDeleteV1CaptableOptionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableOptionsId(requestParameters: CaptableApiDeleteV1CaptableOptionsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
-            return localVarFp.deleteV1CaptableOptionsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1CaptableOptionsById(requestParameters: CaptableApiDeleteV1CaptableOptionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+            return localVarFp.deleteV1CaptableOptionsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
          * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
-         * @param {CaptableApiDeleteV1CaptableSafesIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiDeleteV1CaptableSafesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableSafesId(requestParameters: CaptableApiDeleteV1CaptableSafesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
-            return localVarFp.deleteV1CaptableSafesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1CaptableSafesById(requestParameters: CaptableApiDeleteV1CaptableSafesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+            return localVarFp.deleteV1CaptableSafesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
          * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
-         * @param {CaptableApiDeleteV1CaptableSharesIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiDeleteV1CaptableSharesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableSharesId(requestParameters: CaptableApiDeleteV1CaptableSharesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
-            return localVarFp.deleteV1CaptableSharesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1CaptableSharesById(requestParameters: CaptableApiDeleteV1CaptableSharesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+            return localVarFp.deleteV1CaptableSharesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
          * @summary Removes one of the caller org\'s stakeholders.
-         * @param {CaptableApiDeleteV1CaptableStakeholdersIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiDeleteV1CaptableStakeholdersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CaptableStakeholdersId(requestParameters: CaptableApiDeleteV1CaptableStakeholdersIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
-            return localVarFp.deleteV1CaptableStakeholdersId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1CaptableStakeholdersById(requestParameters: CaptableApiDeleteV1CaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableDeleted> {
+            return localVarFp.deleteV1CaptableStakeholdersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s share classes, in creation order. A share class is what a certificate is issued in, and every class the company has authorized appears. The response is a bare JSON array, not an envelope.
@@ -1570,12 +1570,12 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
         /**
          * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
          * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
-         * @param {CaptableApiGetV1CaptableRoundsIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiGetV1CaptableRoundsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CaptableRoundsId(requestParameters: CaptableApiGetV1CaptableRoundsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableRoundDetail> {
-            return localVarFp.getV1CaptableRoundsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1CaptableRoundsById(requestParameters: CaptableApiGetV1CaptableRoundsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableRoundDetail> {
+            return localVarFp.getV1CaptableRoundsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s SAFEs, newest first. A SAFE is a simple agreement for future equity: its capital sits OUTSIDE issued equity until it converts, so it is not part of the share counts.
@@ -1614,8 +1614,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getV1CaptableSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Amend a share class
+         * Amends a share class.  It rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Amends a share class.
          * @param {CaptableApiPatchV1CaptableClassesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1626,16 +1626,16 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
         /**
          * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
          * @summary Changes one of the caller org\'s stakeholders.
-         * @param {CaptableApiPatchV1CaptableStakeholdersIdRequest} requestParameters Request parameters.
+         * @param {CaptableApiPatchV1CaptableStakeholdersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CaptableStakeholdersId(requestParameters: CaptableApiPatchV1CaptableStakeholdersIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.patchV1CaptableStakeholdersId(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(axios, basePath));
+        patchV1CaptableStakeholdersById(requestParameters: CaptableApiPatchV1CaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
+            return localVarFp.patchV1CaptableStakeholdersById(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Define a share class
+         * Defines a share class.  It creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Defines a share class.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1643,8 +1643,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableClasses(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a convertible note
+         * Records a convertible note.  It records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a convertible note.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1652,8 +1652,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableConvertibles(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Grant options from an equity plan
+         * Grants options from an equity plan.  It records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Grants options from an equity plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1661,8 +1661,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableOptions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open an equity incentive plan
+         * Opens an equity incentive plan.  It reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens an equity incentive plan.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1670,8 +1670,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptablePlans(options).then((request) => request(axios, basePath));
         },
         /**
-         * Opens a round with its name, type and target amount. It starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Open a funding round
+         * Opens a funding round.  It opens a round with its name, type and target amount. The round starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Opens a funding round.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1679,8 +1679,18 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableRounds(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record an investment into a round
+         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
+         * @param {CaptableApiPostV1CaptableRoundsByIdCloseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1CaptableRoundsByIdClose(requestParameters: CaptableApiPostV1CaptableRoundsByIdCloseRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
+            return localVarFp.postV1CaptableRoundsByIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records an investment into a round.  It records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records an investment into a round.
          * @param {CaptableApiPostV1CaptableRoundsByIdInvestmentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1689,18 +1699,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableRoundsByIdInvestments(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
-         * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
-         * @param {CaptableApiPostV1CaptableRoundsIdCloseRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1CaptableRoundsIdClose(requestParameters: CaptableApiPostV1CaptableRoundsIdCloseRequest, options?: RawAxiosRequestConfig): AxiosPromise<CaptableUpdated> {
-            return localVarFp.postV1CaptableRoundsIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Record a SAFE
+         * Records a SAFE.  It records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Records a SAFE.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1708,8 +1708,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableSafes(options).then((request) => request(axios, basePath));
         },
         /**
-         * Issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Issue a share certificate
+         * Issues a share certificate.  It issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Issues a share certificate.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1717,8 +1717,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableShares(options).then((request) => request(axios, basePath));
         },
         /**
-         * Moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Transfer shares to another stakeholder
+         * Transfers shares to another stakeholder.  It moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Transfers shares to another stakeholder.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1726,8 +1726,8 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1CaptableSharesTransfer(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-         * @summary Add stakeholders to the cap table
+         * Adds stakeholders to the cap table.  It records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  The body is a single object OR an array, which is why this is not a typed op: a Go struct decodes one or the other, never both.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+         * @summary Adds stakeholders to the cap table.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1748,85 +1748,85 @@ export const CaptableApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for deleteV1CaptableConvertiblesId operation in CaptableApi.
+ * Request parameters for deleteV1CaptableConvertiblesById operation in CaptableApi.
  * @export
- * @interface CaptableApiDeleteV1CaptableConvertiblesIdRequest
+ * @interface CaptableApiDeleteV1CaptableConvertiblesByIdRequest
  */
-export interface CaptableApiDeleteV1CaptableConvertiblesIdRequest {
+export interface CaptableApiDeleteV1CaptableConvertiblesByIdRequest {
     /**
      * ID is the convertible note to delete.
      * @type {string}
-     * @memberof CaptableApiDeleteV1CaptableConvertiblesId
+     * @memberof CaptableApiDeleteV1CaptableConvertiblesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CaptableOptionsId operation in CaptableApi.
+ * Request parameters for deleteV1CaptableOptionsById operation in CaptableApi.
  * @export
- * @interface CaptableApiDeleteV1CaptableOptionsIdRequest
+ * @interface CaptableApiDeleteV1CaptableOptionsByIdRequest
  */
-export interface CaptableApiDeleteV1CaptableOptionsIdRequest {
+export interface CaptableApiDeleteV1CaptableOptionsByIdRequest {
     /**
      * ID is the option grant to delete.
      * @type {string}
-     * @memberof CaptableApiDeleteV1CaptableOptionsId
+     * @memberof CaptableApiDeleteV1CaptableOptionsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CaptableSafesId operation in CaptableApi.
+ * Request parameters for deleteV1CaptableSafesById operation in CaptableApi.
  * @export
- * @interface CaptableApiDeleteV1CaptableSafesIdRequest
+ * @interface CaptableApiDeleteV1CaptableSafesByIdRequest
  */
-export interface CaptableApiDeleteV1CaptableSafesIdRequest {
+export interface CaptableApiDeleteV1CaptableSafesByIdRequest {
     /**
      * ID is the SAFE to delete.
      * @type {string}
-     * @memberof CaptableApiDeleteV1CaptableSafesId
+     * @memberof CaptableApiDeleteV1CaptableSafesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CaptableSharesId operation in CaptableApi.
+ * Request parameters for deleteV1CaptableSharesById operation in CaptableApi.
  * @export
- * @interface CaptableApiDeleteV1CaptableSharesIdRequest
+ * @interface CaptableApiDeleteV1CaptableSharesByIdRequest
  */
-export interface CaptableApiDeleteV1CaptableSharesIdRequest {
+export interface CaptableApiDeleteV1CaptableSharesByIdRequest {
     /**
      * ID is the share certificate to delete.
      * @type {string}
-     * @memberof CaptableApiDeleteV1CaptableSharesId
+     * @memberof CaptableApiDeleteV1CaptableSharesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CaptableStakeholdersId operation in CaptableApi.
+ * Request parameters for deleteV1CaptableStakeholdersById operation in CaptableApi.
  * @export
- * @interface CaptableApiDeleteV1CaptableStakeholdersIdRequest
+ * @interface CaptableApiDeleteV1CaptableStakeholdersByIdRequest
  */
-export interface CaptableApiDeleteV1CaptableStakeholdersIdRequest {
+export interface CaptableApiDeleteV1CaptableStakeholdersByIdRequest {
     /**
      * ID is the stakeholder to delete.
      * @type {string}
-     * @memberof CaptableApiDeleteV1CaptableStakeholdersId
+     * @memberof CaptableApiDeleteV1CaptableStakeholdersById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CaptableRoundsId operation in CaptableApi.
+ * Request parameters for getV1CaptableRoundsById operation in CaptableApi.
  * @export
- * @interface CaptableApiGetV1CaptableRoundsIdRequest
+ * @interface CaptableApiGetV1CaptableRoundsByIdRequest
  */
-export interface CaptableApiGetV1CaptableRoundsIdRequest {
+export interface CaptableApiGetV1CaptableRoundsByIdRequest {
     /**
      * ID is the round to read. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
      * @type {string}
-     * @memberof CaptableApiGetV1CaptableRoundsId
+     * @memberof CaptableApiGetV1CaptableRoundsById
      */
     readonly id: string
 }
@@ -1846,24 +1846,45 @@ export interface CaptableApiPatchV1CaptableClassesByIdRequest {
 }
 
 /**
- * Request parameters for patchV1CaptableStakeholdersId operation in CaptableApi.
+ * Request parameters for patchV1CaptableStakeholdersById operation in CaptableApi.
  * @export
- * @interface CaptableApiPatchV1CaptableStakeholdersIdRequest
+ * @interface CaptableApiPatchV1CaptableStakeholdersByIdRequest
  */
-export interface CaptableApiPatchV1CaptableStakeholdersIdRequest {
+export interface CaptableApiPatchV1CaptableStakeholdersByIdRequest {
     /**
      * ID is the stakeholder to update. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
      * @type {string}
-     * @memberof CaptableApiPatchV1CaptableStakeholdersId
+     * @memberof CaptableApiPatchV1CaptableStakeholdersById
      */
     readonly id: string
 
     /**
      * 
      * @type {CaptableStakeholderPatch}
-     * @memberof CaptableApiPatchV1CaptableStakeholdersId
+     * @memberof CaptableApiPatchV1CaptableStakeholdersById
      */
     readonly captableStakeholderPatch: CaptableStakeholderPatch
+}
+
+/**
+ * Request parameters for postV1CaptableRoundsByIdClose operation in CaptableApi.
+ * @export
+ * @interface CaptableApiPostV1CaptableRoundsByIdCloseRequest
+ */
+export interface CaptableApiPostV1CaptableRoundsByIdCloseRequest {
+    /**
+     * ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
+     * @type {string}
+     * @memberof CaptableApiPostV1CaptableRoundsByIdClose
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CaptableRoundCloseRequest}
+     * @memberof CaptableApiPostV1CaptableRoundsByIdClose
+     */
+    readonly captableRoundCloseRequest: CaptableRoundCloseRequest
 }
 
 /**
@@ -1878,27 +1899,6 @@ export interface CaptableApiPostV1CaptableRoundsByIdInvestmentsRequest {
      * @memberof CaptableApiPostV1CaptableRoundsByIdInvestments
      */
     readonly id: string
-}
-
-/**
- * Request parameters for postV1CaptableRoundsIdClose operation in CaptableApi.
- * @export
- * @interface CaptableApiPostV1CaptableRoundsIdCloseRequest
- */
-export interface CaptableApiPostV1CaptableRoundsIdCloseRequest {
-    /**
-     * ID is the round to close. It is the path segment: the URL is the addressing authority, and the org it is resolved in comes from the caller\&#39;s principal, so an id from another tenant is simply not found.
-     * @type {string}
-     * @memberof CaptableApiPostV1CaptableRoundsIdClose
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {CaptableRoundCloseRequest}
-     * @memberof CaptableApiPostV1CaptableRoundsIdClose
-     */
-    readonly captableRoundCloseRequest: CaptableRoundCloseRequest
 }
 
 /**
@@ -1925,61 +1925,61 @@ export class CaptableApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
      * @summary Removes one of the caller org\'s convertible notes, taking its principal out of the cap table\'s unconverted-instrument totals.
-     * @param {CaptableApiDeleteV1CaptableConvertiblesIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiDeleteV1CaptableConvertiblesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public deleteV1CaptableConvertiblesId(requestParameters: CaptableApiDeleteV1CaptableConvertiblesIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).deleteV1CaptableConvertiblesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1CaptableConvertiblesById(requestParameters: CaptableApiDeleteV1CaptableConvertiblesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).deleteV1CaptableConvertiblesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts. An id this org does not hold is not found.
      * @summary Removes one of the caller org\'s option grants, taking its shares out of the cap table\'s granted-options and fully-diluted counts.
-     * @param {CaptableApiDeleteV1CaptableOptionsIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiDeleteV1CaptableOptionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public deleteV1CaptableOptionsId(requestParameters: CaptableApiDeleteV1CaptableOptionsIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).deleteV1CaptableOptionsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1CaptableOptionsById(requestParameters: CaptableApiDeleteV1CaptableOptionsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).deleteV1CaptableOptionsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals. An id this org does not hold is not found.
      * @summary Removes one of the caller org\'s SAFEs, taking its capital out of the cap table\'s unconverted-instrument totals.
-     * @param {CaptableApiDeleteV1CaptableSafesIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiDeleteV1CaptableSafesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public deleteV1CaptableSafesId(requestParameters: CaptableApiDeleteV1CaptableSafesIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).deleteV1CaptableSafesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1CaptableSafesById(requestParameters: CaptableApiDeleteV1CaptableSafesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).deleteV1CaptableSafesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts. An id this org does not hold is not found.
      * @summary Removes one of the caller org\'s share certificates, taking its shares out of the cap table\'s outstanding and fully-diluted counts.
-     * @param {CaptableApiDeleteV1CaptableSharesIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiDeleteV1CaptableSharesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public deleteV1CaptableSharesId(requestParameters: CaptableApiDeleteV1CaptableSharesIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).deleteV1CaptableSharesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1CaptableSharesById(requestParameters: CaptableApiDeleteV1CaptableSharesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).deleteV1CaptableSharesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s stakeholders. It REFUSES to orphan issued equity: a holder that still holds share certificates or option grants cannot be deleted, and answers 400 saying so — release or transfer the holdings first. An id this org does not hold is not found.
      * @summary Removes one of the caller org\'s stakeholders.
-     * @param {CaptableApiDeleteV1CaptableStakeholdersIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiDeleteV1CaptableStakeholdersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public deleteV1CaptableStakeholdersId(requestParameters: CaptableApiDeleteV1CaptableStakeholdersIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).deleteV1CaptableStakeholdersId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1CaptableStakeholdersById(requestParameters: CaptableApiDeleteV1CaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).deleteV1CaptableStakeholdersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2062,13 +2062,13 @@ export class CaptableApi extends BaseAPI {
     /**
      * Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first. A round id that does not exist in the caller\'s org is not found — including one that exists in another tenant, since the org comes from the caller\'s principal and is part of the lookup.
      * @summary Returns one of the caller org\'s fundraising rounds together with every investment written into it, oldest first.
-     * @param {CaptableApiGetV1CaptableRoundsIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiGetV1CaptableRoundsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public getV1CaptableRoundsId(requestParameters: CaptableApiGetV1CaptableRoundsIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).getV1CaptableRoundsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1CaptableRoundsById(requestParameters: CaptableApiGetV1CaptableRoundsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).getV1CaptableRoundsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2116,8 +2116,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Amend a share class
+     * Amends a share class.  It rewrites one share class — the amendment path for a class whose authorized count, price, seniority or preference terms have changed.  It REPLACES the class rather than merging into it: every field is taken from this body, so an omitted field resets to the create-time default instead of keeping its current value. Send the full class. The index and the derived prefix are unchanged by an amendment. An id that is not this company\'s is not found.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Amends a share class.
      * @param {CaptableApiPatchV1CaptableClassesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2130,18 +2130,18 @@ export class CaptableApi extends BaseAPI {
     /**
      * Changes one of the caller org\'s stakeholders. It is a PARTIAL update: only the fields the request names are written, and a field sent as null clears that column. A request that names no updatable field is refused, and an id this org does not hold is not found.  The values are stored as sent. Unlike adding a stakeholder, this route does not check the email\'s shape or the type and relationship vocabularies, so it can record a value that adding one would have rejected.
      * @summary Changes one of the caller org\'s stakeholders.
-     * @param {CaptableApiPatchV1CaptableStakeholdersIdRequest} requestParameters Request parameters.
+     * @param {CaptableApiPatchV1CaptableStakeholdersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
      */
-    public patchV1CaptableStakeholdersId(requestParameters: CaptableApiPatchV1CaptableStakeholdersIdRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).patchV1CaptableStakeholdersId(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(this.axios, this.basePath));
+    public patchV1CaptableStakeholdersById(requestParameters: CaptableApiPatchV1CaptableStakeholdersByIdRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).patchV1CaptableStakeholdersById(requestParameters.id, requestParameters.captableStakeholderPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Define a share class
+     * Defines a share class.  It creates a class of stock — its authorized share count, votes per share, par and issue price, seniority, conversion rights and liquidation/participation multiples — which is what shares, priced rounds and equity plans are then issued against.  Two fields are the company\'s to assign, not the caller\'s: the class index auto-increments per company, and the certificate prefix is DERIVED from the class type (CS for COMMON, PS for anything else), so a prefix in the body is ignored.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Defines a share class.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2151,8 +2151,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Record a convertible note
+     * Records a convertible note.  It records a convertible note held by a stakeholder: the principal, the conversion cap, discount and interest rate, MFN, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the note\'s public id must be unused there — a reused id is a conflict rather than an overwrite. Like a SAFE, this records the instrument only; conversion is not performed here.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Records a convertible note.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2162,8 +2162,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Grant options from an equity plan
+     * Grants options from an equity plan.  It records an option grant to a stakeholder under an equity plan — quantity, exercise price, ISO/NSO type, cliff and vesting years, and the issue, expiration, vesting-start, board-approval and Rule 144 dates.  The stakeholder and the equity plan must both already exist in this company, and the grant id must be unused there — a reused grant id is a conflict, so a grant can never be overwritten by a later one carrying the same number.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Grants options from an equity plan.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2173,8 +2173,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Open an equity incentive plan
+     * Opens an equity incentive plan.  It reserves a pool of shares out of a share class for option grants, with the board approval and effective dates and what happens to cancelled options.  The share class must already exist in this company — a plan cannot reserve out of nothing. Note the field name the bundle reads for the cancellation behaviour is `defaultCancellatonBehavior`; that spelling is the wire, and a correctly spelled key is simply not seen.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Opens an equity incentive plan.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2184,8 +2184,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Opens a round with its name, type and target amount. It starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Open a funding round
+     * Opens a funding round.  It opens a round with its name, type and target amount. The round starts OPEN with nothing raised; investments are then added to it, and closing it is its own call.  A PRICED round is the constrained case: it requires a share class that exists in this company and a price per share above zero, because that price is what converts each investment into issued shares. Its pre-money valuation is optional. A non-priced round carries none of the three.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Opens a funding round.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2195,8 +2195,20 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Record an investment into a round
+     * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
+     * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
+     * @param {CaptableApiPostV1CaptableRoundsByIdCloseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CaptableApi
+     */
+    public postV1CaptableRoundsByIdClose(requestParameters: CaptableApiPostV1CaptableRoundsByIdCloseRequest, options?: RawAxiosRequestConfig) {
+        return CaptableApiFp(this.configuration).postV1CaptableRoundsByIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records an investment into a round.  It records what a stakeholder put into a round and adds it to the round\'s raised total.  On a PRICED round this ISSUES SHARES as well as recording the money: the amount is divided by the round\'s price per share, rounded DOWN to whole shares, and a new certificate for them is issued to the investor in the round\'s share class — so an amount too small to buy one whole share is refused rather than recorded as a zero-share investment. On a non-priced round the money is recorded and no shares are issued.  The round must exist in this company and still be OPEN — a closed round refuses further investment — and the investor must already be a stakeholder here. The date defaults to today when omitted.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Records an investment into a round.
      * @param {CaptableApiPostV1CaptableRoundsByIdInvestmentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2207,20 +2219,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED. Only an OPEN round can be closed: a round that is already closed — like an id this org does not hold — is not found. Closing a round does not change what was invested in it.
-     * @summary Closes one of the caller org\'s fundraising rounds, recording the close date and moving its status to CLOSED.
-     * @param {CaptableApiPostV1CaptableRoundsIdCloseRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CaptableApi
-     */
-    public postV1CaptableRoundsIdClose(requestParameters: CaptableApiPostV1CaptableRoundsIdCloseRequest, options?: RawAxiosRequestConfig) {
-        return CaptableApiFp(this.configuration).postV1CaptableRoundsIdClose(requestParameters.id, requestParameters.captableRoundCloseRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Record a SAFE
+     * Records a SAFE.  It records a Simple Agreement for Future Equity held by a stakeholder: the capital in, the valuation cap and discount, MFN and pro-rata rights, pre- or post-money type, and the issue and board-approval dates.  The stakeholder must already exist in this company, and the SAFE\'s public id must be unused there — a reused id is a conflict rather than an overwrite. This records the instrument; it does not convert it, so nothing is issued against a share class until a round does that.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Records a SAFE.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2230,8 +2230,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Issue a share certificate
+     * Issues a share certificate.  It issues shares of a class to a stakeholder as a certificate: quantity, price and capital contributed, the vesting cliff and term, the legends on the certificate, and the issue, Rule 144, vesting-start and board-approval dates.  Both the stakeholder and the share class must already exist in this company, and the certificate id must be unused there — a reused id is a conflict, never a silent overwrite of an existing certificate.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Issues a share certificate.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2241,8 +2241,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Transfer shares to another stakeholder
+     * Transfers shares to another stakeholder.  It moves shares from one certificate to another stakeholder, in one atomic step.  OMITTING `quantity` transfers the WHOLE certificate, which simply reassigns it and answers newShareId null — that is the difference between a full and a partial transfer, and it is why quantity is absent rather than zero. A partial transfer shrinks the source certificate and issues a NEW one to the recipient, so it requires a `certificateId` for that new certificate and refuses a reused one. The quantity must be between 1 and what the source certificate actually holds; the recipient must be a stakeholder of this same company.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Transfers shares to another stakeholder.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi
@@ -2252,8 +2252,8 @@ export class CaptableApi extends BaseAPI {
     }
 
     /**
-     * Records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  Writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
-     * @summary Add stakeholders to the cap table
+     * Adds stakeholders to the cap table.  It records the people and institutions that can hold equity — the rows every share, option, SAFE, note and investment is issued to.  The body is ONE stakeholder object or an ARRAY of them, and the array is the point: a whole roster loads in a single call. Email is the identity within the company, so a stakeholder whose email is already on the table is SKIPPED rather than duplicated or rejected — the 201 reports how many rows were actually inserted, which is what makes re-running an import safe. Validation is all-or-nothing across the batch: one bad entry refuses the whole array.  The body is a single object OR an array, which is why this is not a typed op: a Go struct decodes one or the other, never both.  It writes the caller\'s OWN cap table: the org resolved from the validated principal selects the tenant\'s store and scopes every row, so there is no field by which a caller can write into another company\'s table; a request with no validated org is refused. The whole write runs in one transaction, so a refusal leaves nothing behind. Validation is the cap-table bundle\'s and so is its refusal: a bad body comes back as {success:false, message, errors:[…]} with the failing fields listed, and numeric fields accept a number OR a numeric string. Bodies are capped at 1 MiB.
+     * @summary Adds stakeholders to the cap table.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CaptableApi

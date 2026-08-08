@@ -98,9 +98,9 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SentryProjectsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1SentryProjectsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SentryProjectsId', 'id', id)
+            assertParamExists('deleteV1SentryProjectsById', 'id', id)
             const localVarPath = `/v1/sentry/projects/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -167,11 +167,11 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryEventsId: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SentryEventsById: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SentryEventsId', 'id', id)
+            assertParamExists('getV1SentryEventsById', 'id', id)
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1SentryEventsId', 'project', project)
+            assertParamExists('getV1SentryEventsById', 'project', project)
             const localVarPath = `/v1/sentry/events/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -287,9 +287,9 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryIssuesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SentryIssuesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SentryIssuesId', 'id', id)
+            assertParamExists('getV1SentryIssuesById', 'id', id)
             const localVarPath = `/v1/sentry/issues/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -323,11 +323,11 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryIssuesIdEvents: async (id: string, project: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SentryIssuesByIdEvents: async (id: string, project: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SentryIssuesIdEvents', 'id', id)
+            assertParamExists('getV1SentryIssuesByIdEvents', 'id', id)
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1SentryIssuesIdEvents', 'project', project)
+            assertParamExists('getV1SentryIssuesByIdEvents', 'project', project)
             const localVarPath = `/v1/sentry/issues/{id}/events`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -449,9 +449,9 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryProjectsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SentryProjectsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SentryProjectsId', 'id', id)
+            assertParamExists('getV1SentryProjectsById', 'id', id)
             const localVarPath = `/v1/sentry/projects/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -578,11 +578,11 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryTracesId: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SentryTracesById: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SentryTracesId', 'id', id)
+            assertParamExists('getV1SentryTracesById', 'id', id)
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1SentryTracesId', 'project', project)
+            assertParamExists('getV1SentryTracesById', 'project', project)
             const localVarPath = `/v1/sentry/traces/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -599,40 +599,6 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             if (project !== undefined) {
                 localVarQueryParameter['project'] = project;
             }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1SentryByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('optionsV1SentryByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/sentry/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -860,9 +826,9 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SentryProjectsIdKeysRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1SentryProjectsByIdKeysRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1SentryProjectsIdKeysRotate', 'id', id)
+            assertParamExists('postV1SentryProjectsByIdKeysRotate', 'id', id)
             const localVarPath = `/v1/sentry/projects/{id}/keys/rotate`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -929,11 +895,11 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SentryIssuesId: async (id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1SentryIssuesById: async (id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1SentryIssuesId', 'id', id)
+            assertParamExists('putV1SentryIssuesById', 'id', id)
             // verify required parameter 'o11yO11ySentryUpdateIssueIn' is not null or undefined
-            assertParamExists('putV1SentryIssuesId', 'o11yO11ySentryUpdateIssueIn', o11yO11ySentryUpdateIssueIn)
+            assertParamExists('putV1SentryIssuesById', 'o11yO11ySentryUpdateIssueIn', o11yO11ySentryUpdateIssueIn)
             const localVarPath = `/v1/sentry/issues/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -955,40 +921,6 @@ export const SentryApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySentryUpdateIssueIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1SentryByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('traceV1SentryByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/sentry/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1025,10 +957,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SentryProjectsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SentryProjectsId(id, options);
+        async deleteV1SentryProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SentryProjectsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.deleteV1SentryProjectsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.deleteV1SentryProjectsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1052,10 +984,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SentryEventsId(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryEventOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryEventsId(id, project, options);
+        async getV1SentryEventsById(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryEventOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryEventsById(id, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryEventsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryEventsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1087,10 +1019,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SentryIssuesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorGettableIssueOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryIssuesId(id, options);
+        async getV1SentryIssuesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorGettableIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryIssuesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryIssuesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryIssuesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1102,10 +1034,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SentryIssuesIdEvents(id: string, project: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryIssueEventsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryIssuesIdEvents(id, project, limit, options);
+        async getV1SentryIssuesByIdEvents(id: string, project: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryIssueEventsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryIssuesByIdEvents(id, project, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryIssuesIdEvents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryIssuesByIdEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1143,10 +1075,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SentryProjectsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryProjectsId(id, options);
+        async getV1SentryProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryProjectsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryProjectsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryProjectsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1187,23 +1119,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SentryTracesId(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTraceOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryTracesId(id, project, options);
+        async getV1SentryTracesById(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTraceOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SentryTracesById(id, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryTracesId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async optionsV1SentryByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsV1SentryByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.optionsV1SentryByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.getV1SentryTracesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1291,10 +1210,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SentryProjectsIdKeysRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SentryProjectsIdKeysRotate(id, options);
+        async postV1SentryProjectsByIdKeysRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SentryProjectsByIdKeysRotate(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.postV1SentryProjectsIdKeysRotate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.postV1SentryProjectsByIdKeysRotate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1318,23 +1237,10 @@ export const SentryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1SentryIssuesId(id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssueOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1SentryIssuesId(id, o11yO11ySentryUpdateIssueIn, options);
+        async putV1SentryIssuesById(id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1SentryIssuesById(id, o11yO11ySentryUpdateIssueIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.putV1SentryIssuesId']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceV1SentryByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceV1SentryByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SentryApi.traceV1SentryByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SentryApi.putV1SentryIssuesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1360,12 +1266,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Deletes one Sentry project of the caller\'s org.
-         * @param {SentryApiDeleteV1SentryProjectsIdRequest} requestParameters Request parameters.
+         * @param {SentryApiDeleteV1SentryProjectsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SentryProjectsId(requestParameters: SentryApiDeleteV1SentryProjectsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SentryProjectsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1SentryProjectsById(requestParameters: SentryApiDeleteV1SentryProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1SentryProjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the Sentry-compatible read surface — projects, error issues and one issue\'s occurrences, a single event, error logs, error-correlated traces and one trace\'s waterfall, and the event-rate stats — so a Sentry client or the error console reads its errors at the paths it already speaks.  It is the SAME runtime the observability surface serves, reached under a second path family, and there is NO rewrite: the runtime carries these routes literally. That is what makes this a product face rather than a translation layer. One runtime, two path families.  A validated principal is required and the read is scoped to that principal\'s own org. Errors are a tenant\'s OWN data, so org membership is the whole admission test and there is deliberately no admin term on it — gating the product on platform sudo would make the only way to see your own errors a scope that shows you everyone\'s. Before the runtime is initialized, 503.
@@ -1380,12 +1286,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one captured error event of a project, by its id.
-         * @param {SentryApiGetV1SentryEventsIdRequest} requestParameters Request parameters.
+         * @param {SentryApiGetV1SentryEventsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryEventsId(requestParameters: SentryApiGetV1SentryEventsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryEventOut> {
-            return localVarFp.getV1SentryEventsId(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
+        getV1SentryEventsById(requestParameters: SentryApiGetV1SentryEventsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryEventOut> {
+            return localVarFp.getV1SentryEventsById(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.  Callers need the viewer role; the runtime\'s own gate enforces it.
@@ -1400,22 +1306,22 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
-         * @param {SentryApiGetV1SentryIssuesIdRequest} requestParameters Request parameters.
+         * @param {SentryApiGetV1SentryIssuesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryIssuesId(requestParameters: SentryApiGetV1SentryIssuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorGettableIssueOut> {
-            return localVarFp.getV1SentryIssuesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1SentryIssuesById(requestParameters: SentryApiGetV1SentryIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorGettableIssueOut> {
+            return localVarFp.getV1SentryIssuesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
-         * @param {SentryApiGetV1SentryIssuesIdEventsRequest} requestParameters Request parameters.
+         * @param {SentryApiGetV1SentryIssuesByIdEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryIssuesIdEvents(requestParameters: SentryApiGetV1SentryIssuesIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryIssueEventsOut> {
-            return localVarFp.getV1SentryIssuesIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getV1SentryIssuesByIdEvents(requestParameters: SentryApiGetV1SentryIssuesByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryIssueEventsOut> {
+            return localVarFp.getV1SentryIssuesByIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
@@ -1439,12 +1345,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
          * @summary Returns one Sentry project of the caller\'s org, DSN included.
-         * @param {SentryApiGetV1SentryProjectsIdRequest} requestParameters Request parameters.
+         * @param {SentryApiGetV1SentryProjectsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryProjectsId(requestParameters: SentryApiGetV1SentryProjectsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
-            return localVarFp.getV1SentryProjectsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1SentryProjectsById(requestParameters: SentryApiGetV1SentryProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
+            return localVarFp.getV1SentryProjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
@@ -1469,22 +1375,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
          * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
-         * @param {SentryApiGetV1SentryTracesIdRequest} requestParameters Request parameters.
+         * @param {SentryApiGetV1SentryTracesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SentryTracesId(requestParameters: SentryApiGetV1SentryTracesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTraceOut> {
-            return localVarFp.getV1SentryTracesId(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {SentryApiOptionsV1SentryByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1SentryByWildcard1(requestParameters: SentryApiOptionsV1SentryByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getV1SentryTracesById(requestParameters: SentryApiGetV1SentryTracesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTraceOut> {
+            return localVarFp.getV1SentryTracesById(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * The Sentry face carries NO route for a partial update. The wildcard admits every method, so this operation exists as an address, but nothing behind it answers and a request lands on the runtime as an unrouted path.  It is documented rather than silently omitted because the useful thing to say is where to go instead: an issue\'s lifecycle — resolve, ignore, assign — is a REPLACE on that issue, not a patch, and it is the only mutable state on this surface. A client that reaches for a partial update here is looking for that call.
@@ -1549,12 +1445,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-         * @param {SentryApiPostV1SentryProjectsIdKeysRotateRequest} requestParameters Request parameters.
+         * @param {SentryApiPostV1SentryProjectsByIdKeysRotateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SentryProjectsIdKeysRotate(requestParameters: SentryApiPostV1SentryProjectsIdKeysRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
-            return localVarFp.postV1SentryProjectsIdKeysRotate(requestParameters.id, options).then((request) => request(axios, basePath));
+        postV1SentryProjectsByIdKeysRotate(requestParameters: SentryApiPostV1SentryProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
+            return localVarFp.postV1SentryProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * The one replace on the Sentry surface: updating an error ISSUE — resolving it, ignoring it, or assigning it — and answering the updated issue.  Nothing else here takes a replace. A project is created and deleted but never replaced, and the event and trace planes are append-only telemetry, so an issue\'s lifecycle is the only mutable state this face exposes.  Requires a validated, org-scoped principal with edit rights; a viewer is refused. The write is confined to the org minted from that principal\'s claim, so an issue id belonging to another tenant is simply not found. Before the runtime is initialized, 503.
@@ -1569,22 +1465,12 @@ export const SentryApiFactory = function (configuration?: Configuration, basePat
         /**
          * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
          * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
-         * @param {SentryApiPutV1SentryIssuesIdRequest} requestParameters Request parameters.
+         * @param {SentryApiPutV1SentryIssuesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SentryIssuesId(requestParameters: SentryApiPutV1SentryIssuesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssueOut> {
-            return localVarFp.putV1SentryIssuesId(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-         * @summary Not served by the Sentry face
-         * @param {SentryApiTraceV1SentryByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1SentryByWildcard1(requestParameters: SentryApiTraceV1SentryByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putV1SentryIssuesById(requestParameters: SentryApiPutV1SentryIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssueOut> {
+            return localVarFp.putV1SentryIssuesById(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1604,15 +1490,15 @@ export interface SentryApiDeleteV1SentryByWildcard1Request {
 }
 
 /**
- * Request parameters for deleteV1SentryProjectsId operation in SentryApi.
+ * Request parameters for deleteV1SentryProjectsById operation in SentryApi.
  * @export
- * @interface SentryApiDeleteV1SentryProjectsIdRequest
+ * @interface SentryApiDeleteV1SentryProjectsByIdRequest
  */
-export interface SentryApiDeleteV1SentryProjectsIdRequest {
+export interface SentryApiDeleteV1SentryProjectsByIdRequest {
     /**
      * ID is the project id.
      * @type {string}
-     * @memberof SentryApiDeleteV1SentryProjectsId
+     * @memberof SentryApiDeleteV1SentryProjectsById
      */
     readonly id: string
 }
@@ -1632,22 +1518,22 @@ export interface SentryApiGetV1SentryByWildcard1Request {
 }
 
 /**
- * Request parameters for getV1SentryEventsId operation in SentryApi.
+ * Request parameters for getV1SentryEventsById operation in SentryApi.
  * @export
- * @interface SentryApiGetV1SentryEventsIdRequest
+ * @interface SentryApiGetV1SentryEventsByIdRequest
  */
-export interface SentryApiGetV1SentryEventsIdRequest {
+export interface SentryApiGetV1SentryEventsByIdRequest {
     /**
      * ID is the event id.
      * @type {string}
-     * @memberof SentryApiGetV1SentryEventsId
+     * @memberof SentryApiGetV1SentryEventsById
      */
     readonly id: string
 
     /**
      * Project is the project the event belongs to, by its id. Required.
      * @type {string}
-     * @memberof SentryApiGetV1SentryEventsId
+     * @memberof SentryApiGetV1SentryEventsById
      */
     readonly project: string
 }
@@ -1730,43 +1616,43 @@ export interface SentryApiGetV1SentryIssuesRequest {
 }
 
 /**
- * Request parameters for getV1SentryIssuesId operation in SentryApi.
+ * Request parameters for getV1SentryIssuesById operation in SentryApi.
  * @export
- * @interface SentryApiGetV1SentryIssuesIdRequest
+ * @interface SentryApiGetV1SentryIssuesByIdRequest
  */
-export interface SentryApiGetV1SentryIssuesIdRequest {
+export interface SentryApiGetV1SentryIssuesByIdRequest {
     /**
      * ID is the issue id.
      * @type {string}
-     * @memberof SentryApiGetV1SentryIssuesId
+     * @memberof SentryApiGetV1SentryIssuesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SentryIssuesIdEvents operation in SentryApi.
+ * Request parameters for getV1SentryIssuesByIdEvents operation in SentryApi.
  * @export
- * @interface SentryApiGetV1SentryIssuesIdEventsRequest
+ * @interface SentryApiGetV1SentryIssuesByIdEventsRequest
  */
-export interface SentryApiGetV1SentryIssuesIdEventsRequest {
+export interface SentryApiGetV1SentryIssuesByIdEventsRequest {
     /**
      * ID is the issue id.
      * @type {string}
-     * @memberof SentryApiGetV1SentryIssuesIdEvents
+     * @memberof SentryApiGetV1SentryIssuesByIdEvents
      */
     readonly id: string
 
     /**
      * Project is the project whose occurrences to read, by its id. Required.
      * @type {string}
-     * @memberof SentryApiGetV1SentryIssuesIdEvents
+     * @memberof SentryApiGetV1SentryIssuesByIdEvents
      */
     readonly project: string
 
     /**
      * Limit caps how many occurrences come back. Zero means the default.
      * @type {number}
-     * @memberof SentryApiGetV1SentryIssuesIdEvents
+     * @memberof SentryApiGetV1SentryIssuesByIdEvents
      */
     readonly limit?: number
 }
@@ -1807,15 +1693,15 @@ export interface SentryApiGetV1SentryLogsRequest {
 }
 
 /**
- * Request parameters for getV1SentryProjectsId operation in SentryApi.
+ * Request parameters for getV1SentryProjectsById operation in SentryApi.
  * @export
- * @interface SentryApiGetV1SentryProjectsIdRequest
+ * @interface SentryApiGetV1SentryProjectsByIdRequest
  */
-export interface SentryApiGetV1SentryProjectsIdRequest {
+export interface SentryApiGetV1SentryProjectsByIdRequest {
     /**
      * ID is the project id.
      * @type {string}
-     * @memberof SentryApiGetV1SentryProjectsId
+     * @memberof SentryApiGetV1SentryProjectsById
      */
     readonly id: string
 }
@@ -1877,38 +1763,24 @@ export interface SentryApiGetV1SentryTracesRequest {
 }
 
 /**
- * Request parameters for getV1SentryTracesId operation in SentryApi.
+ * Request parameters for getV1SentryTracesById operation in SentryApi.
  * @export
- * @interface SentryApiGetV1SentryTracesIdRequest
+ * @interface SentryApiGetV1SentryTracesByIdRequest
  */
-export interface SentryApiGetV1SentryTracesIdRequest {
+export interface SentryApiGetV1SentryTracesByIdRequest {
     /**
      * ID is the trace id.
      * @type {string}
-     * @memberof SentryApiGetV1SentryTracesId
+     * @memberof SentryApiGetV1SentryTracesById
      */
     readonly id: string
 
     /**
      * Project is the project the trace\&#39;s errors belong to. Required.
      * @type {string}
-     * @memberof SentryApiGetV1SentryTracesId
+     * @memberof SentryApiGetV1SentryTracesById
      */
     readonly project: string
-}
-
-/**
- * Request parameters for optionsV1SentryByWildcard1 operation in SentryApi.
- * @export
- * @interface SentryApiOptionsV1SentryByWildcard1Request
- */
-export interface SentryApiOptionsV1SentryByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof SentryApiOptionsV1SentryByWildcard1
-     */
-    readonly wildcard1: string
 }
 
 /**
@@ -1996,15 +1868,15 @@ export interface SentryApiPostV1SentryProjectsRequest {
 }
 
 /**
- * Request parameters for postV1SentryProjectsIdKeysRotate operation in SentryApi.
+ * Request parameters for postV1SentryProjectsByIdKeysRotate operation in SentryApi.
  * @export
- * @interface SentryApiPostV1SentryProjectsIdKeysRotateRequest
+ * @interface SentryApiPostV1SentryProjectsByIdKeysRotateRequest
  */
-export interface SentryApiPostV1SentryProjectsIdKeysRotateRequest {
+export interface SentryApiPostV1SentryProjectsByIdKeysRotateRequest {
     /**
      * ID is the project id.
      * @type {string}
-     * @memberof SentryApiPostV1SentryProjectsIdKeysRotate
+     * @memberof SentryApiPostV1SentryProjectsByIdKeysRotate
      */
     readonly id: string
 }
@@ -2024,38 +1896,24 @@ export interface SentryApiPutV1SentryByWildcard1Request {
 }
 
 /**
- * Request parameters for putV1SentryIssuesId operation in SentryApi.
+ * Request parameters for putV1SentryIssuesById operation in SentryApi.
  * @export
- * @interface SentryApiPutV1SentryIssuesIdRequest
+ * @interface SentryApiPutV1SentryIssuesByIdRequest
  */
-export interface SentryApiPutV1SentryIssuesIdRequest {
+export interface SentryApiPutV1SentryIssuesByIdRequest {
     /**
      * ID is the issue id.
      * @type {string}
-     * @memberof SentryApiPutV1SentryIssuesId
+     * @memberof SentryApiPutV1SentryIssuesById
      */
     readonly id: string
 
     /**
      * 
      * @type {O11yO11ySentryUpdateIssueIn}
-     * @memberof SentryApiPutV1SentryIssuesId
+     * @memberof SentryApiPutV1SentryIssuesById
      */
     readonly o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn
-}
-
-/**
- * Request parameters for traceV1SentryByWildcard1 operation in SentryApi.
- * @export
- * @interface SentryApiTraceV1SentryByWildcard1Request
- */
-export interface SentryApiTraceV1SentryByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof SentryApiTraceV1SentryByWildcard1
-     */
-    readonly wildcard1: string
 }
 
 /**
@@ -2080,13 +1938,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Deletes one Sentry project of the caller\'s org.
-     * @param {SentryApiDeleteV1SentryProjectsIdRequest} requestParameters Request parameters.
+     * @param {SentryApiDeleteV1SentryProjectsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public deleteV1SentryProjectsId(requestParameters: SentryApiDeleteV1SentryProjectsIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).deleteV1SentryProjectsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1SentryProjectsById(requestParameters: SentryApiDeleteV1SentryProjectsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).deleteV1SentryProjectsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2104,13 +1962,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one captured error event of a project, by its id.
-     * @param {SentryApiGetV1SentryEventsIdRequest} requestParameters Request parameters.
+     * @param {SentryApiGetV1SentryEventsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public getV1SentryEventsId(requestParameters: SentryApiGetV1SentryEventsIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).getV1SentryEventsId(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getV1SentryEventsById(requestParameters: SentryApiGetV1SentryEventsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).getV1SentryEventsById(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2128,25 +1986,25 @@ export class SentryApi extends BaseAPI {
     /**
      * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
-     * @param {SentryApiGetV1SentryIssuesIdRequest} requestParameters Request parameters.
+     * @param {SentryApiGetV1SentryIssuesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public getV1SentryIssuesId(requestParameters: SentryApiGetV1SentryIssuesIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).getV1SentryIssuesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1SentryIssuesById(requestParameters: SentryApiGetV1SentryIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).getV1SentryIssuesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
-     * @param {SentryApiGetV1SentryIssuesIdEventsRequest} requestParameters Request parameters.
+     * @param {SentryApiGetV1SentryIssuesByIdEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public getV1SentryIssuesIdEvents(requestParameters: SentryApiGetV1SentryIssuesIdEventsRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).getV1SentryIssuesIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getV1SentryIssuesByIdEvents(requestParameters: SentryApiGetV1SentryIssuesByIdEventsRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).getV1SentryIssuesByIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2175,13 +2033,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
      * @summary Returns one Sentry project of the caller\'s org, DSN included.
-     * @param {SentryApiGetV1SentryProjectsIdRequest} requestParameters Request parameters.
+     * @param {SentryApiGetV1SentryProjectsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public getV1SentryProjectsId(requestParameters: SentryApiGetV1SentryProjectsIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).getV1SentryProjectsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1SentryProjectsById(requestParameters: SentryApiGetV1SentryProjectsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).getV1SentryProjectsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2211,25 +2069,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
      * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
-     * @param {SentryApiGetV1SentryTracesIdRequest} requestParameters Request parameters.
+     * @param {SentryApiGetV1SentryTracesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public getV1SentryTracesId(requestParameters: SentryApiGetV1SentryTracesIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).getV1SentryTracesId(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-     * @summary Not served by the Sentry face
-     * @param {SentryApiOptionsV1SentryByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SentryApi
-     */
-    public optionsV1SentryByWildcard1(requestParameters: SentryApiOptionsV1SentryByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).optionsV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getV1SentryTracesById(requestParameters: SentryApiGetV1SentryTracesByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).getV1SentryTracesById(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2307,13 +2153,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
-     * @param {SentryApiPostV1SentryProjectsIdKeysRotateRequest} requestParameters Request parameters.
+     * @param {SentryApiPostV1SentryProjectsByIdKeysRotateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public postV1SentryProjectsIdKeysRotate(requestParameters: SentryApiPostV1SentryProjectsIdKeysRotateRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).postV1SentryProjectsIdKeysRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postV1SentryProjectsByIdKeysRotate(requestParameters: SentryApiPostV1SentryProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).postV1SentryProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2331,25 +2177,13 @@ export class SentryApi extends BaseAPI {
     /**
      * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
      * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
-     * @param {SentryApiPutV1SentryIssuesIdRequest} requestParameters Request parameters.
+     * @param {SentryApiPutV1SentryIssuesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SentryApi
      */
-    public putV1SentryIssuesId(requestParameters: SentryApiPutV1SentryIssuesIdRequest, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).putV1SentryIssuesId(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the Sentry face routes nothing here: the request reaches the runtime as an unrouted path and no issue, event or trace is touched.
-     * @summary Not served by the Sentry face
-     * @param {SentryApiTraceV1SentryByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SentryApi
-     */
-    public traceV1SentryByWildcard1(requestParameters: SentryApiTraceV1SentryByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return SentryApiFp(this.configuration).traceV1SentryByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putV1SentryIssuesById(requestParameters: SentryApiPutV1SentryIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return SentryApiFp(this.configuration).putV1SentryIssuesById(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

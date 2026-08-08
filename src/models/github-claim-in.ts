@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface Role
+ * @interface GithubClaimIn
  */
-export interface Role {
+export interface GithubClaimIn {
     /**
-     * 
-     * @type {string}
-     * @memberof Role
+     * Accounts names GitHub logins the App is installed on (\"hanzoai\"). Matched case-insensitively, since GitHub logins are. Ignored when all is true.
+     * @type {Array<string>}
+     * @memberof GithubClaimIn
      */
-    'role'?: string;
+    'accounts'?: Array<string>;
     /**
-     * 
-     * @type {string}
-     * @memberof Role
+     * All binds every account the App holds, instead of naming them.
+     * @type {boolean}
+     * @memberof GithubClaimIn
      */
-    'user'?: string;
+    'all'?: boolean;
 }
 

@@ -21,19 +21,19 @@
  */
 export interface RiskLabelEvent {
     /**
-     * 
+     * At is the event\'s own instant, RFC 3339. It is part of the event\'s IDENTITY and not a filter: it is matched exactly, to the second, against the `at` the assertions were filed under, so an instant a second off names a different event and resolves to nothing. It is also what this event\'s as-of is measured from — At plus the horizon.
      * @type {string}
      * @memberof RiskLabelEvent
      */
     'at'?: string;
     /**
-     * 
+     * Kind is the judged entity\'s type, from the closed set: account, agent, merchant, payout, person, session or transaction. One outside it is refused rather than answered `unlabelled`, because it could only ever match nothing and the caller would read a real absence into a typo.
      * @type {string}
      * @memberof RiskLabelEvent
      */
     'kind'?: string;
     /**
-     * 
+     * Subject is the entity id in the tenant\'s own namespace, at most 512 bytes. It is matched EXACTLY against what was recorded — this is a lookup, not a search, and no prefix, pattern or normalisation is applied.
      * @type {string}
      * @memberof RiskLabelEvent
      */

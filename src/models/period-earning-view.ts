@@ -21,19 +21,19 @@
  */
 export interface PeriodEarningView {
     /**
-     * 
+     * CommissionCents is what the caller earned that period, in cents: the sum over each referred org and upline level of margin × that level\'s rate. Always ≤ marginCents, by construction.
      * @type {number}
      * @memberof PeriodEarningView
      */
     'commissionCents'?: number;
     /**
-     * 
+     * MarginCents is the margin Hanzo earned in that period on the spend of every org the caller referred, in cents — the base commission is a rate OF. It is the aggregate base, never any one customer\'s bill.
      * @type {number}
      * @memberof PeriodEarningView
      */
     'marginCents'?: number;
     /**
-     * 
+     * Period is the accrual bucket: the UTC year-month, \"YYYY-MM\". Commission is latched at most once per referred org per period, so one row is one month.
      * @type {string}
      * @memberof PeriodEarningView
      */

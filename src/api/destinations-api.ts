@@ -42,9 +42,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DestinationsPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1DestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('deleteV1DestinationsPlatform', 'platform', platform)
+            assertParamExists('deleteV1DestinationsByPlatform', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -106,9 +106,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DestinationsPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1DestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('getV1DestinationsPlatform', 'platform', platform)
+            assertParamExists('getV1DestinationsByPlatform', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -134,8 +134,8 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
-         * @summary Connect one conversion destination for your org, or update the one you have
+         * Connects one conversion destination for the caller\'s org, or updates the one already there.  It stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused.  Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connects one conversion destination for the caller\'s org, or updates the one already there.
          * @param {string} platform 
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
@@ -178,9 +178,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsPlatformTest: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1DestinationsByPlatformTest: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('postV1DestinationsPlatformTest', 'platform', platform)
+            assertParamExists('postV1DestinationsByPlatformTest', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}/test`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -222,10 +222,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1DestinationsPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDisconnected>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DestinationsPlatform(platform, options);
+        async deleteV1DestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDisconnected>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DestinationsByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.deleteV1DestinationsPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.deleteV1DestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -247,15 +247,15 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DestinationsPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DestinationsPlatform(platform, options);
+        async getV1DestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DestinationsByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getV1DestinationsPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getV1DestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
-         * @summary Connect one conversion destination for your org, or update the one you have
+         * Connects one conversion destination for the caller\'s org, or updates the one already there.  It stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused.  Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connects one conversion destination for the caller\'s org, or updates the one already there.
          * @param {string} platform 
          * @param {{ [key: string]: any; }} [requestBody] 
          * @param {*} [options] Override http request option.
@@ -274,10 +274,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DestinationsPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationTest>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DestinationsPlatformTest(platform, options);
+        async postV1DestinationsByPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DestinationsByPlatformTest(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postV1DestinationsPlatformTest']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postV1DestinationsByPlatformTest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -293,12 +293,12 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
         /**
          * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
          * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-         * @param {DestinationsApiDeleteV1DestinationsPlatformRequest} requestParameters Request parameters.
+         * @param {DestinationsApiDeleteV1DestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DestinationsPlatform(requestParameters: DestinationsApiDeleteV1DestinationsPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDisconnected> {
-            return localVarFp.deleteV1DestinationsPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
+        deleteV1DestinationsByPlatform(requestParameters: DestinationsApiDeleteV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDisconnected> {
+            return localVarFp.deleteV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports every destination this deployment can forward to, each with the caller org\'s connection state: whether it is connected, whether it is enabled, whether a credential resolves right now, and the config fields the console renders for it.
@@ -312,16 +312,16 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
         /**
          * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
          * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-         * @param {DestinationsApiGetV1DestinationsPlatformRequest} requestParameters Request parameters.
+         * @param {DestinationsApiGetV1DestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DestinationsPlatform(requestParameters: DestinationsApiGetV1DestinationsPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
-            return localVarFp.getV1DestinationsPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
+        getV1DestinationsByPlatform(requestParameters: DestinationsApiGetV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
+            return localVarFp.getV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
-         * @summary Connect one conversion destination for your org, or update the one you have
+         * Connects one conversion destination for the caller\'s org, or updates the one already there.  It stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused.  Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+         * @summary Connects one conversion destination for the caller\'s org, or updates the one already there.
          * @param {DestinationsApiPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -332,40 +332,40 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
         /**
          * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
          * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-         * @param {DestinationsApiPostV1DestinationsPlatformTestRequest} requestParameters Request parameters.
+         * @param {DestinationsApiPostV1DestinationsByPlatformTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsPlatformTest(requestParameters: DestinationsApiPostV1DestinationsPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationTest> {
-            return localVarFp.postV1DestinationsPlatformTest(requestParameters.platform, options).then((request) => request(axios, basePath));
+        postV1DestinationsByPlatformTest(requestParameters: DestinationsApiPostV1DestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationTest> {
+            return localVarFp.postV1DestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1DestinationsPlatform operation in DestinationsApi.
+ * Request parameters for deleteV1DestinationsByPlatform operation in DestinationsApi.
  * @export
- * @interface DestinationsApiDeleteV1DestinationsPlatformRequest
+ * @interface DestinationsApiDeleteV1DestinationsByPlatformRequest
  */
-export interface DestinationsApiDeleteV1DestinationsPlatformRequest {
+export interface DestinationsApiDeleteV1DestinationsByPlatformRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiDeleteV1DestinationsPlatform
+     * @memberof DestinationsApiDeleteV1DestinationsByPlatform
      */
     readonly platform: string
 }
 
 /**
- * Request parameters for getV1DestinationsPlatform operation in DestinationsApi.
+ * Request parameters for getV1DestinationsByPlatform operation in DestinationsApi.
  * @export
- * @interface DestinationsApiGetV1DestinationsPlatformRequest
+ * @interface DestinationsApiGetV1DestinationsByPlatformRequest
  */
-export interface DestinationsApiGetV1DestinationsPlatformRequest {
+export interface DestinationsApiGetV1DestinationsByPlatformRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiGetV1DestinationsPlatform
+     * @memberof DestinationsApiGetV1DestinationsByPlatform
      */
     readonly platform: string
 }
@@ -392,15 +392,15 @@ export interface DestinationsApiPostV1DestinationsByPlatformRequest {
 }
 
 /**
- * Request parameters for postV1DestinationsPlatformTest operation in DestinationsApi.
+ * Request parameters for postV1DestinationsByPlatformTest operation in DestinationsApi.
  * @export
- * @interface DestinationsApiPostV1DestinationsPlatformTestRequest
+ * @interface DestinationsApiPostV1DestinationsByPlatformTestRequest
  */
-export interface DestinationsApiPostV1DestinationsPlatformTestRequest {
+export interface DestinationsApiPostV1DestinationsByPlatformTestRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiPostV1DestinationsPlatformTest
+     * @memberof DestinationsApiPostV1DestinationsByPlatformTest
      */
     readonly platform: string
 }
@@ -415,13 +415,13 @@ export class DestinationsApi extends BaseAPI {
     /**
      * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
      * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-     * @param {DestinationsApiDeleteV1DestinationsPlatformRequest} requestParameters Request parameters.
+     * @param {DestinationsApiDeleteV1DestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public deleteV1DestinationsPlatform(requestParameters: DestinationsApiDeleteV1DestinationsPlatformRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).deleteV1DestinationsPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1DestinationsByPlatform(requestParameters: DestinationsApiDeleteV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).deleteV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -438,18 +438,18 @@ export class DestinationsApi extends BaseAPI {
     /**
      * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
      * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-     * @param {DestinationsApiGetV1DestinationsPlatformRequest} requestParameters Request parameters.
+     * @param {DestinationsApiGetV1DestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public getV1DestinationsPlatform(requestParameters: DestinationsApiGetV1DestinationsPlatformRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).getV1DestinationsPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public getV1DestinationsByPlatform(requestParameters: DestinationsApiGetV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).getV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
-     * @summary Connect one conversion destination for your org, or update the one you have
+     * Connects one conversion destination for the caller\'s org, or updates the one already there.  It stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused.  Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
+     * @summary Connects one conversion destination for the caller\'s org, or updates the one already there.
      * @param {DestinationsApiPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -462,13 +462,13 @@ export class DestinationsApi extends BaseAPI {
     /**
      * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
      * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-     * @param {DestinationsApiPostV1DestinationsPlatformTestRequest} requestParameters Request parameters.
+     * @param {DestinationsApiPostV1DestinationsByPlatformTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public postV1DestinationsPlatformTest(requestParameters: DestinationsApiPostV1DestinationsPlatformTestRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).postV1DestinationsPlatformTest(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public postV1DestinationsByPlatformTest(requestParameters: DestinationsApiPostV1DestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).postV1DestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -21,19 +21,19 @@
  */
 export interface OrgOptinView {
     /**
-     * may the caller edit the org opt-in
+     * CanManage is true only for an admin of this org (or a platform SuperAdmin) — the callers whose write of the org preference will be accepted.
      * @type {boolean}
      * @memberof OrgOptinView
      */
     'canManage'?: boolean;
     /**
-     * 
+     * Display is the name shown for the org on that board. Empty when none was chosen; opting in without one defaults it to the org id.
      * @type {string}
      * @memberof OrgOptinView
      */
     'display'?: string;
     /**
-     * 
+     * Listed is true when the org has opted onto the cross-org global board. False — the default — keeps the org off it entirely; the org\'s own members still see their own board. Listing consents to publishing usage VOLUME, never spend.
      * @type {boolean}
      * @memberof OrgOptinView
      */

@@ -114,9 +114,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3Name: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1S3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1S3Name', 'name', name)
+            assertParamExists('deleteV1S3ByName', 'name', name)
             const localVarPath = `/v1/s3/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -274,13 +274,17 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
-         * @summary Whether object storage is usable here
+         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
+         * @summary Returns one bucket\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Health: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/s3/health`;
+        getV1S3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1S3ByName', 'name', name)
+            const localVarPath = `/v1/s3/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -304,17 +308,13 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
-         * @summary Returns one bucket\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
+         * @summary Whether object storage is usable here
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Name: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1S3Name', 'name', name)
-            const localVarPath = `/v1/s3/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+        getV1S3Health: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/s3/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -479,10 +479,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1S3Name(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1S3Name(name, options);
+        async deleteV1S3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1S3ByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteV1S3Name']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteV1S3ByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -537,6 +537,19 @@ export const S3ApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
+         * @summary Returns one bucket\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1S3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3ByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3ByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
          * @summary Whether object storage is usable here
          * @param {*} [options] Override http request option.
@@ -546,19 +559,6 @@ export const S3ApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3Health(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3Health']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
-         * @summary Returns one bucket\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1S3Name(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3Name(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3Name']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -632,12 +632,12 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Deletes one bucket from the shared object store and removes its metadata row. Answers 204 with no body; a second call is a 404.
          * @summary Deletes one bucket from the shared object store and removes its metadata row.
-         * @param {S3ApiDeleteV1S3NameRequest} requestParameters Request parameters.
+         * @param {S3ApiDeleteV1S3ByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3Name(requestParameters: S3ApiDeleteV1S3NameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1S3Name(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1S3ByName(requestParameters: S3ApiDeleteV1S3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1S3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s object-storage buckets. A bucket lives in an already-live shared object store and is reached through the public gateway. The names here are the friendly ones the org provisioned; the physical bucket is org-namespaced underneath, which is what keeps two tenants\' buckets distinct.
@@ -678,6 +678,16 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.getV1S3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
+         * @summary Returns one bucket\'s metadata.
+         * @param {S3ApiGetV1S3ByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1S3ByName(requestParameters: S3ApiGetV1S3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1S3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
          * @summary Whether object storage is usable here
          * @param {*} [options] Override http request option.
@@ -685,16 +695,6 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          */
         getV1S3Health(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getV1S3Health(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
-         * @summary Returns one bucket\'s metadata.
-         * @param {S3ApiGetV1S3NameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1S3Name(requestParameters: S3ApiGetV1S3NameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1S3Name(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
@@ -764,15 +764,15 @@ export interface S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request {
 }
 
 /**
- * Request parameters for deleteV1S3Name operation in S3Api.
+ * Request parameters for deleteV1S3ByName operation in S3Api.
  * @export
- * @interface S3ApiDeleteV1S3NameRequest
+ * @interface S3ApiDeleteV1S3ByNameRequest
  */
-export interface S3ApiDeleteV1S3NameRequest {
+export interface S3ApiDeleteV1S3ByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof S3ApiDeleteV1S3Name
+     * @memberof S3ApiDeleteV1S3ByName
      */
     readonly name: string
 }
@@ -813,15 +813,15 @@ export interface S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request {
 }
 
 /**
- * Request parameters for getV1S3Name operation in S3Api.
+ * Request parameters for getV1S3ByName operation in S3Api.
  * @export
- * @interface S3ApiGetV1S3NameRequest
+ * @interface S3ApiGetV1S3ByNameRequest
  */
-export interface S3ApiGetV1S3NameRequest {
+export interface S3ApiGetV1S3ByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof S3ApiGetV1S3Name
+     * @memberof S3ApiGetV1S3ByName
      */
     readonly name: string
 }
@@ -888,13 +888,13 @@ export class S3Api extends BaseAPI {
     /**
      * Deletes one bucket from the shared object store and removes its metadata row. Answers 204 with no body; a second call is a 404.
      * @summary Deletes one bucket from the shared object store and removes its metadata row.
-     * @param {S3ApiDeleteV1S3NameRequest} requestParameters Request parameters.
+     * @param {S3ApiDeleteV1S3ByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public deleteV1S3Name(requestParameters: S3ApiDeleteV1S3NameRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).deleteV1S3Name(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1S3ByName(requestParameters: S3ApiDeleteV1S3ByNameRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteV1S3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -944,6 +944,18 @@ export class S3Api extends BaseAPI {
     }
 
     /**
+     * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
+     * @summary Returns one bucket\'s metadata.
+     * @param {S3ApiGetV1S3ByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof S3Api
+     */
+    public getV1S3ByName(requestParameters: S3ApiGetV1S3ByNameRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getV1S3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
      * @summary Whether object storage is usable here
      * @param {*} [options] Override http request option.
@@ -952,18 +964,6 @@ export class S3Api extends BaseAPI {
      */
     public getV1S3Health(options?: RawAxiosRequestConfig) {
         return S3ApiFp(this.configuration).getV1S3Health(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
-     * @summary Returns one bucket\'s metadata.
-     * @param {S3ApiGetV1S3NameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof S3Api
-     */
-    public getV1S3Name(requestParameters: S3ApiGetV1S3NameRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3Name(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

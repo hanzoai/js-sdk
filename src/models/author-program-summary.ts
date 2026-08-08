@@ -21,43 +21,43 @@
  */
 export interface AuthorProgramSummary {
     /**
-     * 
+     * AccruedCents is the page\'s lifetime royalty accrued, in integer USD cents.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'accruedCents'?: number;
     /**
-     * 
+     * Approved is how many are admitted and accruing.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'approved'?: number;
     /**
-     * 
+     * Connected is how many of those are enrolled but not yet admitted to earning.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'connected'?: number;
     /**
-     * 
+     * PaidCents is what has been RECORDED as paid across the page, in integer USD cents. Recorded, not settled: the money leaves in a human\'s hands.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'paidCents'?: number;
     /**
-     * 
+     * PendingCents is what the platform still owes across the page, in integer USD cents — the sum of each author\'s own accrued − paid, each floored at zero.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'pendingCents'?: number;
     /**
-     * 
+     * Suspended is how many have been stopped from accruing further. An author holds exactly one status, so the three buckets never overlap and connected + approved + suspended = total.
      * @type {number}
      * @memberof AuthorProgramSummary
      */
     'suspended'?: number;
     /**
-     * 
+     * Total is how many author records this response actually carried. The roll-up is folded over the SAME page as authors — newest first, bounded by limit (default 500, ceiling 1000) — so on a program larger than the page it summarizes that page, not the fleet.
      * @type {number}
      * @memberof AuthorProgramSummary
      */

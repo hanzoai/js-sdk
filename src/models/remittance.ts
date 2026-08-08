@@ -21,37 +21,37 @@
  */
 export interface Remittance {
     /**
-     * 
+     * AmountCents is the amount disbursed, in cents. It was reserved against pending commission atomically when recorded, so it never exceeds what was owed.
      * @type {number}
      * @memberof Remittance
      */
     'amountCents'?: number;
     /**
-     * 
+     * CreatedAt is when the payout was recorded, Unix seconds UTC — when the balance moved, not necessarily when the cash landed.
      * @type {number}
      * @memberof Remittance
      */
     'createdAt'?: number;
     /**
-     * 
+     * ID is the payout row\'s server-minted handle, \"apo_\"-prefixed.
      * @type {string}
      * @memberof Remittance
      */
     'id'?: string;
     /**
-     * 
+     * Method is how it was settled. \"credits\" issued a commerce grant into the affiliate org\'s own wallet; any other value (wire, paypal, check, …) is a RECORD of cash a human moved out of band.
      * @type {string}
      * @memberof Remittance
      */
     'method'?: string;
     /**
-     * 
+     * Reference is the operator\'s settlement note — a bank id, a ledger ref. Free text, absent when none was given.
      * @type {string}
      * @memberof Remittance
      */
     'reference'?: string;
     /**
-     * 
+     * Txn is the commerce ledger transaction id, set ONLY where a \"credits\" payout actually issued the grant. Absent for cash methods, which write no ledger row.
      * @type {string}
      * @memberof Remittance
      */

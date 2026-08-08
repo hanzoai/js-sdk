@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Artifact } from './artifact';
+import type { ResearchArtifact } from './research-artifact';
 
 /**
  * 
@@ -25,10 +25,10 @@ import type { Artifact } from './artifact';
 export interface ArtifactsOut {
     /**
      * Data are the artifacts, newest first. Content bytes are never returned here.
-     * @type {Array<Artifact>}
+     * @type {Array<ResearchArtifact>}
      * @memberof ArtifactsOut
      */
-    'data'?: Array<Artifact>;
+    'data'?: Array<ResearchArtifact>;
     /**
      * Total is len(data).
      * @type {number}

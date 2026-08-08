@@ -46,9 +46,9 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SearchName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1SearchByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1SearchName', 'name', name)
+            assertParamExists('deleteV1SearchByName', 'name', name)
             const localVarPath = `/v1/search/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -104,6 +104,40 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
+         * @summary Returns one search index\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1SearchByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1SearchByName', 'name', name)
+            const localVarPath = `/v1/search/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
          * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
@@ -128,40 +162,6 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             if (authorization != null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
             }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1SearchName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1SearchName', 'name', name)
-            const localVarPath = `/v1/search/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -256,10 +256,10 @@ export const SearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SearchName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SearchName(name, options);
+        async deleteV1SearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SearchByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.deleteV1SearchName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SearchApi.deleteV1SearchByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -275,6 +275,19 @@ export const SearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
+         * @summary Returns one search index\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1SearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SearchByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SearchApi.getV1SearchByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
          * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
@@ -285,19 +298,6 @@ export const SearchApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SearchIndexes(authorization, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SearchApi.getV1SearchIndexes']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1SearchName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SearchName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.getV1SearchName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -339,12 +339,12 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
         /**
          * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
          * @summary Deletes one search index from the shared backend and removes its metadata row.
-         * @param {SearchApiDeleteV1SearchNameRequest} requestParameters Request parameters.
+         * @param {SearchApiDeleteV1SearchByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SearchName(requestParameters: SearchApiDeleteV1SearchNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SearchName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1SearchByName(requestParameters: SearchApiDeleteV1SearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1SearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s search indexes. An index is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
@@ -356,6 +356,16 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getV1Search(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
+         * @summary Returns one search index\'s metadata.
+         * @param {SearchApiGetV1SearchByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1SearchByName(requestParameters: SearchApiGetV1SearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1SearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
          * @param {SearchApiGetV1SearchIndexesRequest} requestParameters Request parameters.
@@ -364,16 +374,6 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          */
         getV1SearchIndexes(requestParameters: SearchApiGetV1SearchIndexesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchIndexList> {
             return localVarFp.getV1SearchIndexes(requestParameters.authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {SearchApiGetV1SearchNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1SearchName(requestParameters: SearchApiGetV1SearchNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1SearchName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
@@ -399,15 +399,29 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for deleteV1SearchName operation in SearchApi.
+ * Request parameters for deleteV1SearchByName operation in SearchApi.
  * @export
- * @interface SearchApiDeleteV1SearchNameRequest
+ * @interface SearchApiDeleteV1SearchByNameRequest
  */
-export interface SearchApiDeleteV1SearchNameRequest {
+export interface SearchApiDeleteV1SearchByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof SearchApiDeleteV1SearchName
+     * @memberof SearchApiDeleteV1SearchByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for getV1SearchByName operation in SearchApi.
+ * @export
+ * @interface SearchApiGetV1SearchByNameRequest
+ */
+export interface SearchApiGetV1SearchByNameRequest {
+    /**
+     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+     * @type {string}
+     * @memberof SearchApiGetV1SearchByName
      */
     readonly name: string
 }
@@ -424,20 +438,6 @@ export interface SearchApiGetV1SearchIndexesRequest {
      * @memberof SearchApiGetV1SearchIndexes
      */
     readonly authorization?: string
-}
-
-/**
- * Request parameters for getV1SearchName operation in SearchApi.
- * @export
- * @interface SearchApiGetV1SearchNameRequest
- */
-export interface SearchApiGetV1SearchNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof SearchApiGetV1SearchName
-     */
-    readonly name: string
 }
 
 /**
@@ -478,13 +478,13 @@ export class SearchApi extends BaseAPI {
     /**
      * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
      * @summary Deletes one search index from the shared backend and removes its metadata row.
-     * @param {SearchApiDeleteV1SearchNameRequest} requestParameters Request parameters.
+     * @param {SearchApiDeleteV1SearchByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchApi
      */
-    public deleteV1SearchName(requestParameters: SearchApiDeleteV1SearchNameRequest, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).deleteV1SearchName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1SearchByName(requestParameters: SearchApiDeleteV1SearchByNameRequest, options?: RawAxiosRequestConfig) {
+        return SearchApiFp(this.configuration).deleteV1SearchByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -499,6 +499,18 @@ export class SearchApi extends BaseAPI {
     }
 
     /**
+     * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
+     * @summary Returns one search index\'s metadata.
+     * @param {SearchApiGetV1SearchByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SearchApi
+     */
+    public getV1SearchByName(requestParameters: SearchApiGetV1SearchByNameRequest, options?: RawAxiosRequestConfig) {
+        return SearchApiFp(this.configuration).getV1SearchByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
      * @summary Lists the search indexes with their document counts and timestamps.
      * @param {SearchApiGetV1SearchIndexesRequest} requestParameters Request parameters.
@@ -508,18 +520,6 @@ export class SearchApi extends BaseAPI {
      */
     public getV1SearchIndexes(requestParameters: SearchApiGetV1SearchIndexesRequest = {}, options?: RawAxiosRequestConfig) {
         return SearchApiFp(this.configuration).getV1SearchIndexes(requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-     * @summary Returns one search index\'s metadata.
-     * @param {SearchApiGetV1SearchNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public getV1SearchName(requestParameters: SearchApiGetV1SearchNameRequest, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).getV1SearchName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

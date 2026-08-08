@@ -24,55 +24,55 @@ import type { VersionView } from './version-view';
  */
 export interface PromptDetail {
     /**
-     * 
+     * CreatedAt is when version 1 was written, RFC 3339 UTC. Appending a version does not move it.
      * @type {string}
      * @memberof PromptDetail
      */
     'createdAt'?: string;
     /**
-     * 
+     * Labels is the current version\'s free-form taxonomy. `[]` when none, never null.
      * @type {Array<string>}
      * @memberof PromptDetail
      */
     'labels'?: Array<string>;
     /**
-     * 
+     * UpdatedAt is when the current version was appended, RFC 3339 UTC. Equal to createdAt for a prompt that has only ever had one version.
      * @type {string}
      * @memberof PromptDetail
      */
     'lastUpdatedAt'?: string;
     /**
-     * 
+     * Name is the prompt\'s org-unique handle and the URL segment it is addressed by.
      * @type {string}
      * @memberof PromptDetail
      */
     'name'?: string;
     /**
-     * 
+     * Prompt is the CURRENT version\'s template body — the only content this service returns. Earlier versions are listed in versionHistory by number and date, and their bodies are not served in bulk.
      * @type {string}
      * @memberof PromptDetail
      */
     'prompt'?: string;
     /**
-     * 
+     * Tags is the second free-form taxonomy, same rules as Labels.
      * @type {Array<string>}
      * @memberof PromptDetail
      */
     'tags'?: Array<string>;
     /**
-     * 
+     * Type labels the current version\'s kind; \"text\" unless the creator said otherwise.
      * @type {string}
      * @memberof PromptDetail
      */
     'type'?: string;
     /**
-     * 
+     * Version is the current version number, starting at 1 and incremented by one on every create against an existing name.
      * @type {number}
      * @memberof PromptDetail
      */
     'version'?: number;
     /**
-     * 
+     * Versions is the history METADATA, newest first, capped at the last 100 — no bodies, so a long history cannot inflate this response. It always includes the current version as its first entry.
      * @type {Array<VersionView>}
      * @memberof PromptDetail
      */

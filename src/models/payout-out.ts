@@ -24,7 +24,7 @@ import type { Settlement } from './settlement';
  */
 export interface PayoutOut {
     /**
-     * 
+     * Data is the recorded payout and the balances it left behind.
      * @type {Settlement}
      * @memberof PayoutOut
      */

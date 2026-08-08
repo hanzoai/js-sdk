@@ -21,19 +21,19 @@
  */
 export interface UserOptinView {
     /**
-     * false when the caller\'s identity can\'t be resolved
+     * CanSet is false when the caller\'s ledger identity cannot be resolved (no user name on the principal). Writing the preference would fail, so hide the control.
      * @type {boolean}
      * @memberof UserOptinView
      */
     'canSet'?: boolean;
     /**
-     * 
+     * Handle is the display name on the caller\'s listed row. Empty when they never chose one; opting in without a handle sets it to their username, so a listed row is never blank.
      * @type {string}
      * @memberof UserOptinView
      */
     'handle'?: string;
     /**
-     * 
+     * Listed is true when the caller\'s board row is published under Handle to other viewers. False — the default for anyone who never opted in — anonymizes the row; the metric still counts, only the name is withheld.
      * @type {boolean}
      * @memberof UserOptinView
      */

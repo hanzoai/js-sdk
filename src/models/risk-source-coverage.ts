@@ -27,13 +27,13 @@ export interface RiskSourceCoverage {
      */
     'facts'?: number;
     /**
-     * 
+     * Source is the asserter these two counts are for — chargeoff, dispute, case, refund, review or sample. There is one entry per source that either filed in the window or won in it, in precedence order, strongest first. A source no longer in the vocabulary still has rows and is reported after the known ones rather than dropped out of a total that is supposed to add up.
      * @type {string}
      * @memberof RiskSourceCoverage
      */
     'source'?: string;
     /**
-     * 
+     * Won is how many JUDGED events this source\'s assertion was the one IN FORCE for, at that event\'s own as-of — it beat every other visible claim under the precedence rule. Summed over the sources it is Judged. Read against Facts it is the ratio that matters: many filed and few won is a source being outranked, not a source that is broken, and one source winning nearly everything is a plane that looks labelled because one noisy filer dominates it.
      * @type {number}
      * @memberof RiskSourceCoverage
      */

@@ -24,7 +24,7 @@ import type { ConnView } from './conn-view';
  */
 export interface RefreshOut {
     /**
-     * Connector is the connector with its new expiry.
+     * Connection is the connector with its new expiry.
      * @type {ConnView}
      * @memberof RefreshOut
      */

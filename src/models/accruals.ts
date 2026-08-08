@@ -21,19 +21,25 @@
  */
 export interface Accruals {
     /**
-     * 
+     * Accrued is how many NEW commission accruals this run created, counted across every upline level. The accrual is latched at most once per (affiliate, source org, period), so a re-run inside the same month reports 0 having changed nothing — 0 means \"already accrued\", not \"failed\".
      * @type {number}
      * @memberof Accruals
      */
     'accrued'?: number;
     /**
-     * 
+     * RoyaltiesAccrued is how many OSS-author royalty accruals the SAME spend read produced in the sibling authors program. One read drives both.
      * @type {number}
      * @memberof Accruals
      */
     'royaltiesAccrued'?: number;
     /**
-     * 
+     * RoyaltyFailures is reported, not swallowed: a sweep that could not reach the royalty store must not read as one that found nothing owed. The count was already computed and then dropped on the floor, which is the same silence the typed leg was added to end.
+     * @type {number}
+     * @memberof Accruals
+     */
+    'royaltyFailures'?: number;
+    /**
+     * Swept is how many source (referred) orgs the run visited, bounded at 500 per run. A source with no spend this period, or one whose spend could not be read, still counts as swept.
      * @type {number}
      * @memberof Accruals
      */

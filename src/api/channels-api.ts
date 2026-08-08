@@ -42,17 +42,13 @@ import type { PairingQueue } from '../models';
 export const ChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
-         * @summary Send a message from your org\'s bot to one chat room
-         * @param {string} channel 
+         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
+         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ChannelsByChannelSend: async (channel: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'channel' is not null or undefined
-            assertParamExists('postV1ChannelsByChannelSend', 'channel', channel)
-            const localVarPath = `/v1/channels/{channel}/send`
-                .replace(`{${"channel"}}`, encodeURIComponent(String(channel)));
+        getV1Channels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/channels`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -60,7 +56,7 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -82,7 +78,7 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsGetAllowlist: async (channel?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ChannelsAllowlist: async (channel?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/channels/allowlist`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -118,7 +114,7 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsGetInbox: async (since?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ChannelsInbox: async (since?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/channels/inbox`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -156,7 +152,7 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsGetPairing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ChannelsPairing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/channels/pairing`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -181,15 +177,49 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Sends a message from the caller org\'s bot to one chat room.  It delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Sends a message from the caller org\'s bot to one chat room.
+         * @param {string} channel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1ChannelsByChannelSend: async (channel: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'channel' is not null or undefined
+            assertParamExists('postV1ChannelsByChannelSend', 'channel', channel)
+            const localVarPath = `/v1/channels/{channel}/send`
+                .replace(`{${"channel"}}`, encodeURIComponent(String(channel)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on. It requires ORG ADMIN, not merely membership. The first approval an org makes on a channel also bootstraps that sender as the channel\'s owner, which the answer reports. An unknown or expired code is a 404, and a code always belongs to exactly one org, so it can never approve someone into another tenant.
          * @summary Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on.
          * @param {ApprovePairingIn} approvePairingIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsPostPairingApprove: async (approvePairingIn: ApprovePairingIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1ChannelsPairingApprove: async (approvePairingIn: ApprovePairingIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'approvePairingIn' is not null or undefined
-            assertParamExists('v1ChannelsPostPairingApprove', 'approvePairingIn', approvePairingIn)
+            assertParamExists('postV1ChannelsPairingApprove', 'approvePairingIn', approvePairingIn)
             const localVarPath = `/v1/channels/pairing/approve`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -223,9 +253,9 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsPutAllowlist: async (allowlistPutIn: AllowlistPutIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1ChannelsAllowlist: async (allowlistPutIn: AllowlistPutIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'allowlistPutIn' is not null or undefined
-            assertParamExists('v1ChannelsPutAllowlist', 'allowlistPutIn', allowlistPutIn)
+            assertParamExists('putV1ChannelsAllowlist', 'allowlistPutIn', allowlistPutIn)
             const localVarPath = `/v1/channels/allowlist`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -252,36 +282,6 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1GetChannels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/channels`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -293,8 +293,59 @@ export const ChannelsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ChannelsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
-         * @summary Send a message from your org\'s bot to one chat room
+         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
+         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1Channels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatChannels>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Channels(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.getV1Channels']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
+         * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
+         * @param {string} [channel] Channel is the transport to read: discord, slack, teams or telegram. Required; an unknown value is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1ChannelsAllowlist(channel?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowlistView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ChannelsAllowlist(channel, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.getV1ChannelsAllowlist']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
+         * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
+         * @param {string} [since] Since is the exclusive cursor: only messages with a higher row id come back. Empty starts at the beginning. Must parse as an integer.
+         * @param {string} [limit] Limit caps how many messages come back. Empty or 0 uses the store\&#39;s default page size. Must parse as an integer.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1ChannelsInbox(since?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InboxPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ChannelsInbox(since, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.getV1ChannelsInbox']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
+         * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1ChannelsPairing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PairingQueue>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ChannelsPairing(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.getV1ChannelsPairing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sends a message from the caller org\'s bot to one chat room.  It delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Sends a message from the caller org\'s bot to one chat room.
          * @param {string} channel 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -306,55 +357,16 @@ export const ChannelsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
-         * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
-         * @param {string} [channel] Channel is the transport to read: discord, slack, teams or telegram. Required; an unknown value is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1ChannelsGetAllowlist(channel?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowlistView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ChannelsGetAllowlist(channel, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1ChannelsGetAllowlist']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
-         * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
-         * @param {string} [since] Since is the exclusive cursor: only messages with a higher row id come back. Empty starts at the beginning. Must parse as an integer.
-         * @param {string} [limit] Limit caps how many messages come back. Empty or 0 uses the store\&#39;s default page size. Must parse as an integer.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1ChannelsGetInbox(since?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InboxPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ChannelsGetInbox(since, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1ChannelsGetInbox']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
-         * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1ChannelsGetPairing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PairingQueue>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ChannelsGetPairing(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1ChannelsGetPairing']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on. It requires ORG ADMIN, not merely membership. The first approval an org makes on a channel also bootstraps that sender as the channel\'s owner, which the answer reports. An unknown or expired code is a 404, and a code always belongs to exactly one org, so it can never approve someone into another tenant.
          * @summary Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on.
          * @param {ApprovePairingIn} approvePairingIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1ChannelsPostPairingApprove(approvePairingIn: ApprovePairingIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PairingApproved>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ChannelsPostPairingApprove(approvePairingIn, options);
+        async postV1ChannelsPairingApprove(approvePairingIn: ApprovePairingIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PairingApproved>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ChannelsPairingApprove(approvePairingIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1ChannelsPostPairingApprove']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.postV1ChannelsPairingApprove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -364,22 +376,10 @@ export const ChannelsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1ChannelsPutAllowlist(allowlistPutIn: AllowlistPutIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowlistView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1ChannelsPutAllowlist(allowlistPutIn, options);
+        async putV1ChannelsAllowlist(allowlistPutIn: AllowlistPutIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowlistView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1ChannelsAllowlist(allowlistPutIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1ChannelsPutAllowlist']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v1GetChannels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatChannels>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1GetChannels(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.v1GetChannels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ChannelsApi.putV1ChannelsAllowlist']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -393,8 +393,46 @@ export const ChannelsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ChannelsApiFp(configuration)
     return {
         /**
-         * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
-         * @summary Send a message from your org\'s bot to one chat room
+         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
+         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1Channels(options?: RawAxiosRequestConfig): AxiosPromise<ChatChannels> {
+            return localVarFp.getV1Channels(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
+         * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
+         * @param {ChannelsApiGetV1ChannelsAllowlistRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1ChannelsAllowlist(requestParameters: ChannelsApiGetV1ChannelsAllowlistRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AllowlistView> {
+            return localVarFp.getV1ChannelsAllowlist(requestParameters.channel, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
+         * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
+         * @param {ChannelsApiGetV1ChannelsInboxRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1ChannelsInbox(requestParameters: ChannelsApiGetV1ChannelsInboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<InboxPage> {
+            return localVarFp.getV1ChannelsInbox(requestParameters.since, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
+         * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1ChannelsPairing(options?: RawAxiosRequestConfig): AxiosPromise<PairingQueue> {
+            return localVarFp.getV1ChannelsPairing(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sends a message from the caller org\'s bot to one chat room.  It delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+         * @summary Sends a message from the caller org\'s bot to one chat room.
          * @param {ChannelsApiPostV1ChannelsByChannelSendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -403,65 +441,62 @@ export const ChannelsApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postV1ChannelsByChannelSend(requestParameters.channel, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
-         * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
-         * @param {ChannelsApiV1ChannelsGetAllowlistRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ChannelsGetAllowlist(requestParameters: ChannelsApiV1ChannelsGetAllowlistRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AllowlistView> {
-            return localVarFp.v1ChannelsGetAllowlist(requestParameters.channel, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
-         * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
-         * @param {ChannelsApiV1ChannelsGetInboxRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ChannelsGetInbox(requestParameters: ChannelsApiV1ChannelsGetInboxRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<InboxPage> {
-            return localVarFp.v1ChannelsGetInbox(requestParameters.since, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
-         * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1ChannelsGetPairing(options?: RawAxiosRequestConfig): AxiosPromise<PairingQueue> {
-            return localVarFp.v1ChannelsGetPairing(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on. It requires ORG ADMIN, not merely membership. The first approval an org makes on a channel also bootstraps that sender as the channel\'s owner, which the answer reports. An unknown or expired code is a 404, and a code always belongs to exactly one org, so it can never approve someone into another tenant.
          * @summary Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on.
-         * @param {ChannelsApiV1ChannelsPostPairingApproveRequest} requestParameters Request parameters.
+         * @param {ChannelsApiPostV1ChannelsPairingApproveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsPostPairingApprove(requestParameters: ChannelsApiV1ChannelsPostPairingApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PairingApproved> {
-            return localVarFp.v1ChannelsPostPairingApprove(requestParameters.approvePairingIn, options).then((request) => request(axios, basePath));
+        postV1ChannelsPairingApprove(requestParameters: ChannelsApiPostV1ChannelsPairingApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<PairingApproved> {
+            return localVarFp.postV1ChannelsPairingApprove(requestParameters.approvePairingIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Edits the caller org\'s access policy for one channel and answers the policy as GET would, so both verbs return ONE shape. It requires ORG ADMIN. Every field but `channel` is optional and applied only when provided: an empty policy string leaves that policy alone, an absent or null list leaves that list alone, and an EMPTY list clears it. It writes only CONFIG-sourced allow entries — senders approved through pairing belong to the approval flow, so a policy edit can never revoke one. An unknown channel is a 404.
          * @summary Edits the caller org\'s access policy for one channel and answers the policy as GET would, so both verbs return ONE shape.
-         * @param {ChannelsApiV1ChannelsPutAllowlistRequest} requestParameters Request parameters.
+         * @param {ChannelsApiPutV1ChannelsAllowlistRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1ChannelsPutAllowlist(requestParameters: ChannelsApiV1ChannelsPutAllowlistRequest, options?: RawAxiosRequestConfig): AxiosPromise<AllowlistView> {
-            return localVarFp.v1ChannelsPutAllowlist(requestParameters.allowlistPutIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v1GetChannels(options?: RawAxiosRequestConfig): AxiosPromise<ChatChannels> {
-            return localVarFp.v1GetChannels(options).then((request) => request(axios, basePath));
+        putV1ChannelsAllowlist(requestParameters: ChannelsApiPutV1ChannelsAllowlistRequest, options?: RawAxiosRequestConfig): AxiosPromise<AllowlistView> {
+            return localVarFp.putV1ChannelsAllowlist(requestParameters.allowlistPutIn, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for getV1ChannelsAllowlist operation in ChannelsApi.
+ * @export
+ * @interface ChannelsApiGetV1ChannelsAllowlistRequest
+ */
+export interface ChannelsApiGetV1ChannelsAllowlistRequest {
+    /**
+     * Channel is the transport to read: discord, slack, teams or telegram. Required; an unknown value is a 404.
+     * @type {string}
+     * @memberof ChannelsApiGetV1ChannelsAllowlist
+     */
+    readonly channel?: string
+}
+
+/**
+ * Request parameters for getV1ChannelsInbox operation in ChannelsApi.
+ * @export
+ * @interface ChannelsApiGetV1ChannelsInboxRequest
+ */
+export interface ChannelsApiGetV1ChannelsInboxRequest {
+    /**
+     * Since is the exclusive cursor: only messages with a higher row id come back. Empty starts at the beginning. Must parse as an integer.
+     * @type {string}
+     * @memberof ChannelsApiGetV1ChannelsInbox
+     */
+    readonly since?: string
+
+    /**
+     * Limit caps how many messages come back. Empty or 0 uses the store\&#39;s default page size. Must parse as an integer.
+     * @type {string}
+     * @memberof ChannelsApiGetV1ChannelsInbox
+     */
+    readonly limit?: string
+}
 
 /**
  * Request parameters for postV1ChannelsByChannelSend operation in ChannelsApi.
@@ -478,64 +513,29 @@ export interface ChannelsApiPostV1ChannelsByChannelSendRequest {
 }
 
 /**
- * Request parameters for v1ChannelsGetAllowlist operation in ChannelsApi.
+ * Request parameters for postV1ChannelsPairingApprove operation in ChannelsApi.
  * @export
- * @interface ChannelsApiV1ChannelsGetAllowlistRequest
+ * @interface ChannelsApiPostV1ChannelsPairingApproveRequest
  */
-export interface ChannelsApiV1ChannelsGetAllowlistRequest {
-    /**
-     * Channel is the transport to read: discord, slack, teams or telegram. Required; an unknown value is a 404.
-     * @type {string}
-     * @memberof ChannelsApiV1ChannelsGetAllowlist
-     */
-    readonly channel?: string
-}
-
-/**
- * Request parameters for v1ChannelsGetInbox operation in ChannelsApi.
- * @export
- * @interface ChannelsApiV1ChannelsGetInboxRequest
- */
-export interface ChannelsApiV1ChannelsGetInboxRequest {
-    /**
-     * Since is the exclusive cursor: only messages with a higher row id come back. Empty starts at the beginning. Must parse as an integer.
-     * @type {string}
-     * @memberof ChannelsApiV1ChannelsGetInbox
-     */
-    readonly since?: string
-
-    /**
-     * Limit caps how many messages come back. Empty or 0 uses the store\&#39;s default page size. Must parse as an integer.
-     * @type {string}
-     * @memberof ChannelsApiV1ChannelsGetInbox
-     */
-    readonly limit?: string
-}
-
-/**
- * Request parameters for v1ChannelsPostPairingApprove operation in ChannelsApi.
- * @export
- * @interface ChannelsApiV1ChannelsPostPairingApproveRequest
- */
-export interface ChannelsApiV1ChannelsPostPairingApproveRequest {
+export interface ChannelsApiPostV1ChannelsPairingApproveRequest {
     /**
      * 
      * @type {ApprovePairingIn}
-     * @memberof ChannelsApiV1ChannelsPostPairingApprove
+     * @memberof ChannelsApiPostV1ChannelsPairingApprove
      */
     readonly approvePairingIn: ApprovePairingIn
 }
 
 /**
- * Request parameters for v1ChannelsPutAllowlist operation in ChannelsApi.
+ * Request parameters for putV1ChannelsAllowlist operation in ChannelsApi.
  * @export
- * @interface ChannelsApiV1ChannelsPutAllowlistRequest
+ * @interface ChannelsApiPutV1ChannelsAllowlistRequest
  */
-export interface ChannelsApiV1ChannelsPutAllowlistRequest {
+export interface ChannelsApiPutV1ChannelsAllowlistRequest {
     /**
      * 
      * @type {AllowlistPutIn}
-     * @memberof ChannelsApiV1ChannelsPutAllowlist
+     * @memberof ChannelsApiPutV1ChannelsAllowlist
      */
     readonly allowlistPutIn: AllowlistPutIn
 }
@@ -548,8 +548,54 @@ export interface ChannelsApiV1ChannelsPutAllowlistRequest {
  */
 export class ChannelsApi extends BaseAPI {
     /**
-     * Delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
-     * @summary Send a message from your org\'s bot to one chat room
+     * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
+     * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChannelsApi
+     */
+    public getV1Channels(options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).getV1Channels(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
+     * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
+     * @param {ChannelsApiGetV1ChannelsAllowlistRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChannelsApi
+     */
+    public getV1ChannelsAllowlist(requestParameters: ChannelsApiGetV1ChannelsAllowlistRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).getV1ChannelsAllowlist(requestParameters.channel, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
+     * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
+     * @param {ChannelsApiGetV1ChannelsInboxRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChannelsApi
+     */
+    public getV1ChannelsInbox(requestParameters: ChannelsApiGetV1ChannelsInboxRequest = {}, options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).getV1ChannelsInbox(requestParameters.since, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
+     * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChannelsApi
+     */
+    public getV1ChannelsPairing(options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).getV1ChannelsPairing(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sends a message from the caller org\'s bot to one chat room.  It delivers text, attachments and actions to one room on a connected chat transport — discord, slack, teams or telegram — and answers that transport\'s own receipt, the `messageId` it assigned and the Unix second it landed. An unknown channel is a 404.  The body is the envelope\'s NARROW outbound projection: `room`, `text`, `attachments`, `actions`, `replyTo` and `idempotency`, and nothing else. Identity is not a field — the channel is the path segment and the sender is the caller\'s validated org — so a body carrying `sender`, `account` or `channel` is refused with 400 rather than having it silently dropped. `room.id` is required, and so is something to say: text, or at least one attachment.  Requires a validated principal; 403 without one. The room must already belong to the caller\'s org — each transport verifies the binding itself, so a room this org has not bound is 403 and a room whose route the bot has never learned is 409, meaning someone has to message the bot there first. A transport that fails answers 502 carrying status and shape only, never a token.  Sending is at-most-once only if you ask for it: pass an `idempotency` string and a replay answers 200 with the PRIOR receipt instead of sending twice, while a send that fails releases the key so the caller can re-attempt. Bodies over 1 MiB are refused. All four transports currently render text only, so attachments and actions are flattened deterministically to one line each after the text rather than dropped.
+     * @summary Sends a message from the caller org\'s bot to one chat room.
      * @param {ChannelsApiPostV1ChannelsByChannelSendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -560,73 +606,27 @@ export class ChannelsApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups. An unknown channel is a 404.
-     * @summary Returns the caller org\'s access policy for one channel: whether DMs are pairing-gated, allowlisted or open, whether group rooms are open, allowlisted or disabled, the config-managed DM and group allow entries, the senders approved through PAIRING (read-only here), and the org\'s named access groups.
-     * @param {ChannelsApiV1ChannelsGetAllowlistRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChannelsApi
-     */
-    public v1ChannelsGetAllowlist(requestParameters: ChannelsApiV1ChannelsGetAllowlistRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1ChannelsGetAllowlist(requestParameters.channel, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into. It is a CURSOR feed, not a search: pass the returned cursor back as `since` to get only what has arrived since. Only this org\'s messages are stored under this org, so the feed can never carry another tenant\'s chat.
-     * @summary Returns the messages people have sent to the caller org\'s connected chat bots, oldest first, in the portable envelope shape every transport normalises into.
-     * @param {ChannelsApiV1ChannelsGetInboxRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChannelsApi
-     */
-    public v1ChannelsGetInbox(requestParameters: ChannelsApiV1ChannelsGetInboxRequest = {}, options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1ChannelsGetInbox(requestParameters.since, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet. Each row carries the CODE an org admin passes to POST /v1/channels/pairing/approve. Expired requests are not returned. Codes are capability strings: they are shown here, and never logged.
-     * @summary Returns the pairing requests waiting for the caller org to approve — one per person who messaged a connected bot on a channel whose DM policy is \"pairing\" and who is not allowed yet.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChannelsApi
-     */
-    public v1ChannelsGetPairing(options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1ChannelsGetPairing(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on. It requires ORG ADMIN, not merely membership. The first approval an org makes on a channel also bootstraps that sender as the channel\'s owner, which the answer reports. An unknown or expired code is a 404, and a code always belongs to exactly one org, so it can never approve someone into another tenant.
      * @summary Turns one pending pairing code into a standing allow entry, so that person can DM the org\'s bot on that channel from now on.
-     * @param {ChannelsApiV1ChannelsPostPairingApproveRequest} requestParameters Request parameters.
+     * @param {ChannelsApiPostV1ChannelsPairingApproveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChannelsApi
      */
-    public v1ChannelsPostPairingApprove(requestParameters: ChannelsApiV1ChannelsPostPairingApproveRequest, options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1ChannelsPostPairingApprove(requestParameters.approvePairingIn, options).then((request) => request(this.axios, this.basePath));
+    public postV1ChannelsPairingApprove(requestParameters: ChannelsApiPostV1ChannelsPairingApproveRequest, options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).postV1ChannelsPairingApprove(requestParameters.approvePairingIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Edits the caller org\'s access policy for one channel and answers the policy as GET would, so both verbs return ONE shape. It requires ORG ADMIN. Every field but `channel` is optional and applied only when provided: an empty policy string leaves that policy alone, an absent or null list leaves that list alone, and an EMPTY list clears it. It writes only CONFIG-sourced allow entries — senders approved through pairing belong to the approval flow, so a policy edit can never revoke one. An unknown channel is a 404.
      * @summary Edits the caller org\'s access policy for one channel and answers the policy as GET would, so both verbs return ONE shape.
-     * @param {ChannelsApiV1ChannelsPutAllowlistRequest} requestParameters Request parameters.
+     * @param {ChannelsApiPutV1ChannelsAllowlistRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChannelsApi
      */
-    public v1ChannelsPutAllowlist(requestParameters: ChannelsApiV1ChannelsPutAllowlistRequest, options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1ChannelsPutAllowlist(requestParameters.allowlistPutIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-     * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChannelsApi
-     */
-    public v1GetChannels(options?: RawAxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).v1GetChannels(options).then((request) => request(this.axios, this.basePath));
+    public putV1ChannelsAllowlist(requestParameters: ChannelsApiPutV1ChannelsAllowlistRequest, options?: RawAxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).putV1ChannelsAllowlist(requestParameters.allowlistPutIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

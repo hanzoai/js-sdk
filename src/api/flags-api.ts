@@ -48,9 +48,9 @@ export const FlagsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FlagsDefsKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1FlagsDefsByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteV1FlagsDefsKey', 'key', key)
+            assertParamExists('deleteV1FlagsDefsByKey', 'key', key)
             const localVarPath = `/v1/flags/defs/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -147,9 +147,9 @@ export const FlagsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FlagsDefsKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1FlagsDefsByKey: async (key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1FlagsDefsKey', 'key', key)
+            assertParamExists('getV1FlagsDefsByKey', 'key', key)
             const localVarPath = `/v1/flags/defs/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -319,11 +319,11 @@ export const FlagsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FlagsDefsKey: async (key: string, body: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1FlagsDefsByKey: async (key: string, body: any, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('putV1FlagsDefsKey', 'key', key)
+            assertParamExists('putV1FlagsDefsByKey', 'key', key)
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('putV1FlagsDefsKey', 'body', body)
+            assertParamExists('putV1FlagsDefsByKey', 'body', body)
             const localVarPath = `/v1/flags/defs/{key}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -368,10 +368,10 @@ export const FlagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1FlagsDefsKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeletedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FlagsDefsKey(key, options);
+        async deleteV1FlagsDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeletedOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FlagsDefsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FlagsApi.deleteV1FlagsDefsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FlagsApi.deleteV1FlagsDefsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -406,10 +406,10 @@ export const FlagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FlagsDefsKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FlagsDefsKey(key, options);
+        async getV1FlagsDefsByKey(key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FlagsDefsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FlagsApi.getV1FlagsDefsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FlagsApi.getV1FlagsDefsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -471,10 +471,10 @@ export const FlagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1FlagsDefsKey(key: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1FlagsDefsKey(key, body, options);
+        async putV1FlagsDefsByKey(key: string, body: any, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DefRow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1FlagsDefsByKey(key, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FlagsApi.putV1FlagsDefsKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FlagsApi.putV1FlagsDefsByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -490,12 +490,12 @@ export const FlagsApiFactory = function (configuration?: Configuration, basePath
         /**
          * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
          * @summary Removes one flag definition by key and records the deletion in the change log.
-         * @param {FlagsApiDeleteV1FlagsDefsKeyRequest} requestParameters Request parameters.
+         * @param {FlagsApiDeleteV1FlagsDefsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FlagsDefsKey(requestParameters: FlagsApiDeleteV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeletedOut> {
-            return localVarFp.deleteV1FlagsDefsKey(requestParameters.key, options).then((request) => request(axios, basePath));
+        deleteV1FlagsDefsByKey(requestParameters: FlagsApiDeleteV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeletedOut> {
+            return localVarFp.deleteV1FlagsDefsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s flag change log newest-first: every create, update and delete, with the actor and the time.
@@ -519,12 +519,12 @@ export const FlagsApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns one flag definition by key, or 404 when the caller\'s store has none under that key.
          * @summary Returns one flag definition by key, or 404 when the caller\'s store has none under that key.
-         * @param {FlagsApiGetV1FlagsDefsKeyRequest} requestParameters Request parameters.
+         * @param {FlagsApiGetV1FlagsDefsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FlagsDefsKey(requestParameters: FlagsApiGetV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
-            return localVarFp.getV1FlagsDefsKey(requestParameters.key, options).then((request) => request(axios, basePath));
+        getV1FlagsDefsByKey(requestParameters: FlagsApiGetV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
+            return localVarFp.getV1FlagsDefsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Health reports that the flag engine is serving. It is not gated: liveness must be probe-able without a token.
@@ -568,26 +568,26 @@ export const FlagsApiFactory = function (configuration?: Configuration, basePath
         /**
          * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
          * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
-         * @param {FlagsApiPutV1FlagsDefsKeyRequest} requestParameters Request parameters.
+         * @param {FlagsApiPutV1FlagsDefsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FlagsDefsKey(requestParameters: FlagsApiPutV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
-            return localVarFp.putV1FlagsDefsKey(requestParameters.key, requestParameters.body, options).then((request) => request(axios, basePath));
+        putV1FlagsDefsByKey(requestParameters: FlagsApiPutV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DefRow> {
+            return localVarFp.putV1FlagsDefsByKey(requestParameters.key, requestParameters.body, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1FlagsDefsKey operation in FlagsApi.
+ * Request parameters for deleteV1FlagsDefsByKey operation in FlagsApi.
  * @export
- * @interface FlagsApiDeleteV1FlagsDefsKeyRequest
+ * @interface FlagsApiDeleteV1FlagsDefsByKeyRequest
  */
-export interface FlagsApiDeleteV1FlagsDefsKeyRequest {
+export interface FlagsApiDeleteV1FlagsDefsByKeyRequest {
     /**
      * Key is the flag key to act on, from the path.
      * @type {string}
-     * @memberof FlagsApiDeleteV1FlagsDefsKey
+     * @memberof FlagsApiDeleteV1FlagsDefsByKey
      */
     readonly key: string
 }
@@ -607,15 +607,15 @@ export interface FlagsApiGetV1FlagsActivityRequest {
 }
 
 /**
- * Request parameters for getV1FlagsDefsKey operation in FlagsApi.
+ * Request parameters for getV1FlagsDefsByKey operation in FlagsApi.
  * @export
- * @interface FlagsApiGetV1FlagsDefsKeyRequest
+ * @interface FlagsApiGetV1FlagsDefsByKeyRequest
  */
-export interface FlagsApiGetV1FlagsDefsKeyRequest {
+export interface FlagsApiGetV1FlagsDefsByKeyRequest {
     /**
      * Key is the flag key to act on, from the path.
      * @type {string}
-     * @memberof FlagsApiGetV1FlagsDefsKey
+     * @memberof FlagsApiGetV1FlagsDefsByKey
      */
     readonly key: string
 }
@@ -663,22 +663,22 @@ export interface FlagsApiPostV1FlagsDecideRequest {
 }
 
 /**
- * Request parameters for putV1FlagsDefsKey operation in FlagsApi.
+ * Request parameters for putV1FlagsDefsByKey operation in FlagsApi.
  * @export
- * @interface FlagsApiPutV1FlagsDefsKeyRequest
+ * @interface FlagsApiPutV1FlagsDefsByKeyRequest
  */
-export interface FlagsApiPutV1FlagsDefsKeyRequest {
+export interface FlagsApiPutV1FlagsDefsByKeyRequest {
     /**
      * Key is the flag key to write, from the path.
      * @type {string}
-     * @memberof FlagsApiPutV1FlagsDefsKey
+     * @memberof FlagsApiPutV1FlagsDefsByKey
      */
     readonly key: string
 
     /**
      * 
      * @type {any}
-     * @memberof FlagsApiPutV1FlagsDefsKey
+     * @memberof FlagsApiPutV1FlagsDefsByKey
      */
     readonly body: any
 }
@@ -693,13 +693,13 @@ export class FlagsApi extends BaseAPI {
     /**
      * Removes one flag definition by key and records the deletion in the change log. A key the caller\'s store does not hold is a 404.
      * @summary Removes one flag definition by key and records the deletion in the change log.
-     * @param {FlagsApiDeleteV1FlagsDefsKeyRequest} requestParameters Request parameters.
+     * @param {FlagsApiDeleteV1FlagsDefsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagsApi
      */
-    public deleteV1FlagsDefsKey(requestParameters: FlagsApiDeleteV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig) {
-        return FlagsApiFp(this.configuration).deleteV1FlagsDefsKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1FlagsDefsByKey(requestParameters: FlagsApiDeleteV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return FlagsApiFp(this.configuration).deleteV1FlagsDefsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -728,13 +728,13 @@ export class FlagsApi extends BaseAPI {
     /**
      * Returns one flag definition by key, or 404 when the caller\'s store has none under that key.
      * @summary Returns one flag definition by key, or 404 when the caller\'s store has none under that key.
-     * @param {FlagsApiGetV1FlagsDefsKeyRequest} requestParameters Request parameters.
+     * @param {FlagsApiGetV1FlagsDefsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagsApi
      */
-    public getV1FlagsDefsKey(requestParameters: FlagsApiGetV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig) {
-        return FlagsApiFp(this.configuration).getV1FlagsDefsKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getV1FlagsDefsByKey(requestParameters: FlagsApiGetV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return FlagsApiFp(this.configuration).getV1FlagsDefsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -787,13 +787,13 @@ export class FlagsApi extends BaseAPI {
     /**
      * Creates or replaces the flag definition at the path\'s key and returns the stored row. The BODY IS THE DEFINITION DOCUMENT — the flag-definition JSON object the evaluator consumes — and it is stored verbatim except that its \"key\" is forced to the key in the URL, so a document can never be filed under a name other than the one it was addressed by. Every write bumps the version and appends to the change log under the caller\'s identity.
      * @summary Creates or replaces the flag definition at the path\'s key and returns the stored row.
-     * @param {FlagsApiPutV1FlagsDefsKeyRequest} requestParameters Request parameters.
+     * @param {FlagsApiPutV1FlagsDefsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FlagsApi
      */
-    public putV1FlagsDefsKey(requestParameters: FlagsApiPutV1FlagsDefsKeyRequest, options?: RawAxiosRequestConfig) {
-        return FlagsApiFp(this.configuration).putV1FlagsDefsKey(requestParameters.key, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    public putV1FlagsDefsByKey(requestParameters: FlagsApiPutV1FlagsDefsByKeyRequest, options?: RawAxiosRequestConfig) {
+        return FlagsApiFp(this.configuration).putV1FlagsDefsByKey(requestParameters.key, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

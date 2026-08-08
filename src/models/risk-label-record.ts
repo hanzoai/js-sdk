@@ -21,7 +21,7 @@
  */
 export interface RiskLabelRecord {
     /**
-     * 
+     * At is when the judged EVENT happened, RFC 3339 in UTC, truncated to the second. The filer supplies it, and it is what a maturity horizon measures from: this event\'s as-of is At plus the horizon. A resolve names it back exactly, to the second.
      * @type {string}
      * @memberof RiskLabelRecord
      */
@@ -33,37 +33,37 @@ export interface RiskLabelRecord {
      */
     'by'?: string;
     /**
-     * 
+     * Confidence is the filer\'s own confidence in [0,1] — 1 for a processor chargeback, less for an analyst\'s hunch. Zero is the ordinary value for a filer that stated none, and it means the weakest tie-break there is rather than \"unknown\". It breaks a tie only WITHIN one precedence rank and can never lift a weak source above a strong one.
      * @type {number}
      * @memberof RiskLabelRecord
      */
     'confidence'?: number;
     /**
-     * 
+     * Disposition is what was concluded, from the closed set: `productive` — the event led somewhere, escalated, reported or charged back; `unproductive` — judged not suspicious; or the empty string for an explicit UNJUDGED, which is a real assertion (\"we looked and could not say\") and not the absence of one.
      * @type {string}
      * @memberof RiskLabelRecord
      */
     'disposition'?: string;
     /**
-     * 
+     * Evidence is the pointer to the record this conclusion came from: a dispute id, a case id, a decision id. At most 512 bytes, required at the write, and opaque to this plane — stored and returned verbatim, never resolved. It is what an adverse action is defended with, which is why an assertion carrying none is refused at the door.
      * @type {string}
      * @memberof RiskLabelRecord
      */
     'evidence'?: string;
     /**
-     * 
+     * Hold is true while a litigation hold is on this record: retention will not dispose of it, at any age. False — and it is omitted then — leaves the record disposable once it is older than the boundary a sweep names. It is a fact about the RECORD and not about the world, so it is not folded into ID, no write path can set it, and the hold op is the one way it moves in either direction.
      * @type {boolean}
      * @memberof RiskLabelRecord
      */
     'hold'?: boolean;
     /**
-     * 
+     * ID is the assertion\'s content digest — SHA-256 over every semantic field, rendered hex — computed server-side and never supplied. It is the key a redelivery collapses onto, and it is the id the hold op names.
      * @type {string}
      * @memberof RiskLabelRecord
      */
     'id'?: string;
     /**
-     * 
+     * Kind is what the subject IS, from the closed set: account, agent, merchant, payout, person, session or transaction. With Subject and At it is the IDENTITY of the judged event — the triple a resolve names and the triple assertions are grouped by, so a typo in it would file a label against an event nobody asks about.
      * @type {string}
      * @memberof RiskLabelRecord
      */
@@ -81,13 +81,13 @@ export interface RiskLabelRecord {
      */
     'seen'?: string;
     /**
-     * 
+     * Source is WHO asserted, from the closed set: chargeoff, dispute, case, refund, review or sample. It is the primary term of the precedence rule — an unknown source has no rank and a conflict with it could not be resolved — so it is what decides which of two disagreeing assertions is in force.
      * @type {string}
      * @memberof RiskLabelRecord
      */
     'source'?: string;
     /**
-     * 
+     * Subject is the entity that was judged, named in the TENANT\'S OWN namespace and at most 512 bytes. It is opaque here: stored, matched and returned verbatim, never dereferenced. It has no meaning outside this tenant — the record is the tenant\'s own file — so an id lifted from another tenant\'s response names nothing.
      * @type {string}
      * @memberof RiskLabelRecord
      */

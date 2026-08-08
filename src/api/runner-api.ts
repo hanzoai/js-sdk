@@ -72,9 +72,9 @@ export const RunnerApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RunnerReleasesId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1RunnerReleasesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1RunnerReleasesId', 'id', id)
+            assertParamExists('getV1RunnerReleasesById', 'id', id)
             const localVarPath = `/v1/runner/releases/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -164,10 +164,10 @@ export const RunnerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RunnerReleasesId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RunnerReleasesId(id, options);
+        async getV1RunnerReleasesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RunnerReleasesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RunnerApi.getV1RunnerReleasesId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RunnerApi.getV1RunnerReleasesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -205,12 +205,12 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
         /**
          * Returns one self-publish release by the id its 202 returned.  It returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
          * @summary Returns one self-publish release by the id its 202 returned.
-         * @param {RunnerApiGetV1RunnerReleasesIdRequest} requestParameters Request parameters.
+         * @param {RunnerApiGetV1RunnerReleasesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RunnerReleasesId(requestParameters: RunnerApiGetV1RunnerReleasesIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReleaseState> {
-            return localVarFp.getV1RunnerReleasesId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1RunnerReleasesById(requestParameters: RunnerApiGetV1RunnerReleasesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReleaseState> {
+            return localVarFp.getV1RunnerReleasesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build`, git-push-to-deploy and cloud\'s own self-release all call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both. `release: true` is the third mode: cloud self-publishing its own image, version computed, built, smoke-tested, tagged and announced.  PRIVILEGED, with exactly two credentials and never a third: the shared build-callback token compared in constant time — the machine path, which a user never holds — or a validated IAM principal who is an ADMIN of their org, which is the `hanzo build` user path and means one IAM login authorizes a build with no separate build token. A plain member is refused.  Both paths are bounded the same way: the output must push to a registry the fabric owns, and on the IAM path the image\'s registry namespace must MATCH the caller\'s own validated org — so an org admin can only publish into their own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner.  `release: true` is the exception, and takes SUPERADMIN. It publishes the platform\'s own image — the binary the whole fleet runs — so what it lands reaches every org at the next reconcile, and no role inside the caller\'s own org can authorize that. An org admin is refused however the registry namespace lines up, and the build token, which carries no identity at all, may enqueue an ordinary build but never a release.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
@@ -226,15 +226,15 @@ export const RunnerApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for getV1RunnerReleasesId operation in RunnerApi.
+ * Request parameters for getV1RunnerReleasesById operation in RunnerApi.
  * @export
- * @interface RunnerApiGetV1RunnerReleasesIdRequest
+ * @interface RunnerApiGetV1RunnerReleasesByIdRequest
  */
-export interface RunnerApiGetV1RunnerReleasesIdRequest {
+export interface RunnerApiGetV1RunnerReleasesByIdRequest {
     /**
      * ID is the build id the release trigger answered with, from the path.
      * @type {string}
-     * @memberof RunnerApiGetV1RunnerReleasesId
+     * @memberof RunnerApiGetV1RunnerReleasesById
      */
     readonly id: string
 }
@@ -274,13 +274,13 @@ export class RunnerApi extends BaseAPI {
     /**
      * Returns one self-publish release by the id its 202 returned.  It returns the state of one release run — which is the whole reason the trigger answers with an id, because without this a release that died in the detached pipeline would look exactly like one still in flight. SuperAdmin only.  A 404 means the id is unknown OR has aged out of this process\'s in-memory record. That is the honest answer either way: the process genuinely cannot tell the two apart.
      * @summary Returns one self-publish release by the id its 202 returned.
-     * @param {RunnerApiGetV1RunnerReleasesIdRequest} requestParameters Request parameters.
+     * @param {RunnerApiGetV1RunnerReleasesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunnerApi
      */
-    public getV1RunnerReleasesId(requestParameters: RunnerApiGetV1RunnerReleasesIdRequest, options?: RawAxiosRequestConfig) {
-        return RunnerApiFp(this.configuration).getV1RunnerReleasesId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1RunnerReleasesById(requestParameters: RunnerApiGetV1RunnerReleasesByIdRequest, options?: RawAxiosRequestConfig) {
+        return RunnerApiFp(this.configuration).getV1RunnerReleasesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

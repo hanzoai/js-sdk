@@ -84,9 +84,9 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticlesSlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1HelpArticlesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1HelpArticlesSlug', 'slug', slug)
+            assertParamExists('getV1HelpArticlesBySlug', 'slug', slug)
             const localVarPath = `/v1/help/articles/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -208,10 +208,10 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1HelpArticlesSlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticle>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1HelpArticlesSlug(slug, options);
+        async getV1HelpArticlesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticle>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1HelpArticlesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HelpApi.getV1HelpArticlesSlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HelpApi.getV1HelpArticlesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -262,12 +262,12 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns one public article by slug, with its body. A missing, Draft, or internal (non-public) article is 404 — fail-closed, so this route is no existence oracle for anything beyond \"published and public\".
          * @summary Returns one public article by slug, with its body.
-         * @param {HelpApiGetV1HelpArticlesSlugRequest} requestParameters Request parameters.
+         * @param {HelpApiGetV1HelpArticlesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticlesSlug(requestParameters: HelpApiGetV1HelpArticlesSlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticle> {
-            return localVarFp.getV1HelpArticlesSlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getV1HelpArticlesBySlug(requestParameters: HelpApiGetV1HelpArticlesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticle> {
+            return localVarFp.getV1HelpArticlesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
@@ -313,15 +313,15 @@ export interface HelpApiGetV1HelpArticlesRequest {
 }
 
 /**
- * Request parameters for getV1HelpArticlesSlug operation in HelpApi.
+ * Request parameters for getV1HelpArticlesBySlug operation in HelpApi.
  * @export
- * @interface HelpApiGetV1HelpArticlesSlugRequest
+ * @interface HelpApiGetV1HelpArticlesBySlugRequest
  */
-export interface HelpApiGetV1HelpArticlesSlugRequest {
+export interface HelpApiGetV1HelpArticlesBySlugRequest {
     /**
      * Slug is the article\&#39;s public identifier, from the path. It IS the document name in the help center\&#39;s store.
      * @type {string}
-     * @memberof HelpApiGetV1HelpArticlesSlug
+     * @memberof HelpApiGetV1HelpArticlesBySlug
      */
     readonly slug: string
 }
@@ -362,13 +362,13 @@ export class HelpApi extends BaseAPI {
     /**
      * Returns one public article by slug, with its body. A missing, Draft, or internal (non-public) article is 404 — fail-closed, so this route is no existence oracle for anything beyond \"published and public\".
      * @summary Returns one public article by slug, with its body.
-     * @param {HelpApiGetV1HelpArticlesSlugRequest} requestParameters Request parameters.
+     * @param {HelpApiGetV1HelpArticlesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelpApi
      */
-    public getV1HelpArticlesSlug(requestParameters: HelpApiGetV1HelpArticlesSlugRequest, options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).getV1HelpArticlesSlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getV1HelpArticlesBySlug(requestParameters: HelpApiGetV1HelpArticlesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return HelpApiFp(this.configuration).getV1HelpArticlesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

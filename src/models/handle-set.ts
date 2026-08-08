@@ -21,7 +21,7 @@
  */
 export interface HandleSet {
     /**
-     * 
+     * Handle is the display name as STORED, echoed back after trimming. Empty means the caller opted out: it keeps its rank and still sees its own row, it is just no longer listed to anyone else.
      * @type {string}
      * @memberof HandleSet
      */

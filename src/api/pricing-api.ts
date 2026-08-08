@@ -502,9 +502,9 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModelName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1PricingModelByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1PricingModelName', 'name', name)
+            assertParamExists('getV1PricingModelByName', 'name', name)
             const localVarPath = `/v1/pricing/model/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -996,10 +996,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingModelName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingModelName(name, options);
+        async getV1PricingModelByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingModelByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingModelName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingModelByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1258,12 +1258,12 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
         /**
          * Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them. A model hidden for the caller\'s org answers the same 404 an unknown name does, so a disabled model gets no existence oracle.
          * @summary Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them.
-         * @param {PricingApiGetV1PricingModelNameRequest} requestParameters Request parameters.
+         * @param {PricingApiGetV1PricingModelByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModelName(requestParameters: PricingApiGetV1PricingModelNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingModelName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1PricingModelByName(requestParameters: PricingApiGetV1PricingModelByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getV1PricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
@@ -1350,15 +1350,15 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
 };
 
 /**
- * Request parameters for getV1PricingModelName operation in PricingApi.
+ * Request parameters for getV1PricingModelByName operation in PricingApi.
  * @export
- * @interface PricingApiGetV1PricingModelNameRequest
+ * @interface PricingApiGetV1PricingModelByNameRequest
  */
-export interface PricingApiGetV1PricingModelNameRequest {
+export interface PricingApiGetV1PricingModelByNameRequest {
     /**
      * Name is the model\&#39;s name or its slugged id (\&quot;zen4\&quot;, \&quot;acme/some-model-1\&quot;), matched case-insensitively. It comes from the path: the URL is the addressing authority.
      * @type {string}
-     * @memberof PricingApiGetV1PricingModelName
+     * @memberof PricingApiGetV1PricingModelByName
      */
     readonly name: string
 }
@@ -1538,13 +1538,13 @@ export class PricingApi extends BaseAPI {
     /**
      * Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them. A model hidden for the caller\'s org answers the same 404 an unknown name does, so a disabled model gets no existence oracle.
      * @summary Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them.
-     * @param {PricingApiGetV1PricingModelNameRequest} requestParameters Request parameters.
+     * @param {PricingApiGetV1PricingModelByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingModelName(requestParameters: PricingApiGetV1PricingModelNameRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingModelName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1PricingModelByName(requestParameters: PricingApiGetV1PricingModelByNameRequest, options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getV1PricingModelByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

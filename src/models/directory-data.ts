@@ -27,13 +27,13 @@ import type { Totals } from './totals';
  */
 export interface DirectoryData {
     /**
-     * 
+     * Affiliates is one row per affiliate across the whole fleet, ORG EXPOSED, oldest first and bounded by the request\'s limit.
      * @type {Array<AdminAffiliateView>}
      * @memberof DirectoryData
      */
     'affiliates'?: Array<AdminAffiliateView>;
     /**
-     * 
+     * Summary tallies exactly the rows above — not the whole table — so a limit that truncates the page truncates the tally with it.
      * @type {Totals}
      * @memberof DirectoryData
      */

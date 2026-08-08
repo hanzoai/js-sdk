@@ -21,31 +21,31 @@
  */
 export interface PayoutView {
     /**
-     * 
+     * AmountCents is the amount RESERVED against pending royalty, in integer USD cents, always positive. The reservation is atomic and can never exceed accrued − paid, so this is owed money moved out of pending — not money moved.
      * @type {number}
      * @memberof PayoutView
      */
     'amountCents'?: number;
     /**
-     * 
+     * CreatedAt is unix seconds when the payout was RECORDED — the moment the amount left pending, not the moment a human moved the money.
      * @type {number}
      * @memberof PayoutView
      */
     'createdAt'?: number;
     /**
-     * 
+     * ID is the payout row\'s server-minted handle, \"apo_\"-prefixed. A caller never supplies it; it is what an operator quotes when reconciling a settlement.
      * @type {string}
      * @memberof PayoutView
      */
     'id'?: string;
     /**
-     * 
+     * Method is how the operator says this settles, lowercased as recorded. \"credits\" is the one method that means the author\'s own wallet; anything else — wire, paypal, check — is a cash disbursement a human performs. Recording it pays nobody either way.
      * @type {string}
      * @memberof PayoutView
      */
     'method'?: string;
     /**
-     * 
+     * Reference is the operator\'s external handle for the settlement: a wire confirmation, a PayPal transaction id. Absent when none was given.
      * @type {string}
      * @memberof PayoutView
      */
@@ -57,7 +57,7 @@ export interface PayoutView {
      */
     'settlement'?: string;
     /**
-     * 
+     * Txn is the commerce ledger transaction id of a SETTLED credits payout, and it is absent on every payout this service records. Recording moves no money, and authors asks the money plane exactly one question — what has this org spent? — with no write to answer it with, so there is no receipt to carry. It fills in only when a settlement stamps its transaction back onto the row.
      * @type {string}
      * @memberof PayoutView
      */

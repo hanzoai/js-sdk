@@ -156,70 +156,6 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/tasks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('optionsV1TasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
          * @summary Redirect to the tasks API root
          * @param {*} [options] Override http request option.
@@ -411,70 +347,6 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/tasks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('traceV1TasksByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'TRACE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -533,31 +405,6 @@ export const TasksApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TasksApi.getV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async optionsV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsV1Tasks(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.optionsV1Tasks']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async optionsV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.optionsV1TasksByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.optionsV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -635,31 +482,6 @@ export const TasksApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TasksApi.putV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceV1Tasks(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.traceV1Tasks']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async traceV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.traceV1TasksByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.traceV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -707,25 +529,6 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          */
         getV1TasksByWildcard1(requestParameters: TasksApiGetV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsV1Tasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {TasksApiOptionsV1TasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        optionsV1TasksByWildcard1(requestParameters: TasksApiOptionsV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.optionsV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
@@ -784,25 +587,6 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
         putV1TasksByWildcard1(requestParameters: TasksApiPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceV1Tasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-         * @summary Not routed by the durable engine
-         * @param {TasksApiTraceV1TasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        traceV1TasksByWildcard1(requestParameters: TasksApiTraceV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.traceV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -830,20 +614,6 @@ export interface TasksApiGetV1TasksByWildcard1Request {
      * 
      * @type {string}
      * @memberof TasksApiGetV1TasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for optionsV1TasksByWildcard1 operation in TasksApi.
- * @export
- * @interface TasksApiOptionsV1TasksByWildcard1Request
- */
-export interface TasksApiOptionsV1TasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof TasksApiOptionsV1TasksByWildcard1
      */
     readonly wildcard1: string
 }
@@ -886,20 +656,6 @@ export interface TasksApiPutV1TasksByWildcard1Request {
      * 
      * @type {string}
      * @memberof TasksApiPutV1TasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for traceV1TasksByWildcard1 operation in TasksApi.
- * @export
- * @interface TasksApiTraceV1TasksByWildcard1Request
- */
-export interface TasksApiTraceV1TasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof TasksApiTraceV1TasksByWildcard1
      */
     readonly wildcard1: string
 }
@@ -955,29 +711,6 @@ export class TasksApi extends BaseAPI {
      */
     public getV1TasksByWildcard1(requestParameters: TasksApiGetV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return TasksApiFp(this.configuration).getV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public optionsV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).optionsV1Tasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {TasksApiOptionsV1TasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public optionsV1TasksByWildcard1(requestParameters: TasksApiOptionsV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).optionsV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1047,29 +780,6 @@ export class TasksApi extends BaseAPI {
      */
     public putV1TasksByWildcard1(requestParameters: TasksApiPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
         return TasksApiFp(this.configuration).putV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public traceV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).traceV1Tasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but the engine routes nothing here: the request arrives as an unrouted path and no workflow is read or started.
-     * @summary Not routed by the durable engine
-     * @param {TasksApiTraceV1TasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TasksApi
-     */
-    public traceV1TasksByWildcard1(requestParameters: TasksApiTraceV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).traceV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

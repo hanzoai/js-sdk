@@ -17,26 +17,38 @@
 /**
  * 
  * @export
- * @interface ProjectPatch
+ * @interface CodingStarted
  */
-export interface ProjectPatch {
+export interface CodingStarted {
     /**
-     * Description is the board\'s free-form blurb, at most 32768 characters.
+     * 
      * @type {string}
-     * @memberof ProjectPatch
+     * @memberof CodingStarted
      */
-    'description'?: string;
+    'branch'?: string;
     /**
-     * Key is the project to update, from the path.
+     * 
      * @type {string}
-     * @memberof ProjectPatch
+     * @memberof CodingStarted
      */
-    'key'?: string;
+    'repo'?: string;
     /**
-     * Name is the project\'s display name. Non-empty, at most 256 characters.
-     * @type {string}
-     * @memberof ProjectPatch
+     * 
+     * @type {boolean}
+     * @memberof CodingStarted
      */
-    'name'?: string;
+    'routed'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CodingStarted
+     */
+    'sessionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CodingStarted
+     */
+    'targetId'?: string;
 }
 

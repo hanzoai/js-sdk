@@ -24,7 +24,7 @@ import type { ReferralBoard } from './referral-board';
  */
 export interface ReferralsOut {
     /**
-     * 
+     * Data is the referral board: leaders, funnel, tally and per-level liability.
      * @type {ReferralBoard}
      * @memberof ReferralsOut
      */

@@ -27,13 +27,13 @@ import type { Remittance } from './remittance';
  */
 export interface Settlement {
     /**
-     * 
+     * Affiliate is the row re-read AFTER the payout, so its paidCents and pendingCents already account for the row beside it.
      * @type {AdminAffiliateView}
      * @memberof Settlement
      */
     'affiliate'?: AdminAffiliateView;
     /**
-     * 
+     * Payout is the payout row just recorded.
      * @type {Remittance}
      * @memberof Settlement
      */

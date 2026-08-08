@@ -177,9 +177,9 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalogId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1ToolsCatalogById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ToolsCatalogId', 'id', id)
+            assertParamExists('getV1ToolsCatalogById', 'id', id)
             const localVarPath = `/v1/tools/catalog/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -212,11 +212,11 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1ToolsCatalogId: async (id: string, curateReq: CurateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1ToolsCatalogById: async (id: string, curateReq: CurateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1ToolsCatalogId', 'id', id)
+            assertParamExists('patchV1ToolsCatalogById', 'id', id)
             // verify required parameter 'curateReq' is not null or undefined
-            assertParamExists('patchV1ToolsCatalogId', 'curateReq', curateReq)
+            assertParamExists('patchV1ToolsCatalogById', 'curateReq', curateReq)
             const localVarPath = `/v1/tools/catalog/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -406,10 +406,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ToolsCatalogId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ToolsCatalogId(id, options);
+        async getV1ToolsCatalogById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ToolsCatalogById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1ToolsCatalogId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1ToolsCatalogById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -420,10 +420,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1ToolsCatalogId(id: string, curateReq: CurateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1ToolsCatalogId(id, curateReq, options);
+        async patchV1ToolsCatalogById(id: string, curateReq: CurateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1ToolsCatalogById(id, curateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.patchV1ToolsCatalogId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.patchV1ToolsCatalogById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -506,22 +506,22 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
          * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
-         * @param {ToolsApiGetV1ToolsCatalogIdRequest} requestParameters Request parameters.
+         * @param {ToolsApiGetV1ToolsCatalogByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalogId(requestParameters: ToolsApiGetV1ToolsCatalogIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
-            return localVarFp.getV1ToolsCatalogId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1ToolsCatalogById(requestParameters: ToolsApiGetV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
+            return localVarFp.getV1ToolsCatalogById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
          * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-         * @param {ToolsApiPatchV1ToolsCatalogIdRequest} requestParameters Request parameters.
+         * @param {ToolsApiPatchV1ToolsCatalogByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1ToolsCatalogId(requestParameters: ToolsApiPatchV1ToolsCatalogIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
-            return localVarFp.patchV1ToolsCatalogId(requestParameters.id, requestParameters.curateReq, options).then((request) => request(axios, basePath));
+        patchV1ToolsCatalogById(requestParameters: ToolsApiPatchV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
+            return localVarFp.patchV1ToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one of the caller\'s activated tools and answers with its output.  This is the door onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 seam or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tools — ?activated=true for the callable set.
@@ -619,36 +619,36 @@ export interface ToolsApiGetV1ToolsCatalogRequest {
 }
 
 /**
- * Request parameters for getV1ToolsCatalogId operation in ToolsApi.
+ * Request parameters for getV1ToolsCatalogById operation in ToolsApi.
  * @export
- * @interface ToolsApiGetV1ToolsCatalogIdRequest
+ * @interface ToolsApiGetV1ToolsCatalogByIdRequest
  */
-export interface ToolsApiGetV1ToolsCatalogIdRequest {
+export interface ToolsApiGetV1ToolsCatalogByIdRequest {
     /**
      * ID is the listing, from the path. It is the publisher\&#39;s reverse-DNS name with its one slash written as an underscore — \&quot;com.stripe_mcp\&quot;.
      * @type {string}
-     * @memberof ToolsApiGetV1ToolsCatalogId
+     * @memberof ToolsApiGetV1ToolsCatalogById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for patchV1ToolsCatalogId operation in ToolsApi.
+ * Request parameters for patchV1ToolsCatalogById operation in ToolsApi.
  * @export
- * @interface ToolsApiPatchV1ToolsCatalogIdRequest
+ * @interface ToolsApiPatchV1ToolsCatalogByIdRequest
  */
-export interface ToolsApiPatchV1ToolsCatalogIdRequest {
+export interface ToolsApiPatchV1ToolsCatalogByIdRequest {
     /**
      * ID is the listing to curate, from the path.
      * @type {string}
-     * @memberof ToolsApiPatchV1ToolsCatalogId
+     * @memberof ToolsApiPatchV1ToolsCatalogById
      */
     readonly id: string
 
     /**
      * 
      * @type {CurateReq}
-     * @memberof ToolsApiPatchV1ToolsCatalogId
+     * @memberof ToolsApiPatchV1ToolsCatalogById
      */
     readonly curateReq: CurateReq
 }
@@ -726,25 +726,25 @@ export class ToolsApi extends BaseAPI {
     /**
      * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
      * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
-     * @param {ToolsApiGetV1ToolsCatalogIdRequest} requestParameters Request parameters.
+     * @param {ToolsApiGetV1ToolsCatalogByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public getV1ToolsCatalogId(requestParameters: ToolsApiGetV1ToolsCatalogIdRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).getV1ToolsCatalogId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1ToolsCatalogById(requestParameters: ToolsApiGetV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).getV1ToolsCatalogById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
      * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-     * @param {ToolsApiPatchV1ToolsCatalogIdRequest} requestParameters Request parameters.
+     * @param {ToolsApiPatchV1ToolsCatalogByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public patchV1ToolsCatalogId(requestParameters: ToolsApiPatchV1ToolsCatalogIdRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).patchV1ToolsCatalogId(requestParameters.id, requestParameters.curateReq, options).then((request) => request(this.axios, this.basePath));
+    public patchV1ToolsCatalogById(requestParameters: ToolsApiPatchV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).patchV1ToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

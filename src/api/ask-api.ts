@@ -23,6 +23,10 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { AskRequest } from '../models';
+// @ts-ignore
+import type { Report } from '../models';
+// @ts-ignore
+import type { WebQuestion } from '../models';
 /**
  * AskApi - axios parameter creator
  * @export
@@ -30,8 +34,8 @@ import type { AskRequest } from '../models';
 export const AskApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger) and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Ask a grounded question about your own org
+         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
          * @param {AskRequest} [askRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -63,6 +67,42 @@ export const AskApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
+         * @summary Research a question on the live web and answer it with sources cited
+         * @param {WebQuestion} webQuestion 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        researchWeb: async (webQuestion: WebQuestion, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'webQuestion' is not null or undefined
+            assertParamExists('researchWeb', 'webQuestion', webQuestion)
+            const localVarPath = `/v1/ask/web`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(webQuestion, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -74,8 +114,8 @@ export const AskApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AskApiAxiosParamCreator(configuration)
     return {
         /**
-         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger) and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Ask a grounded question about your own org
+         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
          * @param {AskRequest} [askRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -84,6 +124,19 @@ export const AskApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Ask(askRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AskApi.postV1Ask']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
+         * @summary Research a question on the live web and answer it with sources cited
+         * @param {WebQuestion} webQuestion 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async researchWeb(webQuestion: WebQuestion, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Report>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.researchWeb(webQuestion, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AskApi.researchWeb']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,14 +150,24 @@ export const AskApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = AskApiFp(configuration)
     return {
         /**
-         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger) and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Ask a grounded question about your own org
+         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
          * @param {AskApiPostV1AskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postV1Ask(requestParameters: AskApiPostV1AskRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1Ask(requestParameters.askRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
+         * @summary Research a question on the live web and answer it with sources cited
+         * @param {AskApiResearchWebRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        researchWeb(requestParameters: AskApiResearchWebRequest, options?: RawAxiosRequestConfig): AxiosPromise<Report> {
+            return localVarFp.researchWeb(requestParameters.webQuestion, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -124,6 +187,20 @@ export interface AskApiPostV1AskRequest {
 }
 
 /**
+ * Request parameters for researchWeb operation in AskApi.
+ * @export
+ * @interface AskApiResearchWebRequest
+ */
+export interface AskApiResearchWebRequest {
+    /**
+     * 
+     * @type {WebQuestion}
+     * @memberof AskApiResearchWeb
+     */
+    readonly webQuestion: WebQuestion
+}
+
+/**
  * AskApi - object-oriented interface
  * @export
  * @class AskApi
@@ -131,8 +208,8 @@ export interface AskApiPostV1AskRequest {
  */
 export class AskApi extends BaseAPI {
     /**
-     * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger) and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-     * @summary Ask a grounded question about your own org
+     * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+     * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
      * @param {AskApiPostV1AskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -140,6 +217,18 @@ export class AskApi extends BaseAPI {
      */
     public postV1Ask(requestParameters: AskApiPostV1AskRequest = {}, options?: RawAxiosRequestConfig) {
         return AskApiFp(this.configuration).postV1Ask(requestParameters.askRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Researches a question on the live web and answers it with its sources cited.  This is the DEEP one. It plans the question into topics, runs several web searches, FETCHES AND READS the pages it finds, ranks them, and writes a grounded answer with inline markdown citations. Use it for anything that needs evidence, comparison or current fact — \"what changed in X\", \"compare A and B\", \"is this claim true\". For a plain list of links, use search_web instead; for one page you already have the URL of, use read_page.  `mode` buys depth: `search` is a single fast pass, `news` biases to recency, `research` plans and iterates, `deep` surveys widest. `sources` narrows the evidence to `web`, `news`, `academic`, `github`, `reddit` or `x` — each becomes a site-scoped search, which is how this reaches X/Twitter posts.  EVERY CITATION IS A PAGE THIS CALL FETCHED. That is a property of the text and not an instruction to the model: each source is fenced with a per-request nonce so a crawled page cannot print itself a source number, and every markdown link in the answer is checked against the gathered set before it is returned. So a link in `answer` always appears in `sources`, and a page that was not read cannot be cited.  It is BOUNDED and it degrades rather than failing: a mode\'s rounds, wall clock and token ceiling all cap it, and a search that finds little or a page that will not load yields a thinner answer, never an error. A validated principal is required, and the answer is billed once to that principal\'s org.
+     * @summary Research a question on the live web and answer it with sources cited
+     * @param {AskApiResearchWebRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AskApi
+     */
+    public researchWeb(requestParameters: AskApiResearchWebRequest, options?: RawAxiosRequestConfig) {
+        return AskApiFp(this.configuration).researchWeb(requestParameters.webQuestion, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

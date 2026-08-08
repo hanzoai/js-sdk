@@ -45,7 +45,7 @@ export interface AffiliateEarnings {
      */
     'byReferredOrg'?: Array<OrgEarningView>;
     /**
-     * 
+     * IsAffiliate says whether the caller org has an affiliate record. On false it is the ONLY field present — there is no ledger to report, and the zeros you might expect are absent rather than reported as earnings of nothing.
      * @type {boolean}
      * @memberof AffiliateEarnings
      */

@@ -34,9 +34,15 @@ import type { GithubBackfillIn } from '../models';
 // @ts-ignore
 import type { GithubBackfillResult } from '../models';
 // @ts-ignore
+import type { GithubClaimIn } from '../models';
+// @ts-ignore
+import type { GithubClaimOut } from '../models';
+// @ts-ignore
 import type { GithubImportIn } from '../models';
 // @ts-ignore
 import type { GithubImportOut } from '../models';
+// @ts-ignore
+import type { GithubInstallationsOut } from '../models';
 // @ts-ignore
 import type { GithubPagesBuildOut } from '../models';
 // @ts-ignore
@@ -70,9 +76,9 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IntegrationsGithubReposRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1IntegrationsGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('deleteV1IntegrationsGithubReposRepoPages', 'repo', repo)
+            assertParamExists('deleteV1IntegrationsGithubReposByRepoPages', 'repo', repo)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -105,6 +111,40 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          */
         getV1Integrations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/integrations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
+         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1IntegrationsByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('getV1IntegrationsByProvider', 'provider', provider)
+            const localVarPath = `/v1/integrations/{provider}`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -252,6 +292,36 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.  The confirmation is the point. A connection row holds an installation id, and an id whose installation was since removed on GitHub is a row that mints nothing — every list and import against it fails with a token error, which reads as \"our git integration is broken\" rather than \"that install is gone\". Checking the App\'s view turns that into a fact the caller can act on.  ORG-SCOPED for a tenant, deliberately. The App is installed across every customer, so the raw list is the customer list; a tenant sees only accounts its own org has bound. It discovers a NEW account by installing it (InstallURL), which is GitHub\'s own consent screen — not by reading ours.  A SUPER ADMIN sees the App\'s whole install list, because that list is the platform\'s own inventory rather than any one tenant\'s data, and platform sudo is the single cross-tenant scope this house has. Without it an App installed out-of-band — granted straight from GitHub, so no connect flow ever ran and no connection row exists — is invisible to everyone: the console card reads \"not connected\" and an operator asked \"which GitHub orgs do you see\" can only answer for accounts already bound, which is precisely the accounts that were never the question.
+         * @summary Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1IntegrationsGithubInstallations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/github/installations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane. Org-authed: the org comes from the validated principal, and the granted set is bounded to THAT org\'s installation token — an org can never enumerate another org\'s repos. The console polls it to watch an import flip a repo to imported.
          * @summary Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane.
          * @param {*} [options] Override http request option.
@@ -288,9 +358,9 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IntegrationsGithubReposRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1IntegrationsGithubReposByRepoPages: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('getV1IntegrationsGithubReposRepoPages', 'repo', repo)
+            assertParamExists('getV1IntegrationsGithubReposByRepoPages', 'repo', repo)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -316,17 +386,13 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
-         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
+         * @summary Install the Hanzo app into a Slack workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IntegrationsProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getV1IntegrationsProvider', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+        getV1IntegrationsSlackInstall: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/slack/install`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -620,7 +686,115 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
+         * @summary Acquires the org\'s credential for one provider.
+         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {ConnectIn} connectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderConnect: async (provider: string, connectIn: ConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postV1IntegrationsByProviderConnect', 'provider', provider)
+            // verify required parameter 'connectIn' is not null or undefined
+            assertParamExists('postV1IntegrationsByProviderConnect', 'connectIn', connectIn)
+            const localVarPath = `/v1/integrations/{provider}/connect`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(connectIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderDisconnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postV1IntegrationsByProviderDisconnect', 'provider', provider)
+            const localVarPath = `/v1/integrations/{provider}/disconnect`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
+         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderVerify: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postV1IntegrationsByProviderVerify', 'provider', provider)
+            const localVarPath = `/v1/integrations/{provider}/verify`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -643,6 +817,42 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
+         * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
+         * @param {GithubClaimIn} githubClaimIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubClaim: async (githubClaimIn: GithubClaimIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'githubClaimIn' is not null or undefined
+            assertParamExists('postV1IntegrationsGithubClaim', 'githubClaimIn', githubClaimIn)
+            const localVarPath = `/v1/integrations/github/claim`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(githubClaimIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -686,42 +896,6 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
-         * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
-         * @param {GithubImportIn} githubImportIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsGithubReposImport: async (githubImportIn: GithubImportIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'githubImportIn' is not null or undefined
-            assertParamExists('postV1IntegrationsGithubReposImport', 'githubImportIn', githubImportIn)
-            const localVarPath = `/v1/integrations/github/repos/import`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(githubImportIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
          * @summary Creates the repo\'s Pages site and answers 201 Created with it.
          * @param {string} repo Repo is the repository, from the :repo path segment.
@@ -729,11 +903,11 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IntegrationsGithubReposRepoPages: async (repo: string, githubPagesEnableReq: GithubPagesEnableReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1IntegrationsGithubReposByRepoPages: async (repo: string, githubPagesEnableReq: GithubPagesEnableReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('postV1IntegrationsGithubReposRepoPages', 'repo', repo)
+            assertParamExists('postV1IntegrationsGithubReposByRepoPages', 'repo', repo)
             // verify required parameter 'githubPagesEnableReq' is not null or undefined
-            assertParamExists('postV1IntegrationsGithubReposRepoPages', 'githubPagesEnableReq', githubPagesEnableReq)
+            assertParamExists('postV1IntegrationsGithubReposByRepoPages', 'githubPagesEnableReq', githubPagesEnableReq)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -768,9 +942,9 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IntegrationsGithubReposRepoPagesBuilds: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1IntegrationsGithubReposByRepoPagesBuilds: async (repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('postV1IntegrationsGithubReposRepoPagesBuilds', 'repo', repo)
+            assertParamExists('postV1IntegrationsGithubReposByRepoPagesBuilds', 'repo', repo)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages/builds`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -796,20 +970,16 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
-         * @summary Acquires the org\'s credential for one provider.
-         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
-         * @param {ConnectIn} connectIn 
+         * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
+         * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
+         * @param {GithubImportIn} githubImportIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IntegrationsProviderConnect: async (provider: string, connectIn: ConnectIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1IntegrationsProviderConnect', 'provider', provider)
-            // verify required parameter 'connectIn' is not null or undefined
-            assertParamExists('postV1IntegrationsProviderConnect', 'connectIn', connectIn)
-            const localVarPath = `/v1/integrations/{provider}/connect`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+        postV1IntegrationsGithubReposImport: async (githubImportIn: GithubImportIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'githubImportIn' is not null or undefined
+            assertParamExists('postV1IntegrationsGithubReposImport', 'githubImportIn', githubImportIn)
+            const localVarPath = `/v1/integrations/github/repos/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -828,75 +998,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(connectIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
-         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsProviderDisconnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1IntegrationsProviderDisconnect', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}/disconnect`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
-         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsProviderVerify: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1IntegrationsProviderVerify', 'provider', provider)
-            const localVarPath = `/v1/integrations/{provider}/verify`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(githubImportIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -964,7 +1066,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1061,11 +1163,11 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IntegrationsGithubReposRepoPages: async (repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1IntegrationsGithubReposByRepoPages: async (repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'repo' is not null or undefined
-            assertParamExists('putV1IntegrationsGithubReposRepoPages', 'repo', repo)
+            assertParamExists('putV1IntegrationsGithubReposByRepoPages', 'repo', repo)
             // verify required parameter 'githubPagesUpdateReq' is not null or undefined
-            assertParamExists('putV1IntegrationsGithubReposRepoPages', 'githubPagesUpdateReq', githubPagesUpdateReq)
+            assertParamExists('putV1IntegrationsGithubReposByRepoPages', 'githubPagesUpdateReq', githubPagesUpdateReq)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1110,10 +1212,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IntegrationsGithubReposRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesDisabledOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IntegrationsGithubReposRepoPages(repo, options);
+        async deleteV1IntegrationsGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesDisabledOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IntegrationsGithubReposByRepoPages(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.deleteV1IntegrationsGithubReposRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.deleteV1IntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1126,6 +1228,19 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Integrations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1Integrations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
+         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1IntegrationsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsByProvider(provider, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsByProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1178,6 +1293,18 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.  The confirmation is the point. A connection row holds an installation id, and an id whose installation was since removed on GitHub is a row that mints nothing — every list and import against it fails with a token error, which reads as \"our git integration is broken\" rather than \"that install is gone\". Checking the App\'s view turns that into a fact the caller can act on.  ORG-SCOPED for a tenant, deliberately. The App is installed across every customer, so the raw list is the customer list; a tenant sees only accounts its own org has bound. It discovers a NEW account by installing it (InstallURL), which is GitHub\'s own consent screen — not by reading ours.  A SUPER ADMIN sees the App\'s whole install list, because that list is the platform\'s own inventory rather than any one tenant\'s data, and platform sudo is the single cross-tenant scope this house has. Without it an App installed out-of-band — granted straight from GitHub, so no connect flow ever ran and no connection row exists — is invisible to everyone: the console card reads \"not connected\" and an operator asked \"which GitHub orgs do you see\" can only answer for accounts already bound, which is precisely the accounts that were never the question.
+         * @summary Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1IntegrationsGithubInstallations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubInstallationsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsGithubInstallations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsGithubInstallations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane. Org-authed: the org comes from the validated principal, and the granted set is bounded to THAT org\'s installation token — an org can never enumerate another org\'s repos. The console polls it to watch an import flip a repo to imported.
          * @summary Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane.
          * @param {*} [options] Override http request option.
@@ -1196,23 +1323,22 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IntegrationsGithubReposRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsGithubReposRepoPages(repo, options);
+        async getV1IntegrationsGithubReposByRepoPages(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsGithubReposByRepoPages(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsGithubReposRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
-         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
+         * @summary Install the Hanzo app into a Slack workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IntegrationsProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsProvider(provider, options);
+        async getV1IntegrationsSlackInstall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IntegrationsSlackInstall(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getV1IntegrationsSlackInstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1324,7 +1450,47 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
+         * @summary Acquires the org\'s credential for one provider.
+         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
+         * @param {ConnectIn} connectIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsByProviderConnect(provider: string, connectIn: ConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsByProviderConnect(provider, connectIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsByProviderConnect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsByProviderDisconnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsByProviderDisconnect(provider, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsByProviderDisconnect']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
+         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsByProviderVerify(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsByProviderVerify(provider, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsByProviderVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1333,6 +1499,19 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsDiscordInteractions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsDiscordInteractions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
+         * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
+         * @param {GithubClaimIn} githubClaimIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsGithubClaim(githubClaimIn: GithubClaimIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubClaimOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubClaim(githubClaimIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1349,6 +1528,33 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
+         * @summary Creates the repo\'s Pages site and answers 201 Created with it.
+         * @param {string} repo Repo is the repository, from the :repo path segment.
+         * @param {GithubPagesEnableReq} githubPagesEnableReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsGithubReposByRepoPages(repo: string, githubPagesEnableReq: GithubPagesEnableReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposByRepoPages(repo, githubPagesEnableReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
+         * @summary Requests a Pages rebuild and returns the queued build\'s status.
+         * @param {string} repo Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsGithubReposByRepoPagesBuilds(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesBuildOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposByRepoPagesBuilds(repo, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposByRepoPagesBuilds']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
          * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
          * @param {GithubImportIn} githubImportIn 
@@ -1359,73 +1565,6 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposImport(githubImportIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposImport']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
-         * @summary Creates the repo\'s Pages site and answers 201 Created with it.
-         * @param {string} repo Repo is the repository, from the :repo path segment.
-         * @param {GithubPagesEnableReq} githubPagesEnableReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IntegrationsGithubReposRepoPages(repo: string, githubPagesEnableReq: GithubPagesEnableReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposRepoPages(repo, githubPagesEnableReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposRepoPages']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
-         * @summary Requests a Pages rebuild and returns the queued build\'s status.
-         * @param {string} repo Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IntegrationsGithubReposRepoPagesBuilds(repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesBuildOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposRepoPagesBuilds(repo, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposRepoPagesBuilds']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
-         * @summary Acquires the org\'s credential for one provider.
-         * @param {string} provider Provider is the connector\&#39;s registry id, from the :provider path segment.
-         * @param {ConnectIn} connectIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IntegrationsProviderConnect(provider: string, connectIn: ConnectIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsProviderConnect(provider, connectIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsProviderConnect']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
-         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IntegrationsProviderDisconnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsProviderDisconnect(provider, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsProviderDisconnect']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
-         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1IntegrationsProviderVerify(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsProviderVerify(provider, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsProviderVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1453,7 +1592,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1496,10 +1635,10 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IntegrationsGithubReposRepoPages(repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesUpdatedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IntegrationsGithubReposRepoPages(repo, githubPagesUpdateReq, options);
+        async putV1IntegrationsGithubReposByRepoPages(repo: string, githubPagesUpdateReq: GithubPagesUpdateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubPagesUpdatedOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IntegrationsGithubReposByRepoPages(repo, githubPagesUpdateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.putV1IntegrationsGithubReposRepoPages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.putV1IntegrationsGithubReposByRepoPages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1515,12 +1654,12 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
         /**
          * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
          * @summary Deletes the repo\'s Pages site.
-         * @param {IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesDisabledOut> {
-            return localVarFp.deleteV1IntegrationsGithubReposRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
+        deleteV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesDisabledOut> {
+            return localVarFp.deleteV1IntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/connectors surface) are omitted; the two planes are disjoint.
@@ -1530,6 +1669,16 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         getV1Integrations(options?: RawAxiosRequestConfig): AxiosPromise<ListOut> {
             return localVarFp.getV1Integrations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
+         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
+         * @param {IntegrationsApiGetV1IntegrationsByProviderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1IntegrationsByProvider(requestParameters: IntegrationsApiGetV1IntegrationsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderView> {
+            return localVarFp.getV1IntegrationsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * The single address every connector\'s OAuth flow returns to. It exchanges the authorization the provider granted, records the connection, and ALWAYS redirects the browser back to the console — on success and on every labeled failure alike, so a user never lands on a raw JSON dead end.  It is public and carries no principal, so the org is taken ONLY from the signed state minted when the flow began; no header is trusted here. That state is single-use and is burned BEFORE the exchange, so one authorization is one attempt and a replayed return fails instead of exchanging twice.  Tokens are sealed into the org\'s KMS namespace BEFORE the connection row is written, so a failure of the secret store leaves no half-connected integration advertising a credential that was never stored. Token values never appear in the redirect, in a log line or in an error.  One generalization is worth knowing: a GitHub App installation returns an installation identifier instead of an OAuth code, and it is accepted in the code\'s place so the App model needs no second address.
@@ -1569,6 +1718,15 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.getV1IntegrationsDiscordLinkDiscord(options).then((request) => request(axios, basePath));
         },
         /**
+         * Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.  The confirmation is the point. A connection row holds an installation id, and an id whose installation was since removed on GitHub is a row that mints nothing — every list and import against it fails with a token error, which reads as \"our git integration is broken\" rather than \"that install is gone\". Checking the App\'s view turns that into a fact the caller can act on.  ORG-SCOPED for a tenant, deliberately. The App is installed across every customer, so the raw list is the customer list; a tenant sees only accounts its own org has bound. It discovers a NEW account by installing it (InstallURL), which is GitHub\'s own consent screen — not by reading ours.  A SUPER ADMIN sees the App\'s whole install list, because that list is the platform\'s own inventory rather than any one tenant\'s data, and platform sudo is the single cross-tenant scope this house has. Without it an App installed out-of-band — granted straight from GitHub, so no connect flow ever ran and no connection row exists — is invisible to everyone: the console card reads \"not connected\" and an operator asked \"which GitHub orgs do you see\" can only answer for accounts already bound, which is precisely the accounts that were never the question.
+         * @summary Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1IntegrationsGithubInstallations(options?: RawAxiosRequestConfig): AxiosPromise<GithubInstallationsOut> {
+            return localVarFp.getV1IntegrationsGithubInstallations(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane. Org-authed: the org comes from the validated principal, and the granted set is bounded to THAT org\'s installation token — an org can never enumerate another org\'s repos. The console polls it to watch an import flip a repo to imported.
          * @summary Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane.
          * @param {*} [options] Override http request option.
@@ -1580,22 +1738,21 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
         /**
          * Returns the repo\'s Pages status, live URL, custom domain and build source. The repo is resolved against the org installation\'s GRANTED set, so a caller can never address a repo the App was not granted; 404 when the repo has no Pages site.
          * @summary Returns the repo\'s Pages status, live URL, custom domain and build source.
-         * @param {IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
-            return localVarFp.getV1IntegrationsGithubReposRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
+        getV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
+            return localVarFp.getV1IntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
-         * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {IntegrationsApiGetV1IntegrationsProviderRequest} requestParameters Request parameters.
+         * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
+         * @summary Install the Hanzo app into a Slack workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IntegrationsProvider(requestParameters: IntegrationsApiGetV1IntegrationsProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProviderView> {
-            return localVarFp.getV1IntegrationsProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getV1IntegrationsSlackInstall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1IntegrationsSlackInstall(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo posts in Slack. It starts a link session in the browser and redirects to Slack\'s own sign-in, which is what proves which Slack user is asking.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -1679,13 +1836,53 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.getV1IntegrationsTelegramLinkCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
+         * @summary Acquires the org\'s credential for one provider.
+         * @param {IntegrationsApiPostV1IntegrationsByProviderConnectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderConnect(requestParameters: IntegrationsApiPostV1IntegrationsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectOut> {
+            return localVarFp.postV1IntegrationsByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
+         * @param {IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderDisconnect(requestParameters: IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
+            return localVarFp.postV1IntegrationsByProviderDisconnect(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
+         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
+         * @param {IntegrationsApiPostV1IntegrationsByProviderVerifyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsByProviderVerify(requestParameters: IntegrationsApiPostV1IntegrationsByProviderVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyOut> {
+            return localVarFp.postV1IntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postV1IntegrationsDiscordInteractions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1IntegrationsDiscordInteractions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
+         * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
+         * @param {IntegrationsApiPostV1IntegrationsGithubClaimRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubClaim(requestParameters: IntegrationsApiPostV1IntegrationsGithubClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubClaimOut> {
+            return localVarFp.postV1IntegrationsGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
@@ -1698,6 +1895,26 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.postV1IntegrationsGithubIssuesBackfill(requestParameters.githubBackfillIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
+         * @summary Creates the repo\'s Pages site and answers 201 Created with it.
+         * @param {IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
+            return localVarFp.postV1IntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
+         * @summary Requests a Pages rebuild and returns the queued build\'s status.
+         * @param {IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubReposByRepoPagesBuilds(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesBuildOut> {
+            return localVarFp.postV1IntegrationsGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
          * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
          * @param {IntegrationsApiPostV1IntegrationsGithubReposImportRequest} requestParameters Request parameters.
@@ -1706,56 +1923,6 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         postV1IntegrationsGithubReposImport(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubImportOut> {
             return localVarFp.postV1IntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
-         * @summary Creates the repo\'s Pages site and answers 201 Created with it.
-         * @param {IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
-            return localVarFp.postV1IntegrationsGithubReposRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
-         * @summary Requests a Pages rebuild and returns the queued build\'s status.
-         * @param {IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsGithubReposRepoPagesBuilds(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesBuildOut> {
-            return localVarFp.postV1IntegrationsGithubReposRepoPagesBuilds(requestParameters.repo, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
-         * @summary Acquires the org\'s credential for one provider.
-         * @param {IntegrationsApiPostV1IntegrationsProviderConnectRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsProviderConnect(requestParameters: IntegrationsApiPostV1IntegrationsProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectOut> {
-            return localVarFp.postV1IntegrationsProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
-         * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {IntegrationsApiPostV1IntegrationsProviderDisconnectRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsProviderDisconnect(requestParameters: IntegrationsApiPostV1IntegrationsProviderDisconnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
-            return localVarFp.postV1IntegrationsProviderDisconnect(requestParameters.provider, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
-         * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {IntegrationsApiPostV1IntegrationsProviderVerifyRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1IntegrationsProviderVerify(requestParameters: IntegrationsApiPostV1IntegrationsProviderVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyOut> {
-            return localVarFp.postV1IntegrationsProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -1776,7 +1943,7 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.postV1IntegrationsSlackEvents(options).then((request) => request(axios, basePath));
         },
         /**
-         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+         * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
          * @summary Microsoft Teams Bot Framework webhook
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1805,28 +1972,42 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
         /**
          * Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source. ONLY the provided fields are sent to GitHub, so an update never resets a setting the caller did not mention.
          * @summary Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source.
-         * @param {IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+         * @param {IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesUpdatedOut> {
-            return localVarFp.putV1IntegrationsGithubReposRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(axios, basePath));
+        putV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesUpdatedOut> {
+            return localVarFp.putV1IntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1IntegrationsGithubReposRepoPages operation in IntegrationsApi.
+ * Request parameters for deleteV1IntegrationsGithubReposByRepoPages operation in IntegrationsApi.
  * @export
- * @interface IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest
+ * @interface IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest {
+export interface IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof IntegrationsApiDeleteV1IntegrationsGithubReposRepoPages
+     * @memberof IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPages
      */
     readonly repo: string
+}
+
+/**
+ * Request parameters for getV1IntegrationsByProvider operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiGetV1IntegrationsByProviderRequest
+ */
+export interface IntegrationsApiGetV1IntegrationsByProviderRequest {
+    /**
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * @type {string}
+     * @memberof IntegrationsApiGetV1IntegrationsByProvider
+     */
+    readonly provider: string
 }
 
 /**
@@ -1844,31 +2025,80 @@ export interface IntegrationsApiGetV1IntegrationsByProviderCallbackRequest {
 }
 
 /**
- * Request parameters for getV1IntegrationsGithubReposRepoPages operation in IntegrationsApi.
+ * Request parameters for getV1IntegrationsGithubReposByRepoPages operation in IntegrationsApi.
  * @export
- * @interface IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest
+ * @interface IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest {
+export interface IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
      * @type {string}
-     * @memberof IntegrationsApiGetV1IntegrationsGithubReposRepoPages
+     * @memberof IntegrationsApiGetV1IntegrationsGithubReposByRepoPages
      */
     readonly repo: string
 }
 
 /**
- * Request parameters for getV1IntegrationsProvider operation in IntegrationsApi.
+ * Request parameters for postV1IntegrationsByProviderConnect operation in IntegrationsApi.
  * @export
- * @interface IntegrationsApiGetV1IntegrationsProviderRequest
+ * @interface IntegrationsApiPostV1IntegrationsByProviderConnectRequest
  */
-export interface IntegrationsApiGetV1IntegrationsProviderRequest {
+export interface IntegrationsApiPostV1IntegrationsByProviderConnectRequest {
+    /**
+     * Provider is the connector\&#39;s registry id, from the :provider path segment.
+     * @type {string}
+     * @memberof IntegrationsApiPostV1IntegrationsByProviderConnect
+     */
+    readonly provider: string
+
+    /**
+     * 
+     * @type {ConnectIn}
+     * @memberof IntegrationsApiPostV1IntegrationsByProviderConnect
+     */
+    readonly connectIn: ConnectIn
+}
+
+/**
+ * Request parameters for postV1IntegrationsByProviderDisconnect operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest {
     /**
      * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
      * @type {string}
-     * @memberof IntegrationsApiGetV1IntegrationsProvider
+     * @memberof IntegrationsApiPostV1IntegrationsByProviderDisconnect
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for postV1IntegrationsByProviderVerify operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsByProviderVerifyRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsByProviderVerifyRequest {
+    /**
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * @type {string}
+     * @memberof IntegrationsApiPostV1IntegrationsByProviderVerify
+     */
+    readonly provider: string
+}
+
+/**
+ * Request parameters for postV1IntegrationsGithubClaim operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsGithubClaimRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsGithubClaimRequest {
+    /**
+     * 
+     * @type {GithubClaimIn}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubClaim
+     */
+    readonly githubClaimIn: GithubClaimIn
 }
 
 /**
@@ -1886,6 +2116,41 @@ export interface IntegrationsApiPostV1IntegrationsGithubIssuesBackfillRequest {
 }
 
 /**
+ * Request parameters for postV1IntegrationsGithubReposByRepoPages operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest {
+    /**
+     * Repo is the repository, from the :repo path segment.
+     * @type {string}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubReposByRepoPages
+     */
+    readonly repo: string
+
+    /**
+     * 
+     * @type {GithubPagesEnableReq}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubReposByRepoPages
+     */
+    readonly githubPagesEnableReq: GithubPagesEnableReq
+}
+
+/**
+ * Request parameters for postV1IntegrationsGithubReposByRepoPagesBuilds operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest {
+    /**
+     * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
+     * @type {string}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuilds
+     */
+    readonly repo: string
+}
+
+/**
  * Request parameters for postV1IntegrationsGithubReposImport operation in IntegrationsApi.
  * @export
  * @interface IntegrationsApiPostV1IntegrationsGithubReposImportRequest
@@ -1900,106 +2165,22 @@ export interface IntegrationsApiPostV1IntegrationsGithubReposImportRequest {
 }
 
 /**
- * Request parameters for postV1IntegrationsGithubReposRepoPages operation in IntegrationsApi.
+ * Request parameters for putV1IntegrationsGithubReposByRepoPages operation in IntegrationsApi.
  * @export
- * @interface IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest
+ * @interface IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest
  */
-export interface IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest {
+export interface IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest {
     /**
      * Repo is the repository, from the :repo path segment.
      * @type {string}
-     * @memberof IntegrationsApiPostV1IntegrationsGithubReposRepoPages
-     */
-    readonly repo: string
-
-    /**
-     * 
-     * @type {GithubPagesEnableReq}
-     * @memberof IntegrationsApiPostV1IntegrationsGithubReposRepoPages
-     */
-    readonly githubPagesEnableReq: GithubPagesEnableReq
-}
-
-/**
- * Request parameters for postV1IntegrationsGithubReposRepoPagesBuilds operation in IntegrationsApi.
- * @export
- * @interface IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest
- */
-export interface IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest {
-    /**
-     * Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
-     * @type {string}
-     * @memberof IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuilds
-     */
-    readonly repo: string
-}
-
-/**
- * Request parameters for postV1IntegrationsProviderConnect operation in IntegrationsApi.
- * @export
- * @interface IntegrationsApiPostV1IntegrationsProviderConnectRequest
- */
-export interface IntegrationsApiPostV1IntegrationsProviderConnectRequest {
-    /**
-     * Provider is the connector\&#39;s registry id, from the :provider path segment.
-     * @type {string}
-     * @memberof IntegrationsApiPostV1IntegrationsProviderConnect
-     */
-    readonly provider: string
-
-    /**
-     * 
-     * @type {ConnectIn}
-     * @memberof IntegrationsApiPostV1IntegrationsProviderConnect
-     */
-    readonly connectIn: ConnectIn
-}
-
-/**
- * Request parameters for postV1IntegrationsProviderDisconnect operation in IntegrationsApi.
- * @export
- * @interface IntegrationsApiPostV1IntegrationsProviderDisconnectRequest
- */
-export interface IntegrationsApiPostV1IntegrationsProviderDisconnectRequest {
-    /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-     * @type {string}
-     * @memberof IntegrationsApiPostV1IntegrationsProviderDisconnect
-     */
-    readonly provider: string
-}
-
-/**
- * Request parameters for postV1IntegrationsProviderVerify operation in IntegrationsApi.
- * @export
- * @interface IntegrationsApiPostV1IntegrationsProviderVerifyRequest
- */
-export interface IntegrationsApiPostV1IntegrationsProviderVerifyRequest {
-    /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
-     * @type {string}
-     * @memberof IntegrationsApiPostV1IntegrationsProviderVerify
-     */
-    readonly provider: string
-}
-
-/**
- * Request parameters for putV1IntegrationsGithubReposRepoPages operation in IntegrationsApi.
- * @export
- * @interface IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest
- */
-export interface IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest {
-    /**
-     * Repo is the repository, from the :repo path segment.
-     * @type {string}
-     * @memberof IntegrationsApiPutV1IntegrationsGithubReposRepoPages
+     * @memberof IntegrationsApiPutV1IntegrationsGithubReposByRepoPages
      */
     readonly repo: string
 
     /**
      * 
      * @type {GithubPagesUpdateReq}
-     * @memberof IntegrationsApiPutV1IntegrationsGithubReposRepoPages
+     * @memberof IntegrationsApiPutV1IntegrationsGithubReposByRepoPages
      */
     readonly githubPagesUpdateReq: GithubPagesUpdateReq
 }
@@ -2014,13 +2195,13 @@ export class IntegrationsApi extends BaseAPI {
     /**
      * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
      * @summary Deletes the repo\'s Pages site.
-     * @param {IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public deleteV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiDeleteV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).deleteV1IntegrationsGithubReposRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiDeleteV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).deleteV1IntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2032,6 +2213,18 @@ export class IntegrationsApi extends BaseAPI {
      */
     public getV1Integrations(options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).getV1Integrations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
+     * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
+     * @param {IntegrationsApiGetV1IntegrationsByProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getV1IntegrationsByProvider(requestParameters: IntegrationsApiGetV1IntegrationsByProviderRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getV1IntegrationsByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2080,6 +2273,17 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
+     * Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.  The confirmation is the point. A connection row holds an installation id, and an id whose installation was since removed on GitHub is a row that mints nothing — every list and import against it fails with a token error, which reads as \"our git integration is broken\" rather than \"that install is gone\". Checking the App\'s view turns that into a fact the caller can act on.  ORG-SCOPED for a tenant, deliberately. The App is installed across every customer, so the raw list is the customer list; a tenant sees only accounts its own org has bound. It discovers a NEW account by installing it (InstallURL), which is GitHub\'s own consent screen — not by reading ours.  A SUPER ADMIN sees the App\'s whole install list, because that list is the platform\'s own inventory rather than any one tenant\'s data, and platform sudo is the single cross-tenant scope this house has. Without it an App installed out-of-band — granted straight from GitHub, so no connect flow ever ran and no connection row exists — is invisible to everyone: the console card reads \"not connected\" and an operator asked \"which GitHub orgs do you see\" can only answer for accounts already bound, which is precisely the accounts that were never the question.
+     * @summary Lists the GitHub accounts the caller may see the App installed on, each confirmed against the App\'s own list, plus where to add another.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getV1IntegrationsGithubInstallations(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getV1IntegrationsGithubInstallations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane. Org-authed: the org comes from the validated principal, and the granted set is bounded to THAT org\'s installation token — an org can never enumerate another org\'s repos. The console polls it to watch an import flip a repo to imported.
      * @summary Lists the org\'s granted GitHub repositories, each annotated with its native import + sync status from the git object plane.
      * @param {*} [options] Override http request option.
@@ -2093,25 +2297,24 @@ export class IntegrationsApi extends BaseAPI {
     /**
      * Returns the repo\'s Pages status, live URL, custom domain and build source. The repo is resolved against the org installation\'s GRANTED set, so a caller can never address a repo the App was not granted; 404 when the repo has no Pages site.
      * @summary Returns the repo\'s Pages status, live URL, custom domain and build source.
-     * @param {IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public getV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiGetV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getV1IntegrationsGithubReposRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public getV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getV1IntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
-     * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-     * @param {IntegrationsApiGetV1IntegrationsProviderRequest} requestParameters Request parameters.
+     * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
+     * @summary Install the Hanzo app into a Slack workspace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public getV1IntegrationsProvider(requestParameters: IntegrationsApiGetV1IntegrationsProviderRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).getV1IntegrationsProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getV1IntegrationsSlackInstall(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getV1IntegrationsSlackInstall(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2214,7 +2417,43 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one bridge where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
+     * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
+     * @summary Acquires the org\'s credential for one provider.
+     * @param {IntegrationsApiPostV1IntegrationsByProviderConnectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsByProviderConnect(requestParameters: IntegrationsApiPostV1IntegrationsByProviderConnectRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsByProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
+     * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
+     * @param {IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsByProviderDisconnect(requestParameters: IntegrationsApiPostV1IntegrationsByProviderDisconnectRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsByProviderDisconnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
+     * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
+     * @param {IntegrationsApiPostV1IntegrationsByProviderVerifyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsByProviderVerify(requestParameters: IntegrationsApiPostV1IntegrationsByProviderVerifyRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
      * @summary Discord interactions endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2222,6 +2461,18 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postV1IntegrationsDiscordInteractions(options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postV1IntegrationsDiscordInteractions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.  An installation IS the grant: GitHub recorded the consent when the App was installed, and our connection row is bookkeeping that never got written because nobody came through our callback. This writes that row from the App\'s own view, so 23 accounts granted straight from GitHub stop reading as nothing.  The org is taken from the VALIDATED PRINCIPAL and never from the body, because it is the one part GitHub cannot tell us. An installation carries an account login, a type and a repository selection — nothing that names a Hanzo org. So the binding cannot be DERIVED, only asserted, and the only unforgeable assertion available is the org the caller is already acting in. Inferring one from the account name would be a guess the store cannot catch: its key is (org,provider,owner), so a wrong org is a valid row, and a valid row is a mirror pointed at the wrong tenant.  SUPER ADMIN only, for that same reason. A tenant\'s proof that an account is theirs is GitHub\'s own consent screen — the connect flow — and without it any org could claim any account the App holds. Platform sudo is already the scope that reads the whole install list, so it is the scope that may bind from it; giving a tenant this verb would hand it every other tenant\'s repositories.  Idempotent: the row is keyed (org,provider,owner) and connected_at survives an upsert, so claiming twice rebinds the same account to the same org and reports it under `already`. Re-claiming also REFRESHES the installation id, so an account reinstalled on GitHub — new id, same login — self-heals instead of minting tokens against a dead installation.  Claiming an account another org holds ADDS this org\'s row and leaves theirs standing, so no org loses an integration it is using.
+     * @summary Binds installations the App ALREADY holds to the org the caller is acting in — the reconciliation for a grant that happened outside our connect flow.
+     * @param {IntegrationsApiPostV1IntegrationsGithubClaimRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsGithubClaim(requestParameters: IntegrationsApiPostV1IntegrationsGithubClaimRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2237,6 +2488,30 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
+     * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
+     * @summary Creates the repo\'s Pages site and answers 201 Created with it.
+     * @param {IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
+     * @summary Requests a Pages rebuild and returns the queued build\'s status.
+     * @param {IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsGithubReposByRepoPagesBuilds(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposByRepoPagesBuildsRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposByRepoPagesBuilds(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Imports the selected (or all) granted repos into git.hanzo.ai. The selection is intersected with the installation\'s GRANTED set, so a client can never import a repo the App was not granted (org isolation + a grant check). The import runs in a bounded background worker (don\'t block the request), so the answer is 202 Accepted; poll GET /v1/integrations/github/repos for the per-repo status to flip to imported.
      * @summary Imports the selected (or all) granted repos into git.hanzo.ai.
      * @param {IntegrationsApiPostV1IntegrationsGithubReposImportRequest} requestParameters Request parameters.
@@ -2246,66 +2521,6 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postV1IntegrationsGithubReposImport(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates the repo\'s Pages site and answers 201 Created with it. With buildType \"workflow\" the site builds via GitHub Actions; otherwise it builds from a branch source, defaulting to the repo\'s own default branch when none is given. Only \"/\" and \"/docs\" are legal source paths (GitHub\'s rule).
-     * @summary Creates the repo\'s Pages site and answers 201 Created with it.
-     * @param {IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public postV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposRepoPages(requestParameters.repo, requestParameters.githubPagesEnableReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Requests a Pages rebuild and returns the queued build\'s status. The build is queued AT GITHUB, not completed here, so the answer is 202 Accepted and its status is the one GitHub reported at queue time. 404 when the repository has no Pages site, or when the org\'s installation was not granted it.
-     * @summary Requests a Pages rebuild and returns the queued build\'s status.
-     * @param {IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public postV1IntegrationsGithubReposRepoPagesBuilds(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposRepoPagesBuildsRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposRepoPagesBuilds(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Acquires the org\'s credential for one provider. It has TWO paths and the REQUEST picks which: a \"token\" key in the body seals that credential directly (verify-before-store), and its absence begins the 3-legged OAuth flow — minting a single-use nonce plus an HMAC-signed state that binds this org to this provider, and answering with the provider\'s authorize URL for the caller to redirect to.  Fail-closed order, unchanged: no principal → 403; unknown provider → 404; an AdminOnly connector without the caller\'s own-org admin bit → 403; not configured → 503; KMS not ready → 503 (the flow WILL need to seal a token, so refuse now rather than dead-end at the callback).
-     * @summary Acquires the org\'s credential for one provider.
-     * @param {IntegrationsApiPostV1IntegrationsProviderConnectRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public postV1IntegrationsProviderConnect(requestParameters: IntegrationsApiPostV1IntegrationsProviderConnectRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postV1IntegrationsProviderConnect(requestParameters.provider, requestParameters.connectIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
-     * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-     * @param {IntegrationsApiPostV1IntegrationsProviderDisconnectRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public postV1IntegrationsProviderDisconnect(requestParameters: IntegrationsApiPostV1IntegrationsProviderDisconnectRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postV1IntegrationsProviderDisconnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
-     * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-     * @param {IntegrationsApiPostV1IntegrationsProviderVerifyRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public postV1IntegrationsProviderVerify(requestParameters: IntegrationsApiPostV1IntegrationsProviderVerifyRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).postV1IntegrationsProviderVerify(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2331,7 +2546,7 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connector; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
+     * The messaging endpoint for the Teams bot. A message activity is routed to an agent turn and answered proactively through the Bot Connection; anything that is not a message with text is acknowledged and ignored.  Authentication is the Bot Framework\'s RS256 JWT, verified against its published keys and bound BOTH to this deployment\'s app id and to the activity\'s own service URL. The service-URL binding is the part that matters: without it a token valid for one activity could point the outbound reply somewhere else.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
      * @summary Microsoft Teams Bot Framework webhook
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2366,13 +2581,13 @@ export class IntegrationsApi extends BaseAPI {
     /**
      * Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source. ONLY the provided fields are sent to GitHub, so an update never resets a setting the caller did not mention.
      * @summary Sets or clears the custom domain (cname) and updates HTTPS enforcement, build type, or source.
-     * @param {IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest} requestParameters Request parameters.
+     * @param {IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IntegrationsApi
      */
-    public putV1IntegrationsGithubReposRepoPages(requestParameters: IntegrationsApiPutV1IntegrationsGithubReposRepoPagesRequest, options?: RawAxiosRequestConfig) {
-        return IntegrationsApiFp(this.configuration).putV1IntegrationsGithubReposRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(this.axios, this.basePath));
+    public putV1IntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiPutV1IntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).putV1IntegrationsGithubReposByRepoPages(requestParameters.repo, requestParameters.githubPagesUpdateReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

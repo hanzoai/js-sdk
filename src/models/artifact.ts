@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Release } from './release';
 
 /**
  * 
@@ -21,82 +24,28 @@
  */
 export interface Artifact {
     /**
-     * base64 bytes on write; the server hashes + stores them (never returned)
+     * 
      * @type {string}
      * @memberof Artifact
      */
-    'content'?: string;
+    'cosign_cert'?: string;
     /**
      * 
      * @type {string}
      * @memberof Artifact
      */
-    'git_branch'?: string;
+    'cosign_signature'?: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof Artifact
-     */
-    'git_dirty'?: boolean;
-    /**
-     * 
+     * DownloadURL is a short-lived signed URL to the artifact bytes. The scaffold returns the ArtifactRef as-is; production issues a signed URL.
      * @type {string}
      * @memberof Artifact
      */
-    'git_sha'?: string;
+    'download_url'?: string;
     /**
      * 
-     * @type {string}
+     * @type {Release}
      * @memberof Artifact
      */
-    'kind'?: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof Artifact
-     */
-    'lib_versions'?: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof Artifact
-     */
-    'project'?: string;
-    /**
-     * server-derived content address (sha256:<hash>)
-     * @type {string}
-     * @memberof Artifact
-     */
-    'ref'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Artifact
-     */
-    'retention_class'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Artifact
-     */
-    'run_id'?: string;
-    /**
-     * SERVER-derived on write; the identity
-     * @type {string}
-     * @memberof Artifact
-     */
-    'sha256'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Artifact
-     */
-    'ts'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Artifact
-     */
-    'visibility'?: string;
+    'release'?: Release;
 }
 

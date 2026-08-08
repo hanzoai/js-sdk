@@ -22,8 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Artifact } from '../models';
-// @ts-ignore
 import type { ArtifactOut } from '../models';
 // @ts-ignore
 import type { ArtifactsOut } from '../models';
@@ -39,6 +37,8 @@ import type { IngestOut } from '../models';
 import type { IngestRequest } from '../models';
 // @ts-ignore
 import type { ProjectsOut } from '../models';
+// @ts-ignore
+import type { ResearchArtifact } from '../models';
 // @ts-ignore
 import type { ResearchTotals } from '../models';
 /**
@@ -93,8 +93,8 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
-         * @summary Fetch one recorded artifact\'s bytes by its content hash.
+         * Fetches one recorded artifact\'s bytes by its content hash.  It streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
+         * @summary Fetches one recorded artifact\'s bytes by its content hash.
          * @param {string} sha256 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -234,13 +234,13 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary. The caller submits the bytes as base64 `content`; the SERVER hashes them and THAT hash is the identity and the ref, so the address can never be poisoned by a client-asserted one. A client-supplied sha256, if present, must match the bytes. The project is the SERVER\'s value and visibility is forced private. Re-posting the same bytes is a no-op that reports created=false.
          * @summary Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary.
-         * @param {Artifact} artifact 
+         * @param {ResearchArtifact} researchArtifact 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchArtifacts: async (artifact: Artifact, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'artifact' is not null or undefined
-            assertParamExists('postV1ResearchArtifacts', 'artifact', artifact)
+        postV1ResearchArtifacts: async (researchArtifact: ResearchArtifact, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'researchArtifact' is not null or undefined
+            assertParamExists('postV1ResearchArtifacts', 'researchArtifact', researchArtifact)
             const localVarPath = `/v1/research/artifacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -260,7 +260,7 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(artifact, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(researchArtifact, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -365,8 +365,8 @@ export const ResearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
-         * @summary Fetch one recorded artifact\'s bytes by its content hash.
+         * Fetches one recorded artifact\'s bytes by its content hash.  It streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
+         * @summary Fetches one recorded artifact\'s bytes by its content hash.
          * @param {string} sha256 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -419,12 +419,12 @@ export const ResearchApiFp = function(configuration?: Configuration) {
         /**
          * Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary. The caller submits the bytes as base64 `content`; the SERVER hashes them and THAT hash is the identity and the ref, so the address can never be poisoned by a client-asserted one. A client-supplied sha256, if present, must match the bytes. The project is the SERVER\'s value and visibility is forced private. Re-posting the same bytes is a no-op that reports created=false.
          * @summary Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary.
-         * @param {Artifact} artifact 
+         * @param {ResearchArtifact} researchArtifact 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ResearchArtifacts(artifact: Artifact, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ResearchArtifacts(artifact, options);
+        async postV1ResearchArtifacts(researchArtifact: ResearchArtifact, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ResearchArtifacts(researchArtifact, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResearchApi.postV1ResearchArtifacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -476,8 +476,8 @@ export const ResearchApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getV1ResearchArtifacts(requestParameters.project, requestParameters.run, requestParameters.since, options).then((request) => request(axios, basePath));
         },
         /**
-         * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
-         * @summary Fetch one recorded artifact\'s bytes by its content hash.
+         * Fetches one recorded artifact\'s bytes by its content hash.  It streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
+         * @summary Fetches one recorded artifact\'s bytes by its content hash.
          * @param {ResearchApiGetV1ResearchArtifactsBySha256Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -522,7 +522,7 @@ export const ResearchApiFactory = function (configuration?: Configuration, baseP
          * @throws {RequiredError}
          */
         postV1ResearchArtifacts(requestParameters: ResearchApiPostV1ResearchArtifactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArtifactOut> {
-            return localVarFp.postV1ResearchArtifacts(requestParameters.artifact, options).then((request) => request(axios, basePath));
+            return localVarFp.postV1ResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends one batch of experiment and attempt versions to the caller org\'s evidence store, idempotently by content, then rolls it up to the analytics plane best-effort. The project is the SERVER\'s value and visibility is forced private — an upload grants no training or publication right, which is a separate call. A run carrying a BYO endpoint is SSRF-checked before the store is touched. The answer carries BOTH the canonical (deduped) and retained (full history) counts, so a caller sees the versioned truth rather than a dedup that reads as loss.
@@ -632,10 +632,10 @@ export interface ResearchApiGetV1ResearchTotalsRequest {
 export interface ResearchApiPostV1ResearchArtifactsRequest {
     /**
      * 
-     * @type {Artifact}
+     * @type {ResearchArtifact}
      * @memberof ResearchApiPostV1ResearchArtifacts
      */
-    readonly artifact: Artifact
+    readonly researchArtifact: ResearchArtifact
 }
 
 /**
@@ -686,8 +686,8 @@ export class ResearchApi extends BaseAPI {
     }
 
     /**
-     * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
-     * @summary Fetch one recorded artifact\'s bytes by its content hash.
+     * Fetches one recorded artifact\'s bytes by its content hash.  It streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
+     * @summary Fetches one recorded artifact\'s bytes by its content hash.
      * @param {ResearchApiGetV1ResearchArtifactsBySha256Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -741,7 +741,7 @@ export class ResearchApi extends BaseAPI {
      * @memberof ResearchApi
      */
     public postV1ResearchArtifacts(requestParameters: ResearchApiPostV1ResearchArtifactsRequest, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).postV1ResearchArtifacts(requestParameters.artifact, options).then((request) => request(this.axios, this.basePath));
+        return ResearchApiFp(this.configuration).postV1ResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

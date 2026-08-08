@@ -46,9 +46,9 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketplaceListingsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1MarketplaceListingsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1MarketplaceListingsId', 'id', id)
+            assertParamExists('deleteV1MarketplaceListingsById', 'id', id)
             const localVarPath = `/v1/marketplace/listings/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -258,10 +258,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketplaceListingsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketplaceListingsId(id, options);
+        async deleteV1MarketplaceListingsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketplaceListingsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.deleteV1MarketplaceListingsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.deleteV1MarketplaceListingsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -340,12 +340,12 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
         /**
          * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
          * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-         * @param {MarketplaceApiDeleteV1MarketplaceListingsIdRequest} requestParameters Request parameters.
+         * @param {MarketplaceApiDeleteV1MarketplaceListingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketplaceListingsId(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketplaceListingsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1MarketplaceListingsById(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1MarketplaceListingsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
@@ -399,15 +399,15 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
 };
 
 /**
- * Request parameters for deleteV1MarketplaceListingsId operation in MarketplaceApi.
+ * Request parameters for deleteV1MarketplaceListingsById operation in MarketplaceApi.
  * @export
- * @interface MarketplaceApiDeleteV1MarketplaceListingsIdRequest
+ * @interface MarketplaceApiDeleteV1MarketplaceListingsByIdRequest
  */
-export interface MarketplaceApiDeleteV1MarketplaceListingsIdRequest {
+export interface MarketplaceApiDeleteV1MarketplaceListingsByIdRequest {
     /**
      * ID is the listing to unpublish, from the path.
      * @type {string}
-     * @memberof MarketplaceApiDeleteV1MarketplaceListingsId
+     * @memberof MarketplaceApiDeleteV1MarketplaceListingsById
      */
     readonly id: string
 }
@@ -464,13 +464,13 @@ export class MarketplaceApi extends BaseAPI {
     /**
      * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
      * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-     * @param {MarketplaceApiDeleteV1MarketplaceListingsIdRequest} requestParameters Request parameters.
+     * @param {MarketplaceApiDeleteV1MarketplaceListingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public deleteV1MarketplaceListingsId(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).deleteV1MarketplaceListingsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1MarketplaceListingsById(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).deleteV1MarketplaceListingsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

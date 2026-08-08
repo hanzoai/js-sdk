@@ -206,9 +206,9 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlansEntitlementsId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1PlansEntitlementsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1PlansEntitlementsId', 'id', id)
+            assertParamExists('getV1PlansEntitlementsById', 'id', id)
             const localVarPath = `/v1/plans/entitlements/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -390,9 +390,9 @@ export const PlansApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlansResolveId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1PlansResolveById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1PlansResolveId', 'id', id)
+            assertParamExists('getV1PlansResolveById', 'id', id)
             const localVarPath = `/v1/plans/resolve/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -739,10 +739,10 @@ export const PlansApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlansEntitlementsId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanEntitlements>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlansEntitlementsId(id, options);
+        async getV1PlansEntitlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanEntitlements>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlansEntitlementsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlansApi.getV1PlansEntitlementsId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlansApi.getV1PlansEntitlementsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -812,10 +812,10 @@ export const PlansApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlansResolveId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanResolution>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlansResolveId(id, options);
+        async getV1PlansResolveById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanResolution>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlansResolveById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlansApi.getV1PlansResolveId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlansApi.getV1PlansResolveById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -974,12 +974,12 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
         /**
          * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-         * @param {PlansApiGetV1PlansEntitlementsIdRequest} requestParameters Request parameters.
+         * @param {PlansApiGetV1PlansEntitlementsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlansEntitlementsId(requestParameters: PlansApiGetV1PlansEntitlementsIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanEntitlements> {
-            return localVarFp.getV1PlansEntitlementsId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1PlansEntitlementsById(requestParameters: PlansApiGetV1PlansEntitlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanEntitlements> {
+            return localVarFp.getV1PlansEntitlementsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
@@ -1029,12 +1029,12 @@ export const PlansApiFactory = function (configuration?: Configuration, basePath
         /**
          * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-         * @param {PlansApiGetV1PlansResolveIdRequest} requestParameters Request parameters.
+         * @param {PlansApiGetV1PlansResolveByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlansResolveId(requestParameters: PlansApiGetV1PlansResolveIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanResolution> {
-            return localVarFp.getV1PlansResolveId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1PlansResolveById(requestParameters: PlansApiGetV1PlansResolveByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PlanResolution> {
+            return localVarFp.getV1PlansResolveById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the two JSON Schema documents this surface speaks: entitlements.schema.json, which declares every entitlement key with its type, unit and enum, and plan.schema.json, which a catalog plan record conforms to.
@@ -1127,29 +1127,29 @@ export interface PlansApiDeleteV1PlansEntriesBySlugRequest {
 }
 
 /**
- * Request parameters for getV1PlansEntitlementsId operation in PlansApi.
+ * Request parameters for getV1PlansEntitlementsById operation in PlansApi.
  * @export
- * @interface PlansApiGetV1PlansEntitlementsIdRequest
+ * @interface PlansApiGetV1PlansEntitlementsByIdRequest
  */
-export interface PlansApiGetV1PlansEntitlementsIdRequest {
+export interface PlansApiGetV1PlansEntitlementsByIdRequest {
     /**
      * ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
      * @type {string}
-     * @memberof PlansApiGetV1PlansEntitlementsId
+     * @memberof PlansApiGetV1PlansEntitlementsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1PlansResolveId operation in PlansApi.
+ * Request parameters for getV1PlansResolveById operation in PlansApi.
  * @export
- * @interface PlansApiGetV1PlansResolveIdRequest
+ * @interface PlansApiGetV1PlansResolveByIdRequest
  */
-export interface PlansApiGetV1PlansResolveIdRequest {
+export interface PlansApiGetV1PlansResolveByIdRequest {
     /**
      * ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
      * @type {string}
-     * @memberof PlansApiGetV1PlansResolveId
+     * @memberof PlansApiGetV1PlansResolveById
      */
     readonly id: string
 }
@@ -1234,13 +1234,13 @@ export class PlansApi extends BaseAPI {
     /**
      * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
      * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-     * @param {PlansApiGetV1PlansEntitlementsIdRequest} requestParameters Request parameters.
+     * @param {PlansApiGetV1PlansEntitlementsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlansApi
      */
-    public getV1PlansEntitlementsId(requestParameters: PlansApiGetV1PlansEntitlementsIdRequest, options?: RawAxiosRequestConfig) {
-        return PlansApiFp(this.configuration).getV1PlansEntitlementsId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1PlansEntitlementsById(requestParameters: PlansApiGetV1PlansEntitlementsByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlansApiFp(this.configuration).getV1PlansEntitlementsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1301,13 +1301,13 @@ export class PlansApi extends BaseAPI {
     /**
      * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
      * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-     * @param {PlansApiGetV1PlansResolveIdRequest} requestParameters Request parameters.
+     * @param {PlansApiGetV1PlansResolveByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlansApi
      */
-    public getV1PlansResolveId(requestParameters: PlansApiGetV1PlansResolveIdRequest, options?: RawAxiosRequestConfig) {
-        return PlansApiFp(this.configuration).getV1PlansResolveId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1PlansResolveById(requestParameters: PlansApiGetV1PlansResolveByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlansApiFp(this.configuration).getV1PlansResolveById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

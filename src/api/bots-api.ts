@@ -62,13 +62,17 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour `/v1/bots/:runId/stop`.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * @param {string} runId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsRun: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/bots/run`;
+        postV1BotsByRunidStop: async (runId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runId' is not null or undefined
+            assertParamExists('postV1BotsByRunidStop', 'runId', runId)
+            const localVarPath = `/v1/bots/{runId}/stop`
+                .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -92,17 +96,13 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {string} runId 
+         * Is the reserved address for launching a bot run — not implemented, always 501.  It answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour /v1/bots/:runId/stop.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
+         * @summary Is the reserved address for launching a bot run — not implemented, always 501.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsRunIdStop: async (runId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'runId' is not null or undefined
-            assertParamExists('postV1BotsRunIdStop', 'runId', runId)
-            const localVarPath = `/v1/bots/{runId}/stop`
-                .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+        postV1BotsRun: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/bots/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -148,8 +148,21 @@ export const BotsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour `/v1/bots/:runId/stop`.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * @param {string} runId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1BotsByRunidStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotStopped>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotsByRunidStop(runId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.postV1BotsByRunidStop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the reserved address for launching a bot run — not implemented, always 501.  It answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour /v1/bots/:runId/stop.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
+         * @summary Is the reserved address for launching a bot run — not implemented, always 501.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -157,19 +170,6 @@ export const BotsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotsRun(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BotsApi.postV1BotsRun']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {string} runId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postV1BotsRunIdStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotStopped>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotsRunIdStop(runId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotsApi.postV1BotsRunIdStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -192,37 +192,37 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getV1Bots(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour `/v1/bots/:runId/stop`.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+         * @param {BotsApiPostV1BotsByRunidStopRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1BotsByRunidStop(requestParameters: BotsApiPostV1BotsByRunidStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotStopped> {
+            return localVarFp.postV1BotsByRunidStop(requestParameters.runId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the reserved address for launching a bot run — not implemented, always 501.  It answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour /v1/bots/:runId/stop.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
+         * @summary Is the reserved address for launching a bot run — not implemented, always 501.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postV1BotsRun(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postV1BotsRun(options).then((request) => request(axios, basePath));
         },
-        /**
-         * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-         * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {BotsApiPostV1BotsRunIdStopRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postV1BotsRunIdStop(requestParameters: BotsApiPostV1BotsRunIdStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotStopped> {
-            return localVarFp.postV1BotsRunIdStop(requestParameters.runId, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
 /**
- * Request parameters for postV1BotsRunIdStop operation in BotsApi.
+ * Request parameters for postV1BotsByRunidStop operation in BotsApi.
  * @export
- * @interface BotsApiPostV1BotsRunIdStopRequest
+ * @interface BotsApiPostV1BotsByRunidStopRequest
  */
-export interface BotsApiPostV1BotsRunIdStopRequest {
+export interface BotsApiPostV1BotsByRunidStopRequest {
     /**
      * 
      * @type {string}
-     * @memberof BotsApiPostV1BotsRunIdStop
+     * @memberof BotsApiPostV1BotsByRunidStop
      */
     readonly runId: string
 }
@@ -246,26 +246,26 @@ export class BotsApi extends BaseAPI {
     }
 
     /**
-     * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour `/v1/bots/:runId/stop`.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-     * @summary Reserved address for launching a bot run — not implemented, always 501
+     * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
+     * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
+     * @param {BotsApiPostV1BotsByRunidStopRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BotsApi
+     */
+    public postV1BotsByRunidStop(requestParameters: BotsApiPostV1BotsByRunidStopRequest, options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).postV1BotsByRunidStop(requestParameters.runId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the reserved address for launching a bot run — not implemented, always 501.  It answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour /v1/bots/:runId/stop.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
+     * @summary Is the reserved address for launching a bot run — not implemented, always 501.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotsApi
      */
     public postV1BotsRun(options?: RawAxiosRequestConfig) {
         return BotsApiFp(this.configuration).postV1BotsRun(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
-     * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-     * @param {BotsApiPostV1BotsRunIdStopRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BotsApi
-     */
-    public postV1BotsRunIdStop(requestParameters: BotsApiPostV1BotsRunIdStopRequest, options?: RawAxiosRequestConfig) {
-        return BotsApiFp(this.configuration).postV1BotsRunIdStop(requestParameters.runId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

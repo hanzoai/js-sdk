@@ -44,9 +44,9 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1DeleteSyncId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1SyncById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1DeleteSyncId', 'id', id)
+            assertParamExists('deleteV1SyncById', 'id', id)
             const localVarPath = `/v1/sync/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -77,7 +77,7 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1GetSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1Sync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -108,9 +108,9 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1GetSyncId: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SyncById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1GetSyncId', 'id', id)
+            assertParamExists('getV1SyncById', 'id', id)
             const localVarPath = `/v1/sync/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -143,11 +143,11 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PatchSyncId: async (id: string, patchSyncIn: PatchSyncIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchV1SyncById: async (id: string, patchSyncIn: PatchSyncIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1PatchSyncId', 'id', id)
+            assertParamExists('patchV1SyncById', 'id', id)
             // verify required parameter 'patchSyncIn' is not null or undefined
-            assertParamExists('v1PatchSyncId', 'patchSyncIn', patchSyncIn)
+            assertParamExists('patchV1SyncById', 'patchSyncIn', patchSyncIn)
             const localVarPath = `/v1/sync/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -182,9 +182,9 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostSync: async (syncReq: SyncReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1Sync: async (syncReq: SyncReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'syncReq' is not null or undefined
-            assertParamExists('v1PostSync', 'syncReq', syncReq)
+            assertParamExists('postV1Sync', 'syncReq', syncReq)
             const localVarPath = `/v1/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -218,9 +218,9 @@ export const SyncApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostSyncIdRun: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postV1SyncByIdRun: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1PostSyncIdRun', 'id', id)
+            assertParamExists('postV1SyncByIdRun', 'id', id)
             const localVarPath = `/v1/sync/{id}/run`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -262,10 +262,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1DeleteSyncId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1DeleteSyncId(id, options);
+        async deleteV1SyncById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SyncById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1DeleteSyncId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.deleteV1SyncById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -274,10 +274,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1GetSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1GetSync(options);
+        async getV1Sync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Sync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1GetSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.getV1Sync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -287,10 +287,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1GetSyncId(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1GetSyncId(id, options);
+        async getV1SyncById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SyncById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1GetSyncId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.getV1SyncById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -301,10 +301,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1PatchSyncId(id: string, patchSyncIn: PatchSyncIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1PatchSyncId(id, patchSyncIn, options);
+        async patchV1SyncById(id: string, patchSyncIn: PatchSyncIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1SyncById(id, patchSyncIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1PatchSyncId']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.patchV1SyncById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -314,10 +314,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1PostSync(syncReq: SyncReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1PostSync(syncReq, options);
+        async postV1Sync(syncReq: SyncReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Sync(syncReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1PostSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.postV1Sync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -327,10 +327,10 @@ export const SyncApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v1PostSyncIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncQueued>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v1PostSyncIdRun(id, options);
+        async postV1SyncByIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SyncQueued>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SyncByIdRun(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SyncApi.v1PostSyncIdRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SyncApi.postV1SyncByIdRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -346,12 +346,12 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
          * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
-         * @param {SyncApiV1DeleteSyncIdRequest} requestParameters Request parameters.
+         * @param {SyncApiDeleteV1SyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1DeleteSyncId(requestParameters: SyncApiV1DeleteSyncIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.v1DeleteSyncId(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteV1SyncById(requestParameters: SyncApiDeleteV1SyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1SyncById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * List returns every sync link the caller\'s org has, each with its two endpoints, its direction and trigger policy, and the time it last reconciled. Scoped to the caller\'s own org — another tenant\'s links are structurally unreachable.
@@ -359,125 +359,125 @@ export const SyncApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1GetSync(options?: RawAxiosRequestConfig): AxiosPromise<SyncList> {
-            return localVarFp.v1GetSync(options).then((request) => request(axios, basePath));
+        getV1Sync(options?: RawAxiosRequestConfig): AxiosPromise<SyncList> {
+            return localVarFp.getV1Sync(options).then((request) => request(axios, basePath));
         },
         /**
          * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
          * @summary Get returns one sync by id.
-         * @param {SyncApiV1GetSyncIdRequest} requestParameters Request parameters.
+         * @param {SyncApiGetV1SyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1GetSyncId(requestParameters: SyncApiV1GetSyncIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
-            return localVarFp.v1GetSyncId(requestParameters.id, options).then((request) => request(axios, basePath));
+        getV1SyncById(requestParameters: SyncApiGetV1SyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
+            return localVarFp.getV1SyncById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
          * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
-         * @param {SyncApiV1PatchSyncIdRequest} requestParameters Request parameters.
+         * @param {SyncApiPatchV1SyncByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PatchSyncId(requestParameters: SyncApiV1PatchSyncIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
-            return localVarFp.v1PatchSyncId(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(axios, basePath));
+        patchV1SyncById(requestParameters: SyncApiPatchV1SyncByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
+            return localVarFp.patchV1SyncById(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
          * @summary Create declares a sync between two endpoints and returns it.
-         * @param {SyncApiV1PostSyncRequest} requestParameters Request parameters.
+         * @param {SyncApiPostV1SyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostSync(requestParameters: SyncApiV1PostSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
-            return localVarFp.v1PostSync(requestParameters.syncReq, options).then((request) => request(axios, basePath));
+        postV1Sync(requestParameters: SyncApiPostV1SyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncView> {
+            return localVarFp.postV1Sync(requestParameters.syncReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
          * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
-         * @param {SyncApiV1PostSyncIdRunRequest} requestParameters Request parameters.
+         * @param {SyncApiPostV1SyncByIdRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v1PostSyncIdRun(requestParameters: SyncApiV1PostSyncIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncQueued> {
-            return localVarFp.v1PostSyncIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
+        postV1SyncByIdRun(requestParameters: SyncApiPostV1SyncByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<SyncQueued> {
+            return localVarFp.postV1SyncByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for v1DeleteSyncId operation in SyncApi.
+ * Request parameters for deleteV1SyncById operation in SyncApi.
  * @export
- * @interface SyncApiV1DeleteSyncIdRequest
+ * @interface SyncApiDeleteV1SyncByIdRequest
  */
-export interface SyncApiV1DeleteSyncIdRequest {
+export interface SyncApiDeleteV1SyncByIdRequest {
     /**
      * ID is the sync to act on, from the path.
      * @type {string}
-     * @memberof SyncApiV1DeleteSyncId
+     * @memberof SyncApiDeleteV1SyncById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for v1GetSyncId operation in SyncApi.
+ * Request parameters for getV1SyncById operation in SyncApi.
  * @export
- * @interface SyncApiV1GetSyncIdRequest
+ * @interface SyncApiGetV1SyncByIdRequest
  */
-export interface SyncApiV1GetSyncIdRequest {
+export interface SyncApiGetV1SyncByIdRequest {
     /**
      * ID is the sync to act on, from the path.
      * @type {string}
-     * @memberof SyncApiV1GetSyncId
+     * @memberof SyncApiGetV1SyncById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for v1PatchSyncId operation in SyncApi.
+ * Request parameters for patchV1SyncById operation in SyncApi.
  * @export
- * @interface SyncApiV1PatchSyncIdRequest
+ * @interface SyncApiPatchV1SyncByIdRequest
  */
-export interface SyncApiV1PatchSyncIdRequest {
+export interface SyncApiPatchV1SyncByIdRequest {
     /**
      * ID is the sync to update, from the path.
      * @type {string}
-     * @memberof SyncApiV1PatchSyncId
+     * @memberof SyncApiPatchV1SyncById
      */
     readonly id: string
 
     /**
      * 
      * @type {PatchSyncIn}
-     * @memberof SyncApiV1PatchSyncId
+     * @memberof SyncApiPatchV1SyncById
      */
     readonly patchSyncIn: PatchSyncIn
 }
 
 /**
- * Request parameters for v1PostSync operation in SyncApi.
+ * Request parameters for postV1Sync operation in SyncApi.
  * @export
- * @interface SyncApiV1PostSyncRequest
+ * @interface SyncApiPostV1SyncRequest
  */
-export interface SyncApiV1PostSyncRequest {
+export interface SyncApiPostV1SyncRequest {
     /**
      * 
      * @type {SyncReq}
-     * @memberof SyncApiV1PostSync
+     * @memberof SyncApiPostV1Sync
      */
     readonly syncReq: SyncReq
 }
 
 /**
- * Request parameters for v1PostSyncIdRun operation in SyncApi.
+ * Request parameters for postV1SyncByIdRun operation in SyncApi.
  * @export
- * @interface SyncApiV1PostSyncIdRunRequest
+ * @interface SyncApiPostV1SyncByIdRunRequest
  */
-export interface SyncApiV1PostSyncIdRunRequest {
+export interface SyncApiPostV1SyncByIdRunRequest {
     /**
      * ID is the sync to act on, from the path.
      * @type {string}
-     * @memberof SyncApiV1PostSyncIdRun
+     * @memberof SyncApiPostV1SyncByIdRun
      */
     readonly id: string
 }
@@ -492,13 +492,13 @@ export class SyncApi extends BaseAPI {
     /**
      * Delete removes one sync and tears down the outbound mirror it derived, answering 204. The teardown is the point: without it an unsynced repository would keep force-pushing to the upstream it is no longer linked to. Org-scoped, so another tenant\'s id is the same 404 an unknown id gives.
      * @summary Delete removes one sync and tears down the outbound mirror it derived, answering 204.
-     * @param {SyncApiV1DeleteSyncIdRequest} requestParameters Request parameters.
+     * @param {SyncApiDeleteV1SyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1DeleteSyncId(requestParameters: SyncApiV1DeleteSyncIdRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1DeleteSyncId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1SyncById(requestParameters: SyncApiDeleteV1SyncByIdRequest, options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).deleteV1SyncById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -508,56 +508,56 @@ export class SyncApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1GetSync(options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1GetSync(options).then((request) => request(this.axios, this.basePath));
+    public getV1Sync(options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).getV1Sync(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get returns one sync by id. It is org-scoped: an id belonging to another tenant is the same 404 an unknown id gives, so a probe learns nothing about what exists.
      * @summary Get returns one sync by id.
-     * @param {SyncApiV1GetSyncIdRequest} requestParameters Request parameters.
+     * @param {SyncApiGetV1SyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1GetSyncId(requestParameters: SyncApiV1GetSyncIdRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1GetSyncId(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getV1SyncById(requestParameters: SyncApiGetV1SyncByIdRequest, options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).getV1SyncById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Patch updates one sync\'s mutable policy — direction, trigger and actor — in place. The endpoints and the kind are immutable: re-pointing a sync is a delete and a create, so a link can never silently start syncing somewhere else. A field the request omits is left as it was. Changing the direction immediately reconciles the derived outbound mirror, so turning push off stops the upstream being written to rather than merely recording the intent.
      * @summary Patch updates one sync\'s mutable policy — direction, trigger and actor — in place.
-     * @param {SyncApiV1PatchSyncIdRequest} requestParameters Request parameters.
+     * @param {SyncApiPatchV1SyncByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1PatchSyncId(requestParameters: SyncApiV1PatchSyncIdRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1PatchSyncId(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(this.axios, this.basePath));
+    public patchV1SyncById(requestParameters: SyncApiPatchV1SyncByIdRequest, options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).patchV1SyncById(requestParameters.id, requestParameters.patchSyncIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create declares a sync between two endpoints and returns it. It is an UPSERT: re-declaring the same source and target updates that link rather than piling up duplicates, so a console that re-submits is safe. The org comes from the validated principal, never from the request, so a sync can only ever bind endpoints inside the caller\'s own org. A git source must be an https clone URL on the provider\'s own host with no embedded credentials; a target left empty is derived as a native repository named after the source. With run=true the first reconcile is queued in the background, so a large initial import never blocks this response.
      * @summary Create declares a sync between two endpoints and returns it.
-     * @param {SyncApiV1PostSyncRequest} requestParameters Request parameters.
+     * @param {SyncApiPostV1SyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1PostSync(requestParameters: SyncApiV1PostSyncRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1PostSync(requestParameters.syncReq, options).then((request) => request(this.axios, this.basePath));
+    public postV1Sync(requestParameters: SyncApiPostV1SyncRequest, options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).postV1Sync(requestParameters.syncReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true. The work is handed to a bounded background worker and the call answers 202 immediately, so a large mirror-in never holds the request open; queued=true means accepted, not finished.
      * @summary Run reconciles one sync now — the manual re-sync, and the initial import for a link created without run=true.
-     * @param {SyncApiV1PostSyncIdRunRequest} requestParameters Request parameters.
+     * @param {SyncApiPostV1SyncByIdRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SyncApi
      */
-    public v1PostSyncIdRun(requestParameters: SyncApiV1PostSyncIdRunRequest, options?: RawAxiosRequestConfig) {
-        return SyncApiFp(this.configuration).v1PostSyncIdRun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postV1SyncByIdRun(requestParameters: SyncApiPostV1SyncByIdRunRequest, options?: RawAxiosRequestConfig) {
+        return SyncApiFp(this.configuration).postV1SyncByIdRun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

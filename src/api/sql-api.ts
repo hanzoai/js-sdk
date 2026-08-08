@@ -42,9 +42,9 @@ export const SqlApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SqlName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1SqlByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1SqlName', 'name', name)
+            assertParamExists('deleteV1SqlByName', 'name', name)
             const localVarPath = `/v1/sql/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -106,9 +106,9 @@ export const SqlApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SqlName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getV1SqlByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1SqlName', 'name', name)
+            assertParamExists('getV1SqlByName', 'name', name)
             const localVarPath = `/v1/sql/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -184,10 +184,10 @@ export const SqlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SqlName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SqlName(name, options);
+        async deleteV1SqlByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SqlByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SqlApi.deleteV1SqlName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SqlApi.deleteV1SqlByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const SqlApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SqlName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SqlName(name, options);
+        async getV1SqlByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SqlByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SqlApi.getV1SqlName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SqlApi.getV1SqlByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,12 +241,12 @@ export const SqlApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
          * @summary DropSQL deprovisions one Hanzo SQL database.
-         * @param {SqlApiDeleteV1SqlNameRequest} requestParameters Request parameters.
+         * @param {SqlApiDeleteV1SqlByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SqlName(requestParameters: SqlApiDeleteV1SqlNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SqlName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1SqlByName(requestParameters: SqlApiDeleteV1SqlByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1SqlByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * ListSQL lists the caller org\'s Hanzo SQL databases. Each one is a DEDICATED PostgreSQL instance the org alone runs, so the host is that instance\'s own in-cluster Service and the port is 5432.
@@ -260,12 +260,12 @@ export const SqlApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
          * @summary GetSQL returns one Hanzo SQL database\'s metadata.
-         * @param {SqlApiGetV1SqlNameRequest} requestParameters Request parameters.
+         * @param {SqlApiGetV1SqlByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SqlName(requestParameters: SqlApiGetV1SqlNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1SqlName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getV1SqlByName(requestParameters: SqlApiGetV1SqlByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1SqlByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Launches your org\'s OWN PostgreSQL instance and answers with its `postgres://` connection string. The instance is yours alone: a deployment in your own tenant namespace, so its admin credential is naturally scoped to you and no other tenant shares the process. Off-cluster, where there is no orchestrator to launch one, this fails closed with 503 rather than handing back a shared one.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
@@ -281,29 +281,29 @@ export const SqlApiFactory = function (configuration?: Configuration, basePath?:
 };
 
 /**
- * Request parameters for deleteV1SqlName operation in SqlApi.
+ * Request parameters for deleteV1SqlByName operation in SqlApi.
  * @export
- * @interface SqlApiDeleteV1SqlNameRequest
+ * @interface SqlApiDeleteV1SqlByNameRequest
  */
-export interface SqlApiDeleteV1SqlNameRequest {
+export interface SqlApiDeleteV1SqlByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof SqlApiDeleteV1SqlName
+     * @memberof SqlApiDeleteV1SqlByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1SqlName operation in SqlApi.
+ * Request parameters for getV1SqlByName operation in SqlApi.
  * @export
- * @interface SqlApiGetV1SqlNameRequest
+ * @interface SqlApiGetV1SqlByNameRequest
  */
-export interface SqlApiGetV1SqlNameRequest {
+export interface SqlApiGetV1SqlByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof SqlApiGetV1SqlName
+     * @memberof SqlApiGetV1SqlByName
      */
     readonly name: string
 }
@@ -332,13 +332,13 @@ export class SqlApi extends BaseAPI {
     /**
      * DropSQL deprovisions one Hanzo SQL database. It reverts any app instance bound to it back to Base BEFORE tearing down the org\'s dedicated Postgres instance — never a live app pointed at a deleted backend — then deletes the sealed credential and removes the metadata row. Answers 204 with no body; a second call is a 404, not a second delete.
      * @summary DropSQL deprovisions one Hanzo SQL database.
-     * @param {SqlApiDeleteV1SqlNameRequest} requestParameters Request parameters.
+     * @param {SqlApiDeleteV1SqlByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SqlApi
      */
-    public deleteV1SqlName(requestParameters: SqlApiDeleteV1SqlNameRequest, options?: RawAxiosRequestConfig) {
-        return SqlApiFp(this.configuration).deleteV1SqlName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1SqlByName(requestParameters: SqlApiDeleteV1SqlByNameRequest, options?: RawAxiosRequestConfig) {
+        return SqlApiFp(this.configuration).deleteV1SqlByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -355,13 +355,13 @@ export class SqlApi extends BaseAPI {
     /**
      * GetSQL returns one Hanzo SQL database\'s metadata. It carries the database\'s status, its instance address and the admin user Postgres booted with — never the password, which is returned once at create and otherwise lives only in Hanzo KMS. A still-booting instance reads \"provisioning\", reconciled from the operator\'s live view rather than from the row.
      * @summary GetSQL returns one Hanzo SQL database\'s metadata.
-     * @param {SqlApiGetV1SqlNameRequest} requestParameters Request parameters.
+     * @param {SqlApiGetV1SqlByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SqlApi
      */
-    public getV1SqlName(requestParameters: SqlApiGetV1SqlNameRequest, options?: RawAxiosRequestConfig) {
-        return SqlApiFp(this.configuration).getV1SqlName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getV1SqlByName(requestParameters: SqlApiGetV1SqlByNameRequest, options?: RawAxiosRequestConfig) {
+        return SqlApiFp(this.configuration).getV1SqlByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

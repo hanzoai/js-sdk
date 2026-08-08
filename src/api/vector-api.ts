@@ -46,9 +46,9 @@ export const VectorApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1VectorName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteV1VectorByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1VectorName', 'name', name)
+            assertParamExists('deleteV1VectorByName', 'name', name)
             const localVarPath = `/v1/vector/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -104,6 +104,40 @@ export const VectorApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
+         * @summary Returns one vector collection\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1VectorByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getV1VectorByName', 'name', name)
+            const localVarPath = `/v1/vector/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
          * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
@@ -128,40 +162,6 @@ export const VectorApiAxiosParamCreator = function (configuration?: Configuratio
             if (authorization != null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
             }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1VectorName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1VectorName', 'name', name)
-            const localVarPath = `/v1/vector/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -256,10 +256,10 @@ export const VectorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1VectorName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1VectorName(name, options);
+        async deleteV1VectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1VectorByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.deleteV1VectorName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VectorApi.deleteV1VectorByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -275,6 +275,19 @@ export const VectorApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
+         * @summary Returns one vector collection\'s metadata.
+         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1VectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VectorByName(name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VectorApi.getV1VectorByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
          * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
@@ -285,19 +298,6 @@ export const VectorApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VectorCollections(authorization, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VectorApi.getV1VectorCollections']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1VectorName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VectorName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.getV1VectorName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -339,12 +339,12 @@ export const VectorApiFactory = function (configuration?: Configuration, basePat
         /**
          * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
          * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-         * @param {VectorApiDeleteV1VectorNameRequest} requestParameters Request parameters.
+         * @param {VectorApiDeleteV1VectorByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1VectorName(requestParameters: VectorApiDeleteV1VectorNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1VectorName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteV1VectorByName(requestParameters: VectorApiDeleteV1VectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteV1VectorByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s vector collections. A collection is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
@@ -356,6 +356,16 @@ export const VectorApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getV1Vector(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
+         * @summary Returns one vector collection\'s metadata.
+         * @param {VectorApiGetV1VectorByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1VectorByName(requestParameters: VectorApiGetV1VectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getV1VectorByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
          * @param {VectorApiGetV1VectorCollectionsRequest} requestParameters Request parameters.
@@ -364,16 +374,6 @@ export const VectorApiFactory = function (configuration?: Configuration, basePat
          */
         getV1VectorCollections(requestParameters: VectorApiGetV1VectorCollectionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<VectorCollectionList> {
             return localVarFp.getV1VectorCollections(requestParameters.authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {VectorApiGetV1VectorNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1VectorName(requestParameters: VectorApiGetV1VectorNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1VectorName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Totals the collections, vectors and storage across the vector store.  Every figure is summed from the same per-collection detail GET /v1/vector/collections returns, so the two panels can never disagree. An unreachable Qdrant answers 200 with all zeros rather than an error.
@@ -399,15 +399,29 @@ export const VectorApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for deleteV1VectorName operation in VectorApi.
+ * Request parameters for deleteV1VectorByName operation in VectorApi.
  * @export
- * @interface VectorApiDeleteV1VectorNameRequest
+ * @interface VectorApiDeleteV1VectorByNameRequest
  */
-export interface VectorApiDeleteV1VectorNameRequest {
+export interface VectorApiDeleteV1VectorByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof VectorApiDeleteV1VectorName
+     * @memberof VectorApiDeleteV1VectorByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for getV1VectorByName operation in VectorApi.
+ * @export
+ * @interface VectorApiGetV1VectorByNameRequest
+ */
+export interface VectorApiGetV1VectorByNameRequest {
+    /**
+     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
+     * @type {string}
+     * @memberof VectorApiGetV1VectorByName
      */
     readonly name: string
 }
@@ -424,20 +438,6 @@ export interface VectorApiGetV1VectorCollectionsRequest {
      * @memberof VectorApiGetV1VectorCollections
      */
     readonly authorization?: string
-}
-
-/**
- * Request parameters for getV1VectorName operation in VectorApi.
- * @export
- * @interface VectorApiGetV1VectorNameRequest
- */
-export interface VectorApiGetV1VectorNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof VectorApiGetV1VectorName
-     */
-    readonly name: string
 }
 
 /**
@@ -478,13 +478,13 @@ export class VectorApi extends BaseAPI {
     /**
      * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
      * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-     * @param {VectorApiDeleteV1VectorNameRequest} requestParameters Request parameters.
+     * @param {VectorApiDeleteV1VectorByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VectorApi
      */
-    public deleteV1VectorName(requestParameters: VectorApiDeleteV1VectorNameRequest, options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).deleteV1VectorName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteV1VectorByName(requestParameters: VectorApiDeleteV1VectorByNameRequest, options?: RawAxiosRequestConfig) {
+        return VectorApiFp(this.configuration).deleteV1VectorByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -499,6 +499,18 @@ export class VectorApi extends BaseAPI {
     }
 
     /**
+     * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
+     * @summary Returns one vector collection\'s metadata.
+     * @param {VectorApiGetV1VectorByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VectorApi
+     */
+    public getV1VectorByName(requestParameters: VectorApiGetV1VectorByNameRequest, options?: RawAxiosRequestConfig) {
+        return VectorApiFp(this.configuration).getV1VectorByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
      * @summary Lists the vector collections with their size and geometry.
      * @param {VectorApiGetV1VectorCollectionsRequest} requestParameters Request parameters.
@@ -508,18 +520,6 @@ export class VectorApi extends BaseAPI {
      */
     public getV1VectorCollections(requestParameters: VectorApiGetV1VectorCollectionsRequest = {}, options?: RawAxiosRequestConfig) {
         return VectorApiFp(this.configuration).getV1VectorCollections(requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-     * @summary Returns one vector collection\'s metadata.
-     * @param {VectorApiGetV1VectorNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VectorApi
-     */
-    public getV1VectorName(requestParameters: VectorApiGetV1VectorNameRequest, options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).getV1VectorName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

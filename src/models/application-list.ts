@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Application } from './application';
+import type { ProgramApplication } from './program-application';
 
 /**
  * 
@@ -25,9 +25,9 @@ import type { Application } from './application';
 export interface ApplicationList {
     /**
      * Data is the page of applications, newest first.
-     * @type {Array<Application>}
+     * @type {Array<ProgramApplication>}
      * @memberof ApplicationList
      */
-    'data'?: Array<Application>;
+    'data'?: Array<ProgramApplication>;
 }
 
