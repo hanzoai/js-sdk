@@ -60,15 +60,11 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
          * @summary Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
-         * @param {string} fileId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocumentsByFileIdContext: async (fileId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'fileId' is not null or undefined
-            assertParamExists('getV1DocumentsByFileIdContext', 'fileId', fileId)
-            const localVarPath = `/v1/documents/{file_id}/context`
-                .replace(`{${"file_id"}}`, encodeURIComponent(String(fileId)));
+        getV1DocumentsByFileIdContext: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/documents/{file_id}/context`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -116,12 +112,11 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
         /**
          * Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
          * @summary Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
-         * @param {string} fileId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DocumentsByFileIdContext(fileId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DocumentsByFileIdContext(fileId, options);
+        async getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DocumentsByFileIdContext(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DocumentsApi.getV1DocumentsByFileIdContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -148,29 +143,14 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
         /**
          * Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
          * @summary Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
-         * @param {DocumentsApiGetV1DocumentsByFileIdContextRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocumentsByFileIdContext(requestParameters: DocumentsApiGetV1DocumentsByFileIdContextRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DocumentsByFileIdContext(requestParameters.fileId, options).then((request) => request(axios, basePath));
+        getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getV1DocumentsByFileIdContext(options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * Request parameters for getV1DocumentsByFileIdContext operation in DocumentsApi.
- * @export
- * @interface DocumentsApiGetV1DocumentsByFileIdContextRequest
- */
-export interface DocumentsApiGetV1DocumentsByFileIdContextRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof DocumentsApiGetV1DocumentsByFileIdContext
-     */
-    readonly fileId: string
-}
 
 /**
  * DocumentsApi - object-oriented interface
@@ -193,13 +173,12 @@ export class DocumentsApi extends BaseAPI {
     /**
      * Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
      * @summary Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
-     * @param {DocumentsApiGetV1DocumentsByFileIdContextRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    public getV1DocumentsByFileIdContext(requestParameters: DocumentsApiGetV1DocumentsByFileIdContextRequest, options?: RawAxiosRequestConfig) {
-        return DocumentsApiFp(this.configuration).getV1DocumentsByFileIdContext(requestParameters.fileId, options).then((request) => request(this.axios, this.basePath));
+    public getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig) {
+        return DocumentsApiFp(this.configuration).getV1DocumentsByFileIdContext(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

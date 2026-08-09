@@ -27,7 +27,7 @@ import type { Finding } from './finding';
 import type { LoadBalancer } from './load-balancer';
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Node } from './node';
+import type { Machine } from './machine';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { SourceStatus } from './source-status';
@@ -88,10 +88,10 @@ export interface Snapshot {
     'loadBalancers'?: Array<LoadBalancer>;
     /**
      * 
-     * @type {Array<Node>}
+     * @type {Array<Machine>}
      * @memberof Snapshot
      */
-    'nodes'?: Array<Node>;
+    'nodes'?: Array<Machine>;
     /**
      * 
      * @type {Array<SourceStatus>}

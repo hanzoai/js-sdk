@@ -36,9 +36,9 @@ import type { Middleware } from '../models';
 // @ts-ignore
 import type { Route } from '../models';
 // @ts-ignore
-import type { Service } from '../models';
-// @ts-ignore
 import type { TLSConfig } from '../models';
+// @ts-ignore
+import type { Upstream } from '../models';
 /**
  * IngressApi - axios parameter creator
  * @export
@@ -474,13 +474,13 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
-         * @param {Service} service 
+         * @param {Upstream} upstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IngressServices: async (service: Service, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'service' is not null or undefined
-            assertParamExists('postV1IngressServices', 'service', service)
+        postV1IngressServices: async (upstream: Upstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'upstream' is not null or undefined
+            assertParamExists('postV1IngressServices', 'upstream', upstream)
             const localVarPath = `/v1/ingress/services`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -500,7 +500,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(service, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(upstream, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -591,15 +591,15 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
          * @param {string} id ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Service} service 
+         * @param {Upstream} upstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressServicesById: async (id: string, service: Service, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putV1IngressServicesById: async (id: string, upstream: Upstream, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putV1IngressServicesById', 'id', id)
-            // verify required parameter 'service' is not null or undefined
-            assertParamExists('putV1IngressServicesById', 'service', service)
+            // verify required parameter 'upstream' is not null or undefined
+            assertParamExists('putV1IngressServicesById', 'upstream', upstream)
             const localVarPath = `/v1/ingress/services/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -620,7 +620,7 @@ export const IngressApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(service, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(upstream, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -781,7 +781,7 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
+        async getV1IngressServicesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IngressServicesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.getV1IngressServicesById']?.[localVarOperationServerIndex]?.url;
@@ -840,12 +840,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
         /**
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
-         * @param {Service} service 
+         * @param {Upstream} upstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IngressServices(service: Service, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IngressServices(service, options);
+        async postV1IngressServices(upstream: Upstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IngressServices(upstream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.postV1IngressServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -882,12 +882,12 @@ export const IngressApiFp = function(configuration?: Configuration) {
          * Creates or replaces one backend pool and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. A pool needs at least one backend and every backend URL must be http(s)://host[:port].
          * @summary Creates or replaces one backend pool and hot-applies it.
          * @param {string} id ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
-         * @param {Service} service 
+         * @param {Upstream} upstream 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IngressServicesById(id: string, service: Service, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Service>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressServicesById(id, service, options);
+        async putV1IngressServicesById(id: string, upstream: Upstream, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Upstream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IngressServicesById(id, upstream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IngressApi.putV1IngressServicesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -999,7 +999,7 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IngressServicesById(requestParameters: IngressApiGetV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
+        getV1IngressServicesById(requestParameters: IngressApiGetV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
             return localVarFp.getV1IngressServicesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1047,8 +1047,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IngressServices(requestParameters: IngressApiPostV1IngressServicesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
-            return localVarFp.postV1IngressServices(requestParameters.service, options).then((request) => request(axios, basePath));
+        postV1IngressServices(requestParameters: IngressApiPostV1IngressServicesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
+            return localVarFp.postV1IngressServices(requestParameters.upstream, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates or replaces one edge transform and hot-applies it. POST mints an id when the body omits one; PUT takes the id from the URL, which wins over any id in the body. type must be one of redirectScheme, stripPrefix, addPrefix or headers, and stripPrefix/addPrefix each require their config key.
@@ -1077,8 +1077,8 @@ export const IngressApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IngressServicesById(requestParameters: IngressApiPutV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Service> {
-            return localVarFp.putV1IngressServicesById(requestParameters.id, requestParameters.service, options).then((request) => request(axios, basePath));
+        putV1IngressServicesById(requestParameters: IngressApiPutV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Upstream> {
+            return localVarFp.putV1IngressServicesById(requestParameters.id, requestParameters.upstream, options).then((request) => request(axios, basePath));
         },
         /**
          * PutTLS replaces the caller org\'s ACME intent and hot-applies what can be hot-applied. extraHosts are normalized and validated, then feed the ACME HostPolicy on the reload this op performs, alongside the per-route tls flags. acmeEmail and staging bind an ACME account for the lifetime of an edge process, so they only take effect when the edge (re)starts — the returned note says so.
@@ -1213,10 +1213,10 @@ export interface IngressApiPostV1IngressRoutesRequest {
 export interface IngressApiPostV1IngressServicesRequest {
     /**
      * 
-     * @type {Service}
+     * @type {Upstream}
      * @memberof IngressApiPostV1IngressServices
      */
-    readonly service: Service
+    readonly upstream: Upstream
 }
 
 /**
@@ -1276,10 +1276,10 @@ export interface IngressApiPutV1IngressServicesByIdRequest {
 
     /**
      * 
-     * @type {Service}
+     * @type {Upstream}
      * @memberof IngressApiPutV1IngressServicesById
      */
-    readonly service: Service
+    readonly upstream: Upstream
 }
 
 /**
@@ -1463,7 +1463,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public postV1IngressServices(requestParameters: IngressApiPostV1IngressServicesRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).postV1IngressServices(requestParameters.service, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).postV1IngressServices(requestParameters.upstream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1499,7 +1499,7 @@ export class IngressApi extends BaseAPI {
      * @memberof IngressApi
      */
     public putV1IngressServicesById(requestParameters: IngressApiPutV1IngressServicesByIdRequest, options?: RawAxiosRequestConfig) {
-        return IngressApiFp(this.configuration).putV1IngressServicesById(requestParameters.id, requestParameters.service, options).then((request) => request(this.axios, this.basePath));
+        return IngressApiFp(this.configuration).putV1IngressServicesById(requestParameters.id, requestParameters.upstream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

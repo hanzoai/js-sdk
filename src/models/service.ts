@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { Backend } from './backend';
 
 /**
  * 
@@ -24,22 +21,58 @@ import type { Backend } from './backend';
  */
 export interface Service {
     /**
-     * Backends are the upstream servers to balance across: 1..32 of them.
-     * @type {Array<Backend>}
-     * @memberof Service
-     */
-    'backends'?: Array<Backend>;
-    /**
-     * ID identifies the pool within the org: [A-Za-z0-9-_.], at most 128 chars. A create that omits it gets a generated one. Routes reference it by this id.
+     * 
      * @type {string}
      * @memberof Service
      */
-    'id'?: string;
+    'expectedStatus'?: string;
     /**
-     * PassHostHeader forwards the client\'s original Host header upstream instead of rewriting it to the backend\'s.
-     * @type {boolean}
+     * 
+     * @type {string}
      * @memberof Service
      */
-    'passHostHeader'?: boolean;
+    'message'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Service
+     */
+    'no'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'path'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Service
+     */
+    'port'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Service
+     */
+    'processId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Service
+     */
+    'subStatus'?: string;
 }
 

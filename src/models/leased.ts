@@ -33,7 +33,7 @@ export interface Leased {
      */
     'id'?: string;
     /**
-     * 
+     * Runtime is the boundary this sandbox GOT, which need not be the one asked for — carried for the same reason Workdir is, that it is a fact only the owner knows and a caller assuming it would be holding a second copy. Empty is the node\'s default runtime, and a real answer.
      * @type {string}
      * @memberof Leased
      */

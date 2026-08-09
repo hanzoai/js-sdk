@@ -15,42 +15,46 @@
 
 
 /**
- * The resource surface\'s response. `status` is the verdict, not the HTTP code: a handled failure is still 200.
+ * 
  * @export
- * @interface AiEnvelope
+ * @interface Scale
  */
-export interface AiEnvelope {
-    /**
-     * 
-     * @type {any}
-     * @memberof AiEnvelope
-     */
-    'data'?: any;
-    /**
-     * 
-     * @type {any}
-     * @memberof AiEnvelope
-     */
-    'data2'?: any;
-    /**
-     * Empty on success, the reason on failure.
-     * @type {string}
-     * @memberof AiEnvelope
-     */
-    'msg': string;
+export interface Scale {
     /**
      * 
      * @type {string}
-     * @memberof AiEnvelope
+     * @memberof Scale
      */
-    'status': AiEnvelopeStatusEnum;
+    'createdTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Scale
+     */
+    'displayName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Scale
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Scale
+     */
+    'owner'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Scale
+     */
+    'state'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Scale
+     */
+    'text'?: string;
 }
-
-export const AiEnvelopeStatusEnum = {
-    Ok: 'ok',
-    Error: 'error'
-} as const;
-
-export type AiEnvelopeStatusEnum = typeof AiEnvelopeStatusEnum[keyof typeof AiEnvelopeStatusEnum];
-
 

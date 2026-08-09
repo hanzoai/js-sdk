@@ -21,13 +21,13 @@
  */
 export interface PathIn {
     /**
-     * 
+     * ID is the sandbox to read from, from an earlier lease.
      * @type {string}
      * @memberof PathIn
      */
     'id'?: string;
     /**
-     * 
+     * Path is read relative to the sandbox\'s working directory unless it is absolute, and a path that climbs out of it is refused rather than rewritten. Empty names the working directory itself, which lists it.
      * @type {string}
      * @memberof PathIn
      */

@@ -29,5 +29,11 @@ export interface GithubReposOut {
      * @memberof GithubReposOut
      */
     'repos'?: Array<GithubRepoView>;
+    /**
+     * Unread names the connected accounts this answer could NOT read, so a short list is distinguishable from a complete one. Absent when the answer is whole.  The fan-out is per installation, and one account failing used to be dropped in silence: the response stayed 200 and simply carried fewer repositories, erroring only when EVERY account failed. Measured, twice in a row, minutes apart: 1475 repositories, then 1157 — a whole installation missing with nothing in the answer to say so. Anything driven off the list then under-covers and reports success, which is the failure this field ends.
+     * @type {Array<string>}
+     * @memberof GithubReposOut
+     */
+    'unread'?: Array<string>;
 }
 

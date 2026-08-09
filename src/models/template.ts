@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TemplateConfigOption } from './template-config-option';
 
 /**
  * 
@@ -22,27 +25,75 @@
 export interface Template {
     /**
      * 
+     * @type {Array<TemplateConfigOption>}
+     * @memberof Template
+     */
+    'basicConfigOptions'?: Array<TemplateConfigOption>;
+    /**
+     * 
      * @type {string}
      * @memberof Template
      */
-    'body'?: string;
+    'createdTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'displayName'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof Template
      */
-    'enabled'?: boolean;
+    'enableBasicConfig'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Template
      */
-    'id'?: string;
+    'icon'?: string;
     /**
      * 
      * @type {string}
      * @memberof Template
      */
-    'title'?: string;
+    'manifest'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'owner'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'readme'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'updatedTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'version'?: string;
 }
 

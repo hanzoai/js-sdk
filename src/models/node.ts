@@ -13,6 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Patch } from './patch';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { RemoteApp } from './remote-app';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Service } from './service';
 
 /**
  * 
@@ -22,58 +31,70 @@
 export interface Node {
     /**
      * 
-     * @type {string}
-     * @memberof Node
-     */
-    'blockedReason'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    'cluster'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    'clusterId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    'createdAt'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    'id'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    'localDiskGiB'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    'memoryMiB'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Node
-     */
-    'monthlyCents'?: number;
-    /**
-     * Mutable reports whether this droplet may be changed DIRECTLY — deleted or resized. One predicate covers both because one fact decides both: a DOKS node belongs to a node pool, and the pool is the only thing allowed to change it.
      * @type {boolean}
      * @memberof Node
      */
-    'mutable'?: boolean;
+    'autoQuery'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'category'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'cpuSize'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'createdTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'displayName'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Node
+     */
+    'enableRemoteApp'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Node
+     */
+    'isPermanent'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'machineName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'memSize'?: string;
     /**
      * 
      * @type {string}
@@ -82,10 +103,22 @@ export interface Node {
     'name'?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Node
      */
-    'pods'?: number;
+    'os'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'owner'?: string;
+    /**
+     * 
+     * @type {Array<Patch>}
+     * @memberof Node
+     */
+    'patches'?: Array<Patch>;
     /**
      * 
      * @type {string}
@@ -100,51 +133,63 @@ export interface Node {
     'publicIp'?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<RemoteApp>}
      * @memberof Node
      */
-    'ready'?: boolean;
+    'remoteApps'?: Array<RemoteApp>;
     /**
      * 
      * @type {string}
      * @memberof Node
      */
-    'region'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Node
-     */
-    'schedulable'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    'sizeSlug'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Node
-     */
-    'status'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof Node
-     */
-    'tags'?: Array<string>;
+    'remotePassword'?: string;
     /**
      * 
      * @type {number}
      * @memberof Node
      */
-    'vcpus'?: number;
+    'remotePort'?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Node
      */
-    'volumes'?: number;
+    'remoteProtocol'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'remoteUsername'?: string;
+    /**
+     * 
+     * @type {Array<Service>}
+     * @memberof Node
+     */
+    'services'?: Array<Service>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'size'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'tag'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Node
+     */
+    'updatedTime'?: string;
 }
 

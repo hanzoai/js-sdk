@@ -21,19 +21,19 @@
  */
 export interface WriteIn {
     /**
-     * 
+     * Data is the file\'s bytes, and replaces whatever was there.
      * @type {string}
      * @memberof WriteIn
      */
     'data'?: string;
     /**
-     * 
+     * ID is the sandbox to write into, from an earlier lease.
      * @type {string}
      * @memberof WriteIn
      */
     'id'?: string;
     /**
-     * 
+     * Path is confined the same way PathIn.Path is. Missing parent directories are created.
      * @type {string}
      * @memberof WriteIn
      */

@@ -34,8 +34,8 @@ import type { WebQuestion } from '../models';
 export const AskApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
+         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Ask a grounded question about your own org
          * @param {AskRequest} [askRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -114,8 +114,8 @@ export const AskApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AskApiAxiosParamCreator(configuration)
     return {
         /**
-         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
+         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Ask a grounded question about your own org
          * @param {AskRequest} [askRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -150,8 +150,8 @@ export const AskApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = AskApiFp(configuration)
     return {
         /**
-         * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-         * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
+         * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+         * @summary Ask a grounded question about your own org
          * @param {AskApiPostV1AskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -208,8 +208,8 @@ export interface AskApiResearchWebRequest {
  */
 export class AskApi extends BaseAPI {
     /**
-     * Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
-     * @summary Answers a grounded question about the caller\'s own org, from real figures rather than from the model\'s memory.
+     * Answers a natural-language question about the CALLER\'S OWN org, from real figures rather than from the model\'s memory.  The question is classified to a grounded domain, that domain\'s read runs IN-PROCESS under the caller\'s own credentials, and only then is the result narrated. So the figures and their sources are the domain\'s, resolved before any model call and never altered by one — a wrong answer is a wrong query, never an invention.  Domains: books (the org\'s ledger), projects (what is built and what of it is deployed), git (the org\'s repositories and what changed in them), and web (search, news, research, deep). A validated principal is required; the answer is scoped to that principal\'s org and nothing else.
+     * @summary Ask a grounded question about your own org
      * @param {AskApiPostV1AskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -42,8 +42,8 @@ import type { PairingQueue } from '../models';
 export const ChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+         * Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
+         * @summary Reports every chat channel this org can send through, and whether it can send through it right now.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -293,8 +293,8 @@ export const ChannelsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ChannelsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+         * Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
+         * @summary Reports every chat channel this org can send through, and whether it can send through it right now.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -393,8 +393,8 @@ export const ChannelsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = ChannelsApiFp(configuration)
     return {
         /**
-         * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-         * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+         * Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
+         * @summary Reports every chat channel this org can send through, and whether it can send through it right now.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -548,8 +548,8 @@ export interface ChannelsApiPutV1ChannelsAllowlistRequest {
  */
 export class ChannelsApi extends BaseAPI {
     /**
-     * Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval. The order is fixed, so a console can render the same rows every time. A policy that cannot be read leaves that channel\'s policy fields empty rather than failing the whole listing.
-     * @summary Returns every chat transport channels can talk to — Discord, Slack, Teams and Telegram — with the caller org\'s own facts on each: whether it is connected and to which account, what the transport supports, the org\'s DM and group access policies, and how many pairing requests are pending approval.
+     * Reports every chat channel this org can send through, and whether it can send through it right now.  A channel appears here whether or not it is connected — an empty list would leave a caller unable to tell \"this org has no Slack\" from \"Slack is down\", which are different problems with different fixes. Each entry carries the connection behind it, so the answer to \"why can I not post?\" is in the same response as the channel that cannot post.
+     * @summary Reports every chat channel this org can send through, and whether it can send through it right now.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChannelsApi

@@ -21,13 +21,13 @@
  */
 export interface CodingStartIn {
     /**
-     * 
+     * AgentRef names a configured agent to run as, which is how an org pins a harness, a model and a prompt to a name. Empty runs the default agent.
      * @type {string}
      * @memberof CodingStartIn
      */
     'agentRef'?: string;
     /**
-     * 
+     * Base is the branch to start from. Empty takes the repository\'s default. The run never writes here — it writes the agent branch it answers with.
      * @type {string}
      * @memberof CodingStartIn
      */
@@ -39,19 +39,19 @@ export interface CodingStartIn {
      */
     'desktop'?: boolean;
     /**
-     * 
+     * Project scopes the run to one board\'s work when the org keeps more than one. Empty is the org\'s default.
      * @type {string}
      * @memberof CodingStartIn
      */
     'project'?: string;
     /**
-     * 
+     * Prompt is the task, in the words you would use with a colleague who has the checkout open. It is the whole instruction: there is no second field for context, and a prompt that names files and the outcome it wants gets a run that does not have to guess either.
      * @type {string}
      * @memberof CodingStartIn
      */
     'prompt'?: string;
     /**
-     * 
+     * ReplyChannel / ReplyThread are WHERE THE RUN NARRATES ITSELF, when the door that started it has somewhere for it to talk. Empty means nobody is listening and the run simply does not narrate — which is the app door\'s case, because /v1/coding hands back a session id and the session stream is a better progress feed than any message could be.  It is an ADDRESS and not a token: the engine says \"put this text there\", and the process that owns the workspace\'s bot credential is the one that actually posts. So a run reports into a Slack thread without the engine ever holding the token that could post anywhere else in that workspace.
      * @type {string}
      * @memberof CodingStartIn
      */
@@ -63,31 +63,31 @@ export interface CodingStartIn {
      */
     'replyThread'?: string;
     /**
-     * 
+     * Repo is what to work on, as `owner/name` in the caller\'s own org. The engine resolves the clone URL and the push credential from the org itself, so this says WHICH repository and never how to reach it.
      * @type {string}
      * @memberof CodingStartIn
      */
     'repo'?: string;
     /**
-     * 
+     * Subject is the person the run is attributed to — a linked Hanzo identity the door already proved, never a name the caller picks. Empty is refused rather than defaulted: a run that lost its human must not execute as the org.
      * @type {string}
      * @memberof CodingStartIn
      */
     'subject'?: string;
     /**
-     * 
+     * TargetID routes the run to a registered machine the org has claimed instead of to a sandbox in our cluster. Empty runs it here, which is the usual case.
      * @type {string}
      * @memberof CodingStartIn
      */
     'targetId'?: string;
     /**
-     * 
+     * TimeoutSeconds bounds the whole run. Unset takes the default budget; a run that hits the bound is stopped and reports what it had done by then.
      * @type {number}
      * @memberof CodingStartIn
      */
     'timeoutSeconds'?: number;
     /**
-     * 
+     * Tool is which harness runs the prompt — dev | claude | codex | python | node — and Desktop is whether the run needs a screen. Both are empty by default, which is `dev` with no screen, and that default is what every caller gets until it says otherwise.  They are two fields because they are two questions. The harness decides what argv starts; the screen decides which image carries an X server. A caller may want claude WITH a browser it can see, and a single enum would have made that combination unsayable.
      * @type {string}
      * @memberof CodingStartIn
      */

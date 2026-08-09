@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Service } from './service';
+import type { Upstream } from './upstream';
 
 /**
  * 
@@ -25,9 +25,9 @@ import type { Service } from './service';
 export interface IngressServices {
     /**
      * Services is the org\'s services, ordered by id.
-     * @type {Array<Service>}
+     * @type {Array<Upstream>}
      * @memberof IngressServices
      */
-    'services'?: Array<Service>;
+    'services'?: Array<Upstream>;
 }
 

@@ -24,6 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { IssueEdit } from '../models';
 // @ts-ignore
+import type { IssueHit } from '../models';
+// @ts-ignore
+import type { IssueHits } from '../models';
+// @ts-ignore
 import type { IssueView } from '../models';
 // @ts-ignore
 import type { MilestoneView } from '../models';
@@ -59,6 +63,76 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
+         * @summary Answers across every project in the org.
+         * @param {string} [q] Q matches an issue\&#39;s title or description. A word from the issue, which is what someone remembers — not its number, which is what they are looking up.
+         * @param {string} [project] Project narrows to one team key; \&quot;\&quot; searches every project in the org, which is the point of this op.
+         * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
+         * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
+         * @param {string} [repo] Repo keeps issues bound to one git repository.
+         * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
+         * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
+         * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1TrackerIssues: async (q?: string, project?: string, status?: string, kind?: string, repo?: string, source?: string, assignee?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/tracker/issues`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+            if (repo !== undefined) {
+                localVarQueryParameter['repo'] = repo;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+            if (assignee !== undefined) {
+                localVarQueryParameter['assignee'] = assignee;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
 
 
     
@@ -372,6 +446,44 @@ export const TrackerApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Takes an issue: it becomes yours and it moves to in_progress.  The holder is the CALLER, never an argument. \"Assign this to someone else\" is a different act with different authority, and it already exists as a PATCH; conflating them would let anyone hand work to anyone by naming them.  Claiming something already held by someone else is refused rather than silently taken — two agents on one issue is the failure this prevents, and a claim that quietly wins a race is worse than one that says no.
+         * @summary Takes an issue: it becomes yours and it moves to in_progress.
+         * @param {string} key 
+         * @param {number} num 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1TrackerProjectsByKeyIssuesByNumClaim: async (key: string, num: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('postV1TrackerProjectsByKeyIssuesByNumClaim', 'key', key)
+            // verify required parameter 'num' is not null or undefined
+            assertParamExists('postV1TrackerProjectsByKeyIssuesByNumClaim', 'num', num)
+            const localVarPath = `/v1/tracker/projects/{key}/issues/{num}/claim`
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)))
+                .replace(`{${"num"}}`, encodeURIComponent(String(num)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -393,6 +505,26 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TrackerProjectsByKey(key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.deleteV1TrackerProjectsByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
+         * @summary Answers across every project in the org.
+         * @param {string} [q] Q matches an issue\&#39;s title or description. A word from the issue, which is what someone remembers — not its number, which is what they are looking up.
+         * @param {string} [project] Project narrows to one team key; \&quot;\&quot; searches every project in the org, which is the point of this op.
+         * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
+         * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
+         * @param {string} [repo] Repo keeps issues bound to one git repository.
+         * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
+         * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
+         * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getV1TrackerIssues(q?: string, project?: string, status?: string, kind?: string, repo?: string, source?: string, assignee?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueHits>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrackerIssues(q, project, status, kind, repo, source, assignee, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.getV1TrackerIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -504,6 +636,20 @@ export const TrackerApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.postV1TrackerProjectsByKeyIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Takes an issue: it becomes yours and it moves to in_progress.  The holder is the CALLER, never an argument. \"Assign this to someone else\" is a different act with different authority, and it already exists as a PATCH; conflating them would let anyone hand work to anyone by naming them.  Claiming something already held by someone else is refused rather than silently taken — two agents on one issue is the failure this prevents, and a claim that quietly wins a race is worse than one that says no.
+         * @summary Takes an issue: it becomes yours and it moves to in_progress.
+         * @param {string} key 
+         * @param {number} num 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1TrackerProjectsByKeyIssuesByNumClaim(key: string, num: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueHit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TrackerProjectsByKeyIssuesByNumClaim(key, num, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TrackerApi.postV1TrackerProjectsByKeyIssuesByNumClaim']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -523,6 +669,16 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
          */
         deleteV1TrackerProjectsByKey(requestParameters: TrackerApiDeleteV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
+         * @summary Answers across every project in the org.
+         * @param {TrackerApiGetV1TrackerIssuesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getV1TrackerIssues(requestParameters: TrackerApiGetV1TrackerIssuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IssueHits> {
+            return localVarFp.getV1TrackerIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every milestone across your org\'s repositories, each stamped with the repository it belongs to.  The forge scopes milestones to a repository and publishes no org-level list, so this is a server-side fan-out over the repositories you can see. It runs here rather than in the browser because a client-side fan-out would need the forge reachable from the page and a credential held there.
@@ -601,6 +757,16 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
         postV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
             return localVarFp.postV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.newIssue, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Takes an issue: it becomes yours and it moves to in_progress.  The holder is the CALLER, never an argument. \"Assign this to someone else\" is a different act with different authority, and it already exists as a PATCH; conflating them would let anyone hand work to anyone by naming them.  Claiming something already held by someone else is refused rather than silently taken — two agents on one issue is the failure this prevents, and a claim that quietly wins a race is worse than one that says no.
+         * @summary Takes an issue: it becomes yours and it moves to in_progress.
+         * @param {TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1TrackerProjectsByKeyIssuesByNumClaim(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueHit> {
+            return localVarFp.postV1TrackerProjectsByKeyIssuesByNumClaim(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -616,6 +782,69 @@ export interface TrackerApiDeleteV1TrackerProjectsByKeyRequest {
      * @memberof TrackerApiDeleteV1TrackerProjectsByKey
      */
     readonly key: string
+}
+
+/**
+ * Request parameters for getV1TrackerIssues operation in TrackerApi.
+ * @export
+ * @interface TrackerApiGetV1TrackerIssuesRequest
+ */
+export interface TrackerApiGetV1TrackerIssuesRequest {
+    /**
+     * Q matches an issue\&#39;s title or description. A word from the issue, which is what someone remembers — not its number, which is what they are looking up.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly q?: string
+
+    /**
+     * Project narrows to one team key; \&quot;\&quot; searches every project in the org, which is the point of this op.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly project?: string
+
+    /**
+     * Status keeps one board column: backlog, todo, in_progress, done, canceled.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly status?: string
+
+    /**
+     * Kind keeps one shape: issue, pr, epic.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly kind?: string
+
+    /**
+     * Repo keeps issues bound to one git repository.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly repo?: string
+
+    /**
+     * Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly source?: string
+
+    /**
+     * Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
+     * @type {string}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly assignee?: string
+
+    /**
+     * Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
+     * @type {number}
+     * @memberof TrackerApiGetV1TrackerIssues
+     */
+    readonly limit?: number
 }
 
 /**
@@ -745,6 +974,27 @@ export interface TrackerApiPostV1TrackerProjectsByKeyIssuesRequest {
 }
 
 /**
+ * Request parameters for postV1TrackerProjectsByKeyIssuesByNumClaim operation in TrackerApi.
+ * @export
+ * @interface TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest
+ */
+export interface TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaim
+     */
+    readonly key: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaim
+     */
+    readonly num: number
+}
+
+/**
  * TrackerApi - object-oriented interface
  * @export
  * @class TrackerApi
@@ -761,6 +1011,18 @@ export class TrackerApi extends BaseAPI {
      */
     public deleteV1TrackerProjectsByKey(requestParameters: TrackerApiDeleteV1TrackerProjectsByKeyRequest, options?: RawAxiosRequestConfig) {
         return TrackerApiFp(this.configuration).deleteV1TrackerProjectsByKey(requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers across every project in the org.  The org comes from the validated principal and never from the request: a caller able to name the org could read another tenant\'s backlog, and a search is exactly the shape that would quietly return it.
+     * @summary Answers across every project in the org.
+     * @param {TrackerApiGetV1TrackerIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackerApi
+     */
+    public getV1TrackerIssues(requestParameters: TrackerApiGetV1TrackerIssuesRequest = {}, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).getV1TrackerIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -854,6 +1116,18 @@ export class TrackerApi extends BaseAPI {
      */
     public postV1TrackerProjectsByKeyIssues(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesRequest, options?: RawAxiosRequestConfig) {
         return TrackerApiFp(this.configuration).postV1TrackerProjectsByKeyIssues(requestParameters.key, requestParameters.newIssue, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes an issue: it becomes yours and it moves to in_progress.  The holder is the CALLER, never an argument. \"Assign this to someone else\" is a different act with different authority, and it already exists as a PATCH; conflating them would let anyone hand work to anyone by naming them.  Claiming something already held by someone else is refused rather than silently taken — two agents on one issue is the failure this prevents, and a claim that quietly wins a race is worse than one that says no.
+     * @summary Takes an issue: it becomes yours and it moves to in_progress.
+     * @param {TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackerApi
+     */
+    public postV1TrackerProjectsByKeyIssuesByNumClaim(requestParameters: TrackerApiPostV1TrackerProjectsByKeyIssuesByNumClaimRequest, options?: RawAxiosRequestConfig) {
+        return TrackerApiFp(this.configuration).postV1TrackerProjectsByKeyIssuesByNumClaim(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

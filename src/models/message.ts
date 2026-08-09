@@ -13,6 +13,18 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ModelSearchResult } from './model-search-result';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { ModelToolCall } from './model-tool-call';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Suggestion } from './suggestion';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { VectorScore } from './vector-score';
 
 /**
  * 
@@ -21,46 +33,214 @@
  */
 export interface Message {
     /**
-     * Data is the payload, base64-encoded.
+     * 
      * @type {string}
      * @memberof Message
      */
-    'data'?: string;
+    'answeredTime'?: string;
     /**
-     * Headers are the message headers, when any were published.
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof Message
-     */
-    'headers'?: { [key: string]: Array<string>; };
-    /**
-     * Delivered is how many times a consumer has been handed this message (pulls only).
-     * @type {number}
-     * @memberof Message
-     */
-    'num_delivered'?: number;
-    /**
-     * Remaining is how many messages follow this one for the consumer (pulls only).
-     * @type {number}
-     * @memberof Message
-     */
-    'num_pending'?: number;
-    /**
-     * Sequence is the message\'s stream sequence.
-     * @type {number}
-     * @memberof Message
-     */
-    'sequence'?: number;
-    /**
-     * Subject is the org-relative subject the message was stored under.
+     * 
      * @type {string}
      * @memberof Message
      */
-    'subject'?: string;
+    'author'?: string;
     /**
-     * Timestamp is when the broker stored the message.
+     * 
      * @type {string}
      * @memberof Message
      */
-    'timestamp'?: string;
+    'chat'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'claimedTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'comment'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'createdTime'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'currency'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Message
+     */
+    'dislikeUsers'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'embeddingProvider'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'errorText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'fileName'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'isAlerted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'isDeleted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'isHidden'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'isRegenerated'?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Message
+     */
+    'likeUsers'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'modelProvider'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'needNotify'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'organization'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'owner'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Message
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'reasonText'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'replyTo'?: string;
+    /**
+     * 
+     * @type {Array<ModelSearchResult>}
+     * @memberof Message
+     */
+    'searchResults'?: Array<ModelSearchResult>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'store'?: string;
+    /**
+     * 
+     * @type {Array<Suggestion>}
+     * @memberof Message
+     */
+    'suggestions'?: Array<Suggestion>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Message
+     */
+    'textTokenCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Message
+     */
+    'tokenCount'?: number;
+    /**
+     * 
+     * @type {Array<ModelToolCall>}
+     * @memberof Message
+     */
+    'toolCalls'?: Array<ModelToolCall>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'transactionId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Message
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {Array<VectorScore>}
+     * @memberof Message
+     */
+    'vectorScores'?: Array<VectorScore>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Message
+     */
+    'webSearchEnabled'?: boolean;
 }
 
