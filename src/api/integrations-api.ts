@@ -38,6 +38,10 @@ import type { GithubClaimIn } from '../models';
 // @ts-ignore
 import type { GithubClaimOut } from '../models';
 // @ts-ignore
+import type { GithubForkOut } from '../models';
+// @ts-ignore
+import type { GithubForkReq } from '../models';
+// @ts-ignore
 import type { GithubImportIn } from '../models';
 // @ts-ignore
 import type { GithubImportOut } from '../models';
@@ -57,6 +61,10 @@ import type { GithubPagesUpdatedOut } from '../models';
 import type { GithubPagesView } from '../models';
 // @ts-ignore
 import type { GithubReposOut } from '../models';
+// @ts-ignore
+import type { GithubSearchOut } from '../models';
+// @ts-ignore
+import type { GithubSearchReq } from '../models';
 // @ts-ignore
 import type { ListOut } from '../models';
 // @ts-ignore
@@ -860,6 +868,42 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
+         * @summary Forks a granted repository.
+         * @param {GithubForkReq} githubForkReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubFork: async (githubForkReq: GithubForkReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'githubForkReq' is not null or undefined
+            assertParamExists('postV1IntegrationsGithubFork', 'githubForkReq', githubForkReq)
+            const localVarPath = `/v1/integrations/github/fork`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(githubForkReq, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
          * @summary Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
          * @param {GithubBackfillIn} githubBackfillIn 
@@ -999,6 +1043,42 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(githubImportIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
+         * @summary Finds repositories on GitHub.
+         * @param {GithubSearchReq} githubSearchReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubSearch: async (githubSearchReq: GithubSearchReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'githubSearchReq' is not null or undefined
+            assertParamExists('postV1IntegrationsGithubSearch', 'githubSearchReq', githubSearchReq)
+            const localVarPath = `/v1/integrations/github/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(githubSearchReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1515,6 +1595,19 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
+         * @summary Forks a granted repository.
+         * @param {GithubForkReq} githubForkReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsGithubFork(githubForkReq: GithubForkReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubForkOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubFork(githubForkReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubFork']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
          * @summary Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
          * @param {GithubBackfillIn} githubBackfillIn 
@@ -1565,6 +1658,19 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubReposImport(githubImportIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubReposImport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
+         * @summary Finds repositories on GitHub.
+         * @param {GithubSearchReq} githubSearchReq 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postV1IntegrationsGithubSearch(githubSearchReq: GithubSearchReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GithubSearchOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IntegrationsGithubSearch(githubSearchReq, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postV1IntegrationsGithubSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1885,6 +1991,16 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.postV1IntegrationsGithubClaim(requestParameters.githubClaimIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
+         * @summary Forks a granted repository.
+         * @param {IntegrationsApiPostV1IntegrationsGithubForkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubFork(requestParameters: IntegrationsApiPostV1IntegrationsGithubForkRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubForkOut> {
+            return localVarFp.postV1IntegrationsGithubFork(requestParameters.githubForkReq, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
          * @summary Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
          * @param {IntegrationsApiPostV1IntegrationsGithubIssuesBackfillRequest} requestParameters Request parameters.
@@ -1923,6 +2039,16 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         postV1IntegrationsGithubReposImport(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubImportOut> {
             return localVarFp.postV1IntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
+         * @summary Finds repositories on GitHub.
+         * @param {IntegrationsApiPostV1IntegrationsGithubSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postV1IntegrationsGithubSearch(requestParameters: IntegrationsApiPostV1IntegrationsGithubSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubSearchOut> {
+            return localVarFp.postV1IntegrationsGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(axios, basePath));
         },
         /**
          * The address Slack posts a slash command to, form-encoded. It acknowledges inside Slack\'s three-second budget and posts the answer afterwards to the command\'s own response URL, which is why the immediate reply is empty.  The body is verified against the same app signing secret as the events webhook, and a repeat of the same command invocation is absorbed rather than answered twice.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.  The answer is acknowledged immediately and the work happens afterwards, because every one of these platforms times out a slow webhook. Duplicate deliveries are absorbed durably, so a platform retry of an event that already ran never runs it a second time or bills for it twice. When the agent pool is full nothing at all is recorded and the delivery is refused as retriable, so the message is re-delivered later rather than being lost or half-processed.
@@ -2102,6 +2228,20 @@ export interface IntegrationsApiPostV1IntegrationsGithubClaimRequest {
 }
 
 /**
+ * Request parameters for postV1IntegrationsGithubFork operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsGithubForkRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsGithubForkRequest {
+    /**
+     * 
+     * @type {GithubForkReq}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubFork
+     */
+    readonly githubForkReq: GithubForkReq
+}
+
+/**
  * Request parameters for postV1IntegrationsGithubIssuesBackfill operation in IntegrationsApi.
  * @export
  * @interface IntegrationsApiPostV1IntegrationsGithubIssuesBackfillRequest
@@ -2162,6 +2302,20 @@ export interface IntegrationsApiPostV1IntegrationsGithubReposImportRequest {
      * @memberof IntegrationsApiPostV1IntegrationsGithubReposImport
      */
     readonly githubImportIn: GithubImportIn
+}
+
+/**
+ * Request parameters for postV1IntegrationsGithubSearch operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostV1IntegrationsGithubSearchRequest
+ */
+export interface IntegrationsApiPostV1IntegrationsGithubSearchRequest {
+    /**
+     * 
+     * @type {GithubSearchReq}
+     * @memberof IntegrationsApiPostV1IntegrationsGithubSearch
+     */
+    readonly githubSearchReq: GithubSearchReq
 }
 
 /**
@@ -2476,6 +2630,18 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
+     * Forks a granted repository.  GitHub\'s fork is ASYNCHRONOUS: it answers 202 with the target repo and populates it in the background, and it answers the same 202 when the fork already exists. So this reports what GitHub said rather than waiting — a call that blocked until the clone finished would time out on a large repository and tell the caller nothing it does not already know.
+     * @summary Forks a granted repository.
+     * @param {IntegrationsApiPostV1IntegrationsGithubForkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsGithubFork(requestParameters: IntegrationsApiPostV1IntegrationsGithubForkRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubFork(requestParameters.githubForkReq, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter. Org-scoped by the validated principal — a caller only ever backfills its OWN org. Synchronous + bounded (a total time budget and an issue cap) so it returns the counts directly; idempotent by ExtRef, so a re-run continues where a truncated pass left off and never duplicates.
      * @summary Seeds the native tracker with the EXISTING issues across the org\'s granted repos (default state=open); the webhook keeps them live thereafter.
      * @param {IntegrationsApiPostV1IntegrationsGithubIssuesBackfillRequest} requestParameters Request parameters.
@@ -2521,6 +2687,18 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postV1IntegrationsGithubReposImport(requestParameters: IntegrationsApiPostV1IntegrationsGithubReposImportRequest, options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubReposImport(requestParameters.githubImportIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Finds repositories on GitHub.  This reads the PUBLIC index and returns nothing an installation unlocks: it is how you find a repository to fork, not a way to see inside one. The org\'s own token is used only so the query is rate-limited against the installation rather than anonymously — the results are the same ones anyone would get.
+     * @summary Finds repositories on GitHub.
+     * @param {IntegrationsApiPostV1IntegrationsGithubSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postV1IntegrationsGithubSearch(requestParameters: IntegrationsApiPostV1IntegrationsGithubSearchRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postV1IntegrationsGithubSearch(requestParameters.githubSearchReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

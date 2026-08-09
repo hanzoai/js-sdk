@@ -28,8 +28,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const AvatarApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Fetches a profile photo.  It streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
-         * @summary Fetches a profile photo.
+         * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
+         * @summary Fetch a profile photo
          * @param {string} org 
          * @param {string} user 
          * @param {string} digest 
@@ -70,8 +70,8 @@ export const AvatarApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Sets the caller\'s profile photo.  It stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
-         * @summary Sets the caller\'s profile photo.
+         * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
+         * @summary Set your profile photo
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -110,8 +110,8 @@ export const AvatarApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AvatarApiAxiosParamCreator(configuration)
     return {
         /**
-         * Fetches a profile photo.  It streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
-         * @summary Fetches a profile photo.
+         * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
+         * @summary Fetch a profile photo
          * @param {string} org 
          * @param {string} user 
          * @param {string} digest 
@@ -125,8 +125,8 @@ export const AvatarApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sets the caller\'s profile photo.  It stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
-         * @summary Sets the caller\'s profile photo.
+         * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
+         * @summary Set your profile photo
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -147,8 +147,8 @@ export const AvatarApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = AvatarApiFp(configuration)
     return {
         /**
-         * Fetches a profile photo.  It streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
-         * @summary Fetches a profile photo.
+         * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
+         * @summary Fetch a profile photo
          * @param {AvatarApiGetV1AvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -157,8 +157,8 @@ export const AvatarApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getV1AvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sets the caller\'s profile photo.  It stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
-         * @summary Sets the caller\'s profile photo.
+         * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
+         * @summary Set your profile photo
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -204,8 +204,8 @@ export interface AvatarApiGetV1AvatarByOrgByUserByDigestRequest {
  */
 export class AvatarApi extends BaseAPI {
     /**
-     * Fetches a profile photo.  It streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
-     * @summary Fetches a profile photo.
+     * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
+     * @summary Fetch a profile photo
      * @param {AvatarApiGetV1AvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -216,8 +216,8 @@ export class AvatarApi extends BaseAPI {
     }
 
     /**
-     * Sets the caller\'s profile photo.  It stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
-     * @summary Sets the caller\'s profile photo.
+     * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
+     * @summary Set your profile photo
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AvatarApi

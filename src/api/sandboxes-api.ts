@@ -84,7 +84,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
          * @summary End a sandbox and release it
          * @param {EndIn} endIn 
          * @param {*} [options] Override http request option.
@@ -286,7 +286,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {LeaseIn} leaseIn 
          * @param {*} [options] Override http request option.
@@ -454,7 +454,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
          * @summary Read a file from a sandbox you hold
          * @param {PathIn} pathIn 
          * @param {*} [options] Override http request option.
@@ -490,7 +490,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agents/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
          * @summary Run a command in a sandbox you hold and read its output
          * @param {RunIn} runIn 
          * @param {*} [options] Override http request option.
@@ -526,7 +526,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
          * @summary Stop what a sandbox is running, and keep the sandbox
          * @param {StopIn} stopIn 
          * @param {*} [options] Override http request option.
@@ -562,7 +562,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
          * @summary Write a file into a sandbox you hold
          * @param {WriteIn} writeIn 
          * @param {*} [options] Override http request option.
@@ -621,7 +621,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
          * @summary End a sandbox and release it
          * @param {EndIn} endIn 
          * @param {*} [options] Override http request option.
@@ -698,7 +698,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {LeaseIn} leaseIn 
          * @param {*} [options] Override http request option.
@@ -762,7 +762,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
          * @summary Read a file from a sandbox you hold
          * @param {PathIn} pathIn 
          * @param {*} [options] Override http request option.
@@ -775,7 +775,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agents/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
          * @summary Run a command in a sandbox you hold and read its output
          * @param {RunIn} runIn 
          * @param {*} [options] Override http request option.
@@ -788,7 +788,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
          * @summary Stop what a sandbox is running, and keep the sandbox
          * @param {StopIn} stopIn 
          * @param {*} [options] Override http request option.
@@ -801,7 +801,7 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
          * @summary Write a file into a sandbox you hold
          * @param {WriteIn} writeIn 
          * @param {*} [options] Override http request option.
@@ -834,7 +834,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteV1SandboxesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
          * @summary End a sandbox and release it
          * @param {SandboxesApiEndSandboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -893,7 +893,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.getV1SandboxesByIdTerminalWs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
          * @summary Lease a sandbox — a real computer — or resume one you hold
          * @param {SandboxesApiLeaseSandboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -942,7 +942,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.postV1SandboxesByIdTerminalTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
          * @summary Read a file from a sandbox you hold
          * @param {SandboxesApiReadSandboxFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -952,7 +952,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.readSandboxFile(requestParameters.pathIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agents/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
          * @summary Run a command in a sandbox you hold and read its output
          * @param {SandboxesApiRunInSandboxRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -962,7 +962,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.runInSandbox(requestParameters.runIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
          * @summary Stop what a sandbox is running, and keep the sandbox
          * @param {SandboxesApiStopRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -972,7 +972,7 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.stopRun(requestParameters.stopIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
          * @summary Write a file into a sandbox you hold
          * @param {SandboxesApiWriteSandboxFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1200,7 +1200,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
      * @summary End a sandbox and release it
      * @param {SandboxesApiEndSandboxRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1271,7 +1271,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
      * @summary Lease a sandbox — a real computer — or resume one you hold
      * @param {SandboxesApiLeaseSandboxRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1330,7 +1330,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
      * @summary Read a file from a sandbox you hold
      * @param {SandboxesApiReadSandboxFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1342,7 +1342,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Runs one command inside the caller\'s sandbox and answers its exit code, stdout and stderr. A non-zero exit is a successful call carrying a failed program, so it comes back as data and not as an error.  Name a `session` and the command NARRATES INTO IT: its output is appended to that session\'s live log as the program produces it, so anything watching the session — GET /v1/agents/sessions/stream, scoped to one run with ?root= — watches the work happen rather than waiting for the verdict. Without it the call is what it always was: silent until it returns, which for an agentic run is twenty-five minutes of blank screen.  The session is named; the TENANT is not. It is the org the caller already proved, so a session belonging to somebody else is absent from the org this call acts for and the append is refused there.
      * @summary Run a command in a sandbox you hold and read its output
      * @param {SandboxesApiRunInSandboxRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1354,7 +1354,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Interrupts whatever the caller\'s sandbox is running and answers how many commands it ended. The sandbox stays leased — stop ends the WORK, end ends the RESOURCE — so whoever stopped a run can still read what it left behind.
      * @summary Stop what a sandbox is running, and keep the sandbox
      * @param {SandboxesApiStopRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1366,7 +1366,7 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Writes bytes to one path in the caller\'s sandbox, creating parents, and answers the resolved path.
      * @summary Write a file into a sandbox you hold
      * @param {SandboxesApiWriteSandboxFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

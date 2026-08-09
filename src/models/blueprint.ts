@@ -18,6 +18,9 @@
 import type { JourneyStep } from './journey-step';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Page } from './page';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { Principle } from './principle';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -25,9 +28,6 @@ import type { Section } from './section';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { Strategy } from './strategy';
-// May contain unused imports in some cases
-// @ts-ignore
-import type { Template } from './template';
 
 /**
  * 
@@ -73,10 +73,10 @@ export interface Blueprint {
     'strategies'?: Array<Strategy>;
     /**
      * 
-     * @type {Array<Template>}
+     * @type {Array<Page>}
      * @memberof Blueprint
      */
-    'templates'?: Array<Template>;
+    'templates'?: Array<Page>;
     /**
      * 
      * @type {string}

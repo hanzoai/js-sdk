@@ -32,7 +32,7 @@ import type { CodingStarted } from '../models';
 export const CodingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
@@ -78,7 +78,7 @@ export const CodingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CodingApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
@@ -101,7 +101,7 @@ export const CodingApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = CodingApiFp(configuration)
     return {
         /**
-         * 
+         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingApiPostV1CodingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -135,7 +135,7 @@ export interface CodingApiPostV1CodingRequest {
  */
 export class CodingApi extends BaseAPI {
     /**
-     * 
+     * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
      * @summary Start one autonomous coding run against a repo in the caller\'s org
      * @param {CodingApiPostV1CodingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

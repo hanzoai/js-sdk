@@ -1016,8 +1016,8 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept. Unauthenticated and cached briefly, because a storefront asks for it before anyone has signed in. An unknown host is a plain 404 that does not echo the host back, so it cannot be used to discover which orgs exist.
-         * @summary The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept.
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the org the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate orgs; a successful answer is cacheable for a minute.
+         * @summary The public org configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4450,8 +4450,8 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept. Unauthenticated and cached briefly, because a storefront asks for it before anyone has signed in. An unknown host is a plain 404 that does not echo the host back, so it cannot be used to discover which orgs exist.
-         * @summary The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept.
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the org the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate orgs; a successful answer is cacheable for a minute.
+         * @summary The public org configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5931,8 +5931,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
-         * The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept. Unauthenticated and cached briefly, because a storefront asks for it before anyone has signed in. An unknown host is a plain 404 that does not echo the host back, so it cannot be used to discover which orgs exist.
-         * @summary The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept.
+         * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the org the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate orgs; a successful answer is cacheable for a minute.
+         * @summary The public org configuration a checkout page boots from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8383,8 +8383,8 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept. Unauthenticated and cached briefly, because a storefront asks for it before anyone has signed in. An unknown host is a plain 404 that does not echo the host back, so it cannot be used to discover which orgs exist.
-     * @summary The public configuration for the org that owns this hostname: its branding, its checkout options and the return URLs it will accept.
+     * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the org the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate orgs; a successful answer is cacheable for a minute.
+     * @summary The public org configuration a checkout page boots from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi

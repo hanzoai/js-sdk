@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { Message } from './message';
+import type { Delivery } from './delivery';
 
 /**
  * 
@@ -25,9 +25,9 @@ import type { Message } from './message';
 export interface ReadOut {
     /**
      * Messages is what was read, stream-ordered.
-     * @type {Array<Message>}
+     * @type {Array<Delivery>}
      * @memberof ReadOut
      */
-    'messages'?: Array<Message>;
+    'messages'?: Array<Delivery>;
 }
 

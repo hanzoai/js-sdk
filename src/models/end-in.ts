@@ -21,13 +21,13 @@
  */
 export interface EndIn {
     /**
-     * 
+     * ID is the sandbox whose lease ends, from an earlier lease.
      * @type {string}
      * @memberof EndIn
      */
     'id'?: string;
     /**
-     * 
+     * Purge deletes the project\'s DISK as well. It is opt-in because the disk holds the only copy of the checkout: ending a lease is cheap and reversible, deleting someone\'s uncommitted work is neither.
      * @type {boolean}
      * @memberof EndIn
      */
