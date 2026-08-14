@@ -36,12 +36,25 @@ concurrency:
 jobs:
   publish:
     runs-on: [hanzo-build-linux-amd64]
+    env:
+      # The registry of record, named ONCE and obeyed by every npm call below.
+      #
+      # The repo's `.npmrc` sends installs to the fleet mirror, and a project
+      # `.npmrc` outranks anything setup-node writes — so without this the job
+      # reads and writes a cache instead of npm. The mirror lags: it answered
+      # 2.2.8 as latest while npm already served 2.2.9, which makes `npm view`
+      # report a version absent that plainly exists, and would send `npm
+      # publish` to the mirror rather than to npm. An `npm_config_*` variable
+      # outranks a project `.npmrc`, so one line covers view, publish and the
+      # read-back, and the value setup-node writes its auth line for is the
+      # same one.
+      npm_config_registry: https://registry.npmjs.org
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: ${{ env.npm_config_registry }}
 
       - name: The tag and package.json must agree
         id: what
