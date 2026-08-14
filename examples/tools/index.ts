@@ -1,6 +1,6 @@
 // tools — which MCP servers this key can reach.
 //
-// GET /v1/mcp/servers (operationId get_v1_mcp_servers): the external MCP servers
+// GET /v1/mcp/servers (operationId get_mcp_servers): the external MCP servers
 // the caller's org has enabled, which is the half of the tool surface that is
 // per-org configuration rather than a property of the binary.
 //

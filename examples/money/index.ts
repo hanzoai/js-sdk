@@ -1,7 +1,7 @@
 // money — what is in the wallet, and what spent it.
 //
-//   GET /v1/billing/balance   get_v1_billing_balance
-//   GET /v1/billing/usage     get_v1_billing_usage
+//   GET /v1/billing/balance   get_billing_balance
+//   GET /v1/billing/usage     get_billing_usage
 //
 // Neither call takes an org: both derive the tenant SERVER-side from the JWT
 // `owner` claim, so a key can only ever read its own money. There is no org
