@@ -53,8 +53,8 @@ argument.
 
 **Pass it as `baseOptions`, not as `accessToken`.** The API document declares no
 `securityScheme`, so the generator emitted no auth code: `accessToken`
-type-checks, sends no `Authorization` header, and every call comes back 401 or
-403. `baseOptions` is spread into every request by every operation, so the
+type-checks, sends no `Authorization` header, and the call is refused as
+anonymous. `baseOptions` is spread into every request by every operation, so the
 header set once below reaches all 2502 methods.
 
 ```ts
@@ -104,8 +104,8 @@ npm ci && npm run build
 npx tsx examples/hello/index.ts
 ```
 
-`npm run examples` type-checks all six against the client. CI runs it on every
-push, which is what keeps them from rotting into pseudocode.
+`npm run examples` type-checks all six against the client, and `hanzo.yml` makes
+that a CI gate — which is what keeps them from rotting into pseudocode.
 
 ## The API surface
 
