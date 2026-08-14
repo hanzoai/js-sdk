@@ -37,12 +37,16 @@ this repo        scripts/generate.sh   ->  src/, then owns its bump and release
 
 ## Shape, measured
 
-Document: 1814 paths (1782 under `/v1`), 2479 operations, 192 tags, 2436
-schemas. Client: 192 `*Api` classes, 2502 methods (23 operations carry two tags,
-so they land on two classes), 2461 models, 2658 files.
+Document: 1814 paths (1782 under `/v1`), 2479 operations, 2436 schemas, and 191
+tags in use — the `tags:` array declares 190, and `compat` is used without being
+declared there. Client: 192 `*Api` classes — one per tag plus `DefaultApi`,
+which collects the 50 operations the document leaves untagged (`/`,
+`/.well-known/*`) — 2502 methods (23 operations carry two tags, so they land on
+two classes), 2461 models, 2658 files.
 
-834 of the 2479 operations declare a route and no response schema, so their
-`data` is typed `void` and callers cast. 694 carry a request body.
+891 of the 2479 operations declare a route and no response schema, so callers
+cast: 834 of those come out typed `void`, the other 57 `any`. 694 operations
+carry a request body.
 
 These move on every cloud release. `.spec-lock` names the release this tree
 projects; re-measure rather than trusting the numbers above after a regen.
@@ -95,8 +99,9 @@ Types declared inside hanzoai/iam arrive as `iam.Role`, `iam.Application`, … a
 land as `src/models/iam-role.ts`, `iam-application.ts` — 106 of them. A bare
 `Role` used to mean two unrelated shapes (IAM's 14-property role and a
 2-property `{role, user}` membership row); both now exist and say which is
-which. `src/models/role.ts` and `application.ts` belong to the OTHER services.
-Do not "restore" the bare IAM spellings.
+which — `iam-role.ts` and `role-assignment.ts`, so nothing is named `role.ts`
+any more. `src/models/application.ts` belongs to the OTHER service. Do not
+"restore" the bare IAM spellings.
 
 ## Examples — six flows, and they are a gate
 

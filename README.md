@@ -4,7 +4,7 @@
 
 TypeScript client for the [Hanzo API](https://api.hanzo.ai). Generated from the
 API's own OpenAPI document — the one each subsystem's router emits — so it
-carries every `/v1` route, 2479 operations across 192 products, and cannot name
+carries every `/v1` route, 2479 operations across 191 products, and cannot name
 an address the server does not serve.
 
 ## Install
@@ -109,23 +109,28 @@ that a CI gate — which is what keeps them from rotting into pseudocode.
 
 ## The API surface
 
-One class per product — the first path segment after `/v1/`. 192 of them:
+One class per product — the first path segment after `/v1/`. 191 of them:
 `ChatApi`, `ModelsApi`, `IamApi`, `BillingApi`, `KvApi`, `AgentsApi`,
-`ToolsApi`, `McpApi`, `CommerceApi`, `O11yApi`, and 182 more. Each takes a
-`Configuration`; each method takes one request object.
+`ToolsApi`, `McpApi`, `CommerceApi`, `O11yApi`, and 181 more. A 192nd class,
+`DefaultApi`, holds the 50 routes the document leaves untagged — `/` and the
+`/.well-known/*` family. Each takes a `Configuration`; each method takes one
+request object.
 
 ```ts
-import { BillingApi } from 'hanzoai';
-const { data } = await new BillingApi(config).getBillingBalance();
+import { Configuration, BillingApi } from 'hanzoai';
+
+const billing = new BillingApi(new Configuration({ basePath: 'https://api.hanzo.ai' }));
+billing.getBillingBalance().then(({ data }) => console.log(data));
 ```
 
 Method names are the document's operation ids in camelCase — `get_billing_balance`
 is `getBillingBalance`, and a path parameter reads as `by`:
 `GET /v1/kv/{name}` is `getKvByName({ name })`.
 
-834 of the 2479 operations declare a route but not a response shape, so their
-`data` arrives typed `void` and wants a cast. That is a gap in the document, not
-in the client; it closes as the subsystems describe their own replies.
+891 of the 2479 operations declare a route but not a response shape, so their
+`data` arrives untyped — `void` for 834 of them, `any` for the other 57 — and
+wants a cast. That is a gap in the document, not in the client; it closes as the
+subsystems describe their own replies.
 
 Full reference: [docs.hanzo.ai](https://docs.hanzo.ai).
 

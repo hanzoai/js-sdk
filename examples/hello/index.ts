@@ -11,7 +11,7 @@
 // {"error":"invalid_token"}.
 //
 // The body is read through a cast because this operation declares no response
-// schema — one of 834 in the document that state the route and not its shape.
+// schema — one of 891 in the document that state the route and not its shape.
 import { IamApi } from 'hanzoai';
 import { config, basePath, fail } from '../client';
 
