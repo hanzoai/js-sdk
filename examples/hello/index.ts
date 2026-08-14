@@ -1,7 +1,7 @@
 // hello — who am I?
 //
 // The smallest complete call: prove the key works and print the identity behind
-// it. GET /v1/iam/oauth/userinfo (operationId get_v1_iam_oauth_userinfo).
+// it. GET /v1/iam/oauth/userinfo (operationId get_iam_oauth_userinfo).
 //
 // This flow's whole job is to FAIL when the key is bad, so the route has to be
 // one that actually refuses. Not every identity-shaped route does, and the two

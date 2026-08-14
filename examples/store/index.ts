@@ -1,8 +1,8 @@
 // store — a KV round-trip: provision a store, read it back, delete it.
 //
-//   POST   /v1/kv          post_v1_kv          provision
-//   GET    /v1/kv/{name}   get_v1_kv_name      read back
-//   DELETE /v1/kv/{name}   delete_v1_kv_name   tear down
+//   POST   /v1/kv          post_kv          provision
+//   GET    /v1/kv/{name}   get_kv_by_name      read back
+//   DELETE /v1/kv/{name}   delete_kv_by_name   tear down
 //
 // This is the PROVISIONING plane. The per-key data plane the document also
 // describes (/v1/kv/keys/{key}) is not mounted anywhere — GET 404s and

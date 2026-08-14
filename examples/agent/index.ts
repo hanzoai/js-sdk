@@ -1,8 +1,8 @@
 // agent — define one, run it, read the run back.
 //
-//   POST /v1/agents            post_v1_agents
-//   POST /v1/agents/{ref}/run  post_v1_agents_by_ref_run
-//   GET  /v1/agents/{ref}/runs get_v1_agents_ref_runs
+//   POST /v1/agents            post_agents
+//   POST /v1/agents/{ref}/run  post_agents_by_ref_run
+//   GET  /v1/agents/{ref}/runs get_agents_by_ref_runs
 //
 // `ref` is the agent's public id (agent_...) OR its org-unique name, which is
 // why the run and the read below can both use the name we just created without
