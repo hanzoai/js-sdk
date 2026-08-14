@@ -1,19 +1,11 @@
-// The one place an example learns where the API is and who it is.
-//
-// Every flow imports this and nothing else configures a client, so there is a
-// single answer to "which base URL?" and "which env var?" across all six.
+// Where the API is, who we are, and how to print a failure. Every flow imports
+// this and nothing else configures a client.
 import { Configuration } from 'hanzoai';
 
 /** Default host. `HANZO_BASE_URL` overrides it (staging, a local cloud, a tunnel). */
 export const basePath = process.env.HANZO_BASE_URL ?? 'https://api.hanzo.ai';
 
-/**
- * Fail loudly and early when the key is absent.
- *
- * Without this the SDK sends an unauthenticated request and the flow dies on a
- * 401 several frames deep, which reads like an API bug rather than an unset
- * shell variable.
- */
+/** Fail on the unset variable rather than on the 401 it causes three frames later. */
 export function apiKey(): string {
   const key = process.env.HANZO_API_KEY;
   if (!key) {
@@ -22,13 +14,27 @@ export function apiKey(): string {
   return key;
 }
 
-/** Bearer auth: `accessToken` becomes `Authorization: Bearer <key>`, which is the spec's only scheme. */
+/**
+ * Bearer auth goes through `baseOptions`, NOT through `accessToken`.
+ *
+ * The API document declares no securityScheme, so the generator emitted no auth
+ * code at all: `new Configuration({ accessToken })` type-checks, sends no
+ * Authorization header, and every call comes back 401 or 403. Measured, not
+ * assumed — a local server that echoes its headers sees nothing from
+ * `accessToken` and `Bearer …` from the line below.
+ *
+ * `baseOptions` works because every generated operation spreads it into the
+ * axios request, so a header set once here reaches all 2502 of them. When the
+ * document grows a securityScheme this becomes `accessToken` and nothing else
+ * about these examples changes.
+ */
 export const config = (): Configuration =>
-  new Configuration({ basePath, accessToken: apiKey() });
+  new Configuration({
+    basePath,
+    baseOptions: { headers: { Authorization: `Bearer ${apiKey()}` } },
+  });
 
 /**
- * Print an error the way a caller can act on.
- *
  * axios buries the server's message in `response.data`; the bare `.message` is
  * always "Request failed with status code 4xx", which says nothing.
  */

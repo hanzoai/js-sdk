@@ -1,14 +1,13 @@
 // store — a KV round-trip: provision a store, read it back, delete it.
 //
-//   POST   /v1/kv          post_kv          provision
-//   GET    /v1/kv/{name}   get_kv_by_name      read back
-//   DELETE /v1/kv/{name}   delete_kv_by_name   tear down
+//   POST   /v1/kv          post_kv            provision
+//   GET    /v1/kv/{name}   get_kv_by_name     read back
+//   DELETE /v1/kv/{name}   delete_kv_by_name  tear down
 //
 // This is the PROVISIONING plane. The per-key data plane the document also
-// describes (/v1/kv/keys/{key}) is not mounted anywhere — GET 404s and
-// PUT/DELETE 405 at api.hanzo.ai, and kv.hanzo.ai 404s the whole prefix — so a
-// set/get/delete round-trip on keys would be an example that cannot run.
-// These three all answer 403 unauthenticated, i.e. routed and gated.
+// describes (/v1/kv/keys/{key}) is not mounted — GET 404s and PUT/DELETE 405 at
+// api.hanzo.ai — so a set/get/delete on keys would be an example that cannot
+// run.
 //
 // The delete runs in `finally`, so a failed read still tears the store down
 // rather than leaving it billable for the next run to collide with.
