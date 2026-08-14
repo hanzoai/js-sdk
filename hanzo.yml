@@ -11,18 +11,19 @@ test:
     # silently resolves a different axios than the release does is not a gate.
     #
     # `npm run build` is both halves of the build (CJS + the bundler-facing
-    # ESM), which is the only thing that type-checks all 1360 generated files.
+    # ESM), which is the only thing that type-checks the whole generated tree.
     run: |
       set -e
       npm ci --no-audit --no-fund
       npm run build
 
   - name: examples
-    # The six canonical flows, type-checked against the client that was just
-    # generated. This is the gate that has teeth: `npm run build` only proves
-    # the generated tree is internally consistent, while these compile against
-    # it the way a consumer does — importing `from 'hanzoai'`, reading real
-    # fields off real response models.
+    # The six canonical flows — hello, chat, money, store, agent, tools —
+    # type-checked against the client that was just generated. This is the gate
+    # that has teeth: `npm run build` only proves the generated tree is
+    # internally consistent, while these compile against it the way a consumer
+    # does — importing `from 'hanzoai'`, reading real fields off real response
+    # models.
     #
     # It has already earned its place. `choices[0].message.content` failed to
     # compile here (TS2339: Property 'message' does not exist on type 'object')
@@ -42,11 +43,11 @@ test:
 # `.spec-lock` beside the code, and — only after the `test:` block below has
 # passed over exactly those bytes — commits and cuts a patch.
 #
-# The document moved from hanzoai/openapi `hanzo.yaml` (hand-merged, 1742 paths,
-# fed by nothing, and NOTHING HAS EVER SENT the spec-update this repo listens
-# for) to hanzoai/cloud `openapi.yaml` — smaller (1058 paths), emitted from the
-# code by each app's own router, and gated on every cloud release. A smaller true
-# document beats a larger unverified one.
+# The input is hanzoai/cloud `openapi.yaml` — emitted from the code by each
+# app's own router and gated on every cloud release — not hanzoai/openapi
+# `hanzo.yaml`, which is hand-merged and fed by nothing. A document the routers
+# write beats one a human curates: it cannot name an address the server does not
+# serve. `.spec-lock` records which one this tree projects.
 client:
   generate: ./scripts/generate.sh
   version: 'package.json:jq -r .version package.json'
